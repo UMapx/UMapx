@@ -390,7 +390,7 @@ namespace UMapx.Transform
         private static void Tdrf_h(float[,] F, float[,] D, float sigma)
         {
             // params
-            float a = (float)Math.Exp(-Math.Sqrt(2) / sigma);
+            float a = Maths.Exp(-Maths.Sqrt(2) / sigma);
             float[,] V = Matrice.Pow(a, D);
             int h = F.GetLength(0);
             int w = F.GetLength(1);

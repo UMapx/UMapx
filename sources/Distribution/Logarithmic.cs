@@ -70,8 +70,8 @@ namespace UMapx.Distribution
         {
             get
             {
-                float k1 = p + (float)Math.Log(1 - p);
-                float k2 = (float)Math.Pow(1 - p, 2) * (float)Math.Pow(Math.Log(1 - p), 2);
+                float k1 = p + Maths.Log(1 - p);
+                float k2 = Maths.Pow(1 - p, 2) * Maths.Pow(Maths.Log(1 - p), 2);
                 return -p * k1 / k2;
             }
         }
@@ -118,7 +118,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return 1 + Special.Beta(x + 1, 0) / (float)Math.Log(1 - p);
+            return 1 + Special.Beta(x + 1, 0) / Maths.Log(1 - p);
         }
         /// <summary>
         /// Returns the value of the probability density function.
@@ -135,7 +135,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return -1 / (float)Math.Log(1 - p) * (float)Math.Pow(p, x) / x;
+            return -1 / Maths.Log(1 - p) * Maths.Pow(p, x) / x;
         }
         /// <summary>
         /// Gets the value of entropy.

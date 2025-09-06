@@ -87,7 +87,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (float)Math.Pow(b - a, 2) / 12.0f;
+                return Maths.Pow(b - a, 2) / 12.0f;
             }
         }
         /// <summary>
@@ -173,7 +173,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (float)Math.Log(b - a);
+                return Maths.Log(b - a);
             }
         }
         #endregion

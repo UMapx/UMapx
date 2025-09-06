@@ -73,7 +73,7 @@ namespace UMapx.Core
         {
             get
             {
-                return (float)Math.Sqrt(this.X * this.X + this.Y * this.Y + this.Z * this.Z + this.W * this.W);
+                return Maths.Sqrt(this.X * this.X + this.Y * this.Y + this.Z * this.Z + this.W * this.W);
             }
         }
         /// <summary>
@@ -131,14 +131,14 @@ namespace UMapx.Core
         public static Quaternion32 FromYPR(float yaw, float pitch, float roll)
         {
             float a = roll * 0.5f;
-            float b = (float)Math.Sin(a);
-            float c = (float)Math.Cos(a);
+            float b = Maths.Sin(a);
+            float c = Maths.Cos(a);
             float d = pitch * 0.5f;
-            float e = (float)Math.Sin(d);
-            float f = (float)Math.Cos(d);
+            float e = Maths.Sin(d);
+            float f = Maths.Cos(d);
             float g = yaw * 0.5f;
-            float h = (float)Math.Sin(g);
-            float i = (float)Math.Cos(g);
+            float h = Maths.Sin(g);
+            float i = Maths.Cos(g);
 
             return new Quaternion32(
                 i * e * c + h * f * b,
@@ -180,9 +180,9 @@ namespace UMapx.Core
             }
             else
             {
-                float f = (float)Math.Acos(dot);
+                float f = Maths.Acos(dot);
                 float g = (float)(1.0 / Math.Sin(f));
-                d = (float)Math.Sin(((1.0 - amount) * f)) * g;
+                d = Maths.Sin(((1.0f - amount) * f)) * g;
                 e = (float)(flag ? ((-Math.Sin((amount * f))) * g) : (Math.Sin((amount * f)) * g));
             }
 

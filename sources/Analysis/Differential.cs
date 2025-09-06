@@ -218,9 +218,9 @@ namespace UMapx.Analysis
             {
                 for (j = 0; j < order; j++)
                 {
-                    A[i, j] = (float)Math.Pow(j, i);
+                    A[i, j] = Maths.Pow(j, i);
                 }
-                c[i] = (float)Math.Pow(-1, i) / (i + 1);
+                c[i] = Maths.Pow(-1, i) / (i + 1);
             }
 
             return A.Solve(c);

@@ -105,7 +105,7 @@ namespace UMapx.Distribution
                 float test = (n + 1) * p;
 
                 if (test <= 0 || (int)test != test)
-                    return (float)Math.Floor(test);
+                    return Maths.Floor(test);
 
                 if (test <= n)
                     return test;
@@ -123,7 +123,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (float)Math.Floor(n * p);
+                return Maths.Floor(n * p);
             }
         }
         /// <summary>
@@ -133,7 +133,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (q - p) / (float)Math.Sqrt(n * p * q);
+                return (q - p) / Maths.Sqrt(n * p * q);
             }
         }
         /// <summary>
@@ -159,12 +159,12 @@ namespace UMapx.Distribution
             }
 
             float a = Special.LogBinomial(n, x);
-            float b = x == 0 ? 0 : x * (float)Math.Log(p);
+            float b = x == 0 ? 0 : x * Maths.Log(p);
             float c = (n - x);
-            float d = (float)Math.Log(1 - p);
+            float d = Maths.Log(1 - p);
             float log = a + b + c * d;
 
-            return (float)Math.Exp(log);
+            return Maths.Exp(log);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.

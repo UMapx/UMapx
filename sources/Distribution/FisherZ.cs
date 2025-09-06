@@ -144,18 +144,18 @@ namespace UMapx.Distribution
 
             // first equation:
 
-            float a = (float)Math.Pow(d1, d12);
-            float b = (float)Math.Pow(d2, d22);
+            float a = Maths.Pow(d1, d12);
+            float b = Maths.Pow(d2, d22);
             float c = 2 * a * b;
             float d = Special.Beta(d12, d22);
             float e = c / d;
 
             // second equation:
 
-            float f = (float)Math.Exp(d1 * x);
-            float g = d1 * (float)Math.Exp(2 * x) + d2;
+            float f = Maths.Exp(d1 * x);
+            float g = d1 * Maths.Exp(2 * x) + d2;
             float h = d12 + d22;
-            float j = f / (float)Math.Pow(g, h);
+            float j = f / Maths.Pow(g, h);
 
             // result of F(x, d1, d2):
             return e * j;

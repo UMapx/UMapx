@@ -87,10 +87,10 @@ namespace UMapx.Wavelet
         /// <returns>Function</returns>
         public Complex32 Wavelet(float x)
         {
-            float a = (float)Math.Sqrt(fb);
-            float b = x / (float)Math.Pow(fb, m);
+            float a = Maths.Sqrt(fb);
+            float b = x / Maths.Pow(fb, m);
             float c = Special.Sinc(b, 1);
-            float d = (float)Math.Pow(c, m);
+            float d = Maths.Pow(c, m);
             Complex32 e = Maths.Exp(Maths.I * 2 * Maths.Pi * fc * x);
             return a * d * e;
         }

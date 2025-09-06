@@ -355,7 +355,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Log10(float a)
         {
-            return (float)Math.Log(a, 10.0);
+            return (float)Math.Log(a, 10.0f);
         }
         /// <summary>
         /// Returns the binary logarithm of a number.
@@ -393,7 +393,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Sqrt(float a, float b)
         {
-            return (float)Math.Pow(a, 1.0 / b);
+            return (float)Math.Pow(a, 1.0f / b);
         }
         /// <summary>
         /// Returns the modulus of a number.
@@ -674,7 +674,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Round(Complex32 a, int dig)
         {
-            return new Complex32((float)Math.Round(a.Real, dig), (float)Math.Round(a.Imag, dig));
+            return new Complex32(Maths.Round(a.Real, dig), Maths.Round(a.Imag, dig));
         }
         #endregion
         #endregion
@@ -706,7 +706,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Tan(float a)
         {
-            return (float)Math.Sin(a) / (float)Math.Cos(a);
+            return Maths.Sin(a) / Maths.Cos(a);
         }
         /// <summary>
         /// Returns the cotangent of an angle.
@@ -715,7 +715,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Ctan(float a)
         {
-            return (float)Math.Cos(a) / (float)Math.Sin(a);
+            return Maths.Cos(a) / Maths.Sin(a);
         }
         /// <summary>
         /// Returns the secant of an angle.
@@ -724,7 +724,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Sec(float a)
         {
-            return 1.0f / (float)Math.Cos(a);
+            return 1.0f / Maths.Cos(a);
         }
         /// <summary>
         /// Returns the cosecant of an angle.
@@ -733,7 +733,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Cosc(float a)
         {
-            return 1.0f / (float)Math.Sin(a);
+            return 1.0f / Maths.Sin(a);
         }
         /// <summary>
         /// Returns the arcsine of a number.
@@ -769,7 +769,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Actan(float a)
         {
-            return Pi / 2 - (float)Math.Atan(a);
+            return Pi / 2 - Maths.Atan(a);
         }
         /// <summary>
         /// Returns the arcsecance of a number.
@@ -799,7 +799,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Cos(Complex32 a)
         {
-            return new Complex32((float)Math.Cos(a.Real) * (float)Math.Cosh(a.Imag), -((float)Math.Sin(a.Real) * (float)Math.Sinh(a.Imag)));
+            return new Complex32(Maths.Cos(a.Real) * Maths.Cosh(a.Imag), -(Maths.Sin(a.Real) * Maths.Sinh(a.Imag)));
         }
         /// <summary>
         /// Returns the sine of an angle.
@@ -808,7 +808,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Sin(Complex32 a)
         {
-            return new Complex32((float)Math.Sin(a.Real) * (float)Math.Cosh(a.Imag), (float)Math.Cos(a.Real) * (float)Math.Sinh(a.Imag));
+            return new Complex32(Maths.Sin(a.Real) * Maths.Cosh(a.Imag), Maths.Cos(a.Real) * Maths.Sinh(a.Imag));
         }
         /// <summary>
         /// Returns the tangent of an angle.
@@ -930,7 +930,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Tanh(float a)
         {
-            return (float)Math.Sinh(a) / (float)Math.Cosh(a);
+            return Maths.Sinh(a) / Maths.Cosh(a);
         }
         /// <summary>
         /// Returns the hyperbolic cotangent of an angle.
@@ -939,7 +939,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Ctanh(float a)
         {
-            return (float)Math.Cosh(a) / (float)Math.Sinh(a);
+            return Maths.Cosh(a) / Maths.Sinh(a);
         }
         /// <summary>
         /// Returns the hyperbolic secant of an angle.
@@ -948,7 +948,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Sech(float a)
         {
-            return 1.0f / (float)Math.Cosh(a);
+            return 1.0f / Maths.Cosh(a);
         }
         /// <summary>
         /// Returns the hyperbolic cosecant of an angle.
@@ -957,7 +957,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Cosch(float a)
         {
-            return 1.0f / (float)Math.Sinh(a);
+            return 1.0f / Maths.Sinh(a);
         }
         /// <summary>
         /// Returns the hyperbolic arcsine of a number.
@@ -966,7 +966,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Asinh(float a)
         {
-            return (float)Math.Log(a + Math.Sqrt(a * a + 1));
+            return Maths.Log(a + Maths.Sqrt(a * a + 1));
         }
         /// <summary>
         /// Returns the hyperbolic arccosine of a number.
@@ -977,7 +977,7 @@ namespace UMapx.Core
         {
             if (a >= 0)
             {
-                return (float)Math.Log(a + Math.Sqrt(a * a - 1));
+                return Maths.Log(a + Maths.Sqrt(a * a - 1));
             }
             return 0;
         }
@@ -988,7 +988,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Atanh(float a)
         {
-            return 1.0f / 2.0f * (float)Math.Log((1 + a) / (1 - a));
+            return 1.0f / 2.0f * Maths.Log((1 + a) / (1 - a));
         }
         /// <summary>
         /// Returns the hyperbolic arccotangent of a number.
@@ -997,7 +997,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Actanh(float a)
         {
-            return 1.0f / 2.0f * (float)Math.Log((a + 1) / (a - 1));
+            return 1.0f / 2.0f * Maths.Log((a + 1) / (a - 1));
         }
         /// <summary>
         /// Returns the hyperbolic arcsecance of a number.
@@ -1006,7 +1006,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Asech(float a)
         {
-            return (float)Math.Log((1 + (float)Math.Sqrt(1 - a * a)) / a);
+            return Maths.Log((1 + Maths.Sqrt(1 - a * a)) / a);
         }
         /// <summary>
         /// Returns the hyperbolic arccosecant of a number.
@@ -1017,11 +1017,11 @@ namespace UMapx.Core
         {
             if (a < 0)
             {
-                return (float)Math.Log((1 - (float)Math.Sqrt(1 + a * a)) / a);
+                return Maths.Log((1 - Maths.Sqrt(1 + a * a)) / a);
             }
             if (a > 0)
             {
-                return (float)Math.Log((1 + (float)Math.Sqrt(1 + a * a)) / a);
+                return Maths.Log((1 + Maths.Sqrt(1 + a * a)) / a);
             }
             return 0;
         }
@@ -1035,7 +1035,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Sinh(Complex32 a)
         {
-            return new Complex32((float)Math.Sinh(a.Real) * (float)Math.Cos(a.Imag), (float)Math.Cosh(a.Real) * (float)Math.Sin(a.Imag));
+            return new Complex32(Maths.Sinh(a.Real) * Maths.Cos(a.Imag), Maths.Cosh(a.Real) * Maths.Sin(a.Imag));
         }
         /// <summary>
         /// Returns the hyperbolic cosine of an angle.
@@ -1044,7 +1044,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Cosh(Complex32 a)
         {
-            return new Complex32((float)Math.Cosh(a.Real) * (float)Math.Cos(a.Imag), (float)Math.Sinh(a.Real) * (float)Math.Sin(a.Imag));
+            return new Complex32(Maths.Cosh(a.Real) * Maths.Cos(a.Imag), Maths.Sinh(a.Real) * Maths.Sin(a.Imag));
         }
         /// <summary>
         /// Returns the hyperbolic tangent of an angle.
@@ -1956,12 +1956,12 @@ namespace UMapx.Core
             if (absA > absB)
             {
                 r = b / a;
-                r = absA * (float)Math.Sqrt(1 + r * r);
+                r = absA * Maths.Sqrt(1 + r * r);
             }
             else if (b != 0)
             {
                 r = a / b;
-                r = absB * (float)Math.Sqrt(1 + r * r);
+                r = absB * Maths.Sqrt(1 + r * r);
             }
 
             return r;
@@ -1992,9 +1992,9 @@ namespace UMapx.Core
 
             if (S > 0)
             {
-                fi = (float)Math.Acos(R / (float)Math.Pow(Q, 3.0f / 2.0f)) / 3.0f;
-                v0 = -2 * (float)Math.Sqrt(Q);
-                v1 = 2.0f / 3 * (float)Math.PI;
+                fi = Maths.Acos(R / Maths.Pow(Q, 3.0f / 2.0f)) / 3.0f;
+                v0 = -2 * Maths.Sqrt(Q);
+                v1 = 2.0f / 3 * Maths.Pi;
 
                 x1 = v0 * Math.Cos(fi) - a3;
                 x2 = v0 * Math.Cos(fi + v1) - a3;
@@ -2004,7 +2004,7 @@ namespace UMapx.Core
             {
                 if (Q > 0)
                 {
-                    fi = Maths.Acosh(Math.Abs(R) / (float)Math.Pow(Math.Abs(Q), 3.0f / 2.0f)) / 3.0f;
+                    fi = Maths.Acosh(Math.Abs(R) / Maths.Pow(Math.Abs(Q), 3.0f / 2.0f)) / 3.0f;
                     v0 = Math.Sign(R) * Maths.Sqrt(Q) * Maths.Cosh(fi);
                     v1 = Maths.Sqrt(3) * Maths.Sqrt(Q) * Maths.Sinh(fi);
 
@@ -2032,7 +2032,7 @@ namespace UMapx.Core
             }
             else if (S == 0)
             {
-                v0 = (float)Math.Pow(R, 1.0 / 3.0);
+                v0 = Maths.Pow(R, 1.0f / 3.0f);
                 x1 = -2 * v0 - a3;
                 x2 = x3 = v0 - a3;
             }
@@ -2049,7 +2049,7 @@ namespace UMapx.Core
         public static Complex32[] Quadratic(float a, float b, float c)
         {
             float dis = b * b - 4 * a * c;
-            float abs = (float)Math.Sqrt(Math.Abs(dis));
+            float abs = Maths.Sqrt(Math.Abs(dis));
             Complex32 root = dis < 0 ? new Complex32(0, abs) : new Complex32(abs, 0);
             Complex32 q = -0.5 * (b + Math.Sign(b) * root);
             return new Complex32[] { q / a, c / q };
@@ -2150,7 +2150,7 @@ namespace UMapx.Core
         public static Complex32 Sign(Complex32 z)
         {
             float re = z.Real, im = z.Imag;
-            float r = (float)Math.Sqrt(re * re + im * im);
+            float r = Maths.Sqrt(re * re + im * im);
             if (r == 0f) return new Complex32(0f, 0f);
             return new Complex32(re / r, im / r);
         }
@@ -2176,7 +2176,7 @@ namespace UMapx.Core
         {
             float mag = Math.Abs(magnitude);
             float re = sign.Real, im = sign.Imag;
-            float r = (float)Math.Sqrt(re * re + im * im);
+            float r = Maths.Sqrt(re * re + im * im);
             if (r == 0f) return new Complex32(mag, 0f);
             float s = mag / r;
             return new Complex32(re * s, im * s);
@@ -2190,9 +2190,9 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 CopySign(Complex32 magnitude, Complex32 sign)
         {
-            float mag = (float)Math.Sqrt(magnitude.Real * magnitude.Real + magnitude.Imag * magnitude.Imag);
+            float mag = Maths.Sqrt(magnitude.Real * magnitude.Real + magnitude.Imag * magnitude.Imag);
             float re = sign.Real, im = sign.Imag;
-            float r = (float)Math.Sqrt(re * re + im * im);
+            float r = Maths.Sqrt(re * re + im * im);
             if (r == 0f) return new Complex32(mag, 0f);
             float s = mag / r;
             return new Complex32(re * s, im * s);

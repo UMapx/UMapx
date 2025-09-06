@@ -99,7 +99,7 @@ namespace UMapx.Distribution
             {
                 if (b > 1)
                 {
-                    return a * (float)Math.Pow((b - 1) / (b + 1), 1 / b);
+                    return a * Maths.Pow((b - 1) / (b + 1), 1 / b);
                 }
                 return 0;
             }
@@ -137,7 +137,7 @@ namespace UMapx.Distribution
                 return 0;
             }
 
-            return (b / a) * (float)Math.Pow(x / a, b - 1) / (float)Math.Pow(1.0f + Math.Pow(x / a, b), 2);
+            return (b / a) * Maths.Pow(x / a, b - 1) / Maths.Pow(1.0f + Maths.Pow(x / a, b), 2);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -151,7 +151,7 @@ namespace UMapx.Distribution
                 return 0;
             }
 
-            return 1.0f / (1 + (float)Math.Pow(x / a, -b));
+            return 1.0f / (1 + Maths.Pow(x / a, -b));
         }
         /// <summary>
         /// Returns the value of differential entropy.

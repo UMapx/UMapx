@@ -129,7 +129,7 @@ namespace UMapx.Distribution
             {
                 if (k > 3)
                 {
-                    return 2 * (1 + k) / (k - 3) * (float)Math.Sqrt((k - 2) / k);
+                    return 2 * (1 + k) / (k - 3) * Maths.Sqrt((k - 2) / k);
                 }
                 return float.NaN;
             }
@@ -157,7 +157,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return k * (float)Math.Pow(xm, k) / (float)Math.Pow(x, k + 1);
+            return k * Maths.Pow(xm, k) / Maths.Pow(x, k + 1);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -170,7 +170,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return 1.0f - (float)Math.Pow(xm / x, k);
+            return 1.0f - Maths.Pow(xm / x, k);
         }
         /// <summary>
         /// Returns the value of differential entropy.
@@ -180,7 +180,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return k * xm + (1 - k) * (float)Math.Log(xm) + Special.LogGamma(k); // + (1 - k) * Special.Ksi(k);
+                return k * xm + (1 - k) * Maths.Log(xm) + Special.LogGamma(k); // + (1 - k) * Special.Ksi(k);
             }
         }
         #endregion

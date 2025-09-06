@@ -302,7 +302,7 @@ namespace UMapx.Imaging
         /// <returns>Value</returns>
         public static float G(float Gx, float Gy)
         {
-            return (float)Math.Sqrt(Gx * Gx + Gy * Gy);
+            return Maths.Sqrt(Gx * Gx + Gy * Gy);
         }
         /// <summary>
         /// Gets the angle of the gradient operator.
@@ -312,7 +312,7 @@ namespace UMapx.Imaging
         /// <returns>Value</returns>
         public static float Tetta(float Gx, float Gy)
         {
-            return (float)Math.Atan(Gx / Gy);
+            return Maths.Atan(Gx / Gy);
         }
         #endregion
 

@@ -119,7 +119,7 @@ namespace UMapx.Distribution
                 if (beta > 2.0)
                 {
                     float num = alpha * (alpha + beta - 1);
-                    float den = (beta - 2) * (float)Math.Pow(beta - 1, 2);
+                    float den = (beta - 2) * Maths.Pow(beta - 1, 2);
                     return num / den;
                 }
                 else if (beta > 1.0)
@@ -176,7 +176,7 @@ namespace UMapx.Distribution
                 return 0;
             }
 
-            float num = (float)Math.Pow(x, alpha - 1) * (float)Math.Pow(1 + x, -alpha - beta);
+            float num = Maths.Pow(x, alpha - 1) * Maths.Pow(1 + x, -alpha - beta);
             float den = Special.Beta(alpha, beta);
             return num / den;
         }

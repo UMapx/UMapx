@@ -120,7 +120,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (float)Math.Log(2);
+                return Maths.Log(2);
             }
         }
         #endregion

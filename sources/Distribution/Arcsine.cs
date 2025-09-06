@@ -81,7 +81,7 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            return 2.0f / Maths.Pi * (float)Math.Asin(Math.Sqrt(x));
+            return 2.0f / Maths.Pi * Maths.Asin(Maths.Sqrt(x));
         }
         /// <summary>
         /// Returns the value of the probability density function.

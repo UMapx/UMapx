@@ -92,8 +92,8 @@ namespace UMapx.Imaging
         /// </summary>
         protected override void Rebuild()
         {
-            float s = (Intensity.log05 / (float)Math.Log(0.5 - value2gamma(shadows)));
-            float l = (Intensity.log05 / (float)Math.Log(0.5 + value2gamma(lights)));
+            float s = (Intensity.log05 / Maths.Log(0.5f - value2gamma(shadows)));
+            float l = (Intensity.log05 / Maths.Log(0.5f + value2gamma(lights)));
             this.values = Intensity.LogStretch(s, l, 256);
         }
         #endregion

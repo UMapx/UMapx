@@ -41,7 +41,7 @@ namespace UMapx.Window
             else if (y >= frameSize / 4 &&
                 y <= frameSize / 2)
             {
-                return 2 * (float)Math.Pow(1 - b, 3);
+                return 2 * Maths.Pow(1 - b, 3);
             }
             return 0.0f;
         }

@@ -182,7 +182,7 @@ namespace UMapx.Window
             var Z = FFT.Forward(G); // Z has shape (RL x N)
 
             // 3) Block-wise normalization over R rows: i, i+L, i+2L, ...
-            float w = R / (float)Math.Sqrt(M); // -> sum_r |Z|^2 becomes w^2 (matches R=2 case)
+            float w = R / Maths.Sqrt(M); // -> sum_r |Z|^2 becomes w^2 (matches R=2 case)
             for (int i = 0; i < L; i++)
             {
                 for (int j = 0; j < N; j++)
@@ -194,7 +194,7 @@ namespace UMapx.Window
                         var z = Z[i + r * L, j];
                         energy += z.Real * z.Real + z.Imag * z.Imag;
                     }
-                    float phi = w / (float)Math.Sqrt(energy + eps);
+                    float phi = w / Maths.Sqrt(energy + eps);
 
                     // scale all R components by the same φ
                     for (int r = 0; r < R; r++)
@@ -244,7 +244,7 @@ namespace UMapx.Window
             var Z = FFT.Forward(G); // Z has shape (RL x N)
 
             // 3) Block-wise normalization over R rows: i, i+L, i+2L, ...
-            float w = R / (float)Math.Sqrt(M); // -> sum_r |Z|^2 becomes w^2 (matches R=2 case)
+            float w = R / Maths.Sqrt(M); // -> sum_r |Z|^2 becomes w^2 (matches R=2 case)
             for (int i = 0; i < L; i++)
             {
                 for (int j = 0; j < N; j++)
@@ -256,7 +256,7 @@ namespace UMapx.Window
                         var z = Z[i + r * L, j];
                         energy += z.Real * z.Real + z.Imag * z.Imag;
                     }
-                    float phi = w / (float)Math.Sqrt(energy + eps);
+                    float phi = w / Maths.Sqrt(energy + eps);
                     for (int r = 0; r < R; r++)
                         Z[i + r * L, j] *= phi;
                 }

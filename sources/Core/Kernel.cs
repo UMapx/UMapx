@@ -50,7 +50,7 @@ namespace UMapx.Core
         {
             float t = x * x;
             float s = sigma * sigma;
-            return (float)Math.Exp(-t / s / 2.0);
+            return Maths.Exp(-t / s / 2.0f);
         }
         /// <summary>
         /// Returns the value of a Gaussian function σ = 1.
@@ -59,7 +59,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Gaussian(float x)
         {
-            return (float)Math.Exp(-x * x / 2);
+            return Maths.Exp(-x * x / 2);
         }
         #endregion
 
@@ -79,7 +79,7 @@ namespace UMapx.Core
             else if (-a <= x && x < a)
             {
                 float pix = Maths.Pi * x;
-                return a * (float)Math.Sin(pix) * (float)Math.Sin(pix / a) / (pix * pix);
+                return a * Maths.Sin(pix) * Maths.Sin(pix / a) / (pix * pix);
             }
             return 0;
         }
@@ -179,7 +179,7 @@ namespace UMapx.Core
             {
                 return 0;
             }
-            return 0.9375f * (float)Math.Pow((1 - x * x), 2);
+            return 0.9375f * Maths.Pow((1 - x * x), 2);
         }
         #endregion
 
@@ -196,7 +196,7 @@ namespace UMapx.Core
             {
                 return 0;
             }
-            return 1.09375f * (float)Math.Pow((1 - x * x), 3);
+            return 1.09375f * Maths.Pow((1 - x * x), 3);
         }
         #endregion
 
@@ -213,7 +213,7 @@ namespace UMapx.Core
             {
                 return 0;
             }
-            return 0.864197531f * (float)Math.Pow((1 - abs * abs * abs), 3);
+            return 0.864197531f * Maths.Pow((1 - abs * abs * abs), 3);
         }
         #endregion
 
@@ -225,12 +225,13 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Cosine(float x)
         {
-            float abs = Math.Abs(x);
+            float abs = Maths.Abs(x);
+
             if (abs > 1)
             {
                 return 0;
             }
-            return 0.7853981633975f * (float)Math.Cos(1.570796326795 * x);
+            return 0.7853981633975f * Maths.Cos(1.570796326795f * x);
         }
         #endregion
 
@@ -268,7 +269,7 @@ namespace UMapx.Core
         {
             float abs = Math.Abs(x);
             float k = abs / 1.4142135623731f;
-            return 0.5f * (float)Math.Exp(-k) * (float)Math.Sin(k + 0.7853981633975);
+            return 0.5f * Maths.Exp(-k) * Maths.Sin(k + 0.7853981633975f);
         }
         #endregion
     }

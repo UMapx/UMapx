@@ -110,11 +110,11 @@ namespace UMapx.Distribution
                 float median;
                 if (c >= (a + b) / 2.0)
                 {
-                    median = a + (float)Math.Sqrt((b - a) * (c - a)) / Maths.Sqrt2;
+                    median = a + Maths.Sqrt((b - a) * (c - a)) / Maths.Sqrt2;
                 }
                 else
                 {
-                    median = b - (float)Math.Sqrt((b - a) * (b - c)) / Maths.Sqrt2;
+                    median = b - Maths.Sqrt((b - a) * (b - c)) / Maths.Sqrt2;
                 }
 
                 return median;
@@ -136,7 +136,7 @@ namespace UMapx.Distribution
             {
                 float k1 = (a + b - 2 * c) * (2 * a - b - c) * (a - 2 * b + c);
                 float k2 = 5 * (a * a + b * b + c * c - a * b - a * c - b * c);
-                return Maths.Sqrt2 * k1 / (float)Math.Pow(k2, 1.5);
+                return Maths.Sqrt2 * k1 / Maths.Pow(k2, 1.5f);
             }
         }
         /// <summary>
@@ -156,7 +156,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return 0.5f + (float)Math.Log((b - a) / 2);
+                return 0.5f + Maths.Log((b - a) / 2);
             }
         }
         /// <summary>

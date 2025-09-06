@@ -251,9 +251,9 @@ namespace UMapx.Imaging
                 {
                     for (k = 0; k < width; k++)
                     {
-                        result[j, k] = (float)Math.Exp(-0.5 * Math.Pow((r[j, k] - 0.5), 2) / Math.Pow(sigma, 2)) *
-                                       (float)Math.Exp(-0.5 * Math.Pow((g[j, k] - 0.5), 2) / Math.Pow(sigma, 2)) *
-                                       (float)Math.Exp(-0.5 * Math.Pow((b[j, k] - 0.5), 2) / Math.Pow(sigma, 2));
+                        result[j, k] = Maths.Exp(-0.5f * Maths.Pow((r[j, k] - 0.5f), 2) / Maths.Pow(sigma, 2)) *
+                                       Maths.Exp(-0.5f * Maths.Pow((g[j, k] - 0.5f), 2) / Maths.Pow(sigma, 2)) *
+                                       Maths.Exp(-0.5f * Maths.Pow((b[j, k] - 0.5f), 2) / Maths.Pow(sigma, 2));
                     }
                 }
                 C[i] = result;

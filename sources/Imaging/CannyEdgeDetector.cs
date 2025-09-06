@@ -194,7 +194,7 @@ namespace UMapx.Imaging
             for (int i = 0; i < size; i++)
             {
                 int x = i - radius;
-                kernel[i] = (float)Math.Exp(-(x * x) / (2 * sigma * sigma));
+                kernel[i] = Maths.Exp(-(x * x) / (2 * sigma * sigma));
                 sum += kernel[i];
             }
             for (int i = 0; i < size; i++)

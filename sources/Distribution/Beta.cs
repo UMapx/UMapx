@@ -118,7 +118,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return 2 * (b - a) * (float)Math.Sqrt(a + b + 1) / (a + b + 2) / (float)Math.Sqrt(a * b);
+                return 2 * (b - a) * Maths.Sqrt(a + b + 1) / (a + b + 2) / Maths.Sqrt(a * b);
             }
         }
         /// <summary>
@@ -147,7 +147,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return (float)Math.Pow(x, a - 1) * (float)Math.Pow(1 - x, b - 1) / Special.Beta(a, b);
+            return Maths.Pow(x, a - 1) * Maths.Pow(1 - x, b - 1) / Special.Beta(a, b);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.

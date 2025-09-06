@@ -86,7 +86,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return mu - beta * (float)Math.Log(Math.Log(2));
+                return mu - beta * Maths.Log(Maths.Log(2));
             }
         }
         /// <summary>
@@ -131,7 +131,7 @@ namespace UMapx.Distribution
         /// </summary>
         public float Entropy
         {
-            get { return (float)Math.Log(beta) + Maths.Gamma + 1; }
+            get { return Maths.Log(beta) + Maths.Gamma + 1; }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -141,7 +141,7 @@ namespace UMapx.Distribution
         public float Distribution(float x)
         {
             float z = (x - mu) / beta;
-            return (float)Math.Exp(-Math.Exp(-z));
+            return Maths.Exp(-Maths.Exp(-z));
         }
         /// <summary>
         /// Returns the value of the probability density function.
@@ -151,7 +151,7 @@ namespace UMapx.Distribution
         public float Function(float x)
         {
             float z = (x - mu) / beta;
-            return (1 / beta) * (float)Math.Exp(-(z + Math.Exp(-z)));
+            return (1 / beta) * Maths.Exp(-(z + Maths.Exp(-z)));
         }
         #endregion
     }

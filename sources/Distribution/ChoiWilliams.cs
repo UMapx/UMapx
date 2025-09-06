@@ -108,7 +108,7 @@ namespace UMapx.Distribution
         public float Function(float eta, float tau)
         {
             float ksi = eta * tau;
-            return (float)Math.Exp(-a * ksi * ksi);
+            return Maths.Exp(-a * ksi * ksi);
         }
         /// <summary>
         /// Returns the value of the kernel distribution function.

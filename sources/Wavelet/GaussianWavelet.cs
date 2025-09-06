@@ -1,4 +1,5 @@
 ﻿using System;
+using UMapx.Core;
 
 namespace UMapx.Wavelet
 {
@@ -55,7 +56,7 @@ namespace UMapx.Wavelet
         public float Wavelet(float x)
         {
             float x2 = x * x;
-            float f0 = (float)Math.Pow(2.0 / Math.PI, 0.25) * (float)Math.Exp(-x2);
+            float f0 = Maths.Pow(2.0f / Maths.Pi, 0.25f) * Maths.Exp(-x2);
             float psi = 0;
 
             // Gaussian wavelet ('):
@@ -66,31 +67,31 @@ namespace UMapx.Wavelet
                     break;
 
                 case 2:
-                    psi = 2.0f / (float)Math.Pow(3, 0.5) * (-1.0f + 2 * x2) * f0;
+                    psi = 2.0f / Maths.Pow(3, 0.5f) * (-1.0f + 2 * x2) * f0;
                     break;
 
                 case 3:
-                    psi = 4.0f / (float)Math.Pow(15, 0.5) * x * (3 - 2 * x2) * f0;
+                    psi = 4.0f / Maths.Pow(15, 0.5f) * x * (3 - 2 * x2) * f0;
                     break;
 
                 case 4:
-                    psi = 4.0f / (float)Math.Pow(105, 0.5) * (3 - 12 * x2 + 4 * x2 * x2) * f0;
+                    psi = 4.0f / Maths.Pow(105, 0.5f) * (3 - 12 * x2 + 4 * x2 * x2) * f0;
                     break;
 
                 case 5:
-                    psi = 8.0f / (3 * (float)Math.Pow(105, 0.5)) * x * (-15 + 20 * x2 - 4 * x2 * x2) * f0;
+                    psi = 8.0f / (3 * Maths.Pow(105, 0.5f)) * x * (-15 + 20 * x2 - 4 * x2 * x2) * f0;
                     break;
 
                 case 6:
-                    psi = 8.0f / (3 * (float)Math.Pow(1155, 0.5)) * (-15 + 90 * x2 - 60 * x2 * x2 + 8 * (float)Math.Pow(x2, 3)) * f0;
+                    psi = 8.0f / (3 * Maths.Pow(1155, 0.5f)) * (-15 + 90 * x2 - 60 * x2 * x2 + 8 * Maths.Pow(x2, 3)) * f0;
                     break;
 
                 case 7:
-                    psi = 16.0f / (3 * (float)Math.Pow(15015, 0.5)) * x * (105 - 210 * x2 + 84 * x2 * x2 - 8 * (float)Math.Pow(x2, 3)) * f0;
+                    psi = 16.0f / (3 * Maths.Pow(15015, 0.5f)) * x * (105 - 210 * x2 + 84 * x2 * x2 - 8 * Maths.Pow(x2, 3)) * f0;
                     break;
 
                 case 8:
-                    psi = 16.0f / (45 * (float)Math.Pow(1001, 0.5)) * (105 - 840 * x2 + 840 * x2 * x2 - 224 * (float)Math.Pow(x2, 3) + 16 * (float)Math.Pow(x2, 4)) * f0;
+                    psi = 16.0f / (45 * Maths.Pow(1001, 0.5f)) * (105 - 840 * x2 + 840 * x2 * x2 - 224 * Maths.Pow(x2, 3) + 16 * Maths.Pow(x2, 4)) * f0;
                     break;
             }
 

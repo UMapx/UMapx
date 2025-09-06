@@ -150,8 +150,8 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            float a = (float)Math.Sqrt(x);
-            float b = (float)Math.Sqrt(1.0 / x);
+            float a = Maths.Sqrt(x);
+            float b = Maths.Sqrt(1.0f / x);
             float z = (a - b) / gamma;
 
             // Normal cumulative distribution function
@@ -166,8 +166,8 @@ namespace UMapx.Distribution
         {
             float c = x - mu;
 
-            float a = (float)Math.Sqrt(c / beta);
-            float b = (float)Math.Sqrt(beta / c);
+            float a = Maths.Sqrt(c / beta);
+            float b = Maths.Sqrt(beta / c);
 
             float alpha = (a + b) / (2 * gamma * c);
             float z = (a - b) / gamma;

@@ -124,7 +124,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return 2 / (float)Math.Sqrt(k);
+                return 2 / Maths.Sqrt(k);
             }
         }
         /// <summary>
@@ -148,7 +148,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return (float)Math.Pow(x, k - 1) * (float)Math.Exp(-x / thetta) / (Special.Gamma(k) * (float)Math.Pow(thetta, k));
+            return Maths.Pow(x, k - 1) * Maths.Exp(-x / thetta) / (Special.Gamma(k) * Maths.Pow(thetta, k));
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -171,7 +171,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return k * thetta + (1 - k) * (float)Math.Log(thetta) + Special.LogGamma(k); // + (1 - k) * Special.Ksi(k);
+                return k * thetta + (1 - k) * Maths.Log(thetta) + Special.LogGamma(k); // + (1 - k) * Special.Ksi(k);
             }
         }
         #endregion

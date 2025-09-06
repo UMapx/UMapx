@@ -108,7 +108,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Texturer Wood(int m, int l, double rings = 12)
         {
-            PerlinNoise noise = new PerlinNoise(8, 0.5, 1.0 / 32, 0.05); r = rand.Next(5000);
+            PerlinNoise noise = new PerlinNoise(8, 0.5f, 1.0f / 32, 0.05f); r = rand.Next(5000);
             float[,] texture = new float[m, l];
             int w2 = l / 2, h2 = m / 2;
 
@@ -122,7 +122,7 @@ namespace UMapx.Imaging
                     xv = (float)(x - w2) / l;
                     yv = (float)(y - h2) / m;
 
-                    texture[y, x] = Math.Min(1.0f, (float)Math.Abs(Math.Sin((Math.Sqrt(xv * xv + yv * yv) + noise.Function2D(x + r, y + r)) * Math.PI * 2 * rings)));
+                    texture[y, x] = Math.Min(1.0f, Maths.Abs(Math.Sin((Math.Sqrt(xv * xv + yv * yv) + noise.Function2D(x + r, y + r)) * Math.PI * 2 * rings)));
                 }
             }
             );
@@ -137,7 +137,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Texturer Textile(int m, int l)
         {
-            PerlinNoise noise = new PerlinNoise(3, 0.65, 1.0 / 8, 1.0); r = rand.Next(5000);
+            PerlinNoise noise = new PerlinNoise(3, 0.65f, 1.0f / 8, 1.0f); r = rand.Next(5000);
             float[,] texture = new float[m, l];
 
             Parallel.For(0, m, y =>
@@ -146,8 +146,8 @@ namespace UMapx.Imaging
                 for (x = 0; x < l; x++)
                 {
                     texture[y, x] = Math.Max(0.0f, Math.Min(1.0f, (
-                                (float)Math.Sin(x + noise.Function2D(x + r, y + r)) +
-                                (float)Math.Sin(y + noise.Function2D(x + r, y + r))) * 0.25f + 0.5f));
+                                Maths.Sin(x + noise.Function2D(x + r, y + r)) +
+                                Maths.Sin(y + noise.Function2D(x + r, y + r))) * 0.25f + 0.5f));
                 }
             }
             );
@@ -164,7 +164,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Texturer Marble(int m, int l, float yPeriod = 10.0f, float xPeriod = 5.0f)
         {
-            PerlinNoise noise = new PerlinNoise(2, 0.65, 1.0 / 32, 1.0); r = rand.Next(5000);
+            PerlinNoise noise = new PerlinNoise(2, 0.65f, 1.0f / 32, 1.0f); r = rand.Next(5000);
             float[,] texture = new float[m, l];
             float xFact = xPeriod / l;
             float yFact = yPeriod / m;
@@ -175,7 +175,7 @@ namespace UMapx.Imaging
 
                 for (x = 0; x < l; x++)
                 {
-                    texture[y, x] = Math.Min(1.0f, (float)Math.Abs(Math.Sin((x * xFact + y * yFact + noise.Function2D(x + r, y + r)) * Math.PI)));
+                    texture[y, x] = Math.Min(1.0f, Maths.Abs(Math.Sin((x * xFact + y * yFact + noise.Function2D(x + r, y + r)) * Math.PI)));
                 }
             }
             );
@@ -190,7 +190,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Texturer Labyrinth(int m, int l)
         {
-            PerlinNoise noise = new PerlinNoise(1, 0.65, 1.0 / 16, 1.0); r = rand.Next(5000);
+            PerlinNoise noise = new PerlinNoise(1, 0.65f, 1.0f / 16, 1.0f); r = rand.Next(5000);
             float[,] texture = new float[m, l];
 
             Parallel.For(0, m, y =>
@@ -199,7 +199,7 @@ namespace UMapx.Imaging
 
                 for (x = 0; x < l; x++)
                 {
-                    texture[y, x] = Math.Min(1.0f, (float)Math.Abs(noise.Function2D(x + r, y + r)));
+                    texture[y, x] = Math.Min(1.0f, Maths.Abs(noise.Function2D(x + r, y + r)));
 
                 }
             }
@@ -215,7 +215,7 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public static Texturer Clouds(int m, int l)
         {
-            PerlinNoise noise = new PerlinNoise(8, 0.5, 1.0 / 32, 1.0); r = rand.Next(5000);
+            PerlinNoise noise = new PerlinNoise(8, 0.5f, 1.0f / 32, 1.0f); r = rand.Next(5000);
             float[,] texture = new float[m, l];
 
             Parallel.For(0, m, y =>

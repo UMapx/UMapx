@@ -227,7 +227,7 @@ namespace UMapx.Decomposition
                     r += b[i][l] * b[i][l];
                 }
 
-                r = Sign((float)Math.Sqrt(r), b[l][l]);
+                r = Sign(Maths.Sqrt(r), b[l][l]);
                 b[l][l] += r;
                 rho = r * b[l][l];
 
@@ -274,7 +274,7 @@ namespace UMapx.Decomposition
                     if (s == 0.0) continue;
                     u1 = a[l][k] / s;
                     u2 = a[l1][k] / s;
-                    r = Sign((float)Math.Sqrt(u1 * u1 + u2 * u2), u1);
+                    r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2), u1);
                     v1 = -(u1 + r) / r;
                     v2 = -u2 / r;
                     u2 = v2 / v1;
@@ -301,7 +301,7 @@ namespace UMapx.Decomposition
                     if (s == 0.0) continue;
                     u1 = b[l1][l1] / s;
                     u2 = b[l1][l] / s;
-                    r = Sign((float)Math.Sqrt(u1 * u1 + u2 * u2), u1);
+                    r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2), u1);
                     v1 = -(u1 + r) / r;
                     v2 = -u2 / r;
                     u2 = v2 / v1;
@@ -469,7 +469,7 @@ namespace UMapx.Decomposition
             s = (Math.Abs(a[l][l]) + Math.Abs(a[l1][l]));
             u1 = a[l][l] / s;
             u2 = a[l1][l] / s;
-            r = Sign((float)Math.Sqrt(u1 * u1 + u2 * u2), u1);
+            r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2), u1);
             v1 = -(u1 + r) / r;
             v2 = -u2 / r;
             u2 = v2 / v1;
@@ -519,7 +519,7 @@ namespace UMapx.Decomposition
 
             // Determine single shift zero-th column of a
             ish = 1;
-            r = (float)Math.Sqrt(r);
+            r = Maths.Sqrt(r);
             sh = -t + r;
             s = -t - r;
             if (Math.Abs(s - a44) < Math.Abs(sh - a44))
@@ -595,7 +595,7 @@ namespace UMapx.Decomposition
                 if (s == 0.0) goto L70;
                 u1 = a1 / s;
                 u2 = a2 / s;
-                r = Sign((float)Math.Sqrt(u1 * u1 + u2 * u2), u1);
+                r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2), u1);
                 v1 = -(u1 + r) / r;
                 v2 = -u2 / r;
                 u2 = v2 / v1;
@@ -628,7 +628,7 @@ namespace UMapx.Decomposition
                 u1 = a1 / s;
                 u2 = a2 / s;
                 u3 = a3 / s;
-                r = Sign((float)Math.Sqrt(u1 * u1 + u2 * u2 + u3 * u3), u1);
+                r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2 + u3 * u3), u1);
                 v1 = -(u1 + r) / r;
                 v2 = -u2 / r;
                 v3 = -u3 / r;
@@ -659,7 +659,7 @@ namespace UMapx.Decomposition
                 u1 = b[k2][k2] / s;
                 u2 = b[k2][k1] / s;
                 u3 = b[k2][k] / s;
-                r = Sign((float)Math.Sqrt(u1 * u1 + u2 * u2 + u3 * u3), u1);
+                r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2 + u3 * u3), u1);
                 v1 = -(u1 + r) / r;
                 v2 = -u2 / r;
                 v3 = -u3 / r;
@@ -699,7 +699,7 @@ namespace UMapx.Decomposition
                 if (s == 0.0) goto L260;
                 u1 = b[k1][k1] / s;
                 u2 = b[k1][k] / s;
-                r = Sign((float)Math.Sqrt(u1 * u1 + u2 * u2), u1);
+                r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2), u1);
                 v1 = -(u1 + r) / r;
                 v2 = -u2 / r;
                 u2 = v2 / v1;
@@ -847,7 +847,7 @@ namespace UMapx.Decomposition
                 if (d < 0.0) goto L480;
 
                 // Two real roots. Zero both a(en,na) and b(en,na)
-                e += c + Sign((float)Math.Sqrt(d), c);
+                e += c + Sign(Maths.Sqrt(d), c);
                 a11 -= e * b11;
                 a12 -= e * b12;
                 a22 -= e * b22;
@@ -868,7 +868,7 @@ namespace UMapx.Decomposition
                 s = Math.Abs(a1) + Math.Abs(a2);
                 u1 = a1 / s;
                 u2 = a2 / s;
-                r = Sign((float)Math.Sqrt(u1 * u1 + u2 * u2), u1);
+                r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2), u1);
                 v1 = -(u1 + r) / r;
                 v2 = -u2 / r;
                 u2 = v2 / v1;
@@ -910,7 +910,7 @@ namespace UMapx.Decomposition
                 if (s == 0.0) goto L475;
                 u1 = a1 / s;
                 u2 = a2 / s;
-                r = Sign((float)Math.Sqrt(u1 * u1 + u2 * u2), u1);
+                r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2), u1);
                 v1 = -(u1 + r) / r;
                 v2 = -u2 / r;
                 u2 = v2 / v1;
@@ -947,7 +947,7 @@ namespace UMapx.Decomposition
             // Two complex roots
             L480:
                 e += c;
-                ei = (float)Math.Sqrt(-d);
+                ei = Maths.Sqrt(-d);
                 a11r = a11 - e * b11;
                 a11i = ei * b11;
                 a12r = a12 - e * b12;
@@ -975,11 +975,11 @@ namespace UMapx.Decomposition
 
             // Choose complex z
             L485:
-                cz = (float)Math.Sqrt(a1 * a1 + a1i * a1i);
+                cz = Maths.Sqrt(a1 * a1 + a1i * a1i);
                 if (cz == 0.0) goto L487;
                 szr = (a1 * a2 + a1i * a2i) / cz;
                 szi = (a1 * a2i - a1i * a2) / cz;
-                r = (float)Math.Sqrt(cz * cz + szr * szr + szi * szi);
+                r = Maths.Sqrt(cz * cz + szr * szr + szi * szi);
                 cz /= r;
                 szr /= r;
                 szi /= r;
@@ -1005,11 +1005,11 @@ namespace UMapx.Decomposition
 
             // Choose complex q
             L495:
-                cq = (float)Math.Sqrt(a1 * a1 + a1i * a1i);
+                cq = Maths.Sqrt(a1 * a1 + a1i * a1i);
                 if (cq == 0.0) goto L497;
                 sqr = (a1 * a2 + a1i * a2i) / cq;
                 sqi = (a1 * a2i - a1i * a2) / cq;
-                r = (float)Math.Sqrt(cq * cq + sqr * sqr + sqi * sqi);
+                r = Maths.Sqrt(cq * cq + sqr * sqr + sqi * sqi);
                 cq /= r;
                 sqr /= r;
                 sqi /= r;
@@ -1044,7 +1044,7 @@ namespace UMapx.Decomposition
                 if (t < 0.0)
                     j = en;
 
-                r = (float)Math.Sqrt(dr * dr + di * di);
+                r = Maths.Sqrt(dr * dr + di * di);
                 beta[j] = bn * r;
                 alfr[j] = an * (tr * dr + ti * di) / r;
                 alfi[j] = an * t / r;
@@ -1334,7 +1334,7 @@ namespace UMapx.Decomposition
                         // Computing 2nd power
                         float u1 = z[i][j - 1] / r;
                         float u2 = z[i][j] / r;
-                        r *= (float)Math.Sqrt(u1 * u1 + u2 * u2);
+                        r *= Maths.Sqrt(u1 * u1 + u2 * u2);
                     }
                     if (r > d)
                         d = r;

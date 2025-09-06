@@ -1,4 +1,5 @@
 ﻿using System;
+using UMapx.Core;
 
 namespace UMapx.Wavelet
 {
@@ -32,7 +33,7 @@ namespace UMapx.Wavelet
         public float Wavelet(float x)
         {
             float x2 = x * x;
-            return (float)Math.Exp(-x2 / 2) * (float)Math.Cos(5 * x);
+            return Maths.Exp(-x2 / 2) * Maths.Cos(5 * x);
         }
         #endregion
     }

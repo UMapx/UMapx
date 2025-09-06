@@ -1,4 +1,5 @@
 ﻿using System;
+using UMapx.Core;
 
 namespace UMapx.Colorspace
 {
@@ -191,20 +192,20 @@ namespace UMapx.Colorspace
         public static XYZ FromRGB(int red, int green, int blue)
         {
             // normalize red, green, blue values
-            float rLinear = (float)red / 255.0f;
-            float gLinear = (float)green / 255.0f;
-            float bLinear = (float)blue / 255.0f;
+            float rLinear = red / 255.0f;
+            float gLinear = green / 255.0f;
+            float bLinear = blue / 255.0f;
 
             // convert to a sRGB form
-            float r = (rLinear > 0.04045) ? (float)Math.Pow((rLinear + 0.055) / (1 + 0.055), 2.2) : (float)(rLinear / 12.92);
-            float g = (gLinear > 0.04045) ? (float)Math.Pow((gLinear + 0.055) / (1 + 0.055), 2.2) : (float)(gLinear / 12.92);
-            float b = (bLinear > 0.04045) ? (float)Math.Pow((bLinear + 0.055) / (1 + 0.055), 2.2) : (float)(bLinear / 12.92);
+            float r = (rLinear > 0.04045) ? Maths.Pow((rLinear + 0.055f) / (1 + 0.055f), 2.2f) : (float)(rLinear / 12.92f);
+            float g = (gLinear > 0.04045) ? Maths.Pow((gLinear + 0.055f) / (1 + 0.055f), 2.2f) : (float)(gLinear / 12.92f);
+            float b = (bLinear > 0.04045) ? Maths.Pow((bLinear + 0.055f) / (1 + 0.055f), 2.2f) : (float)(bLinear / 12.92f);
 
             // converts
             return new XYZ(
-                (float)(r * 0.4124 + g * 0.3576 + b * 0.1805),
-                (float)(r * 0.2126 + g * 0.7152 + b * 0.0722),
-                (float)(r * 0.0193 + g * 0.1192 + b * 0.9505)
+                (float)(r * 0.4124f + g * 0.3576f + b * 0.1805f),
+                (float)(r * 0.2126f + g * 0.7152f + b * 0.0722f),
+                (float)(r * 0.0193f + g * 0.1192f + b * 0.9505f)
                 );
         }
         /// <summary>
@@ -226,7 +227,7 @@ namespace UMapx.Colorspace
         /// <returns>Transformed value</returns>
         private static float Fxyz(float t)
         {
-            return ((t > 0.008856) ? (float)Math.Pow(t, (1.0 / 3.0)) : (float)(7.787 * t + 16.0 / 116.0));
+            return (t > 0.008856) ? Maths.Pow(t, 1.0f / 3.0f) : (7.787f * t + 16.0f / 116.0f);
         }
         #endregion
 
@@ -247,7 +248,7 @@ namespace UMapx.Colorspace
 
                 for (int i = 0; i < 3; i++)
                 {
-                    linear[i] = (linear[i] <= 0.0031308) ? 12.92f * linear[i] : (1 + 0.055f) * (float)Math.Pow(linear[i], pow) - 0.055f;
+                    linear[i] = (linear[i] <= 0.0031308) ? 12.92f * linear[i] : (1 + 0.055f) * Maths.Pow(linear[i], pow) - 0.055f;
                 }
 
                 return new RGB(

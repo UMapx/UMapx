@@ -86,7 +86,7 @@ namespace UMapx.Distribution
                 if (eta >= 1)
                     return 0;
 
-                return (1 / b) * (float)Math.Log(1 / eta);
+                return (1 / b) * Maths.Log(1 / eta);
             }
         }
         /// <summary>
@@ -96,7 +96,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (1.0f / b) * (float)Math.Log((-1 / eta) * (float)Math.Log(0.5) + 1);
+                return (1.0f / b) * Maths.Log((-1 / eta) * Maths.Log(0.5f) + 1);
             }
         }
         /// <summary>
@@ -139,8 +139,8 @@ namespace UMapx.Distribution
                 return 0;
             }
 
-            float ebx = (float)Math.Exp(b * x);
-            return 1.0f - (float)Math.Exp(-eta * (ebx - 1.0));
+            float ebx = Maths.Exp(b * x);
+            return 1.0f - Maths.Exp(-eta * (ebx - 1.0f));
         }
         /// <summary>
         /// Returns the value of the probability density function.
@@ -154,9 +154,9 @@ namespace UMapx.Distribution
                 return 0;
             }
 
-            float a1 = b * eta * (float)Math.Exp(eta);
-            float a2 = (float)Math.Exp(b * x);
-            float a3 = (float)Math.Exp(-eta * Math.Exp(b * x));
+            float a1 = b * eta * Maths.Exp(eta);
+            float a2 = Maths.Exp(b * x);
+            float a3 = Maths.Exp(-eta * Maths.Exp(b * x));
             return a1 * a2 * a3;
         }
         #endregion

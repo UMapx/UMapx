@@ -21,10 +21,10 @@ namespace UMapx.Core
 
             for (int k = 0; k < n; k++)
             {
-                sum += (float)Math.Pow(p[k] - q[k], 2);
+                sum += Maths.Pow(p[k] - q[k], 2);
             }
 
-            return (float)Math.Sqrt(sum);
+            return Maths.Sqrt(sum);
         }
         /// <summary>
         /// Returns distance value. 
@@ -317,10 +317,10 @@ namespace UMapx.Core
                 y += q[i] * q[i];
             }
 
-            float den = (float)Math.Sqrt(x) * (float)Math.Sqrt(y);
+            float den = Maths.Sqrt(x) * Maths.Sqrt(y);
             float similarity = s == 0 ? 1.0f : 1.0f - (s / den);
 
-            return (float)Math.Acos(similarity);
+            return Maths.Acos(similarity);
         }
         /// <summary>
         /// Returns distance value. 
@@ -1024,9 +1024,9 @@ namespace UMapx.Core
 
             for (int i = 0; i < n; i++)
             {
-                sum += (float)Math.Pow(Math.Abs(p[i] - q[i]), order);
+                sum += Maths.Pow(Math.Abs(p[i] - q[i]), order);
             }
-            return (float)Math.Pow(sum, 1 / order);
+            return Maths.Pow(sum, 1 / order);
         }
         /// <summary>
         /// Returns distance value. 

@@ -123,7 +123,7 @@ namespace UMapx.Distribution
             if (x <= -r || x >= r) return 0f;
 
             float r2 = r * r, x2 = x * x;
-            float a = (float)Math.Sqrt(r2 - x2);
+            float a = Maths.Sqrt(r2 - x2);
             float b = 2 / (float)(Math.PI * r2);
             return b * a;
         }
@@ -138,9 +138,9 @@ namespace UMapx.Distribution
             if (x >= r) return 1f;
 
             float r2 = r * r, x2 = x * x;
-            float a = (float)Math.Sqrt(r2 - x2);
+            float a = Maths.Sqrt(r2 - x2);
             float b = x / (Maths.Pi * r2);
-            float c = (float)Math.Asin(x / r) / Maths.Pi;
+            float c = Maths.Asin(x / r) / Maths.Pi;
             return 0.5f + b * a + c;
         }
         /// <summary>

@@ -135,8 +135,8 @@ namespace UMapx.Distribution
                 if (d2 > 6)
                 {
                     float v1 = 2 * d1 + d2 - 2;
-                    float v2 = (float)Math.Sqrt(8 * (d2 - 4));
-                    float v3 = (float)Math.Sqrt(d1 * (d1 + d2 - 2));
+                    float v2 = Maths.Sqrt(8 * (d2 - 4));
+                    float v3 = Maths.Sqrt(d1 * (d1 + d2 - 2));
                     float v4 = d2 - 6;
                     return v1 * v2 / (v3 * v4);
                 }
@@ -187,9 +187,9 @@ namespace UMapx.Distribution
             if (x <= 0)
                 return 0;
 
-            float u = (float)Math.Pow(d1 * x, d1) * (float)Math.Pow(d2, d2) /
-                (float)Math.Pow(d1 * x + d2, d1 + d2);
-            return (float)Math.Sqrt(u) / (x * b);
+            float u = Maths.Pow(d1 * x, d1) * Maths.Pow(d2, d2) /
+                Maths.Pow(d1 * x + d2, d1 + d2);
+            return Maths.Sqrt(u) / (x * b);
         }
         #endregion
     }

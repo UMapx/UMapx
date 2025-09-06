@@ -38,7 +38,7 @@ namespace UMapx.Core
         {
             get
             {
-                return (float)Math.Sqrt(Real * Real + Imag * Imag);
+                return Maths.Sqrt(Real * Real + Imag * Imag);
             }
         }
         /// <summary>
@@ -457,8 +457,8 @@ namespace UMapx.Core
         public static Complex32 FromPolarCoordinates(float magnitude, float phase)
         {
             return new Complex32(
-                magnitude * (float)Math.Cos(phase),
-                magnitude * (float)Math.Sin(phase)
+                magnitude * Maths.Cos(phase),
+                magnitude * Maths.Sin(phase)
             );
         }
 

@@ -84,7 +84,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (float)Math.Floor(l);
+                return Maths.Floor(l);
             }
         }
         /// <summary>
@@ -94,7 +94,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (float)Math.Floor(l + 0.333 - 0.02 / l);
+                return Maths.Floor(l + 0.333f - 0.02f / l);
             }
         }
         /// <summary>
@@ -104,7 +104,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (float)Math.Pow(l, -0.5);
+                return Maths.Pow(l, -0.5f);
             }
         }
         /// <summary>
@@ -114,7 +114,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (float)Math.Pow(l, -1.0);
+                return Maths.Pow(l, -1.0f);
             }
         }
         /// <summary>
@@ -128,7 +128,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return (float)Math.Exp(-l) * (float)Math.Pow(l, x) / (float)Special.Factorial(x);
+            return Maths.Exp(-l) * Maths.Pow(l, x) / (float)Special.Factorial(x);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -151,7 +151,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return l * (1 - (float)Math.Log(l)) + (float)Math.Exp(-l) * Row(l);
+                return l * (1 - Maths.Log(l)) + Maths.Exp(-l) * Row(l);
             }
         }
         /// <summary>
@@ -168,7 +168,7 @@ namespace UMapx.Distribution
             for (k = 0; k < n; k++)
             {
                 fac = (float)Special.Factorial(k);
-                sum += (float)Math.Pow(l, k) * (float)Math.Log(fac) / fac;
+                sum += Maths.Pow(l, k) * Maths.Log(fac) / fac;
             }
 
             return sum;

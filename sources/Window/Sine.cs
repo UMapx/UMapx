@@ -26,7 +26,7 @@ namespace UMapx.Window
         /// <returns>Value</returns>
         public override float Function(float x, int frameSize)
         {
-            return (float)Math.Sin(Math.PI * x / (frameSize - 1));
+            return Maths.Sin(Maths.Pi * x / (frameSize - 1));
         }
         /// <summary>
         /// Returns the window function.
@@ -50,7 +50,7 @@ namespace UMapx.Window
         /// <returns>Value</returns>
         internal static float Sinefunc(float x, int frameSize)
         {
-            return (float)Math.Sin(Math.PI * x / (frameSize - 1));
+            return Maths.Sin(Maths.Pi * x / (frameSize - 1));
         }
         #endregion
     }

@@ -104,7 +104,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (float)Math.Sqrt(8.0 / k);
+                return Maths.Sqrt(8.0f / k);
             }
         }
         /// <summary>
@@ -125,7 +125,7 @@ namespace UMapx.Distribution
             get
             {
                 float k2 = k / 2.0f;
-                float s1 = (float)Math.Log(2.0 * Special.Gamma(k2));
+                float s1 = Maths.Log(2.0f * Special.Gamma(k2));
                 float s2 = (1.0f - k2) * Special.DiGamma(k2);
                 return k2 + s1 + s2;
             }

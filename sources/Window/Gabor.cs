@@ -51,8 +51,8 @@ namespace UMapx.Window
         {
             // Gabor window function
             float y = x / frameSize;
-            float z = (float)Math.Pow(2 * Math.PI * y / sigma, 2);
-            return (float)Math.Exp(-z);
+            float z = Maths.Pow(2 * Maths.Pi * y / sigma, 2);
+            return Maths.Exp(-z);
         }
         /// <summary>
         /// Returns the window function.

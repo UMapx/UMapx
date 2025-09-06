@@ -31,7 +31,7 @@ namespace UMapx.Wavelet
         public float Wavelet(float x)
         {
             float t = x / 2;
-            return Special.Sinc(t) * (float)Math.Cos(3 * Math.PI * t);
+            return Special.Sinc(t) * Maths.Cos(3 * Maths.Pi * t);
         }
         #endregion
     }

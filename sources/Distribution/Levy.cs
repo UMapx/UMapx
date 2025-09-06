@@ -125,7 +125,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (1.0f + 3.0f * Maths.Gamma + (float)Math.Log(16 * Math.PI * scale * scale)) / 2.0f;
+                return (1.0f + 3.0f * Maths.Gamma + Maths.Log(16 * Maths.Pi * scale * scale)) / 2.0f;
             }
         }
         /// <summary>
@@ -140,7 +140,7 @@ namespace UMapx.Distribution
                 return 0;
             }
 
-            return Special.Erfc((float)Math.Sqrt(scale / (2 * (x - mu))));
+            return Special.Erfc(Maths.Sqrt(scale / (2 * (x - mu))));
         }
         /// <summary>
         /// Returns the value of the probability density function.
@@ -154,9 +154,9 @@ namespace UMapx.Distribution
                 return 0;
             }
             float z = x - mu;
-            float a = (float)Math.Sqrt(scale / (2.0 * Math.PI));
-            float b = (float)Math.Exp(-(scale / (2 * z)));
-            float c = (float)Math.Pow(z, 3.0 / 2.0);
+            float a = Maths.Sqrt(scale / (2.0f * Maths.Pi));
+            float b = Maths.Exp(-(scale / (2 * z)));
+            float c = Maths.Pow(z, 3.0f / 2.0f);
 
             return a * b / c;
         }

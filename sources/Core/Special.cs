@@ -277,7 +277,7 @@ namespace UMapx.Core
             if (ax == 0)
                 return 1;
 
-            return (float)Math.Sin(ax) / ax;
+            return Maths.Sin(ax) / ax;
         }
         /// <summary>
         /// Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
@@ -364,7 +364,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Rademacher(float t, int n)
         {
-            float p = (float)Math.Pow(2, n);
+            float p = Maths.Pow(2, n);
             float v = p * Maths.Pi * t;
             return Math.Sign(Math.Sin(v));
         }
@@ -376,7 +376,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Rademacher(Complex32 z, int n)
         {
-            float p = (float)Math.Pow(2.0, n);
+            float p = Maths.Pow(2.0f, n);
             Complex32 v = new Complex32(p * Maths.Pi, 0f) * z;
             Complex32 s = Maths.Sin(v);
 
@@ -447,7 +447,7 @@ namespace UMapx.Core
             float x = -c * t;
             float y = -b * Maths.E;
             float z = a * Maths.E;
-            return (float)Math.Pow(z, Math.Pow(y, x));
+            return Maths.Pow(z, Maths.Pow(y, x));
         }
         /// <summary>
         /// Gets the value of the Gompertz function.
@@ -475,10 +475,10 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Dirac(float x, float a)
         {
-            float s = (float)Math.Sqrt(Math.PI);
+            float s = Maths.Sqrt(Maths.Pi);
             float b = 1.0f / Math.Abs(a) / s;
-            float c = (float)Math.Pow(x / a, 2);
-            float e = (float)Math.Exp(-c);
+            float c = Maths.Pow(x / a, 2);
+            float e = Maths.Exp(-c);
             return b * e;
         }
         /// <summary>
@@ -825,7 +825,7 @@ namespace UMapx.Core
         {
             // The 2nd-order super-root, square super-root, or super square root has notation ssqrt(x).
             // It can be represented with the Lambert W-function: ssqrt(x) = log(x) / W{ log(x) }.
-            float log = (float)Math.Log(x);
+            float log = Maths.Log(x);
             return log / LambertW(log, k);
         }
         /// <summary>
@@ -1063,7 +1063,7 @@ namespace UMapx.Core
         {
             if (float.IsNaN(h) || float.IsNaN(a)) return float.NaN;
             if (a == 0f) return 0f;
-            if (h == 0f) return INV_2PI * (float)Math.Atan(a);
+            if (h == 0f) return INV_2PI * Maths.Atan(a);
 
             float sign = a >= 0f ? 1f : -1f;
             float L = Math.Abs(a);
@@ -1074,7 +1074,7 @@ namespace UMapx.Core
             float f(float t)
             {
                 float t2 = t * t;
-                return (float)Math.Exp(-0.5f * h * h * (1f + t2)) / (1f + t2);
+                return Maths.Exp(-0.5f * h * h * (1f + t2)) / (1f + t2);
             }
 
             float sum = f(0f) + f(L);
@@ -2593,7 +2593,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Faddeeva(float x)
         {
-            float re = (float)Math.Exp(-(double)x * x);
+            float re = Maths.Exp(-x * x);
             float im = (float)(2.0 / Math.Sqrt(Math.PI)) * Special.Dawson(x, true);
             return new Complex32(re, im);
         }
@@ -4099,7 +4099,7 @@ namespace UMapx.Core
             float r = 2.2360679774997896964f;
             float phi = (1.0f + r) / 2.0f;
             float psi = (1.0f - r) / 2.0f;
-            float num = (float)Math.Pow(phi, n) - (float)Math.Pow(psi, n);
+            float num = Maths.Pow(phi, n) - Maths.Pow(psi, n);
             return (int)(num / r);
         }
         /// <summary>
@@ -4112,7 +4112,7 @@ namespace UMapx.Core
             float r = 2.2360679774997896964f;
             float phi = (1.0f + r) / 2.0f;
             float psi = (1.0f - r) / 2.0f;
-            float num = (float)Math.Pow(phi, n) + (float)Math.Pow(psi, n);
+            float num = Maths.Pow(phi, n) + Maths.Pow(psi, n);
             return (int)(num);
         }
         #endregion
@@ -4138,7 +4138,7 @@ namespace UMapx.Core
             float sum = 0;
             for (int i = 0; i < n; i++)
             {
-                sum += (float)Math.Pow(i + 1, -m);
+                sum += Maths.Pow(i + 1, -m);
             }
 
             return sum;

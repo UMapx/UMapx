@@ -29,7 +29,7 @@ namespace UMapx.Distribution
         public UQuadratic(float a, float b)
         {
             A = a; B = b;
-            this.alpha = 12 / (float)Math.Pow(b - a, 3);
+            this.alpha = 12 / Maths.Pow(b - a, 3);
             this.beta = (b + a) / 2;
         }
         /// <summary>
@@ -95,7 +95,7 @@ namespace UMapx.Distribution
         /// </summary>
         public float Variance
         {
-            get { return (3.0f / 20.0f) * (float)Math.Pow(b - a, 2.0); }
+            get { return (3.0f / 20.0f) * Maths.Pow(b - a, 2.0f); }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
@@ -114,7 +114,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return 3.0f / 112.0f * (float)Math.Pow(b - a, 4.0);
+                return 3.0f / 112.0f * Maths.Pow(b - a, 4.0f);
             }
         }
         /// <summary>
@@ -144,7 +144,7 @@ namespace UMapx.Distribution
             if (x > b)
                 return 1;
 
-            return (alpha / 3) * (float)(Math.Pow(x - beta, 3) + (float)Math.Pow(beta - a, 3));
+            return (alpha / 3) * (float)(Math.Pow(x - beta, 3) + Maths.Pow(beta - a, 3));
         }
         /// <summary>
         /// Returns the value of the probability density function.
@@ -159,7 +159,7 @@ namespace UMapx.Distribution
             if (x > b)
                 return 0;
 
-            return alpha * (float)Math.Pow(x - beta, 2);
+            return alpha * Maths.Pow(x - beta, 2);
         }
         #endregion
     }

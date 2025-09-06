@@ -48,9 +48,9 @@ namespace UMapx.Distribution
             Mu = mu;
             Omega = omega;
 
-            float twoMuMu = 2.0f * (float)Math.Pow(mu, mu);
+            float twoMuMu = 2.0f * Maths.Pow(mu, mu);
             float gammaMu = Special.Gamma(mu);
-            float spreadMu = (float)Math.Pow(omega, mu);
+            float spreadMu = Maths.Pow(omega, mu);
             nratio = -mu / omega;
             twoMu1 = 2.0f * mu - 1.0f;
 
@@ -107,7 +107,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return Special.Gamma(mu + 0.5f) / Special.Gamma(mu) * (float)Math.Sqrt(omega / mu);
+                return Special.Gamma(mu + 0.5f) / Special.Gamma(mu) * Maths.Sqrt(omega / mu);
             }
         }
         /// <summary>
@@ -119,7 +119,7 @@ namespace UMapx.Distribution
             {
                 float a = Maths.Sqrt2 / 2;
                 float b = ((2 * mu - 1) * omega) / mu;
-                return a * (float)Math.Sqrt(b);
+                return a * Maths.Sqrt(b);
             }
         }
         /// <summary>
@@ -187,7 +187,7 @@ namespace UMapx.Distribution
                 return 0;
             }
 
-            return constant * (float)Math.Pow(x, twoMu1) * (float)Math.Exp(nratio * x * x);
+            return constant * Maths.Pow(x, twoMu1) * Maths.Exp(nratio * x * x);
         }
         #endregion
     }

@@ -149,7 +149,7 @@ namespace UMapx.Decomposition
                         }
 
                         f = Ur[i][i];
-                        g = -Maths.Sign((float)Math.Sqrt(e), f);
+                        g = -Maths.Sign(Maths.Sqrt(e), f);
                         h = f * g - e;
                         Ur[i][i] = f - g;
 
@@ -197,7 +197,7 @@ namespace UMapx.Decomposition
                         }
 
                         f = Ur[i][l];
-                        g = -Maths.Sign((float)Math.Sqrt(e), f);
+                        g = -Maths.Sign(Maths.Sqrt(e), f);
                         h = f * g - e;
                         Ur[i][l] = f - g;
 

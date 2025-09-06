@@ -23,7 +23,7 @@ namespace UMapx.Imaging
             // Single scale retinex modified algorithm
             // by Valery Asiryan
             // 
-            return a * (float)Math.Log(x / xlow, nbase) + b;
+            return a * Maths.Log(x / xlow, nbase) + b;
         }
         /// <summary>
         /// Returns the correction mask.
@@ -141,7 +141,7 @@ namespace UMapx.Imaging
         /// <returns>Value</returns>
         public static float HomomorphicEnhancement(float x, float mu, float a, float b)
         {
-            return (float)Math.Exp(Math.Log(x) - a * Math.Log(mu + b));
+            return Maths.Exp(Maths.Log(x) - a * Maths.Log(mu + b));
         }
         /// <summary>
         /// Returns the correction mask.
@@ -333,7 +333,7 @@ namespace UMapx.Imaging
         /// <returns>Value</returns>
         public static float LogStretch(float x, float mu, float s, float l)
         {
-            return Intensity.LogPow(x, Maths.Range(Intensity.log05 / (float)Math.Log(mu), s, l));
+            return Intensity.LogPow(x, Maths.Range(Intensity.log05 / Maths.Log(mu), s, l));
         }
         /// <summary>
         /// Returns the correction mask.
@@ -370,7 +370,7 @@ namespace UMapx.Imaging
         /// <returns>Value</returns>
         public static float LogPow(float a, float power)
         {
-            return (float)Math.Exp(Math.Log(a) * power);
+            return Maths.Exp(Maths.Log(a) * power);
         }
         #endregion
 
@@ -399,7 +399,7 @@ namespace UMapx.Imaging
         /// <returns>Value</returns>
         public static float Gamma(float x, float g)
         {
-            return (float)Math.Pow(x, g);
+            return Maths.Pow(x, g);
         }
         /// <summary>
         /// Returns the correction mask.
@@ -425,7 +425,7 @@ namespace UMapx.Imaging
         /// <returns>Value</returns>
         public static float Shift(float x, float b)
         {
-            float v = log05 / (float)Math.Log(0.5 - b);
+            float v = log05 / Maths.Log(0.5f - b);
             return LogPow(x, v);
         }
         /// <summary>
@@ -479,7 +479,7 @@ namespace UMapx.Imaging
         public static float Exposure(float x, float average)
         {
             float T = 255.0f / average;
-            return 1 - (float)Math.Exp(-T * x);
+            return 1 - Maths.Exp(-T * x);
         }
         /// <summary>
         /// Returns the correction mask.
@@ -505,7 +505,7 @@ namespace UMapx.Imaging
         /// <returns>Value</returns>
         public static float Sin(float x, float delta)
         {
-            return 0.5f * (float)Math.Sin((3.14 * x) - (3.14 / 2)) + 0.5f + delta;
+            return 0.5f * Maths.Sin((Maths.Pi * x) - (Maths.Pi / 2)) + 0.5f + delta;
         }
         /// <summary>
         /// Returns the correction mask.
@@ -531,7 +531,7 @@ namespace UMapx.Imaging
         /// <returns>Value</returns>
         public static float Cos(float x, float delta)
         {
-            return 0.5f * (float)Math.Cos((3.14 * x) - 3.14) + 0.5f + delta;
+            return 0.5f * Maths.Cos((Maths.Pi * x) - Maths.Pi) + 0.5f + delta;
         }
         /// <summary>
         /// Returns the correction mask.
@@ -559,7 +559,7 @@ namespace UMapx.Imaging
         /// <returns>Value</returns>
         public static float Log(float x, float a, float delta)
         {
-            return (float)Math.Log((1.0 + (x + delta) / 0.5), a);
+            return Maths.Log(1.0f + (x + delta) / 0.5f, a);
         }
         /// <summary>
         /// Returns the correction mask for formula: Y = (X + V).

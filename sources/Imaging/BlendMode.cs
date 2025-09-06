@@ -1,4 +1,5 @@
 ﻿using System;
+using UMapx.Core;
 
 namespace UMapx.Imaging
 {
@@ -198,7 +199,7 @@ namespace UMapx.Imaging
         /// <returns>Value</returns>
         public static float Interpolation(float a, float b)
         {
-            return 0.5f - 0.25f * (float)Math.Cos(Math.PI * a) - 0.25f * (float)Math.Cos(Math.PI * b);
+            return 0.5f - 0.25f * Maths.Cos(Maths.Pi * a) - 0.25f * Maths.Cos(Maths.Pi * b);
         }
         /// <summary>
         /// Implements the function of "soft light" (Adobe Photoshop).
@@ -212,7 +213,7 @@ namespace UMapx.Imaging
             {
                 return 2 * a * b + a * a * (1 - 2 * a);
             }
-            return 2 * a * (1 - b) + (float)Math.Sqrt(a) * (2 * b - 1);
+            return 2 * a * (1 - b) + Maths.Sqrt(a) * (2 * b - 1);
         }
         /// <summary>
         /// Implements the function of "soft light" (Illusions.hu).
@@ -223,8 +224,8 @@ namespace UMapx.Imaging
         public static float Illusions(float a, float b)
         {
             float x = 2 * (0.5f - b);
-            float y = (float)Math.Pow(2, x);
-            return (float)Math.Pow(a, y);
+            float y = Maths.Pow(2, x);
+            return Maths.Pow(a, y);
         }
         /// <summary>
         /// Implements the function of "soft light" (Pegtop).
@@ -261,7 +262,7 @@ namespace UMapx.Imaging
             {
                 return ((16 * a - 12) * a + 4) * a;
             }
-            return (float)Math.Sqrt(a);
+            return Maths.Sqrt(a);
         }
         #endregion
     }

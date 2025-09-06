@@ -121,7 +121,7 @@ namespace UMapx.Distribution
             {
                 float num = (k + 1) * (d + 1);
                 float den = n + 2;
-                return (float)Math.Floor(num / den);
+                return Maths.Floor(num / den);
             }
         }
         /// <summary>
@@ -141,8 +141,8 @@ namespace UMapx.Distribution
         {
             get
             {
-                float k1 = (n - 2 * d) * (float)Math.Pow(n - 1, 0.5) * (n - 2 * k);
-                float k2 = (n * d * (n - d) * (float)Math.Pow(n - k, 0.5) * (n - 2));
+                float k1 = (n - 2 * d) * Maths.Pow(n - 1, 0.5f) * (n - 2 * k);
+                float k2 = (n * d * (n - d) * Maths.Pow(n - k, 0.5f) * (n - 2));
                 return k1 / k2;
             }
         }

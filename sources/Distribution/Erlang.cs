@@ -99,7 +99,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return this.k / (float)Math.Pow(this.lambda, 2.0);
+                return this.k / Maths.Pow(this.lambda, 2.0f);
             }
         }
         /// <summary>
@@ -119,7 +119,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return 2.0f / (float)Math.Sqrt(k);
+                return 2.0f / Maths.Sqrt(k);
             }
         }
         /// <summary>
@@ -140,7 +140,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (1 - k) * Special.DiGamma(k) + (float)Math.Log(Special.Gamma(k) / lambda) + k;
+                return (1 - k) * Special.DiGamma(k) + Maths.Log(Special.Gamma(k) / lambda) + k;
             }
         }
         /// <summary>
@@ -154,7 +154,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return (float)Math.Pow(lambda, k) * (float)Math.Pow(x, k - 1) * (float)Math.Exp(-lambda * x) / (float)Special.Factorial(k - 1);
+            return Maths.Pow(lambda, k) * Maths.Pow(x, k - 1) * Maths.Exp(-lambda * x) / (float)Special.Factorial(k - 1);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.

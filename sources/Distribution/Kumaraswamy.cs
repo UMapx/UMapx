@@ -84,7 +84,7 @@ namespace UMapx.Distribution
             get
             {
                 float alpha = MomentGeneratingFunction(2, a, b);
-                float beta = (float)Math.Pow(MomentGeneratingFunction(1, a, b), 2);
+                float beta = Maths.Pow(MomentGeneratingFunction(1, a, b), 2);
                 return alpha - beta;
             }
         }
@@ -95,7 +95,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (float)Math.Pow(1 - Math.Pow(2, -1 / b), 1 / a);
+                return Maths.Pow(1 - Maths.Pow(2, -1 / b), 1 / a);
             }
         }
         /// <summary>
@@ -110,7 +110,7 @@ namespace UMapx.Distribution
                 {
                     float num = a - 1;
                     float den = a * b - 1;
-                    return (float)Math.Pow(num / den, 1 / a);
+                    return Maths.Pow(num / den, 1 / a);
                 }
 
                 return float.NaN;
@@ -157,8 +157,8 @@ namespace UMapx.Distribution
             if (x < 0)
                 return 0;
 
-            float xa = (float)Math.Pow(x, a);
-            return 1 - (float)Math.Pow(1 - xa, b);
+            float xa = Maths.Pow(x, a);
+            return 1 - Maths.Pow(1 - xa, b);
         }
         /// <summary>
         /// Returns the value of the probability density function.
@@ -173,7 +173,7 @@ namespace UMapx.Distribution
             if (x < 0)
                 return 0;
 
-            return a * b * (float)Math.Pow(x, a - 1) * (float)Math.Pow(1 - Math.Pow(x, a), b - 1);
+            return a * b * Maths.Pow(x, a - 1) * Maths.Pow(1 - Maths.Pow(x, a), b - 1);
         }
         /// <summary>
         /// Returns the n-th raw moment expressed via the Euler Beta function.

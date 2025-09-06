@@ -134,7 +134,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (float)Math.Log(s) + 2;
+                return Maths.Log(s) + 2;
             }
         }
         /// <summary>
@@ -145,7 +145,7 @@ namespace UMapx.Distribution
         public float Distribution(float x)
         {
             float z = (x - mu) / s;
-            return 1.0f / (1 + (float)Math.Exp(-z));
+            return 1.0f / (1 + Maths.Exp(-z));
         }
         /// <summary>
         /// Returns the value of the probability density function.
@@ -155,7 +155,7 @@ namespace UMapx.Distribution
         public float Function(float x)
         {
             float z = (x - mu) / s;
-            float num = (float)Math.Exp(-z);
+            float num = Maths.Exp(-z);
             float a = (1 + num);
             float den = s * a * a;
 

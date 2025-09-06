@@ -27,7 +27,7 @@ namespace UMapx.Distribution
         {
             this.N = n;
             float num = Special.LogGamma((n + 1) / 2.0f);
-            float den = 0.5f * (float)Math.Log(n * Maths.Pi) + Special.LogGamma(n / 2.0f);
+            float den = 0.5f * Maths.Log(n * Maths.Pi) + Special.LogGamma(n / 2.0f);
             this.lambda = num - den;
         }
         /// <summary>
@@ -136,9 +136,9 @@ namespace UMapx.Distribution
                 float a = Special.DiGamma((1 + degrees) / 2.0f);
                 float b = Special.DiGamma(degrees / 2.0f);
                 float c = (degrees + 1) / 2.0f * (a - b);
-                float d = (float)Math.Sqrt(degrees) * Special.Beta(degrees / 2.0f, 0.5f);
+                float d = Maths.Sqrt(degrees) * Special.Beta(degrees / 2.0f, 0.5f);
 
-                return c + (float)Math.Log(d);
+                return c + Maths.Log(d);
             }
         }
         /// <summary>
@@ -149,7 +149,7 @@ namespace UMapx.Distribution
         public float Distribution(float x)
         {
             float v = degrees;
-            float sqrt = (float)Math.Sqrt(x * x + v);
+            float sqrt = Maths.Sqrt(x * x + v);
             float u = (x + sqrt) / (2 * sqrt);
             return Special.BetaIncompleteRegularized(v / 2.0f, v / 2.0f, u);
         }
@@ -160,7 +160,7 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Function(float x)
         {
-            return (float)Math.Exp(LogFunction(x));
+            return Maths.Exp(LogFunction(x));
         }
         /// <summary>
         /// Computes the natural logarithm of the probability density function.
@@ -169,7 +169,7 @@ namespace UMapx.Distribution
         /// <returns>Logarithm of the density</returns>
         private float LogFunction(float x)
         {
-            return lambda - ((degrees + 1) / 2.0f) * (float)Math.Log((x * x) / degrees);
+            return lambda - ((degrees + 1) / 2.0f) * Maths.Log((x * x) / degrees);
         }
         #endregion
     }

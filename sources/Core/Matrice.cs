@@ -482,7 +482,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < mr; j++)
                 {
-                    norm += (float)Math.Pow(Math.Abs(m[i, j]), p);
+                    norm += Maths.Pow(Math.Abs(m[i, j]), p);
                 }
             }
 
@@ -612,7 +612,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < mr; j++)
                 {
-                    norm += (float)Math.Pow(m[i, j].Abs, p);
+                    norm += Maths.Pow(m[i, j].Abs, p);
                 }
             }
 
@@ -1984,7 +1984,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = (float)Math.Pow(m[i, j], pow);
+                    H[i, j] = Maths.Pow(m[i, j], pow);
                 }
             }
 
@@ -2008,7 +2008,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < r1; j++)
                 {
-                    H[i, j] = (float)Math.Pow(a, m[i, j]);
+                    H[i, j] = Maths.Pow(a, m[i, j]);
                 }
             }
 
@@ -2614,7 +2614,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < ml; j++)
                 {
-                    v[i] += (float)Math.Pow(m[j, i] - u[i], 2);
+                    v[i] += Maths.Pow(m[j, i] - u[i], 2);
                 }
             }
             return Matrice.Div(v, ml - 1);
@@ -2656,7 +2656,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < ml; j++)
                 {
-                    v[i] += (float)Math.Pow(m[j, i] - n[j, i], 2);
+                    v[i] += Maths.Pow(m[j, i] - n[j, i], 2);
                 }
             }
             return Matrice.Div(v, ml - 1);
@@ -3461,7 +3461,7 @@ namespace UMapx.Core
 
             for (i = 0; i < length; i++)
             {
-                norm += (float)Math.Pow(Math.Abs(a[i]), p);
+                norm += Maths.Pow(Math.Abs(a[i]), p);
             }
             return (float)Maths.Sqrt(norm, p);
         }
@@ -4628,7 +4628,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < length; i++)
             {
-                H[i] = (float)Math.Pow(v[i], power);
+                H[i] = Maths.Pow(v[i], power);
             }
             return H;
         }
@@ -4681,7 +4681,7 @@ namespace UMapx.Core
 
             for (i = 0; i < n; i++)
             {
-                H[i] = (float)Math.Pow(a, v[i]);
+                H[i] = Maths.Pow(a, v[i]);
             }
 
             return H;
@@ -5042,7 +5042,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < length; i++)
             {
-                sum += (float)Math.Pow(v[i] - mean, 2);
+                sum += Maths.Pow(v[i] - mean, 2);
             }
 
             return sum / (length - 1);
@@ -5078,7 +5078,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < length; i++)
             {
-                sum += (float)Math.Pow(x[i] - y[i], 2);
+                sum += Maths.Pow(x[i] - y[i], 2);
             }
 
             return sum / (length - 1);
@@ -5108,7 +5108,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float StnDev(this float[] v)
         {
-            return (float)Math.Sqrt(Matrice.Var(v));
+            return Maths.Sqrt(Matrice.Var(v));
         }
         /// <summary>
         /// Returns the standard deviation.
@@ -5127,7 +5127,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float StnDev(this float[] x, float[] y)
         {
-            return (float)Math.Sqrt(Matrice.Var(x, y));
+            return Maths.Sqrt(Matrice.Var(x, y));
         }
         /// <summary>
         /// Returns the standard deviation.
@@ -8599,7 +8599,7 @@ namespace UMapx.Core
             if (squared)
                 return v;
 
-            return (float)Math.Sqrt(v);
+            return Maths.Sqrt(v);
         }
         /// <summary>
         /// Returns matrix modulus.
@@ -10244,7 +10244,7 @@ namespace UMapx.Core
                 {
                     u[0] = v[0] / norm;
                     u[0] = u[0] + Maths.Sign(u[0]);
-                    u[0] = u[0] / (float)Math.Sqrt(Math.Abs(u[0]));
+                    u[0] = u[0] / Maths.Sqrt(Math.Abs(u[0]));
 
                     for (int i = 1; i < length; i++)
                     {
@@ -10299,7 +10299,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = (float)Math.Pow(v[i], j);
+                    H[i, j] = Maths.Pow(v[i], j);
                 }
             }
 

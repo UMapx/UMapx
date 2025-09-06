@@ -68,7 +68,7 @@ namespace UMapx.Analysis
             }
 
             // result
-            return sum / (float)Math.Pow(h, order);
+            return sum / Maths.Pow(h, order);
         }
         /// <summary>
         /// Returns the value of a derivative.
@@ -99,7 +99,7 @@ namespace UMapx.Analysis
             }
 
             // result
-            return sum / (float)Math.Pow(h, order);
+            return sum / Maths.Pow(h, order);
         }
         /// <summary>
         /// Returns the value of a derivative.

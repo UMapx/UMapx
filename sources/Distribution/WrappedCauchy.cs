@@ -72,7 +72,7 @@ namespace UMapx.Distribution
         /// </summary>
         public float Variance
         {
-            get { return 1 - (float)Math.Exp(-gamma); }
+            get { return 1 - Maths.Exp(-gamma); }
         }
         /// <summary>
         /// Gets the median value.
@@ -114,7 +114,7 @@ namespace UMapx.Distribution
         /// </summary>
         public float Entropy
         {
-            get { return (float)Math.Log(2 * Math.PI * (1 - Math.Exp(-2 * gamma))); }
+            get { return Maths.Log(2 * Maths.Pi * (1 - Maths.Exp(-2 * gamma))); }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -133,7 +133,7 @@ namespace UMapx.Distribution
         public float Function(float x)
         {
             float constant = (float)(1.0 / (2 * Math.PI));
-            return constant * (float)Math.Sinh(gamma) / (float)(Math.Cosh(gamma) - Math.Cos(x - mu));
+            return constant * Maths.Sinh(gamma) / (float)(Math.Cosh(gamma) - Math.Cos(x - mu));
         }
         #endregion
     }

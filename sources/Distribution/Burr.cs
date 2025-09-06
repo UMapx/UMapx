@@ -83,7 +83,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (float)Math.Pow((c - 1) / (k * c + 1), 1.0 / c);
+                return Maths.Pow((c - 1) / (k * c + 1), 1.0f / c);
             }
         }
         /// <summary>
@@ -93,7 +93,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (float)Math.Pow(Math.Pow(2, 1.0 / k) - 1.0, 1.0 / c);
+                return Maths.Pow(Maths.Pow(2, 1.0f / k) - 1.0f, 1.0f / c);
             }
         }
         /// <summary>
@@ -136,7 +136,7 @@ namespace UMapx.Distribution
                 return float.NaN;
             }
 
-            return 1.0f - (float)Math.Pow(1.0 + Math.Pow(x, c), -k);
+            return 1.0f - Maths.Pow(1.0f + Maths.Pow(x, c), -k);
         }
         /// <summary>
         /// Returns the value of the probability density function.
@@ -151,9 +151,9 @@ namespace UMapx.Distribution
             }
 
             float a = c * k;
-            float b = (float)Math.Pow(x, c - 1);
-            float d = 1 + (float)Math.Pow(x, c);
-            return a * b / (float)Math.Pow(d, k + 1);
+            float b = Maths.Pow(x, c - 1);
+            float d = 1 + Maths.Pow(x, c);
+            return a * b / Maths.Pow(d, k + 1);
         }
         #endregion
     }

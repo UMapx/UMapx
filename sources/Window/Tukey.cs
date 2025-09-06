@@ -55,7 +55,7 @@ namespace UMapx.Window
             // Creating:
             if (x >= 0 && x < c)
             {
-                return 0.5f * (1 + (float)Math.Cos(Math.PI * (x / c - 1)));
+                return 0.5f * (1 + Maths.Cos(Maths.Pi * (x / c - 1)));
             }
             else if (x >= c && x <= d)
             {
@@ -63,7 +63,7 @@ namespace UMapx.Window
             }
             else if (x > d && x <= n)
             {
-                return 0.5f * (1 + (float)Math.Cos(Math.PI * (x / c - 2.0 / a + 1)));
+                return 0.5f * (1 + Maths.Cos(Maths.Pi * (x / c - 2.0f / a + 1)));
             }
             return 0;
         }

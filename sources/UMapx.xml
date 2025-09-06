@@ -14819,7 +14819,7 @@
         </member>
         <member name="T:UMapx.Distribution.ChiSquare">
             <summary>
-            Defines the xi-square distribution.
+            Defines the chi-square distribution.
             </summary>
             <remarks>
             More information can be found on the website:
@@ -14828,7 +14828,7 @@
         </member>
         <member name="M:UMapx.Distribution.ChiSquare.#ctor(System.Int32)">
             <summary>
-            Initializes the xi-square distribution.
+            Initializes the chi-square distribution.
             </summary>
             <param name="k">Degrees of freedom (0, +inf)</param>
         </member>
@@ -22702,7 +22702,7 @@
             https://en.wikipedia.org/wiki/Perlin_noise
             </remarks>
         </member>
-        <member name="M:UMapx.Imaging.PerlinNoise.#ctor(System.Int32,System.Double,System.Double,System.Double)">
+        <member name="M:UMapx.Imaging.PerlinNoise.#ctor(System.Int32,System.Single,System.Single,System.Single)">
             <summary>
             Initializes the Perlin noise.   
             </summary>
@@ -22731,14 +22731,14 @@
             Gets or sets the number of octaves[1, 32].
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.PerlinNoise.Function(System.Double)">
+        <member name="M:UMapx.Imaging.PerlinNoise.Function(System.Single)">
             <summary>
             One-dimensional Perlin noise function.
             </summary>
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Imaging.PerlinNoise.Function2D(System.Double,System.Double)">
+        <member name="M:UMapx.Imaging.PerlinNoise.Function2D(System.Single,System.Single)">
             <summary>
             Two-dimensional Perlin noise function.
             </summary>
@@ -22761,14 +22761,14 @@
             <param name="y">Y coordinate</param>
             <returns>Noise value in the range [-1, 1]</returns>
         </member>
-        <member name="M:UMapx.Imaging.PerlinNoise.SmoothedNoise(System.Double)">
+        <member name="M:UMapx.Imaging.PerlinNoise.SmoothedNoise(System.Single)">
             <summary>
             Computes smoothed 1D noise using cosine interpolation.
             </summary>
             <param name="x">Input coordinate</param>
             <returns>Smoothed noise value</returns>
         </member>
-        <member name="M:UMapx.Imaging.PerlinNoise.SmoothedNoise(System.Double,System.Double)">
+        <member name="M:UMapx.Imaging.PerlinNoise.SmoothedNoise(System.Single,System.Single)">
             <summary>
             Computes smoothed 2D noise using cosine interpolation.
             </summary>
@@ -22776,7 +22776,7 @@
             <param name="y">Y coordinate</param>
             <returns>Smoothed noise value</returns>
         </member>
-        <member name="M:UMapx.Imaging.PerlinNoise.CosineInterpolate(System.Double,System.Double,System.Double)">
+        <member name="M:UMapx.Imaging.PerlinNoise.CosineInterpolate(System.Single,System.Single,System.Single)">
             <summary>
             Performs cosine interpolation between two values.
             </summary>

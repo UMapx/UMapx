@@ -89,7 +89,7 @@ namespace UMapx.Decomposition
                             alpha += w[k] * w[k];
                         }
 
-                        w[i] = (float)Math.Sqrt(d[i] - alpha);
+                        w[i] = Maths.Sqrt(d[i] - alpha);
                         lower[i] = w;
                     }
                     else

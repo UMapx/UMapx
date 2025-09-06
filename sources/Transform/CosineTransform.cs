@@ -63,7 +63,7 @@ namespace UMapx.Transform
             {
                 for (j = 0; j < n; j++)
                 {
-                    H[i, j] = (i == 0) ? g1 : (float)Math.Cos((2 * j + 1) * i * c) * g2;
+                    H[i, j] = (i == 0) ? g1 : Maths.Cos((2 * j + 1) * i * c) * g2;
                 }
             }
 

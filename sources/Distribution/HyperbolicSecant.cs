@@ -81,7 +81,7 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            float angle = (float)Math.Atan(Math.Exp(x * Math.PI / 2.0));
+            float angle = Maths.Atan(Maths.Exp(x * Maths.Pi / 2.0f));
             return 2 * angle / Maths.Pi;
         }
         /// <summary>
