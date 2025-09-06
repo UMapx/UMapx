@@ -773,7 +773,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Actan(float a)
         {
-            return Pi / 2 - Maths.Atan(a);
+            return (float)Math.Atan2(1.0, a);
         }
         /// <summary>
         /// Returns the arcsecance of a number.
