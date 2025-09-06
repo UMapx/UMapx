@@ -4867,15 +4867,15 @@
         </member>
         <member name="M:UMapx.Core.Heap`1.Peek">
             <summary>
-            Gets a heap peek.
+            Returns the element at the top of the heap without removing it.
             </summary>
-            <returns></returns>
+            <returns>Element at the top of the heap.</returns>
         </member>
         <member name="M:UMapx.Core.Heap`1.Extract">
             <summary>
             Extracts an item from the heap.
             </summary>
-            <returns></returns>
+            <returns>The removed root element.</returns>
         </member>
         <member name="T:UMapx.Core.InterpolationMode">
             <summary>
