@@ -10225,35 +10225,29 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[] Householder(this float[] v)
         {
-            int length = v.Length;
+            int n = v.Length;
+            var u = (float[])v.Clone();
 
-            // length checking:
-            if (length > 0)
-            {
-                float norm = v.Norm();
-                float[] u = new float[length];
+            float norm = 0.0f;
+            for (int i = 0; i < n; i++) norm += u[i] * u[i];
+            norm = Maths.Sqrt(norm);
 
-                // householder vector:
-                if (norm != 0)
-                {
-                    u[0] = v[0] / norm;
-                    u[0] = u[0] + Maths.Sign(u[0]);
-                    u[0] = u[0] / Maths.Sqrt(Math.Abs(u[0]));
-
-                    for (int i = 1; i < length; i++)
-                    {
-                        u[i] = v[i] / norm;
-                        u[i] = u[i] / u[0];
-                    }
-                }
-                else
-                {
-                    u = v;
-                    u[0] = (float)Maths.Sqrt2;
-                }
-                return u;
+            if (norm == 0.0)
+            { // zero vector -> pick e1
+                u = new float[n]; u[0] = 1.0f; return u;
             }
-            return v;
+
+            float sign = (u[0] >= 0.0f) ? 1.0f : -1.0f;
+            u[0] = (float)(u[0] + sign * norm);
+
+            // normalize u to unit norm
+            float un = 0.0f;
+            for (int i = 0; i < n; i++) un += u[i] * u[i];
+            un = Maths.Sqrt(un);
+            if (un == 0.0) { u = new float[n]; u[0] = 1.0f; return u; }
+
+            for (int i = 0; i < n; i++) u[i] = (u[i] / un);
+            return u;
         }
         /// <summary>
         /// Implements the construction of the companion matrix.
@@ -10262,20 +10256,13 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float[,] Companion(this float[] v)
         {
-            int n = v.Length, i;
-            float[,] H = new float[n, n];
+            int n = v.Length;
 
-            // last column:
-            for (i = 0; i < n; i++)
-            {
-                H[0, i] = -v[i];
-            }
-            // eyes:
-            for (i = 1; i < n; i++)
-            {
-                H[i, i - 1] = 1;
-            }
-
+            var H = new float[n, n];
+            // subdiagonal ones
+            for (int i = 1; i < n; i++) H[i, i - 1] = 1.0f;
+            // last column = -v
+            for (int i = 0; i < n; i++) H[i, n - 1] = -v[i];
             return H;
         }
         /// <summary>
@@ -10348,19 +10335,18 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float[,] Toeplitz(this float[] v)
         {
-            int n = v.Length / 2;
-            float[,] H = new float[n, n];
-            int i, j;
+            int n = v.Length;
+            var T = new float[n, n];
 
-            for (i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
-                for (j = 0; j < n; j++)
+                for (int j = 0; j < n; j++)
                 {
-                    H[i, j] = v[Maths.Mod(j - i, n)];
+                    T[i, j] = v[Math.Abs(i - j)];
                 }
             }
 
-            return H;
+            return T;
         }
         /// <summary>
         /// Implements the construction of the Cauchy matrix.
@@ -10394,17 +10380,17 @@ namespace UMapx.Core
         public static float[,] Circulant(this float[] v)
         {
             int n = v.Length;
-            float[,] H = new float[n, n];
-            int i, j;
+            var C = new float[n, n];
 
-            for (i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
-                for (j = 0; j < n; j++)
+                for (int j = 0; j < n; j++)
                 {
-                    H[i, j] = v[Maths.Mod(j - i, n)];
+                    C[i, j] = v[Maths.Mod(j - i, n)];
                 }
             }
-            return H;
+
+            return C;
         }
         /// <summary>
         /// Implements the construction of a symmetric matrix.
@@ -10431,26 +10417,72 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
+        /// Returns the Householder vector.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
+        public static Complex32[] Householder(this Complex32[] v)
+        {
+            int n = v.Length;
+            var u = (Complex32[])v.Clone();
+
+            // Compute norm ||v||
+            float norm = 0.0f;
+            for (int i = 0; i < n; i++) norm += u[i].Abs * u[i].Abs;
+            norm = Maths.Sqrt(norm);
+
+            if (norm == 0.0f)
+            {
+                // Zero vector -> e1
+                u = new Complex32[n];
+                u[0] = 1.0f;
+                return u;
+            }
+
+            // α = - exp(i·arg(v0)) * ||v||, if v0 != 0; else -||v||
+            Complex32 alpha;
+            if (u[0].Abs > 0.0f)
+            {
+                Complex32 phase = u[0] / u[0].Abs; // e^{i arg(v0)}
+                alpha = -phase * norm;
+            }
+            else
+            {
+                alpha = -norm;
+            }
+
+            // u0 = u0 - α
+            u[0] = u[0] - alpha;
+
+            // Normalize u
+            float un = 0.0f;
+            for (int i = 0; i < n; i++) un += u[i].Abs * u[i].Abs;
+            un = Maths.Sqrt(un);
+
+            if (un == 0.0f)
+            {
+                u = new Complex32[n];
+                u[0] = 1.0f;
+                return u;
+            }
+
+            for (int i = 0; i < n; i++) u[i] /= un;
+            return u;
+        }
+        /// <summary>
         /// Implements the construction of the companion matrix.
         /// </summary>
         /// <param name="v">Array</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Companion(this Complex32[] v)
         {
-            int n = v.Length, i;
-            Complex32[,] H = new Complex32[n, n];
+            int n = v.Length;
 
-            // last column:
-            for (i = 0; i < n; i++)
-            {
-                H[i, n - 1] = -v[i];
-            }
-            // eyes:
-            for (i = 1; i < n; i++)
-            {
-                H[i, i - 1] = 1;
-            }
-
+            var H = new Complex32[n, n];
+            // subdiagonal ones
+            for (int i = 1; i < n; i++) H[i, i - 1] = 1.0f;
+            // last column = -v
+            for (int i = 0; i < n; i++) H[i, n - 1] = -v[i];
             return H;
         }
         /// <summary>
@@ -10523,19 +10555,18 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Toeplitz(this Complex32[] v)
         {
-            int n = v.Length / 2;
-            Complex32[,] H = new Complex32[n, n];
-            int i, j;
+            int n = v.Length;
+            var T = new Complex32[n, n];
 
-            for (i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
-                for (j = 0; j < n; j++)
+                for (int j = 0; j < n; j++)
                 {
-                    H[i, j] = v[Maths.Mod(j - i, n)];
+                    T[i, j] = v[Math.Abs(i - j)];
                 }
             }
 
-            return H;
+            return T;
         }
         /// <summary>
         /// Implements the construction of the Cauchy matrix.
@@ -10569,17 +10600,17 @@ namespace UMapx.Core
         public static Complex32[,] Circulant(this Complex32[] v)
         {
             int n = v.Length;
-            Complex32[,] H = new Complex32[n, n];
-            int i, j;
+            var C = new Complex32[n, n];
 
-            for (i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
-                for (j = 0; j < n; j++)
+                for (int j = 0; j < n; j++)
                 {
-                    H[i, j] = v[Maths.Mod(j - i, n)];
+                    C[i, j] = v[Maths.Mod(j - i, n)];
                 }
             }
-            return H;
+
+            return C;
         }
         /// <summary>
         /// Implements the construction of a symmetric matrix.
