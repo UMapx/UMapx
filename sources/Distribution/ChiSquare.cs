@@ -150,11 +150,9 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Function(float x)
         {
-            if (x <= 0)
-            {
-                return 1;
-            }
-            return Special.GammaQ(k / 2.0f, x / 2.0f);
+            if (x <= 0) return 0;
+            float coeff = 1f / (Maths.Pow(2, k / 2f) * Special.Gamma(k / 2f));
+            return coeff * Maths.Pow(x, k / 2f - 1f) * Maths.Exp(-x / 2f);
         }
         #endregion
     }
