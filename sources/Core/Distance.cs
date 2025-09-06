@@ -152,12 +152,12 @@ namespace UMapx.Core
             return v;
         }
         /// <summary>
-        /// Returns distance value. 
+        /// Returns distance value.
         /// </summary>
         /// <param name="p">Array</param>
         /// <param name="q">Array</param>
-        /// <returns>Value</returns>
-        public static Complex32 Chebyshev(this Complex32[] p, Complex32[] q)
+        /// <returns>Float</returns>
+        public static float Chebyshev(this Complex32[] p, Complex32[] q)
         {
             int n = p.Length;
             float max = Maths.Abs(p[0] - q[0]);
@@ -172,16 +172,16 @@ namespace UMapx.Core
             return max;
         }
         /// <summary>
-        /// Returns distance value. 
+        /// Returns distance value.
         /// </summary>
         /// <param name="p">Matrix</param>
         /// <param name="q">Matrix</param>
-        /// <returns>Vector</returns>
-        public static Complex32[] Chebyshev(this Complex32[,] p, Complex32[,] q)
+        /// <returns>Float array</returns>
+        public static float[] Chebyshev(this Complex32[,] p, Complex32[,] q)
         {
             int r = p.GetLength(0);
             int c = p.GetLength(1);
-            Complex32[] v = new Complex32[r];
+            float[] v = new float[r];
 
             for (int i = 0; i < r; i++)
             {
