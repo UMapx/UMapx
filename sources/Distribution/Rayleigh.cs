@@ -153,7 +153,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return 1 + Maths.Log(sigma / Maths.Log(2)) + Maths.Gamma / 2;
+                return 1 + Maths.Log(sigma / Maths.Sqrt2) + Maths.Gamma / 2;
             }
         }
         #endregion
