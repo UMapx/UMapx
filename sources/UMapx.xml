@@ -6061,14 +6061,14 @@
             Returns the modulus of a complex number.
             </summary>
             <param name="a">Complex number</param>
-            <returns>Complex number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Angle(UMapx.Core.Complex32)">
             <summary>
             Returns the angle of a complex number.
             </summary>
             <param name="a">Complex number</param>
-            <returns>Complex number</returns>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Log(UMapx.Core.Complex32)">
             <summary>

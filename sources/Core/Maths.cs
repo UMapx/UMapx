@@ -519,7 +519,7 @@ namespace UMapx.Core
         /// Returns the modulus of a complex number.
         /// </summary>
         /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <returns>Value</returns>
         public static float Abs(Complex32 a)
         {
             return a.Abs;
@@ -528,7 +528,7 @@ namespace UMapx.Core
         /// Returns the angle of a complex number.
         /// </summary>
         /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <returns>Value</returns>
         public static float Angle(Complex32 a)
         {
             return a.Angle;
