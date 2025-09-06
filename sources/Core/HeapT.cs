@@ -48,9 +48,9 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Gets a heap peek.
+        /// Returns the element at the top of the heap without removing it.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Element at the top of the heap.</returns>
         public T Peek()
         {
             if (Count == 0)
@@ -61,7 +61,7 @@ namespace UMapx.Core
         /// <summary>
         /// Extracts an item from the heap.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The removed root element.</returns>
         public T Extract()
         {
             if (Count == 0)
