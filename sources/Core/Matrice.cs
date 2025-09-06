@@ -263,10 +263,8 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float[,] Invert(this float[,] m)
         {
-            if (m.GetLength(0) != m.GetLength(1))
-            {
-                return m;
-            }
+            if (!Matrice.IsSquare(m))
+                throw new ArgumentException("The matrix must be square");
 
             return Jagged.FromJagged(LinealgOptions.MatrixOperation.Invert(Jagged.ToJagged(m)));
         }
@@ -298,10 +296,8 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Invert(this Complex32[,] m)
         {
-            if (m.GetLength(0) != m.GetLength(1))
-            {
-                return m;
-            }
+            if (!Matrice.IsSquare(m))
+                throw new ArgumentException("The matrix must be square");
 
             return Jagged.FromJagged(LinealgOptions.MatrixOperation.Invert(Jagged.ToJagged(m)));
         }
