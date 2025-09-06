@@ -26,7 +26,7 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes fast short-time Fourier transform.
         /// </summary>
-        /// <param name="function">Windows function</param>
+        /// <param name="function">Window function</param>
         /// <param name="normalized">Normalized transform or not</param>
         /// <param name="direction">Processing direction</param>
         public FastShortTimeFourierTransform(IWindow function, bool normalized = true, Direction direction = Direction.Vertical)

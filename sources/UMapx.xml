@@ -33221,7 +33221,7 @@
             <summary>
             Initializes fast short-time Fourier transform.
             </summary>
-            <param name="function">Windows function</param>
+            <param name="function">Window function</param>
             <param name="normalized">Normalized transform or not</param>
             <param name="direction">Processing direction</param>
         </member>
@@ -34076,7 +34076,7 @@
             <summary>
             Initializes short-time Fourier transform.
             </summary>
-            <param name="function">Windows function</param>
+            <param name="function">Window function</param>
             <param name="normalized">Normalized transform or not</param>
             <param name="direction">Processing direction</param>
         </member>
