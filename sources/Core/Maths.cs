@@ -979,11 +979,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Acosh(float a)
         {
-            if (a >= 0)
-            {
-                return Maths.Log(a + Maths.Sqrt(a * a - 1));
-            }
-            return 0;
+            if (a < 1.0f) return float.NaN;
+            return Maths.Log(a + Maths.Sqrt((a - 1.0f) * (a + 1.0f)));
         }
         /// <summary>
         /// Returns the hyperbolic arctangent of a number.
