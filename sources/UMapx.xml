@@ -4937,7 +4937,7 @@
         </member>
         <member name="M:UMapx.Core.Jagged.Rand(System.Int32,System.Int32)">
             <summary>
-            Implements the construction of a vector of random numbers whose values are distributed according to a uniform distribution.
+            Constructs a matrix of random numbers with values uniformly distributed in the interval [0, 1).
             </summary>
             <param name="m">Height</param>
             <param name="l">Width</param>
@@ -4945,7 +4945,7 @@
         </member>
         <member name="M:UMapx.Core.Jagged.Randc(System.Int32,System.Int32)">
             <summary>
-            Implements the construction of a vector of random numbers whose values are distributed according to a uniform distribution.
+            Constructs a complex matrix of random numbers whose real and imaginary parts are uniformly distributed in the interval [0, 1).
             </summary>
             <param name="m">Height</param>
             <param name="l">Width</param>
@@ -4953,7 +4953,7 @@
         </member>
         <member name="M:UMapx.Core.Jagged.Randi(System.Int32,System.Int32)">
             <summary>
-            Implements the construction of a vector of integer random numbers.
+            Constructs a matrix of integer random numbers uniformly distributed between 1 and l (inclusive).
             </summary>
             <param name="m">Height</param>
             <param name="l">Width</param>
@@ -4961,17 +4961,17 @@
         </member>
         <member name="M:UMapx.Core.Jagged.Randi(System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
-            Implements the construction of a vector of integer random numbers.
+            Constructs a matrix of integer random numbers uniformly distributed in the interval [<paramref name="a"/>, <paramref name="b"/>).
             </summary>
             <param name="m">Height</param>
             <param name="l">Width</param>
             <param name="a">Lower bound</param>
-            <param name="b">Upper bound</param>
+            <param name="b">Upper bound (exclusive)</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Jagged.Randic(System.Int32,System.Int32)">
             <summary>
-            Implements the construction of a vector of integer random numbers.
+            Constructs a complex matrix of integer random numbers whose real and imaginary parts are uniformly distributed between 1 and l (inclusive).
             </summary>
             <param name="m">Height</param>
             <param name="l">Width</param>
@@ -4979,12 +4979,12 @@
         </member>
         <member name="M:UMapx.Core.Jagged.Randic(System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
-            Implements the construction of a vector of integer random numbers.
+            Constructs a complex matrix of integer random numbers whose real and imaginary parts are uniformly distributed in the interval [<paramref name="a"/>, <paramref name="b"/>).
             </summary>
             <param name="m">Height</param>
             <param name="l">Width</param>
             <param name="a">Lower bound</param>
-            <param name="b">Upper bound</param>
+            <param name="b">Upper bound (exclusive)</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Core.Jagged.Zero(System.Int32,System.Int32)">
