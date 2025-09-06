@@ -104,11 +104,11 @@ namespace UMapx.Core
             return H;
         }
         /// <summary>
-        /// Implements the construction of the Kirsh operator [3 x 3].
+        /// Implements the construction of the Kirsch operator [3 x 3].
         /// </summary>
         /// <param name="direction">Gradient direction</param>
         /// <returns>Matrix</returns>
-        public static float[,] Kirsh(Gradient direction)
+        public static float[,] Kirsch(Gradient direction)
         {
             float[,] H = new float[3, 3];
 
