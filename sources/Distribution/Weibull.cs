@@ -31,6 +31,7 @@ namespace UMapx.Distribution
         public Weibull(float lambda, float k)
         {
             Lambda = lambda;
+            K = k;
         }
         /// <summary>
         /// Gets or sets the value of the scale factor (0, + inf).
