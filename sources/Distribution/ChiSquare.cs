@@ -64,13 +64,14 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the median value.
+        /// Gets the median value (approximation).
         /// </summary>
         public float Median
         {
             get
             {
-                return k - 2.0f / 3;
+                // Wilson–Hilferty approximation to keep median non-negative
+                return k * Maths.Pow(1 - 2f / (9f * k), 3f);
             }
         }
         /// <summary>
