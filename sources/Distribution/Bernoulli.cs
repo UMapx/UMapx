@@ -132,7 +132,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (6 * p * p - 6 * p + 1) / p * (1 - p);
+                return (6 * p * p - 6 * p + 1) / (p * (1 - p));
             }
         }
         /// <summary>
