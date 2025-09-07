@@ -95,7 +95,8 @@ namespace UMapx.Distribution
             {
                 if (k > 2)
                 {
-                    return Maths.Pow(xm / k - 1) * (k / (k - 2));
+                    float kMinus1 = k - 1;
+                    return (k * xm * xm) / (kMinus1 * kMinus1 * (k - 2));
                 }
                 return float.NaN;
             }
