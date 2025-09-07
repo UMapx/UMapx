@@ -123,7 +123,9 @@ namespace UMapx.Distribution
         {
             get
             {
-                return Maths.Floor(n * p);
+                // See e.g. https://en.wikipedia.org/wiki/Binomial_distribution#Median
+                float median = Maths.Floor((n + 1) * p);
+                return median > n ? n : median;
             }
         }
         /// <summary>
