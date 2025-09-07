@@ -125,13 +125,13 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the kurtosis coefficient.
+        /// Gets the excess coefficient (kurtosis minus 3).
         /// </summary>
         public float Excess
         {
             get
             {
-                return (Special.Gamma(1.0f + 4.0f / k) * Maths.Pow(l, 4) - 4 * Mean * Special.Gamma(1 + 3.0f / k) * Maths.Pow(l, 3) + 6 * Maths.Pow(Mean, 2) * Maths.Pow(l, 2) * Special.Gamma(1.0f + 2.0f / k) - 3 * Maths.Pow(Mean, 4)) / (Variance * Variance);
+                return (Special.Gamma(1.0f + 4.0f / k) * Maths.Pow(l, 4) - 4 * Mean * Special.Gamma(1 + 3.0f / k) * Maths.Pow(l, 3) + 6 * Maths.Pow(Mean, 2) * Maths.Pow(l, 2) * Special.Gamma(1.0f + 2.0f / k) - 3 * Maths.Pow(Mean, 4)) / (Variance * Variance) - 3f;
             }
         }
         /// <summary>
