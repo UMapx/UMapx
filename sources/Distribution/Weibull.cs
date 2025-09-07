@@ -100,7 +100,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return l * Maths.Pow(k - 1, 1.0f / k) / Maths.Pow(k, 1.0f / k);
+                return k > 1 ? l * Maths.Pow((k - 1f) / k, 1f / k) : 0f;
             }
         }
         /// <summary>
