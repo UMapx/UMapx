@@ -16204,7 +16204,7 @@
         </member>
         <member name="P:UMapx.Distribution.Laplace.Entropy">
             <summary>
-            Returns the value of differential entropy.
+            Returns the value of differential entropy H = 1 - ln(a / 2).
             </summary>
             <returns>Value</returns>
         </member>
@@ -17354,6 +17354,9 @@
             <summary>
             Gets the kurtosis coefficient.
             </summary>
+            <remarks>
+            (3/112 * (b - a)^4) / Maths.Pow(Variance, 2) - 3
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.UQuadratic.Entropy">
             <summary>
@@ -17442,7 +17445,7 @@
         </member>
         <member name="P:UMapx.Distribution.Weibull.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess coefficient (kurtosis minus 3).
             </summary>
         </member>
         <member name="M:UMapx.Distribution.Weibull.Function(System.Single)">
