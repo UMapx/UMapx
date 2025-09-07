@@ -122,7 +122,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (p - q) / Maths.Sqrt(p * q);
+                return (q - p) / Maths.Sqrt(p * q);
             }
         }
         /// <summary>
