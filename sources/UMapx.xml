@@ -12707,7 +12707,7 @@
         </member>
         <member name="M:UMapx.Core.Special.Beta(System.Single,System.Single)">
             <summary>
-            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(a + b).
             </summary>
             <param name="a">Value</param>
             <param name="b">Value</param>
@@ -12715,7 +12715,7 @@
         </member>
         <member name="M:UMapx.Core.Special.Beta(UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
-            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(a + b).
             </summary>
             <param name="a">Value</param>
             <param name="b">Value</param>
