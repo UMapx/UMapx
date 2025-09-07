@@ -60,9 +60,12 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mean value.
         /// </summary>
+        /// <remarks>
+        /// For degrees of freedom ≤ 1, the mean is undefined and returns <see cref="float.NaN"/>.
+        /// </remarks>
         public float Mean
         {
-            get { return 0; }
+            get => degrees > 1 ? 0f : float.NaN;
         }
         /// <summary>
         /// Gets the median value.
