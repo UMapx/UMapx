@@ -161,7 +161,7 @@ namespace UMapx.Analysis
             }
 
             // result
-            return sum / Math.Pow(h, order);
+            return sum / Maths.Pow(h, order);
         }
         #endregion
 
