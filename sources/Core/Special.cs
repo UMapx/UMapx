@@ -2619,7 +2619,7 @@ namespace UMapx.Core
         {
             if (inverse)
             {
-                return Maths.Sqrt(2) * Special.Erf(1 - 2 * x, true);
+                return Maths.Sqrt2 * Special.Erf(1 - 2 * x, true);
             }
             return 0.5f * Special.Erfc(x / Maths.Sqrt2);
         }
@@ -2633,7 +2633,7 @@ namespace UMapx.Core
         {
             if (inverse)
             {
-                return Maths.Sqrt(2) * Special.Erf(1 - 2 * x, true);
+                return Maths.Sqrt2 * Special.Erf(1 - 2 * x, true);
             }
             return 0.5f * Special.Erfc(x / Maths.Sqrt2);
         }
