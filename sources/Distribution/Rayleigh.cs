@@ -116,7 +116,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return -(6 * Maths.Pi - 24 * Maths.Pi + 16) / Maths.Pow(4 - Maths.Pi);
+                return (-6 * Maths.Pi * Maths.Pi + 24 * Maths.Pi - 16) / Maths.Pow(4 - Maths.Pi);
             }
         }
         /// <summary>
