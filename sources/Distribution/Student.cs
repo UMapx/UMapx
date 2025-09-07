@@ -169,7 +169,7 @@ namespace UMapx.Distribution
         /// <returns>Logarithm of the density</returns>
         private float LogFunction(float x)
         {
-            return lambda - ((degrees + 1) / 2.0f) * Maths.Log((x * x) / degrees);
+            return lambda - ((degrees + 1) / 2.0f) * Maths.Log(1 + (x * x) / degrees);
         }
         #endregion
     }
