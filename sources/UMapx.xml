@@ -15637,7 +15637,7 @@
             <summary>
             Returns the value of the probability distribution function.
             </summary>
-            <param name="x">Value</param>
+            <param name="x">Number of failures before the first success</param>
             <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Geometric.Entropy">
@@ -16342,14 +16342,14 @@
             <summary>
             Returns the value of the probability distribution function.
             </summary>
-            <param name="x">Value</param>
+            <param name="x">Value (x ≥ 1)</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Logarithmic.Function(System.Single)">
             <summary>
-            Returns the value of the probability density function.
+            Returns the value of the probability mass function.
             </summary>
-            <param name="x">Value</param>
+            <param name="x">Value (integer x ≥ 1)</param>
             <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Logarithmic.Entropy">
