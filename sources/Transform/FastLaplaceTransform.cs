@@ -180,7 +180,7 @@ namespace UMapx.Transform
 
                     for (i = 0; i < N; i++)
                     {
-                        col[i] = B[i, j].Conjugate;
+                        col[i] = B[i, j];
                     }
 
                     col = Forward(col);
@@ -289,7 +289,7 @@ namespace UMapx.Transform
 
                     for (j = 0; j < M; j++)
                     {
-                        row[j] = A[i, j].Conjugate;
+                        row[j] = A[i, j];
                     }
                     row = Backward(row);
 
