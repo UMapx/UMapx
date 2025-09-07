@@ -363,8 +363,8 @@ namespace UMapx.Analysis
             {
                 sum = (3f * h / 8f) * (y[0] + 3f * y[1] + 3f * y[2] + y[3]);
                 float s_odd = 0f, s_even = 0f;
-                for (int i = 4; i < n - 1; i += 2) s_odd += y[i - 1];
-                for (int i = 5; i < n - 1; i += 2) s_even += y[i - 1];
+                for (int i = 4; i <= n - 2; i += 2) s_odd += y[i];
+                for (int i = 5; i <= n - 2; i += 2) s_even += y[i];
                 sum += (h / 3f) * (y[3] + y[n - 1] + 4f * s_odd + 2f * s_even);
             }
             return sum;
@@ -671,8 +671,8 @@ namespace UMapx.Analysis
             {
                 sum = (3f * h / 8f) * (y[0] + 3f * y[1] + 3f * y[2] + y[3]);
                 Complex32 s_odd = 0f, s_even = 0f;
-                for (int i = 4; i < n - 1; i += 2) s_odd += y[i - 1];
-                for (int i = 5; i < n - 1; i += 2) s_even += y[i - 1];
+                for (int i = 4; i <= n - 2; i += 2) s_odd += y[i];
+                for (int i = 5; i <= n - 2; i += 2) s_even += y[i];
                 sum += (h / 3f) * (y[3] + y[n - 1] + 4f * s_odd + 2f * s_even);
             }
             return sum;
