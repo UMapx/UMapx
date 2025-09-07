@@ -132,7 +132,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
+        /// <param name="x">Number of failures before the first success</param>
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
@@ -140,7 +140,8 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return 1 - Maths.Pow(q, x);
+            x = Maths.Floor(x); // x is interpreted as the number of failures before first success
+            return 1 - Maths.Pow(q, x + 1);
         }
         /// <summary>
         /// Returns the value of differential entropy.
