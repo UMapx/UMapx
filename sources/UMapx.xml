@@ -14879,7 +14879,7 @@
         </member>
         <member name="P:UMapx.Distribution.ChiSquare.Median">
             <summary>
-            Gets the median value.
+            Gets the median value (approximation).
             </summary>
         </member>
         <member name="P:UMapx.Distribution.ChiSquare.Mode">
@@ -16841,6 +16841,9 @@
             <summary>
             Gets the median value.
             </summary>
+            <remarks>
+            Uses an approximation valid for λ ≥ 1.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Poisson.Skewness">
             <summary>
@@ -17058,6 +17061,9 @@
             <summary>
             Gets the mean value.
             </summary>
+            <remarks>
+            For degrees of freedom ≤ 1, the mean is undefined and returns <see cref="F:System.Single.NaN"/>.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Student.Median">
             <summary>
