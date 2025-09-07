@@ -7,7 +7,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Using for rectangles operations.
     /// </summary>
-    public static class Rectangles
+    public static partial class Rectangles
     {
         #region Operators
 

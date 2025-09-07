@@ -3,7 +3,7 @@
     /// <summary>
     /// Used to edit and transform tensors.
     /// </summary>
-    public static class TensorTransform
+    public static partial class TensorTransform
     {
         #region Merge
         /// <summary>

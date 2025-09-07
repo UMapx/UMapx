@@ -9,7 +9,7 @@ namespace UMapx.Core
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Kernel_(statistics)
     /// </remarks>
-    public static class Kernel
+    public static partial class Kernel
     {
         #region Bicubic kernel function
         /// <summary>

@@ -9,7 +9,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Used to work with the statistical characteristics of the image.
     /// </summary>
-    public static class Statistics
+    public static partial class Statistics
     {
         #region Histogram
         /// <summary>

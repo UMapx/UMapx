@@ -5,7 +5,7 @@ namespace UMapx.Core
     /// <summary>
     /// Used to work with jagged arrays.
     /// </summary>
-    public static class Jagged
+    public static partial class Jagged
     {
         #region Conversions
         /// <summary>

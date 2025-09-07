@@ -7,7 +7,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Used to edit and transform depth maps.
     /// </summary>
-    public static class DepthTransform
+    public static partial class DepthTransform
     {
         #region Rotate
         /// <summary>

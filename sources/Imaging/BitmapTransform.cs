@@ -8,7 +8,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Used to edit and transform images using GDI+.
     /// </summary>
-    public static class BitmapTransform
+    public static partial class BitmapTransform
     {
         #region Rotate
         /// <summary>

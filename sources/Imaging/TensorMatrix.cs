@@ -7,7 +7,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Used to work with tensor matrices.
     /// </summary>
-    public static class TensorMatrix
+    public static partial class TensorMatrix
     {
         #region Tensor convert components
         /// <summary>

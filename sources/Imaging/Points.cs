@@ -6,7 +6,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Using for points operations.
     /// </summary>
-    public static class Points
+    public static partial class Points
     {
         #region Operators
 

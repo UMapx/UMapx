@@ -7,7 +7,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Used to work with point matrices.
     /// </summary>
-    public static class PointMatrix
+    public static partial class PointMatrix
     {
         #region Filters
         /// <summary>

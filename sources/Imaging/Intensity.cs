@@ -6,7 +6,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Used to work with brightness represented as a value belonging to the interval [0, 1].
     /// </summary>
-    public static class Intensity
+    public static partial class Intensity
     {
         #region Nonlinear methods components
         /// <summary>

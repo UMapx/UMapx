@@ -8,7 +8,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Used to work with depth matrices.
     /// </summary>
-    public static class DepthMatrix
+    public static partial class DepthMatrix
     {
         #region Depth convert components
         /// <summary>

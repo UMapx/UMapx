@@ -10,7 +10,7 @@ namespace UMapx.Imaging
     /// More information can be found on the website:
     /// http://www.pegtop.net/delphi/articles/blendmodes/index.htm
     /// </remarks>
-    public static class BlendMode
+    public static partial class BlendMode
     {
         #region Blend mode components
         /// <summary>

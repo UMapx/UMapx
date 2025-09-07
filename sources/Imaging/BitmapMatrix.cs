@@ -9,7 +9,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Used to work with bitmap matrices.
     /// </summary>
-    public static class BitmapMatrix
+    public static partial class BitmapMatrix
     {
         #region RGB
         /// <summary>

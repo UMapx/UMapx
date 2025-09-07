@@ -7,7 +7,7 @@ namespace UMapx.Imaging
     /// <summary>
     /// Used to work with bitmap formats.
     /// </summary>
-    public static class BitmapFormat
+    public static partial class BitmapFormat
     {
         #region Bitmap convert components
         /// <summary>
