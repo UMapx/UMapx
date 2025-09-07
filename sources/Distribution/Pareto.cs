@@ -83,7 +83,11 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (k * xm) / (k - 1);
+                if (k > 1)
+                {
+                    return (k * xm) / (k - 1);
+                }
+                return float.PositiveInfinity;
             }
         }
         /// <summary>
