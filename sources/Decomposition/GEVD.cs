@@ -1386,7 +1386,7 @@ namespace UMapx.Decomposition
         /// 
         /// <remarks>
         ///   This is a port of the sign transfer function from EISPACK,
-        ///   and is is equivalent to C++'s std::copysign function.
+        ///   and is equivalent to C++'s std::copysign function.
         /// </remarks>
         /// 
         /// <returns>If B > 0 then the result is ABS(A), else it is -ABS(A)</returns>
