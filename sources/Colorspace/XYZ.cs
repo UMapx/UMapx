@@ -197,9 +197,9 @@ namespace UMapx.Colorspace
             float bLinear = blue / 255.0f;
 
             // convert to a sRGB form
-            float r = (rLinear > 0.04045) ? Maths.Pow((rLinear + 0.055f) / (1 + 0.055f), 2.2f) : (float)(rLinear / 12.92f);
-            float g = (gLinear > 0.04045) ? Maths.Pow((gLinear + 0.055f) / (1 + 0.055f), 2.2f) : (float)(gLinear / 12.92f);
-            float b = (bLinear > 0.04045) ? Maths.Pow((bLinear + 0.055f) / (1 + 0.055f), 2.2f) : (float)(bLinear / 12.92f);
+            float r = (rLinear > 0.04045) ? Maths.Pow((rLinear + 0.055f) / (1 + 0.055f), 2.4f) : (float)(rLinear / 12.92f);
+            float g = (gLinear > 0.04045) ? Maths.Pow((gLinear + 0.055f) / (1 + 0.055f), 2.4f) : (float)(gLinear / 12.92f);
+            float b = (bLinear > 0.04045) ? Maths.Pow((bLinear + 0.055f) / (1 + 0.055f), 2.4f) : (float)(bLinear / 12.92f);
 
             // converts
             return new XYZ(
