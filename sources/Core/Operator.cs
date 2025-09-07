@@ -3,9 +3,9 @@
 namespace UMapx.Core
 {
     /// <summary>
-    /// Used to implement convolutional operators. 
+    /// Used to implement convolutional operators.
     /// </summary>
-    public static class Operator
+    public static partial class Operator
     {
         #region Fixed
         /// <summary>

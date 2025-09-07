@@ -5,7 +5,7 @@ namespace UMapx.Core
     /// <summary>
     /// Used to calculate distances.
     /// </summary>
-    public static class Distance
+    public static partial class Distance
     {
         #region Euclidean distance
         /// <summary>

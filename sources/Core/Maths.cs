@@ -7,7 +7,7 @@ namespace UMapx.Core
     /// <summary>
     /// Used to implement basic algebraic, trigonometric and hyperbolic operations.
     /// </summary>
-    public static class Maths
+    public static partial class Maths
     {
         #region Constant
         /// <summary>

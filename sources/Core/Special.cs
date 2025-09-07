@@ -10,7 +10,7 @@ namespace UMapx.Core
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Special_functions
     /// </remarks>
-    public static class Special
+    public static partial class Special
     {
         #region Private data
         /// <summary>

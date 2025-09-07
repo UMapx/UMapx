@@ -7,7 +7,7 @@ namespace UMapx.Core
     /// <summary>
     /// Used to implement standard algebraic operations on matrices and vectors.
     /// </summary>
-    public static class Matrice
+    public static partial class Matrice
     {
         // Matrix voids
 
