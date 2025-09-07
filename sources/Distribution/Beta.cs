@@ -150,10 +150,15 @@ namespace UMapx.Distribution
             return Maths.Pow(x, a - 1) * Maths.Pow(1 - x, b - 1) / Special.Beta(a, b);
         }
         /// <summary>
-        /// Returns the value of the probability distribution function.
+        /// Returns the value of the cumulative distribution function.
+        /// Uses the regularized incomplete beta function.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
+        /// <example>
+        /// Beta beta = new Beta(2f, 3f);
+        /// float cdf = beta.Distribution(0.5f);
+        /// </example>
         public float Distribution(float x)
         {
             if (x > 1)
@@ -164,7 +169,7 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return Special.BetaIncomplete(a, b, x);
+            return Special.BetaIncompleteRegularized(a, b, x);
         }
         /// <summary>
         /// Returns the value of differential entropy.
