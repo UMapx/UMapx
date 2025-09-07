@@ -91,7 +91,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return l * l * (Special.Gamma(1.0f + 2.0f / k) - Special.Gamma(1.0f + 1.0f / k));
+                return l * l * (Special.Gamma(1f + 2f / k) - Maths.Pow(Special.Gamma(1f + 1f / k), 2));
             }
         }
         /// <summary>
