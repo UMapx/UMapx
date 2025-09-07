@@ -168,7 +168,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return Maths.Gamma * (1.0f - 1.0f / k) + Maths.Pow(l / k, k) + Maths.Log(l / k);
+                return Maths.Gamma * (1f - 1f / k) + Maths.Log(l / k) + 1f;
             }
         }
         #endregion
