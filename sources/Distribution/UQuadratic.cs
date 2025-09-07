@@ -110,11 +110,14 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
+        /// <remarks>
+        /// (3/112 * (b - a)^4) / Maths.Pow(Variance, 2) - 3
+        /// </remarks>
         public float Excess
         {
             get
             {
-                return 3.0f / 112.0f * Maths.Pow(b - a, 4.0f);
+                return (3f / 112f * Maths.Pow(b - a, 4f)) / Maths.Pow(Variance, 2f) - 3f;
             }
         }
         /// <summary>
