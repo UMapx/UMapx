@@ -152,9 +152,8 @@ namespace UMapx.Distribution
         public float Distribution(float x)
         {
             float v = degrees;
-            float sqrt = Maths.Sqrt(x * x + v);
-            float u = (x + sqrt) / (2 * sqrt);
-            return Special.BetaIncompleteRegularized(v / 2.0f, v / 2.0f, u);
+            float u = Special.BetaIncompleteRegularized(v / 2.0f, 0.5f, v / (x * x + v));
+            return x >= 0 ? 1.0f - 0.5f * u : 0.5f * u;
         }
         /// <summary>
         /// Returns the value of the probability density function.
