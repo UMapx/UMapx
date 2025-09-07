@@ -226,7 +226,7 @@ namespace UMapx.Core
         /// Prints jagged array to console.
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
-        /// <param name="A">Matrix</param>
+        /// <param name="A">Jagged array</param>
         public static void Print<T>(this T[][] A)
         {
             int m = A?.GetLength(0) ?? 0, n = A?[0]?.GetLength(0) ?? 0;

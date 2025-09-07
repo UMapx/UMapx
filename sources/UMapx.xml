@@ -4129,7 +4129,7 @@
             Prints jagged array to console.
             </summary>
             <typeparam name="T">Type</typeparam>
-            <param name="A">Matrix</param>
+            <param name="A">Jagged array</param>
         </member>
         <member name="M:UMapx.Core.Debugger.Info(System.Object,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
