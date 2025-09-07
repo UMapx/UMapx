@@ -2902,7 +2902,7 @@ namespace UMapx.Core
 
         #region Beta functions
         /// <summary>
-        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(a + b).
         /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
@@ -2912,7 +2912,7 @@ namespace UMapx.Core
             return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
         }
         /// <summary>
-        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(ab).
+        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(a + b).
         /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
