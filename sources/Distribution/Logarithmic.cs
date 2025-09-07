@@ -106,36 +106,46 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
+        /// <param name="x">Value (x ≥ 1)</param>
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            if (x <= 0)
+            if (x < 1)
             {
                 return 0;
             }
-            if (x > 1)
+
+            int n = (int)Maths.Floor(x);
+            float c = -1 / Maths.Log(1 - p);
+            float sum = 0;
+
+            for (int k = 1; k <= n; k++)
             {
-                return 0;
+                sum += c * Maths.Pow(p, k) / k;
             }
-            return 1 + Special.Beta(x + 1, 0) / Maths.Log(1 - p);
+
+            return sum;
         }
         /// <summary>
-        /// Returns the value of the probability density function.
+        /// Returns the value of the probability mass function.
         /// </summary>
-        /// <param name="x">Value</param>
+        /// <param name="x">Value (integer x ≥ 1)</param>
         /// <returns>Value</returns>
         public float Function(float x)
         {
-            if (x <= 0)
+            if (x < 1)
             {
                 return 0;
             }
-            if (x > 1)
+
+            int k = (int)Maths.Floor(x);
+
+            if (x != k)
             {
                 return 0;
             }
-            return -1 / Maths.Log(1 - p) * Maths.Pow(p, x) / x;
+
+            return -1 / Maths.Log(1 - p) * Maths.Pow(p, k) / k;
         }
         /// <summary>
         /// Gets the value of entropy.
