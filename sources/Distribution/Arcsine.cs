@@ -91,12 +91,12 @@ namespace UMapx.Distribution
         public float Function(float x)
         {
             if (x > 1)
-                return 1.0f;
+                return 0.0f;
 
             if (x < 0)
                 return 0.0f;
 
-            return 1.0f / (float)(Math.PI * Math.Sqrt(x * (1 - x)));
+            return 1.0f / (Maths.Pi * Maths.Sqrt(x * (1 - x)));
         }
         #endregion
     }
