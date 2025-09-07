@@ -90,12 +90,12 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
+        /// <remarks>
+        /// Uses an approximation valid for λ ≥ 1.
+        /// </remarks>
         public float Median
         {
-            get
-            {
-                return Maths.Floor(l + 0.333f - 0.02f / l);
-            }
+            get => l < 1f ? 0f : Maths.Floor(l + 1f / 3f - 0.02f / l);
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
