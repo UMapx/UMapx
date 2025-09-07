@@ -157,14 +157,14 @@ namespace UMapx.Distribution
             return 1 - 0.5f * Maths.Exp(-a * (x - b));
         }
         /// <summary>
-        /// Returns the value of differential entropy.
+        /// Returns the value of differential entropy H = 1 - ln(a / 2).
         /// </summary>
         /// <returns>Value</returns>
         public float Entropy
         {
             get
             {
-                return Maths.Log(4 * Maths.Pi * a);
+                return 1 - Maths.Log(a / 2.0f);
             }
         }
         #endregion
