@@ -4124,6 +4124,13 @@
             <typeparam name="T">Type</typeparam>
             <param name="A">Matrix</param>
         </member>
+        <member name="M:UMapx.Core.Debugger.Print``1(``0[][])">
+            <summary>
+            Prints jagged array to console.
+            </summary>
+            <typeparam name="T">Type</typeparam>
+            <param name="A">Matrix</param>
+        </member>
         <member name="M:UMapx.Core.Debugger.Info(System.Object,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
             Prints a simple reflection-based summary of an object's public properties and methods.

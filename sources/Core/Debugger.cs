@@ -222,6 +222,92 @@ namespace UMapx.Core
             }
             Console.WriteLine();
         }
+        /// <summary>
+        /// Prints jagged array to console.
+        /// </summary>
+        /// <typeparam name="T">Type</typeparam>
+        /// <param name="A">Matrix</param>
+        public static void Print<T>(this T[][] A)
+        {
+            int m = A?.GetLength(0) ?? 0, n = A?[0]?.GetLength(0) ?? 0;
+
+            // Empty cases
+            if (m == 0 || n == 0)
+            {
+                Console.WriteLine($"Empty matrix {m} x {n}");
+                return;
+            }
+            else
+            {
+                Console.WriteLine($"Matrix {m} x {n}");
+            }
+
+            var s = new string[m, n];
+            var colWidth = new int[n];
+
+            // Pre-format numbers and compute per-column widths
+            for (int j = 0; j < n; j++)
+            {
+                int w = 0;
+                for (int i = 0; i < m; i++)
+                {
+                    string str = A[i][j].ToString();
+                    s[i, j] = str;
+                    if (str.Length > w) w = str.Length;
+                }
+                colWidth[j] = w;
+            }
+
+            int consoleWidth;
+            try { consoleWidth = Math.Max(20, Console.WindowWidth); }
+            catch { consoleWidth = 80; } // fallback for hosts without a real console
+            int startCol = 0;
+
+            while (startCol < n)
+            {
+                // Choose how many columns fit into the current console width
+                int widthUsed = RowIndent.Length;
+                int endCol = startCol;
+
+                while (endCol < n)
+                {
+                    int add = (endCol > startCol ? Gap : 0) + colWidth[endCol];
+                    if (widthUsed + add > consoleWidth)
+                    {
+                        if (endCol == startCol) endCol++; // ensure at least one column
+                        break;
+                    }
+                    widthUsed += add;
+                    endCol++;
+                }
+
+                if (endCol <= startCol)
+                    endCol = startCol + 1;
+
+                if (startCol > 0)
+                {
+                    Console.WriteLine();
+                }
+                Console.WriteLine($"Columns {startCol + 1} through {endCol}");
+
+                // Print rows for the chosen block
+                for (int i = 0; i < m; i++)
+                {
+                    var line = new StringBuilder();
+                    line.Append(RowIndent);
+                    for (int j = startCol; j < endCol; j++)
+                    {
+                        if (j > startCol) line.Append(' ', Gap);
+                        line.Append(s[i, j].PadLeft(colWidth[j]));
+                    }
+                    Console.WriteLine(line.ToString());
+                }
+
+                // Next block
+                startCol = endCol;
+            }
+            Console.WriteLine();
+        }
         #endregion
 
         #region Info methods

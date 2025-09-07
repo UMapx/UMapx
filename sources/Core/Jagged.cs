@@ -250,6 +250,7 @@ namespace UMapx.Core
             for (i = 0; i < m; i++)
             {
                 H[i] = new float[l];
+
                 for (j = 0; j < l; j++)
                 {
                     H[i][j] = 1.0f;
@@ -267,12 +268,15 @@ namespace UMapx.Core
         public static float[][] Eye(int m, int l)
         {
             float[][] H = new float[m][];
-            int i;
 
-            for (i = 0; i < m; i++)
+            for (int i = 0; i < m; i++)
             {
                 H[i] = new float[l];
-                H[i][i] = 1.0f;
+
+                for (int j = 0; j < l; j++)
+                {
+                    H[i][j] = i == j ? 1 : 0;
+                }
             }
 
             return H;
