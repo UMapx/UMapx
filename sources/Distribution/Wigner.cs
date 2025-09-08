@@ -151,7 +151,8 @@ namespace UMapx.Distribution
         {
             get
             {
-                return Maths.Log(Maths.Pi * r) - 1.0f / 2;
+                // Standard differential entropy: H = 1/2 + ln(π r / 2)
+                return Maths.Log(Maths.Pi * r / 2) + 0.5f;
             }
         }
         #endregion
