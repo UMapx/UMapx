@@ -330,7 +330,7 @@ namespace UMapx.Video
 			{
                 // check source
                 if ( ( source == null ) || ( source == string.Empty ) )
-                    throw new ArgumentException( "Video source is not specified." );
+                    throw new ArgumentException( "Video source is not specified" );
 
 				framesReceived = 0;
 				bytesReceived = 0;

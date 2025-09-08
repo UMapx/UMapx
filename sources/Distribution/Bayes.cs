@@ -23,7 +23,7 @@ namespace UMapx.Distribution
         public Bayes(float[] stat, float[] prior)
         {
             if (stat.Length != prior.Length)
-                throw new ArgumentException("Arrays must be of the same dimensions.");
+                throw new ArgumentException("Arrays must be of the same dimensions");
 
             this.N = prior.Length;
             this.Pp = new float[N];

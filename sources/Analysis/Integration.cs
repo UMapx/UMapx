@@ -733,7 +733,7 @@ namespace UMapx.Analysis
         /// <returns>Romberg estimate of ∫_a^b f(x) dx</returns>
         private static Complex32 Romb(Complex32[] y, Complex32 a, Complex32 b, int maxK, float eps = 1e-8f)
         {
-            if (y == null || y.Length < 2) throw new ArgumentException("y must have at least 2 samples.");
+            if (y == null || y.Length < 2) throw new ArgumentException("y must have at least 2 samples");
             if (maxK < 1) throw new ArgumentException(nameof(maxK));
             int N = y.Length;
             int S = N - 1;

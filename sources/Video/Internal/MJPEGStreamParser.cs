@@ -160,7 +160,7 @@
             }
             else
             {
-                throw new InvalidOperationException("No frame detected in buffer.");
+                throw new InvalidOperationException("No frame detected in buffer");
             }
         }
 
@@ -182,7 +182,7 @@
             }
             else
             {
-                throw new InvalidOperationException("No frame detected in buffer.");
+                throw new InvalidOperationException("No frame detected in buffer");
             }
         }
 

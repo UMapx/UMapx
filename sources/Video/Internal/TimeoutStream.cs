@@ -170,7 +170,7 @@
                 catch (AggregateException)
                 {
                     _source = new CancellationTokenSource();
-                    throw new TimeoutException("The operation timed out.");
+                    throw new TimeoutException("The operation timed out");
                 }
             }
             else
