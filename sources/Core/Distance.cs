@@ -62,12 +62,13 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Euclidean(this Complex32[] p, Complex32[] q)
         {
-            Complex32 sum = 0;
+            float sum = 0;
             int n = p.Length;
 
             for (int k = 0; k < n; k++)
             {
-                sum += Maths.Pow(p[k] - q[k], 2);
+                float d = Maths.Abs(p[k] - q[k]);
+                sum += d * d;
             }
 
             return Maths.Sqrt(sum);
@@ -318,9 +319,11 @@ namespace UMapx.Core
             }
 
             float den = Maths.Sqrt(x) * Maths.Sqrt(y);
-            float similarity = s == 0 ? 1.0f : 1.0f - (s / den);
+            if (den == 0)
+                return 0;
+            float cosine = s / den;
 
-            return Maths.Acos(similarity);
+            return Maths.Acos(cosine);
         }
         /// <summary>
         /// Returns distance value. 
@@ -360,20 +363,24 @@ namespace UMapx.Core
         {
             int n = p.Length;
             Complex32 s = 0;
-            Complex32 x = 0;
-            Complex32 y = 0;
+            float x = 0;
+            float y = 0;
 
             for (int i = 0; i < n; i++)
             {
-                s += p[i] * q[i];
-                x += p[i] * p[i];
-                y += q[i] * q[i];
+                s += p[i] * q[i].Conjugate;
+                float a = Maths.Abs(p[i]);
+                float b = Maths.Abs(q[i]);
+                x += a * a;
+                y += b * b;
             }
 
-            Complex32 den = Maths.Sqrt(x) * Maths.Sqrt(y);
-            Complex32 similarity = s == 0 ? 1.0f : 1.0f - (s / den);
+            float den = Maths.Sqrt(x) * Maths.Sqrt(y);
+            if (den == 0)
+                return 0;
+            Complex32 cosine = s / den;
 
-            return Maths.Acos(similarity);
+            return Maths.Acos(cosine);
         }
         /// <summary>
         /// Returns distance value. 
@@ -714,10 +721,11 @@ namespace UMapx.Core
 
             for (int i = 0; i < n; i++)
             {
-                sum += (float)Math.Pow(Math.Sqrt(p[i]) - Math.Sqrt(q[i]), 2);
+                float d = Maths.Sqrt(p[i]) - Maths.Sqrt(q[i]);
+                sum += d * d;
             }
 
-            return sum / Maths.Sqrt2;
+            return Maths.Sqrt(sum) / Maths.Sqrt2;
         }
         /// <summary>
         /// Returns distance value. 
@@ -756,14 +764,16 @@ namespace UMapx.Core
         public static Complex32 Hellinger(this Complex32[] p, Complex32[] q)
         {
             int n = p.Length;
-            Complex32 sum = 0;
+            float sum = 0;
 
             for (int i = 0; i < n; i++)
             {
-                sum += Maths.Pow(Maths.Sqrt(p[i]) - Maths.Sqrt(q[i]), 2);
+                Complex32 diff = Maths.Sqrt(p[i]) - Maths.Sqrt(q[i]);
+                float d = Maths.Abs(diff);
+                sum += d * d;
             }
 
-            return sum / Maths.Sqrt2;
+            return Maths.Sqrt(sum) / Maths.Sqrt2;
         }
         /// <summary>
         /// Returns distance value. 
@@ -1582,12 +1592,12 @@ namespace UMapx.Core
         public static Complex32 SquareEuclidian(this Complex32[] p, Complex32[] q)
         {
             int n = p.Length;
-            Complex32 sum = 0.0f;
-            Complex32 u;
+            float sum = 0.0f;
+            float u;
 
             for (int i = 0; i < n; i++)
             {
-                u = p[i] - q[i];
+                u = Maths.Abs(p[i] - q[i]);
                 sum += u * u;
             }
 
@@ -1682,17 +1692,24 @@ namespace UMapx.Core
         public static Complex32 Cosine(this Complex32[] p, Complex32[] b)
         {
             int length = p.Length;
-            Complex32 A = Matrice.Abs(p, false);
-            Complex32 B = Matrice.Abs(b, false);
             Complex32 s = 0;
+            float A = 0;
+            float B = 0;
 
             for (int i = 0; i < length; i++)
-                s += p[i] * b[i];
+            {
+                s += p[i] * b[i].Conjugate;
+                float ap = Maths.Abs(p[i]);
+                float bp = Maths.Abs(b[i]);
+                A += ap * ap;
+                B += bp * bp;
+            }
 
-            if (A == 0 || B == 0)
+            float den = Maths.Sqrt(A) * Maths.Sqrt(B);
+            if (den == 0)
                 return 0;
 
-            return s / (A * B);
+            return s / den;
         }
         /// <summary>
         /// Returns distance value. 
