@@ -97,11 +97,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                if (mu == 0)
-                {
-                    return scale / 3.0f;
-                }
-                return float.NaN;
+                return mu + scale / 3.0f;
             }
         }
         /// <summary>
@@ -125,7 +121,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (1.0f + 3.0f * Maths.Gamma + Maths.Log(16 * Maths.Pi * scale * scale)) / 2.0f;
+                return 1.0f + Maths.Log(2.0f * Maths.Sqrt(Maths.Pi * scale));
             }
         }
         /// <summary>
