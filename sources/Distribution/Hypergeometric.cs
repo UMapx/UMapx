@@ -142,7 +142,7 @@ namespace UMapx.Distribution
             get
             {
                 float k1 = (n - 2 * d) * Maths.Pow(n - 1, 0.5f) * (n - 2 * k);
-                float k2 = (n * d * (n - d) * Maths.Pow(n - k, 0.5f) * (n - 2));
+                float k2 = Maths.Sqrt(k * d * (n - d) * (n - k)) * (n - 2);
                 return k1 / k2;
             }
         }
