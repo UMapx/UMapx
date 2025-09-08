@@ -86,13 +86,13 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the support interval of the argument.
+        /// Gets the support interval of the argument [max(0, K + D - N), min(D, K)].
         /// </summary>
         public RangeFloat Support
         {
             get
             {
-                return new RangeFloat(0, k);
+                return new RangeFloat(Math.Max(0, k + d - n), Math.Min(d, k));
             }
         }
         /// <summary>
