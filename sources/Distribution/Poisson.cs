@@ -128,7 +128,12 @@ namespace UMapx.Distribution
             {
                 return 0;
             }
-            return Maths.Exp(-l) * Maths.Pow(l, x) / (float)Special.Factorial(x);
+            int k = (int)x;
+            if (x != Maths.Floor(x))
+            {
+                return 0;
+            }
+            return Maths.Exp(-l) * Maths.Pow(l, k) / (float)Special.Factorial(k);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
