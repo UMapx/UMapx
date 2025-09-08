@@ -182,7 +182,7 @@ namespace UMapx.Distribution
 
             float a = n - x;
             float b = x + 1;
-            return Special.BetaIncomplete(a, b, q);
+            return Special.BetaIncompleteRegularized(a, b, q);
         }
         /// <summary>
         /// Returns the value of differential entropy.
