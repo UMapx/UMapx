@@ -32462,7 +32462,7 @@
         </member>
         <member name="T:UMapx.Wavelet.HaarWavelet">
             <summary>
-            Defines the continuous Haar wavelet.
+            Defines the continuous Haar wavelet on [0,1).
             </summary>
         </member>
         <member name="M:UMapx.Wavelet.HaarWavelet.#ctor">
@@ -32479,7 +32479,7 @@
         </member>
         <member name="M:UMapx.Wavelet.HaarWavelet.Wavelet(System.Single)">
             <summary>
-            Returns the value of the wavelet function.
+            Returns the value of the wavelet function defined on [0,1).
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
@@ -32636,12 +32636,18 @@
         </member>
         <member name="T:UMapx.Wavelet.MorletWavelet">
             <summary>
-            Defines the continuous Morlet wavelet.
+            Defines the normalized continuous Morlet wavelet with zero mean.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.MorletWavelet.#ctor">
+        <member name="M:UMapx.Wavelet.MorletWavelet.#ctor(System.Single)">
             <summary>
             Initializes the continuous Morlet wavelet.
+            </summary>
+            <param name="omega0">Central frequency</param>
+        </member>
+        <member name="P:UMapx.Wavelet.MorletWavelet.Omega0">
+            <summary>
+            Gets or sets the central frequency.
             </summary>
         </member>
         <member name="M:UMapx.Wavelet.MorletWavelet.Scaling(System.Single)">
@@ -32653,7 +32659,7 @@
         </member>
         <member name="M:UMapx.Wavelet.MorletWavelet.Wavelet(System.Single)">
             <summary>
-            Returns the value of the wavelet function.
+            Returns the value of the normalized wavelet function with zero mean.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>

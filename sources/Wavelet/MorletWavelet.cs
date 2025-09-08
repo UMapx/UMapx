@@ -17,8 +17,10 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Initializes the continuous Morlet wavelet.
         /// </summary>
-        public MorletWavelet()
+        /// <param name="omega0">Central frequency</param>
+        public MorletWavelet(float omega0)
         {
+            this.Omega0 = omega0;
         }
         /// <summary>
         /// Gets or sets the central frequency.
