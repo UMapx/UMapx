@@ -121,7 +121,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return 1.0f + Maths.Log(2.0f * Maths.Sqrt(Maths.Pi * scale));
+                return 1.0f + Maths.Log(Maths.Sqrt(2.0f * Maths.Pi * scale));
             }
         }
         /// <summary>
