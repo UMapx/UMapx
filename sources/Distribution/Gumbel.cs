@@ -53,8 +53,8 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (value < 0)
-                    throw new ArgumentException("Invalid argument value");
+                if (value <= 0)
+                    throw new ArgumentException("Scale factor β must be greater than 0.");
 
                 this.beta = value;
             }
