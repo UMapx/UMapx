@@ -41,7 +41,7 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (value < 0)
+                if (value <= 0)
                     throw new ArgumentException("Invalid argument value");
 
                 this.mu = value;
@@ -58,7 +58,7 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (value < 0)
+                if (value <= 0)
                     throw new ArgumentException("Invalid argument value");
 
                 this.beta = value;
@@ -75,7 +75,7 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (value < 0)
+                if (value <= 0)
                     throw new ArgumentException("Invalid argument value");
 
                 this.gamma = value;
@@ -98,7 +98,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return 1 + 0.5f * gamma * gamma;
+                return mu + beta * (1 + 0.5f * gamma * gamma);
             }
         }
         /// <summary>
@@ -113,7 +113,7 @@ namespace UMapx.Distribution
         /// </summary>
         public float Variance
         {
-            get { return gamma * gamma * (1 + (5 * gamma * gamma) / 4); }
+            get { return beta * beta * gamma * gamma * (1 + 5f * gamma * gamma / 4f); }
         }
         /// <summary>
         /// Gets the mode value.
@@ -150,12 +150,12 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            float a = Maths.Sqrt(x);
-            float b = Maths.Sqrt(1.0f / x);
-            float z = (a - b) / gamma;
+            if (x <= mu)
+                return 0;
 
-            // Normal cumulative distribution function
-            return Special.Erfc(-z / 1.4142135623731f) * 0.5f;
+            float z = (Maths.Sqrt((x - mu) / beta) - Maths.Sqrt(beta / (x - mu))) / gamma;
+
+            return 0.5f * Special.Erfc(-z / Maths.Sqrt2);
         }
         /// <summary>
         /// Returns the value of the probability density function.
@@ -164,16 +164,15 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Function(float x)
         {
-            float c = x - mu;
+            if (x <= mu)
+                return 0;
 
-            float a = Maths.Sqrt(c / beta);
-            float b = Maths.Sqrt(beta / c);
-
-            float alpha = (a + b) / (2 * gamma * c);
+            float a = Maths.Sqrt((x - mu) / beta);
+            float b = Maths.Sqrt(beta / (x - mu));
             float z = (a - b) / gamma;
+            float phi = Maths.Exp(-0.5f * z * z) / Maths.Sqrt(2 * Maths.Pi);
 
-            // Normal cumulative distribution function
-            return alpha * Special.Erfc(-z / 1.4142135623731f) * 0.5f;
+            return (a + b) / (2 * gamma * (x - mu)) * phi;
         }
         #endregion
     }
