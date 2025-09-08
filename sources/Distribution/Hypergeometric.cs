@@ -28,8 +28,8 @@ namespace UMapx.Distribution
         /// Initializes the hypergeometric distribution.
         /// </summary>
         /// <param name="n">Parameter N [0, +inf]</param>
-        /// <param name="k">Parameter D [0, N]</param>
-        /// <param name="d">Parameter K [0, N]</param>
+        /// <param name="k">Parameter K [0, N]</param>
+        /// <param name="d">Parameter D [0, N]</param>
         public Hypergeometric(float n, float k, float d)
         {
             N = n; K = k; D = d;
@@ -69,7 +69,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets or sets the value of the parameter k [0, N].
+        /// Gets or sets the value of the parameter K [0, N].
         /// </summary>
         public float K
         {
