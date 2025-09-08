@@ -75,7 +75,7 @@ namespace UMapx.Distribution
         /// </remarks>
         public float Entropy
         {
-            get { return (2f / Maths.Pi) * Maths.G; }
+            get { return Maths.Log(4f); }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
