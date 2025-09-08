@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UMapx", "UMapx.csproj", "{33A1E4B7-F6A3-4EA8-8446-4E37016D375B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Distribution", "..\tests\Distribution\Distribution.csproj", "{3AB31F1E-94EE-4AE3-925E-4F72E7B44574}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{33A1E4B7-F6A3-4EA8-8446-4E37016D375B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33A1E4B7-F6A3-4EA8-8446-4E37016D375B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33A1E4B7-F6A3-4EA8-8446-4E37016D375B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AB31F1E-94EE-4AE3-925E-4F72E7B44574}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AB31F1E-94EE-4AE3-925E-4F72E7B44574}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AB31F1E-94EE-4AE3-925E-4F72E7B44574}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AB31F1E-94EE-4AE3-925E-4F72E7B44574}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
