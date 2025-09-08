@@ -4,7 +4,7 @@ using UMapx.Core;
 namespace UMapx.Wavelet
 {
     /// <summary>
-    /// Defines the continuous complex Morlet wavelet.
+    /// Defines the normalized continuous complex Morlet wavelet.
     /// </summary>
     [Serializable]
     public class ComplexMorletWavelet : IComplexWavelet
@@ -62,13 +62,14 @@ namespace UMapx.Wavelet
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Returns the value of the wavelet function.
+        /// Returns the value of the normalized wavelet function.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Function</returns>
         public Complex32 Wavelet(float x)
         {
-            return Math.Pow(Maths.Pi * fb, -0.5) * Maths.Exp(2 * Maths.Pi * Maths.I * fc * x) * Math.Exp(-(x * x) / fb);
+            float amplitude = Maths.Pow(Maths.Pi, -0.25f) / Maths.Sqrt(fb);
+            return amplitude * Maths.Exp(2 * Maths.Pi * Maths.I * fc * x) * Maths.Exp(-(x * x) / fb);
         }
         #endregion
     }
