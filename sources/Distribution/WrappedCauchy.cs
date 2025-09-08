@@ -68,7 +68,8 @@ namespace UMapx.Distribution
             get { return mu; }
         }
         /// <summary>
-        /// Gets the variance value.
+        /// Gets the circular variance value.
+        /// The standard (linear) variance does not exist.
         /// </summary>
         public float Variance
         {
