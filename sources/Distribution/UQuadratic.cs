@@ -18,6 +18,15 @@ namespace UMapx.Distribution
         float b;
         float alpha;
         float beta;
+
+        /// <summary>
+        /// Updates coefficients when parameters change.
+        /// </summary>
+        private void UpdateCoefficients()
+        {
+            this.alpha = 12 / Maths.Pow(b - a, 3);
+            this.beta = (b + a) / 2;
+        }
         #endregion
 
         #region UQuadratic components
@@ -29,8 +38,7 @@ namespace UMapx.Distribution
         public UQuadratic(float a, float b)
         {
             A = a; B = b;
-            this.alpha = 12 / Maths.Pow(b - a, 3);
-            this.beta = (b + a) / 2;
+            UpdateCoefficients();
         }
         /// <summary>
         /// Gets or sets the value of the parameter a ∈ (0, +inf).
@@ -47,6 +55,7 @@ namespace UMapx.Distribution
                     throw new ArgumentException("Invalid argument value");
 
                 this.a = value;
+                UpdateCoefficients();
             }
         }
         /// <summary>
@@ -60,10 +69,11 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (b < a)
+                if (value < a)
                     throw new ArgumentException("The value of parameter b must be either greater than or equal to a");
 
                 this.b = value;
+                UpdateCoefficients();
             }
         }
         /// <summary>
@@ -95,7 +105,7 @@ namespace UMapx.Distribution
         /// </summary>
         public float Variance
         {
-            get { return (3.0f / 20.0f) * Maths.Pow(b - a, 2.0f); }
+            get { return (1f / 20f) * Maths.Pow(b - a, 2f); }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
@@ -110,9 +120,6 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
-        /// <remarks>
-        /// (3/112 * (b - a)^4) / Maths.Pow(Variance, 2) - 3
-        /// </remarks>
         public float Excess
         {
             get

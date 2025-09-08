@@ -17311,6 +17311,11 @@
             https://en.wikipedia.org/wiki/U-quadratic_distribution
             </remarks>
         </member>
+        <member name="M:UMapx.Distribution.UQuadratic.UpdateCoefficients">
+            <summary>
+            Updates coefficients when parameters change.
+            </summary>
+        </member>
         <member name="M:UMapx.Distribution.UQuadratic.#ctor(System.Single,System.Single)">
             <summary>
             Initializes the U-quadratic distribution.
@@ -17357,9 +17362,6 @@
             <summary>
             Gets the kurtosis coefficient.
             </summary>
-            <remarks>
-            (3/112 * (b - a)^4) / Maths.Pow(Variance, 2) - 3
-            </remarks>
         </member>
         <member name="P:UMapx.Distribution.UQuadratic.Entropy">
             <summary>
