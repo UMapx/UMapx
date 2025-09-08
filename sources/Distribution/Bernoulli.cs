@@ -126,13 +126,13 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the kurtosis coefficient.
+        /// Gets the excess kurtosis (kurtosis minus 3).
         /// </summary>
         public float Excess
         {
             get
             {
-                return (6 * p * p - 6 * p + 1) / (p * (1 - p));
+                return (6 * p * p - 6 * p + 1) / (p * (1 - p)) - 3f;
             }
         }
         /// <summary>
