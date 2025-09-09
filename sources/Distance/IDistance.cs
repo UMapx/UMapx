@@ -7,6 +7,7 @@ namespace UMapx.Distance
     /// </summary>
     internal interface IDistance
     {
+        #region Interface
         /// <summary>
         /// Returns distance value. 
         /// </summary>
@@ -35,5 +36,6 @@ namespace UMapx.Distance
         /// <param name="q">Matrix</param>
         /// <returns>Vector</returns>
         Complex32[] Compute(Complex32[,] p, Complex32[,] q);
+        #endregion
     }
 }
