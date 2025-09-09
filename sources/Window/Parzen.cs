@@ -34,12 +34,12 @@ namespace UMapx.Window
 
             // props:
             if ((y >= 0) &&
-                (y <= frameSize / 4))
+                (y <= frameSize / 4.0f))
             {
                 return 1.0f - 6.0f * a * a * (1.0f - b);
             }
-            else if (y >= frameSize / 4 &&
-                y <= frameSize / 2)
+            else if (y >= frameSize / 4.0f &&
+                y <= frameSize / 2.0f)
             {
                 return 2 * Maths.Pow(1 - b, 3);
             }
