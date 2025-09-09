@@ -19,7 +19,6 @@ namespace UMapx.Distribution
         private int d2;
 
         // Derived values
-        private float b;
         private float? mean;
         private float? variance;
         #endregion
@@ -32,29 +31,42 @@ namespace UMapx.Distribution
         /// <param name="d2">Second degree of freedom</param>
         public FisherSnedecor(int d1 = 1, int d2 = 1)
         {
-            if (d1 <= 0)
-                throw new ArgumentOutOfRangeException("d1", "The value must be greater than zero");
-            if (d2 <= 0)
-                throw new ArgumentOutOfRangeException("d2", "The value must be greater than zero");
-
-            this.d1 = d1;
-            this.d2 = d2;
-
-            this.b = Special.Beta(d1 * 0.5f, d2 * 0.5f);
+            this.D1 = d1;
+            this.D2 = d2;
         }
         /// <summary>
         /// Gets the value of the first degree of freedom.
         /// </summary>
         public int D1
         {
-            get { return d1; }
+            get 
+            {
+                return d1; 
+            }
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException(nameof(d1), "The value must be greater than zero");
+
+                d1 = value;
+            }
         }
         /// <summary>
         /// Gets the value of the second degree of freedom.
         /// </summary>
         public int D2
         {
-            get { return d2; }
+            get 
+            { 
+                return d2; 
+            }
+            set
+            {
+                if (d2 <= 0)
+                    throw new ArgumentOutOfRangeException(nameof(d2), "The value must be greater than zero");
+
+                d2 = value;
+            }
         }
         /// <summary>
         /// Gets the mean value.
@@ -186,7 +198,8 @@ namespace UMapx.Distribution
         {
             if (x <= 0)
                 return 0;
-
+            
+            float b = Special.Beta(d1 * 0.5f, d2 * 0.5f);
             float u = Maths.Pow(d1 * x, d1) * Maths.Pow(d2, d2) /
                 Maths.Pow(d1 * x + d2, d1 + d2);
             return Maths.Sqrt(u) / (x * b);

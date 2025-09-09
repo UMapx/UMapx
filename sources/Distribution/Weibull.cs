@@ -61,7 +61,10 @@ namespace UMapx.Distribution
             }
             set
             {
-                this.k = Maths.Max(0.0000001f, value);
+                if (value <= 0)
+                    throw new ArgumentException("Invalid argument value");
+
+                this.k = value;
             }
         }
         /// <summary>

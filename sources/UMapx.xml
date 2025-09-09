@@ -16631,6 +16631,13 @@
             https://en.wikipedia.org/wiki/Nakagami_distribution
             </remarks>
         </member>
+        <member name="M:UMapx.Distribution.Nakagami.Initialize(System.Single,System.Single)">
+            <summary>
+            Configures distribution parameters and precomputes constants.
+            </summary>
+            <param name="mu">Shape factor</param>
+            <param name="omega">Spread coefficient</param>
+        </member>
         <member name="M:UMapx.Distribution.Nakagami.#ctor">
              <summary>
             Initializes the distribution of Nakagami.
@@ -16642,13 +16649,6 @@
             </summary>
             <param name="mu">Shape factor</param>
             <param name="omega">Spread rate</param>
-        </member>
-        <member name="M:UMapx.Distribution.Nakagami.Initialize(System.Single,System.Single)">
-            <summary>
-            Configures distribution parameters and precomputes constants.
-            </summary>
-            <param name="mu">Shape factor</param>
-            <param name="omega">Spread coefficient</param>
         </member>
         <member name="P:UMapx.Distribution.Nakagami.Mu">
             <summary>

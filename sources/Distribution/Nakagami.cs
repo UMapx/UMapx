@@ -19,6 +19,22 @@ namespace UMapx.Distribution
         private float constant; // 2 * μ ^ μ / (Γ(μ) * ω ^ μ))
         private float nratio;   // -μ / ω
         private float twoMu1;   // 2 * μ - 1.0
+
+        /// <summary>
+        /// Configures distribution parameters and precomputes constants.
+        /// </summary>
+        /// <param name="mu">Shape factor</param>
+        /// <param name="omega">Spread coefficient</param>
+        private void Initialize(float mu, float omega)
+        {
+            float twoMuMu = 2.0f * Maths.Pow(mu, mu);
+            float gammaMu = Special.Gamma(mu);
+            float spreadMu = Maths.Pow(omega, mu);
+
+            nratio = -mu / omega;
+            twoMu1 = 2.0f * mu - 1.0f;
+            constant = twoMuMu / (gammaMu * spreadMu);
+        }
         #endregion
 
         #region Nakagami components
@@ -27,7 +43,8 @@ namespace UMapx.Distribution
         /// </summary>
         public Nakagami()
         {
-            Initialize(0.5f, 1);
+            Mu = 0.5f;
+            Omega = 1;
         }
         /// <summary>
         /// Initializes the distribution of Nakagami.
@@ -36,25 +53,8 @@ namespace UMapx.Distribution
         /// <param name="omega">Spread rate</param>
         public Nakagami(float mu, float omega)
         {
-            Initialize(mu, omega);
-        }
-        /// <summary>
-        /// Configures distribution parameters and precomputes constants.
-        /// </summary>
-        /// <param name="mu">Shape factor</param>
-        /// <param name="omega">Spread coefficient</param>
-        private void Initialize(float mu, float omega)
-        {
             Mu = mu;
             Omega = omega;
-
-            float twoMuMu = 2.0f * Maths.Pow(mu, mu);
-            float gammaMu = Special.Gamma(mu);
-            float spreadMu = Maths.Pow(omega, mu);
-            nratio = -mu / omega;
-            twoMu1 = 2.0f * mu - 1.0f;
-
-            constant = twoMuMu / (gammaMu * spreadMu);
         }
         /// <summary>
         /// Gets or sets the value of the shape factor.
@@ -71,6 +71,7 @@ namespace UMapx.Distribution
                     throw new ArgumentException("Invalid argument value");
 
                 this.mu = value;
+                Initialize(this.mu, this.omega);
             }
         }
         /// <summary>
@@ -88,6 +89,7 @@ namespace UMapx.Distribution
                     throw new ArgumentException("Invalid argument value");
 
                 this.omega = value;
+                Initialize(this.mu, this.omega);
             }
         }
         /// <summary>
@@ -118,7 +120,7 @@ namespace UMapx.Distribution
             get
             {
                 float a = Maths.Sqrt2 / 2;
-                float b = ((2 * mu - 1) * omega) / mu;
+                float b = (2 * mu - 1) * omega / mu;
                 return a * Maths.Sqrt(b);
             }
         }

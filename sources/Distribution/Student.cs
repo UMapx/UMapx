@@ -14,7 +14,6 @@ namespace UMapx.Distribution
     public class Student : IDistribution
     {
         #region Private data
-        private float lambda;
         private float degrees;
         #endregion
 
@@ -26,9 +25,6 @@ namespace UMapx.Distribution
         public Student(float n)
         {
             this.N = n;
-            float num = Special.LogGamma((n + 1) / 2.0f);
-            float den = 0.5f * Maths.Log(n * Maths.Pi) + Special.LogGamma(n / 2.0f);
-            this.lambda = num - den;
         }
         /// <summary>
         /// Gets or sets degrees of freedom n ∈ (0, +inf).
@@ -171,7 +167,10 @@ namespace UMapx.Distribution
         /// <returns>Logarithm of the density</returns>
         private float LogFunction(float x)
         {
-            return lambda - ((degrees + 1) / 2.0f) * Maths.Log(1 + (x * x) / degrees);
+            float num = Special.LogGamma((this.degrees + 1) / 2.0f);
+            float den = 0.5f * Maths.Log(this.degrees * Maths.Pi) + Special.LogGamma(this.degrees / 2.0f);
+            float lambda = num - den;
+            return lambda - (degrees + 1) / 2.0f * Maths.Log(1 + (x * x) / degrees);
         }
         #endregion
     }
