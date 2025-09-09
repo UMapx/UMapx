@@ -82,14 +82,11 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         /// <summary>
-        /// Gets the variance value.
+        /// Gets the variance value. Undefined for the Cauchy distribution.
         /// </summary>
         public float Variance
         {
-            get
-            {
-                return float.PositiveInfinity;
-            }
+            get { throw new NotSupportedException(); }
         }
         /// <summary>
         /// Gets the mode value.
