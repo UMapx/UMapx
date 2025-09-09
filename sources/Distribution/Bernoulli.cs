@@ -177,6 +177,10 @@ namespace UMapx.Distribution
         {
             get
             {
+                if (p == 0f || p == 1f)
+                {
+                    return 0f;
+                }
                 return -q * Maths.Log(q) - p * Maths.Log(p);
             }
         }
