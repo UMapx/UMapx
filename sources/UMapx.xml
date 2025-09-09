@@ -15741,7 +15741,7 @@
         </member>
         <member name="P:UMapx.Distribution.HyperbolicSecant.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
         </member>
         <member name="P:UMapx.Distribution.HyperbolicSecant.Support">
