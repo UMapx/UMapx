@@ -146,7 +146,11 @@ namespace UMapx.Distribution
             {
                 return q;
             }
-            return p;
+            if (x == 1)
+            {
+                return p;
+            }
+            return 0;
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
