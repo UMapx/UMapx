@@ -9,9 +9,9 @@ namespace UMapx.Distribution
     public class Bayes
     {
         #region Private data
-        private float[] Pp;
-        private float Pa;
-        private int N;
+        private readonly float[] Pp;
+        private readonly float Pa;
+        private readonly int N;
         #endregion
 
         #region Bayes components
