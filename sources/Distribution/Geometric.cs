@@ -125,9 +125,14 @@ namespace UMapx.Distribution
         {
             if (x < 0)
             {
-                return 0;
+                return 0f;
             }
-            return Maths.Pow(q, x) * p;
+            int k = (int)Maths.Floor(x);
+            if (x != k)
+            {
+                return 0f;
+            }
+            return Maths.Pow(q, k) * p;
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
