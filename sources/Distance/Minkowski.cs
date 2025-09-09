@@ -32,7 +32,7 @@ namespace UMapx.Distance
             }
             set
             {
-                if (value < 0)
+                if (value <= 0)
                     throw new ArgumentException("Order cannot be less or equal 0");
 
                 order = value;
