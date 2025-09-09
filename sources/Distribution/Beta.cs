@@ -43,6 +43,11 @@ namespace UMapx.Distribution
             }
             set
             {
+                if (value <= 0)
+                {
+                    throw new ArgumentException("Parameter b must be greater than zero");
+                }
+
                 this.a = value;
             }
         }
@@ -57,6 +62,11 @@ namespace UMapx.Distribution
             }
             set
             {
+                if (value <= 0)
+                {
+                    throw new ArgumentException("Parameter b must be greater than zero");
+                }
+
                 this.b = value;
             }
         }
