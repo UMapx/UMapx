@@ -75,7 +75,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mean value.
+        /// Gets the mean value. Undefined for the Cauchy distribution.
         /// </summary>
         public float Mean
         {

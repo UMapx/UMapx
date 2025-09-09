@@ -14693,12 +14693,12 @@
         </member>
         <member name="P:UMapx.Distribution.Cauchy.Mean">
             <summary>
-            Gets the mean value.
+            Gets the mean value. Undefined for the Cauchy distribution.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Cauchy.Variance">
             <summary>
-            Gets the variance value.
+            Gets the variance value. Undefined for the Cauchy distribution.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Cauchy.Mode">
