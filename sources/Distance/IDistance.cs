@@ -5,7 +5,7 @@ namespace UMapx.Distance
     /// <summary>
     /// Defines the distance interface.
     /// </summary>
-    internal interface IDistance
+    public interface IDistance
     {
         #region Interface
         /// <summary>

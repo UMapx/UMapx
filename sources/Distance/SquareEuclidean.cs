@@ -3,11 +3,11 @@
 namespace UMapx.Distance
 {
     /// <summary>
-    /// Defines square Euclidian distance.
+    /// Defines square Euclidean distance.
     /// </summary>
-    public class SquareEuclidian : DistanceBase, IDistance
+    public class SquareEuclidean : DistanceBase, IDistance
     {
-        #region Square-Euclidian distance
+        #region Square-Euclidean distance
         /// <summary>
         /// Returns distance value.
         /// </summary>

@@ -14020,12 +14020,12 @@
             <param name="q">Array</param>
             <returns>Value</returns>
         </member>
-        <member name="T:UMapx.Distance.SquareEuclidian">
+        <member name="T:UMapx.Distance.SquareEuclidean">
             <summary>
-            Defines square Euclidian distance.
+            Defines square Euclidean distance.
             </summary>
         </member>
-        <member name="M:UMapx.Distance.SquareEuclidian.Compute(System.Single[],System.Single[])">
+        <member name="M:UMapx.Distance.SquareEuclidean.Compute(System.Single[],System.Single[])">
             <summary>
             Returns distance value.
             </summary>
@@ -14033,7 +14033,7 @@
             <param name="q">Array</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Distance.SquareEuclidian.Compute(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+        <member name="M:UMapx.Distance.SquareEuclidean.Compute(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
             <summary>
             Returns distance value.
             </summary>
