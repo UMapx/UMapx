@@ -80,7 +80,7 @@ namespace UMapx.Transform
                 C[k] = 2.0f * (B[k] * Maths.Exp(c * k)).Real / Maths.Sqrt(2f * N);
             }
 
-            C[0] = C[0] / Maths.Sqrt2; // DCT-I
+            C[0] = C[0] / Maths.Sqrt2;
 
             return C;
         }
@@ -100,7 +100,7 @@ namespace UMapx.Transform
                 A[k] = B[k] * Maths.Exp(c * k) * Maths.Sqrt(2f * N);
             }
 
-            A[0] /= Maths.Sqrt(2f); // DCT-I
+            A[0] /= Maths.Sqrt(2f);
 
             A = FFT.Backward(A);
 

@@ -67,7 +67,7 @@ namespace UMapx.Transform
                 }
             }
 
-            return (H);
+            return H;
         }
         #endregion
 
@@ -92,7 +92,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = CosineTransform.Matrix(N);
-            return Core.Matrice.Dot(B, (float[,])Core.Matrice.Transpose(U));
+            return Core.Matrice.Dot(B, Matrice.Transpose(U));
         }
         /// <summary>
         /// Forward cosine transform.
@@ -156,7 +156,7 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = CosineTransform.Matrix(N);
-            return Core.Matrice.Dot(B, (float[,])Core.Matrice.Transpose(U));
+            return Core.Matrice.Dot(B, Matrice.Transpose(U));
         }
         /// <summary>
         /// Forward cosine transform.
