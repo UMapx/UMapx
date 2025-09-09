@@ -43,6 +43,7 @@ using UMapx.Analysis;
 using UMapx.Colorspace;
 using UMapx.Core;
 using UMapx.Decomposition;
+using UMapx.Distance;
 using UMapx.Distribution;
 using UMapx.Imaging;
 using UMapx.Response;
