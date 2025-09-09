@@ -45,7 +45,7 @@ namespace UMapx.Distribution
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentException("Parameter b must be greater than zero");
+                    throw new ArgumentException("Parameter a must be greater than zero");
                 }
 
                 this.a = value;
