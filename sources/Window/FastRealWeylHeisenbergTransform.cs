@@ -36,9 +36,6 @@ namespace UMapx.Window
             int N2 = A.Length;
             int N = N2 / 2;
 
-            if (N == this.m)
-                throw new ArgumentException("M could not be equal N/2");
-
             var a = new Complex32[N];
 
             for (int i = 0; i < N; i++)
@@ -66,9 +63,6 @@ namespace UMapx.Window
         {
             int N2 = B.Length;
             int N = N2 / 2;
-
-            if (N == this.m)
-                throw new ArgumentException("M could not be equal N/2");
 
             var cache = FastWeylHeisenbergTransform.PolyphaseCache.Build(N, this.m, this.window);
             var c = new Complex32[N2];
@@ -100,9 +94,6 @@ namespace UMapx.Window
             int cols2 = A.GetLength(1);
             int rows = rows2 / 2;
             int cols = cols2 / 2;
-
-            if (rows == this.m || cols == this.m)
-                throw new ArgumentException("M could not be equal N/2");
 
             FastWeylHeisenbergTransform.PolyphaseCache cacheCols = null;
             FastWeylHeisenbergTransform.PolyphaseCache cacheRows = null;
@@ -209,9 +200,6 @@ namespace UMapx.Window
             int cols2 = B.GetLength(1);
             int rows = rows2 / 2;
             int cols = cols2 / 2;
-
-            if (rows == this.m || cols == this.m)
-                throw new ArgumentException("M could not be equal N/2");
 
             FastWeylHeisenbergTransform.PolyphaseCache cacheCols = null;
             FastWeylHeisenbergTransform.PolyphaseCache cacheRows = null;
@@ -321,9 +309,6 @@ namespace UMapx.Window
             int N2 = A.Length;
             int N = N2 / 2;
 
-            if (N == this.m)
-                throw new ArgumentException("M could not be equal N/2");
-
             // Build cache for length N (since FWHT(N) -> length 2N)
             var cache = FastWeylHeisenbergTransform.PolyphaseCache.Build(N, this.m, this.window);
 
@@ -361,9 +346,6 @@ namespace UMapx.Window
         {
             int N2 = B.Length;
             int N = N2 / 2;
-
-            if (N == this.m)
-                throw new ArgumentException("M could not be equal N/2");
 
             // Build cache for length N (since IFWHT(2N) -> length N)
             var cache = FastWeylHeisenbergTransform.PolyphaseCache.Build(N, this.m, this.window);
@@ -410,9 +392,6 @@ namespace UMapx.Window
             int cols2 = A.GetLength(1);
             int rows = rows2 / 2;
             int cols = cols2 / 2;
-
-            if (rows == this.m || cols == this.m)
-                throw new ArgumentException("M could not be equal N/2");
 
             FastWeylHeisenbergTransform.PolyphaseCache cacheCols = null;
             FastWeylHeisenbergTransform.PolyphaseCache cacheRows = null;
@@ -535,9 +514,6 @@ namespace UMapx.Window
             int cols2 = B.GetLength(1);
             int rows = rows2 / 2;
             int cols = cols2 / 2;
-
-            if (rows == this.m || cols == this.m)
-                throw new ArgumentException("M could not be equal N/2");
 
             FastWeylHeisenbergTransform.PolyphaseCache cacheCols = null;
             FastWeylHeisenbergTransform.PolyphaseCache cacheRows = null;
