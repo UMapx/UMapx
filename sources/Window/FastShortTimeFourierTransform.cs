@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using UMapx.Core;
 using UMapx.Transform;
 
@@ -13,12 +12,11 @@ namespace UMapx.Window
     /// https://en.wikipedia.org/wiki/Short-time_Fourier_transform
     /// </remarks>
     [Serializable]
-    public class FastShortTimeFourierTransform : IWindowTransform, ITransform
+    public class FastShortTimeFourierTransform : Complex32TransformBase, IWindowTransform, ITransform
     {
         #region Private data
         private readonly FastFourierTransform FFT;
         private IWindow window;
-        private Direction direction;
         private readonly float[] coefs;
         #endregion
 
@@ -54,20 +52,6 @@ namespace UMapx.Window
             }
         }
         /// <summary>
-        /// Gets or sets the processing direction.
-        /// </summary>
-        public Direction Direction
-        {
-            get
-            {
-                return this.direction;
-            }
-            set
-            {
-                this.direction = value;
-            }
-        }
-        /// <summary>
         /// Gets or sets the window function.
         /// </summary>
         public IWindow Window
@@ -83,7 +67,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Forward(Complex32[] A)
+        public override Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length, frame = coefs.Length;
             if (N % frame != 0)
@@ -111,7 +95,7 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Backward(Complex32[] B)
+        public override Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length, frame = coefs.Length;
             if (N % frame != 0)
@@ -133,236 +117,6 @@ namespace UMapx.Window
             }
 
             return A;
-        }
-        /// <summary>
-        /// Forward short-time Fourier Transform.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
-        public Complex32[,] Forward(Complex32[,] A)
-        {
-            // Fourier transform:
-            Complex32[,] B = (Complex32[,])A.Clone();
-            int N = A.GetLength(0);
-            int M = A.GetLength(1);
-
-            if (direction == Direction.Both)
-            {
-                // 2-d horizontal short-time fourier transform:
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = B[i, j];
-                    }
-
-                    row = Forward(row);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        B[i, j] = row[j];
-                    }
-                });
-
-                // 2-d vertical short-time fourier transform:
-                Parallel.For(0, M, j =>
-                {
-                    Complex32[] col = new Complex32[N];
-                    int i;
-
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = B[i, j];
-                    }
-
-                    col = Forward(col);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        B[i, j] = col[i];
-                    }
-                });
-
-            }
-            else if (direction == Direction.Vertical)
-            {
-                // 2-d vertical short-time fourier transform:
-                Parallel.For(0, M, j =>
-                {
-                    Complex32[] col = new Complex32[N];
-                    int i;
-
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = B[i, j];
-                    }
-
-                    col = Forward(col);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        B[i, j] = col[i];
-                    }
-                });
-            }
-            else
-            {
-                // 2-d horizontal short-time fourier transform:
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = B[i, j];
-                    }
-
-                    row = Forward(row);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        B[i, j] = row[j];
-                    }
-                });
-            }
-
-            return B;
-        }
-        /// <summary>
-        /// Backward short-time Fourier Transform.
-        /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
-        public Complex32[,] Backward(Complex32[,] B)
-        {
-            Complex32[,] A = (Complex32[,])B.Clone();
-            int N = B.GetLength(0);
-            int M = B.GetLength(1);
-
-            if (direction == Direction.Both)
-            {
-                // 2-d vertical short-time fourier transform:
-                Parallel.For(0, M, j =>
-                {
-                    Complex32[] col = new Complex32[N];
-                    int i;
-
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = A[i, j];
-                    }
-
-                    col = Backward(col);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        A[i, j] = col[i];
-                    }
-                });
-
-                // 2-d horizontal short-time fourier transform:
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = A[i, j];
-                    }
-
-                    row = Backward(row);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        A[i, j] = row[j];
-                    }
-                });
-            }
-            else if (direction == Direction.Vertical)
-            {
-                // 2-d vertical short-time fourier transform:
-                Parallel.For(0, M, j =>
-                {
-                    Complex32[] col = new Complex32[N];
-                    int i;
-
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = A[i, j];
-                    }
-
-                    col = Backward(col);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        A[i, j] = col[i];
-                    }
-                });
-            }
-            else
-            {
-                // 2-d horizontal short-time fourier transform:
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = A[i, j];
-                    }
-
-                    row = Backward(row);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        A[i, j] = row[j];
-                    }
-                });
-            }
-
-            return A;
-        }
-        /// <summary>
-        /// Forward short-time Fourier Transform.
-        /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
-        public float[] Forward(float[] A)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Backward short-time Fourier Transform.
-        /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
-        public float[] Backward(float[] B)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Forward short-time Fourier Transform.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
-        public float[,] Forward(float[,] A)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Backward short-time Fourier Transform.
-        /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
-        public float[,] Backward(float[,] B)
-        {
-            throw new NotSupportedException();
         }
         #endregion
     }

@@ -32875,11 +32875,6 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="P:UMapx.Window.FastShortTimeFourierTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
-        </member>
         <member name="P:UMapx.Window.FastShortTimeFourierTransform.Window">
             <summary>
             Gets or sets the window function.
@@ -32898,48 +32893,6 @@
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward short-time Fourier Transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward short-time Fourier Transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Forward(System.Single[])">
-            <summary>
-            Forward short-time Fourier Transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Backward(System.Single[])">
-            <summary>
-            Backward short-time Fourier Transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Forward(System.Single[0:,0:])">
-            <summary>
-            Forward short-time Fourier Transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward short-time Fourier Transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Window.FastWeylHeisenbergTransform">
             <summary>
@@ -33730,11 +33683,6 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="P:UMapx.Window.ShortTimeFourierTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
-        </member>
         <member name="P:UMapx.Window.ShortTimeFourierTransform.Window">
             <summary>
             Gets or sets the window function.
@@ -33753,48 +33701,6 @@
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.ShortTimeFourierTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward short-time Fourier Transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.ShortTimeFourierTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward short-time Fourier Transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.ShortTimeFourierTransform.Forward(System.Single[])">
-            <summary>
-            Forward short-time Fourier Transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.ShortTimeFourierTransform.Backward(System.Single[])">
-            <summary>
-            Backward short-time Fourier Transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.ShortTimeFourierTransform.Forward(System.Single[0:,0:])">
-            <summary>
-            Forward short-time Fourier Transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.ShortTimeFourierTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward short-time Fourier Transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Window.Sine">
             <summary>
