@@ -53,7 +53,7 @@ namespace UMapx.Colorspace
             }
             set
             {
-                s = (value > 1) ? 1 : ((value < 0.00001f) ? 0.00001f : value);
+                s = (value > 1) ? 1 : ((value < 0) ? 0 : value);
             }
         }
         /// <summary>
@@ -217,8 +217,7 @@ namespace UMapx.Colorspace
                 {
                     red = green = blue = 0;
                 }
-
-                if (s <= 0)
+                else if (s <= 0)
                 {
                     red = green = blue = b;
                 }
