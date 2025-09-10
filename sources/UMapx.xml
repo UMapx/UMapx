@@ -15728,6 +15728,9 @@
             <summary>
             Gets the variance value.
             </summary>
+            <remarks>
+            For the standard hyperbolic secant distribution, the variance is π² / 4.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.HyperbolicSecant.Mode">
             <summary>
