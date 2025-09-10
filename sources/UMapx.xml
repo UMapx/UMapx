@@ -14417,7 +14417,7 @@
             Initializes the binomial distribution.
             </summary>
         </member>
-        <member name="M:UMapx.Distribution.Binomial.#ctor(System.Single,System.Single)">
+        <member name="M:UMapx.Distribution.Binomial.#ctor(System.Int32,System.Single)">
             <summary>
             Initializes the binomial distribution.
             </summary>

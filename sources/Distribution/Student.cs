@@ -37,7 +37,7 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (value < 1)
+                if (value <= 0)
                     throw new ArgumentException("Invalid argument value");
 
                 this.degrees = value;

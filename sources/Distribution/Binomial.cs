@@ -14,7 +14,7 @@ namespace UMapx.Distribution
     public class Binomial : IDistribution
     {
         #region Private data
-        private float n = 20;
+        private int n = 20;
         private float p = 0.5f;
         private float q = 0.5f;
         #endregion
@@ -29,14 +29,14 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="n">Number of experiments (>0)</param>
         /// <param name="p">Probability of success [0, 1]</param>
-        public Binomial(float n, float p)
+        public Binomial(int n, float p)
         {
             N = n; P = p;
         }
         /// <summary>
         /// Gets or sets number of experiments.
         /// </summary>
-        public float N
+        public int N
         {
             get
             {
@@ -44,6 +44,9 @@ namespace UMapx.Distribution
             }
             set
             {
+                if (value < 0)
+                    throw new ArgumentException("Invalid argument value");
+
                 this.n = value;
             }
         }
