@@ -3,7 +3,7 @@
 namespace UMapx.Colorspace
 {
     /// <summary>
-    /// Defines a color model YCbCr in the [0, 1] range for all components.
+    /// Defines a color model YCbCr.
     /// </summary>
     [Serializable]
     public struct YCbCr : IColorSpace, ICloneable

@@ -3154,7 +3154,7 @@
         </member>
         <member name="T:UMapx.Colorspace.YCbCr">
             <summary>
-            Defines a color model YCbCr in the [0, 1] range for all components.
+            Defines a color model YCbCr.
             </summary>
         </member>
         <member name="M:UMapx.Colorspace.YCbCr.#ctor(System.Single,System.Single,System.Single)">
