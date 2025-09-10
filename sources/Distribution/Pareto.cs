@@ -73,7 +73,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return new RangeFloat(0, float.PositiveInfinity);
+                return new RangeFloat(xm, float.PositiveInfinity);
             }
         }
         /// <summary>
