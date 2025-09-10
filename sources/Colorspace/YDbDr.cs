@@ -52,7 +52,7 @@ namespace UMapx.Colorspace
             }
             set
             {
-                db = (value > 1.333) ? 1 : ((value < -1.333) ? -1.333f : value);
+                db = (value > 1.333) ? 1.333f : ((value < -1.333) ? -1.333f : value);
             }
         }
         /// <summary>
