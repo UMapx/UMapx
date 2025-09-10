@@ -11,7 +11,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Discrete_cosine_transform
     /// </remarks>
     [Serializable]
-    public class FastCosineTransform : FloatTransformBase, ITransform
+    public class FastCosineTransform : TransformBaseFloat, ITransform
     {
         #region Private data
         /// <summary>

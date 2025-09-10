@@ -13,7 +13,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Hilbert_transform
     /// </remarks>
     [Serializable]
-    public class FastHilbertTransform : Complex32TransformBase, ITransform
+    public class FastHilbertTransform : TransformBaseComplex32, ITransform
     {
         #region Private data
         /// <summary>

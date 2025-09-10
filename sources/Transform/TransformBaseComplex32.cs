@@ -7,7 +7,7 @@ namespace UMapx.Transform
     /// <summary>
     /// Defines an adapter class for a transform.
     /// </summary>
-    public abstract class Complex32TransformBase : TransformBase, ITransform
+    public abstract class TransformBaseComplex32 : TransformBase, ITransform
     {
         #region Transform methods
         /// <summary>

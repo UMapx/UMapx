@@ -11,7 +11,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Laplace_transform
     /// </remarks>
     [Serializable]
-    public class FastLaplaceTransform : Complex32TransformBase, ITransform
+    public class FastLaplaceTransform : TransformBaseComplex32, ITransform
     {
         #region Private data
         /// <summary>

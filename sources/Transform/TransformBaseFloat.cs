@@ -6,7 +6,7 @@ namespace UMapx.Transform
     /// <summary>
     /// Defines an adapter class for a transform.
     /// </summary>
-    public abstract class FloatTransformBase : TransformBase, ITransform
+    public abstract class TransformBaseFloat : TransformBase, ITransform
     {
         #region Transform methods
         /// <summary>

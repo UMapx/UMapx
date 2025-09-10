@@ -12,7 +12,7 @@ namespace UMapx.Window
     /// https://en.wikipedia.org/wiki/Short-time_Fourier_transform
     /// </remarks>
     [Serializable]
-    public class FastShortTimeFourierTransform : Complex32TransformBase, IWindowTransform, ITransform
+    public class FastShortTimeFourierTransform : TransformBaseComplex32, IWindowTransform, ITransform
     {
         #region Private data
         private readonly FastFourierTransform FFT;
