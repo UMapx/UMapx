@@ -109,7 +109,7 @@ namespace UMapx.Distribution
         {
             float ksi = Maths.Pi * eta * tau;
             float psi = Maths.Exp(-2 * Maths.Pi * a * tau * tau);
-            return Special.Sinc(ksi, 1) / ksi * psi;
+            return Special.Sinc(ksi, 1) * psi;
         }
         /// <summary>
         /// Returns the value of the kernel distribution function.
@@ -121,7 +121,7 @@ namespace UMapx.Distribution
         {
             if (tau == 0)
             {
-                return float.NaN;
+                return t == 0 ? float.PositiveInfinity : 0f;
             }
             if (Math.Abs(tau) >= 2 * Math.Abs(t))
             {

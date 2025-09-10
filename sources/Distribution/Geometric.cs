@@ -26,13 +26,13 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the geometric distribution.
         /// </summary>
-        /// <param name="p">Probability of "success" [0, 1]</param>
+        /// <param name="p">Probability of "success" (0, 1]</param>
         public Geometric(float p)
         {
             P = p;
         }
         /// <summary>
-        /// Gets or sets the probability value of "success" [0, 1].
+        /// Gets or sets the probability value of "success" (0, 1].
         /// </summary>
         public float P
         {
@@ -42,7 +42,7 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (value < 0 || value > 1)
+                if (value <= 0 || value > 1)
                     throw new ArgumentException("Invalid argument value");
 
                 this.p = value;

@@ -105,6 +105,15 @@ namespace UMapx.Distribution
         {
             get
             {
+                if (a < 1 && b >= 1)
+                {
+                    return 0f;
+                }
+
+                if (b < 1 && a >= 1)
+                {
+                    return 1f;
+                }
 
                 if ((a >= 1) && (b >= 1) && (a != 1 && b != 1))
                 {

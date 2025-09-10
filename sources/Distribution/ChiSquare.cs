@@ -85,7 +85,7 @@ namespace UMapx.Distribution
                 {
                     return k - 2;
                 }
-                return float.NaN;
+                return 0;
             }
         }
         /// <summary>

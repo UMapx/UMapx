@@ -107,7 +107,7 @@ namespace UMapx.Distribution
                 {
                     return (k - 1) * thetta;
                 }
-                return float.NaN;
+                return 0;
             }
         }
         /// <summary>

@@ -99,7 +99,7 @@ namespace UMapx.Distribution
             {
                 if (b > 1)
                 {
-                    return a * Maths.Pow((b - 1) / (b + 1), 1 / b);
+                    return a * Maths.Pow((b - 1) / b, 1 / b);
                 }
                 return 0;
             }

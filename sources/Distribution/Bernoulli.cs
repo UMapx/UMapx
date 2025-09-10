@@ -122,6 +122,11 @@ namespace UMapx.Distribution
         {
             get
             {
+                if (p == 0f || p == 1f)
+                {
+                    return float.NaN;
+                }
+
                 return (q - p) / Maths.Sqrt(p * q);
             }
         }
@@ -132,6 +137,11 @@ namespace UMapx.Distribution
         {
             get
             {
+                if (p == 0f || p == 1f)
+                {
+                    return float.NaN;
+                }
+
                 return (6 * p * p - 6 * p + 1) / (p * (1 - p)) - 3f;
             }
         }

@@ -70,7 +70,8 @@ namespace UMapx.Wavelet
         {
             float amplitude = Maths.Pow(Maths.Pi, -0.25f) / Maths.Sqrt(fb);
             float correction = Maths.Exp(-2 * Maths.Pi * Maths.Pi * fc * fc * fb);
-            return amplitude * (Maths.Exp(2 * Maths.Pi * Maths.I * fc * x) - correction) * Maths.Exp(-(x * x) / fb);
+            Complex32 exponent = Maths.Exp(2 * Maths.Pi * Maths.I * fc * x) - correction;
+            return amplitude * exponent * Maths.Exp(-(x * x) / fb);
         }
         #endregion
     }

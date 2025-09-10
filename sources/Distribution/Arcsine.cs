@@ -81,6 +81,12 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
+            if (x <= 0)
+                return 0.0f;
+
+            if (x >= 1)
+                return 1.0f;
+
             return 2.0f / Maths.Pi * Maths.Asin(Maths.Sqrt(x));
         }
         /// <summary>

@@ -62,7 +62,7 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (d2 <= 0)
+                if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(d2), "The value must be greater than zero");
 
                 d2 = value;

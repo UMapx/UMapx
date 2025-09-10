@@ -124,6 +124,7 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Function(float x)
         {
+            if (x < 0) return 0;
             int k = (int)x;
 
             if (x != Maths.Floor(x))
