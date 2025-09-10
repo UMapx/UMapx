@@ -83,7 +83,10 @@ namespace UMapx.Distribution
         {
             get
             {
-                return Maths.Pow((c - 1) / (k * c + 1), 1.0f / c);
+                if (c > 1 && k * c > 1)
+                    return Maths.Pow((c - 1) / (k * c + 1), 1.0f / c);
+
+                return 0;
             }
         }
         /// <summary>
@@ -122,7 +125,7 @@ namespace UMapx.Distribution
         /// </summary>
         public RangeFloat Support
         {
-            get { return new RangeFloat(float.Epsilon, float.PositiveInfinity); }
+            get { return new RangeFloat(0, float.PositiveInfinity); }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
@@ -133,7 +136,7 @@ namespace UMapx.Distribution
         {
             if (x <= 0)
             {
-                return float.NaN;
+                return 0;
             }
 
             return 1.0f - Maths.Pow(1.0f + Maths.Pow(x, c), -k);
@@ -147,7 +150,7 @@ namespace UMapx.Distribution
         {
             if (x <= 0)
             {
-                return float.NaN;
+                return 0;
             }
 
             float a = c * k;
