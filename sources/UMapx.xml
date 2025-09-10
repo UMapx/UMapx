@@ -287,7 +287,7 @@
             Gets or sets the differentiation method.
             </summary>
         </member>
-        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IFloatMesh,System.Single[],System.Single)">
+        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IMeshFloat,System.Single[],System.Single)">
             <summary>
             Returns the value of a differential equation.
             </summary>
@@ -296,7 +296,7 @@
             <param name="y0">Value</param>
             <returns>Array of function values</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IComplex32Mesh,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
+        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IMeshComplex32,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
             <summary>
             Returns the value of a differential equation.
             </summary>
@@ -305,7 +305,7 @@
             <param name="y0">Value</param>
             <returns>Array of function values</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IFloatMesh,System.Single[],System.Single,System.Int32)">
+        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IMeshFloat,System.Single[],System.Single,System.Int32)">
             <summary>
             Returns the value of a differential equation calculated by the Adams-Bashforth method.
             </summary>
@@ -315,7 +315,7 @@
             <param name="order">Order</param>
             <returns>Array of function values</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IComplex32Mesh,UMapx.Core.Complex32[],UMapx.Core.Complex32,System.Int32)">
+        <member name="M:UMapx.Analysis.Differential.Compute(UMapx.Core.IMeshComplex32,UMapx.Core.Complex32[],UMapx.Core.Complex32,System.Int32)">
             <summary>
             Returns the value of a differential equation calculated by the Adams-Bashforth method.
             </summary>
@@ -332,7 +332,7 @@
             <param name="order">Order</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.Euler(UMapx.Core.IFloatMesh,System.Single[],System.Single)">
+        <member name="M:UMapx.Analysis.Differential.Euler(UMapx.Core.IMeshFloat,System.Single[],System.Single)">
             <summary>
             Explicit Euler method (1st order) for y' = f(x, y) on a given grid x.
             </summary>
@@ -345,7 +345,7 @@
             <param name="y0">Initial value y(x[0])</param>
             <returns>Solution values at x[1..n]</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.RungeKutta2(UMapx.Core.IFloatMesh,System.Single[],System.Single)">
+        <member name="M:UMapx.Analysis.Differential.RungeKutta2(UMapx.Core.IMeshFloat,System.Single[],System.Single)">
             <summary>
             Runge–Kutta method of order 2 (midpoint form) on grid x.
             </summary>
@@ -357,7 +357,7 @@
             <param name="y0">Initial value y(x[0])</param>
             <returns>Solution values at x[1..n]</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.RungeKutta4(UMapx.Core.IFloatMesh,System.Single[],System.Single)">
+        <member name="M:UMapx.Analysis.Differential.RungeKutta4(UMapx.Core.IMeshFloat,System.Single[],System.Single)">
             <summary>
             Classic Runge–Kutta method of order 4 (RK4) on grid x.
             </summary>
@@ -369,7 +369,7 @@
             <param name="y0">Initial value y(x[0])</param>
             <returns>Solution values at x[1..n]</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.Fehlberg(UMapx.Core.IFloatMesh,System.Single[],System.Single)">
+        <member name="M:UMapx.Analysis.Differential.Fehlberg(UMapx.Core.IMeshFloat,System.Single[],System.Single)">
             <summary>
             Fehlberg (RKF45 scheme without stepsize adaptation): fixed-step 4th-order estimate.
             </summary>
@@ -382,7 +382,7 @@
             <param name="y0">Initial value y(x[0])</param>
             <returns>Solution values at x[1..n]</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.Euler(UMapx.Core.IComplex32Mesh,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
+        <member name="M:UMapx.Analysis.Differential.Euler(UMapx.Core.IMeshComplex32,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
             <summary>
             Explicit Euler method (1st order) for y' = f(x, y) on a given grid x.
             </summary>
@@ -395,7 +395,7 @@
             <param name="y0">Initial value y(x[0])</param>
             <returns>Solution values at x[1..n]</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.RungeKutta2(UMapx.Core.IComplex32Mesh,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
+        <member name="M:UMapx.Analysis.Differential.RungeKutta2(UMapx.Core.IMeshComplex32,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
             <summary>
             Runge–Kutta method of order 2 (midpoint form) on grid x.
             </summary>
@@ -407,7 +407,7 @@
             <param name="y0">Initial value y(x[0])</param>
             <returns>Solution values at x[1..n]</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.RungeKutta4(UMapx.Core.IComplex32Mesh,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
+        <member name="M:UMapx.Analysis.Differential.RungeKutta4(UMapx.Core.IMeshComplex32,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
             <summary>
             Classic Runge–Kutta method of order 4 (RK4) on grid x.
             </summary>
@@ -419,7 +419,7 @@
             <param name="y0">Initial value y(x[0])</param>
             <returns>Solution values at x[1..n]</returns>
         </member>
-        <member name="M:UMapx.Analysis.Differential.Fehlberg(UMapx.Core.IComplex32Mesh,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
+        <member name="M:UMapx.Analysis.Differential.Fehlberg(UMapx.Core.IMeshComplex32,UMapx.Core.Complex32[],UMapx.Core.Complex32)">
             <summary>
             Fehlberg (RKF45 scheme without stepsize adaptation): fixed-step 4th-order estimate.
             </summary>
@@ -4180,7 +4180,7 @@
             <param name="x">Value</param>
             <returns>Complex number</returns>
         </member>
-        <member name="T:UMapx.Core.IFloatMesh">
+        <member name="T:UMapx.Core.IMeshFloat">
             <summary>
             Defines the delegate of a continuous function that depends on two arguments.
             </summary>
@@ -4188,7 +4188,7 @@
             <param name="y">Second argument</param>
             <returns>Value</returns>
         </member>
-        <member name="T:UMapx.Core.IComplex32Mesh">
+        <member name="T:UMapx.Core.IMeshComplex32">
             <summary>
             Defines the delegate of a continuous function that depends on two arguments.
             </summary>
@@ -9817,7 +9817,7 @@
             <param name="function">Continuous function delegate</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Compute(System.Single[],System.Single[],UMapx.Core.IFloatMesh)">
+        <member name="M:UMapx.Core.Matrice.Compute(System.Single[],System.Single[],UMapx.Core.IMeshFloat)">
             <summary>
             Returns a matrix of function values.
             </summary>
@@ -9826,7 +9826,7 @@
             <param name="function">Continuous function delegate</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Compute(System.Single[],UMapx.Core.Complex32[],UMapx.Core.IComplex32Mesh)">
+        <member name="M:UMapx.Core.Matrice.Compute(System.Single[],UMapx.Core.Complex32[],UMapx.Core.IMeshComplex32)">
             <summary>
             Returns a matrix of function values.
             </summary>
@@ -9835,7 +9835,7 @@
             <param name="function">Continuous function delegate</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Compute(UMapx.Core.Complex32[],System.Single[],UMapx.Core.IComplex32Mesh)">
+        <member name="M:UMapx.Core.Matrice.Compute(UMapx.Core.Complex32[],System.Single[],UMapx.Core.IMeshComplex32)">
             <summary>
             Returns a matrix of function values.
             </summary>
@@ -9844,7 +9844,7 @@
             <param name="function">Continuous function delegate</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.Matrice.Compute(UMapx.Core.Complex32[],UMapx.Core.Complex32[],UMapx.Core.IComplex32Mesh)">
+        <member name="M:UMapx.Core.Matrice.Compute(UMapx.Core.Complex32[],UMapx.Core.Complex32[],UMapx.Core.IMeshComplex32)">
             <summary>
             Returns a matrix of function values.
             </summary>
@@ -22797,7 +22797,7 @@
             Defines the color photo filter.
             </summary>
         </member>
-        <member name="M:UMapx.Imaging.PhotoFilter.#ctor(UMapx.Core.IFloatMesh,System.Drawing.Color,System.Single)">
+        <member name="M:UMapx.Imaging.PhotoFilter.#ctor(UMapx.Core.IMeshFloat,System.Drawing.Color,System.Single)">
             <summary>
             Initializes the color photo filter.
             </summary>
@@ -32126,38 +32126,38 @@
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="T:UMapx.Wavelet.IComplexWavelet">
+        <member name="T:UMapx.Wavelet.IWaveletComplex32">
             <summary>
             Defines the interface for continuous complex wavelets.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.IComplexWavelet.Scaling(System.Single)">
+        <member name="M:UMapx.Wavelet.IWaveletComplex32.Scaling(System.Single)">
             <summary>
             Returns the value of the scaling function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.IComplexWavelet.Wavelet(System.Single)">
+        <member name="M:UMapx.Wavelet.IWaveletComplex32.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="T:UMapx.Wavelet.IFloatWavelet">
+        <member name="T:UMapx.Wavelet.IWaveletFloat">
             <summary>
             Defines the interface for continuous wavelets.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.IFloatWavelet.Scaling(System.Single)">
+        <member name="M:UMapx.Wavelet.IWaveletFloat.Scaling(System.Single)">
             <summary>
             Returns the value of the scaling function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.IFloatWavelet.Wavelet(System.Single)">
+        <member name="M:UMapx.Wavelet.IWaveletFloat.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>

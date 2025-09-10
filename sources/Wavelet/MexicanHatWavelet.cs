@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous Mexican hat wavelet.
     /// </summary>
     [Serializable]
-    public class MexicanHatWavelet : IFloatWavelet
+    public class MexicanHatWavelet : IWaveletFloat
     {
         #region Wavelet components
         /// <summary>

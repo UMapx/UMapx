@@ -6,7 +6,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous Haar wavelet on [0,1).
     /// </summary>
     [Serializable]
-    public class HaarWavelet : IFloatWavelet
+    public class HaarWavelet : IWaveletFloat
     {
         #region Haar wavelet components
         /// <summary>

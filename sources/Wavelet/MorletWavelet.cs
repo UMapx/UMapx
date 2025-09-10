@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the normalized continuous Morlet wavelet with zero mean.
     /// </summary>
     [Serializable]
-    public class MorletWavelet : IFloatWavelet
+    public class MorletWavelet : IWaveletFloat
     {
         #region Private data
         private float omega0 = 5;

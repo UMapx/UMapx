@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the normalized continuous complex Morlet wavelet.
     /// </summary>
     [Serializable]
-    public class ComplexMorletWavelet : IComplexWavelet
+    public class ComplexMorletWavelet : IWaveletComplex32
     {
         #region Private data
         private float fb;

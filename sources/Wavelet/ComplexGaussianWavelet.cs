@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous complex Gaussian wavelet.
     /// </summary>
     [Serializable]
-    public class ComplexGaussianWavelet : IComplexWavelet
+    public class ComplexGaussianWavelet : IWaveletComplex32
     {
         #region Private data
         private int derivative;

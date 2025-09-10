@@ -16,7 +16,7 @@ namespace UMapx.Imaging
         #region Private data
         private float s;
         private Color color;
-        private IFloatMesh blendf;
+        private IMeshFloat blendf;
         #endregion
 
         #region Filter components
@@ -26,7 +26,7 @@ namespace UMapx.Imaging
         /// <param name="blendf">Blend function</param>
         /// <param name="color">Color</param>
         /// <param name="strength">Strength [0, 1]</param>
-        public PhotoFilter(IFloatMesh blendf, Color color, float strength = 0.5f)
+        public PhotoFilter(IMeshFloat blendf, Color color, float strength = 0.5f)
         {
             BlendFunction = blendf;
             Color = color;
@@ -55,7 +55,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets or sets the blend function.
         /// </summary>
-        public IFloatMesh BlendFunction
+        public IMeshFloat BlendFunction
         {
             get
             {

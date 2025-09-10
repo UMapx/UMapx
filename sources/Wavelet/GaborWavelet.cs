@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous complex Gabor wavelet.
     /// </summary>
     [Serializable]
-    public class GaborWavelet : IComplexWavelet
+    public class GaborWavelet : IWaveletComplex32
     {
         #region Private data
         private float x0;

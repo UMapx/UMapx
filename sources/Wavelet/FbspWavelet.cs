@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous complex frequency B-spline wavelet.
     /// </summary>
     [Serializable]
-    public class FbspWavelet : IComplexWavelet
+    public class FbspWavelet : IWaveletComplex32
     {
         #region Private data
         private float m;

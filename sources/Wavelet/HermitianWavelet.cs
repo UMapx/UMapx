@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous Hermitian wavelet.
     /// </summary>
     [Serializable]
-    public class HermitianWavelet : IComplexWavelet
+    public class HermitianWavelet : IWaveletComplex32
     {
         #region Private data
         private int derivative;

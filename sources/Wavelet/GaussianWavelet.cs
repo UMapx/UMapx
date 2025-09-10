@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous Gaussian wavelet.
     /// </summary>
     [Serializable]
-    public class GaussianWavelet : IFloatWavelet
+    public class GaussianWavelet : IWaveletFloat
     {
         #region Private data
         private int derivative;

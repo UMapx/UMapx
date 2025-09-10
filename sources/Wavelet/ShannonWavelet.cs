@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous Shannon wavelet.
     /// </summary>
     [Serializable]
-    public class ShannonWavelet : IFloatWavelet
+    public class ShannonWavelet : IWaveletFloat
     {
         #region Wavelet components
         /// <summary>

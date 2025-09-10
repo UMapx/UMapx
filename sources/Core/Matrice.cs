@@ -10064,7 +10064,7 @@ namespace UMapx.Core
         /// <param name="y">Array of values of the second argument</param>
         /// <param name="function">Continuous function delegate</param>
         /// <returns>Matrix</returns>
-        public static float[,] Compute(this float[] x, float[] y, IFloatMesh function)
+        public static float[,] Compute(this float[] x, float[] y, IMeshFloat function)
         {
             int xlength = x.Length, ylength = y.Length;
             float[,] z = new float[xlength, ylength];
@@ -10086,7 +10086,7 @@ namespace UMapx.Core
         /// <param name="y">Array of values of the second argument</param>
         /// <param name="function">Continuous function delegate</param>
         /// <returns>Matrix</returns>
-        public static Complex32[,] Compute(this float[] x, Complex32[] y, IComplex32Mesh function)
+        public static Complex32[,] Compute(this float[] x, Complex32[] y, IMeshComplex32 function)
         {
             int xlength = x.Length, ylength = y.Length;
             Complex32[,] z = new Complex32[xlength, ylength];
@@ -10108,7 +10108,7 @@ namespace UMapx.Core
         /// <param name="y">Array of values of the second argument</param>
         /// <param name="function">Continuous function delegate</param>
         /// <returns>Matrix</returns>
-        public static Complex32[,] Compute(this Complex32[] x, float[] y, IComplex32Mesh function)
+        public static Complex32[,] Compute(this Complex32[] x, float[] y, IMeshComplex32 function)
         {
             int xlength = x.Length, ylength = y.Length;
             Complex32[,] z = new Complex32[xlength, ylength];
@@ -10130,7 +10130,7 @@ namespace UMapx.Core
         /// <param name="y">Array of values of the second argument</param>
         /// <param name="function">Continuous function delegate</param>
         /// <returns>Matrix</returns>
-        public static Complex32[,] Compute(this Complex32[] x, Complex32[] y, IComplex32Mesh function)
+        public static Complex32[,] Compute(this Complex32[] x, Complex32[] y, IMeshComplex32 function)
         {
             int xlength = x.Length, ylength = y.Length;
             Complex32[,] z = new Complex32[xlength, ylength];

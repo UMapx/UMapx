@@ -18,12 +18,12 @@
     /// <param name="x">First argument</param>
     /// <param name="y">Second argument</param>
     /// <returns>Value</returns>
-    public delegate float IFloatMesh(float x, float y);
+    public delegate float IMeshFloat(float x, float y);
     /// <summary>
     /// Defines the delegate of a continuous function that depends on two arguments.
     /// </summary>
     /// <param name="x">First argument</param>
     /// <param name="y">Second argument</param>
     /// <returns>Complex number</returns>
-    public delegate Complex32 IComplex32Mesh(Complex32 x, Complex32 y);
+    public delegate Complex32 IMeshComplex32(Complex32 x, Complex32 y);
 }

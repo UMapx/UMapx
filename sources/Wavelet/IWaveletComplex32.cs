@@ -1,9 +1,11 @@
-﻿namespace UMapx.Wavelet
+﻿using UMapx.Core;
+
+namespace UMapx.Wavelet
 {
     /// <summary>
-    /// Defines the interface for continuous wavelets.
+    /// Defines the interface for continuous complex wavelets.
     /// </summary>
-    public interface IFloatWavelet
+    public interface IWaveletComplex32
     {
         #region Interface
         /// <summary>
@@ -11,13 +13,13 @@
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Function</returns>
-        float Scaling(float x);
+        Complex32 Scaling(float x);
         /// <summary>
         /// Returns the value of the wavelet function.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Function</returns>
-        float Wavelet(float x);
+        Complex32 Wavelet(float x);
         #endregion
     }
 }
