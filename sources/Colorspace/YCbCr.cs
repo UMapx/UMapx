@@ -3,7 +3,7 @@
 namespace UMapx.Colorspace
 {
     /// <summary>
-    /// Defines a color model YCbCr.
+    /// Defines a color model YCbCr in the [0, 1] range for all components.
     /// </summary>
     [Serializable]
     public struct YCbCr : IColorSpace, ICloneable
@@ -19,13 +19,13 @@ namespace UMapx.Colorspace
         /// Creates an instance of the structure YCbCr.
         /// </summary>
         /// <param name="y">Y [0, 1]</param>
-        /// <param name="cb">Cb [-1, 1]</param>
-        /// <param name="cr">Cr [-1, 1]</param>
+        /// <param name="cb">Cb [0, 1]</param>
+        /// <param name="cr">Cr [0, 1]</param>
         public YCbCr(float y, float cb, float cr)
         {
             this.y = (y > 1) ? 1 : ((y < 0) ? 0 : y);
-            this.cb = (cb > 1) ? 1 : ((cb < -1) ? -1 : cb);
-            this.cr = (cr > 1) ? 1 : ((cr < -1) ? -1 : cr);
+            this.cb = (cb > 1) ? 1 : ((cb < 0) ? 0 : cb);
+            this.cr = (cr > 1) ? 1 : ((cr < 0) ? 0 : cr);
         }
         /// <summary>
         /// Defines a component of the color model [0, 1].
@@ -42,7 +42,7 @@ namespace UMapx.Colorspace
             }
         }
         /// <summary>
-        /// Defines a component of the color model [-1, 1].
+        /// Defines a component of the color model [0, 1].
         /// </summary>
         public float Cb
         {
@@ -52,11 +52,11 @@ namespace UMapx.Colorspace
             }
             set
             {
-                cb = (value > 1) ? 1 : ((value < -1) ? -1 : value);
+                cb = (value > 1) ? 1 : ((value < 0) ? 0 : value);
             }
         }
         /// <summary>
-        /// Defines a component of the color model [-1, 1].
+        /// Defines a component of the color model [0, 1].
         /// </summary>
         public float Cr
         {
@@ -66,7 +66,7 @@ namespace UMapx.Colorspace
             }
             set
             {
-                cr = (value > 1) ? 1 : ((value < -1) ? -1 : value);
+                cr = (value > 1) ? 1 : ((value < 0) ? 0 : value);
             }
         }
         #endregion
