@@ -50,8 +50,7 @@ namespace UMapx.Transform
                     {
                         B[i, j] = row[j];
                     }
-                }
-                );
+                });
 
                 Parallel.For(0, M, j =>
                 {
@@ -141,8 +140,7 @@ namespace UMapx.Transform
                     {
                         A[i, j] = col[i];
                     }
-                }
-                );
+                });
 
                 Parallel.For(0, N, i =>
                 {
@@ -159,8 +157,7 @@ namespace UMapx.Transform
                     {
                         A[i, j] = row[j];
                     }
-                }
-                );
+                });
             }
             else if (Direction == Direction.Vertical)
             {
