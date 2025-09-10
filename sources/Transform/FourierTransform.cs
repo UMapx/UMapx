@@ -11,17 +11,13 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Discrete_Fourier_transform
     /// </remarks>
     [Serializable]
-    public class FourierTransform : ITransform
+    public class FourierTransform : TransformBase, ITransform
     {
         #region Private data
         /// <summary>
         /// Normalized transform or not.
         /// </summary>
         private bool normalized;
-        /// <summary>
-        /// Processing direction.
-        /// </summary>
-        private Direction direction;
         #endregion
 
         #region Initialize
@@ -32,7 +28,7 @@ namespace UMapx.Transform
         /// <param name="direction">Processing direction</param>
         public FourierTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
-            this.normalized = normalized; this.direction = direction;
+            this.Normalized = normalized; this.Direction = direction;
         }
         /// <summary>
         /// Normalized transform or not.
@@ -46,20 +42,6 @@ namespace UMapx.Transform
             set
             {
                 this.normalized = value;
-            }
-        }
-        /// <summary>
-        /// Gets or sets the processing direction.
-        /// </summary>
-        public Direction Direction
-        {
-            get
-            {
-                return this.direction;
-            }
-            set
-            {
-                this.direction = value;
             }
         }
         #endregion
@@ -88,7 +70,7 @@ namespace UMapx.Transform
 
         #region Fourier Transform
         /// <summary>
-        /// Forward Fourier transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
@@ -106,7 +88,7 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Backward Fourier transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
@@ -124,7 +106,7 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Forward Fourier transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
@@ -135,12 +117,12 @@ namespace UMapx.Transform
             Complex32[,] V = FourierTransform.Matrix(M);
             Complex32[,] B;
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 B = U.Dot(A).Dot(V.Hermitian());
                 B = normalized ? B.Div(Math.Sqrt(N * M)) : B;
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 B = U.Dot(A);
                 B = normalized ? B.Div(Math.Sqrt(N)) : B;
@@ -154,7 +136,7 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Backward Fourier transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
@@ -165,12 +147,12 @@ namespace UMapx.Transform
             Complex32[,] V = FourierTransform.Matrix(M);
             Complex32[,] A;
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 A = U.Hermitian().Dot(B).Dot(V);
                 A = normalized ? A.Div(Math.Sqrt(N * M)) : A;
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 A = U.Hermitian().Dot(B);
                 A = normalized ? A.Div(Math.Sqrt(N)) : A;
@@ -184,7 +166,7 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Forward Fourier transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
@@ -193,7 +175,7 @@ namespace UMapx.Transform
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Backward Fourier transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
@@ -202,7 +184,7 @@ namespace UMapx.Transform
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Forward Fourier transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
@@ -211,7 +193,7 @@ namespace UMapx.Transform
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Backward Fourier transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>

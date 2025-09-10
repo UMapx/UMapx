@@ -25508,6 +25508,67 @@
             <param name="grid">Grid</param>
             <param name="radius">Radius</param>
         </member>
+        <member name="T:UMapx.Transform.Complex32TransformBase">
+            <summary>
+            Defines an adapter class for a transform.
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.Complex32TransformBase.Forward(System.Single[])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.Complex32TransformBase.Backward(System.Single[])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.Complex32TransformBase.Forward(System.Single[0:,0:])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.Complex32TransformBase.Backward(System.Single[0:,0:])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.Complex32TransformBase.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.Complex32TransformBase.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.Complex32TransformBase.Forward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.Complex32TransformBase.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
         <member name="T:UMapx.Transform.CosineTransform">
             <summary>
             Defines the cosine transform.
@@ -25611,63 +25672,58 @@
             </summary>
             <param name="direction">Processing direction</param>
         </member>
-        <member name="P:UMapx.Transform.DeltaTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.DeltaTransform.Forward(System.Single[])">
             <summary>
-            Forward delta transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.DeltaTransform.Backward(System.Single[])">
             <summary>
-            Backward delta transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.DeltaTransform.Forward(System.Single[0:,0:])">
             <summary>
-            Forward delta transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.DeltaTransform.Backward(System.Single[0:,0:])">
             <summary>
-            Backward delta transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.DeltaTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
-            Forward delta transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.DeltaTransform.Backward(UMapx.Core.Complex32[])">
             <summary>
-            Backward delta transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.DeltaTransform.Forward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Forward delta transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.DeltaTransform.Backward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Backward delta transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
@@ -25833,77 +25889,25 @@
             Fourier transform.
             </summary>
         </member>
-        <member name="F:UMapx.Transform.FastCosineTransform.direction">
-            <summary>
-            Processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.FastCosineTransform.#ctor(UMapx.Core.Direction)">
             <summary>
             Initializes the fast cosine transform.
             </summary>
             <param name="direction">Processing direction</param>
         </member>
-        <member name="P:UMapx.Transform.FastCosineTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.FastCosineTransform.Forward(System.Single[])">
             <summary>
-            Forward cosine transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FastCosineTransform.Backward(System.Single[])">
             <summary>
-            Backward cosine transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastCosineTransform.Forward(System.Single[0:,0:])">
-            <summary>
-            Forward cosine transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastCosineTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward cosine transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastCosineTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward cosine transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastCosineTransform.Backward(UMapx.Core.Complex32[])">
-            <summary>
-            Backward cosine transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastCosineTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward cosine transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastCosineTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward cosine transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Transform.FastFourierTransform">
             <summary>
@@ -25914,11 +25918,6 @@
             https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm
             https://en.wikipedia.org/wiki/Chirp_Z-transform
             </remarks>
-        </member>
-        <member name="F:UMapx.Transform.FastFourierTransform.direction">
-            <summary>
-            Processing direction.
-            </summary>
         </member>
         <member name="F:UMapx.Transform.FastFourierTransform.normalized">
             <summary>
@@ -25937,63 +25936,58 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="P:UMapx.Transform.FastFourierTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.FastFourierTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
-            Forward Fourier transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FastFourierTransform.Backward(UMapx.Core.Complex32[])">
             <summary>
-            Backward Fourier transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FastFourierTransform.Forward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Forward Fourier transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.FastFourierTransform.Backward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Backward Fourier transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.FastFourierTransform.Forward(System.Single[])">
             <summary>
-            Forward Fourier transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FastFourierTransform.Backward(System.Single[])">
             <summary>
-            Backward Fourier transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FastFourierTransform.Forward(System.Single[0:,0:])">
             <summary>
-            Forward Fourier transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.FastFourierTransform.Backward(System.Single[0:,0:])">
             <summary>
-            Backward Fourier transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
@@ -26132,59 +26126,17 @@
         </member>
         <member name="M:UMapx.Transform.FastHartleyTransform.Forward(System.Single[])">
             <summary>
-            Forward Hartley transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FastHartleyTransform.Backward(System.Single[])">
             <summary>
-            Backward Hartley transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastHartleyTransform.Forward(System.Single[0:,0:])">
-            <summary>
-            Forward Hartley transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastHartleyTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward Hartley transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastHartleyTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward Hartley transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastHartleyTransform.Backward(UMapx.Core.Complex32[])">
-            <summary>
-            Backward Hartley transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastHartleyTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward Hartley transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastHartleyTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward Hartley transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Transform.FastHilbertTransform">
             <summary>
@@ -26202,11 +26154,6 @@
             Fourier transform.
             </summary>
         </member>
-        <member name="F:UMapx.Transform.FastHilbertTransform.direction">
-            <summary>
-            Processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.FastHilbertTransform.#ctor(System.Boolean,UMapx.Core.Direction)">
             <summary>
             Initializes the fast Hilbert transform.
@@ -26219,66 +26166,19 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="P:UMapx.Transform.FastHilbertTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.FastHilbertTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
-            Forward Hilbert transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FastHilbertTransform.Backward(UMapx.Core.Complex32[])">
             <summary>
-            Backward Hilbert transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastHilbertTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward Hilbert transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastHilbertTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward Hilbert transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastHilbertTransform.Forward(System.Single[])">
-            <summary>
-            Forward Hilbert transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastHilbertTransform.Backward(System.Single[])">
-            <summary>
-            Backward Hilbert transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastHilbertTransform.Forward(System.Single[0:,0:])">
-            <summary>
-            Forward Hilbert transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastHilbertTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward Hilbert transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Transform.FastLaplaceTransform">
             <summary>
@@ -26297,11 +26197,6 @@
         <member name="F:UMapx.Transform.FastLaplaceTransform.sigma">
             <summary>
             Damping factor.
-            </summary>
-        </member>
-        <member name="F:UMapx.Transform.FastLaplaceTransform.direction">
-            <summary>
-            Processing direction.
             </summary>
         </member>
         <member name="M:UMapx.Transform.FastLaplaceTransform.#ctor(System.Single,System.Boolean,UMapx.Core.Direction)">
@@ -26325,66 +26220,19 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="P:UMapx.Transform.FastLaplaceTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.FastLaplaceTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
-            Forward Laplace transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FastLaplaceTransform.Backward(UMapx.Core.Complex32[])">
             <summary>
-            Backward Laplace transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastLaplaceTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward Laplace transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastLaplaceTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward Laplace transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastLaplaceTransform.Forward(System.Single[])">
-            <summary>
-            Forward Laplace transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastLaplaceTransform.Backward(System.Single[])">
-            <summary>
-            Backward Laplace transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastLaplaceTransform.Forward(System.Single[0:,0:])">
-            <summary>
-            Forward Laplace transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastLaplaceTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward Laplace transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.FastLaplaceTransform.ApplyLaplaceOperator(UMapx.Core.Complex32[],System.Single)">
             <summary>
@@ -26417,77 +26265,25 @@
             Fourier transform.
             </summary>
         </member>
-        <member name="F:UMapx.Transform.FastSineTransform.direction">
-            <summary>
-            Processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.FastSineTransform.#ctor(UMapx.Core.Direction)">
             <summary>
             Defines the fast sine transform.
             </summary>
             <param name="direction">Processing direction</param>
         </member>
-        <member name="P:UMapx.Transform.FastSineTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.FastSineTransform.Forward(System.Single[])">
             <summary>
-            Forward sine transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FastSineTransform.Backward(System.Single[])">
             <summary>
-            Backward sine transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastSineTransform.Forward(System.Single[0:,0:])">
-            <summary>
-            Forward sine transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastSineTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward sine transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastSineTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward sine transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastSineTransform.Backward(UMapx.Core.Complex32[])">
-            <summary>
-            Backward sine transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastSineTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward sine transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastSineTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward sine transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Transform.FastWalshHadamardTransform">
             <summary>
@@ -26497,11 +26293,6 @@
             More information can be found on the website:
             http://www.mathworks.com/matlabcentral/fileexchange/6879-fast-walsh-hadamard-transform
             </remarks>
-        </member>
-        <member name="F:UMapx.Transform.FastWalshHadamardTransform.direction">
-            <summary>
-            Processing direction.
-            </summary>
         </member>
         <member name="F:UMapx.Transform.FastWalshHadamardTransform.normalized">
             <summary>
@@ -26520,66 +26311,19 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="P:UMapx.Transform.FastWalshHadamardTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.FastWalshHadamardTransform.Forward(System.Single[])">
             <summary>
-            Forward Walsh-Hadamard transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FastWalshHadamardTransform.Backward(System.Single[])">
             <summary>
-            Backward Walsh-Hadamard transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWalshHadamardTransform.Forward(System.Single[0:,0:])">
-            <summary>
-            Forward Walsh-Hadamard transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWalshHadamardTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward Walsh-Hadamard transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWalshHadamardTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward Walsh-Hadamard transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWalshHadamardTransform.Backward(UMapx.Core.Complex32[])">
-            <summary>
-            Backward Walsh-Hadamard transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWalshHadamardTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward Walsh-Hadamard transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastWalshHadamardTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward Walsh-Hadamard transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.FastWalshHadamardTransform.FWHT(System.Single[])">
             <summary>
@@ -26592,6 +26336,67 @@
             Fast Walsh-Hadamard transform.
             </summary>
             <param name="data">Array</param>
+        </member>
+        <member name="T:UMapx.Transform.FloatToComplex32TransformBase">
+            <summary>
+            Defines an adapter class for a transform.
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.FloatToComplex32TransformBase.Forward(System.Single[])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.FloatToComplex32TransformBase.Backward(System.Single[])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.FloatToComplex32TransformBase.Forward(System.Single[0:,0:])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.FloatToComplex32TransformBase.Backward(System.Single[0:,0:])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.FloatToComplex32TransformBase.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.FloatToComplex32TransformBase.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.FloatToComplex32TransformBase.Forward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.FloatToComplex32TransformBase.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Transform.FourierTransform">
             <summary>
@@ -26607,11 +26412,6 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="F:UMapx.Transform.FourierTransform.direction">
-            <summary>
-            Processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.FourierTransform.#ctor(System.Boolean,UMapx.Core.Direction)">
             <summary>
             Initializes the Fourier transform.
@@ -26624,11 +26424,6 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="P:UMapx.Transform.FourierTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.FourierTransform.Matrix(System.Int32)">
             <summary>
             Implements the construction of the Fourier matrix.
@@ -26638,56 +26433,56 @@
         </member>
         <member name="M:UMapx.Transform.FourierTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
-            Forward Fourier transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FourierTransform.Backward(UMapx.Core.Complex32[])">
             <summary>
-            Backward Fourier transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FourierTransform.Forward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Forward Fourier transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.FourierTransform.Backward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Backward Fourier transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.FourierTransform.Forward(System.Single[])">
             <summary>
-            Forward Fourier transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FourierTransform.Backward(System.Single[])">
             <summary>
-            Backward Fourier transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FourierTransform.Forward(System.Single[0:,0:])">
             <summary>
-            Forward Fourier transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.FourierTransform.Backward(System.Single[0:,0:])">
             <summary>
-            Backward Fourier transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
@@ -27071,11 +26866,6 @@
             https://en.wikipedia.org/wiki/Hankel_transform
             </remarks>
         </member>
-        <member name="F:UMapx.Transform.HankelTransform.direction">
-            <summary>
-            Processing direction.
-            </summary>
-        </member>
         <member name="F:UMapx.Transform.HankelTransform.a">
             <summary>
             Param.
@@ -27087,11 +26877,6 @@
             </summary>
             <param name="a">Param</param>
             <param name="direction">Processing direction</param>
-        </member>
-        <member name="P:UMapx.Transform.HankelTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
         </member>
         <member name="P:UMapx.Transform.HankelTransform.A">
             <summary>
@@ -27119,56 +26904,56 @@
         </member>
         <member name="M:UMapx.Transform.HankelTransform.Forward(System.Single[])">
             <summary>
-            Forward Hankel transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.HankelTransform.Backward(System.Single[])">
             <summary>
-            Backward Hankel transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.HankelTransform.Forward(System.Single[0:,0:])">
             <summary>
-            Forward Hankel transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.HankelTransform.Backward(System.Single[0:,0:])">
             <summary>
-            Backward Hankel transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.HankelTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
-            Forward Hankel transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.HankelTransform.Backward(UMapx.Core.Complex32[])">
             <summary>
-            Backward Hankel transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.HankelTransform.Forward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Forward Hankel transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.HankelTransform.Backward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Backward Hankel transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
@@ -27187,11 +26972,6 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="F:UMapx.Transform.HartleyTransform.direction">
-            <summary>
-            Processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.HartleyTransform.#ctor(System.Boolean,UMapx.Core.Direction)">
             <summary>
             Initializes the Hartley transform.
@@ -27204,11 +26984,6 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="P:UMapx.Transform.HartleyTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.HartleyTransform.Matrix(System.Int32)">
             <summary>
             Implements the construction of the Hartley transform matrix.
@@ -27218,56 +26993,56 @@
         </member>
         <member name="M:UMapx.Transform.HartleyTransform.Forward(System.Single[])">
             <summary>
-            Forward Hartley transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.HartleyTransform.Backward(System.Single[])">
             <summary>
-            Backward Hartley transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.HartleyTransform.Forward(System.Single[0:,0:])">
             <summary>
-            Forward Hartley transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.HartleyTransform.Backward(System.Single[0:,0:])">
             <summary>
-            Backward Hartley transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.HartleyTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
-            Forward Hartley transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.HartleyTransform.Backward(UMapx.Core.Complex32[])">
             <summary>
-            Backward Hartley transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.HartleyTransform.Forward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Forward Hartley transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.HartleyTransform.Backward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Backward Hartley transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
@@ -27288,11 +27063,6 @@
             Fourier transform.
             </summary>
         </member>
-        <member name="F:UMapx.Transform.HilbertTransform.direction">
-            <summary>
-            Processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.HilbertTransform.#ctor(System.Boolean,UMapx.Core.Direction)">
             <summary>
             Initializes the Hilbert transform.
@@ -27305,66 +27075,19 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="P:UMapx.Transform.HilbertTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.HilbertTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
-            Forward Hilbert transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.HilbertTransform.Backward(UMapx.Core.Complex32[])">
             <summary>
-            Backward Hilbert transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.HilbertTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward Hilbert transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.HilbertTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward Hilbert transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.HilbertTransform.Forward(System.Single[])">
-            <summary>
-            Forward Hilbert transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.HilbertTransform.Backward(System.Single[])">
-            <summary>
-            Backward Hilbert transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.HilbertTransform.Forward(System.Single[0:,0:])">
-            <summary>
-            Forward Hilbert transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.HilbertTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward Hilbert transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.HilbertTransform.ApplyHilbertOperatorMaskInplace(UMapx.Core.Complex32[])">
             <summary>
@@ -27542,11 +27265,6 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="F:UMapx.Transform.LaplaceTransform.direction">
-            <summary>
-            Processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.LaplaceTransform.#ctor(System.Single,System.Boolean,UMapx.Core.Direction)">
             <summary>
             Initializes the Laplace transform.
@@ -27568,11 +27286,6 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="P:UMapx.Transform.LaplaceTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.LaplaceTransform.Matrix(System.Int32,System.Single,System.Boolean)">
             <summary>
             Implements the construction of the Laplace matrix.
@@ -27584,56 +27297,56 @@
         </member>
         <member name="M:UMapx.Transform.LaplaceTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
-            Forward Laplace transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.LaplaceTransform.Backward(UMapx.Core.Complex32[])">
             <summary>
-            Backward Laplace transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.LaplaceTransform.Forward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Forward Laplace transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.LaplaceTransform.Backward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Backward Laplace transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.LaplaceTransform.Forward(System.Single[])">
             <summary>
-            Forward Laplace transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.LaplaceTransform.Backward(System.Single[])">
             <summary>
-            Backward Laplace transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.LaplaceTransform.Forward(System.Single[0:,0:])">
             <summary>
-            Forward Laplace transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.LaplaceTransform.Backward(System.Single[0:,0:])">
             <summary>
-            Backward Laplace transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
@@ -28155,21 +27868,11 @@
             http://sernam.ru/book_prett1.php?id=91
             </remarks>
         </member>
-        <member name="F:UMapx.Transform.SineTransform.direction">
-            <summary>
-            Processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.SineTransform.#ctor(UMapx.Core.Direction)">
             <summary>
             Initializes the sine transform.
             </summary>
             <param name="direction">Processing direction</param>
-        </member>
-        <member name="P:UMapx.Transform.SineTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
         </member>
         <member name="M:UMapx.Transform.SineTransform.Matrix(System.Int32)">
             <summary>
@@ -28180,56 +27883,56 @@
         </member>
         <member name="M:UMapx.Transform.SineTransform.Forward(System.Single[])">
             <summary>
-            Forward sine transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.SineTransform.Backward(System.Single[])">
             <summary>
-            Backward sine transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.SineTransform.Forward(System.Single[0:,0:])">
             <summary>
-            Forward sine transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.SineTransform.Backward(System.Single[0:,0:])">
             <summary>
-            Backward sine transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.SineTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
-            Forward sine transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.SineTransform.Backward(UMapx.Core.Complex32[])">
             <summary>
-            Backward sine transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.SineTransform.Forward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Forward sine transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.SineTransform.Backward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Backward sine transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
@@ -28315,6 +28018,16 @@
             Over.
             </summary>
         </member>
+        <member name="T:UMapx.Transform.TransformBase">
+            <summary>
+            Defines the transform base class.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.TransformBase.Direction">
+            <summary>
+            Gets or sets the processing direction.
+            </summary>
+        </member>
         <member name="T:UMapx.Transform.WalshHadamardTransform">
             <summary>
             Defines the Walsh-Hadamard transform.
@@ -28329,11 +28042,6 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="F:UMapx.Transform.WalshHadamardTransform.direction">
-            <summary>
-            Processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.WalshHadamardTransform.#ctor(System.Boolean,UMapx.Core.Direction)">
             <summary>
             Initializes the Walsh-Hadamard transform.
@@ -28344,11 +28052,6 @@
         <member name="P:UMapx.Transform.WalshHadamardTransform.Normalized">
             <summary>
             Normalized transform or not.
-            </summary>
-        </member>
-        <member name="P:UMapx.Transform.WalshHadamardTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
             </summary>
         </member>
         <member name="M:UMapx.Transform.WalshHadamardTransform.Matrix(System.Int32)">
@@ -28366,56 +28069,56 @@
         </member>
         <member name="M:UMapx.Transform.WalshHadamardTransform.Forward(System.Single[])">
             <summary>
-            Forward Walsh-Hadamard transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.WalshHadamardTransform.Backward(System.Single[])">
             <summary>
-            Backward Walsh-Hadamard transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.WalshHadamardTransform.Forward(System.Single[0:,0:])">
             <summary>
-            Forward Walsh-Hadamard transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.WalshHadamardTransform.Backward(System.Single[0:,0:])">
             <summary>
-            Backward Walsh-Hadamard transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.WalshHadamardTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
-            Forward Walsh-Hadamard transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.WalshHadamardTransform.Backward(UMapx.Core.Complex32[])">
             <summary>
-            Backward Walsh-Hadamard transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.WalshHadamardTransform.Forward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Forward Walsh-Hadamard transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.WalshHadamardTransform.Backward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Backward Walsh-Hadamard transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>

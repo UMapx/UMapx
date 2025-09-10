@@ -11,7 +11,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Laplace_transform
     /// </remarks>
     [Serializable]
-    public class LaplaceTransform : ITransform
+    public class LaplaceTransform : TransformBase, ITransform
     {
         #region Private data
         /// <summary>
@@ -22,10 +22,6 @@ namespace UMapx.Transform
         /// Normalized transform or not.
         /// </summary>
         private bool normalized;
-        /// <summary>
-        /// Processing direction.
-        /// </summary>
-        private Direction direction;
         #endregion
 
         #region Initialize
@@ -75,20 +71,6 @@ namespace UMapx.Transform
                 this.normalized = value;
             }
         }
-        /// <summary>
-        /// Gets or sets the processing direction.
-        /// </summary>
-        public Direction Direction
-        {
-            get
-            {
-                return this.direction;
-            }
-            set
-            {
-                this.direction = value;
-            }
-        }
         #endregion
 
         #region Laplace static components
@@ -136,7 +118,7 @@ namespace UMapx.Transform
 
         #region Laplace Transform
         /// <summary>
-        /// Forward Laplace transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
@@ -144,17 +126,17 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             Complex32[,] U = LaplaceTransform.Matrix(N, sigma);
-            Complex32[] B = Core.Matrice.Dot(A, U);
+            Complex32[] B = Matrice.Dot(A, U);
 
             if (normalized)
             {
-                B = Core.Matrice.Div(B, Math.Sqrt(N));
+                B = Matrice.Div(B, Math.Sqrt(N));
             }
 
             return B;
         }
         /// <summary>
-        /// Backward Laplace transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
@@ -162,17 +144,17 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             Complex32[,] U = LaplaceTransform.Matrix(N, sigma, true);
-            Complex32[] A = Core.Matrice.Dot(B, Core.Matrice.Hermitian(U));
+            Complex32[] A = Matrice.Dot(B, Matrice.Hermitian(U));
 
             if (normalized)
             {
-                A = Core.Matrice.Div(A, Math.Sqrt(N));
+                A = Matrice.Div(A, Math.Sqrt(N));
             }
 
             return A;
         }
         /// <summary>
-        /// Forward Laplace transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
@@ -183,12 +165,12 @@ namespace UMapx.Transform
             Complex32[,] V = LaplaceTransform.Matrix(M, sigma);
             Complex32[,] B;
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 B = U.Dot(A).Dot(V.Hermitian());
                 B = normalized ? B.Div(Math.Sqrt(N * M)) : B;
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 B = U.Dot(A);
                 B = normalized ? B.Div(Math.Sqrt(N)) : B;
@@ -202,7 +184,7 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Backward Laplace transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
@@ -213,12 +195,12 @@ namespace UMapx.Transform
             Complex32[,] V = LaplaceTransform.Matrix(M, sigma, true);
             Complex32[,] A;
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 A = U.Hermitian().Dot(B).Dot(V);
                 A = normalized ? A.Div(Math.Sqrt(N * M)) : A;
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 A = U.Hermitian().Dot(B);
                 A = normalized ? A.Div(Math.Sqrt(N)) : A;
@@ -232,7 +214,7 @@ namespace UMapx.Transform
             return A;
         }
         /// <summary>
-        /// Forward Laplace transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
@@ -241,7 +223,7 @@ namespace UMapx.Transform
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Backward Laplace transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
@@ -250,7 +232,7 @@ namespace UMapx.Transform
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Forward Laplace transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
@@ -259,7 +241,7 @@ namespace UMapx.Transform
             throw new NotSupportedException();
         }
         /// <summary>
-        /// Backward Laplace transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>

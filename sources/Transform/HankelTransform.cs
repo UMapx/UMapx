@@ -14,13 +14,9 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Hankel_transform
     /// </remarks>
     [Serializable]
-    public class HankelTransform : ITransform
+    public class HankelTransform : TransformBase, ITransform
     {
         #region Private data
-        /// <summary>
-        /// Processing direction.
-        /// </summary>
-        private Direction direction;
         /// <summary>
         /// Param.
         /// </summary>
@@ -35,22 +31,8 @@ namespace UMapx.Transform
         /// <param name="direction">Processing direction</param>
         public HankelTransform(int a = 0, Direction direction = Direction.Vertical)
         {
-            this.direction = direction;
+            this.Direction = direction;
             this.a = a;
-        }
-        /// <summary>
-        /// Gets or sets the processing direction.
-        /// </summary>
-        public Direction Direction
-        {
-            get
-            {
-                return this.direction;
-            }
-            set
-            {
-                this.direction = value;
-            }
         }
         /// <summary>
         /// Gets or sets the param of transform.
@@ -141,7 +123,7 @@ namespace UMapx.Transform
 
         #region Hankel Transform
         /// <summary>
-        /// Forward Hankel transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
@@ -149,10 +131,10 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return Core.Matrice.Dot(A, U);
+            return Matrice.Dot(A, U);
         }
         /// <summary>
-        /// Backward Hankel transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
@@ -160,10 +142,10 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return Core.Matrice.Dot(B, (float[,])Core.Matrice.Transpose(U));
+            return Matrice.Dot(B, Matrice.Transpose(U));
         }
         /// <summary>
-        /// Forward Hankel transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
@@ -173,18 +155,18 @@ namespace UMapx.Transform
             float[,] U = HankelTransform.Matrix(N, a);
             float[,] V = HankelTransform.Matrix(M, a);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 return U.Dot(A).Dot(V.Transpose());
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 return U.Dot(A);
             }
             return A.Dot(V.Transpose());
         }
         /// <summary>
-        /// Backward Hankel transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
@@ -194,18 +176,18 @@ namespace UMapx.Transform
             float[,] U = HankelTransform.Matrix(N, a);
             float[,] V = HankelTransform.Matrix(M, a);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 return U.Transpose().Dot(B).Dot(V);
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 return U.Transpose().Dot(B);
             }
             return B.Dot(V);
         }
         /// <summary>
-        /// Forward Hankel transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
@@ -213,10 +195,10 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return Core.Matrice.Dot(A, U);
+            return Matrice.Dot(A, U);
         }
         /// <summary>
-        /// Backward Hankel transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
@@ -224,10 +206,10 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = HankelTransform.Matrix(N, a);
-            return Core.Matrice.Dot(B, (float[,])Core.Matrice.Transpose(U));
+            return Matrice.Dot(B, Matrice.Transpose(U));
         }
         /// <summary>
-        /// Forward Hankel transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
@@ -237,18 +219,18 @@ namespace UMapx.Transform
             float[,] U = HankelTransform.Matrix(N, a);
             float[,] V = HankelTransform.Matrix(M, a);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 return U.Dot(A).Dot(V.Transpose());
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 return U.Dot(A);
             }
             return A.Dot(V.Transpose());
         }
         /// <summary>
-        /// Backward Hankel transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
@@ -258,11 +240,11 @@ namespace UMapx.Transform
             float[,] U = HankelTransform.Matrix(N, a);
             float[,] V = HankelTransform.Matrix(M, a);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 return U.Transpose().Dot(B).Dot(V);
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 return U.Transpose().Dot(B);
             }

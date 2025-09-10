@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using UMapx.Core;
 
 namespace UMapx.Transform
@@ -12,7 +11,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Laplace_transform
     /// </remarks>
     [Serializable]
-    public class FastLaplaceTransform : ITransform
+    public class FastLaplaceTransform : Complex32TransformBase, ITransform
     {
         #region Private data
         /// <summary>
@@ -23,10 +22,6 @@ namespace UMapx.Transform
         /// Damping factor.
         /// </summary>
         private float sigma;
-        /// <summary>
-        /// Processing direction.
-        /// </summary>
-        private Direction direction;
         #endregion
 
         #region Initialize
@@ -76,29 +71,15 @@ namespace UMapx.Transform
                 this.FFT.Normalized = value;
             }
         }
-        /// <summary>
-        /// Gets or sets the processing direction.
-        /// </summary>
-        public Direction Direction
-        {
-            get
-            {
-                return this.direction;
-            }
-            set
-            {
-                this.direction = value;
-            }
-        }
         #endregion
 
         #region Laplace Transform
         /// <summary>
-        /// Forward Laplace transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Forward(Complex32[] A)
+        public override Complex32[] Forward(Complex32[] A)
         {
             // Fourier transform:
             Complex32[] B = FFT.Forward(A);
@@ -108,11 +89,11 @@ namespace UMapx.Transform
             return B;
         }
         /// <summary>
-        /// Backward Laplace transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Backward(Complex32[] B)
+        public override Complex32[] Backward(Complex32[] B)
         {
             // Laplace to Fourier transform:
             Complex32[] A = (Complex32[])B.Clone();
@@ -120,223 +101,6 @@ namespace UMapx.Transform
 
             // Fourier transform:
             return FFT.Backward(A);
-        }
-        /// <summary>
-        /// Forward Laplace transform.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
-        public Complex32[,] Forward(Complex32[,] A)
-        {
-            Complex32[,] B = (Complex32[,])A.Clone();
-            int N = B.GetLength(0);
-            int M = B.GetLength(1);
-
-            if (direction == Direction.Both)
-            {
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = B[i, j];
-                    }
-
-                    row = Forward(row);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        B[i, j] = row[j];
-                    }
-                }
-                );
-
-                Parallel.For(0, M, j =>
-                {
-                    Complex32[] col = new Complex32[N];
-                    int i;
-
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = B[i, j].Conjugate;
-                    }
-
-                    col = Forward(col);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        B[i, j] = col[i];
-                    }
-                });
-            }
-            else if (direction == Direction.Vertical)
-            {
-                Parallel.For(0, M, j =>
-                {
-                    Complex32[] col = new Complex32[N];
-                    int i;
-
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = B[i, j];
-                    }
-
-                    col = Forward(col);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        B[i, j] = col[i];
-                    }
-                });
-            }
-            else
-            {
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = B[i, j];
-                    }
-
-                    row = Forward(row);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        B[i, j] = row[j];
-                    }
-                });
-            }
-
-            return B;
-        }
-        /// <summary>
-        /// Backward Laplace transform.
-        /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
-        public Complex32[,] Backward(Complex32[,] B)
-        {
-            Complex32[,] A = (Complex32[,])B.Clone();
-            int N = B.GetLength(0);
-            int M = B.GetLength(1);
-
-            if (direction == Direction.Both)
-            {
-                Parallel.For(0, M, j =>
-                {
-                    Complex32[] col = new Complex32[N];
-                    int i;
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = A[i, j];
-                    }
-                    col = Backward(col);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        A[i, j] = col[i];
-                    }
-                }
-                );
-
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = A[i, j].Conjugate;
-                    }
-                    row = Backward(row);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        A[i, j] = row[j];
-                    }
-                }
-                );
-            }
-            else if (direction == Direction.Vertical)
-            {
-                Parallel.For(0, M, j =>
-                {
-                    Complex32[] col = new Complex32[N];
-                    int i;
-                    for (i = 0; i < N; i++)
-                    {
-                        col[i] = A[i, j];
-                    }
-                    col = Backward(col);
-
-                    for (i = 0; i < N; i++)
-                    {
-                        A[i, j] = col[i];
-                    }
-                });
-            }
-            else
-            {
-                Parallel.For(0, N, i =>
-                {
-                    Complex32[] row = new Complex32[M];
-                    int j;
-
-                    for (j = 0; j < M; j++)
-                    {
-                        row[j] = A[i, j];
-                    }
-                    row = Backward(row);
-
-                    for (j = 0; j < M; j++)
-                    {
-                        A[i, j] = row[j];
-                    }
-                });
-            }
-
-            return A;
-        }
-        /// <summary>
-        /// Forward Laplace transform.
-        /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
-        public float[] Forward(float[] A)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Backward Laplace transform.
-        /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
-        public float[] Backward(float[] B)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Forward Laplace transform.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
-        public float[,] Forward(float[,] A)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Backward Laplace transform.
-        /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
-        public float[,] Backward(float[,] B)
-        {
-            throw new NotSupportedException();
         }
         #endregion
 

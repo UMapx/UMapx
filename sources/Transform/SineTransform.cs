@@ -11,15 +11,8 @@ namespace UMapx.Transform
     /// http://sernam.ru/book_prett1.php?id=91
     /// </remarks>
     [Serializable]
-    public class SineTransform : ITransform
+    public class SineTransform : TransformBase, ITransform
     {
-        #region Private data
-        /// <summary>
-        /// Processing direction.
-        /// </summary>
-        private Direction direction;
-        #endregion
-
         #region Initialize
         /// <summary>
         /// Initializes the sine transform.
@@ -27,21 +20,7 @@ namespace UMapx.Transform
         /// <param name="direction">Processing direction</param>
         public SineTransform(Direction direction = Direction.Vertical)
         {
-            this.direction = direction;
-        }
-        /// <summary>
-        /// Gets or sets the processing direction.
-        /// </summary>
-        public Direction Direction
-        {
-            get
-            {
-                return this.direction;
-            }
-            set
-            {
-                this.direction = value;
-            }
+            this.Direction = direction;
         }
         #endregion
 
@@ -72,7 +51,7 @@ namespace UMapx.Transform
 
         #region Sine Transform
         /// <summary>
-        /// Forward sine transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
@@ -80,10 +59,10 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = SineTransform.Matrix(N);
-            return Core.Matrice.Dot(A, U);
+            return Matrice.Dot(A, U);
         }
         /// <summary>
-        /// Backward sine transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
@@ -91,10 +70,10 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = SineTransform.Matrix(N);
-            return Core.Matrice.Dot(B, (float[,])Core.Matrice.Transpose(U));
+            return Matrice.Dot(B, Matrice.Transpose(U));
         }
         /// <summary>
-        /// Forward sine transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
@@ -104,18 +83,18 @@ namespace UMapx.Transform
             float[,] U = SineTransform.Matrix(N);
             float[,] V = SineTransform.Matrix(M);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 return U.Dot(A).Dot(V.Transpose());
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 return U.Dot(A);
             }
             return A.Dot(V.Transpose());
         }
         /// <summary>
-        /// Backward sine transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
@@ -125,18 +104,18 @@ namespace UMapx.Transform
             float[,] U = SineTransform.Matrix(N);
             float[,] V = SineTransform.Matrix(M);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 return U.Transpose().Dot(B).Dot(V);
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 return U.Transpose().Dot(B);
             }
             return B.Dot(V);
         }
         /// <summary>
-        /// Forward sine transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
@@ -144,10 +123,10 @@ namespace UMapx.Transform
         {
             int N = A.Length;
             float[,] U = SineTransform.Matrix(N);
-            return Core.Matrice.Dot(A, U);
+            return Matrice.Dot(A, U);
         }
         /// <summary>
-        /// Backward sine transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
@@ -155,10 +134,10 @@ namespace UMapx.Transform
         {
             int N = B.Length;
             float[,] U = SineTransform.Matrix(N);
-            return Core.Matrice.Dot(B, (float[,])Core.Matrice.Transpose(U));
+            return Matrice.Dot(B, Matrice.Transpose(U));
         }
         /// <summary>
-        /// Forward sine transform.
+        /// Forward transform.
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
@@ -168,18 +147,18 @@ namespace UMapx.Transform
             float[,] U = SineTransform.Matrix(N);
             float[,] V = SineTransform.Matrix(M);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 return U.Dot(A).Dot(V.Transpose());
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 return U.Dot(A);
             }
             return A.Dot(V.Transpose());
         }
         /// <summary>
-        /// Backward sine transform.
+        /// Backward transform.
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
@@ -189,11 +168,11 @@ namespace UMapx.Transform
             float[,] U = SineTransform.Matrix(N);
             float[,] V = SineTransform.Matrix(M);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 return U.Transpose().Dot(B).Dot(V);
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 return U.Transpose().Dot(B);
             }
