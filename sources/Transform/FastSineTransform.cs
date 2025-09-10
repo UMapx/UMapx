@@ -12,7 +12,7 @@ namespace UMapx.Transform
     /// http://sernam.ru/book_prett1.php?id=91
     /// </remarks>
     [Serializable]
-    public class FastSineTransform : FloatToComplex32TransformBase, ITransform
+    public class FastSineTransform : FloatTransformBase, ITransform
     {
         #region Private data
         /// <summary>

@@ -11,7 +11,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Discrete_Hartley_transform
     /// </remarks>
     [Serializable]
-    public class FastHartleyTransform : FloatToComplex32TransformBase, ITransform
+    public class FastHartleyTransform : FloatTransformBase, ITransform
     {
         #region Private data
         /// <summary>

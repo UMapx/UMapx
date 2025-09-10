@@ -11,7 +11,7 @@ namespace UMapx.Transform
     /// http://www.mathworks.com/matlabcentral/fileexchange/6879-fast-walsh-hadamard-transform
     /// </remarks>
     [Serializable]
-    public class FastWalshHadamardTransform : FloatToComplex32TransformBase, ITransform
+    public class FastWalshHadamardTransform : FloatTransformBase, ITransform
     {
         #region Private data
         /// <summary>
