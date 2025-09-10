@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using UMapx.Core;
 
 namespace UMapx.Transform
@@ -13,7 +12,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Chirp_Z-transform
     /// </remarks>
     [Serializable]
-    public class FastFourierTransform : TransformBase, ITransform
+    public class FastFourierTransform : TransformBaseComplex32, ITransform
     {
         #region Private data
         /// <summary>
@@ -55,7 +54,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Forward(Complex32[] A)
+        public override Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
             var B = (Complex32[])A.Clone();
@@ -75,7 +74,7 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Backward(Complex32[] B)
+        public override Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
             var A = (Complex32[])B.Clone();
@@ -91,182 +90,6 @@ namespace UMapx.Transform
             //    Scale(A, 1f / N);
 
             return A;
-        }
-        /// <summary>
-        /// Forward transform.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
-        public Complex32[,] Forward(Complex32[,] A)
-        {
-            var B = (Complex32[,])A.Clone();
-            int N = B.GetLength(0);
-            int M = B.GetLength(1);
-
-            if (Direction == Direction.Both)
-            {
-                Parallel.For(0, N, i =>
-                {
-                    var row = new Complex32[M];
-                    for (int j = 0; j < M; j++) row[j] = B[i, j];
-
-                    if ((M & (M - 1)) == 0) CooleyTukeyFFT(row, false);
-                    else BluesteinFFT(row, false);
-
-                    for (int j = 0; j < M; j++) B[i, j] = row[j];
-                });
-
-                Parallel.For(0, M, j =>
-                {
-                    var col = new Complex32[N];
-                    for (int i = 0; i < N; i++) col[i] = B[i, j].Conjugate;
-
-                    if ((N & (N - 1)) == 0) CooleyTukeyFFT(col, false);
-                    else BluesteinFFT(col, false);
-
-                    for (int i = 0; i < N; i++) B[i, j] = col[i];
-                });
-
-                if (normalized) B = Matrice.Div(B, Maths.Sqrt(N * M));
-            }
-            else if (Direction == Direction.Vertical)
-            {
-                Parallel.For(0, M, j =>
-                {
-                    var col = new Complex32[N];
-                    for (int i = 0; i < N; i++) col[i] = B[i, j];
-
-                    if ((N & (N - 1)) == 0) CooleyTukeyFFT(col, false);
-                    else BluesteinFFT(col, false);
-
-                    for (int i = 0; i < N; i++) B[i, j] = col[i];
-                });
-
-                if (normalized) B = Matrice.Div(B, Maths.Sqrt(N));
-            }
-            else // Direction.Horizontal
-            {
-                Parallel.For(0, N, i =>
-                {
-                    var row = new Complex32[M];
-                    for (int j = 0; j < M; j++) row[j] = B[i, j];
-
-                    if ((M & (M - 1)) == 0) CooleyTukeyFFT(row, false);
-                    else BluesteinFFT(row, false);
-
-                    for (int j = 0; j < M; j++) B[i, j] = row[j];
-                });
-
-                if (normalized) B = Matrice.Div(B, Maths.Sqrt(M));
-            }
-
-            return B;
-        }
-        /// <summary>
-        /// Backward transform.
-        /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
-        public Complex32[,] Backward(Complex32[,] B)
-        {
-            var A = (Complex32[,])B.Clone();
-            int N = A.GetLength(0);
-            int M = A.GetLength(1);
-
-            if (Direction == Direction.Both)
-            {
-                Parallel.For(0, M, j =>
-                {
-                    var col = new Complex32[N];
-                    for (int i = 0; i < N; i++) col[i] = A[i, j];
-
-                    if ((N & (N - 1)) == 0) CooleyTukeyFFT(col, true);
-                    else BluesteinFFT(col, true);
-
-                    for (int i = 0; i < N; i++) A[i, j] = col[i];
-                });
-
-                Parallel.For(0, N, i =>
-                {
-                    var row = new Complex32[M];
-                    for (int j = 0; j < M; j++) row[j] = A[i, j].Conjugate;
-
-                    if ((M & (M - 1)) == 0) CooleyTukeyFFT(row, true);
-                    else BluesteinFFT(row, true);
-
-                    for (int j = 0; j < M; j++) A[i, j] = row[j];
-                });
-
-                if (normalized) A = Matrice.Div(A, Maths.Sqrt(N * M));
-            }
-            else if (Direction == Direction.Vertical)
-            {
-                Parallel.For(0, M, j =>
-                {
-                    var col = new Complex32[N];
-                    for (int i = 0; i < N; i++) col[i] = A[i, j];
-
-                    if ((N & (N - 1)) == 0) CooleyTukeyFFT(col, true);
-                    else BluesteinFFT(col, true);
-
-                    for (int i = 0; i < N; i++) A[i, j] = col[i];
-                });
-
-                if (normalized) A = Matrice.Div(A, Maths.Sqrt(N));
-            }
-            else // Direction.Horizontal
-            {
-                Parallel.For(0, N, i =>
-                {
-                    var row = new Complex32[M];
-                    for (int j = 0; j < M; j++) row[j] = A[i, j];
-
-                    if ((M & (M - 1)) == 0) CooleyTukeyFFT(row, true);
-                    else BluesteinFFT(row, true);
-
-                    for (int j = 0; j < M; j++) A[i, j] = row[j];
-                });
-
-                if (normalized) A = Matrice.Div(A, Maths.Sqrt(M));
-            }
-
-            return A;
-        }
-        /// <summary>
-        /// Forward transform.
-        /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
-        public float[] Forward(float[] A)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Backward transform.
-        /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
-        public float[] Backward(float[] B)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Forward transform.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
-        public float[,] Forward(float[,] A)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Backward transform.
-        /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
-        public float[,] Backward(float[,] B)
-        {
-            throw new NotSupportedException();
         }
         #endregion
 

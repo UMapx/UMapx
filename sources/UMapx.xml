@@ -25882,48 +25882,6 @@
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Transform.FastFourierTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastFourierTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastFourierTransform.Forward(System.Single[])">
-            <summary>
-            Forward transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastFourierTransform.Backward(System.Single[])">
-            <summary>
-            Backward transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastFourierTransform.Forward(System.Single[0:,0:])">
-            <summary>
-            Forward transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Transform.FastFourierTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
         <member name="M:UMapx.Transform.FastFourierTransform.BluesteinFFT(UMapx.Core.Complex32[],System.Boolean)">
             <summary>
             Fast Fourier transform (Bluestein FFT).

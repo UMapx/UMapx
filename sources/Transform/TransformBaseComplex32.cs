@@ -78,17 +78,16 @@ namespace UMapx.Transform
 
                     for (j = 0; j < M; j++)
                     {
-                        row[j] = B[i, j];
+                        row[j] = B[i, j].Conjugate;
                     }
 
                     row = Forward(row);
 
                     for (j = 0; j < M; j++)
                     {
-                        B[i, j] = row[j];
+                        B[i, j] = row[j].Conjugate;
                     }
-                }
-                );
+                });
 
                 Parallel.For(0, M, j =>
                 {
@@ -97,7 +96,7 @@ namespace UMapx.Transform
 
                     for (i = 0; i < N; i++)
                     {
-                        col[i] = B[i, j].Conjugate;
+                        col[i] = B[i, j];
                     }
 
                     col = Forward(col);
@@ -137,14 +136,14 @@ namespace UMapx.Transform
 
                     for (j = 0; j < M; j++)
                     {
-                        row[j] = B[i, j];
+                        row[j] = B[i, j].Conjugate;
                     }
 
                     row = Forward(row);
 
                     for (j = 0; j < M; j++)
                     {
-                        B[i, j] = row[j];
+                        B[i, j] = row[j].Conjugate;
                     }
                 });
             }
@@ -193,7 +192,7 @@ namespace UMapx.Transform
 
                     for (j = 0; j < M; j++)
                     {
-                        A[i, j] = row[j];
+                        A[i, j] = row[j].Conjugate;
                     }
                 });
             }
@@ -224,13 +223,13 @@ namespace UMapx.Transform
 
                     for (j = 0; j < M; j++)
                     {
-                        row[j] = A[i, j];
+                        row[j] = A[i, j].Conjugate;
                     }
                     row = Backward(row);
 
                     for (j = 0; j < M; j++)
                     {
-                        A[i, j] = row[j];
+                        A[i, j] = row[j].Conjugate;
                     }
                 });
             }
