@@ -25578,21 +25578,11 @@
             https://en.wikipedia.org/wiki/Discrete_cosine_transform
             </remarks>
         </member>
-        <member name="F:UMapx.Transform.CosineTransform.direction">
-            <summary>
-            Processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.CosineTransform.#ctor(UMapx.Core.Direction)">
             <summary>
             Initializes the cosine transform.
             </summary>
             <param name="direction">Processing direction</param>
-        </member>
-        <member name="P:UMapx.Transform.CosineTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
-            </summary>
         </member>
         <member name="M:UMapx.Transform.CosineTransform.Matrix(System.Int32)">
             <summary>

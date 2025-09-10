@@ -11,15 +11,8 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Discrete_cosine_transform
     /// </remarks>
     [Serializable]
-    public class CosineTransform : ITransform
+    public class CosineTransform : TransformBase, ITransform
     {
-        #region Private data
-        /// <summary>
-        /// Processing direction.
-        /// </summary>
-        private Direction direction;
-        #endregion
-
         #region Initialize
         /// <summary>
         /// Initializes the cosine transform.
@@ -27,21 +20,7 @@ namespace UMapx.Transform
         /// <param name="direction">Processing direction</param>
         public CosineTransform(Direction direction = Direction.Vertical)
         {
-            this.direction = direction;
-        }
-        /// <summary>
-        /// Gets or sets the processing direction.
-        /// </summary>
-        public Direction Direction
-        {
-            get
-            {
-                return this.direction;
-            }
-            set
-            {
-                this.direction = value;
-            }
+            this.Direction = direction;
         }
         #endregion
 
@@ -105,11 +84,11 @@ namespace UMapx.Transform
             float[,] U = CosineTransform.Matrix(N);
             float[,] V = CosineTransform.Matrix(M);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 return U.Dot(A).Dot(V.Transpose());
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 return U.Dot(A);
             }
@@ -126,11 +105,11 @@ namespace UMapx.Transform
             float[,] U = CosineTransform.Matrix(N);
             float[,] V = CosineTransform.Matrix(M);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 return U.Transpose().Dot(B).Dot(V);
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 return U.Transpose().Dot(B);
             }
@@ -169,11 +148,11 @@ namespace UMapx.Transform
             float[,] U = CosineTransform.Matrix(N);
             float[,] V = CosineTransform.Matrix(M);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 return U.Dot(A).Dot(V.Transpose());
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 return U.Dot(A);
             }
@@ -190,11 +169,11 @@ namespace UMapx.Transform
             float[,] U = CosineTransform.Matrix(N);
             float[,] V = CosineTransform.Matrix(M);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 return U.Transpose().Dot(B).Dot(V);
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 return U.Transpose().Dot(B);
             }
