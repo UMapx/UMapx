@@ -127,7 +127,7 @@ namespace UMapx.Transform
                     for (int i = 0; i < N; i++) B[i, j] = col[i];
                 });
 
-                if (normalized) B = Matrice.Div(B, Maths.Sqrt(N * (double)M));
+                if (normalized) B = Matrice.Div(B, Maths.Sqrt(N * M));
             }
             else if (Direction == Direction.Vertical)
             {
@@ -197,8 +197,7 @@ namespace UMapx.Transform
                     for (int j = 0; j < M; j++) A[i, j] = row[j];
                 });
 
-                if (normalized) A = Matrice.Div(A, Maths.Sqrt(N * (double)M));
-                //else A = Matrice.Div(A, (float)(N * (double)M));
+                if (normalized) A = Matrice.Div(A, Maths.Sqrt(N * M));
             }
             else if (Direction == Direction.Vertical)
             {
@@ -214,7 +213,6 @@ namespace UMapx.Transform
                 });
 
                 if (normalized) A = Matrice.Div(A, Maths.Sqrt(N));
-                //else A = Matrice.Div(A, (float)N);
             }
             else // Direction.Horizontal
             {
@@ -230,7 +228,6 @@ namespace UMapx.Transform
                 });
 
                 if (normalized) A = Matrice.Div(A, Maths.Sqrt(M));
-                //else A = Matrice.Div(A, (float)M);
             }
 
             return A;
