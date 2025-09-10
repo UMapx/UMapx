@@ -163,7 +163,7 @@ namespace UMapx.Colorspace
 
             float Y = 0.299f * r + 0.587f * g + 0.114f * b;
             float Cb = -0.450f * r - 0.883f * g + 1.333f * b;
-            float Cr = -1.333f * r - 1.116f * g - 0.217f * b;
+            float Cr = -1.333f * r + 1.116f * g + 0.217f * b;
 
             return new YDbDr(Y, Cb, Cr);
         }
