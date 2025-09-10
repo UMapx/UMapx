@@ -156,35 +156,46 @@ namespace UMapx.Window
         /// <returns>Array</returns>
         public static float[] Packet(IWindow window, int length)
         {
-            // exception by length
-            if (window.FrameSize >= length)
-                return window.GetWindow(length);
+            // exeption by length
+            if (window.FrameSize > length)
+                return WeylHeisenbergTransform.nSymmetry(window, length);
 
-            var baseLen = window.FrameSize;
-            var g = window.GetWindow(baseLen);
+            // params for approximation
+            float[] w = WeylHeisenbergTransform.nSymmetry(window, (int)window.FrameSize);
+            int n = w.Length;
+            float min = Math.Min(w[0], w[n - 1]);
+            float[] g = new float[length];
+            int i, j = (length - n) / 2;
+            int k = Math.Min(length - 2 * j, n);
+            int z = j + k;
 
-            // Target buffer and symmetric padding sizes
-            int pad = length - baseLen;
-            int leftPad = pad / 2;
-            int rightPad = pad - leftPad;
+            // do job for intervals
+            for (i = 0; i < j; i++)
+                g[i] = min;
 
-            var w = new float[length];
+            for (i = j; i < z; i++)
+                g[i] = w[i - j];
 
-            // Use the window's own edge levels as "its minima" for padding
-            // (for most windows these are indeed the minima).
-            float leftVal = g[0];
-            float rightVal = g[baseLen - 1];
+            for (i = z; i < length; i++)
+                g[i] = min;
 
-            // Left pad
-            for (int i = 0; i < leftPad; i++)
-                w[i] = leftVal;
+            return g;
+        }
+        /// <summary>
+        /// Returns a vector of values of a window function that satisfies the N-1 symmetry condition.
+        /// </summary>
+        /// <param name="window">Windows function</param>
+        /// <param name="length">Number of samples</param>
+        /// <returns>Array</returns>
+        private static float[] nSymmetry(IWindow window, int length)
+        {
+            // creaing window function
+            float[] g = window.GetWindow(length + 1);
+            float[] w = new float[length];
 
-            // Copy the core window centered
-            Buffer.BlockCopy(g, 0, w, sizeof(float) * leftPad, baseLen * sizeof(float));
-
-            // Right pad
-            for (int i = length - rightPad; i < length; i++)
-                w[i] = rightVal;
+            // N-1 symmetric
+            for (int i = 0; i < length; i++)
+                w[i] = g[i];
 
             return w;
         }
