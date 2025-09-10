@@ -33811,11 +33811,6 @@
             Number of frequency shifts.
             </summary>
         </member>
-        <member name="F:UMapx.Window.WeylHeisenbergTransform.direction">
-            <summary>
-            Processing direction.
-            </summary>
-        </member>
         <member name="M:UMapx.Window.WeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
             <summary>
             Initializes a group of orthogonal bases and Weyl-Heisenberg transformations.
@@ -33827,11 +33822,6 @@
         <member name="P:UMapx.Window.WeylHeisenbergTransform.M">
             <summary>
             Gets or sets number of frequency shifts [4, N].
-            </summary>
-        </member>
-        <member name="P:UMapx.Window.WeylHeisenbergTransform.Direction">
-            <summary>
-            Gets or sets the processing direction.
             </summary>
         </member>
         <member name="P:UMapx.Window.WeylHeisenbergTransform.Window">

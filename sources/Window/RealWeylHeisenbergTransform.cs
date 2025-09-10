@@ -151,11 +151,11 @@ namespace UMapx.Window
             float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
             float[,] B;
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 B = U.Transpose().Dot(A).Dot(V);
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 B = U.Transpose().Dot(A);
             }
@@ -177,11 +177,11 @@ namespace UMapx.Window
             float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
             float[,] A;
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 A = U.Dot(B).Dot(V.Transpose());
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 A = U.Dot(B);
             }
@@ -227,11 +227,11 @@ namespace UMapx.Window
             float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
             Complex32[,] B;
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 B = U.Transpose().Dot(A).Dot(V);
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 B = U.Transpose().Dot(A);
             }
@@ -253,11 +253,11 @@ namespace UMapx.Window
             float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
             Complex32[,] A;
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 A = U.Dot(B).Dot(V.Transpose());
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 A = U.Dot(B);
             }

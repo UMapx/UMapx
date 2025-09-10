@@ -64,13 +64,13 @@ namespace UMapx.Window
             PolyphaseCache cacheCols = null; // U for length N (vertical)
             PolyphaseCache cacheRows = null; // V for length M (horizontal)
 
-            if (direction == Direction.Both || direction == Direction.Vertical)
+            if (Direction == Direction.Both || Direction == Direction.Vertical)
                 cacheCols = PolyphaseCache.Build(N, this.m, this.window);
 
-            if (direction == Direction.Both || direction == Direction.Horizontal)
+            if (Direction == Direction.Both || Direction == Direction.Horizontal)
                 cacheRows = PolyphaseCache.Build(M, this.m, this.window);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 // 1) Left-multiply: U^H · A  → shape: (2N × M)
                 var tmp = new Complex32[2 * N, M];
@@ -123,7 +123,7 @@ namespace UMapx.Window
                 return B;
             }
 
-            if (direction == Direction.Vertical)
+            if (Direction == Direction.Vertical)
             {
                 // B = U^H · A  → (2N × M)
                 var B = new Complex32[2 * N, M];
@@ -191,13 +191,13 @@ namespace UMapx.Window
             PolyphaseCache cacheCols = null; // for target N = N2/2 (vertical inverse)
             PolyphaseCache cacheRows = null; // for target M = M2/2 (horizontal inverse)
 
-            if (direction == Direction.Both || direction == Direction.Vertical)
+            if (Direction == Direction.Both || Direction == Direction.Vertical)
                 cacheCols = PolyphaseCache.Build(N2 / 2, this.m, this.window);
 
-            if (direction == Direction.Both || direction == Direction.Horizontal)
+            if (Direction == Direction.Both || Direction == Direction.Horizontal)
                 cacheRows = PolyphaseCache.Build(M2 / 2, this.m, this.window);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 // Inverse order of Forward(Both):
                 // 1) Undo right multiply (· V) per row using the conjugation trick:
@@ -250,7 +250,7 @@ namespace UMapx.Window
                 return A;
             }
 
-            if (direction == Direction.Vertical)
+            if (Direction == Direction.Vertical)
             {
                 // A = (U^H)^{-1} · B : columns 2N → N
                 var A = new Complex32[N2 / 2, M2];

@@ -13,7 +13,7 @@ namespace UMapx.Window
     /// https://ieeexplore.ieee.org/document/8711969/
     /// </remarks>
     [Serializable]
-    public class WeylHeisenbergTransform : IWindowTransform, ITransform
+    public class WeylHeisenbergTransform : TransformBase, IWindowTransform, ITransform
     {
         #region Private data
         /// <summary>
@@ -24,10 +24,6 @@ namespace UMapx.Window
         /// Number of frequency shifts.
         /// </summary>
         protected int m;
-        /// <summary>
-        /// Processing direction.
-        /// </summary>
-        protected Direction direction;
         #endregion
 
         #region Initialize
@@ -56,20 +52,6 @@ namespace UMapx.Window
                     throw new ArgumentException("M must be greater than 2");
 
                 this.m = value;
-            }
-        }
-        /// <summary>
-        /// Gets or sets the processing direction.
-        /// </summary>
-        public Direction Direction
-        {
-            get
-            {
-                return this.direction;
-            }
-            set
-            {
-                this.direction = value;
             }
         }
         /// <summary>
@@ -245,11 +227,11 @@ namespace UMapx.Window
             Complex32[,] V = WeylHeisenbergTransform.Matrix(this.window, M, this.m, true);
             Complex32[,] B;
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 B = U.Hermitian().Dot(A).Dot(V);
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 B = U.Hermitian().Dot(A);
             }
@@ -271,11 +253,11 @@ namespace UMapx.Window
             Complex32[,] V = WeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
             Complex32[,] A;
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 A = U.Dot(B).Dot(V.Hermitian());
             }
-            else if (direction == Direction.Vertical)
+            else if (Direction == Direction.Vertical)
             {
                 A = U.Dot(B);
             }

@@ -107,12 +107,12 @@ namespace UMapx.Window
             FastWeylHeisenbergTransform.PolyphaseCache cacheCols = null;
             FastWeylHeisenbergTransform.PolyphaseCache cacheRows = null;
 
-            if (direction == Direction.Both || direction == Direction.Vertical)
+            if (Direction == Direction.Both || Direction == Direction.Vertical)
                 cacheCols = FastWeylHeisenbergTransform.PolyphaseCache.Build(rows, this.m, this.window);
-            if (direction == Direction.Both || direction == Direction.Horizontal)
+            if (Direction == Direction.Both || Direction == Direction.Horizontal)
                 cacheRows = FastWeylHeisenbergTransform.PolyphaseCache.Build(cols, this.m, this.window);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 var tmp = new float[rows2, cols2];
 
@@ -155,7 +155,7 @@ namespace UMapx.Window
                 return B;
             }
 
-            if (direction == Direction.Vertical)
+            if (Direction == Direction.Vertical)
             {
                 var B = new float[rows2, cols2];
                 Parallel.For(0, cols2, j =>
@@ -216,12 +216,12 @@ namespace UMapx.Window
             FastWeylHeisenbergTransform.PolyphaseCache cacheCols = null;
             FastWeylHeisenbergTransform.PolyphaseCache cacheRows = null;
 
-            if (direction == Direction.Both || direction == Direction.Vertical)
+            if (Direction == Direction.Both || Direction == Direction.Vertical)
                 cacheCols = FastWeylHeisenbergTransform.PolyphaseCache.Build(rows, this.m, this.window);
-            if (direction == Direction.Both || direction == Direction.Horizontal)
+            if (Direction == Direction.Both || Direction == Direction.Horizontal)
                 cacheRows = FastWeylHeisenbergTransform.PolyphaseCache.Build(cols, this.m, this.window);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 var tmp = new float[rows2, cols2];
 
@@ -266,7 +266,7 @@ namespace UMapx.Window
                 return A;
             }
 
-            if (direction == Direction.Vertical)
+            if (Direction == Direction.Vertical)
             {
                 var A = new float[rows2, cols2];
                 Parallel.For(0, cols2, j =>
@@ -417,12 +417,12 @@ namespace UMapx.Window
             FastWeylHeisenbergTransform.PolyphaseCache cacheCols = null;
             FastWeylHeisenbergTransform.PolyphaseCache cacheRows = null;
 
-            if (direction == Direction.Both || direction == Direction.Vertical)
+            if (Direction == Direction.Both || Direction == Direction.Vertical)
                 cacheCols = FastWeylHeisenbergTransform.PolyphaseCache.Build(rows, this.m, this.window);
-            if (direction == Direction.Both || direction == Direction.Horizontal)
+            if (Direction == Direction.Both || Direction == Direction.Horizontal)
                 cacheRows = FastWeylHeisenbergTransform.PolyphaseCache.Build(cols, this.m, this.window);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 var tmp = new Complex32[rows2, cols2];
 
@@ -471,7 +471,7 @@ namespace UMapx.Window
                 return B;
             }
 
-            if (direction == Direction.Vertical)
+            if (Direction == Direction.Vertical)
             {
                 var B = new Complex32[rows2, cols2];
 
@@ -542,12 +542,12 @@ namespace UMapx.Window
             FastWeylHeisenbergTransform.PolyphaseCache cacheCols = null;
             FastWeylHeisenbergTransform.PolyphaseCache cacheRows = null;
 
-            if (direction == Direction.Both || direction == Direction.Vertical)
+            if (Direction == Direction.Both || Direction == Direction.Vertical)
                 cacheCols = FastWeylHeisenbergTransform.PolyphaseCache.Build(rows, this.m, this.window);
-            if (direction == Direction.Both || direction == Direction.Horizontal)
+            if (Direction == Direction.Both || Direction == Direction.Horizontal)
                 cacheRows = FastWeylHeisenbergTransform.PolyphaseCache.Build(cols, this.m, this.window);
 
-            if (direction == Direction.Both)
+            if (Direction == Direction.Both)
             {
                 var tmp = new Complex32[rows2, cols2];
 
@@ -598,7 +598,7 @@ namespace UMapx.Window
                 return A;
             }
 
-            if (direction == Direction.Vertical)
+            if (Direction == Direction.Vertical)
             {
                 var A = new Complex32[rows2, cols2];
 
