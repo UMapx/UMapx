@@ -27898,7 +27898,7 @@
         </member>
         <member name="T:UMapx.Transform.TransformBaseComplex32">
             <summary>
-            Defines an adapter class for a transform.
+            Defines an adapter class for a complex transform.
             </summary>
         </member>
         <member name="M:UMapx.Transform.TransformBaseComplex32.Forward(System.Single[])">

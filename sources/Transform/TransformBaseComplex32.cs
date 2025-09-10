@@ -5,7 +5,7 @@ using UMapx.Core;
 namespace UMapx.Transform
 {
     /// <summary>
-    /// Defines an adapter class for a transform.
+    /// Defines an adapter class for a complex transform.
     /// </summary>
     public abstract class TransformBaseComplex32 : TransformBase, ITransform
     {
