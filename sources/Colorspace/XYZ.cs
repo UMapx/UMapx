@@ -242,13 +242,14 @@ namespace UMapx.Colorspace
             {
                 float[] linear = new float[3];
                 linear[0] = x * 3.2410f - y * 1.5374f - z * 0.4986f; // red
-                linear[1] = -x * 0.9692f + y * 1.8760f - z * 0.0416f; // green
+                linear[1] = -x * 0.9692f + y * 1.8760f + z * 0.0416f; // green
                 linear[2] = x * 0.0556f - y * 0.2040f + z * 1.0570f; // blue
                 float pow = 1.0f / 2.4f;
 
                 for (int i = 0; i < 3; i++)
                 {
                     linear[i] = (linear[i] <= 0.0031308) ? 12.92f * linear[i] : (1 + 0.055f) * Maths.Pow(linear[i], pow) - 0.055f;
+                    linear[i] = Maths.Float(linear[i]);
                 }
 
                 return new RGB(
