@@ -33824,7 +33824,7 @@
             <param name="length">Number of samples</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.nSymmetry(UMapx.Window.IWindow,System.Int32)">
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Symmetry(UMapx.Window.IWindow,System.Int32)">
             <summary>
             Returns a vector of values of a window function that satisfies the N-1 symmetry condition.
             </summary>
