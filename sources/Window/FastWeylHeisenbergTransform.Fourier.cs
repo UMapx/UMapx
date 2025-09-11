@@ -94,7 +94,7 @@ namespace UMapx.Window
             {
                 // main: correlate in frequency and go back to l-domain
                 for (int q = 0; q < L; q++)
-                    tmp[q] = S_hat[n0, q].Conjugate * Xhat[n0, q];
+                    tmp[q] = S_hat[n0][q].Conjugate * Xhat[n0, q];
 
                 FFT(tmp, true); // inverse FFT over r → correlation over l
                 for (int l = 0; l < L; l++)
@@ -108,7 +108,7 @@ namespace UMapx.Window
                     float ang = 2f * Maths.Pi * q * carry / L;
                     var shiftPhase = Maths.Exp(-Complex32.I * ang); // exp(-j*2π*q/L) when carry=1
 
-                    tmp[q] = T_hat[n0, q].Conjugate * Xhat[n0, q] * shiftPhase;
+                    tmp[q] = T_hat[n0][q].Conjugate * Xhat[n0, q] * shiftPhase;
                 }
 
                 FFT(tmp, true); // inverse FFT over r
@@ -279,18 +279,18 @@ namespace UMapx.Window
                 for (int q = 0; q < L; q++)
                 {
                     // main branch adjoint
-                    Xhat[n0, q] += S_hat[n0, q] * bufL[q];
+                    Xhat[n0, q] += S_hat[n0][q] * bufL[q];
 
                     // half branch adjoint (conjugate of forward’s carry-phase)
                     if (carry != 0)
                     {
                         float ang = 2f * Maths.Pi * q * carry / L;
                         var shiftPhaseAdj = Maths.Exp(Complex32.I * ang); // exp(+j*2π*q/L)
-                        Xhat[n0, q] += T_hat[n0, q] * shiftPhaseAdj * bufL2[q];
+                        Xhat[n0, q] += T_hat[n0][q] * shiftPhaseAdj * bufL2[q];
                     }
                     else
                     {
-                        Xhat[n0, q] += T_hat[n0, q] * bufL2[q];
+                        Xhat[n0, q] += T_hat[n0][q] * bufL2[q];
                     }
                 }
             }
@@ -359,14 +359,14 @@ namespace UMapx.Window
             // -------------------- Cached spectra --------------------
 
             /// <summary>
-            /// FFT<sub>L</sub> of the main branch polyphase components [M, L].
+            /// FFT<sub>L</sub> of the main branch polyphase components [M][L].
             /// </summary>
-            public readonly Complex32[,] S_hat;
+            public readonly Complex32[][] S_hat;
 
             /// <summary>
-            /// FFT<sub>L</sub> of the half-shifted branch polyphase components [M, L].
+            /// FFT<sub>L</sub> of the half-shifted branch polyphase components [M][L].
             /// </summary>
-            public readonly Complex32[,] T_hat;
+            public readonly Complex32[][] T_hat;
 
             /// <summary>
             /// Creates a new instance of the polyphase cache.
@@ -376,7 +376,7 @@ namespace UMapx.Window
             /// <param name="L">Number of time shifts</param>
             /// <param name="S">FFT of the main branch polyphase components</param>
             /// <param name="T">FFT of the half-shifted branch polyphase components</param>
-            public PolyphaseCache(int N, int M, int L, Complex32[,] S, Complex32[,] T)
+            public PolyphaseCache(int N, int M, int L, Complex32[][] S, Complex32[][] T)
             {
                 this.N = N;
                 this.M = M;
@@ -413,13 +413,17 @@ namespace UMapx.Window
                 // Allocate caches for the FFTs of polyphase components:
                 // S_hat[n0, q] = FFT_L over r of polyphase component g[r*M + n0]
                 // T_hat[n0, q] = FFT_L over r of polyphase component g[r*M + (n0 + M/2) % M]
-                var S_hat = new Complex32[Mloc, L];
-                var T_hat = new Complex32[Mloc, L];
+                var S_hat = new Complex32[Mloc][];
+                var T_hat = new Complex32[Mloc][];
 
                 var s = new Complex32[L]; // temporary buffer for length-L FFT
 
                 for (int n0 = 0; n0 < Mloc; n0++)
                 {
+                    // Initialize caches
+                    S_hat[n0] = new Complex32[L];
+                    T_hat[n0] = new Complex32[L];
+
                     // --- Main branch polyphase component ---
                     // s[r] = g[r*M + n0], r = 0..L-1
                     for (int r = 0; r < L; r++)
@@ -430,7 +434,7 @@ namespace UMapx.Window
 
                     // Store as S_hat[n0, :]
                     for (int q = 0; q < L; q++)
-                        S_hat[n0, q] = s[q];
+                        S_hat[n0][q] = s[q];
 
                     // --- Half-shifted branch polyphase component ---
                     // Index n1 is (n0 + M/2) mod M — frequency index shifted by half the band.
@@ -444,7 +448,7 @@ namespace UMapx.Window
 
                     // Store as T_hat[n0, :]
                     for (int q = 0; q < L; q++)
-                        T_hat[n0, q] = s[q];
+                        T_hat[n0][q] = s[q];
                 }
 
                 // return cache

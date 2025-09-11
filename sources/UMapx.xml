@@ -33173,15 +33173,15 @@
         </member>
         <member name="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.S_hat">
             <summary>
-            FFT<sub>L</sub> of the main branch polyphase components [M, L].
+            FFT<sub>L</sub> of the main branch polyphase components [M][L].
             </summary>
         </member>
         <member name="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.T_hat">
             <summary>
-            FFT<sub>L</sub> of the half-shifted branch polyphase components [M, L].
+            FFT<sub>L</sub> of the half-shifted branch polyphase components [M][L].
             </summary>
         </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.#ctor(System.Int32,System.Int32,System.Int32,UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.#ctor(System.Int32,System.Int32,System.Int32,UMapx.Core.Complex32[][],UMapx.Core.Complex32[][])">
             <summary>
             Creates a new instance of the polyphase cache.
             </summary>
