@@ -211,7 +211,7 @@ namespace UMapx.Window
         {
             int N = A.Length;
             Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
-            Complex32[] B = Core.Matrice.Dot(A, Core.Matrice.Hermitian(U));
+            Complex32[] B = Core.Matrice.Dot(A, Matrice.Hermitian(U));
             return B;
         }
         /// <summary>
@@ -223,7 +223,7 @@ namespace UMapx.Window
         {
             int N = B.Length;
             Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            Complex32[] A = Core.Matrice.Dot(B, U);
+            Complex32[] A = Matrice.Dot(B, U);
             return A.Div(2);
         }
         /// <summary>
