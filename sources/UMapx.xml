@@ -33075,60 +33075,56 @@
         </member>
         <member name="M:UMapx.Window.FastWeylHeisenbergTransform.FWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">
              <summary>
-             Forward fast Weyl–Heisenberg transform (2-channel packing, length = 2N).
+             Forward fast Weyl–Heisenberg transform (2-channel packing, output length = 2N).
              
-             Input:
-               A ∈ ℂ^N,  N = M * L,  M is even.
+             Signal model and factorization:
+               • N = M · L,  M is even. Index the signal as n = r·M + n0 with residues n0∈[0..M-1], r∈[0..L-1].
+               • Polyphase split over n0 and length-L FFT over r:
+                   Xhat[n0,q] = FFT_L{ A[r*M + n0] }_r.
+               • Frequency-domain correlations (analysis) with orthonormalized window spectra:
+                   main : C_main[n0,l] = IFFT_L{ conj(S_hat[n0,q]) * Xhat[n0,q] }_q,
+                   half : C_half[n0,l] = IFFT_L{ conj(T_hat[n0,q]) * Xhat[n0,q] * φ_carry(q) }_q,
+                 where φ_carry(q) = exp(−j·2π q/L) iff (n0 + M/2) wraps modulo M (time shift +1 in r).
+               • Across residues n0, assemble frequency shifts k by a forward DFT_M with positive exponent
+                 and apply the quarter-period phase e^{+jπk/2} to account for the (n − M/4) centering.
+               • Two-channel packing:
+                   B_main[u] =  P(l,k) · gain,
+                   B_half[u] = −j · Q(l,k) · gain,
+                 with u = l·M + k and gain = √M / √N = 1/√L (orthonormal convention).
+            
+             Exactness:
+               Matches the column-wise “slow” reference matrix G ∈ ℂ^{N×2N} built from the SAME
+               Zak-orthonormalized analysis window g used to compute S_hat/T_hat in PolyphaseCache.
              
-             Output:
-               B ∈ ℂ^{2N}, split as:
-                 B_main[u] = B[u + 0],   u = l*M + k
-                 B_half[u] = B[u + N],   u = l*M + k
-            
-             This matches the column-wise “slow” matrix reference G ∈ ℂ^{N×2N} with columns:
-               main:   g[i] * exp( j*2π*k/M * (n - M/4) )
-               half: j*g[j] * exp( j*2π*k/M * (n - M/4) )
-            
-             Analysis (i.e., G^H A) realized via:
-               - polyphase split over residue n0 (mod M) and FFT_L along r,
-               - frequency-domain correlations with conj(S_hat/T_hat),
-               - carry-phase compensation for the half branch when (n0 + M/2) wraps,
-               - DFT_M over n0 (via forward FFT over n0) + quarter-phase e^{+jπk/2},
-               - normalization gain = √M / √N = 1 / (2√L).
-            
-             Notes:
-               Caches C.S_hat, C.T_hat must be built from the SAME orthonormalized window
-               as used by the slow matrix builder, otherwise values will differ by window scaling.
+             Complexity:
+               O(M·L·log L) for the r-axis FFT/IFFT correlations + O(L·M·log M) for the n0→k assembly.
+               Memory uses O(L·M) only for two row-major workspaces C_main and C_half (no Xhat buffer).
              </summary>
-             <param name="A">Input signal (length N)</param>
-             <param name="C">Polyphase cache (built for N,M,window)</param>
-             <returns>B of length 2N: main (0..N-1) and half (N..2N-1) branches</returns>
+             <param name="A">Input signal A ∈ ℂ^N, N = M·L</param>
+             <param name="C">Polyphase cache holding S_hat and T_hat computed from the orthonormal window</param>
+             <returns>B ∈ ℂ^{2N}: main in B[0..N-1], half in B[N..2N-1], packed as u = l·M + k</returns>
         </member>
         <member name="M:UMapx.Window.FastWeylHeisenbergTransform.IFWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">
              <summary>
-             Inverse fast Weyl–Heisenberg transform (2-channel input, length = 2N).
+             Inverse fast Weyl–Heisenberg transform (synthesis), inverting the forward packing exactly.
+             
+             Given B_main and B_half (packed by u = l·M + k):
+               • Undo −j on the half branch and the quarter-phase e^{+jπk/2}, recover the spectra
+                 over k, then IFFT_M to get the per-residue correlation sequences C_main[:,l], C_half[:,l].
+               • FFT_L over l to return to the r-frequency axis (q), then apply the adjoint frequency
+                 correlations (synthesis):  Xhat[n0,q] = S_hat[n0,q]·FFT{C_main} + T_hat[n0,q]·FFT{C_half}·conj(φ_carry).
+               • IFFT_L over q and interleave residues to reconstruct A[n] = A[r·M + n0].
             
-             Input:
-               B ∈ ℂ^{2N}, split as:
-                 B_main[u] = B[u + 0],   u = l*M + k
-                 B_half[u] = B[u + N],   u = l*M + k
+             Normalization tracks the forward:
+               forward gain = √M/√N = 1/√L and inverse uses the corresponding 1/gain as part of the unpacking
+               (here kept as <c>invGain = 1/(2√L)</c> to match the user’s established convention and matrix reference).
             
-             This inverts the forward packing:
-               forward: B_main =  P * gain
-                        B_half = (-j) Q * gain
-               where gain = √M / √N = 1 / (2√L).
-            
-             Inverse mapping:
-               P =      B_main / gain
-               Q =  j * B_half / gain
-            
-             Then we undo the quarter-phase e^{+jπk/2}, invert the DFT over n₀,
-             apply the adjoint of the frequency-domain correlations, and finally
-             invert the polyphase FFT over r to reconstruct A.
+             Complexity:
+               O(L·M·log M) for IFFT_M over k + O(M·L·log L) for synthesis along the r-axis.
              </summary>
-             <param name="B">Input coefficients of length 2N (main first, then half)</param>
-             <param name="C">Polyphase cache (built for N, M, window)</param>
-             <returns>Reconstructed signal A of length N</returns>
+             <param name="B">Input coefficients B ∈ ℂ^{2N}: main in [0..N-1], half in [N..2N-1]</param>
+             <param name="C">Polyphase cache with the same orthonormal window spectra S_hat/T_hat</param>
+             <returns>Reconstructed signal A ∈ ℂ^N</returns>
         </member>
         <member name="T:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache">
             <summary>

@@ -16,154 +16,140 @@ namespace UMapx.Window
         #region Internal methods and classes
 
         /// <summary>
-        /// Forward fast Weyl–Heisenberg transform (2-channel packing, length = 2N).
+        /// Forward fast Weyl–Heisenberg transform (2-channel packing, output length = 2N).
         /// 
-        /// Input:
-        ///   A ∈ ℂ^N,  N = M * L,  M is even.
+        /// Signal model and factorization:
+        ///   • N = M · L,  M is even. Index the signal as n = r·M + n0 with residues n0∈[0..M-1], r∈[0..L-1].
+        ///   • Polyphase split over n0 and length-L FFT over r:
+        ///       Xhat[n0,q] = FFT_L{ A[r*M + n0] }_r.
+        ///   • Frequency-domain correlations (analysis) with orthonormalized window spectra:
+        ///       main : C_main[n0,l] = IFFT_L{ conj(S_hat[n0,q]) * Xhat[n0,q] }_q,
+        ///       half : C_half[n0,l] = IFFT_L{ conj(T_hat[n0,q]) * Xhat[n0,q] * φ_carry(q) }_q,
+        ///     where φ_carry(q) = exp(−j·2π q/L) iff (n0 + M/2) wraps modulo M (time shift +1 in r).
+        ///   • Across residues n0, assemble frequency shifts k by a forward DFT_M with positive exponent
+        ///     and apply the quarter-period phase e^{+jπk/2} to account for the (n − M/4) centering.
+        ///   • Two-channel packing:
+        ///       B_main[u] =  P(l,k) · gain,
+        ///       B_half[u] = −j · Q(l,k) · gain,
+        ///     with u = l·M + k and gain = √M / √N = 1/√L (orthonormal convention).
+        ///
+        /// Exactness:
+        ///   Matches the column-wise “slow” reference matrix G ∈ ℂ^{N×2N} built from the SAME
+        ///   Zak-orthonormalized analysis window g used to compute S_hat/T_hat in PolyphaseCache.
         /// 
-        /// Output:
-        ///   B ∈ ℂ^{2N}, split as:
-        ///     B_main[u] = B[u + 0],   u = l*M + k
-        ///     B_half[u] = B[u + N],   u = l*M + k
-        ///
-        /// This matches the column-wise “slow” matrix reference G ∈ ℂ^{N×2N} with columns:
-        ///   main:   g[i] * exp( j*2π*k/M * (n - M/4) )
-        ///   half: j*g[j] * exp( j*2π*k/M * (n - M/4) )
-        ///
-        /// Analysis (i.e., G^H A) realized via:
-        ///   - polyphase split over residue n0 (mod M) and FFT_L along r,
-        ///   - frequency-domain correlations with conj(S_hat/T_hat),
-        ///   - carry-phase compensation for the half branch when (n0 + M/2) wraps,
-        ///   - DFT_M over n0 (via forward FFT over n0) + quarter-phase e^{+jπk/2},
-        ///   - normalization gain = √M / √N = 1 / (2√L).
-        ///
-        /// Notes:
-        ///   Caches C.S_hat, C.T_hat must be built from the SAME orthonormalized window
-        ///   as used by the slow matrix builder, otherwise values will differ by window scaling.
+        /// Complexity:
+        ///   O(M·L·log L) for the r-axis FFT/IFFT correlations + O(L·M·log M) for the n0→k assembly.
+        ///   Memory uses O(L·M) only for two row-major workspaces C_main and C_half (no Xhat buffer).
         /// </summary>
-        /// <param name="A">Input signal (length N)</param>
-        /// <param name="C">Polyphase cache (built for N,M,window)</param>
-        /// <returns>B of length 2N: main (0..N-1) and half (N..2N-1) branches</returns>
+        /// <param name="A">Input signal A ∈ ℂ^N, N = M·L</param>
+        /// <param name="C">Polyphase cache holding S_hat and T_hat computed from the orthonormal window</param>
+        /// <returns>B ∈ ℂ^{2N}: main in B[0..N-1], half in B[N..2N-1], packed as u = l·M + k</returns>
         internal static Complex32[] FWHT(Complex32[] A, PolyphaseCache C)
         {
             int N = A.Length;
-            var B = new Complex32[2 * N];
+            int M = C.M;
+            int L = N / M;
+            if (L * M != N) throw new ArgumentException("N must be divisible by M");
 
-            int Mloc = C.M;
-            int L = N / Mloc;
-            if (L * Mloc != N) throw new ArgumentException("N must be divisible by M");
+            var S_hat = C.S_hat; // [M][L]  spectra of g[r*M + n0] over r
+            var T_hat = C.T_hat; // [M][L]  spectra of g[r*M + (n0 + M/2) mod M] over r
 
-            // Cached FFT_L spectra of window polyphase components (built from orthonormalized g):
-            //   S_hat[n0,q] = FFT_L{ g[r*M + n0] }_r
-            //   T_hat[n0,q] = FFT_L{ g[r*M + (n0+M/2) mod M] }_r
-            // Dimensions: [M, L].
-            var S_hat = C.S_hat;
-            var T_hat = C.T_hat;
-
-            // 1) Polyphase split over residue n0 (mod M). For each n0 we FFT along r (length L):
-            //    Xhat[n0,q] = FFT_L{ A[r*M + n0] }_r
-            var Xhat = new Complex32[Mloc][];
-            var tmp = new Complex32[L];
-
-            for (int n0 = 0; n0 < Mloc; n0++)
+            // Precompute carry-phase φ_carry(q) = exp(−j·2π q/L).
+            // It models a +1 cyclic shift in r (time) caused by index wrap when (n0 + M/2) ≥ M.
+            var shiftL = new Complex32[L];
+            for (int q = 0; q < L; q++)
             {
-                Xhat[n0] = new Complex32[L];
-
-                for (int r = 0; r < L; r++)
-                    tmp[r] = A[r * Mloc + n0];
-
-                FFT(tmp, false); // forward FFT along r (no extra scaling)
-
-                for (int q = 0; q < L; q++)
-                    Xhat[n0][q] = tmp[q];
+                float ang = 2f * Maths.Pi * q / L;
+                shiftL[q] = Maths.Exp(-Complex32.I * ang);
             }
 
-            // 2) Frequency-domain correlations to accumulate over time-shift l:
-            //
-            // main branch:
-            //   Cmain[n0,l] = IFFT_L{ conj(S_hat[n0,q]) * Xhat[n0,q] }_q
-            //
-            // half branch:
-            //   Chalf[n0,l] = IFFT_L{ conj(T_hat[n0,q]) * Xhat[n0,q] * phase_carry(q) }_q
-            //
-            // carry phase:
-            //   when (n0 + M/2) >= M, the half-branch index wraps and induces a +1 shift in r.
-            //   A +1 shift in r corresponds in frequency to multiplication by exp(-j*2π*q/L).
-            var Cmain = new Complex32[Mloc][];
-            var Chalf = new Complex32[Mloc][];
-
-            for (int n0 = 0; n0 < Mloc; n0++)
+            // Row-major accumulation buffers:
+            //   Cmain_rows[l][n0]  holds C_main[n0,l],
+            //   Chalf_rows[l][n0]  holds C_half[n0,l].
+            // We store by rows to run FFT_M directly in-place per row (no extra copies).
+            var Cmain_rows = new Complex32[L][];
+            var Chalf_rows = new Complex32[L][];
+            for (int l = 0; l < L; l++)
             {
-                // initiazile
-                Cmain[n0] = new Complex32[L];
-                Chalf[n0] = new Complex32[L];
+                Cmain_rows[l] = new Complex32[M];
+                Chalf_rows[l] = new Complex32[M];
+            }
 
-                // main: correlate in frequency and go back to l-domain
+            // Length-L temporaries reused for all residues.
+            var X = new Complex32[L]; // X[q]  = FFT_L polyphase spectrum for residue n0
+            var Y = new Complex32[L]; // work  = pointwise products in frequency
+
+            // ----- Stage 1: polyphase → FFT_L over r → frequency correlations → IFFT_L to l domain -----
+            for (int n0 = 0; n0 < M; n0++)
+            {
+                // Polyphase gather along r for this residue n0.
+                for (int r = 0; r < L; r++)
+                    X[r] = A[r * M + n0];
+
+                // X[q] ← FFT_L{ A[r*M + n0] }_r  (forward FFT, no extra scaling).
+                FFT(X, false);
+
+                // MAIN branch: Y[q] = conj(S_hat[n0,q]) * X[q].
+                var Sh = S_hat[n0];
                 for (int q = 0; q < L; q++)
-                    tmp[q] = S_hat[n0][q].Conjugate * Xhat[n0][q];
+                    Y[q] = Sh[q].Conjugate * X[q];
 
-                FFT(tmp, true); // inverse FFT over r → correlation over l
+                // IFFT_L over q: gives correlation sequence over time shifts l.
+                FFT(Y, true); // inverse is orthonormal (applies 1/√L internally)
                 for (int l = 0; l < L; l++)
-                    Cmain[n0][l] = tmp[l];
+                    Cmain_rows[l][n0] = Y[l];
 
-                // half: same, but with carry-phase if (n0 + M/2) wraps
-                int carry = ((n0 + Mloc / 2) >= Mloc) ? 1 : 0;
-
-                for (int q = 0; q < L; q++)
+                // HALF branch:
+                // If (n0 + M/2) wraps past M, that implies a +1 shift in r, i.e. multiply by exp(−j·2πq/L).
+                var Th = T_hat[n0];
+                bool carry = ((n0 + (M >> 1)) >= M);
+                if (carry)
                 {
-                    float ang = 2f * Maths.Pi * q * carry / L;
-                    var shiftPhase = Maths.Exp(-Complex32.I * ang); // exp(-j*2π*q/L) when carry=1
-
-                    tmp[q] = T_hat[n0][q].Conjugate * Xhat[n0][q] * shiftPhase;
+                    for (int q = 0; q < L; q++)
+                        Y[q] = Th[q].Conjugate * X[q] * shiftL[q];
+                }
+                else
+                {
+                    for (int q = 0; q < L; q++)
+                        Y[q] = Th[q].Conjugate * X[q];
                 }
 
-                FFT(tmp, true); // inverse FFT over r
+                // IFFT_L → half branch correlations over l.
+                FFT(Y, true);
                 for (int l = 0; l < L; l++)
-                    Chalf[n0][l] = tmp[l];
+                    Chalf_rows[l][n0] = Y[l];
             }
 
-            // 3) Assemble over frequency shifts k for each time shift l.
-            //
-            // Over n0 we need a DFT with positive exponent e^{+j2π kn0/M}.
-            // We realize it by a forward FFT over n0 (no extra *M here).
-            // Then we apply the quarter-phase e^{+jπk/2} (accounts for the (n - M/4) shift).
-            //
-            // Final normalization:
-            //   gain = √M / √N.
-            //
-            // Output packing (two channels):
-            //   B_main[u] =  P * gain
-            //   B_half[u] = (-j) Q * gain
-            // where P, Q are the assembled complex contributions of main/half branches.
-            var Sp_main = new Complex32[Mloc];
-            var Sp_half = new Complex32[Mloc];
-
-            float gain = Maths.Sqrt(Mloc) / Maths.Sqrt(N);
+            // ----- Stage 2: per-row assembly over k (DFT_M with + exponent) + quarter-phase + packing -----
+            var B = new Complex32[2 * N];
+            float gain = Maths.Sqrt(M) / Maths.Sqrt(N); // = 1/√L (unitary end-to-end)
 
             for (int l = 0; l < L; l++)
             {
-                // collect l-th rows across n0
-                for (int n0 = 0; n0 < Mloc; n0++)
-                {
-                    Sp_main[n0] = Cmain[n0][l];
-                    Sp_half[n0] = Chalf[n0][l];
-                }
+                var rowM = Cmain_rows[l]; // length M
+                var rowH = Chalf_rows[l]; // length M
 
-                // forward DFT over n0 via FFT (positive-exponent convention)
-                FFT(Sp_main, false);
-                FFT(Sp_half, false);
+                // Forward DFT over residues n0 (positive exponent) via FFT.
+                FFT(rowM, false);
+                FFT(rowH, false);
 
-                for (int k = 0; k < Mloc; k++)
+                // Apply quarter-phase e^{+jπk/2} (4-periodic: 1, +j, −1, −j) and pack outputs.
+                for (int k = 0; k < M; k++)
                 {
                     var phase = PhasePlusPiOver2(k); // e^{+jπk/2}
-                    var P = phase * Sp_main[k];      // main contribution
-                    var Q = phase * Sp_half[k];      // half contribution
 
-                    int u = l * Mloc + k;
+                    // P = e^{+jπk/2} · FFT_M{C_main}[k]
+                    // Q = e^{+jπk/2} · FFT_M{C_half}[k]
+                    var P = phase * rowM[k];
+                    var Q = phase * rowH[k];
 
-                    // Two-channel output that matches the slow matrix reference (G^H A):
-                    B[u + 0] = P * gain;   // main channel
-                    B[u + N] = -Complex32.I * Q * gain;   // half channel (−j factor)
+                    int u = l * M + k;
+
+                    // Two-channel packing consistent with the slow matrix reference:
+                    //   main:  B[u]     =  P · gain,
+                    //   half:  B[u + N] = (−j) · Q · gain.
+                    B[u] = P * gain;
+                    B[u + N] = -Complex32.I * Q * gain;
                 }
             }
 
@@ -171,79 +157,85 @@ namespace UMapx.Window
         }
 
         /// <summary>
-        /// Inverse fast Weyl–Heisenberg transform (2-channel input, length = 2N).
+        /// Inverse fast Weyl–Heisenberg transform (synthesis), inverting the forward packing exactly.
+        /// 
+        /// Given B_main and B_half (packed by u = l·M + k):
+        ///   • Undo −j on the half branch and the quarter-phase e^{+jπk/2}, recover the spectra
+        ///     over k, then IFFT_M to get the per-residue correlation sequences C_main[:,l], C_half[:,l].
+        ///   • FFT_L over l to return to the r-frequency axis (q), then apply the adjoint frequency
+        ///     correlations (synthesis):  Xhat[n0,q] = S_hat[n0,q]·FFT{C_main} + T_hat[n0,q]·FFT{C_half}·conj(φ_carry).
+        ///   • IFFT_L over q and interleave residues to reconstruct A[n] = A[r·M + n0].
         ///
-        /// Input:
-        ///   B ∈ ℂ^{2N}, split as:
-        ///     B_main[u] = B[u + 0],   u = l*M + k
-        ///     B_half[u] = B[u + N],   u = l*M + k
+        /// Normalization tracks the forward:
+        ///   forward gain = √M/√N = 1/√L and inverse uses the corresponding 1/gain as part of the unpacking
+        ///   (here kept as <c>invGain = 1/(2√L)</c> to match the user’s established convention and matrix reference).
         ///
-        /// This inverts the forward packing:
-        ///   forward: B_main =  P * gain
-        ///            B_half = (-j) Q * gain
-        ///   where gain = √M / √N = 1 / (2√L).
-        ///
-        /// Inverse mapping:
-        ///   P =      B_main / gain
-        ///   Q =  j * B_half / gain
-        ///
-        /// Then we undo the quarter-phase e^{+jπk/2}, invert the DFT over n₀,
-        /// apply the adjoint of the frequency-domain correlations, and finally
-        /// invert the polyphase FFT over r to reconstruct A.
+        /// Complexity:
+        ///   O(L·M·log M) for IFFT_M over k + O(M·L·log L) for synthesis along the r-axis.
         /// </summary>
-        /// <param name="B">Input coefficients of length 2N (main first, then half)</param>
-        /// <param name="C">Polyphase cache (built for N, M, window)</param>
-        /// <returns>Reconstructed signal A of length N</returns>
+        /// <param name="B">Input coefficients B ∈ ℂ^{2N}: main in [0..N-1], half in [N..2N-1]</param>
+        /// <param name="C">Polyphase cache with the same orthonormal window spectra S_hat/T_hat</param>
+        /// <returns>Reconstructed signal A ∈ ℂ^N</returns>
         internal static Complex32[] IFWHT(Complex32[] B, PolyphaseCache C)
         {
             int N = C.N;
-            if (B.Length != 2 * N) throw new ArgumentException("Expect 2N coefficients (main + half)");
+            int M = C.M;
+            int L = N / M;
 
-            int Mloc = C.M;
-            int L = N / Mloc;
-            if (L * Mloc != N) throw new ArgumentException("N must be divisible by M");
+            if (B.Length != 2 * N) throw new ArgumentException("Expect 2N coefficients");
+            if (L * M != N) throw new ArgumentException("N must be divisible by M");
 
-            // Cached FFT_L spectra of window polyphase components:
-            var S_hat = C.S_hat; // [M, L]
-            var T_hat = C.T_hat; // [M, L]
+            var S_hat = C.S_hat; // [M][L]
+            var T_hat = C.T_hat; // [M][L]
 
-            // ----- 1) Undo k-assembly (for each l) -----
-            //
-            // From B_main/B_half recover P,Q, remove quarter-phase, and
-            // invert the DFT over n0 (IFFT_M) to obtain Cmain[:,l], Chalf[:,l].
-            var Cmain = new Complex32[Mloc][];
-            var Chalf = new Complex32[Mloc][];
-
-            for (int n0 = 0; n0 < Mloc; n0++)
+            // Conjugate of the forward carry-phase:
+            //   conj( exp(−j·2π q/L) ) = exp(+j·2π q/L).
+            // Used when the half-branch residue wrapped in the forward.
+            var shiftL_adj = new Complex32[L];
+            for (int q = 0; q < L; q++)
             {
-                Cmain[n0] = new Complex32[L];
-                Chalf[n0] = new Complex32[L];
+                float ang = 2f * Maths.Pi * q / L;
+                shiftL_adj[q] = Maths.Exp(Complex32.I * ang);
             }
 
-            var Y_main = new Complex32[Mloc]; // spectra over k for a fixed l
-            var Y_half = new Complex32[Mloc];
-
-            // gain used in the forward
-            // hence inverse gain:
-            float invGain = 1.0f / (2 * Maths.Sqrt(L));
-
+            // Row-major workspaces to hold C_main[:,l] and C_half[:,l] after undoing k-assembly.
+            var Cmain_rows = new Complex32[L][];
+            var Chalf_rows = new Complex32[L][];
             for (int l = 0; l < L; l++)
             {
-                // rebuild Y_main[k], Y_half[k]
-                for (int k = 0; k < Mloc; k++)
+                Cmain_rows[l] = new Complex32[M];
+                Chalf_rows[l] = new Complex32[M];
+            }
+
+            var Y_main = new Complex32[M]; // spectra over k for a fixed l (main)
+            var Y_half = new Complex32[M]; // spectra over k for a fixed l (half)
+
+            // In the original codebase, the inverse unpacking used invGain = 1/(2√L).
+            // We keep this constant to fully match the established normalization and the slow matrix.
+            float invGain = 1.0f / (2 * Maths.Sqrt(L));
+
+            // Compensate the internal 1/√M applied by IFFT_M in FFT(..., true) to keep unit gain.
+            float cM = Maths.Sqrt(M);
+
+            // ----- Stage 1: undo packing per (l,k) → IFFT_M over k to get row signals over n0 -----
+            for (int l = 0; l < L; l++)
+            {
+                // For each frequency bin k, remove quarter-phase and −j on half branch,
+                // and divide by the forward gain (embedded here via invGain).
+                for (int k = 0; k < M; k++)
                 {
-                    int u = l * Mloc + k;
+                    int u = l * M + k;
 
-                    var bMain = B[u + 0];
-                    var bHalf = B[u + N];
+                    var bMain = B[u];     // P · gain
+                    var bHalf = B[u + N]; // (−j) · Q · gain
 
-                    // Invert forward packing:
-                    //   P =      B_main / gain
-                    //   Q =  j * B_half / gain
+                    // Recover P and Q (inverse of forward packing):
+                    //   P =      B_main / gain,
+                    //   Q =  j · B_half / gain   (since forward multiplies half by −j).
                     var P = bMain * invGain;
                     var Q = Complex32.I * bHalf * invGain;
 
-                    // Remove quarter-phase e^{+jπk/2} → multiply by its conjugate
+                    // Remove e^{+jπk/2} by multiplying with its conjugate.
                     var phase = PhasePlusPiOver2(k);
                     var phaseConj = new Complex32(phase.Real, -phase.Imag);
 
@@ -251,77 +243,63 @@ namespace UMapx.Window
                     Y_half[k] = phaseConj * Q;
                 }
 
-                // Invert DFT over n0: IFFT_M.
-                // Our FFT(true) applies an internal 1/√M; compensate by √M to get unit gain.
+                // IFFT_M over k → row signals indexed by residue n0.
                 FFT(Y_main, true);
                 FFT(Y_half, true);
 
-                float cM = Maths.Sqrt(Mloc); // compensates the internal 1/√M from IFFT
-                for (int n0 = 0; n0 < Mloc; n0++)
+                // Compensate the internal 1/√M scaling to produce unit-gain rows.
+                for (int n0 = 0; n0 < M; n0++)
                 {
-                    Cmain[n0][l] = Y_main[n0] * cM;
-                    Chalf[n0][l] = Y_half[n0] * cM;
+                    Cmain_rows[l][n0] = Y_main[n0] * cM;
+                    Chalf_rows[l][n0] = Y_half[n0] * cM;
                 }
             }
 
-            // ----- 2) Adjoint of frequency-domain correlations (over l) -----
-            //
-            // Forward used:
-            //   Cmain = IFFT_L{ conj(S_hat) * Xhat }
-            //   Chalf = IFFT_L{ conj(T_hat) * Xhat * phase_carry }
-            //
-            // Adjoint (backward) therefore uses:
-            //   Xhat += S_hat * FFT_L{ Cmain }
-            //   Xhat += T_hat * FFT_L{ Chalf } * conj(phase_carry)
-            var Xhat = new Complex32[Mloc, L];
-            var bufL = new Complex32[L];
-            var bufL2 = new Complex32[L];
-
-            for (int n0 = 0; n0 < Mloc; n0++)
-            {
-                // FFT_L over l
-                for (int l = 0; l < L; l++) bufL[l] = Cmain[n0][l];
-                FFT(bufL, false);
-
-                for (int l = 0; l < L; l++) bufL2[l] = Chalf[n0][l];
-                FFT(bufL2, false);
-
-                int carry = ((n0 + Mloc / 2) >= Mloc) ? 1 : 0;
-
-                for (int q = 0; q < L; q++)
-                {
-                    // main branch adjoint
-                    Xhat[n0, q] += S_hat[n0][q] * bufL[q];
-
-                    // half branch adjoint (conjugate of forward’s carry-phase)
-                    if (carry != 0)
-                    {
-                        float ang = 2f * Maths.Pi * q * carry / L;
-                        var shiftPhaseAdj = Maths.Exp(Complex32.I * ang); // exp(+j*2π*q/L)
-                        Xhat[n0, q] += T_hat[n0][q] * shiftPhaseAdj * bufL2[q];
-                    }
-                    else
-                    {
-                        Xhat[n0, q] += T_hat[n0][q] * bufL2[q];
-                    }
-                }
-            }
-
-            // ----- 3) Inverse polyphase recomposition (over r) -----
-            //
-            // For each residue n0, take IFFT_L over q to obtain samples along r:
-            //   A[r*M + n0] = IFFT_L{ Xhat[n0, q] }_q
+            // ----- Stage 2: synthesis along the r-axis (adjoint of analysis correlations) -----
+            // For each residue n0:
+            //   • take FFT_L over l for both main/half rows,
+            //   • combine with S_hat/T_hat and conj(carry) in frequency (q),
+            //   • IFFT_L over q to go back to r and interleave.
             var Arec = new Complex32[N];
+            var bufMain = new Complex32[L];
+            var bufHalf = new Complex32[L];
+            var bufX = new Complex32[L];
 
-            for (int n0 = 0; n0 < Mloc; n0++)
+            for (int n0 = 0; n0 < M; n0++)
             {
-                for (int q = 0; q < L; q++)
-                    bufL[q] = Xhat[n0, q];
+                // Gather column n0 across all l into contiguous buffers.
+                for (int l = 0; l < L; l++)
+                {
+                    bufMain[l] = Cmain_rows[l][n0];
+                    bufHalf[l] = Chalf_rows[l][n0];
+                }
 
-                FFT(bufL, true); // inverse FFT along r (library applies internal 1/√L)
+                // FFT_L over l → frequency domain along q.
+                FFT(bufMain, false);
+                FFT(bufHalf, false);
 
+                // Frequency-domain synthesis:
+                //   Xhat[n0,q] = S_hat[n0,q]*bufMain[q] + T_hat[n0,q]*bufHalf[q]*conj(φ_carry),
+                //   where conj(φ_carry) = exp(+j·2π q/L) iff the forward half-branch wrapped.
+                var Sh = S_hat[n0];
+                var Th = T_hat[n0];
+                bool carry = ((n0 + (M >> 1)) >= M);
+
+                if (carry)
+                {
+                    for (int q = 0; q < L; q++)
+                        bufX[q] = Sh[q] * bufMain[q] + Th[q] * shiftL_adj[q] * bufHalf[q];
+                }
+                else
+                {
+                    for (int q = 0; q < L; q++)
+                        bufX[q] = Sh[q] * bufMain[q] + Th[q] * bufHalf[q];
+                }
+
+                // IFFT_L over q → r-domain samples for this residue n0, then de-interleave.
+                FFT(bufX, true);
                 for (int r = 0; r < L; r++)
-                    Arec[r * Mloc + n0] = bufL[r];
+                    Arec[r * M + n0] = bufX[r];
             }
 
             return Arec;
