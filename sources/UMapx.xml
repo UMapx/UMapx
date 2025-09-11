@@ -28094,17 +28094,6 @@
             <exception cref="T:System.ArgumentNullException">Exception</exception>
             <exception cref="T:System.ArgumentException">Exception</exception>
         </member>
-        <member name="M:UMapx.Transform.FastRealWeylHeisenbergHartleyTransform.CyclicReverseInPlace(System.Single[])">
-            <summary>
-            Hartley-specific “cyclic reverse” used to separate cos/sin sums from a single FHT.
-            It swaps v[1] ↔ v[n-1], v[2] ↔ v[n-2], … while keeping v[0] intact.
-            With this permutation:
-              H_rev = FHT( v_rev )
-            and therefore:
-              cos_sum = 0.5 * (H + H_rev)
-              sin_sum = 0.5 * (H - H_rev)
-            </summary>
-        </member>
         <member name="M:UMapx.Transform.FastRealWeylHeisenbergHartleyTransform.PrecomputeWindowSpectra">
              <summary>
              Precompute “complex-like” Hartley spectra over L for all polyphase columns of the window:

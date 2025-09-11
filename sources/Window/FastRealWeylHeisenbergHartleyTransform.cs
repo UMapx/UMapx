@@ -96,25 +96,6 @@ namespace UMapx.Transform
         #region Private helpers
 
         /// <summary>
-        /// Hartley-specific “cyclic reverse” used to separate cos/sin sums from a single FHT.
-        /// It swaps v[1] ↔ v[n-1], v[2] ↔ v[n-2], … while keeping v[0] intact.
-        /// With this permutation:
-        ///   H_rev = FHT( v_rev )
-        /// and therefore:
-        ///   cos_sum = 0.5 * (H + H_rev)
-        ///   sin_sum = 0.5 * (H - H_rev)
-        /// </summary>
-        private static void CyclicReverseInPlace(float[] v)
-        {
-            int n = v.Length, half = n / 2;
-            for (int i = 1; i <= half; i++)
-            {
-                int a = i, b = n - i;
-                var t = v[a]; v[a] = v[b]; v[b] = t;
-            }
-        }
-
-        /// <summary>
         /// Precompute “complex-like” Hartley spectra over L for all polyphase columns of the window:
         ///   G_a(q)  = Cg[a][q]  + i * Sg[a][q]
         ///   G2_a(q) = Cg2[a][q] + i * Sg2[a][q], where a' = a + M/2 (mod M).
