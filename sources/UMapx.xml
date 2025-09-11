@@ -28159,1617 +28159,6 @@
             3) Inverse FHT_L and deinterleave to n = a + b*M into xr and xi.
             </remarks>
         </member>
-        <member name="T:UMapx.Window.FastRealWeylHeisenbergHartleyTransform">
-            <summary>
-            Fast real (Hartley-only) Weyl–Heisenberg transform (1D).
-            </summary>
-            <remarks>
-            Все внутренние DFT/IDFT-шаги (по L и по M) реализованы через быстрые Хартли-преобразования (DHT)
-            без вызовов FFT. Внешние результаты совпадают с референсом (float[]: real-проекция FWHT).
-            </remarks>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergHartleyTransform.Forward(System.Single[])">
-            <summary>
-            Forward real WH (1D). На входе: A = [Re, Im] длины 2N. На выходе: 2N real (main/half).
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergHartleyTransform.Backward(System.Single[])">
-            <summary>
-            Backward real WH (1D). На входе: 2N real (main/half). На выходе: [Re, Im] * 2.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergHartleyTransform.FWHT_Hartley(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">
-            <summary>
-            Комплексный FWHT (2N коэф.) через DHT (без FFT).
-            Совпадает с FastWeylHeisenbergTransform.FWHT по значению.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergHartleyTransform.IFWHT_Hartley(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">
-            <summary>
-            Обратный FWHT через DHT (вход: 2N коэф. main+half).
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergHartleyTransform.DFT_via_DHT(System.Single[],System.Single[])">
-            <summary>Комплексный unnormalized DFT через две DHT над Re/Im.</summary>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergHartleyTransform.IFFT_via_DHT_Standard(UMapx.Core.Complex32[])">
-            <summary>Стандартная (1/n) комплексная IDFT через две DHT.</summary>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergHartleyTransform.IFFT_via_DHT_Custom(UMapx.Core.Complex32[])">
-            <summary>
-            Кастомная «IFFT» как в референсном коде: sqrt(n) * IDFT_standard.
-            Совпадает с их FFT(true), где применяется 1/sqrt(n) после «unnorm» обратного ДПФ.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergHartleyTransform.PhasePlusPiOver2(System.Int32)">
-            <summary>Четверть-периодный множитель e^{+jπk/2}.</summary>
-        </member>
-        <member name="T:UMapx.Window.BartlettHann">
-            <summary>
-            Defines the Bartlett-Hann window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.BartlettHann.#ctor(System.Int32)">
-            <summary>
-            Initializes the Bartlett-Hann window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-        </member>
-        <member name="M:UMapx.Window.BartlettHann.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.BartlettHann.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.Blackman">
-            <summary>
-            Defines the Blackman window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Blackman.#ctor(System.Int32)">
-            <summary>
-            Initializes the Blackman window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-        </member>
-        <member name="M:UMapx.Window.Blackman.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Blackman.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.BlackmanHarris">
-            <summary>
-            Defines the Blackman-Harris window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.BlackmanHarris.#ctor(System.Int32)">
-            <summary>
-            Initializes the Blackman-Harris window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-        </member>
-        <member name="M:UMapx.Window.BlackmanHarris.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.BlackmanHarris.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.BlackmanNuttall">
-            <summary>
-            Defines the Blackman-Nuttall window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.BlackmanNuttall.#ctor(System.Int32)">
-            <summary>
-            Initializes the Blackman-Nuttall window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-        </member>
-        <member name="M:UMapx.Window.BlackmanNuttall.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.BlackmanNuttall.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.Confined">
-            <summary>
-            Defines the closed Gaussian window.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Confined.#ctor(System.Int32,System.Single)">
-            <summary>
-            Initializes the closed Gaussian window.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <param name="sigma">Standard deviation (0.14 * N)</param>
-        </member>
-        <member name="M:UMapx.Window.Confined.#ctor(System.Int32)">
-            <summary>
-            Initializes a Gaussian window function closed.
-            </summary>
-            <param name="frameSize">Window size</param>
-        </member>
-        <member name="P:UMapx.Window.Confined.Sigma">
-            <summary>
-            Gets or sets the standard deviation (>0).
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Confined.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Confined.G(System.Single)">
-            <summary>
-            Function G(x).
-            </summary>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Confined.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.Cosine">
-            <summary>
-            Defines the cosine window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Cosine.#ctor(System.Int32)">
-            <summary>
-            Initializes the cosine window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-        </member>
-        <member name="M:UMapx.Window.Cosine.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Cosine.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.Cosine.Cosinefunc(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Factor</returns>
-        </member>
-        <member name="T:UMapx.Window.FastRealWeylHeisenbergTransform">
-            <summary>
-            Defines fast real Weyl-Heisenberg transform.
-            </summary>
-            <remarks>
-            The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete real orthogonal
-            Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
-            </remarks>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
-            <summary>
-            Initializes fast real Weyl-Heisenberg transform.
-            </summary>
-            <param name="window">Windows function</param>
-            <param name="m">Number of frequency shifts [4, N/4]</param>
-            <param name="direction">Processing direction</param>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Forward(System.Single[])">
-            <summary>
-            Forward real Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Backward(System.Single[])">
-            <summary>
-            Backward real Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Forward(System.Single[0:,0:])">
-            <summary>
-            Forward real Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward real Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward real Weyl-Heisenberg transform for complex input.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[])">
-            <summary>
-            Backward real Weyl-Heisenberg transform for complex input.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward real Weyl-Heisenberg transform for complex matrices.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward real Weyl-Heisenberg transform for complex matrices.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="T:UMapx.Window.FastShortTimeFourierTransform">
-            <summary>
-            Defines fast short-time Fourier transform.
-            </summary>
-            <remarks>
-            More information can be found on the website:
-            https://en.wikipedia.org/wiki/Short-time_Fourier_transform
-            </remarks>
-        </member>
-        <member name="M:UMapx.Window.FastShortTimeFourierTransform.#ctor(UMapx.Window.IWindow,System.Boolean,UMapx.Core.Direction)">
-            <summary>
-            Initializes fast short-time Fourier transform.
-            </summary>
-            <param name="function">Window function</param>
-            <param name="normalized">Normalized transform or not</param>
-            <param name="direction">Processing direction</param>
-        </member>
-        <member name="P:UMapx.Window.FastShortTimeFourierTransform.Normalized">
-            <summary>
-            Normalized transform or not.
-            </summary>
-        </member>
-        <member name="P:UMapx.Window.FastShortTimeFourierTransform.Window">
-            <summary>
-            Gets or sets the window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward short-time Fourier Transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Backward(UMapx.Core.Complex32[])">
-            <summary>
-            Backward short-time Fourier Transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.FastWeylHeisenbergTransform">
-            <summary>
-            Defines fast Weyl-Heisenberg transform.
-            </summary>
-            <remarks>
-            The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete orthogonal
-            Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
-            </remarks>
-            <summary>
-            Defines fast Weyl-Heisenberg transform.
-            </summary>
-            <remarks>
-            The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete orthogonal
-            Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
-            </remarks>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.FWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">
-             <summary>
-             Forward fast Weyl–Heisenberg transform (2-channel packing, length = 2N).
-             
-             Input:
-               A ∈ ℂ^N,  N = M * L,  M is even.
-             
-             Output:
-               B ∈ ℂ^{2N}, split as:
-                 B_main[u] = B[u + 0],   u = l*M + k
-                 B_half[u] = B[u + N],   u = l*M + k
-            
-             This matches the column-wise “slow” matrix reference G ∈ ℂ^{N×2N} with columns:
-               main:   g[i] * exp( j*2π*k/M * (n - M/4) )
-               half: j*g[j] * exp( j*2π*k/M * (n - M/4) )
-            
-             Analysis (i.e., G^H A) realized via:
-               - polyphase split over residue n0 (mod M) and FFT_L along r,
-               - frequency-domain correlations with conj(S_hat/T_hat),
-               - carry-phase compensation for the half branch when (n0 + M/2) wraps,
-               - DFT_M over n0 (via forward FFT over n0) + quarter-phase e^{+jπk/2},
-               - normalization gain = √M / √N = 1 / (2√L).
-            
-             Notes:
-               Caches C.S_hat, C.T_hat must be built from the SAME orthonormalized window
-               as used by the slow matrix builder, otherwise values will differ by window scaling.
-             </summary>
-             <param name="A">Input signal (length N)</param>
-             <param name="C">Polyphase cache (built for N,M,window)</param>
-             <returns>B of length 2N: main (0..N-1) and half (N..2N-1) branches</returns>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.IFWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">
-             <summary>
-             Inverse fast Weyl–Heisenberg transform (2-channel input, length = 2N).
-            
-             Input:
-               B ∈ ℂ^{2N}, split as:
-                 B_main[u] = B[u + 0],   u = l*M + k
-                 B_half[u] = B[u + N],   u = l*M + k
-            
-             This inverts the forward packing:
-               forward: B_main =  P * gain
-                        B_half = (-j) Q * gain
-               where gain = √M / √N = 1 / (2√L).
-            
-             Inverse mapping:
-               P =      B_main / gain
-               Q =  j * B_half / gain
-            
-             Then we undo the quarter-phase e^{+jπk/2}, invert the DFT over n₀,
-             apply the adjoint of the frequency-domain correlations, and finally
-             invert the polyphase FFT over r to reconstruct A.
-             </summary>
-             <param name="B">Input coefficients of length 2N (main first, then half)</param>
-             <param name="C">Polyphase cache (built for N, M, window)</param>
-             <returns>Reconstructed signal A of length N</returns>
-        </member>
-        <member name="T:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache">
-            <summary>
-            Defines the polyphase cache for the fast Weyl–Heisenberg transform.
-            <para>
-            This cache stores precomputed FFTs of the polyphase components of the
-            orthogonalized analysis window. It is used in both forward and backward
-            transforms to avoid recomputing window-related data for each call.
-            </para>
-            <para>
-            Parameters:
-            <list type="bullet">
-            <item><description><see cref="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.N"/> – total signal length</description></item>
-            <item><description><see cref="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.M"/> – number of frequency shifts (must be even)</description></item>
-            <item><description><see cref="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.L"/> – number of time shifts, L = N / M</description></item>
-            <item><description><see cref="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.S_hat"/> – FFT<sub>L</sub> of the main polyphase branch
-            s<sub>n0</sub>[r] = g[r*M + n0], dimensions [M, L]</description></item>
-            <item><description><see cref="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.T_hat"/> – FFT<sub>L</sub> of the half-shifted polyphase branch
-            t<sub>n0</sub>[r] = g[r*M + (n0 + M/2) mod M], dimensions [M, L]</description></item>
-            </list>
-            </para>
-            </summary>
-            <remarks>
-            The cache is specific to a given combination of (N, M, window function).
-            If the window changes, the cache must be rebuilt.
-            </remarks>
-        </member>
-        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.N">
-            <summary>
-            Total signal length.
-            </summary>
-        </member>
-        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.M">
-            <summary>
-            Number of frequency shifts (must be even).
-            </summary>
-        </member>
-        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.L">
-            <summary>
-            Number of time shifts (L = N / M).
-            </summary>
-        </member>
-        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.S_hat">
-            <summary>
-            FFT<sub>L</sub> of the main branch polyphase components [M, L].
-            </summary>
-        </member>
-        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.T_hat">
-            <summary>
-            FFT<sub>L</sub> of the half-shifted branch polyphase components [M, L].
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.#ctor(System.Int32,System.Int32,System.Int32,UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Creates a new instance of the polyphase cache.
-            </summary>
-            <param name="N">Total signal length</param>
-            <param name="M">Number of frequency shifts</param>
-            <param name="L">Number of time shifts</param>
-            <param name="S">FFT of the main branch polyphase components</param>
-            <param name="T">FFT of the half-shifted branch polyphase components</param>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.Build(System.Int32,System.Int32,UMapx.Window.IWindow)">
-            <summary>
-            Precomputes FFT_L of the polyphase components of the orthogonalized window.
-            These cached arrays S_hat and T_hat are used in both Forward() and Backward()
-            to avoid recomputing window FFTs for every transform call.
-            </summary>
-            <param name="N">Total signal length</param>
-            <param name="Mloc">Number of frequency shifts M (must be even)</param>
-            <param name="window">Windows function</param>
-            <returns>Polyphase cache</returns>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.PhasePlusPiOver2(System.Int32)">
-            <summary>
-            Returns the complex phase factor e^{+j * π * k / 2}.
-            This term is 4-periodic in k and takes only four distinct values: 1, +j, −1, −j.
-            
-            Context:
-            • Quarter-period phase factors appear in WH transforms, DFT twiddle factors,
-              and modulation/demodulation stages.
-            • In the Weyl–Heisenberg transform, this multiplier is used during n₀→k assembly
-              with a positive-exponent DFT to align phases with the matrix reference.
-            
-            Relationship:
-              PhasePlusPiOver2(k) = conj(PhaseMinusPiOver2(k)).
-            
-            Mapping (k mod 4):
-              0 →  1   (  0°)
-              1 → +j   (+90°)
-              2 → −1   (180°)
-              3 → −j   (−90°)
-            </summary>
-            <param name="k">Frequency index (integer)</param>
-            <returns>Complex value of e^{+j * π * k / 2}</returns>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.FFT(UMapx.Core.Complex32[],System.Boolean)">
-            <summary>
-            Fast Fourier transform.
-            </summary>
-            <param name="a">Input</param>
-            <param name="inverse">Inverse or not</param>
-        </member>
-        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.fastFourierTransform">
-            <summary>
-            UMapx fast Fourier transform.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
-            <summary>
-            Initializes fast Weyl-Heisenberg transform.
-            </summary>
-            <param name="window">Windows function</param>
-            <param name="m">Number of frequency shifts [4, N/2]</param>
-            <param name="direction">Processing direction</param>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="T:UMapx.Window.FastZakTransform">
-            <summary>
-            Defines the fast Zak transform.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.FastZakTransform.#ctor(System.Int32)">
-            <summary>
-            Initializes the fast Zak transform.
-            </summary>
-            <param name="m">Number of frequency shifts [4, N/2]</param>
-        </member>
-        <member name="P:UMapx.Window.FastZakTransform.M">
-            <summary>
-            Gets or sets number of frequency shifts [4, N/2].
-            </summary>
-            <remarks>
-            Even number.
-            </remarks>
-        </member>
-        <member name="M:UMapx.Window.FastZakTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward Zak transform.
-            </summary>
-            <param name="input">Array</param>
-            <returns>Matrix</returns>
-            <exception cref="T:System.ArgumentException">Exception</exception>
-        </member>
-        <member name="M:UMapx.Window.FastZakTransform.Forward(System.Single[])">
-            <summary>
-            Forward Zak transform.
-            </summary>
-            <param name="input">Array</param>
-            <returns>Matrix</returns>
-            <exception cref="T:System.ArgumentException">Exception</exception>
-        </member>
-        <member name="M:UMapx.Window.FastZakTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward Zak transform.
-            </summary>
-            <param name="matrix">Matrix</param>
-            <returns>Array</returns>
-            <exception cref="T:System.ArgumentException">Exception</exception>
-        </member>
-        <member name="M:UMapx.Window.FastZakTransform.Orthogonalize(System.Single[])">
-            <summary>
-            Zak orthogonalization.
-            </summary>
-            <param name="input">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastZakTransform.Orthogonalize(UMapx.Core.Complex32[])">
-            <summary>
-            Zak orthogonalization.
-            </summary>
-            <param name="input">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.FlatTop">
-            <summary>
-            Defines the "Flat-Top" window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.FlatTop.#ctor(System.Int32)">
-            <summary>
-            Initializes the "Flat-Top" window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-        </member>
-        <member name="M:UMapx.Window.FlatTop.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.FlatTop.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.Gabor">
-            <summary>
-            Defines the Gabor window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Gabor.#ctor(System.Int32,System.Single)">
-            <summary>
-            Initializes the Gabor window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <param name="sigma">Scale parameter</param>
-        </member>
-        <member name="P:UMapx.Window.Gabor.Sigma">
-            <summary>
-            Gets or sets the standard deviation (>0).
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Gabor.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Gabor.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.Gabor.Scaled(System.Int32)">
-            <summary>
-            Returns Gabor window function defined without sigma. Scaled function version.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <returns>Gabor window function</returns>
-        </member>
-        <member name="T:UMapx.Window.Hamming">
-            <summary>
-            Defines the Hamming window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Hamming.#ctor(System.Int32)">
-            <summary>
-            Initializes the Hamming window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-        </member>
-        <member name="M:UMapx.Window.Hamming.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Hamming.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.Hann">
-            <summary>
-            Defines the Hann window function (Hanning).
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Hann.#ctor(System.Int32)">
-            <summary>
-            Initializes the Hann window function (Hanning).
-            </summary>
-            <param name="frameSize">Window size</param>
-        </member>
-        <member name="M:UMapx.Window.Hann.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Hann.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.IWindow">
-            <summary>
-            Defines the interface of window functions.
-            </summary>
-        </member>
-        <member name="P:UMapx.Window.IWindow.FrameSize">
-            <summary>
-            Gets or sets the window size.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.IWindow.Function(System.Single)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.IWindow.GetWindow">
-            <summary>
-            Returns the window function.
-            </summary>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.IWindow.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.IWindow.Function(System.Single[],System.Int32)">
-            <summary>
-            Returns an array of window function values.
-            </summary>
-            <param name="x">Array</param>
-            <param name="frameSize">Window size</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.IWindow.Function(System.Single[])">
-            <summary>
-            Returns an array of window function values.
-            </summary>
-            <param name="x">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.IWindowTransform">
-            <summary>
-            Defines the general window transform interface.
-            </summary>
-        </member>
-        <member name="P:UMapx.Window.IWindowTransform.Window">
-            <summary>
-            Gets or sets the window function.
-            </summary>
-        </member>
-        <member name="T:UMapx.Window.IZakTransform">
-            <summary>
-            Defines the Zak transform interface.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.IZakTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward Zak transform.
-            </summary>
-            <param name="input">Array</param>
-            <returns>Matrix</returns>
-            <exception cref="T:System.ArgumentException">Exception</exception>
-        </member>
-        <member name="M:UMapx.Window.IZakTransform.Forward(System.Single[])">
-            <summary>
-            Forward Zak transform.
-            </summary>
-            <param name="input">Array</param>
-            <returns>Matrix</returns>
-            <exception cref="T:System.ArgumentException">Exception</exception>
-        </member>
-        <member name="M:UMapx.Window.IZakTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward Zak transform.
-            </summary>
-            <param name="matrix">Matrix</param>
-            <returns>Array</returns>
-            <exception cref="T:System.ArgumentException">Exception</exception>
-        </member>
-        <member name="T:UMapx.Window.Kaiser">
-            <summary>
-            Defines the Kaiser window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Kaiser.#ctor(System.Int32,System.Single)">
-            <summary>
-            Initializes the Kaiser window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <param name="a">Form parameter</param>
-        </member>
-        <member name="P:UMapx.Window.Kaiser.A">
-            <summary>
-            Gets or sets the value of the form parameter.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Kaiser.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Kaiser.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.Lanczos">
-            <summary>
-            Defines the Lanczos window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Lanczos.#ctor(System.Int32)">
-            <summary>
-            Initializes the Lanczos window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-        </member>
-        <member name="M:UMapx.Window.Lanczos.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Lanczos.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.Normal">
-            <summary>
-            Defines a generalized window normal function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Normal.#ctor(System.Int32,System.Single,System.Single)">
-            <summary>
-            Initializes a generalized window normal function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <param name="sigma">Standard deviation (>0)</param>
-            <param name="pow">Power<remarks>For p = 2 - Gaussian window</remarks></param>
-        </member>
-        <member name="P:UMapx.Window.Normal.Sigma">
-            <summary>
-            Gets or sets the standard deviation (>0).
-            </summary>
-        </member>
-        <member name="P:UMapx.Window.Normal.Pow">
-            <summary>
-            Power.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Normal.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Normal.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.Nuttall">
-            <summary>
-            Defines the Nuttall window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Nuttall.#ctor(System.Int32)">
-            <summary>
-            Initializes the Nuttall window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-        </member>
-        <member name="M:UMapx.Window.Nuttall.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Nuttall.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.Parzen">
-            <summary>
-            Defines the Parzen window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Parzen.#ctor(System.Int32)">
-            <summary>
-            Initializes the Parzen window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-        </member>
-        <member name="M:UMapx.Window.Parzen.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Parzen.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.Planck">
-            <summary>
-            Defines the window function of Planck.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Planck.#ctor(System.Int32,System.Single)">
-            <summary>
-            Initializes the Planck window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <param name="a">Form parameter [0, 0.5]</param>
-        </member>
-        <member name="P:UMapx.Window.Planck.A">
-            <summary>
-            Gets or sets the value of the form parameter [0, 0.5].
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Planck.Z(System.Single,System.Boolean,System.Int32)">
-            <summary>
-            Function Z+-(x, a).
-            </summary>
-            <param name="x">Value</param>
-            <param name="p">Sign</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Planck.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Planck.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.RealWeylHeisenbergHartleyTransform">
-            <summary>
-            Defines a group of real orthogonal bases and discrete Weyl-Heisenberg transforms.
-            </summary>
-            <remarks>
-            More information can be found on the website:
-            https://ieeexplore.ieee.org/document/8711969/
-            </remarks>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
-            <summary>
-            Initializes a group of real orthogonal bases and Weyl-Heisenberg transformations.
-            </summary>
-            <param name="window">Windows function</param>
-            <param name="m">Number of frequency shifts [4, N/4]</param>
-            <param name="direction">Processing direction</param>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Matrix(System.Single[],System.Int32)">
-            <summary>
-            Returns the real Weyl-Heisenberg basis matrix.
-            </summary>
-            <remarks>
-            Matrix dimension [2N, 2N], where N = M * L.
-            </remarks>
-            <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts [4, N/4]</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Matrix(UMapx.Window.IWindow,System.Int32,System.Int32,System.Boolean)">
-            <summary>
-            Returns the real Weyl-Heisenberg basis matrix.
-            </summary>
-            <remarks>
-            Matrix dimension [2N, 2N], where N = M * L.
-            </remarks>
-            <param name="window">Windows function</param>
-            <param name="N">Number of samples</param>
-            <param name="M">Number of frequency shifts [4, N/4]</param>
-            <param name="orthogonalize">Orthogonalized matrix or not</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Matrix(System.Single[],System.Int32,System.Boolean)">
-            <summary>
-            Returns the real Weyl-Heisenberg basis matrix.
-            </summary>
-            <remarks>
-            Matrix dimension [2N, 2N], where N = M * L.
-            </remarks>
-            <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts [4, N/4]</param>
-            <param name="orthogonalize">Orthogonalized matrix or not</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Forward(System.Single[])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Backward(System.Single[])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Forward(System.Single[0:,0:])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Backward(UMapx.Core.Complex32[])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="T:UMapx.Window.RealWeylHeisenbergTransform">
-            <summary>
-            Defines a group of real orthogonal bases and discrete Weyl-Heisenberg transforms.
-            </summary>
-            <remarks>
-            More information can be found on the website:
-            https://ieeexplore.ieee.org/document/8711969/
-            </remarks>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
-            <summary>
-            Initializes a group of real orthogonal bases and Weyl-Heisenberg transformations.
-            </summary>
-            <param name="window">Windows function</param>
-            <param name="m">Number of frequency shifts [4, N/4]</param>
-            <param name="direction">Processing direction</param>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32)">
-            <summary>
-            Returns the real Weyl-Heisenberg basis matrix.
-            </summary>
-            <remarks>
-            Matrix dimension [2N, 2N], where N = M * L.
-            </remarks>
-            <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts [4, N/4]</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(UMapx.Window.IWindow,System.Int32,System.Int32,System.Boolean)">
-            <summary>
-            Returns the real Weyl-Heisenberg basis matrix.
-            </summary>
-            <remarks>
-            Matrix dimension [2N, 2N], where N = M * L.
-            </remarks>
-            <param name="window">Windows function</param>
-            <param name="N">Number of samples</param>
-            <param name="M">Number of frequency shifts [4, N/4]</param>
-            <param name="orthogonalize">Orthogonalized matrix or not</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32,System.Boolean)">
-            <summary>
-            Returns the real Weyl-Heisenberg basis matrix.
-            </summary>
-            <remarks>
-            Matrix dimension [2N, 2N], where N = M * L.
-            </remarks>
-            <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts [4, N/4]</param>
-            <param name="orthogonalize">Orthogonalized matrix or not</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Forward(System.Single[])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Backward(System.Single[])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Forward(System.Single[0:,0:])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="T:UMapx.Window.ShortTimeFourierTransform">
-            <summary>
-            Defines short-time Fourier transform.
-            </summary>
-            <remarks>
-            More information can be found on the website:
-            https://en.wikipedia.org/wiki/Short-time_Fourier_transform
-            </remarks>
-        </member>
-        <member name="M:UMapx.Window.ShortTimeFourierTransform.#ctor(UMapx.Window.IWindow,System.Boolean,UMapx.Core.Direction)">
-            <summary>
-            Initializes short-time Fourier transform.
-            </summary>
-            <param name="function">Window function</param>
-            <param name="normalized">Normalized transform or not</param>
-            <param name="direction">Processing direction</param>
-        </member>
-        <member name="P:UMapx.Window.ShortTimeFourierTransform.Normalized">
-            <summary>
-            Normalized transform or not.
-            </summary>
-        </member>
-        <member name="P:UMapx.Window.ShortTimeFourierTransform.Window">
-            <summary>
-            Gets or sets the window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.ShortTimeFourierTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward short-time Fourier Transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.ShortTimeFourierTransform.Backward(UMapx.Core.Complex32[])">
-            <summary>
-            Backward short-time Fourier Transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.Sine">
-            <summary>
-            Defines the sine window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Sine.#ctor(System.Int32)">
-            <summary>
-            Initializes the sine window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-        </member>
-        <member name="M:UMapx.Window.Sine.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Sine.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.Sine.Sinefunc(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="T:UMapx.Window.Tukey">
-            <summary>
-            Defines the window function of Tukey.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Tukey.#ctor(System.Int32,System.Single)">
-            <summary>
-            Initializes the Tukey window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <param name="a">Form parameter [0, 1]</param>
-        </member>
-        <member name="P:UMapx.Window.Tukey.A">
-            <summary>
-            Gets or sets the value of the form parameter [0, 1].
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Tukey.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Tukey.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.Welch">
-            <summary>
-            Defines the Welch window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.Welch.#ctor(System.Int32)">
-            <summary>
-            Initializes the Welch window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-        </member>
-        <member name="M:UMapx.Window.Welch.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.Welch.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.WeylHeisenbergTransform">
-            <summary>
-            Defines a group of orthogonal bases and discrete Weyl-Heisenberg transforms.
-            </summary>
-            <remarks>
-            More information can be found on the website:
-            https://ieeexplore.ieee.org/document/8711969/
-            </remarks>
-        </member>
-        <member name="F:UMapx.Window.WeylHeisenbergTransform.window">
-            <summary>
-            Windows function.
-            </summary>
-        </member>
-        <member name="F:UMapx.Window.WeylHeisenbergTransform.m">
-            <summary>
-            Number of frequency shifts.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
-            <summary>
-            Initializes a group of orthogonal bases and Weyl-Heisenberg transformations.
-            </summary>
-            <param name="window">Windows function</param>
-            <param name="m">Number of frequency shifts [4, N/2]</param>
-            <param name="direction">Processing direction</param>
-        </member>
-        <member name="P:UMapx.Window.WeylHeisenbergTransform.M">
-            <summary>
-            Gets or sets number of frequency shifts [4, N].
-            </summary>
-        </member>
-        <member name="P:UMapx.Window.WeylHeisenbergTransform.Window">
-            <summary>
-            Gets or sets the window function.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.Matrix(System.Single[],System.Int32)">
-            <summary>
-            Returns the complex Weyl-Heisenberg basis matrix.
-            </summary>
-            <remarks>
-            Matrix dimension [N, 2N], where N = M * L.
-            </remarks>
-            <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.Matrix(UMapx.Window.IWindow,System.Int32,System.Int32,System.Boolean)">
-            <summary>
-            Returns the complex Weyl-Heisenberg basis matrix.
-            </summary>
-            <remarks>
-            Matrix dimension [N, 2N], where N = M * L.
-            </remarks>
-            <param name="window">Windows function</param>
-            <param name="N">Number of samples</param>
-            <param name="M">Number of frequency shifts [4, N/2]</param>
-            <param name="orthogonalize">Orthogonalized matrix or not</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.Matrix(System.Single[],System.Int32,System.Boolean)">
-            <summary>
-            Returns the complex Weyl-Heisenberg basis matrix.
-            </summary>
-            <remarks>
-            Matrix dimension [N, 2N], where N = M * L.
-            </remarks>
-            <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts [4, N/2]</param>
-            <param name="orthogonalize">Orthogonalized matrix or not</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.Packet(UMapx.Window.IWindow,System.Int32)">
-            <summary>
-            Returns a vector of window function values.
-            </summary>
-            <param name="window">Windows function</param>
-            <param name="length">Number of samples</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.Symmetry(UMapx.Window.IWindow,System.Int32)">
-            <summary>
-            Returns a vector of values of a window function that satisfies the N-1 symmetry condition.
-            </summary>
-            <param name="window">Windows function</param>
-            <param name="length">Number of samples</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.Backward(UMapx.Core.Complex32[])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.Forward(System.Single[])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.Backward(System.Single[])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.Forward(System.Single[0:,0:])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.WeylHeisenbergTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="T:UMapx.Window.WindowBase">
-            <summary>
-            Defines the class for window functions.
-            </summary>
-            <remarks>
-            More information can be found on the website:
-            https://en.wikipedia.org/wiki/Window_function
-            </remarks>
-        </member>
-        <member name="F:UMapx.Window.WindowBase.frameSize">
-            <summary>
-            Window size.
-            </summary>
-        </member>
-        <member name="P:UMapx.Window.WindowBase.FrameSize">
-            <summary>
-            Gets or sets the window size.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.WindowBase.Function(System.Single)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.WindowBase.GetWindow">
-            <summary>
-            Returns the window function.
-            </summary>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.WindowBase.Function(System.Single[],System.Int32)">
-            <summary>
-            Returns an array of window function values.
-            </summary>
-            <param name="x">Array</param>
-            <param name="frameSize">Window size</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.WindowBase.Function(System.Single[])">
-            <summary>
-            Returns an array of window function values.
-            </summary>
-            <param name="x">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.WindowBase.Function(System.Single,System.Int32)">
-            <summary>
-            Returns the value of a window function.
-            </summary>
-            <param name="x">Value</param>
-            <param name="frameSize">Window size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Window.WindowBase.GetWindow(System.Int32)">
-            <summary>
-            Returns the window function.
-            </summary>
-            <param name="frameSize">Window size</param>
-            <returns>Array</returns>
-        </member>
-        <member name="T:UMapx.Window.ZakTransform">
-            <summary>
-            Defines the Zak transform.
-            </summary>
-        </member>
-        <member name="M:UMapx.Window.ZakTransform.#ctor(System.Int32)">
-            <summary>
-            Initializes the Zak transform.
-            </summary>
-            <param name="m">Number of frequency shifts [4, N/2]</param>
-        </member>
-        <member name="P:UMapx.Window.ZakTransform.M">
-            <summary>
-            Gets or sets number of frequency shifts [4, N/2].
-            </summary>
-            <remarks>
-            Even number.
-            </remarks>
-        </member>
-        <member name="M:UMapx.Window.ZakTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward Zak transform.
-            </summary>
-            <param name="input">Array</param>
-            <returns>Matrix</returns>
-            <exception cref="T:System.ArgumentException">Exception</exception>
-        </member>
-        <member name="M:UMapx.Window.ZakTransform.Forward(System.Single[])">
-            <summary>
-            Forward Zak transform.
-            </summary>
-            <param name="input">Array</param>
-            <returns>Matrix</returns>
-            <exception cref="T:System.ArgumentException">Exception</exception>
-        </member>
-        <member name="M:UMapx.Window.ZakTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward Zak transform.
-            </summary>
-            <param name="matrix">Matrix</param>
-            <returns>Array</returns>
-            <exception cref="T:System.ArgumentException">Exception</exception>
-        </member>
-        <member name="M:UMapx.Window.ZakTransform.Orthogonalize(System.Single[])">
-            <summary>
-            Zak orthogonalization.
-            </summary>
-            <param name="input">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.ZakTransform.Orthogonalize(UMapx.Core.Complex32[])">
-            <summary>
-            Zak orthogonalization.
-            </summary>
-            <param name="input">Array</param>
-            <returns>Array</returns>
-        </member>
         <member name="T:UMapx.Video.ByteArrayUtils">
             <summary>
             Some internal utilities for handling arrays.
@@ -34248,6 +32637,1572 @@
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
+        </member>
+        <member name="T:UMapx.Window.BartlettHann">
+            <summary>
+            Defines the Bartlett-Hann window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.BartlettHann.#ctor(System.Int32)">
+            <summary>
+            Initializes the Bartlett-Hann window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+        </member>
+        <member name="M:UMapx.Window.BartlettHann.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.BartlettHann.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.Blackman">
+            <summary>
+            Defines the Blackman window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Blackman.#ctor(System.Int32)">
+            <summary>
+            Initializes the Blackman window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+        </member>
+        <member name="M:UMapx.Window.Blackman.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Blackman.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.BlackmanHarris">
+            <summary>
+            Defines the Blackman-Harris window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.BlackmanHarris.#ctor(System.Int32)">
+            <summary>
+            Initializes the Blackman-Harris window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+        </member>
+        <member name="M:UMapx.Window.BlackmanHarris.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.BlackmanHarris.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.BlackmanNuttall">
+            <summary>
+            Defines the Blackman-Nuttall window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.BlackmanNuttall.#ctor(System.Int32)">
+            <summary>
+            Initializes the Blackman-Nuttall window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+        </member>
+        <member name="M:UMapx.Window.BlackmanNuttall.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.BlackmanNuttall.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.Confined">
+            <summary>
+            Defines the closed Gaussian window.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Confined.#ctor(System.Int32,System.Single)">
+            <summary>
+            Initializes the closed Gaussian window.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <param name="sigma">Standard deviation (0.14 * N)</param>
+        </member>
+        <member name="M:UMapx.Window.Confined.#ctor(System.Int32)">
+            <summary>
+            Initializes a Gaussian window function closed.
+            </summary>
+            <param name="frameSize">Window size</param>
+        </member>
+        <member name="P:UMapx.Window.Confined.Sigma">
+            <summary>
+            Gets or sets the standard deviation (>0).
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Confined.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Confined.G(System.Single)">
+            <summary>
+            Function G(x).
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Confined.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.Cosine">
+            <summary>
+            Defines the cosine window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Cosine.#ctor(System.Int32)">
+            <summary>
+            Initializes the cosine window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+        </member>
+        <member name="M:UMapx.Window.Cosine.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Cosine.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.Cosine.Cosinefunc(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Factor</returns>
+        </member>
+        <member name="T:UMapx.Window.FastRealWeylHeisenbergTransform">
+            <summary>
+            Defines fast real Weyl-Heisenberg transform.
+            </summary>
+            <remarks>
+            The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete real orthogonal
+            Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
+            </remarks>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
+            <summary>
+            Initializes fast real Weyl-Heisenberg transform.
+            </summary>
+            <param name="window">Windows function</param>
+            <param name="m">Number of frequency shifts [4, N/4]</param>
+            <param name="direction">Processing direction</param>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Forward(System.Single[])">
+            <summary>
+            Forward real Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Backward(System.Single[])">
+            <summary>
+            Backward real Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Forward(System.Single[0:,0:])">
+            <summary>
+            Forward real Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Backward(System.Single[0:,0:])">
+            <summary>
+            Backward real Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward real Weyl-Heisenberg transform for complex input.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward real Weyl-Heisenberg transform for complex input.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Forward real Weyl-Heisenberg transform for complex matrices.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward real Weyl-Heisenberg transform for complex matrices.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="T:UMapx.Window.FastShortTimeFourierTransform">
+            <summary>
+            Defines fast short-time Fourier transform.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Short-time_Fourier_transform
+            </remarks>
+        </member>
+        <member name="M:UMapx.Window.FastShortTimeFourierTransform.#ctor(UMapx.Window.IWindow,System.Boolean,UMapx.Core.Direction)">
+            <summary>
+            Initializes fast short-time Fourier transform.
+            </summary>
+            <param name="function">Window function</param>
+            <param name="normalized">Normalized transform or not</param>
+            <param name="direction">Processing direction</param>
+        </member>
+        <member name="P:UMapx.Window.FastShortTimeFourierTransform.Normalized">
+            <summary>
+            Normalized transform or not.
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.FastShortTimeFourierTransform.Window">
+            <summary>
+            Gets or sets the window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward short-time Fourier Transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastShortTimeFourierTransform.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward short-time Fourier Transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.FastWeylHeisenbergTransform">
+            <summary>
+            Defines fast Weyl-Heisenberg transform.
+            </summary>
+            <remarks>
+            The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete orthogonal
+            Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
+            </remarks>
+            <summary>
+            Defines fast Weyl-Heisenberg transform.
+            </summary>
+            <remarks>
+            The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete orthogonal
+            Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
+            </remarks>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.FWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">
+             <summary>
+             Forward fast Weyl–Heisenberg transform (2-channel packing, length = 2N).
+             
+             Input:
+               A ∈ ℂ^N,  N = M * L,  M is even.
+             
+             Output:
+               B ∈ ℂ^{2N}, split as:
+                 B_main[u] = B[u + 0],   u = l*M + k
+                 B_half[u] = B[u + N],   u = l*M + k
+            
+             This matches the column-wise “slow” matrix reference G ∈ ℂ^{N×2N} with columns:
+               main:   g[i] * exp( j*2π*k/M * (n - M/4) )
+               half: j*g[j] * exp( j*2π*k/M * (n - M/4) )
+            
+             Analysis (i.e., G^H A) realized via:
+               - polyphase split over residue n0 (mod M) and FFT_L along r,
+               - frequency-domain correlations with conj(S_hat/T_hat),
+               - carry-phase compensation for the half branch when (n0 + M/2) wraps,
+               - DFT_M over n0 (via forward FFT over n0) + quarter-phase e^{+jπk/2},
+               - normalization gain = √M / √N = 1 / (2√L).
+            
+             Notes:
+               Caches C.S_hat, C.T_hat must be built from the SAME orthonormalized window
+               as used by the slow matrix builder, otherwise values will differ by window scaling.
+             </summary>
+             <param name="A">Input signal (length N)</param>
+             <param name="C">Polyphase cache (built for N,M,window)</param>
+             <returns>B of length 2N: main (0..N-1) and half (N..2N-1) branches</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.IFWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">
+             <summary>
+             Inverse fast Weyl–Heisenberg transform (2-channel input, length = 2N).
+            
+             Input:
+               B ∈ ℂ^{2N}, split as:
+                 B_main[u] = B[u + 0],   u = l*M + k
+                 B_half[u] = B[u + N],   u = l*M + k
+            
+             This inverts the forward packing:
+               forward: B_main =  P * gain
+                        B_half = (-j) Q * gain
+               where gain = √M / √N = 1 / (2√L).
+            
+             Inverse mapping:
+               P =      B_main / gain
+               Q =  j * B_half / gain
+            
+             Then we undo the quarter-phase e^{+jπk/2}, invert the DFT over n₀,
+             apply the adjoint of the frequency-domain correlations, and finally
+             invert the polyphase FFT over r to reconstruct A.
+             </summary>
+             <param name="B">Input coefficients of length 2N (main first, then half)</param>
+             <param name="C">Polyphase cache (built for N, M, window)</param>
+             <returns>Reconstructed signal A of length N</returns>
+        </member>
+        <member name="T:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache">
+            <summary>
+            Defines the polyphase cache for the fast Weyl–Heisenberg transform.
+            <para>
+            This cache stores precomputed FFTs of the polyphase components of the
+            orthogonalized analysis window. It is used in both forward and backward
+            transforms to avoid recomputing window-related data for each call.
+            </para>
+            <para>
+            Parameters:
+            <list type="bullet">
+            <item><description><see cref="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.N"/> – total signal length</description></item>
+            <item><description><see cref="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.M"/> – number of frequency shifts (must be even)</description></item>
+            <item><description><see cref="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.L"/> – number of time shifts, L = N / M</description></item>
+            <item><description><see cref="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.S_hat"/> – FFT<sub>L</sub> of the main polyphase branch
+            s<sub>n0</sub>[r] = g[r*M + n0], dimensions [M, L]</description></item>
+            <item><description><see cref="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.T_hat"/> – FFT<sub>L</sub> of the half-shifted polyphase branch
+            t<sub>n0</sub>[r] = g[r*M + (n0 + M/2) mod M], dimensions [M, L]</description></item>
+            </list>
+            </para>
+            </summary>
+            <remarks>
+            The cache is specific to a given combination of (N, M, window function).
+            If the window changes, the cache must be rebuilt.
+            </remarks>
+        </member>
+        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.N">
+            <summary>
+            Total signal length.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.M">
+            <summary>
+            Number of frequency shifts (must be even).
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.L">
+            <summary>
+            Number of time shifts (L = N / M).
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.S_hat">
+            <summary>
+            FFT<sub>L</sub> of the main branch polyphase components [M, L].
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.T_hat">
+            <summary>
+            FFT<sub>L</sub> of the half-shifted branch polyphase components [M, L].
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.#ctor(System.Int32,System.Int32,System.Int32,UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Creates a new instance of the polyphase cache.
+            </summary>
+            <param name="N">Total signal length</param>
+            <param name="M">Number of frequency shifts</param>
+            <param name="L">Number of time shifts</param>
+            <param name="S">FFT of the main branch polyphase components</param>
+            <param name="T">FFT of the half-shifted branch polyphase components</param>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.Build(System.Int32,System.Int32,UMapx.Window.IWindow)">
+            <summary>
+            Precomputes FFT_L of the polyphase components of the orthogonalized window.
+            These cached arrays S_hat and T_hat are used in both Forward() and Backward()
+            to avoid recomputing window FFTs for every transform call.
+            </summary>
+            <param name="N">Total signal length</param>
+            <param name="Mloc">Number of frequency shifts M (must be even)</param>
+            <param name="window">Windows function</param>
+            <returns>Polyphase cache</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.PhasePlusPiOver2(System.Int32)">
+            <summary>
+            Returns the complex phase factor e^{+j * π * k / 2}.
+            This term is 4-periodic in k and takes only four distinct values: 1, +j, −1, −j.
+            
+            Context:
+            • Quarter-period phase factors appear in WH transforms, DFT twiddle factors,
+              and modulation/demodulation stages.
+            • In the Weyl–Heisenberg transform, this multiplier is used during n₀→k assembly
+              with a positive-exponent DFT to align phases with the matrix reference.
+            
+            Relationship:
+              PhasePlusPiOver2(k) = conj(PhaseMinusPiOver2(k)).
+            
+            Mapping (k mod 4):
+              0 →  1   (  0°)
+              1 → +j   (+90°)
+              2 → −1   (180°)
+              3 → −j   (−90°)
+            </summary>
+            <param name="k">Frequency index (integer)</param>
+            <returns>Complex value of e^{+j * π * k / 2}</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.FFT(UMapx.Core.Complex32[],System.Boolean)">
+            <summary>
+            Fast Fourier transform.
+            </summary>
+            <param name="a">Input</param>
+            <param name="inverse">Inverse or not</param>
+        </member>
+        <member name="F:UMapx.Window.FastWeylHeisenbergTransform.fastFourierTransform">
+            <summary>
+            UMapx fast Fourier transform.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
+            <summary>
+            Initializes fast Weyl-Heisenberg transform.
+            </summary>
+            <param name="window">Windows function</param>
+            <param name="m">Number of frequency shifts [4, N/2]</param>
+            <param name="direction">Processing direction</param>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="T:UMapx.Window.FastZakTransform">
+            <summary>
+            Defines the fast Zak transform.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.#ctor(System.Int32)">
+            <summary>
+            Initializes the fast Zak transform.
+            </summary>
+            <param name="m">Number of frequency shifts [4, N/2]</param>
+        </member>
+        <member name="P:UMapx.Window.FastZakTransform.M">
+            <summary>
+            Gets or sets number of frequency shifts [4, N/2].
+            </summary>
+            <remarks>
+            Even number.
+            </remarks>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward Zak transform.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Matrix</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.Forward(System.Single[])">
+            <summary>
+            Forward Zak transform.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Matrix</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward Zak transform.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <returns>Array</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.Orthogonalize(System.Single[])">
+            <summary>
+            Zak orthogonalization.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastZakTransform.Orthogonalize(UMapx.Core.Complex32[])">
+            <summary>
+            Zak orthogonalization.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.FlatTop">
+            <summary>
+            Defines the "Flat-Top" window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.FlatTop.#ctor(System.Int32)">
+            <summary>
+            Initializes the "Flat-Top" window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+        </member>
+        <member name="M:UMapx.Window.FlatTop.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.FlatTop.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.Gabor">
+            <summary>
+            Defines the Gabor window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Gabor.#ctor(System.Int32,System.Single)">
+            <summary>
+            Initializes the Gabor window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <param name="sigma">Scale parameter</param>
+        </member>
+        <member name="P:UMapx.Window.Gabor.Sigma">
+            <summary>
+            Gets or sets the standard deviation (>0).
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Gabor.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Gabor.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.Gabor.Scaled(System.Int32)">
+            <summary>
+            Returns Gabor window function defined without sigma. Scaled function version.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <returns>Gabor window function</returns>
+        </member>
+        <member name="T:UMapx.Window.Hamming">
+            <summary>
+            Defines the Hamming window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Hamming.#ctor(System.Int32)">
+            <summary>
+            Initializes the Hamming window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+        </member>
+        <member name="M:UMapx.Window.Hamming.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Hamming.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.Hann">
+            <summary>
+            Defines the Hann window function (Hanning).
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Hann.#ctor(System.Int32)">
+            <summary>
+            Initializes the Hann window function (Hanning).
+            </summary>
+            <param name="frameSize">Window size</param>
+        </member>
+        <member name="M:UMapx.Window.Hann.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Hann.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.IWindow">
+            <summary>
+            Defines the interface of window functions.
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.IWindow.FrameSize">
+            <summary>
+            Gets or sets the window size.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.IWindow.Function(System.Single)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.IWindow.GetWindow">
+            <summary>
+            Returns the window function.
+            </summary>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.IWindow.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.IWindow.Function(System.Single[],System.Int32)">
+            <summary>
+            Returns an array of window function values.
+            </summary>
+            <param name="x">Array</param>
+            <param name="frameSize">Window size</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.IWindow.Function(System.Single[])">
+            <summary>
+            Returns an array of window function values.
+            </summary>
+            <param name="x">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.IWindowTransform">
+            <summary>
+            Defines the general window transform interface.
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.IWindowTransform.Window">
+            <summary>
+            Gets or sets the window function.
+            </summary>
+        </member>
+        <member name="T:UMapx.Window.IZakTransform">
+            <summary>
+            Defines the Zak transform interface.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.IZakTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward Zak transform.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Matrix</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Window.IZakTransform.Forward(System.Single[])">
+            <summary>
+            Forward Zak transform.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Matrix</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Window.IZakTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward Zak transform.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <returns>Array</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="T:UMapx.Window.Kaiser">
+            <summary>
+            Defines the Kaiser window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Kaiser.#ctor(System.Int32,System.Single)">
+            <summary>
+            Initializes the Kaiser window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <param name="a">Form parameter</param>
+        </member>
+        <member name="P:UMapx.Window.Kaiser.A">
+            <summary>
+            Gets or sets the value of the form parameter.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Kaiser.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Kaiser.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.Lanczos">
+            <summary>
+            Defines the Lanczos window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Lanczos.#ctor(System.Int32)">
+            <summary>
+            Initializes the Lanczos window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+        </member>
+        <member name="M:UMapx.Window.Lanczos.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Lanczos.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.Normal">
+            <summary>
+            Defines a generalized window normal function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Normal.#ctor(System.Int32,System.Single,System.Single)">
+            <summary>
+            Initializes a generalized window normal function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <param name="sigma">Standard deviation (>0)</param>
+            <param name="pow">Power<remarks>For p = 2 - Gaussian window</remarks></param>
+        </member>
+        <member name="P:UMapx.Window.Normal.Sigma">
+            <summary>
+            Gets or sets the standard deviation (>0).
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.Normal.Pow">
+            <summary>
+            Power.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Normal.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Normal.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.Nuttall">
+            <summary>
+            Defines the Nuttall window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Nuttall.#ctor(System.Int32)">
+            <summary>
+            Initializes the Nuttall window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+        </member>
+        <member name="M:UMapx.Window.Nuttall.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Nuttall.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.Parzen">
+            <summary>
+            Defines the Parzen window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Parzen.#ctor(System.Int32)">
+            <summary>
+            Initializes the Parzen window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+        </member>
+        <member name="M:UMapx.Window.Parzen.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Parzen.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.Planck">
+            <summary>
+            Defines the window function of Planck.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Planck.#ctor(System.Int32,System.Single)">
+            <summary>
+            Initializes the Planck window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <param name="a">Form parameter [0, 0.5]</param>
+        </member>
+        <member name="P:UMapx.Window.Planck.A">
+            <summary>
+            Gets or sets the value of the form parameter [0, 0.5].
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Planck.Z(System.Single,System.Boolean,System.Int32)">
+            <summary>
+            Function Z+-(x, a).
+            </summary>
+            <param name="x">Value</param>
+            <param name="p">Sign</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Planck.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Planck.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.RealWeylHeisenbergHartleyTransform">
+            <summary>
+            Defines a group of real orthogonal bases and discrete Weyl-Heisenberg transforms.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://ieeexplore.ieee.org/document/8711969/
+            </remarks>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
+            <summary>
+            Initializes a group of real orthogonal bases and Weyl-Heisenberg transformations.
+            </summary>
+            <param name="window">Windows function</param>
+            <param name="m">Number of frequency shifts [4, N/4]</param>
+            <param name="direction">Processing direction</param>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Matrix(System.Single[],System.Int32)">
+            <summary>
+            Returns the real Weyl-Heisenberg basis matrix.
+            </summary>
+            <remarks>
+            Matrix dimension [2N, 2N], where N = M * L.
+            </remarks>
+            <param name="g0">Function</param>
+            <param name="M">Number of frequency shifts [4, N/4]</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Matrix(UMapx.Window.IWindow,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Returns the real Weyl-Heisenberg basis matrix.
+            </summary>
+            <remarks>
+            Matrix dimension [2N, 2N], where N = M * L.
+            </remarks>
+            <param name="window">Windows function</param>
+            <param name="N">Number of samples</param>
+            <param name="M">Number of frequency shifts [4, N/4]</param>
+            <param name="orthogonalize">Orthogonalized matrix or not</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Matrix(System.Single[],System.Int32,System.Boolean)">
+            <summary>
+            Returns the real Weyl-Heisenberg basis matrix.
+            </summary>
+            <remarks>
+            Matrix dimension [2N, 2N], where N = M * L.
+            </remarks>
+            <param name="g0">Function</param>
+            <param name="M">Number of frequency shifts [4, N/4]</param>
+            <param name="orthogonalize">Orthogonalized matrix or not</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Forward(System.Single[])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Backward(System.Single[])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Forward(System.Single[0:,0:])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Backward(System.Single[0:,0:])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Forward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="T:UMapx.Window.RealWeylHeisenbergTransform">
+            <summary>
+            Defines a group of real orthogonal bases and discrete Weyl-Heisenberg transforms.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://ieeexplore.ieee.org/document/8711969/
+            </remarks>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
+            <summary>
+            Initializes a group of real orthogonal bases and Weyl-Heisenberg transformations.
+            </summary>
+            <param name="window">Windows function</param>
+            <param name="m">Number of frequency shifts [4, N/4]</param>
+            <param name="direction">Processing direction</param>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32)">
+            <summary>
+            Returns the real Weyl-Heisenberg basis matrix.
+            </summary>
+            <remarks>
+            Matrix dimension [2N, 2N], where N = M * L.
+            </remarks>
+            <param name="g0">Function</param>
+            <param name="M">Number of frequency shifts [4, N/4]</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(UMapx.Window.IWindow,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Returns the real Weyl-Heisenberg basis matrix.
+            </summary>
+            <remarks>
+            Matrix dimension [2N, 2N], where N = M * L.
+            </remarks>
+            <param name="window">Windows function</param>
+            <param name="N">Number of samples</param>
+            <param name="M">Number of frequency shifts [4, N/4]</param>
+            <param name="orthogonalize">Orthogonalized matrix or not</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32,System.Boolean)">
+            <summary>
+            Returns the real Weyl-Heisenberg basis matrix.
+            </summary>
+            <remarks>
+            Matrix dimension [2N, 2N], where N = M * L.
+            </remarks>
+            <param name="g0">Function</param>
+            <param name="M">Number of frequency shifts [4, N/4]</param>
+            <param name="orthogonalize">Orthogonalized matrix or not</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Forward(System.Single[])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Backward(System.Single[])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Forward(System.Single[0:,0:])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Backward(System.Single[0:,0:])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="T:UMapx.Window.ShortTimeFourierTransform">
+            <summary>
+            Defines short-time Fourier transform.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Short-time_Fourier_transform
+            </remarks>
+        </member>
+        <member name="M:UMapx.Window.ShortTimeFourierTransform.#ctor(UMapx.Window.IWindow,System.Boolean,UMapx.Core.Direction)">
+            <summary>
+            Initializes short-time Fourier transform.
+            </summary>
+            <param name="function">Window function</param>
+            <param name="normalized">Normalized transform or not</param>
+            <param name="direction">Processing direction</param>
+        </member>
+        <member name="P:UMapx.Window.ShortTimeFourierTransform.Normalized">
+            <summary>
+            Normalized transform or not.
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.ShortTimeFourierTransform.Window">
+            <summary>
+            Gets or sets the window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.ShortTimeFourierTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward short-time Fourier Transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.ShortTimeFourierTransform.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward short-time Fourier Transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.Sine">
+            <summary>
+            Defines the sine window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Sine.#ctor(System.Int32)">
+            <summary>
+            Initializes the sine window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+        </member>
+        <member name="M:UMapx.Window.Sine.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Sine.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.Sine.Sinefunc(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="T:UMapx.Window.Tukey">
+            <summary>
+            Defines the window function of Tukey.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Tukey.#ctor(System.Int32,System.Single)">
+            <summary>
+            Initializes the Tukey window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <param name="a">Form parameter [0, 1]</param>
+        </member>
+        <member name="P:UMapx.Window.Tukey.A">
+            <summary>
+            Gets or sets the value of the form parameter [0, 1].
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Tukey.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Tukey.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.Welch">
+            <summary>
+            Defines the Welch window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.Welch.#ctor(System.Int32)">
+            <summary>
+            Initializes the Welch window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+        </member>
+        <member name="M:UMapx.Window.Welch.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.Welch.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.WeylHeisenbergTransform">
+            <summary>
+            Defines a group of orthogonal bases and discrete Weyl-Heisenberg transforms.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://ieeexplore.ieee.org/document/8711969/
+            </remarks>
+        </member>
+        <member name="F:UMapx.Window.WeylHeisenbergTransform.window">
+            <summary>
+            Windows function.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.WeylHeisenbergTransform.m">
+            <summary>
+            Number of frequency shifts.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
+            <summary>
+            Initializes a group of orthogonal bases and Weyl-Heisenberg transformations.
+            </summary>
+            <param name="window">Windows function</param>
+            <param name="m">Number of frequency shifts [4, N/2]</param>
+            <param name="direction">Processing direction</param>
+        </member>
+        <member name="P:UMapx.Window.WeylHeisenbergTransform.M">
+            <summary>
+            Gets or sets number of frequency shifts [4, N].
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.WeylHeisenbergTransform.Window">
+            <summary>
+            Gets or sets the window function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Matrix(System.Single[],System.Int32)">
+            <summary>
+            Returns the complex Weyl-Heisenberg basis matrix.
+            </summary>
+            <remarks>
+            Matrix dimension [N, 2N], where N = M * L.
+            </remarks>
+            <param name="g0">Function</param>
+            <param name="M">Number of frequency shifts</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Matrix(UMapx.Window.IWindow,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Returns the complex Weyl-Heisenberg basis matrix.
+            </summary>
+            <remarks>
+            Matrix dimension [N, 2N], where N = M * L.
+            </remarks>
+            <param name="window">Windows function</param>
+            <param name="N">Number of samples</param>
+            <param name="M">Number of frequency shifts [4, N/2]</param>
+            <param name="orthogonalize">Orthogonalized matrix or not</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Matrix(System.Single[],System.Int32,System.Boolean)">
+            <summary>
+            Returns the complex Weyl-Heisenberg basis matrix.
+            </summary>
+            <remarks>
+            Matrix dimension [N, 2N], where N = M * L.
+            </remarks>
+            <param name="g0">Function</param>
+            <param name="M">Number of frequency shifts [4, N/2]</param>
+            <param name="orthogonalize">Orthogonalized matrix or not</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Packet(UMapx.Window.IWindow,System.Int32)">
+            <summary>
+            Returns a vector of window function values.
+            </summary>
+            <param name="window">Windows function</param>
+            <param name="length">Number of samples</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Symmetry(UMapx.Window.IWindow,System.Int32)">
+            <summary>
+            Returns a vector of values of a window function that satisfies the N-1 symmetry condition.
+            </summary>
+            <param name="window">Windows function</param>
+            <param name="length">Number of samples</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Forward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Forward(System.Single[])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Backward(System.Single[])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Forward(System.Single[0:,0:])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.WeylHeisenbergTransform.Backward(System.Single[0:,0:])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="T:UMapx.Window.WindowBase">
+            <summary>
+            Defines the class for window functions.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Window_function
+            </remarks>
+        </member>
+        <member name="F:UMapx.Window.WindowBase.frameSize">
+            <summary>
+            Window size.
+            </summary>
+        </member>
+        <member name="P:UMapx.Window.WindowBase.FrameSize">
+            <summary>
+            Gets or sets the window size.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.WindowBase.Function(System.Single)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.WindowBase.GetWindow">
+            <summary>
+            Returns the window function.
+            </summary>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.WindowBase.Function(System.Single[],System.Int32)">
+            <summary>
+            Returns an array of window function values.
+            </summary>
+            <param name="x">Array</param>
+            <param name="frameSize">Window size</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.WindowBase.Function(System.Single[])">
+            <summary>
+            Returns an array of window function values.
+            </summary>
+            <param name="x">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.WindowBase.Function(System.Single,System.Int32)">
+            <summary>
+            Returns the value of a window function.
+            </summary>
+            <param name="x">Value</param>
+            <param name="frameSize">Window size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Window.WindowBase.GetWindow(System.Int32)">
+            <summary>
+            Returns the window function.
+            </summary>
+            <param name="frameSize">Window size</param>
+            <returns>Array</returns>
+        </member>
+        <member name="T:UMapx.Window.ZakTransform">
+            <summary>
+            Defines the Zak transform.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.ZakTransform.#ctor(System.Int32)">
+            <summary>
+            Initializes the Zak transform.
+            </summary>
+            <param name="m">Number of frequency shifts [4, N/2]</param>
+        </member>
+        <member name="P:UMapx.Window.ZakTransform.M">
+            <summary>
+            Gets or sets number of frequency shifts [4, N/2].
+            </summary>
+            <remarks>
+            Even number.
+            </remarks>
+        </member>
+        <member name="M:UMapx.Window.ZakTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward Zak transform.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Matrix</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Window.ZakTransform.Forward(System.Single[])">
+            <summary>
+            Forward Zak transform.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Matrix</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Window.ZakTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward Zak transform.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <returns>Array</returns>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Window.ZakTransform.Orthogonalize(System.Single[])">
+            <summary>
+            Zak orthogonalization.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.ZakTransform.Orthogonalize(UMapx.Core.Complex32[])">
+            <summary>
+            Zak orthogonalization.
+            </summary>
+            <param name="input">Array</param>
+            <returns>Array</returns>
         </member>
     </members>
 </doc>
