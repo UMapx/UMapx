@@ -64,16 +64,8 @@ namespace UMapx.Window
             var xr = new float[N];
             var xi = new float[N];
 
-            if (y.Length == 2 * N)
-            {
-                Buffer.BlockCopy(y, 0, xr, 0, sizeof(float) * N);
-                Buffer.BlockCopy(y, sizeof(float) * N, xi, 0, sizeof(float) * N);
-            }
-            else
-            {
-                Buffer.BlockCopy(y, 0, xr, 0, sizeof(float) * N);
-                // xi stays zero
-            }
+            Buffer.BlockCopy(y, 0, xr, 0, sizeof(float) * N);
+            Buffer.BlockCopy(y, sizeof(float) * N, xi, 0, sizeof(float) * N);
 
             // 1) Correlation along L for each residue a (for both branches and both halves)
             var R = new float[M][];
