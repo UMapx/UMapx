@@ -32,7 +32,7 @@ namespace UMapx.Window
         ///      c2 = −sin(φ − πk/2)·R2 +  cos(φ − πk/2)·S2
         /// 4) A final scale = 1/L is applied to match your matrix convention.
         /// </remarks>
-        public static float[] FRWHT(float[] A, RealPolyphaseCache C)
+        internal static float[] FRWHT(float[] A, RealPolyphaseCache C)
         {
             var N = C.N;
             var L = C.L;
@@ -249,7 +249,7 @@ namespace UMapx.Window
         ///    one inverse FHT_L.
         /// 3) Inverse FHT_L and deinterleave to n = a + b*M into xr and xi.
         /// </remarks>
-        public static float[] IFRWHT(float[] B, RealPolyphaseCache C)
+        internal static float[] IFRWHT(float[] B, RealPolyphaseCache C)
         {
             var N = C.N;
             var L = C.L;
@@ -495,7 +495,7 @@ namespace UMapx.Window
         /// These cached spectra are used in both Forward and Backward to avoid repeated
         /// window transforms and to keep numerics stable/deterministic.
         /// </summary>
-        public sealed class RealPolyphaseCache
+        internal sealed class RealPolyphaseCache
         {
             /// <summary>
             /// Total signal length N. Must satisfy N = M x L.
