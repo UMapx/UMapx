@@ -21,8 +21,15 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="window">Windows function</param>
         /// <param name="m">Number of frequency shifts [4, N/4]</param>
+        /// <param name="spectrumType">Spectrum type</param>
         /// <param name="direction">Processing direction</param>
-        public RealWeylHeisenbergTransform(IWindow window, int m = 8, Direction direction = Direction.Vertical) : base(window, m, direction) { }
+        public RealWeylHeisenbergTransform(IWindow window, int m = 8, SpectrumType spectrumType = SpectrumType.Fourier, Direction direction = Direction.Vertical) 
+            : base(window, m, direction) { SpectrumType = spectrumType; }
+
+        /// <summary>
+        /// Gets or sets spectrum type.
+        /// </summary>
+        public SpectrumType SpectrumType { get; set; }
         #endregion
 
         #region Weyl-Heisenberg static components
@@ -34,8 +41,9 @@ namespace UMapx.Window
         /// </remarks>
         /// <param name="g0">Function</param>
         /// <param name="M">Number of frequency shifts [4, N/4]</param>
+        /// <param name="spectrumType">Spectrum type</param>
         /// <returns>Matrix</returns>
-        public new static float[,] Matrix(float[] g0, int M)
+        public static float[,] Matrix(float[] g0, int M, SpectrumType spectrumType = SpectrumType.Fourier)
         {
             int N = g0.Length, L = N / M;
 
@@ -43,36 +51,87 @@ namespace UMapx.Window
                 throw new ArgumentException("Number of frequency shifts not defined correctly");
 
             float[,] G = new float[2 * N, 2 * N];
-            Complex32 c = 2 * Maths.Pi * Maths.I;
-            float a = M / 2.0f;
 
-            Parallel.For(0, N, n =>
+            if (spectrumType == SpectrumType.Fourier)
             {
-                float phase = n - a / 2.0f;
-                int k, l, u, i, j;
-                Complex32 exp;
+                Complex32 c = 2 * Maths.Pi * Maths.I;
+                float a = M / 2.0f;
 
-                for (k = 0; k < M; k++)
+                Parallel.For(0, N, n =>
                 {
-                    exp = Maths.Exp(c * k / M * phase);
+                    float phase = n - a / 2.0f;
+                    int k, l, u, i, j;
+                    Complex32 exp;
 
-                    for (l = 0; l < L; l++)
+                    for (k = 0; k < M; k++)
                     {
-                        u = l * M + k;
-                        i = Maths.Mod(n - l * M, N);
-                        j = Maths.Mod(n + M / 2 - l * M, N);
+                        exp = Maths.Exp(c * k / M * phase);
 
-                        var G1 =           g0[i] * exp;
-                        var G2 = Maths.I * g0[j] * exp;
+                        for (l = 0; l < L; l++)
+                        {
+                            u = l * M + k;
+                            i = Maths.Mod(n - l * M, N);
+                            j = Maths.Mod(n + M / 2 - l * M, N);
 
-                        // implements the [2N, 2N] WH matrix
-                        // https://github.com/asiryan/Weyl-Heisenberg-Toolbox/blob/master/matlab/toolbox_scripts/weylhzr.m
+                            var G1 = g0[i] * exp;
+                            var G2 = Maths.I * g0[j] * exp;
 
-                        G[n, u + 0] = G1.Real; G[n + N, u + 0] = G1.Imag;
-                        G[n, u + N] = G2.Real; G[n + N, u + N] = G2.Imag;
+                            // implements the [2N, 2N] WH matrix
+                            // https://github.com/asiryan/Weyl-Heisenberg-Toolbox/blob/master/matlab/toolbox_scripts/weylhzr.m
+
+                            G[n, u + 0] = G1.Real; G[n + N, u + 0] = G1.Imag;
+                            G[n, u + N] = G2.Real; G[n + N, u + N] = G2.Imag;
+                        }
                     }
-                }
-            });
+                });
+            }
+            else
+            {
+                // Constants
+                float twoPiOverM = 2.0f * Maths.Pi / M;
+                float halfPi = 0.5f * Maths.Pi;
+                float quarterM = 0.25f * M; // shift of M/4 used in 'phase'
+
+                Parallel.For(0, N, n =>
+                {
+                    // phase = n - M/4  (same as original: a = M/2, then phase = n - a/2)
+                    float phase = n - quarterM;
+
+                    for (int k = 0; k < M; k++)
+                    {
+                        // θ = 2π * (k/M) * phase
+                        float theta = twoPiOverM * k * phase;
+
+                        // Hartley evaluations
+                        float cas1 = Special.Cas(theta);             // = cosθ + sinθ
+                        float cas2 = Special.Cas(theta - halfPi);    // = sinθ - cosθ
+
+                        // Recover cosθ and sinθ from cas:
+                        float c = 0.5f * (cas1 - cas2); // cosθ
+                        float s = 0.5f * (cas1 + cas2); // sinθ
+
+                        for (int l = 0; l < L; l++)
+                        {
+                            int u = l * M + k;
+                            int i = Maths.Mod(n - l * M, N);
+                            int j = Maths.Mod(n + (M / 2) - l * M, N);
+
+                            float gi = g0[i];
+                            float gj = g0[j];
+
+                            // This exactly matches:
+                            // G1 = gi * (cosθ + i sinθ)
+                            // G2 = i * gj * (cosθ + i sinθ) = gj * (cos(θ+π/2) + i sin(θ+π/2))
+                            // => Re(G2) = -gj * sinθ, Im(G2) = gj * cosθ
+                            G[n + 0, u + 0] = gi * c;   // Re(G1)
+                            G[n + N, u + 0] = gi * s;   // Im(G1)
+
+                            G[n + 0, u + N] = -gj * s;  // Re(G2)
+                            G[n + N, u + N] = gj * c;   // Im(G2)
+                        }
+                    }
+                });
+            }
 
             return G;
         }
@@ -86,10 +145,11 @@ namespace UMapx.Window
         /// <param name="N">Number of samples</param>
         /// <param name="M">Number of frequency shifts [4, N/4]</param>
         /// <param name="orthogonalize">Orthogonalized matrix or not</param>
+        /// <param name="spectrumType">Spectrum type</param>
         /// <returns>Matrix</returns>
-        public new static float[,] Matrix(IWindow window, int N, int M, bool orthogonalize = true)
+        public static float[,] Matrix(IWindow window, int N, int M, bool orthogonalize = true, SpectrumType spectrumType = SpectrumType.Fourier)
         {
-            return RealWeylHeisenbergTransform.Matrix(WeylHeisenbergTransform.Packet(window, N), M, orthogonalize);
+            return RealWeylHeisenbergTransform.Matrix(WeylHeisenbergTransform.Packet(window, N), M, orthogonalize, spectrumType);
         }
         /// <summary>
         /// Returns the real Weyl-Heisenberg basis matrix.
@@ -100,17 +160,18 @@ namespace UMapx.Window
         /// <param name="g0">Function</param>
         /// <param name="M">Number of frequency shifts [4, N/4]</param>
         /// <param name="orthogonalize">Orthogonalized matrix or not</param>
+        /// <param name="spectrumType">Spectrum type</param>
         /// <returns>Matrix</returns>
-        public new static float[,] Matrix(float[] g0, int M, bool orthogonalize = true)
+        public static float[,] Matrix(float[] g0, int M, bool orthogonalize = true, SpectrumType spectrumType = SpectrumType.Fourier)
         {
             if (orthogonalize)
             {
                 ZakTransform zakTransform = new ZakTransform(M);
 
-                return RealWeylHeisenbergTransform.Matrix(zakTransform.Orthogonalize(g0), M);
+                return RealWeylHeisenbergTransform.Matrix(zakTransform.Orthogonalize(g0), M, spectrumType);
             }
 
-            return RealWeylHeisenbergTransform.Matrix(g0, M);
+            return RealWeylHeisenbergTransform.Matrix(g0, M, spectrumType);
         }
         #endregion
 
@@ -123,7 +184,7 @@ namespace UMapx.Window
         public override float[] Forward(float[] A)
         {
             int N = A.Length;
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
+            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
             float[] B = Core.Matrice.Dot(A, Matrice.Transpose(U));
             return B;
         }
@@ -135,7 +196,7 @@ namespace UMapx.Window
         public override float[] Backward(float[] B)
         {
             int N = B.Length;
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
+            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
             float[] A = Core.Matrice.Dot(B, U);
             return A;
         }
@@ -147,8 +208,8 @@ namespace UMapx.Window
         public override float[,] Forward(float[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
+            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
+            float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true, SpectrumType);
             float[,] B;
 
             if (Direction == Direction.Both)
@@ -173,8 +234,8 @@ namespace UMapx.Window
         public override float[,] Backward(float[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
+            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
+            float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true, SpectrumType);
             float[,] A;
 
             if (Direction == Direction.Both)
@@ -199,7 +260,7 @@ namespace UMapx.Window
         public override Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
+            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
             Complex32[] B = Core.Matrice.Dot(A, Matrice.Transpose(U));
             return B;
         }
@@ -211,7 +272,7 @@ namespace UMapx.Window
         public override Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
+            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
             Complex32[] A = Core.Matrice.Dot(B, U);
             return A;
         }
@@ -223,8 +284,8 @@ namespace UMapx.Window
         public override Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
+            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
+            float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true, SpectrumType);
             Complex32[,] B;
 
             if (Direction == Direction.Both)
@@ -249,8 +310,8 @@ namespace UMapx.Window
         public override Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
+            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
+            float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true, SpectrumType);
             Complex32[,] A;
 
             if (Direction == Direction.Both)

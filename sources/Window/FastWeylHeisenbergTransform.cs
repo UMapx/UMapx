@@ -15,8 +15,8 @@ namespace UMapx.Window
     [Serializable]
     public partial class FastWeylHeisenbergTransform : WeylHeisenbergTransform, IWindowTransform, ITransform
     {
-        // Go to "FastWeylHeisenbergTransform.Asiryan.cs" file to find out more about the fast O(N log N) implementation
-        // designed and developed by Valery Asiryan, Yerevan, Armenia (2025)
+        // Go to "FastWeylHeisenbergTransform.Fourier.cs" and "FastRealWeylHeisenbergTransform.Hartley.cs" files
+        // to find out more about the fast O(N log N) implementations.
 
         #region Initialize
         /// <summary>

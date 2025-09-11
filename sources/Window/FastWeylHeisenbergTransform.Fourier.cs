@@ -342,7 +342,7 @@ namespace UMapx.Window
         internal sealed class PolyphaseCache
         {
             /// <summary>
-            /// Total signal length.
+            /// Total signal length. Must satisfy N = M x L.
             /// </summary>
             public readonly int N;
 
@@ -355,6 +355,8 @@ namespace UMapx.Window
             /// Number of time shifts (L = N / M).
             /// </summary>
             public readonly int L;
+
+            // -------------------- Cached spectra --------------------
 
             /// <summary>
             /// FFT<sub>L</sub> of the main branch polyphase components [M, L].
