@@ -166,7 +166,7 @@ namespace UMapx.Window
             var CR = new float[M]; var SR = new float[M];
             var CS = new float[M]; var SS = new float[M];
 
-            // scale for M-stage mixing:
+            // mixing scale
             float scale = 1.0f / L;
 
             for (int l = 0; l < L; l++)
@@ -280,7 +280,7 @@ namespace UMapx.Window
             var xr = new float[N];
             var xi = new float[N];
 
-            // Undo the Forward mixing scale (Forward stored re*scale, here we multiply by 1/scale = L).
+            // mixing scale
             float invScaleM = 1.0f / L;
 
             // === Step 1: recover A1, A2, B1, B2 for each l via two FHT calls ===

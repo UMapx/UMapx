@@ -62,18 +62,20 @@ namespace UMapx.Window
 
             // 1) Polyphase split over residue n0 (mod M). For each n0 we FFT along r (length L):
             //    Xhat[n0,q] = FFT_L{ A[r*M + n0] }_r
-            var Xhat = new Complex32[Mloc, L];
+            var Xhat = new Complex32[Mloc][];
             var tmp = new Complex32[L];
 
             for (int n0 = 0; n0 < Mloc; n0++)
             {
+                Xhat[n0] = new Complex32[L];
+
                 for (int r = 0; r < L; r++)
                     tmp[r] = A[r * Mloc + n0];
 
                 FFT(tmp, false); // forward FFT along r (no extra scaling)
 
                 for (int q = 0; q < L; q++)
-                    Xhat[n0, q] = tmp[q];
+                    Xhat[n0][q] = tmp[q];
             }
 
             // 2) Frequency-domain correlations to accumulate over time-shift l:
@@ -87,18 +89,22 @@ namespace UMapx.Window
             // carry phase:
             //   when (n0 + M/2) >= M, the half-branch index wraps and induces a +1 shift in r.
             //   A +1 shift in r corresponds in frequency to multiplication by exp(-j*2π*q/L).
-            var Cmain = new Complex32[Mloc, L];
-            var Chalf = new Complex32[Mloc, L];
+            var Cmain = new Complex32[Mloc][];
+            var Chalf = new Complex32[Mloc][];
 
             for (int n0 = 0; n0 < Mloc; n0++)
             {
+                // initiazile
+                Cmain[n0] = new Complex32[L];
+                Chalf[n0] = new Complex32[L];
+
                 // main: correlate in frequency and go back to l-domain
                 for (int q = 0; q < L; q++)
-                    tmp[q] = S_hat[n0][q].Conjugate * Xhat[n0, q];
+                    tmp[q] = S_hat[n0][q].Conjugate * Xhat[n0][q];
 
                 FFT(tmp, true); // inverse FFT over r → correlation over l
                 for (int l = 0; l < L; l++)
-                    Cmain[n0, l] = tmp[l];
+                    Cmain[n0][l] = tmp[l];
 
                 // half: same, but with carry-phase if (n0 + M/2) wraps
                 int carry = ((n0 + Mloc / 2) >= Mloc) ? 1 : 0;
@@ -108,12 +114,12 @@ namespace UMapx.Window
                     float ang = 2f * Maths.Pi * q * carry / L;
                     var shiftPhase = Maths.Exp(-Complex32.I * ang); // exp(-j*2π*q/L) when carry=1
 
-                    tmp[q] = T_hat[n0][q].Conjugate * Xhat[n0, q] * shiftPhase;
+                    tmp[q] = T_hat[n0][q].Conjugate * Xhat[n0][q] * shiftPhase;
                 }
 
                 FFT(tmp, true); // inverse FFT over r
                 for (int l = 0; l < L; l++)
-                    Chalf[n0, l] = tmp[l];
+                    Chalf[n0][l] = tmp[l];
             }
 
             // 3) Assemble over frequency shifts k for each time shift l.
@@ -139,8 +145,8 @@ namespace UMapx.Window
                 // collect l-th rows across n0
                 for (int n0 = 0; n0 < Mloc; n0++)
                 {
-                    Sp_main[n0] = Cmain[n0, l];
-                    Sp_half[n0] = Chalf[n0, l];
+                    Sp_main[n0] = Cmain[n0][l];
+                    Sp_half[n0] = Chalf[n0][l];
                 }
 
                 // forward DFT over n0 via FFT (positive-exponent convention)
@@ -205,8 +211,14 @@ namespace UMapx.Window
             //
             // From B_main/B_half recover P,Q, remove quarter-phase, and
             // invert the DFT over n0 (IFFT_M) to obtain Cmain[:,l], Chalf[:,l].
-            var Cmain = new Complex32[Mloc, L];
-            var Chalf = new Complex32[Mloc, L];
+            var Cmain = new Complex32[Mloc][];
+            var Chalf = new Complex32[Mloc][];
+
+            for (int n0 = 0; n0 < Mloc; n0++)
+            {
+                Cmain[n0] = new Complex32[L];
+                Chalf[n0] = new Complex32[L];
+            }
 
             var Y_main = new Complex32[Mloc]; // spectra over k for a fixed l
             var Y_half = new Complex32[Mloc];
@@ -247,8 +259,8 @@ namespace UMapx.Window
                 float cM = Maths.Sqrt(Mloc); // compensates the internal 1/√M from IFFT
                 for (int n0 = 0; n0 < Mloc; n0++)
                 {
-                    Cmain[n0, l] = Y_main[n0] * cM;
-                    Chalf[n0, l] = Y_half[n0] * cM;
+                    Cmain[n0][l] = Y_main[n0] * cM;
+                    Chalf[n0][l] = Y_half[n0] * cM;
                 }
             }
 
@@ -268,10 +280,10 @@ namespace UMapx.Window
             for (int n0 = 0; n0 < Mloc; n0++)
             {
                 // FFT_L over l
-                for (int l = 0; l < L; l++) bufL[l] = Cmain[n0, l];
+                for (int l = 0; l < L; l++) bufL[l] = Cmain[n0][l];
                 FFT(bufL, false);
 
-                for (int l = 0; l < L; l++) bufL2[l] = Chalf[n0, l];
+                for (int l = 0; l < L; l++) bufL2[l] = Chalf[n0][l];
                 FFT(bufL2, false);
 
                 int carry = ((n0 + Mloc / 2) >= Mloc) ? 1 : 0;
