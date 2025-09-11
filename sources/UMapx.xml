@@ -32755,24 +32755,20 @@
             Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
             </remarks>
             <summary>
-            Fast real Weyl–Heisenberg (Gabor) transform via Hartley (FHT), matching the 2N×2N matrix (analysis exact).
+            Defines fast real Weyl-Heisenberg transform.
             </summary>
             <remarks>
-            Analysis factorization:
-              • Polyphase: n = a + b*M, N = M*L
-              • Correlation along L via Hartley-DFT (two FHT_L calls to recover C,S)
-              • For G2 (M/2 branch): for residues a ≥ M/2 apply extra +1 cyclic shift along L (implemented as spectral rotation)
-              • DFT along M via Hartley (two FHT calls → C,S) and quarter-period mixing by k mod 4
-            Uses only your FastHartleyTransform; no complex arithmetic.
-            Backward provided as exact O(N^2) matrix-form (Special.Cas).
+            The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete real orthogonal
+            Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
             </remarks>
         </member>
-        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Transform.SpectrumType,UMapx.Core.Direction)">
             <summary>
             Initializes fast real Weyl-Heisenberg transform.
             </summary>
             <param name="window">Windows function</param>
             <param name="m">Number of frequency shifts [4, N/4]</param>
+            <param name="spectrumType">Spectrum type</param>
             <param name="direction">Processing direction</param>
         </member>
         <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.Forward(System.Single[])">
@@ -33692,13 +33688,19 @@
             https://ieeexplore.ieee.org/document/8711969/
             </remarks>
         </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Transform.SpectrumType,UMapx.Core.Direction)">
             <summary>
             Initializes a group of real orthogonal bases and Weyl-Heisenberg transformations.
             </summary>
             <param name="window">Windows function</param>
             <param name="m">Number of frequency shifts [4, N/4]</param>
+            <param name="spectrumType">Spectrum type</param>
             <param name="direction">Processing direction</param>
+        </member>
+        <member name="P:UMapx.Window.RealWeylHeisenbergTransform.SpectrumType">
+            <summary>
+            Gets or sets spectrum type.
+            </summary>
         </member>
         <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32,UMapx.Transform.SpectrumType)">
             <summary>
