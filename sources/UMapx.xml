@@ -3837,6 +3837,13 @@
             <param name="b">Complex number</param>
             <returns>Complex number</returns>
         </member>
+        <member name="M:UMapx.Core.Complex32.op_UnaryPlus(UMapx.Core.Complex32)">
+            <summary>
+            A complex number.
+            </summary>
+            <param name="a">Complex number</param>
+            <returns>Complex number</returns>
+        </member>
         <member name="M:UMapx.Core.Complex32.op_Subtraction(UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
             The difference of two complex numbers.

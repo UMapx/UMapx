@@ -154,6 +154,15 @@ namespace UMapx.Core
         {
             return new Complex32(b.Real + a, b.Imag);
         }
+        /// <summary>
+        /// A complex number.
+        /// </summary>
+        /// <param name="a">Complex number</param>
+        /// <returns>Complex number</returns>
+        public static Complex32 operator +(Complex32 a)
+        {
+            return new Complex32(a.Real, a.Imag);
+        }
 
 
         /// <summary>
