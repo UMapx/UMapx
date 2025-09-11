@@ -129,45 +129,61 @@ namespace UMapx.Transform
         /// </summary>
         private void PrecomputeWindowSpectra()
         {
+            // Polyphase buffers (length L)
             var Ga = new float[L];
             var G2a = new float[L];
-            var tmp = new float[L];
 
             for (int a = 0; a < M; a++)
             {
-                // Polyphase column for residue a: g0[a + b*M], b = 0..L-1
+                // -----------------------------
+                // residue a → spectra Cg[a], Sg[a]
+                // -----------------------------
+                // Build polyphase column: Ga[b] = g0[a + b*M], b = 0..L-1
                 for (int b = 0; b < L; b++) Ga[b] = g0[a + b * M];
 
-                // Two FHTs to split into cos/sin
+                // One FHT_L; the spectrum of the cyclic-reversed signal is H[(L-q) % L]
                 var H = FHT_L.Forward(Ga);
-                Array.Copy(Ga, tmp, L); CyclicReverseInPlace(tmp);
-                var HR = FHT_L.Forward(tmp);
 
                 var C = new float[L];
                 var S = new float[L];
+
+                // Recover cos/sin sums:
+                //   C[q] = 0.5 * (H[q] + H_rev[q])  = Σ g * cos
+                //   S[q] = 0.5 * (H[q] - H_rev[q])  = Σ g * sin
+                // where H_rev[q] = H[(L - q) % L]
                 for (int q = 0; q < L; q++)
                 {
-                    C[q] = 0.5f * (H[q] + HR[q]); // Re-like
-                    S[q] = 0.5f * (H[q] - HR[q]); // Im-like (sign aligned to conj usage)
+                    int qrev = (q == 0) ? 0 : (L - q);  // mirrors 0→0, (L/2)→(L/2) when L is even
+                    float HR = H[qrev];
+                    C[q] = 0.5f * (H[q] + HR); // Re
+                    S[q] = 0.5f * (H[q] - HR); // Im-like (sign matched for conj)
                 }
-                Cg[a] = C; Sg[a] = S;
 
-                // Same for residue a' = a + M/2 (mod M)
+                Cg[a] = C;
+                Sg[a] = S;
+
+                // -----------------------------
+                // residue a' = a + M/2 → spectra Cg2[a], Sg2[a]
+                // -----------------------------
                 int ap = (a + (M >> 1)) % M;
+
                 for (int b = 0; b < L; b++) G2a[b] = g0[ap + b * M];
 
                 var H2 = FHT_L.Forward(G2a);
-                Array.Copy(G2a, tmp, L); CyclicReverseInPlace(tmp);
-                var H2R = FHT_L.Forward(tmp);
 
                 var C2 = new float[L];
                 var S2 = new float[L];
+
                 for (int q = 0; q < L; q++)
                 {
-                    C2[q] = 0.5f * (H2[q] + H2R[q]);
-                    S2[q] = 0.5f * (H2[q] - H2R[q]);
+                    int qrev = (q == 0) ? 0 : (L - q);
+                    float HR = H2[qrev];
+                    C2[q] = 0.5f * (H2[q] + HR);
+                    S2[q] = 0.5f * (H2[q] - HR);
                 }
-                Cg2[a] = C2; Sg2[a] = S2;
+
+                Cg2[a] = C2;
+                Sg2[a] = S2;
             }
         }
 
