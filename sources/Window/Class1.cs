@@ -119,7 +119,7 @@ namespace UMapx.Transform
             for (int i = 1; i <= half; i++)
             {
                 int a = i, b = n - i;
-                float t = v[a]; v[a] = v[b]; v[b] = t;
+                var t = v[a]; v[a] = v[b]; v[b] = t;
             }
         }
 
@@ -140,11 +140,13 @@ namespace UMapx.Transform
 
                 var C = new float[L];
                 var S = new float[L];
+
                 for (int q = 0; q < L; q++)
                 {
                     C[q] = 0.5f * (H[q] + HR[q]); // Re
                     S[q] = 0.5f * (H[q] - HR[q]); // Im-like (sign matched for conj)
                 }
+
                 Cg[a] = C; Sg[a] = S;
 
                 // residue a' = a + M/2
@@ -157,11 +159,13 @@ namespace UMapx.Transform
 
                 var C2 = new float[L];
                 var S2 = new float[L];
+
                 for (int q = 0; q < L; q++)
                 {
                     C2[q] = 0.5f * (H2[q] + H2R[q]);
                     S2[q] = 0.5f * (H2[q] - H2R[q]);
                 }
+
                 Cg2[a] = C2; Sg2[a] = S2;
             }
         }
@@ -281,6 +285,7 @@ namespace UMapx.Transform
                     float im2i = Cxi[q] * Sr - Sxi[q] * Cr;
                     Hy2[q] = re2i - im2i;
                 }
+
                 R2[a] = FHT_L.Backward(Hy);    // r2_a[l]
                 S2[a] = FHT_L.Backward(Hy2);   // s2_a[l]
             }
