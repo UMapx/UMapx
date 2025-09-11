@@ -32,11 +32,11 @@ namespace UMapx.Window
         ///      c2 = −sin(φ − πk/2)·R2 +  cos(φ − πk/2)·S2
         /// 4) A final scale = 1/L is applied to match your matrix convention.
         /// </remarks>
-        public static float[] FRWHT(float[] y, RealPolyphaseCache cache)
+        public static float[] FRWHT(float[] A, RealPolyphaseCache C)
         {
-            var N = cache.N;
-            var L = cache.L;
-            var M = cache.M;
+            var N = C.N;
+            var L = C.L;
+            var M = C.M;
 
             // quarter-period tables
             var c0 = new sbyte[M];
@@ -64,8 +64,8 @@ namespace UMapx.Window
             var xr = new float[N];
             var xi = new float[N];
 
-            Buffer.BlockCopy(y, 0, xr, 0, sizeof(float) * N);
-            Buffer.BlockCopy(y, sizeof(float) * N, xi, 0, sizeof(float) * N);
+            Buffer.BlockCopy(A, 0, xr, 0, sizeof(float) * N);
+            Buffer.BlockCopy(A, sizeof(float) * N, xi, 0, sizeof(float) * N);
 
             // 1) Correlation along L for each residue a (for both branches and both halves)
             var R = new float[M][];
@@ -111,7 +111,7 @@ namespace UMapx.Window
                 }
 
                 // Y = X * conj(G) for Ga
-                var Cg_a = cache.Cg[a]; var Sg_a = cache.Sg[a];
+                var Cg_a = C.Cg[a]; var Sg_a = C.Sg[a];
 
                 for (int q = 0; q < L; q++)
                 {
@@ -128,7 +128,7 @@ namespace UMapx.Window
                 S[a] = FHT.Backward(Hy2);  // s_a[l]
 
                 // Y = X * conj(G2) for Ga2 (residue a+M/2), with extra +1 shift along L when a ≥ M/2
-                var Cg2_a = cache.Cg2[a]; var Sg2_a = cache.Sg2[a];
+                var Cg2_a = C.Cg2[a]; var Sg2_a = C.Sg2[a];
                 bool shift1 = a >= (M >> 1);
 
                 for (int q = 0; q < L; q++)
@@ -249,13 +249,11 @@ namespace UMapx.Window
         ///    one inverse FHT_L.
         /// 3) Inverse FHT_L and deinterleave to n = a + b*M into xr and xi.
         /// </remarks>
-        public static float[] IFRWHT(float[] c, RealPolyphaseCache cache)
+        public static float[] IFRWHT(float[] B, RealPolyphaseCache C)
         {
-            if (c == null) throw new ArgumentNullException(nameof(c));
-
-            var N = cache.N;
-            var L = cache.L;
-            var M = cache.M;
+            var N = C.N;
+            var L = C.L;
+            var M = C.M;
 
             // quarter-period tables
             var c0 = new sbyte[M];
@@ -299,8 +297,8 @@ namespace UMapx.Window
                 for (int k = 0; k < M; k++)
                 {
                     int u = l * M + k;
-                    C1[k] = c[u] * invScaleM;
-                    C2[k] = c[u + N] * invScaleM;
+                    C1[k] = B[u] * invScaleM;
+                    C2[k] = B[u + N] * invScaleM;
                 }
 
                 // --- A1 = cos_sum(c0*C1) + sin_sum(s0*C1) ---
@@ -369,7 +367,7 @@ namespace UMapx.Window
                     Sx[q] = 0.5f * (Hx[q] - HR);
                 }
 
-                var Cg_a = cache.Cg[a]; var Sg_a = cache.Sg[a];
+                var Cg_a = C.Cg[a]; var Sg_a = C.Sg[a];
                 for (int q = 0; q < L; q++)
                 {
                     float re = Cx[q] * Cg_a[q] - Sx[q] * Sg_a[q];
@@ -390,7 +388,7 @@ namespace UMapx.Window
                     Sx[q] = 0.5f * (Hx[q] - HR);
                 }
 
-                var Cg2_a = cache.Cg2[a]; var Sg2_a = cache.Sg2[a];
+                var Cg2_a = C.Cg2[a]; var Sg2_a = C.Sg2[a];
                 bool shift1 = a >= (M >> 1);
                 for (int q = 0; q < L; q++)
                 {
