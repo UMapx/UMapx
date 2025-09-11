@@ -95,8 +95,6 @@ namespace UMapx.Transform
 
         #region Private helpers
 
-        #region Private helpers
-
         /// <summary>
         /// Hartley-specific “cyclic reverse” used to separate cos/sin sums from a single FHT.
         /// It swaps v[1] ↔ v[n-1], v[2] ↔ v[n-2], … while keeping v[0] intact.
@@ -172,9 +170,6 @@ namespace UMapx.Transform
                 Cg2[a] = C2; Sg2[a] = S2;
             }
         }
-
-        #endregion
-
 
         #endregion
 
