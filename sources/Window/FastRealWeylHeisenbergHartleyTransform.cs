@@ -272,7 +272,7 @@ namespace UMapx.Transform
 
                 // Y = X * conj(G2) for Ga2 (residue a+M/2), with extra +1 shift along L when a ≥ M/2
                 var Cg2_a = Cg2[a]; var Sg2_a = Sg2[a];
-                bool shift1 = (a >= (M >> 1));
+                bool shift1 = a >= (M >> 1);
 
                 for (int q = 0; q < L; q++)
                 {
@@ -509,7 +509,7 @@ namespace UMapx.Transform
                 }
 
                 var Cg2_a = Cg2[a]; var Sg2_a = Sg2[a];
-                bool shift1 = (a >= (M >> 1));
+                bool shift1 = a >= (M >> 1);
                 for (int q = 0; q < L; q++)
                 {
                     float Cr = Cg2_a[q], Sr = Sg2_a[q];
