@@ -32,7 +32,7 @@ namespace UMapx.Window
         ///      c2 = −sin(φ − πk/2)·R2 +  cos(φ − πk/2)·S2
         /// 4) A final scale = 1/L is applied to match your matrix convention.
         /// </remarks>
-        public float[] FRWHT(float[] y, RealPolyphaseCache cache)
+        public static float[] FRWHT(float[] y, RealPolyphaseCache cache)
         {
             var N = cache.N;
             var L = cache.L;
@@ -257,7 +257,7 @@ namespace UMapx.Window
         ///    one inverse FHT_L.
         /// 3) Inverse FHT_L and deinterleave to n = a + b*M into xr and xi.
         /// </remarks>
-        public float[] IFRWHT(float[] c, RealPolyphaseCache cache)
+        public static float[] IFRWHT(float[] c, RealPolyphaseCache cache)
         {
             if (c == null) throw new ArgumentNullException(nameof(c));
 
