@@ -27763,6 +27763,21 @@
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
+        <member name="T:UMapx.Transform.SpectrumType">
+            <summary>
+            Spectrum type.
+            </summary>
+        </member>
+        <member name="F:UMapx.Transform.SpectrumType.Fourier">
+            <summary>
+            Fourier.
+            </summary>
+        </member>
+        <member name="F:UMapx.Transform.SpectrumType.Hartley">
+            <summary>
+            Hartley.
+            </summary>
+        </member>
         <member name="T:UMapx.Transform.ThresholdFilter">
             <summary>
             Defines the threshold filter.
@@ -28070,83 +28085,6 @@
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
-        </member>
-        <member name="T:UMapx.Transform.FastRealWeylHeisenbergHartleyTransform">
-            <summary>
-            Fast real Weyl–Heisenberg (Gabor) transform via Hartley (FHT), matching the 2N×2N matrix (analysis exact).
-            </summary>
-            <remarks>
-            Analysis factorization:
-              • Polyphase: n = a + b*M, N = M*L
-              • Correlation along L via Hartley-DFT (two FHT_L calls to recover C,S)
-              • For G2 (M/2 branch): for residues a ≥ M/2 apply extra +1 cyclic shift along L (implemented as spectral rotation)
-              • DFT along M via Hartley (two FHT calls → C,S) and quarter-period mixing by k mod 4
-            Uses only your FastHartleyTransform; no complex arithmetic.
-            Backward provided as exact O(N^2) matrix-form (Special.Cas).
-            </remarks>
-        </member>
-        <member name="M:UMapx.Transform.FastRealWeylHeisenbergHartleyTransform.#ctor(System.Single[],System.Int32)">
-            <summary>
-            Fast real Weyl–Heisenberg (Gabor) transform via Hartley (FHT), matching the 2N×2N matrix (analysis exact).
-            </summary>
-            <param name="g0">Window function (orthogonalized)</param>
-            <param name="M">Frequency shifts</param>
-            <exception cref="T:System.ArgumentNullException">Exception</exception>
-            <exception cref="T:System.ArgumentException">Exception</exception>
-        </member>
-        <member name="M:UMapx.Transform.FastRealWeylHeisenbergHartleyTransform.PrecomputeWindowSpectra">
-             <summary>
-             Precompute “complex-like” Hartley spectra over L for all polyphase columns of the window:
-               G_a(q)  = Cg[a][q]  + i * Sg[a][q]
-               G2_a(q) = Cg2[a][q] + i * Sg2[a][q], where a' = a + M/2 (mod M).
-            
-             We obtain Re/Im-like parts via two FHT_L calls (vector and its cyclic-reverse):
-               Re = 0.5 * (H + H_rev),  Im = 0.5 * (H - H_rev)
-            
-             Notes:
-             • The sign convention for S(·) is chosen so that multiplying by conj(G) in the
-               Hartley domain maps to the (re − im) combination later in Forward.
-             • FHT normalization follows your FastHartleyTransform settings (normalized or not).
-             </summary>
-        </member>
-        <member name="M:UMapx.Transform.FastRealWeylHeisenbergHartleyTransform.Forward(System.Single[])">
-            <summary>
-            Forward (analysis): y[2N] -> c[2N] equals G^T * y (exactly matches your 2N×2N matrix).
-            If y.Length == N, the bottom half (xi) is assumed to be zeros.
-            </summary>
-            <remarks>
-            Factorization:
-            1) Along L (time steps): compute correlations r_a[l], s_a[l] with window polyphases,
-               entirely in the Hartley domain using two FHT_L calls per vector to extract cos/sin.
-               For branch G2, for residues a ≥ M/2, apply an extra +1 shift along L, implemented
-               as spectral rotation by e^{-i 2π q / L}.
-            2) Along M (frequency shifts): FHT + reverse trick to get cos/sin for each of r,s,
-               then quarter-period mixing using k mod 4 via c0[k]=cos(πk/2), s0[k]=sin(πk/2) ∈ {0,±1}.
-            3) Branch formulas:
-                 c1 =  cos(φ − πk/2)·R  +  sin(φ − πk/2)·S
-                 c2 = −sin(φ − πk/2)·R2 +  cos(φ − πk/2)·S2
-            4) A final scale = 1/L is applied to match your matrix convention.
-            </remarks>
-        </member>
-        <member name="M:UMapx.Transform.FastRealWeylHeisenbergHartleyTransform.Backward(System.Single[])">
-            <summary>
-            Backward (synthesis): c[2N] -> y[2N], fast Hartley-only inverse
-            that mirrors the Forward factorization (matches your matrix form).
-            </summary>
-            <remarks>
-            Inverse steps:
-            1) For each l, recover four k-sums via 2×FHT with quarter-period tables:
-               A1 = Σ c1·cos(φ−πk/2),  A2 = Σ c1·sin(φ−πk/2),
-               B1 = Σ c2·cos(φ−πk/2),  B2 = Σ c2·sin(φ−πk/2).
-               We do **one** FHT per weighted vector and obtain the “reverse” via spectral
-               mirroring (H_rev[k] = H[(M-k) mod M]).
-            2) For each residue a, do two L-convolutions in the Hartley domain:
-               xr: y1 = g_a * A1 ; y2 = g_{a+M/2}(+1 shift if a≥M/2) * (−B2)
-               xi: z1 = g_a * A2 ; z2 = g_{a+M/2}(+1 shift if a≥M/2) * (+B1)
-               Each convolution uses **one** forward FHT_L (cos/sin via mirroring) and
-               one inverse FHT_L.
-            3) Inverse FHT_L and deinterleave to n = a + b*M into xr and xi.
-            </remarks>
         </member>
         <member name="T:UMapx.Video.ByteArrayUtils">
             <summary>
@@ -32816,6 +32754,18 @@
             The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete real orthogonal
             Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
             </remarks>
+            <summary>
+            Fast real Weyl–Heisenberg (Gabor) transform via Hartley (FHT), matching the 2N×2N matrix (analysis exact).
+            </summary>
+            <remarks>
+            Analysis factorization:
+              • Polyphase: n = a + b*M, N = M*L
+              • Correlation along L via Hartley-DFT (two FHT_L calls to recover C,S)
+              • For G2 (M/2 branch): for residues a ≥ M/2 apply extra +1 cyclic shift along L (implemented as spectral rotation)
+              • DFT along M via Hartley (two FHT calls → C,S) and quarter-period mixing by k mod 4
+            Uses only your FastHartleyTransform; no complex arithmetic.
+            Backward provided as exact O(N^2) matrix-form (Special.Cas).
+            </remarks>
         </member>
         <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
             <summary>
@@ -32881,6 +32831,159 @@
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.FRWHT(System.Single[],UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache)">
+            <summary>
+            Forward (analysis): y[2N] -> c[2N] equals G^T * y (exactly matches your 2N×2N matrix).
+            If y.Length == N, the bottom half (xi) is assumed to be zeros.
+            </summary>
+            <remarks>
+            Factorization:
+            1) Along L (time steps): compute correlations r_a[l], s_a[l] with window polyphases,
+               entirely in the Hartley domain using two FHT_L calls per vector to extract cos/sin.
+               For branch G2, for residues a ≥ M/2, apply an extra +1 shift along L, implemented
+               as spectral rotation by e^{-i 2π q / L}.
+            2) Along M (frequency shifts): FHT + reverse trick to get cos/sin for each of r,s,
+               then quarter-period mixing using k mod 4 via c0[k]=cos(πk/2), s0[k]=sin(πk/2) ∈ {0,±1}.
+            3) Branch formulas:
+                 c1 =  cos(φ − πk/2)·R  +  sin(φ − πk/2)·S
+                 c2 = −sin(φ − πk/2)·R2 +  cos(φ − πk/2)·S2
+            4) A final scale = 1/L is applied to match your matrix convention.
+            </remarks>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.IFRWHT(System.Single[],UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache)">
+            <summary>
+            Backward (synthesis): c[2N] -> y[2N], fast Hartley-only inverse
+            that mirrors the Forward factorization (matches your matrix form).
+            </summary>
+            <remarks>
+            Inverse steps:
+            1) For each l, recover four k-sums via 2×FHT with quarter-period tables:
+               A1 = Σ c1·cos(φ−πk/2),  A2 = Σ c1·sin(φ−πk/2),
+               B1 = Σ c2·cos(φ−πk/2),  B2 = Σ c2·sin(φ−πk/2).
+               We do **one** FHT per weighted vector and obtain the “reverse” via spectral
+               mirroring (H_rev[k] = H[(M-k) mod M]).
+            2) For each residue a, do two L-convolutions in the Hartley domain:
+               xr: y1 = g_a * A1 ; y2 = g_{a+M/2}(+1 shift if a≥M/2) * (−B2)
+               xi: z1 = g_a * A2 ; z2 = g_{a+M/2}(+1 shift if a≥M/2) * (+B1)
+               Each convolution uses **one** forward FHT_L (cos/sin via mirroring) and
+               one inverse FHT_L.
+            3) Inverse FHT_L and deinterleave to n = a + b*M into xr and xi.
+            </remarks>
+        </member>
+        <member name="T:UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache">
+            <summary>
+            Polyphase/Hartley cache for the fast real Weyl–Heisenberg (Gabor) transform.
+            The cache stores, for every residue a, the Hartley-domain
+            spectra of the window's polyphase components along the L-dimension.
+            
+            Notation:
+              N = total length, M = number of frequency shifts (must be even), L = N / M
+              n = a + b·M  (polyphase indexing: residue a and time index b)
+            
+            What is cached (per residue a, per frequency bin q in 0..L-1):
+              G_a(q)  = Cg[a][q]  + i · Sg[a][q]
+              G2_a(q) = Cg2[a][q] + i · Sg2[a][q], where a' = (a + M/2) mod M
+            
+            The pair (C,S) is a "complex-like" decomposition in the Hartley (cas) domain:
+            we recover cosine/sine sums via one FHT of the polyphase column and its
+            cyclic-reversal using the identity H_rev[q] = H[(L - q) mod L]:
+              C[q] = 0.5 · (H[q] + H_rev[q])  == Σ x[b] · cos(2π·q·b/L)
+              S[q] = 0.5 · (H[q] - H_rev[q])  == Σ x[b] · sin(2π·q·b/L)
+            
+            These cached spectra are used in both Forward and Backward to avoid repeated
+            window transforms and to keep numerics stable/deterministic.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache.N">
+            <summary>
+            Total signal length N. Must satisfy N = M x L.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache.M">
+            <summary>
+            Number of frequency shifts (must be even).
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache.L">
+            <summary>
+            Number of time shifts (L = N / M).
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache.Cg">
+            <summary>
+            Real (cosine) part of the Hartley "spectrum" G_a(q) for residue a (main branch).
+            Size: M arrays of length L.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache.Sg">
+            <summary>
+            Imag-like (sine) part of the Hartley "spectrum" G_a(q) for residue a (main branch).
+            The sign convention is chosen so that multiplication by conj(G) in the
+            Hartley domain maps to the (re − im) combination used in Forward().
+            Size: M arrays of length L.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache.Cg2">
+            <summary>
+            Real (cosine) part of the Hartley "spectrum" G2_a(q) for residue a (half-shifted branch).
+            Here G2 corresponds to residue a' = a + M/2 (mod M).
+            Size: M arrays of length L.
+            </summary>
+        </member>
+        <member name="F:UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache.Sg2">
+            <summary>
+            Imag-like (sine) part of the Hartley "spectrum" G2_a(q) for residue a (half-shifted branch).
+            Size: M arrays of length L.
+            </summary>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache.#ctor(System.Int32,System.Int32,System.Int32,System.Single[][],System.Single[][],System.Single[][],System.Single[][])">
+            <summary>
+            Construct a cache instance from precomputed arrays. Typically produced by <see cref="M:UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache.Build(System.Int32,System.Int32,UMapx.Window.IWindow)"/>.
+            </summary>
+            <param name="N">Total signal length (N = M·L).</param>
+            <param name="M">Number of frequency shifts (even).</param>
+            <param name="L">Number of time shifts (L = N / M).</param>
+            <param name="Cg">Real parts of G_a(q).</param>
+            <param name="Sg">Imag-like parts of G_a(q).</param>
+            <param name="Cg2">Real parts of G2_a(q) for a' = a + M/2.</param>
+            <param name="Sg2">Imag-like parts of G2_a(q) for a' = a + M/2.</param>
+        </member>
+        <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache.Build(System.Int32,System.Int32,UMapx.Window.IWindow)">
+            <summary>
+            Build a <see cref="T:UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache"/> from a window function and grid (N, M).
+            
+            Steps:
+             1) Generate the length-N analysis window g0 using the same factory
+                as the complex implementation.
+             2) Orthonormalize g0 via Zak-domain orthogonalization to obtain WH-orthonormal g.
+                (This ensures the real/Hartley path uses an identically normalized window.)
+             3) For each residue a in 0..M-1:
+                  • Form the polyphase column Ga[b] = g[a + b·M], b = 0..L-1
+                  • Compute its length-L FHT: H = FHT(Ga)
+                  • Recover cosine/sine sums via mirror:
+                      C[q] = 0.5·(H[q] + H[(L − q) mod L])
+                      S[q] = 0.5·(H[q] − H[(L − q) mod L])
+                  • Store as Cg[a], Sg[a]
+                Then repeat for the half-shift residue a' = a + M/2 (mod M) to get Cg2[a], Sg2[a].
+            
+            Notes:
+             • M must be even so that a' is well-defined.
+             • We deliberately use the orthonormalized window g for both G and G2 branches.
+               Mixing g and g0 here would break orthogonality and lead to amplitude mismatches.
+             • This method uses the outer transform's single FHT instance (shared),
+               which is safe because nested types in C# can access private members of the enclosing type.
+            </summary>
+            <param name="N">Total signal length (must be divisible by Mloc).</param>
+            <param name="Mloc">Number of frequency shifts M (must be even).</param>
+            <param name="window">Window function (e.g., Gaussian, Hann, etc.).</param>
+            <returns>Initialized polyphase/Hartley cache.</returns>
+            <exception cref="T:System.ArgumentException">Thrown if N is not divisible by Mloc or Mloc is not even.</exception>
+        </member>
+        <member name="F:UMapx.Window.FastRealWeylHeisenbergTransform.FHT">
+            <summary>
+            UMapx fast Hartley transform.
+            </summary>
+        </member>
         <member name="T:UMapx.Window.FastShortTimeFourierTransform">
             <summary>
             Defines fast short-time Fourier transform.
@@ -32937,6 +33040,42 @@
             The class represents a computationally efficient implementation of one-dimensional and two-dimensional discrete orthogonal
             Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
             </remarks>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
+            <summary>
+            Initializes fast Weyl-Heisenberg transform.
+            </summary>
+            <param name="window">Windows function</param>
+            <param name="m">Number of frequency shifts [4, N/2]</param>
+            <param name="direction">Processing direction</param>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Forward Weyl-Heisenberg transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward Weyl-Heisenberg transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Window.FastWeylHeisenbergTransform.FWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">
              <summary>
@@ -33023,7 +33162,7 @@
         </member>
         <member name="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.N">
             <summary>
-            Total signal length.
+            Total signal length. Must satisfy N = M x L.
             </summary>
         </member>
         <member name="F:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache.M">
@@ -33101,42 +33240,6 @@
             <summary>
             UMapx fast Fourier transform.
             </summary>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
-            <summary>
-            Initializes fast Weyl-Heisenberg transform.
-            </summary>
-            <param name="window">Windows function</param>
-            <param name="m">Number of frequency shifts [4, N/2]</param>
-            <param name="direction">Processing direction</param>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Window.FastZakTransform">
             <summary>
@@ -33580,115 +33683,6 @@
             </summary>
             <returns>Array</returns>
         </member>
-        <member name="T:UMapx.Window.RealWeylHeisenbergHartleyTransform">
-            <summary>
-            Defines a group of real orthogonal bases and discrete Weyl-Heisenberg transforms.
-            </summary>
-            <remarks>
-            More information can be found on the website:
-            https://ieeexplore.ieee.org/document/8711969/
-            </remarks>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.#ctor(UMapx.Window.IWindow,System.Int32,UMapx.Core.Direction)">
-            <summary>
-            Initializes a group of real orthogonal bases and Weyl-Heisenberg transformations.
-            </summary>
-            <param name="window">Windows function</param>
-            <param name="m">Number of frequency shifts [4, N/4]</param>
-            <param name="direction">Processing direction</param>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Matrix(System.Single[],System.Int32)">
-            <summary>
-            Returns the real Weyl-Heisenberg basis matrix.
-            </summary>
-            <remarks>
-            Matrix dimension [2N, 2N], where N = M * L.
-            </remarks>
-            <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts [4, N/4]</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Matrix(UMapx.Window.IWindow,System.Int32,System.Int32,System.Boolean)">
-            <summary>
-            Returns the real Weyl-Heisenberg basis matrix.
-            </summary>
-            <remarks>
-            Matrix dimension [2N, 2N], where N = M * L.
-            </remarks>
-            <param name="window">Windows function</param>
-            <param name="N">Number of samples</param>
-            <param name="M">Number of frequency shifts [4, N/4]</param>
-            <param name="orthogonalize">Orthogonalized matrix or not</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Matrix(System.Single[],System.Int32,System.Boolean)">
-            <summary>
-            Returns the real Weyl-Heisenberg basis matrix.
-            </summary>
-            <remarks>
-            Matrix dimension [2N, 2N], where N = M * L.
-            </remarks>
-            <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts [4, N/4]</param>
-            <param name="orthogonalize">Orthogonalized matrix or not</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Forward(System.Single[])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Backward(System.Single[])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Forward(System.Single[0:,0:])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Backward(System.Single[0:,0:])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Forward(UMapx.Core.Complex32[])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Backward(UMapx.Core.Complex32[])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Array</param>
-            <returns>Array</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Forward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Forward Weyl-Heisenberg transform.
-            </summary>
-            <param name="A">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergHartleyTransform.Backward(UMapx.Core.Complex32[0:,0:])">
-            <summary>
-            Backward Weyl-Heisenberg transform.
-            </summary>
-            <param name="B">Matrix</param>
-            <returns>Matrix</returns>
-        </member>
         <member name="T:UMapx.Window.RealWeylHeisenbergTransform">
             <summary>
             Defines a group of real orthogonal bases and discrete Weyl-Heisenberg transforms.
@@ -33706,7 +33700,7 @@
             <param name="m">Number of frequency shifts [4, N/4]</param>
             <param name="direction">Processing direction</param>
         </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32)">
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32,UMapx.Transform.SpectrumType)">
             <summary>
             Returns the real Weyl-Heisenberg basis matrix.
             </summary>
@@ -33715,9 +33709,10 @@
             </remarks>
             <param name="g0">Function</param>
             <param name="M">Number of frequency shifts [4, N/4]</param>
+            <param name="spectrumType">Spectrum type</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(UMapx.Window.IWindow,System.Int32,System.Int32,System.Boolean)">
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(UMapx.Window.IWindow,System.Int32,System.Int32,System.Boolean,UMapx.Transform.SpectrumType)">
             <summary>
             Returns the real Weyl-Heisenberg basis matrix.
             </summary>
@@ -33728,9 +33723,10 @@
             <param name="N">Number of samples</param>
             <param name="M">Number of frequency shifts [4, N/4]</param>
             <param name="orthogonalize">Orthogonalized matrix or not</param>
+            <param name="spectrumType">Spectrum type</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32,System.Boolean)">
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32,System.Boolean,UMapx.Transform.SpectrumType)">
             <summary>
             Returns the real Weyl-Heisenberg basis matrix.
             </summary>
@@ -33740,6 +33736,7 @@
             <param name="g0">Function</param>
             <param name="M">Number of frequency shifts [4, N/4]</param>
             <param name="orthogonalize">Orthogonalized matrix or not</param>
+            <param name="spectrumType">Spectrum type</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Forward(System.Single[])">

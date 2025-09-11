@@ -13,8 +13,11 @@ namespace UMapx.Window
     /// Weyl-Heisenberg transforms. This implementation was designed and developed by Valery Asiryan, Yerevan, Armenia (2025).
     /// </remarks>
     [Serializable]
-    public class FastRealWeylHeisenbergTransform : RealWeylHeisenbergTransform, IWindowTransform, ITransform
+    public partial class FastRealWeylHeisenbergTransform : RealWeylHeisenbergTransform, IWindowTransform, ITransform
     {
+        // Go to "FastWeylHeisenbergTransform.Fourier.cs" and "FastRealWeylHeisenbergTransform.Hartley.cs" files
+        // to find out more about the fast O(N log N) implementations.
+
         #region Initialize
         /// <summary>
         /// Initializes fast real Weyl-Heisenberg transform.
