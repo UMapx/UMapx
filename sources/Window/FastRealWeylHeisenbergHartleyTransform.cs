@@ -198,7 +198,7 @@ namespace UMapx.Transform
             if (y.Length != N && y.Length != 2 * N)
                 throw new ArgumentException($"Input length must be N={N} or 2N={2 * N}");
 
-            // Split input into top/bottom halves (xr, xi), each of length N
+            // split input into top/bottom halves (xr, xi)
             var xr = new float[N];
             var xi = new float[N];
 
@@ -210,79 +210,79 @@ namespace UMapx.Transform
             else
             {
                 Buffer.BlockCopy(y, 0, xr, 0, sizeof(float) * N);
-                // xi remains zero
+                // xi stays zero
             }
 
-            // 1) Correlation along L for each residue a (both branches, both halves)
+            // 1) Correlation along L for each residue a (for both branches and both halves)
             var R = new float[M][];
             var S = new float[M][];
             var R2 = new float[M][];
             var S2 = new float[M][];
 
-            var Xa = new float[L]; // polyphase slice of xr for residue a
-            var Xrv = new float[L]; // its cyclic-reverse (to extract sin-sum)
-            var Hy = new float[L]; // Hartley spectrum of correlation for xr
-            var Hy2 = new float[L]; // Hartley spectrum of correlation for xi
+            var Xa = new float[L];
+            var Hy = new float[L];
+            var Hy2 = new float[L];
 
             for (int a = 0; a < M; a++)
             {
-                // --- xr with G_a ---
+                // --- xr with Ga ---
                 for (int b = 0; b < L; b++) Xa[b] = xr[a + b * M];
 
-                // Two FHTs to get cos/sin sums along L
+                // Single FHT_L; cos/sin via spectral mirroring: HR[q] = H[(L-q)%L]
                 var Hx = FHT_L.Forward(Xa);
-                Array.Copy(Xa, Xrv, L); CyclicReverseInPlace(Xrv);
-                var HxR = FHT_L.Forward(Xrv);
 
                 var Cx = new float[L];
                 var Sx = new float[L];
                 for (int q = 0; q < L; q++)
                 {
-                    Cx[q] = 0.5f * (Hx[q] + HxR[q]); // Σ xr cos
-                    Sx[q] = 0.5f * (Hx[q] - HxR[q]); // Σ xr sin
+                    int qrev = (q == 0) ? 0 : (L - q);
+                    float HR = Hx[qrev];
+                    Cx[q] = 0.5f * (Hx[q] + HR); // Σ xr cos
+                    Sx[q] = 0.5f * (Hx[q] - HR); // Σ xr sin
                 }
 
-                // --- xi with G_a ---
+                // --- xi with Ga ---
                 for (int b = 0; b < L; b++) Xa[b] = xi[a + b * M];
 
                 var Hi = FHT_L.Forward(Xa);
-                Array.Copy(Xa, Xrv, L); CyclicReverseInPlace(Xrv);
-                var HiR = FHT_L.Forward(Xrv);
 
                 var Cxi = new float[L];
                 var Sxi = new float[L];
                 for (int q = 0; q < L; q++)
                 {
-                    Cxi[q] = 0.5f * (Hi[q] + HiR[q]); // Σ xi cos
-                    Sxi[q] = 0.5f * (Hi[q] - HiR[q]); // Σ xi sin
+                    int qrev = (q == 0) ? 0 : (L - q);
+                    float HR = Hi[qrev];
+                    Cxi[q] = 0.5f * (Hi[q] + HR); // Σ xi cos
+                    Sxi[q] = 0.5f * (Hi[q] - HR); // Σ xi sin
                 }
 
-                // Multiply by conj(G_a) in Hartley domain:
-                // (Cx + iSx) * (Cg − iSg) → Hy = (re − im) combination under Hartley cas
+                // Y = X * conj(G) for Ga
                 var Cg_a = Cg[a]; var Sg_a = Sg[a];
+
                 for (int q = 0; q < L; q++)
                 {
-                    // xr
                     float re = Cx[q] * Cg_a[q] + Sx[q] * Sg_a[q];
                     float im = Cx[q] * Sg_a[q] - Sx[q] * Cg_a[q];
-                    Hy[q] = re - im;
+                    Hy[q] = re - im;   // xr with Ga
 
-                    // xi
                     float re_i = Cxi[q] * Cg_a[q] + Sxi[q] * Sg_a[q];
                     float im_i = Cxi[q] * Sg_a[q] - Sxi[q] * Cg_a[q];
-                    Hy2[q] = re_i - im_i;
+                    Hy2[q] = re_i - im_i; // xi with Ga
                 }
+
                 R[a] = FHT_L.Backward(Hy);   // r_a[l]
                 S[a] = FHT_L.Backward(Hy2);  // s_a[l]
 
-                // --- xr/xi with G2 (residue a + M/2) and +1 shift along L for a ≥ M/2 ---
+                // Y = X * conj(G2) for Ga2 (residue a+M/2), with extra +1 shift along L when a ≥ M/2
                 var Cg2_a = Cg2[a]; var Sg2_a = Sg2[a];
                 bool shift1 = (a >= (M >> 1));
 
                 for (int q = 0; q < L; q++)
                 {
-                    // rotate conj(G2) by e^{-i 2π q / L} if shift1
-                    float Cr = Cg2_a[q], Sr = Sg2_a[q];
+                    // rotate conj(G2) by e^{-i·2π q/L} if shift1
+                    float Cr = Cg2_a[q];
+                    float Sr = Sg2_a[q];
+
                     if (shift1)
                     {
                         float cx = cL[q], s = sL[q];
@@ -291,71 +291,84 @@ namespace UMapx.Transform
                         Cr = Cr2; Sr = Sr2;
                     }
 
-                    // xr * conj(G2)
                     float re2 = Cx[q] * Cr + Sx[q] * Sr;
                     float im2 = Cx[q] * Sr - Sx[q] * Cr;
                     Hy[q] = re2 - im2;
 
-                    // xi * conj(G2)
                     float re2i = Cxi[q] * Cr + Sxi[q] * Sr;
                     float im2i = Cxi[q] * Sr - Sxi[q] * Cr;
                     Hy2[q] = re2i - im2i;
                 }
+
                 R2[a] = FHT_L.Backward(Hy);   // r2_a[l]
                 S2[a] = FHT_L.Backward(Hy2);  // s2_a[l]
             }
 
-            // 2) For each l: FHT along a (length M) + quarter-period mixing in k
+            // 2) For each l: FHT along a (length M) + quarter-period mixing
             var c = new float[2 * N];
 
             var vec = new float[M];
-            var rev = new float[M];
 
-            var CR = new float[M]; var SR = new float[M]; // cos/sin parts of R
-            var CS = new float[M]; var SS = new float[M]; // cos/sin parts of S
+            var CR = new float[M]; var SR = new float[M];
+            var CS = new float[M]; var SS = new float[M];
 
-            // Mixing scale along M (kept to match your matrix tests)
+            // scale for M-stage mixing:
             float scale = 1.0f / L;
 
             for (int l = 0; l < L; l++)
             {
-                // cos/sin for R(:, l)
+                // --- branch 1 (G1): from R,S ---
                 for (int a = 0; a < M; a++) vec[a] = R[a][l];
-                Array.Copy(vec, rev, M); CyclicReverseInPlace(rev);
                 var H1 = FHT_M.Forward(vec);
-                var H1R = FHT_M.Forward(rev);
-                for (int k = 0; k < M; k++) { CR[k] = 0.5f * (H1[k] + H1R[k]); SR[k] = 0.5f * (H1[k] - H1R[k]); }
-
-                // cos/sin for S(:, l)
-                for (int a = 0; a < M; a++) vec[a] = S[a][l];
-                Array.Copy(vec, rev, M); CyclicReverseInPlace(rev);
-                H1 = FHT_M.Forward(vec);
-                H1R = FHT_M.Forward(rev);
-                for (int k = 0; k < M; k++) { CS[k] = 0.5f * (H1[k] + H1R[k]); SS[k] = 0.5f * (H1[k] - H1R[k]); }
-
-                // Branch 1: c1 = cos(φ−πk/2)·R + sin(φ−πk/2)·S
                 for (int k = 0; k < M; k++)
                 {
+                    int krev = (k == 0) ? 0 : (M - k);
+                    float HR = H1[krev];
+                    CR[k] = 0.5f * (H1[k] + HR);
+                    SR[k] = 0.5f * (H1[k] - HR);
+                }
+
+                for (int a = 0; a < M; a++) vec[a] = S[a][l];
+                H1 = FHT_M.Forward(vec);
+                for (int k = 0; k < M; k++)
+                {
+                    int krev = (k == 0) ? 0 : (M - k);
+                    float HR = H1[krev];
+                    CS[k] = 0.5f * (H1[k] + HR);
+                    SS[k] = 0.5f * (H1[k] - HR);
+                }
+
+                for (int k = 0; k < M; k++)
+                {
+                    // c1 = cos(φ−πk/2)·R + sin(φ−πk/2)·S
                     float re1 = c0[k] * (CR[k] + SS[k]) + s0[k] * (SR[k] - CS[k]);
                     c[l * M + k] = re1 * scale;
                 }
 
-                // cos/sin for R2(:, l) and S2(:, l)
+                // --- branch 2 (G2): from R2,S2) ---
                 for (int a = 0; a < M; a++) vec[a] = R2[a][l];
-                Array.Copy(vec, rev, M); CyclicReverseInPlace(rev);
                 H1 = FHT_M.Forward(vec);
-                H1R = FHT_M.Forward(rev);
-                for (int k = 0; k < M; k++) { CR[k] = 0.5f * (H1[k] + H1R[k]); SR[k] = 0.5f * (H1[k] - H1R[k]); }
-
-                for (int a = 0; a < M; a++) vec[a] = S2[a][l];
-                Array.Copy(vec, rev, M); CyclicReverseInPlace(rev);
-                H1 = FHT_M.Forward(vec);
-                H1R = FHT_M.Forward(rev);
-                for (int k = 0; k < M; k++) { CS[k] = 0.5f * (H1[k] + H1R[k]); SS[k] = 0.5f * (H1[k] - H1R[k]); }
-
-                // Branch 2: c2 = −sin(φ−πk/2)·R2 + cos(φ−πk/2)·S2
                 for (int k = 0; k < M; k++)
                 {
+                    int krev = (k == 0) ? 0 : (M - k);
+                    float HR = H1[krev];
+                    CR[k] = 0.5f * (H1[k] + HR);
+                    SR[k] = 0.5f * (H1[k] - HR);
+                }
+
+                for (int a = 0; a < M; a++) vec[a] = S2[a][l];
+                H1 = FHT_M.Forward(vec);
+                for (int k = 0; k < M; k++)
+                {
+                    int krev = (k == 0) ? 0 : (M - k);
+                    float HR = H1[krev];
+                    CS[k] = 0.5f * (H1[k] + HR);
+                    SS[k] = 0.5f * (H1[k] - HR);
+                }
+
+                for (int k = 0; k < M; k++)
+                {
+                    // c2 = −sin(φ−πk/2)·R2 + cos(φ−πk/2)·S2
                     float re2 = c0[k] * (-SR[k] + CS[k]) + s0[k] * (CR[k] + SS[k]);
                     c[l * M + k + N] = re2 * scale;
                 }
@@ -373,14 +386,13 @@ namespace UMapx.Transform
         /// 1) For each l, recover four k-sums via 2×FHT_M with quarter-period tables:
         ///    A1 = Σ c1·cos(φ−πk/2),  A2 = Σ c1·sin(φ−πk/2),
         ///    B1 = Σ c2·cos(φ−πk/2),  B2 = Σ c2·sin(φ−πk/2).
-        ///    This uses two FHTs (vector and cyclic-reverse) on weighted sequences (c0·c, s0·c).
+        ///    We do **one** FHT per weighted vector and obtain the “reverse” via spectral
+        ///    mirroring (H_rev[k] = H[(M-k) mod M]).
         /// 2) For each residue a, do two L-convolutions in the Hartley domain:
         ///    xr: y1 = g_a * A1 ; y2 = g_{a+M/2}(+1 shift if a≥M/2) * (−B2)
         ///    xi: z1 = g_a * A2 ; z2 = g_{a+M/2}(+1 shift if a≥M/2) * (+B1)
-        ///    Convolution in Hartley frequency uses:
-        ///      H = (Cx*Cg − Sx*Sg) + (Cx*Sg + Sx*Cg)  (i.e., Re + Im in cas form)
-        ///    The +1 shift along L for the G2 branch is implemented as multiplying
-        ///    the window spectrum by e^{-i 2π q / L} (note the minus sign).
+        ///    Each convolution uses **one** forward FHT_L (cos/sin via mirroring) and
+        ///    one inverse FHT_L.
         /// 3) Inverse FHT_L and deinterleave to n = a + b*M into xr and xi.
         /// </remarks>
         public override float[] Backward(float[] c)
@@ -400,8 +412,7 @@ namespace UMapx.Transform
             for (int a = 0; a < M; a++) { A1[a] = new float[L]; A2[a] = new float[L]; B1[a] = new float[L]; B2[a] = new float[L]; }
 
             var C1 = new float[M]; var C2 = new float[M]; // c1(l,·), c2(l,·) with scale undone
-            var P = new float[M]; var PR = new float[M]; // c0-weighted
-            var Q = new float[M]; var QR = new float[M]; // s0-weighted
+            var P = new float[M]; var Q = new float[M]; // c0-weighted and s0-weighted
 
             for (int l = 0; l < L; l++)
             {
@@ -415,58 +426,53 @@ namespace UMapx.Transform
 
                 // --- A1 = cos_sum(c0*C1) + sin_sum(s0*C1) ---
                 for (int k = 0; k < M; k++) { P[k] = c0[k] * C1[k]; Q[k] = s0[k] * C1[k]; }
-                Array.Copy(P, PR, M); CyclicReverseInPlace(PR);
+
                 var HP = FHT_M.Forward(P);
-                var HPR = FHT_M.Forward(PR);
-                Array.Copy(Q, QR, M); CyclicReverseInPlace(QR);
                 var HQ = FHT_M.Forward(Q);
-                var HQR = FHT_M.Forward(QR);
+
                 for (int a = 0; a < M; a++)
                 {
-                    float cosP = 0.5f * (HP[a] + HPR[a]);
-                    float sinQ = 0.5f * (HQ[a] - HQR[a]);
+                    int arev = (a == 0) ? 0 : (M - a);
+                    float cosP = 0.5f * (HP[a] + HP[arev]); // cos_sum(P)
+                    float sinQ = 0.5f * (HQ[a] - HQ[arev]); // sin_sum(Q)
                     A1[a][l] = cosP + sinQ;
                 }
 
                 // --- A2 = sin_sum(c0*C1) − cos_sum(s0*C1) ---
-                float[] HS = HQ, HSR = HQR; // for s0*C1
-                float[] HC = HP, HCR = HPR; // for c0*C1
                 for (int a = 0; a < M; a++)
                 {
-                    float cosS = 0.5f * (HS[a] + HSR[a]);
-                    float sinC = 0.5f * (HC[a] - HCR[a]);
+                    int arev = (a == 0) ? 0 : (M - a);
+                    float cosS = 0.5f * (HQ[a] + HQ[arev]); // cos_sum(s0*C1)
+                    float sinC = 0.5f * (HP[a] - HP[arev]); // sin_sum(c0*C1)
                     A2[a][l] = sinC - cosS;
                 }
 
                 // --- B1 = cos_sum(c0*C2) + sin_sum(s0*C2) ---
                 for (int k = 0; k < M; k++) { P[k] = c0[k] * C2[k]; Q[k] = s0[k] * C2[k]; }
-                Array.Copy(P, PR, M); CyclicReverseInPlace(PR);
+
                 HP = FHT_M.Forward(P);
-                HPR = FHT_M.Forward(PR);
-                Array.Copy(Q, QR, M); CyclicReverseInPlace(QR);
                 HQ = FHT_M.Forward(Q);
-                HQR = FHT_M.Forward(QR);
+
                 for (int a = 0; a < M; a++)
                 {
-                    float cosP = 0.5f * (HP[a] + HPR[a]);
-                    float sinQ = 0.5f * (HQ[a] - HQR[a]);
+                    int arev = (a == 0) ? 0 : (M - a);
+                    float cosP = 0.5f * (HP[a] + HP[arev]); // cos_sum(P)
+                    float sinQ = 0.5f * (HQ[a] - HQ[arev]); // sin_sum(Q)
                     B1[a][l] = cosP + sinQ;
                 }
 
                 // --- B2 = sin_sum(c0*C2) − cos_sum(s0*C2) ---
-                HS = HQ; HSR = HQR;  // for s0*C2
-                HC = HP; HCR = HPR;  // for c0*C2
                 for (int a = 0; a < M; a++)
                 {
-                    float cosS = 0.5f * (HS[a] + HSR[a]);
-                    float sinC = 0.5f * (HC[a] - HCR[a]);
-                    B2[a][l] = sinC - cosS;
+                    int arev = (a == 0) ? 0 : (M - a);
+                    float cosS_fix = 0.5f * (HQ[a] + HQ[arev]); // cos_sum(s0*C2)
+                    float sinC_fix = 0.5f * (HP[a] - HP[arev]); // sin_sum(c0*C2)
+                    B2[a][l] = sinC_fix - cosS_fix;
                 }
             }
 
             // === Step 2: two L-convolutions per residue a, then deinterleave to n = a + b*M ===
             var col = new float[L];
-            var colR = new float[L];
             var Cx = new float[L];
             var Sx = new float[L];
             var Hy = new float[L];
@@ -475,15 +481,18 @@ namespace UMapx.Transform
             {
                 // ----- xr: y1 = g_a * A1 -----
                 Array.Copy(A1[a], col, L);
-                Array.Copy(col, colR, L); CyclicReverseInPlace(colR);
                 var Hx = FHT_L.Forward(col);
-                var HxR = FHT_L.Forward(colR);
-                for (int q = 0; q < L; q++) { Cx[q] = 0.5f * (Hx[q] + HxR[q]); Sx[q] = 0.5f * (Hx[q] - HxR[q]); }
+                for (int q = 0; q < L; q++)
+                {
+                    int qrev = (q == 0) ? 0 : (L - q);
+                    float HR = Hx[qrev];
+                    Cx[q] = 0.5f * (Hx[q] + HR);
+                    Sx[q] = 0.5f * (Hx[q] - HR);
+                }
 
                 var Cg_a = Cg[a]; var Sg_a = Sg[a];
                 for (int q = 0; q < L; q++)
                 {
-                    // Convolution in Hartley domain: (Cx + iSx) * (Cg + iSg)
                     float re = Cx[q] * Cg_a[q] - Sx[q] * Sg_a[q];
                     float im = Cx[q] * Sg_a[q] + Sx[q] * Cg_a[q];
                     Hy[q] = re + im; // Hartley spectrum (cas)
@@ -493,10 +502,14 @@ namespace UMapx.Transform
                 // ----- xr: y2 = g_{a+M/2}(+1 shift if a≥M/2) * (−B2) -----
                 Array.Copy(B2[a], col, L);
                 for (int i = 0; i < L; i++) col[i] = -col[i]; // minus sign from the branch-2 formula
-                Array.Copy(col, colR, L); CyclicReverseInPlace(colR);
                 Hx = FHT_L.Forward(col);
-                HxR = FHT_L.Forward(colR);
-                for (int q = 0; q < L; q++) { Cx[q] = 0.5f * (Hx[q] + HxR[q]); Sx[q] = 0.5f * (Hx[q] - HxR[q]); }
+                for (int q = 0; q < L; q++)
+                {
+                    int qrev = (q == 0) ? 0 : (L - q);
+                    float HR = Hx[qrev];
+                    Cx[q] = 0.5f * (Hx[q] + HR);
+                    Sx[q] = 0.5f * (Hx[q] - HR);
+                }
 
                 var Cg2_a = Cg2[a]; var Sg2_a = Sg2[a];
                 bool shift1 = (a >= (M >> 1));
@@ -526,10 +539,14 @@ namespace UMapx.Transform
 
                 // ----- xi: z1 = g_a * A2 -----
                 Array.Copy(A2[a], col, L);
-                Array.Copy(col, colR, L); CyclicReverseInPlace(colR);
                 Hx = FHT_L.Forward(col);
-                HxR = FHT_L.Forward(colR);
-                for (int q = 0; q < L; q++) { Cx[q] = 0.5f * (Hx[q] + HxR[q]); Sx[q] = 0.5f * (Hx[q] - HxR[q]); }
+                for (int q = 0; q < L; q++)
+                {
+                    int qrev = (q == 0) ? 0 : (L - q);
+                    float HR = Hx[qrev];
+                    Cx[q] = 0.5f * (Hx[q] + HR);
+                    Sx[q] = 0.5f * (Hx[q] - HR);
+                }
                 for (int q = 0; q < L; q++)
                 {
                     float re = Cx[q] * Cg_a[q] - Sx[q] * Sg_a[q];
@@ -540,10 +557,14 @@ namespace UMapx.Transform
 
                 // ----- xi: z2 = g_{a+M/2}(+1 shift if a≥M/2) * (+B1) -----
                 Array.Copy(B1[a], col, L);
-                Array.Copy(col, colR, L); CyclicReverseInPlace(colR);
                 Hx = FHT_L.Forward(col);
-                HxR = FHT_L.Forward(colR);
-                for (int q = 0; q < L; q++) { Cx[q] = 0.5f * (Hx[q] + HxR[q]); Sx[q] = 0.5f * (Hx[q] - HxR[q]); }
+                for (int q = 0; q < L; q++)
+                {
+                    int qrev = (q == 0) ? 0 : (L - q);
+                    float HR = Hx[qrev];
+                    Cx[q] = 0.5f * (Hx[q] + HR);
+                    Sx[q] = 0.5f * (Hx[q] - HR);
+                }
                 for (int q = 0; q < L; q++)
                 {
                     float Cr = Cg2_a[q], Sr = Sg2_a[q];

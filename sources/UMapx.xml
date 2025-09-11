@@ -28149,14 +28149,13 @@
             1) For each l, recover four k-sums via 2×FHT_M with quarter-period tables:
                A1 = Σ c1·cos(φ−πk/2),  A2 = Σ c1·sin(φ−πk/2),
                B1 = Σ c2·cos(φ−πk/2),  B2 = Σ c2·sin(φ−πk/2).
-               This uses two FHTs (vector and cyclic-reverse) on weighted sequences (c0·c, s0·c).
+               We do **one** FHT per weighted vector and obtain the “reverse” via spectral
+               mirroring (H_rev[k] = H[(M-k) mod M]).
             2) For each residue a, do two L-convolutions in the Hartley domain:
                xr: y1 = g_a * A1 ; y2 = g_{a+M/2}(+1 shift if a≥M/2) * (−B2)
                xi: z1 = g_a * A2 ; z2 = g_{a+M/2}(+1 shift if a≥M/2) * (+B1)
-               Convolution in Hartley frequency uses:
-                 H = (Cx*Cg − Sx*Sg) + (Cx*Sg + Sx*Cg)  (i.e., Re + Im in cas form)
-               The +1 shift along L for the G2 branch is implemented as multiplying
-               the window spectrum by e^{-i 2π q / L} (note the minus sign).
+               Each convolution uses **one** forward FHT_L (cos/sin via mirroring) and
+               one inverse FHT_L.
             3) Inverse FHT_L and deinterleave to n = a + b*M into xr and xi.
             </remarks>
         </member>
