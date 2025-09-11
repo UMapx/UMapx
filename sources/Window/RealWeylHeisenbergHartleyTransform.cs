@@ -44,7 +44,7 @@ namespace UMapx.Window
 
             // Optional: for exact phasing used below, M should be even; for WH real blocks typically M % 4 == 0.
             if ((M & 1) != 0)
-                throw new ArgumentException("M must be even (preferably divisible by 4) for this phasing.");
+                throw new ArgumentException("M must be even (preferably divisible by 4) for this phasing");
 
             float[,] G = new float[2 * N, 2 * N];
 
