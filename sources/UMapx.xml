@@ -28071,9 +28071,9 @@
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
-        <member name="T:UMapx.Transform.FastRealWeylHeisenbergTransformHartley">
+        <member name="T:UMapx.Transform.FastRealWeylHeisenbergHartleyTransform">
             <summary>
-            Fast real 1D Weyl–Heisenberg (Gabor) transform via Hartley (FHT), matching the 2N×2N matrix (analysis exact).
+            Fast real Weyl–Heisenberg (Gabor) transform via Hartley (FHT), matching the 2N×2N matrix (analysis exact).
             </summary>
             <remarks>
             Analysis factorization:
@@ -28085,16 +28085,80 @@
             Backward provided as exact O(N^2) matrix-form (Special.Cas).
             </remarks>
         </member>
-        <member name="M:UMapx.Transform.FastRealWeylHeisenbergTransformHartley.Forward(System.Single[])">
+        <member name="M:UMapx.Transform.FastRealWeylHeisenbergHartleyTransform.#ctor(System.Single[],System.Int32)">
             <summary>
-            Forward (analysis): y[2N] -> c[2N] equals G^T * y for your 2N×2N matrix.
-            If y.Length == N, the second half is assumed zero (xi = 0).
+            Fast real Weyl–Heisenberg (Gabor) transform via Hartley (FHT), matching the 2N×2N matrix (analysis exact).
+            </summary>
+            <param name="g0">Window function (orthogonalized)</param>
+            <param name="M">Frequency shifts</param>
+            <exception cref="T:System.ArgumentNullException">Exception</exception>
+            <exception cref="T:System.ArgumentException">Exception</exception>
+        </member>
+        <member name="M:UMapx.Transform.FastRealWeylHeisenbergHartleyTransform.CyclicReverseInPlace(System.Single[])">
+            <summary>
+            Hartley-specific “cyclic reverse” used to separate cos/sin sums from a single FHT.
+            It swaps v[1] ↔ v[n-1], v[2] ↔ v[n-2], … while keeping v[0] intact.
+            With this permutation:
+              H_rev = FHT( v_rev )
+            and therefore:
+              cos_sum = 0.5 * (H + H_rev)
+              sin_sum = 0.5 * (H - H_rev)
             </summary>
         </member>
-        <member name="M:UMapx.Transform.FastRealWeylHeisenbergTransformHartley.Backward(System.Single[])">
+        <member name="M:UMapx.Transform.FastRealWeylHeisenbergHartleyTransform.PrecomputeWindowSpectra">
+             <summary>
+             Precompute “complex-like” Hartley spectra over L for all polyphase columns of the window:
+               G_a(q)  = Cg[a][q]  + i * Sg[a][q]
+               G2_a(q) = Cg2[a][q] + i * Sg2[a][q], where a' = a + M/2 (mod M).
+            
+             We obtain Re/Im-like parts via two FHT_L calls (vector and its cyclic-reverse):
+               Re = 0.5 * (H + H_rev),  Im = 0.5 * (H - H_rev)
+            
+             Notes:
+             • The sign convention for S(·) is chosen so that multiplying by conj(G) in the
+               Hartley domain maps to the (re − im) combination later in Forward.
+             • FHT normalization follows your FastHartleyTransform settings (normalized or not).
+             </summary>
+        </member>
+        <member name="M:UMapx.Transform.FastRealWeylHeisenbergHartleyTransform.Forward(System.Single[])">
             <summary>
-            Backward (synthesis): c[2N] -> y[2N], exact matrix-form (O(N^2)) using Special.Cas (Hartley-only).
+            Forward (analysis): y[2N] -> c[2N] equals G^T * y (exactly matches your 2N×2N matrix).
+            If y.Length == N, the bottom half (xi) is assumed to be zeros.
             </summary>
+            <remarks>
+            Factorization:
+            1) Along L (time steps): compute correlations r_a[l], s_a[l] with window polyphases,
+               entirely in the Hartley domain using two FHT_L calls per vector to extract cos/sin.
+               For branch G2, for residues a ≥ M/2, apply an extra +1 shift along L, implemented
+               as spectral rotation by e^{-i 2π q / L}.
+            2) Along M (frequency shifts): FHT_M + reverse trick to get cos/sin for each of r,s,
+               then quarter-period mixing using k mod 4 via c0[k]=cos(πk/2), s0[k]=sin(πk/2) ∈ {0,±1}.
+            3) Branch formulas:
+                 c1 =  cos(φ − πk/2)·R  +  sin(φ − πk/2)·S
+                 c2 = −sin(φ − πk/2)·R2 +  cos(φ − πk/2)·S2
+            4) A final scale = 1/L is applied to match your matrix convention.
+            </remarks>
+        </member>
+        <member name="M:UMapx.Transform.FastRealWeylHeisenbergHartleyTransform.Backward(System.Single[])">
+            <summary>
+            Backward (synthesis): c[2N] -> y[2N], fast Hartley-only inverse
+            that mirrors the Forward factorization (matches your matrix form).
+            </summary>
+            <remarks>
+            Inverse steps:
+            1) For each l, recover four k-sums via 2×FHT_M with quarter-period tables:
+               A1 = Σ c1·cos(φ−πk/2),  A2 = Σ c1·sin(φ−πk/2),
+               B1 = Σ c2·cos(φ−πk/2),  B2 = Σ c2·sin(φ−πk/2).
+               This uses two FHTs (vector and cyclic-reverse) on weighted sequences (c0·c, s0·c).
+            2) For each residue a, do two L-convolutions in the Hartley domain:
+               xr: y1 = g_a * A1 ; y2 = g_{a+M/2}(+1 shift if a≥M/2) * (−B2)
+               xi: z1 = g_a * A2 ; z2 = g_{a+M/2}(+1 shift if a≥M/2) * (+B1)
+               Convolution in Hartley frequency uses:
+                 H = (Cx*Cg − Sx*Sg) + (Cx*Sg + Sx*Cg)  (i.e., Re + Im in cas form)
+               The +1 shift along L for the G2 branch is implemented as multiplying
+               the window spectrum by e^{-i 2π q / L} (note the minus sign).
+            3) Inverse FHT_L and deinterleave to n = a + b*M into xr and xi.
+            </remarks>
         </member>
         <member name="T:UMapx.Window.FastRealWeylHeisenbergHartleyTransform">
             <summary>
