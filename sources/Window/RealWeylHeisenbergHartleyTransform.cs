@@ -84,11 +84,11 @@ namespace UMapx.Window
                         // G1 = gi * (cosθ + i sinθ)
                         // G2 = i * gj * (cosθ + i sinθ) = gj * (cos(θ+π/2) + i sin(θ+π/2))
                         // => Re(G2) = -gj * sinθ, Im(G2) = gj * cosθ
-                        G[n, u + 0] = gi * c;   // Re(G1)
+                        G[n + 0, u + 0] = gi * c;   // Re(G1)
                         G[n + N, u + 0] = gi * s;   // Im(G1)
 
-                        G[n, u + N] = -gj * s;  // Re(G2)
-                        G[n + N, u + N] = gj * c;  // Im(G2)
+                        G[n + 0, u + N] = -gj * s;  // Re(G2)
+                        G[n + N, u + N] = gj * c;   // Im(G2)
                     }
                 }
             });

@@ -28073,43 +28073,17 @@
         </member>
         <member name="T:UMapx.Transform.FastRealWeylHeisenbergTransformHartley">
             <summary>
-            Fast real 1D Weyl–Heisenberg (Gabor) transform via Hartley (FHT), matching the 2N×2N matrix.
+            Fast real 1D Weyl–Heisenberg (Gabor) transform via Hartley (FHT), matching the 2N×2N matrix (analysis exact).
             </summary>
             <remarks>
-            Factorization (analysis): polyphase split N = M * L; correlation along L via Hartley-DFT (two FHT_L calls);
-            then FHT_M along a and quarter-period (-π/2) mixing via {cos(πk/2), sin(πk/2)} ∈ {0,±1}.
-            Second branch (M/2 shift) is handled via residues (a + M/2) and an extra (-1)^k.
-            Synthesis here is an exact O(N^2) reference (matrix-accurate) using Special.Cas; no complex arithmetic.
-            Uses only your FastHartleyTransform for all DFT-like steps.
+            Analysis factorization:
+              • Polyphase: n = a + b*M, N = M*L
+              • Correlation along L via Hartley-DFT (two FHT_L calls to recover C,S)
+              • For G2 (M/2 branch): for residues a ≥ M/2 apply extra +1 cyclic shift along L (implemented as spectral rotation)
+              • DFT along M via Hartley (two FHT_M calls → C,S) and quarter-period mixing by k mod 4
+            Uses only your FastHartleyTransform; no complex arithmetic.
+            Backward provided as exact O(N^2) matrix-form (Special.Cas).
             </remarks>
-        </member>
-        <member name="M:UMapx.Transform.FastRealWeylHeisenbergTransformHartley.#ctor(System.Single[],System.Int32,System.Boolean,System.Single,UMapx.Core.Direction)">
-            <summary>
-            Initializes the fast real 1D WH transform (2N↔2N) using Hartley transforms only.
-            </summary>
-            <param name="g0">Prototype window of length N (N must be divisible by M)</param>
-            <param name="M">Number of frequency shifts (must be even)</param>
-            <param name="normalized">Use orthonormal Hartley scaling (true = 1/√n forward/backward)</param>
-            <param name="eps">Small guard for divisions in synthesis (default 1e-7)</param>
-            <param name="direction">Processing direction flag (kept for API symmetry)</param>
-        </member>
-        <member name="P:UMapx.Transform.FastRealWeylHeisenbergTransformHartley.Normalized">
-            <summary>Whether the internal Hartley transforms are normalized.</summary>
-        </member>
-        <member name="P:UMapx.Transform.FastRealWeylHeisenbergTransformHartley.Direction">
-            <summary>Processing direction (kept for API symmetry).</summary>
-        </member>
-        <member name="P:UMapx.Transform.FastRealWeylHeisenbergTransformHartley.Window">
-            <summary>Returns a copy of the current window.</summary>
-        </member>
-        <member name="M:UMapx.Transform.FastRealWeylHeisenbergTransformHartley.SetWindow(System.Single[])">
-            <summary>Updates the window and refreshes all precomputed spectra.</summary>
-        </member>
-        <member name="M:UMapx.Transform.FastRealWeylHeisenbergTransformHartley.PrecomputeWindowSpectra">
-            <summary>
-            Precomputes conj DFT along L for each residue a: Ga[b] = g0[a + b*M], b=0..L-1.
-            Two-Hartley trick to recover (C,S); also for the M/2-shifted residue.
-            </summary>
         </member>
         <member name="M:UMapx.Transform.FastRealWeylHeisenbergTransformHartley.Forward(System.Single[])">
             <summary>
