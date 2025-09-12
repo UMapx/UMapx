@@ -164,6 +164,8 @@ namespace UMapx.Transform
             {
                 float a = src[sOff];
                 float b = src[sOff + sStride];
+
+                // 2-point DHT (Hartley) matrix:
                 dst[dOff + 0] = a + b;
                 dst[dOff + 1] = a - b;
                 return;
@@ -180,10 +182,6 @@ namespace UMapx.Transform
                 float d = src[s3];
 
                 // 4-point DHT (Hartley) matrix:
-                // [1  1  1  1;
-                //  1  1 -1 -1;
-                //  1 -1  1 -1;
-                //  1 -1 -1  1]
                 dst[dOff + 0] = (a + b) + (c + d);
                 dst[dOff + 1] = (a + b) - (c + d);
                 dst[dOff + 2] = (a - b) + (c - d);
@@ -266,50 +264,164 @@ namespace UMapx.Transform
             else
             {
                 // Odd-length fallback: direct O(n^2) Hartley (pure, no FFT).
-                DHT(src, sOff, sStride, n, dst, dOff);
+                FHT_BluesteinHartley(src, sOff, sStride, n, dst, dOff);
             }
         }
 
         /// <summary>
-        /// Direct Hartley transform (no normalization): Y[k] = Σ_n x[n] * cas(2π n k / N).
-        /// Optimized with trigonometric recurrences per k (no per-sample trig calls).
+        /// Pure-Hartley Bluestein (no FFT):
+        /// DHT_N(x)[k] = Re{X[k]} - Im{X[k]}, where
+        /// X[k] = e^{-jπ k^2/N} · ( a * b )[k],
+        /// a[n] = x[n] · e^{-jπ n^2/N},   b[m] = e^{+jπ m^2/N}.
+        /// The linear convolution (a*b) is computed via FHT-only engine:
+        /// for real sequences, conv = IDHT( combine(Ha, Hb) ), where
+        /// combine implements the DHT convolution theorem; complex conv
+        /// is obtained by four real convs.
         /// </summary>
-        private static void DHT(float[] src, int sOff, int sStride, int n, float[] dst, int dOff)
+        private static void FHT_BluesteinHartley(float[] src, int sOff, int sStride, int n, float[] dst, int dOff)
         {
-            // For each k, cas(m * ωk) is generated via recurrence:
-            // cos((m+1)φ) = cos mφ * cos φ - sin mφ * sin φ
-            // sin((m+1)φ) = sin mφ * cos φ + cos mφ * sin φ
-            // then cas = cos + sin.
-            float twoPiOverN = 2f * Maths.Pi / n;
+            // 1) Build chirped a = x * exp(-j π n^2 / N)
+            var ar = new float[n];
+            var ai = new float[n];
 
+            float c0 = Maths.Pi / n; // π / N
+            int p = sOff;
+            for (int i = 0; i < n; i++, p += sStride)
+            {
+                float x = src[p];
+                float ang = c0 * i * i;      // π i^2 / N
+                float c = Maths.Cos(ang);    // cos(ang)
+                float s = -Maths.Sin(ang);   // -sin(ang) for exp(-j ang)
+
+                ar[i] = x * c;
+                ai[i] = x * s;
+            }
+
+            // 2) Build b (kernel) for linear convolution on length P ≥ 2N-1.
+            int L = 2 * n - 1;
+            int P = NextPow2(L);
+
+            var br = new float[P]; // real part of b
+            var bi = new float[P]; // imag part of b
+
+            // Positive indices m = 0..N-1
+            for (int m = 0; m < n; m++)
+            {
+                float ang = c0 * m * m;  // π m^2 / N
+                br[m] = Maths.Cos(ang);
+                bi[m] = Maths.Sin(ang);  // +sin for exp(+j ang)
+            }
+            // Negative indices m = -(N-1)..-1 mapped to P-(N-1)..P-1
+            for (int mm = 1; mm <= n - 1; mm++)
+            {
+                int idx = P - mm;        // corresponds to m = -mm
+                float mneg = mm;         // (-mm)^2 = mm^2
+                float ang = c0 * mneg * mneg;
+                br[idx] = Maths.Cos(ang);
+                bi[idx] = Maths.Sin(ang);
+            }
+
+            // 3) Compute complex linear convolution c = a (*) b via Hartley-only engine
+            //    Using: (ar+jai)*(br+jbi) = (ar⊗br - ai⊗bi) + j(ar⊗bi + ai⊗br),
+            //    where ⊗ is linear convolution computed via FHT on size P.
+
+            // Real convs (length L, calculated on size P):
+            var t1 = RealLinearConvFHT(ar, n, br, P, L, P); // ar ⊗ br
+            var t2 = RealLinearConvFHT(ai, n, bi, P, L, P); // ai ⊗ bi
+            var t3 = RealLinearConvFHT(ar, n, bi, P, L, P); // ar ⊗ bi
+            var t4 = RealLinearConvFHT(ai, n, br, P, L, P); // ai ⊗ br
+
+            var cr = new float[L];
+            var ci = new float[L];
+            for (int k = 0; k < L; k++)
+            {
+                cr[k] = t1[k] - t2[k];
+                ci[k] = t3[k] + t4[k];
+            }
+
+            // 4) X[k] = e^{-jπ k^2/N} * c[k], take k=0..N-1
+            //    Then DHT = Re(X) - Im(X).
             for (int k = 0; k < n; k++)
             {
-                float phi = twoPiOverN * k;       // φ = 2π k / N
-                float cStep = Maths.Cos(phi);     // cos φ
-                float sStep = Maths.Sin(phi);     // sin φ
+                float ang = c0 * k * k;  // π k^2 / N
+                float c = Maths.Cos(ang);
+                float s = -Maths.Sin(ang); // for exp(-j ang)
 
-                // m = 0 → cos 0 = 1, sin 0 = 0
-                float c = 1f;
-                float s = 0f;
+                float rr = cr[k];
+                float ii = ci[k];
 
-                // params
-                float acc = 0f;
-                int p = sOff;
+                // Complex multiply (rr + j*ii) * (c + j*s)
+                float xr = rr * c - ii * s;
+                float xi = rr * s + ii * c;
 
-                for (int m = 0; m < n; m++, p += sStride)
-                {
-                    // cas(mφ) = cos(mφ) + sin(mφ) = c + s
-                    acc += src[p] * (c + s);
-
-                    // Advance (c, s) to (m+1) using one rotation
-                    // c' = c*cStep - s*sStep;   s' = s*cStep + c*sStep
-                    float cNext = c * cStep - s * sStep;
-                    s = s * cStep + c * sStep;
-                    c = cNext;
-                }
-
-                dst[dOff + k] = acc;
+                dst[dOff + k] = xr - xi; // Hartley: Re - Im
             }
+        }
+
+        /// <summary>
+        /// Real linear convolution y = a ⊗ b (length L = la + lb_eff - 1),
+        /// computed via Hartley-only convolution theorem on size P (power-of-two).
+        /// Here b is already padded on size P (lb_eff = P), and a occupies 0..la-1.
+        /// Implementation details:
+        ///  1) Zero-pad a and b to length P
+        ///  2) Y_H = HartleyConvolutionCombine( FHT(a), FHT(b) )         (circular on P)
+        ///  3) y_pad = IDHT(Y_H) / P                                     (time domain)
+        ///  4) Return first L samples (linear conv region)
+        /// Note: uses pure FHT (no normalization inside; 1/P appears explicitly).
+        /// </summary>
+        private static float[] RealLinearConvFHT(float[] a, int la, float[] b_pad, int P, int L, int Pchecked)
+        {
+            // Safety: Pchecked==P is just to stress size is power-of-two
+            // Pack a→A (size P), b already in b_pad (size P)
+            var A = new float[P];
+            var B = new float[P];
+            for (int i = 0; i < la; i++) A[i] = a[i];
+            // b_pad may carry data at both head and tail to emulate negative indices
+            Array.Copy(b_pad, 0, B, 0, P);
+
+            // FHT(A), FHT(B) on size P (pure Hartley, radix-2)
+            var AH = new float[P];
+            var BH = new float[P];
+            FHT(A, 0, 1, P, AH, 0);
+            FHT(B, 0, 1, P, BH, 0);
+
+            // Combine in Hartley domain (circular conv theorem for DHT):
+            // Let rev(k) = (P - k) % P. If F = H(a), G = H(b),
+            // Then H(a ⊛ b)[k] = 1/2 * ( F[k]*G[k] + F[rev]*G[k] + F[k]*G[rev] - F[rev]*G[rev] )
+            // Proof: via mapping DFT↔DHT (Re/Im vs H/H_rev), per-k pair algebra.
+            var YH = new float[P];
+            for (int k = 0; k < P; k++)
+            {
+                int rk = (k == 0) ? 0 : (P - k);
+                float Fk = AH[k];
+                float Fr = AH[rk];
+                float Gk = BH[k];
+                float Gr = BH[rk];
+
+                YH[k] = 0.5f * (Fk * Gk + Fr * Gk + Fk * Gr - Fr * Gr);
+            }
+
+            // y_pad = IDHT(YH) = FHT(YH) / P  (since unnormalized FHT is self-inverse up to factor P)
+            var ypad = new float[P];
+            FHT(YH, 0, 1, P, ypad, 0);
+
+            float invP = 1f / P;
+            for (int i = 0; i < P; i++) ypad[i] *= invP;
+
+            // Return first L samples (valid linear convolution region)
+            var y = new float[L];
+            Array.Copy(ypad, 0, y, 0, L);
+            return y;
+        }
+
+        /// <summary>
+        /// Next power of two ≥ n (n ≥ 1).
+        /// </summary>
+        private static int NextPow2(int n)
+        {
+            int p = 1;
+            while (p < n) p <<= 1;
+            return p;
         }
         #endregion
     }

@@ -13260,7 +13260,7 @@
             </summary>
             <param name="a">Square matrix to factorize</param>
         </member>
-        <member name="T:UMapx.Decomposition.NNMF">
+        <member name="T:UMapx.Decomposition.NMF">
             <summary>
             Defines non-negative matrix factorization.
             </summary>
@@ -13270,7 +13270,7 @@
             https://en.wikipedia.org/wiki/Non-negative_matrix_factorization
             </remarks>
         </member>
-        <member name="M:UMapx.Decomposition.NNMF.#ctor(System.Single[0:,0:],System.Int32,System.Int32)">
+        <member name="M:UMapx.Decomposition.NMF.#ctor(System.Single[0:,0:],System.Int32,System.Int32)">
             <summary>
             Initializes non-negative matrix factorization.
             </summary>
@@ -13278,17 +13278,17 @@
             <param name="r">The dimension of new matrices</param>
             <param name="iterations">Number of iterations</param>
         </member>
-        <member name="P:UMapx.Decomposition.NNMF.W">
+        <member name="P:UMapx.Decomposition.NMF.W">
             <summary>
             Gets the left matrix.
             </summary>
         </member>
-        <member name="P:UMapx.Decomposition.NNMF.H">
+        <member name="P:UMapx.Decomposition.NMF.H">
             <summary>
             Gets the right matrix.
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.NNMF.NnmfDcmp(System.Single[0:,0:],System.Int32)">
+        <member name="M:UMapx.Decomposition.NMF.NnmfDcmp(System.Single[0:,0:],System.Int32)">
             <summary>
             Computes non-negative matrix factorization for input matrix.
             </summary>
@@ -26051,10 +26051,34 @@
              • Single-precision math (MathF) to reduce casts and overhead
             </summary>
         </member>
-        <member name="M:UMapx.Transform.FastHartleyTransform.DirectFHT(System.Single[],System.Int32,System.Int32,System.Int32,System.Single[],System.Int32)">
+        <member name="M:UMapx.Transform.FastHartleyTransform.FHT_BluesteinHartley(System.Single[],System.Int32,System.Int32,System.Int32,System.Single[],System.Int32)">
             <summary>
-            Direct Hartley transform (no normalization): Y[k] = Σ_n x[n] * cas(2π n k / N).
-            Optimized with trigonometric recurrences per k (no per-sample trig calls).
+            Pure-Hartley Bluestein (no FFT):
+            DHT_N(x)[k] = Re{X[k]} - Im{X[k]}, where
+            X[k] = e^{-jπ k^2/N} · ( a * b )[k],
+            a[n] = x[n] · e^{-jπ n^2/N},   b[m] = e^{+jπ m^2/N}.
+            The linear convolution (a*b) is computed via FHT-only engine:
+            for real sequences, conv = IDHT( combine(Ha, Hb) ), where
+            combine implements the DHT convolution theorem; complex conv
+            is obtained by four real convs.
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.FastHartleyTransform.RealLinearConvFHT(System.Single[],System.Int32,System.Single[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Real linear convolution y = a ⊗ b (length L = la + lb_eff - 1),
+            computed via Hartley-only convolution theorem on size P (power-of-two).
+            Here b is already padded on size P (lb_eff = P), and a occupies 0..la-1.
+            Implementation details:
+             1) Zero-pad a and b to length P
+             2) Y_H = HartleyConvolutionCombine( FHT(a), FHT(b) )         (circular on P)
+             3) y_pad = IDHT(Y_H) / P                                     (time domain)
+             4) Return first L samples (linear conv region)
+            Note: uses pure FHT (no normalization inside; 1/P appears explicitly).
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.FastHartleyTransform.NextPow2(System.Int32)">
+            <summary>
+            Next power of two ≥ n (n ≥ 1).
             </summary>
         </member>
         <member name="T:UMapx.Transform.FastHilbertTransform">
