@@ -13260,7 +13260,7 @@
             </summary>
             <param name="a">Square matrix to factorize</param>
         </member>
-        <member name="T:UMapx.Decomposition.NNMF">
+        <member name="T:UMapx.Decomposition.NMF">
             <summary>
             Defines non-negative matrix factorization.
             </summary>
@@ -13270,7 +13270,7 @@
             https://en.wikipedia.org/wiki/Non-negative_matrix_factorization
             </remarks>
         </member>
-        <member name="M:UMapx.Decomposition.NNMF.#ctor(System.Single[0:,0:],System.Int32,System.Int32)">
+        <member name="M:UMapx.Decomposition.NMF.#ctor(System.Single[0:,0:],System.Int32,System.Int32)">
             <summary>
             Initializes non-negative matrix factorization.
             </summary>
@@ -13278,17 +13278,17 @@
             <param name="r">The dimension of new matrices</param>
             <param name="iterations">Number of iterations</param>
         </member>
-        <member name="P:UMapx.Decomposition.NNMF.W">
+        <member name="P:UMapx.Decomposition.NMF.W">
             <summary>
             Gets the left matrix.
             </summary>
         </member>
-        <member name="P:UMapx.Decomposition.NNMF.H">
+        <member name="P:UMapx.Decomposition.NMF.H">
             <summary>
             Gets the right matrix.
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.NNMF.NnmfDcmp(System.Single[0:,0:],System.Int32)">
+        <member name="M:UMapx.Decomposition.NMF.NnmfDcmp(System.Single[0:,0:],System.Int32)">
             <summary>
             Computes non-negative matrix factorization for input matrix.
             </summary>
@@ -26004,11 +26004,12 @@
             Fourier transform.
             </summary>
         </member>
-        <member name="M:UMapx.Transform.FastHartleyTransform.#ctor(System.Boolean,UMapx.Core.Direction)">
+        <member name="M:UMapx.Transform.FastHartleyTransform.#ctor(System.Boolean,UMapx.Transform.SpectrumType,UMapx.Core.Direction)">
             <summary>
             Initializes the fast Hartley transform.
             </summary>
             <param name="normalized">Normalized transform or not</param>
+            <param name="spectrumType">Spectrum type</param>
             <param name="direction">Processing direction</param>
         </member>
         <member name="P:UMapx.Transform.FastHartleyTransform.Normalized">
@@ -26019,6 +26020,11 @@
         <member name="P:UMapx.Transform.FastHartleyTransform.Direction">
             <summary>
             Gets or sets the processing direction.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.FastHartleyTransform.SpectrumType">
+            <summary>
+            Gets or sets spectrum type.
             </summary>
         </member>
         <member name="M:UMapx.Transform.FastHartleyTransform.Forward(System.Single[])">
@@ -26034,6 +26040,46 @@
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.FastHartleyTransform.FHT(System.Single[],System.Int32,System.Int32,System.Int32,System.Single[],System.Int32)">
+            <summary>
+            Radix-2 DIT FHT for even n; safe O(n^2) direct Hartley for odd n.
+            Writes n outputs contiguously to dst[dOff .. dOff + n - 1].
+            Optimizations:
+             • Fast bases for n=2 and n=4 (no recursion, no trig)
+             • Trigonometric recurrences for twiddles (one sin/cos per call, O(1) per k)
+             • Single-precision math (MathF) to reduce casts and overhead
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.FastHartleyTransform.FHT_BluesteinHartley(System.Single[],System.Int32,System.Int32,System.Int32,System.Single[],System.Int32)">
+            <summary>
+            Pure-Hartley Bluestein (no FFT):
+            DHT_N(x)[k] = Re{X[k]} - Im{X[k]}, where
+            X[k] = e^{-jπ k^2/N} · ( a * b )[k],
+            a[n] = x[n] · e^{-jπ n^2/N},   b[m] = e^{+jπ m^2/N}.
+            The linear convolution (a*b) is computed via FHT-only engine:
+            for real sequences, conv = IDHT( combine(Ha, Hb) ), where
+            combine implements the DHT convolution theorem; complex conv
+            is obtained by four real convs.
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.FastHartleyTransform.RealLinearConvFHT(System.Single[],System.Int32,System.Single[],System.Int32,System.Int32)">
+            <summary>
+            Real linear convolution y = a ⊗ b (length L = la + lb_eff - 1),
+            computed via Hartley-only convolution theorem on size P (power-of-two).
+            Here b is already padded on size P (lb_eff = P), and a occupies 0..la-1.
+            Implementation details:
+             1) Zero-pad a and b to length P
+             2) Y_H = HartleyConvolutionCombine( FHT(a), FHT(b) )         (circular on P)
+             3) y_pad = IDHT(Y_H) / P                                     (time domain)
+             4) Return first L samples (linear conv region)
+            Note: uses pure FHT (no normalization inside; 1/P appears explicitly).
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.FastHartleyTransform.NextPow2(System.Int32)">
+            <summary>
+            Next power of two ≥ n (n ≥ 1).
+            </summary>
         </member>
         <member name="T:UMapx.Transform.FastHilbertTransform">
             <summary>
@@ -26805,11 +26851,12 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="M:UMapx.Transform.HartleyTransform.#ctor(System.Boolean,UMapx.Core.Direction)">
+        <member name="M:UMapx.Transform.HartleyTransform.#ctor(System.Boolean,UMapx.Transform.SpectrumType,UMapx.Core.Direction)">
             <summary>
             Initializes the Hartley transform.
             </summary>
             <param name="normalized">Normalized transform or not</param>
+            <param name="spectrumType">Spectrum type</param>
             <param name="direction">Processing direction</param>
         </member>
         <member name="P:UMapx.Transform.HartleyTransform.Normalized">
@@ -26817,11 +26864,17 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="M:UMapx.Transform.HartleyTransform.Matrix(System.Int32)">
+        <member name="P:UMapx.Transform.HartleyTransform.SpectrumType">
+            <summary>
+            Gets or sets spectrum type.
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.HartleyTransform.Matrix(System.Int32,UMapx.Transform.SpectrumType)">
             <summary>
             Implements the construction of the Hartley transform matrix.
             </summary>
             <param name="n">Size</param>
+            <param name="spectrumType">Spectrum type</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.HartleyTransform.Forward(System.Single[])">

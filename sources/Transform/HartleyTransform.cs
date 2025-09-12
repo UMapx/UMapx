@@ -25,10 +25,13 @@ namespace UMapx.Transform
         /// Initializes the Hartley transform.
         /// </summary>
         /// <param name="normalized">Normalized transform or not</param>
+        /// <param name="spectrumType">Spectrum type</param>
         /// <param name="direction">Processing direction</param>
-        public HartleyTransform(bool normalized = true, Direction direction = Direction.Vertical)
+        public HartleyTransform(bool normalized = true, SpectrumType spectrumType = SpectrumType.Fourier, Direction direction = Direction.Vertical)
         {
-            this.Normalized = normalized; this.Direction = direction;
+            this.Normalized = normalized; 
+            this.Direction = direction;
+            this.SpectrumType = spectrumType;
         }
         /// <summary>
         /// Normalized transform or not.
@@ -44,6 +47,10 @@ namespace UMapx.Transform
                 this.normalized = value;
             }
         }
+        /// <summary>
+        /// Gets or sets spectrum type.
+        /// </summary>
+        public SpectrumType SpectrumType { get; set; }
         #endregion
 
         #region Hartley static components
@@ -51,12 +58,19 @@ namespace UMapx.Transform
         /// Implements the construction of the Hartley transform matrix.
         /// </summary>
         /// <param name="n">Size</param>
+        /// <param name="spectrumType">Spectrum type</param>
         /// <returns>Matrix</returns>
-        public static float[,] Matrix(int n)
+        public static float[,] Matrix(int n, SpectrumType spectrumType = SpectrumType.Hartley)
         {
+            if (spectrumType == SpectrumType.Fourier)
+            {
+                var F = FourierTransform.Matrix(n);
+                return F.ToReal().Sub(F.ToImag());
+            }
+
             int j, i;
             float[,] H = new float[n, n];
-            float s = (2.0f * Maths.Pi) / n;
+            float s = 2.0f * Maths.Pi / n;
 
             for (i = 0; i < n; i++)
             {
@@ -66,7 +80,7 @@ namespace UMapx.Transform
                 }
             }
 
-            return (H);
+            return H;
         }
         #endregion
 
@@ -79,7 +93,7 @@ namespace UMapx.Transform
         public float[] Forward(float[] A)
         {
             int N = A.Length;
-            float[,] U = HartleyTransform.Matrix(N);
+            float[,] U = HartleyTransform.Matrix(N, SpectrumType);
             float[] B = Matrice.Dot(A, U);
 
             if (normalized)
@@ -97,7 +111,7 @@ namespace UMapx.Transform
         public float[] Backward(float[] B)
         {
             int N = B.Length;
-            float[,] U = HartleyTransform.Matrix(N);
+            float[,] U = HartleyTransform.Matrix(N, SpectrumType);
             float[] A = Matrice.Dot(B, Matrice.Transpose(U));
 
             if (normalized)
@@ -115,8 +129,8 @@ namespace UMapx.Transform
         public float[,] Forward(float[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            float[,] U = HartleyTransform.Matrix(N);
-            float[,] V = HartleyTransform.Matrix(M);
+            float[,] U = HartleyTransform.Matrix(N, SpectrumType);
+            float[,] V = HartleyTransform.Matrix(M, SpectrumType);
             float[,] B;
 
             if (Direction == Direction.Both)
@@ -145,8 +159,8 @@ namespace UMapx.Transform
         public float[,] Backward(float[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            float[,] U = HartleyTransform.Matrix(N);
-            float[,] V = HartleyTransform.Matrix(M);
+            float[,] U = HartleyTransform.Matrix(N, SpectrumType);
+            float[,] V = HartleyTransform.Matrix(M, SpectrumType);
             float[,] A;
 
             if (Direction == Direction.Both)
@@ -175,7 +189,7 @@ namespace UMapx.Transform
         public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
-            float[,] U = HartleyTransform.Matrix(N);
+            float[,] U = HartleyTransform.Matrix(N, SpectrumType);
             Complex32[] B = Matrice.Dot(A, U);
 
             if (normalized)
@@ -193,7 +207,7 @@ namespace UMapx.Transform
         public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
-            float[,] U = HartleyTransform.Matrix(N);
+            float[,] U = HartleyTransform.Matrix(N, SpectrumType);
             Complex32[] A = Matrice.Dot(B, Matrice.Transpose(U));
 
             if (normalized)
@@ -211,8 +225,8 @@ namespace UMapx.Transform
         public Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            float[,] U = HartleyTransform.Matrix(N);
-            float[,] V = HartleyTransform.Matrix(M);
+            float[,] U = HartleyTransform.Matrix(N, SpectrumType);
+            float[,] V = HartleyTransform.Matrix(M, SpectrumType);
             Complex32[,] B;
 
             if (Direction == Direction.Both)
@@ -241,8 +255,8 @@ namespace UMapx.Transform
         public Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            float[,] U = HartleyTransform.Matrix(N);
-            float[,] V = HartleyTransform.Matrix(M);
+            float[,] U = HartleyTransform.Matrix(N, SpectrumType);
+            float[,] V = HartleyTransform.Matrix(M, SpectrumType);
             Complex32[,] A;
 
             if (Direction == Direction.Both)

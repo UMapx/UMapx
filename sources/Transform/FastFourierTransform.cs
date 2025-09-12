@@ -93,7 +93,7 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Core FFTs
+        #region Core FFT
         /// <summary>
         /// Fast Fourier transform (Bluestein FFT).
         /// </summary>

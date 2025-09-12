@@ -37,43 +37,38 @@ namespace UMapx.Window
             var N = C.N;
             var L = C.L;
             var M = C.M;
+            int halfM = M >> 1;
 
-            // quarter-period tables
-            var c0 = new sbyte[M];
-            var s0 = new sbyte[M];
+            // quarter-period tables (precomputed in cache as float for zero-cast fast mul)
+            var c0 = C.c0;
+            var s0 = C.s0;
 
-            for (int k = 0; k < M; k++)
-            {
-                int r = k & 3;
-                c0[k] = (sbyte)((r == 0) ? +1 : (r == 2) ? -1 : 0);
-                s0[k] = (sbyte)((r == 1) ? +1 : (r == 3) ? -1 : 0);
-            }
-
-            // precompute cos/sin for e^{-i 2π q/L}
-            var cL = new float[L];
-            var sL = new float[L];
-
-            for (int q = 0; q < L; q++)
-            {
-                double ang = 2.0 * Math.PI * q / L;
-                cL[q] = (float)Math.Cos(ang);
-                sL[q] = (float)Math.Sin(ang);
-            }
+            // reverse index tables
+            var revL = C.revL;
+            var revM = C.revM;
 
             // split input into top/bottom halves (xr, xi)
             var xr = new float[N];
             var xi = new float[N];
 
-            Buffer.BlockCopy(A, 0, xr, 0, sizeof(float) * N);
-            Buffer.BlockCopy(A, sizeof(float) * N, xi, 0, sizeof(float) * N);
+            // Safe copy: if only N provided, xi stays zeros
+            int copyN = Math.Min(A.Length, N);
+            Buffer.BlockCopy(A, 0, xr, 0, sizeof(float) * copyN);
+            if (A.Length >= 2 * N)
+                Buffer.BlockCopy(A, sizeof(float) * N, xi, 0, sizeof(float) * N);
 
             // 1) Correlation along L for each residue a (for both branches and both halves)
-            var R = new float[M][];
-            var S = new float[M][];
-            var R2 = new float[M][];
-            var S2 = new float[M][];
+            // Store as contiguous blocks per l for better cache in step (2): idx = l*M + a
+            var R = new float[M * L];
+            var S = new float[M * L];
+            var R2 = new float[M * L];
+            var S2 = new float[M * L];
 
             var Xa = new float[L];
+            var Cx_r = new float[L]; // cos-sum for xr
+            var Sx_r = new float[L]; // sin-sum for xr
+            var Cx_i = new float[L]; // cos-sum for xi
+            var Sx_i = new float[L]; // sin-sum for xi
             var Hy = new float[L];
             var Hy2 = new float[L];
 
@@ -81,81 +76,61 @@ namespace UMapx.Window
             {
                 // --- xr with Ga ---
                 for (int b = 0; b < L; b++) Xa[b] = xr[a + b * M];
-
-                // Single FHT_L; cos/sin via spectral mirroring: HR[q] = H[(L-q)%L]
                 var Hx = FHT.Forward(Xa);
-
-                var Cx = new float[L];
-                var Sx = new float[L];
                 for (int q = 0; q < L; q++)
                 {
-                    int qrev = (q == 0) ? 0 : (L - q);
+                    int qrev = revL[q];
                     float HR = Hx[qrev];
-                    Cx[q] = 0.5f * (Hx[q] + HR); // Σ xr cos
-                    Sx[q] = 0.5f * (Hx[q] - HR); // Σ xr sin
+                    Cx_r[q] = 0.5f * (Hx[q] + HR); // Σ xr cos
+                    Sx_r[q] = 0.5f * (Hx[q] - HR); // Σ xr sin
                 }
+
+                // Y = X * conj(G) for Ga  using correct Hartley combos:
+                // re - im = Cx*(Cg−Sg) + Sx*(Cg+Sg)  →  Cx*diff + Sx*sum
+                var sumG = C.sumG[a];
+                var diffG = C.diffG[a];
+                for (int q = 0; q < L; q++)
+                    Hy[q] = Cx_r[q] * diffG[q] + Sx_r[q] * sumG[q];
+                var yR = FHT.Backward(Hy);   // r_a[l]
 
                 // --- xi with Ga ---
                 for (int b = 0; b < L; b++) Xa[b] = xi[a + b * M];
-
                 var Hi = FHT.Forward(Xa);
-
-                var Cxi = new float[L];
-                var Sxi = new float[L];
                 for (int q = 0; q < L; q++)
                 {
-                    int qrev = (q == 0) ? 0 : (L - q);
+                    int qrev = revL[q];
                     float HR = Hi[qrev];
-                    Cxi[q] = 0.5f * (Hi[q] + HR); // Σ xi cos
-                    Sxi[q] = 0.5f * (Hi[q] - HR); // Σ xi sin
+                    Cx_i[q] = 0.5f * (Hi[q] + HR); // Σ xi cos
+                    Sx_i[q] = 0.5f * (Hi[q] - HR); // Σ xi sin
                 }
-
-                // Y = X * conj(G) for Ga
-                var Cg_a = C.Cg[a]; var Sg_a = C.Sg[a];
 
                 for (int q = 0; q < L; q++)
-                {
-                    float re = Cx[q] * Cg_a[q] + Sx[q] * Sg_a[q];
-                    float im = Cx[q] * Sg_a[q] - Sx[q] * Cg_a[q];
-                    Hy[q] = re - im;   // xr with Ga
+                    Hy2[q] = Cx_i[q] * diffG[q] + Sx_i[q] * sumG[q];
+                var yS = FHT.Backward(Hy2);  // s_a[l]
 
-                    float re_i = Cxi[q] * Cg_a[q] + Sxi[q] * Sg_a[q];
-                    float im_i = Cxi[q] * Sg_a[q] - Sxi[q] * Cg_a[q];
-                    Hy2[q] = re_i - im_i; // xi with Ga
-                }
+                // ----- G2 branch, use pre-rotated combos for a ≥ M/2 -----
+                var sumG2 = (a >= halfM) ? C.sumG2S[a] : C.sumG2[a];
+                var diffG2 = (a >= halfM) ? C.diffG2S[a] : C.diffG2[a];
 
-                R[a] = FHT.Backward(Hy);   // r_a[l]
-                S[a] = FHT.Backward(Hy2);  // s_a[l]
-
-                // Y = X * conj(G2) for Ga2 (residue a+M/2), with extra +1 shift along L when a ≥ M/2
-                var Cg2_a = C.Cg2[a]; var Sg2_a = C.Sg2[a];
-                bool shift1 = a >= (M >> 1);
-
+                // xr with G2  (use xr cos/sin sums)  →  Cx*diff2 + Sx*sum2
                 for (int q = 0; q < L; q++)
+                    Hy[q] = Cx_r[q] * diffG2[q] + Sx_r[q] * sumG2[q];
+                var yR2 = FHT.Backward(Hy);   // r2_a[l]
+
+                // xi with G2  (use xi cos/sin sums)
+                for (int q = 0; q < L; q++)
+                    Hy2[q] = Cx_i[q] * diffG2[q] + Sx_i[q] * sumG2[q];
+                var yS2 = FHT.Backward(Hy2);  // s2_a[l]
+
+                // scatter to R,S,R2,S2 as blocks by l (idx = l*M + a)
+                for (int l = 0; l < L; l++)
                 {
-                    // rotate conj(G2) by e^{-i·2π q/L} if shift1
-                    float Cr = Cg2_a[q];
-                    float Sr = Sg2_a[q];
-
-                    if (shift1)
-                    {
-                        float cx = cL[q], s = sL[q];
-                        float Cr2 = Cr * cx + Sr * s;
-                        float Sr2 = -Cr * s + Sr * cx;
-                        Cr = Cr2; Sr = Sr2;
-                    }
-
-                    float re2 = Cx[q] * Cr + Sx[q] * Sr;
-                    float im2 = Cx[q] * Sr - Sx[q] * Cr;
-                    Hy[q] = re2 - im2;
-
-                    float re2i = Cxi[q] * Cr + Sxi[q] * Sr;
-                    float im2i = Cxi[q] * Sr - Sxi[q] * Cr;
-                    Hy2[q] = re2i - im2i;
+                    int idx = l * M + a;
+                    R[idx] = yR[l];
+                    S[idx] = yS[l];
+                    R2[idx] = yR2[l];
+                    S2[idx] = yS2[l];
                 }
-
-                R2[a] = FHT.Backward(Hy);   // r2_a[l]
-                S2[a] = FHT.Backward(Hy2);  // s2_a[l]
             }
 
             // 2) For each l: FHT along a (length M) + quarter-period mixing
@@ -171,22 +146,24 @@ namespace UMapx.Window
 
             for (int l = 0; l < L; l++)
             {
+                int baseIdx = l * M;
+
                 // --- branch 1 (G1): from R,S ---
-                for (int a = 0; a < M; a++) vec[a] = R[a][l];
+                for (int a = 0; a < M; a++) vec[a] = R[baseIdx + a];
                 var H1 = FHT.Forward(vec);
                 for (int k = 0; k < M; k++)
                 {
-                    int krev = (k == 0) ? 0 : (M - k);
+                    int krev = revM[k];
                     float HR = H1[krev];
                     CR[k] = 0.5f * (H1[k] + HR);
                     SR[k] = 0.5f * (H1[k] - HR);
                 }
 
-                for (int a = 0; a < M; a++) vec[a] = S[a][l];
+                for (int a = 0; a < M; a++) vec[a] = S[baseIdx + a];
                 H1 = FHT.Forward(vec);
                 for (int k = 0; k < M; k++)
                 {
-                    int krev = (k == 0) ? 0 : (M - k);
+                    int krev = revM[k];
                     float HR = H1[krev];
                     CS[k] = 0.5f * (H1[k] + HR);
                     SS[k] = 0.5f * (H1[k] - HR);
@@ -194,27 +171,27 @@ namespace UMapx.Window
 
                 for (int k = 0; k < M; k++)
                 {
-                    // c1 = cos(φ−πk/2)·R + sin(φ−πk/2)·S
+                    // c1 =  cos(φ−πk/2)·R + sin(φ−πk/2)·S
                     float re1 = c0[k] * (CR[k] + SS[k]) + s0[k] * (SR[k] - CS[k]);
                     c[l * M + k] = re1 * scale;
                 }
 
                 // --- branch 2 (G2): from R2,S2) ---
-                for (int a = 0; a < M; a++) vec[a] = R2[a][l];
+                for (int a = 0; a < M; a++) vec[a] = R2[baseIdx + a];
                 H1 = FHT.Forward(vec);
                 for (int k = 0; k < M; k++)
                 {
-                    int krev = (k == 0) ? 0 : (M - k);
+                    int krev = revM[k];
                     float HR = H1[krev];
                     CR[k] = 0.5f * (H1[k] + HR);
                     SR[k] = 0.5f * (H1[k] - HR);
                 }
 
-                for (int a = 0; a < M; a++) vec[a] = S2[a][l];
+                for (int a = 0; a < M; a++) vec[a] = S2[baseIdx + a];
                 H1 = FHT.Forward(vec);
                 for (int k = 0; k < M; k++)
                 {
-                    int krev = (k == 0) ? 0 : (M - k);
+                    int krev = revM[k];
                     float HR = H1[krev];
                     CS[k] = 0.5f * (H1[k] + HR);
                     SS[k] = 0.5f * (H1[k] - HR);
@@ -222,7 +199,7 @@ namespace UMapx.Window
 
                 for (int k = 0; k < M; k++)
                 {
-                    // c2 = −sin(φ−πk/2)·R2 + cos(φ−πk/2)·S2
+                    // c2 = −sin(φ−πk/2)·R2 +  cos(φ−πk/2)·S2
                     float re2 = c0[k] * (-SR[k] + CS[k]) + s0[k] * (CR[k] + SS[k]);
                     c[l * M + k + N] = re2 * scale;
                 }
@@ -254,28 +231,15 @@ namespace UMapx.Window
             var N = C.N;
             var L = C.L;
             var M = C.M;
+            int halfM = M >> 1;
 
             // quarter-period tables
-            var c0 = new sbyte[M];
-            var s0 = new sbyte[M];
+            var c0 = C.c0;
+            var s0 = C.s0;
 
-            for (int k = 0; k < M; k++)
-            {
-                int r = k & 3;
-                c0[k] = (sbyte)((r == 0) ? +1 : (r == 2) ? -1 : 0);
-                s0[k] = (sbyte)((r == 1) ? +1 : (r == 3) ? -1 : 0);
-            }
-
-            // precompute cos/sin for e^{-i 2π q/L}
-            var cL = new float[L];
-            var sL = new float[L];
-
-            for (int q = 0; q < L; q++)
-            {
-                double ang = 2.0 * Math.PI * q / L;
-                cL[q] = (float)Math.Cos(ang);
-                sL[q] = (float)Math.Sin(ang);
-            }
+            // reverse index tables
+            var revL = C.revL;
+            var revM = C.revM;
 
             var xr = new float[N];
             var xi = new float[N];
@@ -289,27 +253,26 @@ namespace UMapx.Window
             for (int a = 0; a < M; a++) { A1[a] = new float[L]; A2[a] = new float[L]; B1[a] = new float[L]; B2[a] = new float[L]; }
 
             var C1 = new float[M]; var C2 = new float[M]; // c1(l,·), c2(l,·) with scale undone
-            var P = new float[M]; var Q = new float[M]; // c0-weighted and s0-weighted
+            var P = new float[M]; var Q = new float[M];   // c0-weighted and s0-weighted
 
             for (int l = 0; l < L; l++)
             {
                 // Unpack c1, c2 for fixed l and remove the Forward scale
+                int baseIdx = l * M;
                 for (int k = 0; k < M; k++)
                 {
-                    int u = l * M + k;
-                    C1[k] = B[u] * invScaleM;
-                    C2[k] = B[u + N] * invScaleM;
+                    C1[k] = B[baseIdx + k] * invScaleM;
+                    C2[k] = B[baseIdx + k + N] * invScaleM;
                 }
 
                 // --- A1 = cos_sum(c0*C1) + sin_sum(s0*C1) ---
                 for (int k = 0; k < M; k++) { P[k] = c0[k] * C1[k]; Q[k] = s0[k] * C1[k]; }
-
                 var HP = FHT.Forward(P);
                 var HQ = FHT.Forward(Q);
 
                 for (int a = 0; a < M; a++)
                 {
-                    int arev = (a == 0) ? 0 : (M - a);
+                    int arev = revM[a];
                     float cosP = 0.5f * (HP[a] + HP[arev]); // cos_sum(P)
                     float sinQ = 0.5f * (HQ[a] - HQ[arev]); // sin_sum(Q)
                     A1[a][l] = cosP + sinQ;
@@ -318,7 +281,7 @@ namespace UMapx.Window
                 // --- A2 = sin_sum(c0*C1) − cos_sum(s0*C1) ---
                 for (int a = 0; a < M; a++)
                 {
-                    int arev = (a == 0) ? 0 : (M - a);
+                    int arev = revM[a];
                     float cosS = 0.5f * (HQ[a] + HQ[arev]); // cos_sum(s0*C1)
                     float sinC = 0.5f * (HP[a] - HP[arev]); // sin_sum(c0*C1)
                     A2[a][l] = sinC - cosS;
@@ -326,13 +289,12 @@ namespace UMapx.Window
 
                 // --- B1 = cos_sum(c0*C2) + sin_sum(s0*C2) ---
                 for (int k = 0; k < M; k++) { P[k] = c0[k] * C2[k]; Q[k] = s0[k] * C2[k]; }
-
                 HP = FHT.Forward(P);
                 HQ = FHT.Forward(Q);
 
                 for (int a = 0; a < M; a++)
                 {
-                    int arev = (a == 0) ? 0 : (M - a);
+                    int arev = revM[a];
                     float cosP = 0.5f * (HP[a] + HP[arev]); // cos_sum(P)
                     float sinQ = 0.5f * (HQ[a] - HQ[arev]); // sin_sum(Q)
                     B1[a][l] = cosP + sinQ;
@@ -341,7 +303,7 @@ namespace UMapx.Window
                 // --- B2 = sin_sum(c0*C2) − cos_sum(s0*C2) ---
                 for (int a = 0; a < M; a++)
                 {
-                    int arev = (a == 0) ? 0 : (M - a);
+                    int arev = revM[a];
                     float cosS_fix = 0.5f * (HQ[a] + HQ[arev]); // cos_sum(s0*C2)
                     float sinC_fix = 0.5f * (HP[a] - HP[arev]); // sin_sum(c0*C2)
                     B2[a][l] = sinC_fix - cosS_fix;
@@ -349,62 +311,42 @@ namespace UMapx.Window
             }
 
             // === Step 2: two L-convolutions per residue a, then deinterleave to n = a + b*M ===
-            var col = new float[L];
             var Cx = new float[L];
             var Sx = new float[L];
             var Hy = new float[L];
 
             for (int a = 0; a < M; a++)
             {
+                // Pre-bind branch combos
+                var sumG = C.sumG[a];
+                var diffG = C.diffG[a];
+                var sumG2 = (a >= halfM) ? C.sumG2S[a] : C.sumG2[a];
+                var diffG2 = (a >= halfM) ? C.diffG2S[a] : C.diffG2[a];
+
                 // ----- xr: y1 = g_a * A1 -----
-                Array.Copy(A1[a], col, L);
-                var Hx = FHT.Forward(col);
+                var Hx = FHT.Forward(A1[a]); // no copy (assumes Forward doesn't modify)
                 for (int q = 0; q < L; q++)
                 {
-                    int qrev = (q == 0) ? 0 : (L - q);
+                    int qrev = revL[q];
                     float HR = Hx[qrev];
                     Cx[q] = 0.5f * (Hx[q] + HR);
                     Sx[q] = 0.5f * (Hx[q] - HR);
                 }
-
-                var Cg_a = C.Cg[a]; var Sg_a = C.Sg[a];
                 for (int q = 0; q < L; q++)
-                {
-                    float re = Cx[q] * Cg_a[q] - Sx[q] * Sg_a[q];
-                    float im = Cx[q] * Sg_a[q] + Sx[q] * Cg_a[q];
-                    Hy[q] = re + im; // Hartley spectrum (cas)
-                }
+                    Hy[q] = Cx[q] * sumG[q] + Sx[q] * diffG[q];
                 var y1 = FHT.Backward(Hy);
 
                 // ----- xr: y2 = g_{a+M/2}(+1 shift if a≥M/2) * (−B2) -----
-                Array.Copy(B2[a], col, L);
-                for (int i = 0; i < L; i++) col[i] = -col[i]; // minus sign from the branch-2 formula
-                Hx = FHT.Forward(col);
+                Hx = FHT.Forward(B2[a]);
                 for (int q = 0; q < L; q++)
                 {
-                    int qrev = (q == 0) ? 0 : (L - q);
+                    int qrev = revL[q];
                     float HR = Hx[qrev];
-                    Cx[q] = 0.5f * (Hx[q] + HR);
-                    Sx[q] = 0.5f * (Hx[q] - HR);
+                    Cx[q] = -0.5f * (Hx[q] + HR); // minus sign from the branch-2 formula
+                    Sx[q] = -0.5f * (Hx[q] - HR);
                 }
-
-                var Cg2_a = C.Cg2[a]; var Sg2_a = C.Sg2[a];
-                bool shift1 = a >= (M >> 1);
                 for (int q = 0; q < L; q++)
-                {
-                    float Cr = Cg2_a[q], Sr = Sg2_a[q];
-                    if (shift1)
-                    {
-                        // +1 shift along L => multiply G2 by e^{-i 2π q / L}
-                        float cph = cL[q], sph = sL[q];
-                        float Cr2 = Cr * cph + Sr * sph;
-                        float Sr2 = -Cr * sph + Sr * cph;
-                        Cr = Cr2; Sr = Sr2;
-                    }
-                    float re = Cx[q] * Cr - Sx[q] * Sr;
-                    float im = Cx[q] * Sr + Sx[q] * Cr;
-                    Hy[q] = re + im;
-                }
+                    Hy[q] = Cx[q] * sumG2[q] + Sx[q] * diffG2[q];
                 var y2 = FHT.Backward(Hy);
 
                 // Scatter back to xr at n = a + b*M
@@ -415,48 +357,29 @@ namespace UMapx.Window
                 }
 
                 // ----- xi: z1 = g_a * A2 -----
-                Array.Copy(A2[a], col, L);
-                Hx = FHT.Forward(col);
+                Hx = FHT.Forward(A2[a]);
                 for (int q = 0; q < L; q++)
                 {
-                    int qrev = (q == 0) ? 0 : (L - q);
+                    int qrev = revL[q];
                     float HR = Hx[qrev];
                     Cx[q] = 0.5f * (Hx[q] + HR);
                     Sx[q] = 0.5f * (Hx[q] - HR);
                 }
                 for (int q = 0; q < L; q++)
-                {
-                    float re = Cx[q] * Cg_a[q] - Sx[q] * Sg_a[q];
-                    float im = Cx[q] * Sg_a[q] + Sx[q] * Cg_a[q];
-                    Hy[q] = re + im;
-                }
+                    Hy[q] = Cx[q] * sumG[q] + Sx[q] * diffG[q];
                 var z1 = FHT.Backward(Hy);
 
                 // ----- xi: z2 = g_{a+M/2}(+1 shift if a≥M/2) * (+B1) -----
-                Array.Copy(B1[a], col, L);
-                Hx = FHT.Forward(col);
+                Hx = FHT.Forward(B1[a]);
                 for (int q = 0; q < L; q++)
                 {
-                    int qrev = (q == 0) ? 0 : (L - q);
+                    int qrev = revL[q];
                     float HR = Hx[qrev];
                     Cx[q] = 0.5f * (Hx[q] + HR);
                     Sx[q] = 0.5f * (Hx[q] - HR);
                 }
                 for (int q = 0; q < L; q++)
-                {
-                    float Cr = Cg2_a[q], Sr = Sg2_a[q];
-                    if (shift1)
-                    {
-                        // same e^{-i 2π q / L} rotation
-                        float cph = cL[q], sph = sL[q];
-                        float Cr2 = Cr * cph + Sr * sph;
-                        float Sr2 = -Cr * sph + Sr * cph;
-                        Cr = Cr2; Sr = Sr2;
-                    }
-                    float re = Cx[q] * Cr - Sx[q] * Sr;
-                    float im = Cx[q] * Sr + Sx[q] * Cr;
-                    Hy[q] = re + im;
-                }
+                    Hy[q] = Cx[q] * sumG2[q] + Sx[q] * diffG2[q];
                 var z2 = FHT.Backward(Hy);
 
                 for (int b = 0; b < L; b++)
@@ -560,7 +483,83 @@ namespace UMapx.Window
                 this.Sg = Sg;
                 this.Cg2 = Cg2;
                 this.Sg2 = Sg2;
+
+                // Precompute helpers
+                revL = new int[L];
+                for (int q = 0; q < L; q++) revL[q] = (q == 0) ? 0 : (L - q);
+                revM = new int[M];
+                for (int k = 0; k < M; k++) revM[k] = (k == 0) ? 0 : (M - k);
+
+                c0 = new float[M];
+                s0 = new float[M];
+                for (int k = 0; k < M; k++)
+                {
+                    int r = k & 3;
+                    c0[k] = (r == 0) ? +1f : (r == 2) ? -1f : 0f;
+                    s0[k] = (r == 1) ? +1f : (r == 3) ? -1f : 0f;
+                }
+
+                cL = new float[L];
+                sL = new float[L];
+                for (int q = 0; q < L; q++)
+                {
+                    double ang = 2.0 * Math.PI * q / L;
+                    cL[q] = (float)Math.Cos(ang);
+                    sL[q] = (float)Math.Sin(ang);
+                }
+
+                // Precompute sum/diff combos for main and half-shift branches,
+                // plus rotated (+1 shift) versions for G2 (used when a ≥ M/2).
+                sumG = new float[M][];
+                diffG = new float[M][];
+                sumG2 = new float[M][];
+                diffG2 = new float[M][];
+                sumG2S = new float[M][];
+                diffG2S = new float[M][];
+
+                for (int a = 0; a < M; a++)
+                {
+                    var C = Cg[a]; var S = Sg[a];
+                    var sum = new float[L]; var dif = new float[L];
+                    for (int q = 0; q < L; q++) { sum[q] = C[q] + S[q]; dif[q] = C[q] - S[q]; }
+                    sumG[a] = sum;
+                    diffG[a] = dif;
+
+                    var C2 = Cg2[a]; var S2 = Sg2[a];
+                    var sum2 = new float[L]; var dif2 = new float[L];
+                    for (int q = 0; q < L; q++) { sum2[q] = C2[q] + S2[q]; dif2[q] = C2[q] - S2[q]; }
+                    sumG2[a] = sum2;
+                    diffG2[a] = dif2;
+
+                    // rotated ( +1 shift along L ): rotate (C2,S2) by e^{-i 2π q/L}
+                    var sum2s = new float[L]; var dif2s = new float[L];
+                    for (int q = 0; q < L; q++)
+                    {
+                        float Cr = C2[q] * cL[q] + S2[q] * sL[q];
+                        float Sr = -C2[q] * sL[q] + S2[q] * cL[q];
+                        sum2s[q] = Cr + Sr;
+                        dif2s[q] = Cr - Sr;
+                    }
+                    sumG2S[a] = sum2s;
+                    diffG2S[a] = dif2s;
+                }
             }
+
+            // ----------- Extra precomputed helpers for speed -----------
+            public readonly int[] revL;
+            public readonly int[] revM;
+            public readonly float[] c0;
+            public readonly float[] s0;
+            public readonly float[] cL;
+            public readonly float[] sL;
+
+            // combos
+            public readonly float[][] sumG;    // Cg + Sg
+            public readonly float[][] diffG;   // Cg - Sg
+            public readonly float[][] sumG2;   // Cg2 + Sg2
+            public readonly float[][] diffG2;  // Cg2 - Sg2
+            public readonly float[][] sumG2S;  // rotated ( +1 shift ) combos
+            public readonly float[][] diffG2S;
 
             /// <summary>
             /// Build a <see cref="RealPolyphaseCache"/> from a window function and grid (N, M).
@@ -668,7 +667,7 @@ namespace UMapx.Window
                     Sg2[a] = S2;
                 }
 
-                // Return the completed cache object.
+                // Return the completed cache object (constructor will complete precomputations).
                 return new RealPolyphaseCache(N, Mloc, L, Cg, Sg, Cg2, Sg2);
             }
         }
@@ -676,7 +675,7 @@ namespace UMapx.Window
         /// <summary>
         /// UMapx fast Hartley transform.
         /// </summary>
-        private static readonly FastHartleyTransform FHT = new FastHartleyTransform(false, Direction.Vertical);
+        private static readonly FastHartleyTransform FHT = new FastHartleyTransform(false, SpectrumType.Hartley, Direction.Vertical);
 
         #endregion
     }
