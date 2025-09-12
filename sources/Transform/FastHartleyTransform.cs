@@ -266,7 +266,7 @@ namespace UMapx.Transform
             else
             {
                 // Odd-length fallback: direct O(n^2) Hartley (pure, no FFT).
-                DirectFHT(src, sOff, sStride, n, dst, dOff);
+                DHT(src, sOff, sStride, n, dst, dOff);
             }
         }
 
@@ -274,7 +274,7 @@ namespace UMapx.Transform
         /// Direct Hartley transform (no normalization): Y[k] = Σ_n x[n] * cas(2π n k / N).
         /// Optimized with trigonometric recurrences per k (no per-sample trig calls).
         /// </summary>
-        private static void DirectFHT(float[] src, int sOff, int sStride, int n, float[] dst, int dOff)
+        private static void DHT(float[] src, int sOff, int sStride, int n, float[] dst, int dOff)
         {
             // For each k, cas(m * ωk) is generated via recurrence:
             // cos((m+1)φ) = cos mφ * cos φ - sin mφ * sin φ

@@ -12,7 +12,7 @@ namespace UMapx.Decomposition
     /// https://en.wikipedia.org/wiki/Non-negative_matrix_factorization
     /// </remarks>
     [Serializable]
-    public class NNMF
+    public class NMF
     {
         #region Private data
         private float[,] w;       // W is m x r (weights)
@@ -29,7 +29,7 @@ namespace UMapx.Decomposition
         /// <param name="A">Non-negative matrix</param>
         /// <param name="r">The dimension of new matrices</param>
         /// <param name="iterations">Number of iterations</param>
-        public NNMF(float[,] A, int r, int iterations = 100)
+        public NMF(float[,] A, int r, int iterations = 100)
         {
             this.m = A.GetLength(0);
             this.n = A.GetLength(1);
