@@ -31,7 +31,7 @@ namespace UMapx.Window
         /// Initializes a group of orthogonal bases and Weyl-Heisenberg transformations.
         /// </summary>
         /// <param name="window">Windows function</param>
-        /// <param name="m">Number of frequency shifts [1, N/2]</param>
+        /// <param name="m">Number of frequency shifts [1, N]</param>
         /// <param name="direction">Processing direction</param>
         public WeylHeisenbergTransform(IWindow window, int m = 8, Direction direction = Direction.Vertical)
         {

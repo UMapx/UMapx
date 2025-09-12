@@ -33955,7 +33955,7 @@
             Initializes a group of orthogonal bases and Weyl-Heisenberg transformations.
             </summary>
             <param name="window">Windows function</param>
-            <param name="m">Number of frequency shifts [1, N/2]</param>
+            <param name="m">Number of frequency shifts [1, N]</param>
             <param name="direction">Processing direction</param>
         </member>
         <member name="P:UMapx.Window.WeylHeisenbergTransform.M">
