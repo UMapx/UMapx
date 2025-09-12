@@ -208,8 +208,6 @@ namespace UMapx.Window
             return c;
         }
 
-
-
         /// <summary>
         /// Backward (synthesis): c[2N] -> y[2N], fast Hartley-only inverse
         /// that mirrors the Forward factorization (matches your matrix form).
