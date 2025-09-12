@@ -326,10 +326,10 @@ namespace UMapx.Transform
             //    where ⊗ is linear convolution computed via FHT on size P.
 
             // Real convs (length L, calculated on size P):
-            var t1 = RealLinearConvFHT(ar, n, br, P, L, P); // ar ⊗ br
-            var t2 = RealLinearConvFHT(ai, n, bi, P, L, P); // ai ⊗ bi
-            var t3 = RealLinearConvFHT(ar, n, bi, P, L, P); // ar ⊗ bi
-            var t4 = RealLinearConvFHT(ai, n, br, P, L, P); // ai ⊗ br
+            var t1 = RealLinearConvFHT(ar, n, br, P, L); // ar ⊗ br
+            var t2 = RealLinearConvFHT(ai, n, bi, P, L); // ai ⊗ bi
+            var t3 = RealLinearConvFHT(ar, n, bi, P, L); // ar ⊗ bi
+            var t4 = RealLinearConvFHT(ai, n, br, P, L); // ai ⊗ br
 
             var cr = new float[L];
             var ci = new float[L];
@@ -369,7 +369,7 @@ namespace UMapx.Transform
         ///  4) Return first L samples (linear conv region)
         /// Note: uses pure FHT (no normalization inside; 1/P appears explicitly).
         /// </summary>
-        private static float[] RealLinearConvFHT(float[] a, int la, float[] b_pad, int P, int L, int Pchecked)
+        private static float[] RealLinearConvFHT(float[] a, int la, float[] b_pad, int P, int L)
         {
             // Safety: Pchecked==P is just to stress size is power-of-two
             // Pack a→A (size P), b already in b_pad (size P)

@@ -26063,7 +26063,7 @@
             is obtained by four real convs.
             </summary>
         </member>
-        <member name="M:UMapx.Transform.FastHartleyTransform.RealLinearConvFHT(System.Single[],System.Int32,System.Single[],System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Transform.FastHartleyTransform.RealLinearConvFHT(System.Single[],System.Int32,System.Single[],System.Int32,System.Int32)">
             <summary>
             Real linear convolution y = a ⊗ b (length L = la + lb_eff - 1),
             computed via Hartley-only convolution theorem on size P (power-of-two).
