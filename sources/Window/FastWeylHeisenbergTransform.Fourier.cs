@@ -102,7 +102,7 @@ namespace UMapx.Window
                 // HALF branch:
                 // If (n0 + M/2) wraps past M, that implies a +1 shift in r, i.e. multiply by exp(−j·2πq/L).
                 var Th = T_hat[n0];
-                bool carry = ((n0 + (M >> 1)) >= M);
+                bool carry = (n0 + (M >> 1)) >= M;
                 if (carry)
                 {
                     for (int q = 0; q < L; q++)
@@ -148,7 +148,7 @@ namespace UMapx.Window
                     // Two-channel packing consistent with the slow matrix reference:
                     //   main:  B[u]     =  P · gain,
                     //   half:  B[u + N] = (−j) · Q · gain.
-                    B[u] = P * gain;
+                    B[u + 0] = P * gain;
                     B[u + N] = -Complex32.I * Q * gain;
                 }
             }
@@ -283,7 +283,7 @@ namespace UMapx.Window
                 //   where conj(φ_carry) = exp(+j·2π q/L) iff the forward half-branch wrapped.
                 var Sh = S_hat[n0];
                 var Th = T_hat[n0];
-                bool carry = ((n0 + (M >> 1)) >= M);
+                bool carry = (n0 + (M >> 1)) >= M;
 
                 if (carry)
                 {
