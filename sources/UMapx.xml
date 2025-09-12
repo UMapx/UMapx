@@ -25992,53 +25992,69 @@
         </member>
         <member name="T:UMapx.Transform.FastHartleyTransform">
             <summary>
-            Pure fast Hartley transform (FHT), no FFT coupling.
-            Radix-2 DIT recursion with exact Hartley twiddle algebra.
+            Defines the fast Hartley transform.
             </summary>
             <remarks>
-            Core combine (for N = 2M):
-              X[k]     = E[k] + cos(πk/M) * O[k] + sin(πk/M) * O[(M - k) % M]
-              X[k + M] = E[k] - cos(πk/M) * O[k] - sin(πk/M) * O[(M - k) % M]
-            This follows the classic Bracewell/Sorensen FHT identities (self-inverse up to scaling).
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Discrete_Hartley_transform
             </remarks>
         </member>
-        <member name="M:UMapx.Transform.FastHartleyTransform.#ctor(System.Boolean,UMapx.Core.Direction)">
+        <member name="F:UMapx.Transform.FastHartleyTransform.FFT">
             <summary>
-            Initializes the fast Hartley transform (pure FHT, no FFT).
+            Fourier transform.
             </summary>
-            <param name="normalized">Apply 1/sqrt(N) scaling (orthonormal form)</param>
-            <param name="direction">Processing direction (kept for API parity)</param>
+        </member>
+        <member name="M:UMapx.Transform.FastHartleyTransform.#ctor(System.Boolean,UMapx.Core.Direction,UMapx.Transform.SpectrumType)">
+            <summary>
+            Initializes the fast Hartley transform.
+            </summary>
+            <param name="normalized">Normalized transform or not</param>
+            <param name="direction">Processing direction</param>
+            <param name="spectrumType">Spectrum type</param>
         </member>
         <member name="P:UMapx.Transform.FastHartleyTransform.Normalized">
             <summary>
-            Normalized transform or not (1/sqrt(N) scaling on both forward/backward).
+            Normalized transform or not.
             </summary>
         </member>
         <member name="P:UMapx.Transform.FastHartleyTransform.Direction">
             <summary>
-            Gets or sets the processing direction (placeholder for matrix paths).
+            Gets or sets the processing direction.
+            </summary>
+        </member>
+        <member name="P:UMapx.Transform.FastHartleyTransform.SpectrumType">
+            <summary>
+            Gets or sets spectrum type.
             </summary>
         </member>
         <member name="M:UMapx.Transform.FastHartleyTransform.Forward(System.Single[])">
             <summary>
-            Forward Hartley transform (real → real), O(N log N) for even N via pure FHT.
-            For odd N (or tiny N), falls back to safe O(N^2) Hartley kernel.
+            Forward transform.
             </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FastHartleyTransform.Backward(System.Single[])">
             <summary>
-            Backward Hartley transform (real → real), identical to forward up to scaling.
+            Backward transform.
             </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.FastHartleyTransform.FHT(System.Single[],System.Int32,System.Int32,System.Int32,System.Single[],System.Int32)">
             <summary>
             Radix-2 DIT FHT for even n; safe O(n^2) direct Hartley for odd n.
             Writes n outputs contiguously to dst[dOff .. dOff + n - 1].
+            Optimizations:
+             • Fast bases for n=2 and n=4 (no recursion, no trig)
+             • Trigonometric recurrences for twiddles (one sin/cos per call, O(1) per k)
+             • Single-precision math (MathF) to reduce casts and overhead
             </summary>
         </member>
         <member name="M:UMapx.Transform.FastHartleyTransform.DirectFHT(System.Single[],System.Int32,System.Int32,System.Int32,System.Single[],System.Int32)">
             <summary>
             Direct Hartley transform (no normalization): Y[k] = Σ_n x[n] * cas(2π n k / N).
+            Optimized with trigonometric recurrences per k (no per-sample trig calls).
             </summary>
         </member>
         <member name="T:UMapx.Transform.FastHilbertTransform">
