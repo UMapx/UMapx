@@ -85,12 +85,12 @@ namespace UMapx.Window
                     Sx_r[q] = 0.5f * (Hx[q] - HR); // Σ xr sin
                 }
 
-                // Y = X * conj(G) for Ga  using precomputed combos:
-                // Hy[q] = Cx*sum + Sx*diff  where sum=(Cg+Sg), diff=(Cg−Sg)
+                // Y = X * conj(G) for Ga  using correct Hartley combos:
+                // re - im = Cx*(Cg−Sg) + Sx*(Cg+Sg)  →  Cx*diff + Sx*sum
                 var sumG = C.sumG[a];
                 var diffG = C.diffG[a];
                 for (int q = 0; q < L; q++)
-                    Hy[q] = Cx_r[q] * sumG[q] + Sx_r[q] * diffG[q];
+                    Hy[q] = Cx_r[q] * diffG[q] + Sx_r[q] * sumG[q];
                 var yR = FHT.Backward(Hy);   // r_a[l]
 
                 // --- xi with Ga ---
@@ -105,21 +105,21 @@ namespace UMapx.Window
                 }
 
                 for (int q = 0; q < L; q++)
-                    Hy2[q] = Cx_i[q] * sumG[q] + Sx_i[q] * diffG[q];
+                    Hy2[q] = Cx_i[q] * diffG[q] + Sx_i[q] * sumG[q];
                 var yS = FHT.Backward(Hy2);  // s_a[l]
 
                 // ----- G2 branch, use pre-rotated combos for a ≥ M/2 -----
                 var sumG2 = (a >= halfM) ? C.sumG2S[a] : C.sumG2[a];
                 var diffG2 = (a >= halfM) ? C.diffG2S[a] : C.diffG2[a];
 
-                // xr with G2  (IMPORTANT: use xr cos/sin sums!)
+                // xr with G2  (use xr cos/sin sums)  →  Cx*diff2 + Sx*sum2
                 for (int q = 0; q < L; q++)
-                    Hy[q] = Cx_r[q] * sumG2[q] + Sx_r[q] * diffG2[q];
+                    Hy[q] = Cx_r[q] * diffG2[q] + Sx_r[q] * sumG2[q];
                 var yR2 = FHT.Backward(Hy);   // r2_a[l]
 
                 // xi with G2  (use xi cos/sin sums)
                 for (int q = 0; q < L; q++)
-                    Hy2[q] = Cx_i[q] * sumG2[q] + Sx_i[q] * diffG2[q];
+                    Hy2[q] = Cx_i[q] * diffG2[q] + Sx_i[q] * sumG2[q];
                 var yS2 = FHT.Backward(Hy2);  // s2_a[l]
 
                 // scatter to R,S,R2,S2 as blocks by l (idx = l*M + a)
@@ -207,6 +207,7 @@ namespace UMapx.Window
 
             return c;
         }
+
 
 
         /// <summary>
