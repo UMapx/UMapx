@@ -676,7 +676,7 @@ namespace UMapx.Window
         /// <summary>
         /// UMapx fast Hartley transform.
         /// </summary>
-        private static readonly FastHartleyTransform FHT = new FastHartleyTransform(false, Direction.Vertical);
+        private static readonly FastHartleyTransform FHT = new FastHartleyTransform(false, SpectrumType.Fourier, Direction.Vertical);
 
         #endregion
     }

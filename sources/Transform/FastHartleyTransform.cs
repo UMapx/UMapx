@@ -25,9 +25,9 @@ namespace UMapx.Transform
         /// Initializes the fast Hartley transform.
         /// </summary>
         /// <param name="normalized">Normalized transform or not</param>
-        /// <param name="direction">Processing direction</param>
         /// <param name="spectrumType">Spectrum type</param>
-        public FastHartleyTransform(bool normalized = true, Direction direction = Direction.Vertical, SpectrumType spectrumType = SpectrumType.Fourier)
+        /// <param name="direction">Processing direction</param>
+        public FastHartleyTransform(bool normalized = true, SpectrumType spectrumType = SpectrumType.Fourier, Direction direction = Direction.Vertical)
         {
             this.FFT = new FastFourierTransform(normalized, direction);
             this.SpectrumType = spectrumType;
@@ -66,7 +66,7 @@ namespace UMapx.Transform
         public SpectrumType SpectrumType { get; set; }
         #endregion
 
-        #region Fast Hartley Transform (1D, float)
+        #region Fast Hartley Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
@@ -312,6 +312,5 @@ namespace UMapx.Transform
             }
         }
         #endregion
-
     }
 }

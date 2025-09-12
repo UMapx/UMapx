@@ -26004,13 +26004,13 @@
             Fourier transform.
             </summary>
         </member>
-        <member name="M:UMapx.Transform.FastHartleyTransform.#ctor(System.Boolean,UMapx.Core.Direction,UMapx.Transform.SpectrumType)">
+        <member name="M:UMapx.Transform.FastHartleyTransform.#ctor(System.Boolean,UMapx.Transform.SpectrumType,UMapx.Core.Direction)">
             <summary>
             Initializes the fast Hartley transform.
             </summary>
             <param name="normalized">Normalized transform or not</param>
-            <param name="direction">Processing direction</param>
             <param name="spectrumType">Spectrum type</param>
+            <param name="direction">Processing direction</param>
         </member>
         <member name="P:UMapx.Transform.FastHartleyTransform.Normalized">
             <summary>
@@ -26827,11 +26827,12 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="M:UMapx.Transform.HartleyTransform.#ctor(System.Boolean,UMapx.Core.Direction)">
+        <member name="M:UMapx.Transform.HartleyTransform.#ctor(System.Boolean,UMapx.Transform.SpectrumType,UMapx.Core.Direction)">
             <summary>
             Initializes the Hartley transform.
             </summary>
             <param name="normalized">Normalized transform or not</param>
+            <param name="spectrumType">Spectrum type</param>
             <param name="direction">Processing direction</param>
         </member>
         <member name="P:UMapx.Transform.HartleyTransform.Normalized">
@@ -26839,11 +26840,17 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="M:UMapx.Transform.HartleyTransform.Matrix(System.Int32)">
+        <member name="P:UMapx.Transform.HartleyTransform.SpectrumType">
+            <summary>
+            Gets or sets spectrum type.
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.HartleyTransform.Matrix(System.Int32,UMapx.Transform.SpectrumType)">
             <summary>
             Implements the construction of the Hartley transform matrix.
             </summary>
             <param name="n">Size</param>
+            <param name="spectrumType">Spectrum type</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.HartleyTransform.Forward(System.Single[])">
