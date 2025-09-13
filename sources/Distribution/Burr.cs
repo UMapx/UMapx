@@ -67,7 +67,11 @@ namespace UMapx.Distribution
         /// </summary>
         public float Mean
         {
-            get { return k * Special.Beta(k - 1.0f / c, 1.0f + 1.0f / c); }
+            get 
+            {
+                if (k <= 1.0f / c) return float.NaN;
+                return k * Special.Beta(k - 1.0f / c, 1.0f + 1.0f / c); 
+            }
         }
         /// <summary>
         /// Gets the variance value.
@@ -83,7 +87,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                if (c > 1 && k * c > 1)
+                if (c > 1)
                     return Maths.Pow((c - 1) / (k * c + 1), 1.0f / c);
 
                 return 0;
