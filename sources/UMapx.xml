@@ -1,27 +1,18 @@
-            <remarks>
+            The mode is calculated as <c>sqrt((2 * μ - 1) * ω / μ)</c>.
             The variance is defined only for <c>k &gt; 2/c</c>. For
             <c>k ≤ 2/c</c> the second moment diverges and the method
             returns <see cref="F:System.Single.PositiveInfinity"/>.
-            </remarks>
-            <remarks>
             Defined only when <c>k &gt; 3/c</c>; otherwise returns
             <see cref="F:System.Single.NaN"/>.
-            </remarks>
             for <c>k &gt; 4/c</c>; for <c>2/c &lt; k ≤ 4/c</c> the fourth moment
             diverges and the method returns <see cref="F:System.Single.PositiveInfinity"/>.
             For <c>k ≤ 2/c</c> the result is <see cref="F:System.Single.NaN"/>.
-            <remarks>
             Defined for all <c>c &gt; 0</c> and <c>k &gt; 0</c>.
-            </remarks>
             The distribution is defined for positive degrees of freedom
             <c>d1 &gt; 0</c> and <c>d2 &gt; 0</c>. Its median has no closed form and is
             computed numerically. More information can be found on the website:
             Gets the median value (computed numerically).
-            <remarks>
             The CDF is expressed through the regularized incomplete beta function
             after converting <paramref name="x"/> to the corresponding
             F-distribution variable.
-            </remarks>
-            <remarks>
             Uses Wilson–Hilferty approximation.
-            </remarks>

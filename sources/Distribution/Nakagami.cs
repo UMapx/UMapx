@@ -114,14 +114,13 @@ namespace UMapx.Distribution
         }
         /// <summary>
         /// Gets the mode value.
+        /// The mode is calculated as <c>sqrt((2 * μ - 1) * ω / μ)</c>.
         /// </summary>
         public float Mode
         {
             get
             {
-                float a = Maths.Sqrt2 / 2;
-                float b = (2 * mu - 1) * omega / mu;
-                return a * Maths.Sqrt(b);
+                return Maths.Sqrt((2 * mu - 1) * omega / mu);
             }
         }
         /// <summary>
