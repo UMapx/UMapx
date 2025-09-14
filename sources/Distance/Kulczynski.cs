@@ -4,7 +4,8 @@ namespace UMapx.Distance
 {
     /// <summary>
     /// Defines Kulczynski distance.
-    /// For details see https://en.wikipedia.org/wiki/Kulczynski_dissimilarity.
+    /// D = 0.5 * (tf / (tt + tf) + ft / (tt + ft)).
+    /// See https://en.wikipedia.org/wiki/Kulczynski_dissimilarity.
     /// </summary>
     public class Kulczynski : DistanceBase, IDistance
     {
@@ -18,9 +19,9 @@ namespace UMapx.Distance
         public override float Compute(float[] p, float[] q)
         {
             int n = p.Length;
-            int tf = 0;
-            int ft = 0;
-            int tt = 0;
+            float tf = 0;
+            float ft = 0;
+            float tt = 0;
 
             for (int i = 0; i < n; i++)
             {
@@ -29,7 +30,7 @@ namespace UMapx.Distance
                 if (p[i] != 0 && q[i] != 0) tt++;
             }
 
-            return 0.5f * (tf / (float)(tt + tf) + ft / (float)(tt + ft));
+            return 0.5f * (tf / (tt + tf) + ft / (tt + ft));
         }
         /// <summary>
         /// Returns distance value.
@@ -40,9 +41,9 @@ namespace UMapx.Distance
         public override Complex32 Compute(Complex32[] p, Complex32[] q)
         {
             int n = p.Length;
-            int tf = 0;
-            int ft = 0;
-            int tt = 0;
+            float tf = 0;
+            float ft = 0;
+            float tt = 0;
 
             for (int i = 0; i < n; i++)
             {
@@ -51,7 +52,7 @@ namespace UMapx.Distance
                 if (p[i] != 0 && q[i] != 0) tt++;
             }
 
-            return 0.5f * (tf / (float)(tt + tf) + ft / (float)(tt + ft));
+            return 0.5f * (tf / (tt + tf) + ft / (tt + ft));
         }
         #endregion
     }
