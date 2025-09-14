@@ -132,7 +132,7 @@ namespace UMapx.Distribution
                 {
                     return 1f;
                 }
-                throw new ArgumentException("Distribution undefined for τ = 0 when t ≠ 0.", nameof(tau));
+                throw new ArgumentException("Distribution undefined for τ = 0 when t ≠ 0", nameof(tau));
             }
             if (Math.Abs(tau) >= 2 * Math.Abs(t))
             {

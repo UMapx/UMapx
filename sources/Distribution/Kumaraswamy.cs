@@ -130,7 +130,11 @@ namespace UMapx.Distribution
         /// </summary>
         public float Entropy
         {
-            get { return float.NaN; }
+            get 
+            {
+                return (1f - 1f / b) + (1f - 1f / a) * Special.DiGamma(1f + 1f / a)
+                    - Special.DiGamma(b) - Maths.Log(a) - Maths.Log(b);
+            }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.

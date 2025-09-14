@@ -14502,6 +14502,9 @@
             <summary>
             Gets the value of the asymmetry coefficient.
             </summary>
+            <remarks>
+            Skewness is undefined when all trials succeed or fail.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Binomial.Excess">
             <summary>
@@ -15029,7 +15032,11 @@
             </summary>
             <param name="t">Value</param>
             <param name="tau">Value</param>
-            <returns>Value</returns>
+            <returns>
+            Value. When <paramref name="tau"/> equals zero the method
+            returns <c>1</c> for <paramref name="t"/> equal to zero and throws
+            <see cref="T:System.ArgumentException"/> otherwise.
+            </returns>
         </member>
         <member name="T:UMapx.Distribution.Erlang">
             <summary>
