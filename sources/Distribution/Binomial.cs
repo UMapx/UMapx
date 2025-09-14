@@ -183,8 +183,10 @@ namespace UMapx.Distribution
             if (x >= n)
                 return 1;
 
-            float a = n - x;
-            float b = x + 1;
+            // Interpret x as the integer number of successes k.
+            int k = (int)Maths.Floor(x);
+            float a = n - k;
+            float b = k + 1;
             return Special.BetaIncompleteRegularized(a, b, q);
         }
         /// <summary>
