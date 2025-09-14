@@ -68,7 +68,7 @@ namespace UMapx.Distribution
             set
             {
                 if (value < 0.5f)
-                    throw new ArgumentException("Mu must be greater than or equal to 0.5.");
+                    throw new ArgumentException("Mu must be greater than or equal to 0.5");
 
                 this.mu = value;
                 Initialize(this.mu, this.omega);

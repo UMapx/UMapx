@@ -14124,8 +14124,11 @@
         </member>
         <member name="P:UMapx.Distribution.Arcsine.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Arcsine.Support">
             <summary>
@@ -14232,9 +14235,11 @@
         </member>
         <member name="P:UMapx.Distribution.Bernoulli.Excess">
             <summary>
-            Gets the excess kurtosis.
-            The returned value already equals kurtosis minus 3.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Bernoulli.Function(System.Single)">
             <summary>
@@ -14323,8 +14328,11 @@
         </member>
         <member name="P:UMapx.Distribution.Beta.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Beta.Function(System.Single)">
             <summary>
@@ -14409,8 +14417,11 @@
         </member>
         <member name="P:UMapx.Distribution.BetaPrime.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.BetaPrime.Entropy">
             <summary>
@@ -14494,8 +14505,11 @@
         </member>
         <member name="P:UMapx.Distribution.Binomial.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Binomial.Function(System.Single)">
             <summary>
@@ -14581,8 +14595,11 @@
         </member>
         <member name="P:UMapx.Distribution.BirnbaumSaunders.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.BirnbaumSaunders.Entropy">
             <summary>
@@ -14657,8 +14674,11 @@
         </member>
         <member name="P:UMapx.Distribution.Burr.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Burr.Entropy">
             <summary>
@@ -14747,8 +14767,11 @@
         </member>
         <member name="P:UMapx.Distribution.Cauchy.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Cauchy.Function(System.Single)">
             <summary>
@@ -14822,8 +14845,11 @@
         </member>
         <member name="P:UMapx.Distribution.ChiSquare.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.ChiSquare.Entropy">
             <summary>
@@ -14891,8 +14917,11 @@
         </member>
         <member name="P:UMapx.Distribution.ChoiWilliams.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.ChoiWilliams.Support">
             <summary>
@@ -14967,8 +14996,11 @@
         </member>
         <member name="P:UMapx.Distribution.ConeShape.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.ConeShape.Support">
             <summary>
@@ -15054,8 +15086,11 @@
         </member>
         <member name="P:UMapx.Distribution.Erlang.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Erlang.Entropy">
             <summary>
@@ -15134,8 +15169,11 @@
         </member>
         <member name="P:UMapx.Distribution.Exponential.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Exponential.Function(System.Single)">
             <summary>
@@ -15223,8 +15261,11 @@
         </member>
         <member name="P:UMapx.Distribution.FisherSnedecor.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.FisherSnedecor.Support">
             <summary>
@@ -15303,8 +15344,11 @@
         </member>
         <member name="P:UMapx.Distribution.FisherZ.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.FisherZ.Entropy">
             <summary>
@@ -15397,8 +15441,11 @@
         </member>
         <member name="P:UMapx.Distribution.Gamma.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Gamma.Function(System.Single)">
             <summary>
@@ -15483,8 +15530,11 @@
         </member>
         <member name="P:UMapx.Distribution.Gaussian.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Gaussian.Function(System.Single)">
             <summary>
@@ -15563,8 +15613,11 @@
         </member>
         <member name="P:UMapx.Distribution.Geometric.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Geometric.Function(System.Single)">
             <summary>
@@ -15639,8 +15692,11 @@
         </member>
         <member name="P:UMapx.Distribution.Gompertz.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Gompertz.Entropy">
             <summary>
@@ -15726,6 +15782,9 @@
             <summary>
             Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Gumbel.Entropy">
             <summary>
@@ -15792,6 +15851,9 @@
             <summary>
             Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.HyperbolicSecant.Support">
             <summary>
@@ -15889,8 +15951,11 @@
         </member>
         <member name="P:UMapx.Distribution.Hypergeometric.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Hypergeometric.Function(System.Single)">
             <summary>
@@ -15949,8 +16014,11 @@
         </member>
         <member name="P:UMapx.Distribution.IDistribution.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.IDistribution.Entropy">
             <summary>
@@ -16016,8 +16084,11 @@
         </member>
         <member name="P:UMapx.Distribution.Kumaraswamy.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Kumaraswamy.Support">
             <summary>
@@ -16125,8 +16196,11 @@
         </member>
         <member name="P:UMapx.Distribution.Laplace.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Laplace.Function(System.Single)">
             <summary>
@@ -16206,8 +16280,11 @@
         </member>
         <member name="P:UMapx.Distribution.Levy.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Levy.Entropy">
             <summary>
@@ -16280,8 +16357,11 @@
         </member>
         <member name="P:UMapx.Distribution.Logarithmic.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Logarithmic.Distribution(System.Single)">
             <summary>
@@ -16320,12 +16400,12 @@
             <summary>
             Initializes the logarithmic Gaussian distribution.
             </summary>
-            <param name="sigma">Standard deviation</param>
+            <param name="sigma">Standard deviation (σ > 0)</param>
             <param name="mu">Mathematical expectation</param>
         </member>
         <member name="P:UMapx.Distribution.LogGaussian.Sigma">
             <summary>
-            Gets or sets the standard deviation.
+            Gets or sets the standard deviation (σ > 0).
             </summary>
         </member>
         <member name="P:UMapx.Distribution.LogGaussian.Mu">
@@ -16365,8 +16445,11 @@
         </member>
         <member name="P:UMapx.Distribution.LogGaussian.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.LogGaussian.Function(System.Single)">
             <summary>
@@ -16451,8 +16534,11 @@
         </member>
         <member name="P:UMapx.Distribution.Logistic.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Logistic.Entropy">
             <summary>
@@ -16536,8 +16622,11 @@
         </member>
         <member name="P:UMapx.Distribution.LogLogistic.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.LogLogistic.Function(System.Single)">
             <summary>
@@ -16572,7 +16661,7 @@
             <summary>
             Configures distribution parameters and precomputes constants.
             </summary>
-            <param name="mu">Shape factor</param>
+            <param name="mu">Shape factor (μ ≥ 0.5)</param>
             <param name="omega">Spread coefficient</param>
         </member>
         <member name="M:UMapx.Distribution.Nakagami.#ctor">
@@ -16584,12 +16673,12 @@
             <summary>
             Initializes the distribution of Nakagami.
             </summary>
-            <param name="mu">Shape factor</param>
+            <param name="mu">Shape factor (μ ≥ 0.5)</param>
             <param name="omega">Spread rate</param>
         </member>
         <member name="P:UMapx.Distribution.Nakagami.Mu">
             <summary>
-            Gets or sets the value of the shape factor.
+            Gets or sets the value of the shape factor (μ ≥ 0.5).
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Nakagami.Omega">
@@ -16629,8 +16718,11 @@
         </member>
         <member name="P:UMapx.Distribution.Nakagami.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Nakagami.Entropy">
             <summary>
@@ -16717,9 +16809,10 @@
         </member>
         <member name="P:UMapx.Distribution.Pareto.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
             <remarks>
+            Full kurtosis equals 3 plus this value.
             Formula: 6 * (k^3 + k^2 - 6k - 2) / (k * (k - 3) * (k - 4))
             </remarks>
         </member>
@@ -16803,8 +16896,11 @@
         </member>
         <member name="P:UMapx.Distribution.Poisson.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Poisson.Function(System.Single)">
             <summary>
@@ -16879,8 +16975,11 @@
         </member>
         <member name="P:UMapx.Distribution.Rademacher.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Rademacher.Distribution(System.Single)">
             <summary>
@@ -16960,8 +17059,11 @@
         </member>
         <member name="P:UMapx.Distribution.Rayleigh.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Rayleigh.Function(System.Single)">
             <summary>
@@ -17038,12 +17140,13 @@
         </member>
         <member name="P:UMapx.Distribution.Student.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
             <remarks>
-            For degrees of freedom in the interval (2, 4], the kurtosis is infinite and
+            Full kurtosis equals 3 plus this value.
+            For degrees of freedom in the interval (2, 4], the excess kurtosis is infinite and
             returns <see cref="F:System.Single.PositiveInfinity"/>. For degrees of freedom ≤ 2, the
-            kurtosis is undefined and returns <see cref="F:System.Single.NaN"/>.
+            excess kurtosis is undefined and returns <see cref="F:System.Single.NaN"/>.
             </remarks>
         </member>
         <member name="P:UMapx.Distribution.Student.Entropy">
@@ -17141,8 +17244,11 @@
         </member>
         <member name="P:UMapx.Distribution.Triangular.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Triangular.Entropy">
             <summary>
@@ -17227,8 +17333,11 @@
         </member>
         <member name="P:UMapx.Distribution.Uniform.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Uniform.Function(System.Single)">
             <summary>
@@ -17308,8 +17417,11 @@
         </member>
         <member name="P:UMapx.Distribution.UQuadratic.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.UQuadratic.Entropy">
             <summary>
@@ -17398,8 +17510,11 @@
         </member>
         <member name="P:UMapx.Distribution.Weibull.Excess">
             <summary>
-            Gets the excess coefficient (kurtosis minus 3).
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Weibull.Function(System.Single)">
             <summary>
@@ -17473,8 +17588,11 @@
         </member>
         <member name="P:UMapx.Distribution.Wigner.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.Wigner.Function(System.Single)">
             <summary>
@@ -17555,8 +17673,11 @@
         </member>
         <member name="P:UMapx.Distribution.WrappedCauchy.Excess">
             <summary>
-            Gets the kurtosis coefficient.
+            Gets the excess kurtosis (kurtosis minus 3).
             </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.WrappedCauchy.Entropy">
             <summary>
