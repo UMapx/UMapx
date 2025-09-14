@@ -73,7 +73,7 @@ namespace UMapx.Distribution
         /// </summary>
         public float Variance
         {
-            get { return 1 - Maths.Exp(-2 * gamma); } // circular variance
+            get { return 1f - Maths.Exp(-gamma); } // returns circular variance
         }
         /// <summary>
         /// Gets the median value.
