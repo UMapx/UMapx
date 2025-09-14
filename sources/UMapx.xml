@@ -14547,6 +14547,11 @@
             https://en.wikipedia.org/wiki/Birnbaum–Saunders_distribution
             </remarks>
         </member>
+        <member name="M:UMapx.Distribution.BirnbaumSaunders.Cbrt(System.Single)">
+            <summary>
+            Returns the real cube root of the given value.
+            </summary>
+        </member>
         <member name="M:UMapx.Distribution.BirnbaumSaunders.#ctor(System.Single,System.Single,System.Single)">
             <summary>
             Initializes the Birnbaum-Saunders distribution.
@@ -14584,6 +14589,9 @@
             <summary>
             Gets the median value.
             </summary>
+            <remarks>
+            The expression is valid for γ &gt; 0.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.BirnbaumSaunders.Variance">
             <summary>
@@ -14594,11 +14602,17 @@
             <summary>
             Gets the mode value.
             </summary>
+            <remarks>
+            Derived from solving a cubic equation; valid for γ &gt; 0.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.BirnbaumSaunders.Skewness">
             <summary>
             Gets the value of the asymmetry coefficient.
             </summary>
+            <remarks>
+            The skewness exists for all γ &gt; 0.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.BirnbaumSaunders.Excess">
             <summary>
@@ -14607,11 +14621,17 @@
             <remarks>
             Full kurtosis equals 3 plus this value.
             </remarks>
+            <remarks>
+            The expression is valid for γ &gt; 0.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.BirnbaumSaunders.Entropy">
             <summary>
             Gets the value of entropy.
             </summary>
+            <remarks>
+            Closed-form expression for γ &gt; 0.
+            </remarks>
         </member>
         <member name="M:UMapx.Distribution.BirnbaumSaunders.Distribution(System.Single)">
             <summary>
