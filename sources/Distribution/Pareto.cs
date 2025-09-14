@@ -145,13 +145,16 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the kurtosis coefficient.
         /// </summary>
+        /// <remarks>
+        /// Formula: 6 * (k^3 + k^2 - 6k - 2) / (k * (k - 3) * (k - 4))
+        /// </remarks>
         public float Excess
         {
             get
             {
                 float k2 = k * k;
                 float k3 = k2 * k;
-                return 6 * (k3 + k2 + 6 * k - 2) / (k * (k - 3) * (k - 4));
+                return 6 * (k3 + k2 - 6 * k - 2) / (k * (k - 3) * (k - 4));
             }
         }
         /// <summary>
