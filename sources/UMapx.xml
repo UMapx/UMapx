@@ -1,4 +1,3 @@
-            <param name="order">Order [1, +inf)</param>
-            Gets or sets order [1, +inf).
-            <param name="p">Array of non-negative values</param>
-            <param name="q">Array of non-negative values</param>
+        <member name="M:UMapx.Distribution.Kumaraswamy.RawMoment(System.Int32,System.Single,System.Single)">
+            Computes <c>b · B(1 + n / a, b)</c>, where <c>B(·,·)</c> is the Euler Beta function.
+            The result corresponds to the coefficient of the n-th raw moment <c>E[X^n]</c>.
