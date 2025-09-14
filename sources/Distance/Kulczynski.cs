@@ -4,6 +4,7 @@ namespace UMapx.Distance
 {
     /// <summary>
     /// Defines Kulczynski distance.
+    /// For details see https://en.wikipedia.org/wiki/Kulczynski_dissimilarity.
     /// </summary>
     public class Kulczynski : DistanceBase, IDistance
     {
@@ -28,9 +29,7 @@ namespace UMapx.Distance
                 if (p[i] != 0 && q[i] != 0) tt++;
             }
 
-            float num = tf + ft - tt + n;
-            float den = ft + tf + n;
-            return num / den;
+            return 0.5f * (tf / (float)(tt + tf) + ft / (float)(tt + ft));
         }
         /// <summary>
         /// Returns distance value.
@@ -52,9 +51,7 @@ namespace UMapx.Distance
                 if (p[i] != 0 && q[i] != 0) tt++;
             }
 
-            float num = tf + ft - tt + n;
-            float den = ft + tf + n;
-            return num / den;
+            return 0.5f * (tf / (float)(tt + tf) + ft / (float)(tt + ft));
         }
         #endregion
     }
