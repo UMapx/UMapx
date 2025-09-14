@@ -7,7 +7,6 @@ namespace UMapx.Distribution
     /// Defines the Gompertz distribution.
     /// </summary>
     /// <remarks>
-    /// Valid for <c>&eta; &gt; 0</c> and <c>b &gt; 0</c>.<br/>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Gompertz_distribution
     /// </remarks>

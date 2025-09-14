@@ -14663,6 +14663,11 @@
             <summary>
             Gets the variance value.
             </summary>
+            <remarks>
+            The variance is defined only for <c>k &gt; 2/c</c>. For
+            <c>k ≤ 2/c</c> the second moment diverges and the method
+            returns <see cref="F:System.Single.PositiveInfinity"/>.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Burr.Mode">
             <summary>
@@ -14678,19 +14683,29 @@
             <summary>
             Gets the value of the asymmetry coefficient.
             </summary>
+            <remarks>
+            Defined only when <c>k &gt; 3/c</c>; otherwise returns
+            <see cref="F:System.Single.NaN"/>.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Burr.Excess">
             <summary>
             Gets the excess kurtosis (kurtosis minus 3).
             </summary>
             <remarks>
-            Full kurtosis equals 3 plus this value.
+            Full kurtosis equals 3 plus this value. The excess is defined only
+            for <c>k &gt; 4/c</c>; for <c>2/c &lt; k ≤ 4/c</c> the fourth moment
+            diverges and the method returns <see cref="F:System.Single.PositiveInfinity"/>.
+            For <c>k ≤ 2/c</c> the result is <see cref="F:System.Single.NaN"/>.
             </remarks>
         </member>
         <member name="P:UMapx.Distribution.Burr.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
+            <remarks>
+            Defined for all <c>c &gt; 0</c> and <c>k &gt; 0</c>.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Burr.Support">
             <summary>
@@ -15310,7 +15325,9 @@
             Defines the Fisher's Z-distribution.
             </summary>
             <remarks>
-            More information can be found on the website:
+            The distribution is defined for positive degrees of freedom
+            <c>d1 &gt; 0</c> and <c>d2 &gt; 0</c>. Its median has no closed form and is
+            computed numerically. More information can be found on the website:
             https://en.wikipedia.org/wiki/Fisher%27s_z-distribution
             </remarks>
         </member>
@@ -15356,7 +15373,7 @@
         </member>
         <member name="P:UMapx.Distribution.FisherZ.Median">
             <summary>
-            Gets the median value.
+            Gets the median value (computed numerically).
             </summary>
         </member>
         <member name="P:UMapx.Distribution.FisherZ.Skewness">
@@ -15386,6 +15403,11 @@
             <summary>
             Returns the value of the probability distribution function.
             </summary>
+            <remarks>
+            The CDF is expressed through the regularized incomplete beta function
+            after converting <paramref name="x"/> to the corresponding
+            F-distribution variable.
+            </remarks>
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
