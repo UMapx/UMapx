@@ -16,13 +16,13 @@ namespace UMapx.Distance
         /// <returns>Value</returns>
         public override float Compute(float[] p, float[] q)
         {
-            int n = p.Length;
             int tf = 0;
             int ft = 0;
             int tt = 0;
             int ff = 0;
+            int length = p.Length;
 
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < length; i++)
             {
                 if (p[i] == 1 && q[i] == 0) tf++;
                 if (p[i] == 0 && q[i] == 1) ft++;
@@ -30,7 +30,7 @@ namespace UMapx.Distance
                 if (p[i] == 0 && q[i] == 0) ff++;
             }
 
-            n = tt + tf + ft + ff;
+            int n = tt + tf + ft + ff;
             return (tf + ft) / (float)n;
         }
         /// <summary>
@@ -41,13 +41,13 @@ namespace UMapx.Distance
         /// <returns>Value</returns>
         public override Complex32 Compute(Complex32[] p, Complex32[] q)
         {
-            int n = p.Length;
             int tf = 0;
             int ft = 0;
             int tt = 0;
             int ff = 0;
+            int length = p.Length;
 
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < length; i++)
             {
                 if (p[i] == 1 && q[i] == 0) tf++;
                 if (p[i] == 0 && q[i] == 1) ft++;
@@ -55,7 +55,7 @@ namespace UMapx.Distance
                 if (p[i] == 0 && q[i] == 0) ff++;
             }
 
-            n = tt + tf + ft + ff;
+            int n = tt + tf + ft + ff;
             return (tf + ft) / (float)n;
         }
         #endregion
