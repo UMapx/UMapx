@@ -66,18 +66,20 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mean value.
         /// </summary>
+        /// <remarks>
+        /// The mean exists only for <c>d2 &gt; 2</c>; otherwise,
+        /// <see cref="float.PositiveInfinity"/> is returned.
+        /// </remarks>
         public float Mean
         {
             get
             {
                 if (d2 <= 2)
                 {
-                    return float.NaN;
+                    return float.PositiveInfinity;
                 }
-                else
-                {
-                    return d2 / (d2 - 2.0f);
-                }
+
+                return d2 / (d2 - 2.0f);
             }
         }
         /// <summary>
@@ -90,18 +92,28 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
+        /// <remarks>
+        /// The variance is finite only when <c>d2 &gt; 4</c>.
+        /// It becomes <see cref="float.PositiveInfinity"/> for
+        /// <c>d2 &lt;= 4</c>; in particular, for <c>d2 &lt;= 2</c> the mean is
+        /// already infinite.
+        /// </remarks>
         public float Variance
         {
             get
             {
+                if (d2 <= 2)
+                {
+                    // Mean is already infinite
+                    return float.PositiveInfinity;
+                }
+
                 if (d2 <= 4)
                 {
-                    return float.NaN;
+                    return float.PositiveInfinity;
                 }
-                else
-                {
-                    return 2.0f * d2 * d2 * (d1 + d2 - 2) / (d1 * (d2 - 2) * (d2 - 2) * (d2 - 4));
-                }
+
+                return 2.0f * d2 * d2 * (d1 + d2 - 2) / (d1 * (d2 - 2) * (d2 - 2) * (d2 - 4));
             }
         }
         /// <summary>
