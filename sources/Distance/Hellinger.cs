@@ -24,7 +24,7 @@ namespace UMapx.Distance
             for (int i = 0; i < n; i++)
             {
                 if (p[i] < 0 || q[i] < 0)
-                    throw new ArgumentException("Arrays must contain non-negative values.");
+                    throw new ArgumentException("Arrays must contain non-negative values");
 
                 float d = Maths.Sqrt(p[i]) - Maths.Sqrt(q[i]);
                 sum += d * d;
@@ -47,7 +47,7 @@ namespace UMapx.Distance
             for (int i = 0; i < n; i++)
             {
                 if (p[i].Real < 0 || q[i].Real < 0)
-                    throw new ArgumentException("Arrays must contain non-negative real parts.");
+                    throw new ArgumentException("Arrays must contain non-negative real parts");
 
                 Complex32 diff = Maths.Sqrt(p[i]) - Maths.Sqrt(q[i]);
                 float d = Maths.Abs(diff);

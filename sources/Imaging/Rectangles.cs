@@ -111,7 +111,7 @@ namespace UMapx.Imaging
         public static Rectangle FromPoints(this Point[] points)
         {
             if (points.Length != 4)
-                throw new ArgumentException("A rectangle can only be built using four points.");
+                throw new ArgumentException("A rectangle can only be built using four points");
 
             return Rectangle.FromLTRB(
                 points[0].X,

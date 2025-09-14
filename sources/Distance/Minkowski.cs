@@ -20,7 +20,7 @@ namespace UMapx.Distance
         public Minkowski(float order)
         {
             if (order < 1)
-                throw new ArgumentException("Order must be greater or equal to 1 to preserve metric properties.");
+                throw new ArgumentException("Order must be greater or equal to 1 to preserve metric properties");
 
             this.order = order;
         }
@@ -36,7 +36,7 @@ namespace UMapx.Distance
             set
             {
                 if (value < 1)
-                    throw new ArgumentException("Order must be greater or equal to 1 to preserve metric properties.");
+                    throw new ArgumentException("Order must be greater or equal to 1 to preserve metric properties");
 
                 order = value;
             }
