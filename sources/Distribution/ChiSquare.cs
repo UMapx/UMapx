@@ -64,14 +64,18 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the median value (approximation).
+        /// Gets the median value using the Wilson–Hilferty approximation.
         /// </summary>
+        /// <remarks>
+        /// The approximation is truncated to zero for very small degrees of freedom.
+        /// </remarks>
         public float Median
         {
             get
             {
-                // Wilson–Hilferty approximation to keep median non-negative
-                return k * Maths.Pow(1 - 2f / (9f * k), 3f);
+                // Wilson–Hilferty approximation
+                float median = k * Maths.Pow(1 - 2f / (9f * k), 3f);
+                return median < 0f ? 0f : median;
             }
         }
         /// <summary>
