@@ -14154,6 +14154,7 @@
         <member name="T:UMapx.Distribution.Bayes">
             <summary>
             Defines the Bayes probability class.
+            Input probabilities must have non-zero total mass.
             </summary>
         </member>
         <member name="M:UMapx.Distribution.Bayes.#ctor(System.Single[],System.Single[])">
@@ -14162,6 +14163,7 @@
             </summary>
             <param name="stat">Array of statistical probabilities</param>
             <param name="prior">An array of a priori probabilities (before experiment)</param>
+            <remarks>The total probability mass must be non-zero.</remarks>
         </member>
         <member name="P:UMapx.Distribution.Bayes.General">
             <summary>

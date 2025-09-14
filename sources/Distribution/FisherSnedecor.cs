@@ -14,13 +14,8 @@ namespace UMapx.Distribution
     public class FisherSnedecor : IDistribution
     {
         #region Private data
-        // Distribution parameters
         private int d1;
         private int d2;
-
-        // Derived values
-        private float? mean;
-        private float? variance;
         #endregion
 
         #region Fisher-Snedecor components
@@ -75,19 +70,14 @@ namespace UMapx.Distribution
         {
             get
             {
-                if (!mean.HasValue)
+                if (d2 <= 2)
                 {
-                    if (d2 <= 2)
-                    {
-                        mean = float.NaN;
-                    }
-                    else
-                    {
-                        mean = d2 / (d2 - 2.0f);
-                    }
+                    return float.NaN;
                 }
-
-                return mean.Value;
+                else
+                {
+                    return d2 / (d2 - 2.0f);
+                }
             }
         }
         /// <summary>
@@ -104,20 +94,14 @@ namespace UMapx.Distribution
         {
             get
             {
-                if (!variance.HasValue)
+                if (d2 <= 4)
                 {
-                    if (d2 <= 4)
-                    {
-                        variance = float.NaN;
-                    }
-                    else
-                    {
-                        variance = (2.0f * d2 * d2 * (d1 + d2 - 2)) /
-                            (d1 * (d2 - 2) * (d2 - 2) * (d2 - 4));
-                    }
+                    return float.NaN;
                 }
-
-                return variance.Value;
+                else
+                {
+                    return 2.0f * d2 * d2 * (d1 + d2 - 2) / (d1 * (d2 - 2) * (d2 - 2) * (d2 - 4));
+                }
             }
         }
         /// <summary>
