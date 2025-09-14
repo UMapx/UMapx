@@ -154,7 +154,8 @@ namespace UMapx.Distribution
                 return 0;
             }
 
-            float a1 = b * eta * Maths.Exp(eta);
+            // Normalization does not contain factor exp(η).
+            float a1 = b * eta;
             float a2 = Maths.Exp(b * x);
             float a3 = Maths.Exp(-eta * Maths.Exp(b * x));
             return a1 * a2 * a3;
