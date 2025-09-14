@@ -33167,13 +33167,13 @@
             <summary>
             Construct a cache instance from precomputed arrays. Typically produced by <see cref="M:UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache.Build(System.Int32,System.Int32,UMapx.Window.IWindow)"/>.
             </summary>
-            <param name="N">Total signal length (N = M·L).</param>
-            <param name="M">Number of frequency shifts (even).</param>
-            <param name="L">Number of time shifts (L = N / M).</param>
-            <param name="Cg">Real parts of G_a(q).</param>
-            <param name="Sg">Imag-like parts of G_a(q).</param>
-            <param name="Cg2">Real parts of G2_a(q) for a' = a + M/2.</param>
-            <param name="Sg2">Imag-like parts of G2_a(q) for a' = a + M/2.</param>
+            <param name="N">Total signal length (N = M·L)</param>
+            <param name="M">Number of frequency shifts (even)</param>
+            <param name="L">Number of time shifts (L = N / M)</param>
+            <param name="Cg">Real parts of G_a(q)</param>
+            <param name="Sg">Imag-like parts of G_a(q)</param>
+            <param name="Cg2">Real parts of G2_a(q) for a' = a + M/2</param>
+            <param name="Sg2">Imag-like parts of G2_a(q) for a' = a + M/2</param>
         </member>
         <member name="M:UMapx.Window.FastRealWeylHeisenbergTransform.RealPolyphaseCache.Build(System.Int32,System.Int32,UMapx.Window.IWindow)">
             <summary>
@@ -33200,10 +33200,10 @@
              • This method uses the outer transform's single FHT instance (shared),
                which is safe because nested types in C# can access private members of the enclosing type.
             </summary>
-            <param name="N">Total signal length (must be divisible by Mloc).</param>
-            <param name="Mloc">Number of frequency shifts M (must be even).</param>
-            <param name="window">Window function (e.g., Gaussian, Hann, etc.).</param>
-            <returns>Initialized polyphase/Hartley cache.</returns>
+            <param name="N">Total signal length (must be divisible by Mloc)</param>
+            <param name="Mloc">Number of frequency shifts M (must be even)</param>
+            <param name="window">Window function (e.g., Gaussian, Hann, etc.)</param>
+            <returns>Initialized polyphase/Hartley cache</returns>
             <exception cref="T:System.ArgumentException">Thrown if N is not divisible by Mloc or Mloc is not even.</exception>
         </member>
         <member name="F:UMapx.Window.FastRealWeylHeisenbergTransform.FHT">

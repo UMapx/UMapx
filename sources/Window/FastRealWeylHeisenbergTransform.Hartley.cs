@@ -467,13 +467,13 @@ namespace UMapx.Window
             /// <summary>
             /// Construct a cache instance from precomputed arrays. Typically produced by <see cref="Build"/>.
             /// </summary>
-            /// <param name="N">Total signal length (N = M·L).</param>
-            /// <param name="M">Number of frequency shifts (even).</param>
-            /// <param name="L">Number of time shifts (L = N / M).</param>
-            /// <param name="Cg">Real parts of G_a(q).</param>
-            /// <param name="Sg">Imag-like parts of G_a(q).</param>
-            /// <param name="Cg2">Real parts of G2_a(q) for a' = a + M/2.</param>
-            /// <param name="Sg2">Imag-like parts of G2_a(q) for a' = a + M/2.</param>
+            /// <param name="N">Total signal length (N = M·L)</param>
+            /// <param name="M">Number of frequency shifts (even)</param>
+            /// <param name="L">Number of time shifts (L = N / M)</param>
+            /// <param name="Cg">Real parts of G_a(q)</param>
+            /// <param name="Sg">Imag-like parts of G_a(q)</param>
+            /// <param name="Cg2">Real parts of G2_a(q) for a' = a + M/2</param>
+            /// <param name="Sg2">Imag-like parts of G2_a(q) for a' = a + M/2</param>
             public RealPolyphaseCache(int N, int M, int L, float[][] Cg, float[][] Sg, float[][] Cg2, float[][] Sg2)
             {
                 this.N = N;
@@ -585,10 +585,10 @@ namespace UMapx.Window
             ///  • This method uses the outer transform's single FHT instance (shared),
             ///    which is safe because nested types in C# can access private members of the enclosing type.
             /// </summary>
-            /// <param name="N">Total signal length (must be divisible by Mloc).</param>
-            /// <param name="Mloc">Number of frequency shifts M (must be even).</param>
-            /// <param name="window">Window function (e.g., Gaussian, Hann, etc.).</param>
-            /// <returns>Initialized polyphase/Hartley cache.</returns>
+            /// <param name="N">Total signal length (must be divisible by Mloc)</param>
+            /// <param name="Mloc">Number of frequency shifts M (must be even)</param>
+            /// <param name="window">Window function (e.g., Gaussian, Hann, etc.)</param>
+            /// <returns>Initialized polyphase/Hartley cache</returns>
             /// <exception cref="ArgumentException">Thrown if N is not divisible by Mloc or Mloc is not even.</exception>
             public static RealPolyphaseCache Build(int N, int Mloc, IWindow window)
             {
