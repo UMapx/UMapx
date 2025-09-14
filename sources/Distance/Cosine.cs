@@ -7,9 +7,24 @@ namespace UMapx.Distance
     /// </summary>
     public class Cosine : DistanceBase, IDistance
     {
+        #region Contructor
+        /// <summary>
+        /// Initializes cosine distance.
+        /// </summary>
+        /// <param name="similarity">Use similarity formula or not</param>
+        public Cosine(bool similarity = false) 
+        {
+            Similarity = similarity;
+        }
+        /// <summary>
+        /// Use similarity formula or not.
+        /// </summary>
+        public bool Similarity { get; set; }
+        #endregion
+
         #region Cosine distance
         /// <summary>
-        /// Returns similarity function of two vectors.
+        /// Returns distance value.
         /// </summary>
         /// <param name="p">Vector</param>
         /// <param name="b">Vector</param>
@@ -27,10 +42,11 @@ namespace UMapx.Distance
             if (A == 0 || B == 0)
                 return 0;
 
-            return s / (A * B);
+            var similarity = s / (A * B);
+            return Similarity ? similarity : 1f - similarity;
         }
         /// <summary>
-        /// Returns similarity function of two vectors.
+        /// Returns distance value.
         /// </summary>
         /// <param name="p">Vector</param>
         /// <param name="b">Vector</param>
@@ -55,7 +71,8 @@ namespace UMapx.Distance
             if (den == 0)
                 return 0;
 
-            return s / den;
+            var similarity = s / (A * B);
+            return Similarity ? similarity : 1f - similarity;
         }
         #endregion
     }

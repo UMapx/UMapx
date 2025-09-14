@@ -13716,9 +13716,20 @@
             Defines cosine distance.
             </summary>
         </member>
+        <member name="M:UMapx.Distance.Cosine.#ctor(System.Boolean)">
+            <summary>
+            Initializes cosine distance.
+            </summary>
+            <param name="similarity">Use similarity formula or not</param>
+        </member>
+        <member name="P:UMapx.Distance.Cosine.Similarity">
+            <summary>
+            Use similarity formula or not.
+            </summary>
+        </member>
         <member name="M:UMapx.Distance.Cosine.Compute(System.Single[],System.Single[])">
             <summary>
-            Returns similarity function of two vectors.
+            Returns distance value.
             </summary>
             <param name="p">Vector</param>
             <param name="b">Vector</param>
@@ -13726,7 +13737,7 @@
         </member>
         <member name="M:UMapx.Distance.Cosine.Compute(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
             <summary>
-            Returns similarity function of two vectors.
+            Returns distance value.
             </summary>
             <param name="p">Vector</param>
             <param name="b">Vector</param>
