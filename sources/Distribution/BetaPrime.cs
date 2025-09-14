@@ -110,7 +110,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the variance value.
+        /// Gets the variance value. When <c>β ≤ 2</c>, the variance does not exist (∞).
         /// </summary>
         public float Variance
         {
@@ -122,12 +122,9 @@ namespace UMapx.Distribution
                     float den = (beta - 2) * Maths.Pow(beta - 1, 2);
                     return num / den;
                 }
-                else if (beta > 1.0)
-                {
-                    return float.PositiveInfinity;
-                }
 
-                return float.NaN;
+                // β ≤ 2: variance does not exist (∞)
+                return float.PositiveInfinity;
             }
         }
         /// <summary>
