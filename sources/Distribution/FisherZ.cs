@@ -65,16 +65,30 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mean value.
         /// </summary>
+        /// <remarks>
+        /// The mean exists only for <c>d2 &gt; 2</c>.
+        /// Otherwise, <see cref="float.NaN"/> is returned.
+        /// </remarks>
         public float Mean
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                return (d2 > 2) ? 0f : float.NaN;
+            }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
+        /// <remarks>
+        /// The variance is finite only when <c>d2 &gt; 4</c>;
+        /// otherwise, <see cref="float.PositiveInfinity"/> is returned.
+        /// </remarks>
         public float Variance
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                return (d2 > 4) ? 2f * (d1 + d2 - 2f) / (d1 * (d2 - 2f)) : float.PositiveInfinity;
+            }
         }
         /// <summary>
         /// Gets the mode value.
