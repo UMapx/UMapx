@@ -7,7 +7,9 @@ namespace UMapx.Distribution
     /// Defines the Fisher's Z-distribution.
     /// </summary>
     /// <remarks>
-    /// More information can be found on the website:
+    /// The distribution is defined for positive degrees of freedom
+    /// <c>d1 &gt; 0</c> and <c>d2 &gt; 0</c>. Its median has no closed form and is
+    /// computed numerically. More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Fisher%27s_z-distribution
     /// </remarks>
     [Serializable]
@@ -101,11 +103,43 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the median value.
+        /// Gets the median value (computed numerically).
         /// </summary>
         public float Median
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                IFloat f = (t) => Distribution(t) - 0.5f;
+
+                float a = -10f, b = 10f;
+                float fa = f(a), fb = f(b);
+
+                while (fa * fb > 0f)
+                {
+                    a *= 2f; b *= 2f;
+                    fa = f(a); fb = f(b);
+                }
+
+                for (int i = 0; i < 100; i++)
+                {
+                    float m = 0.5f * (a + b);
+                    float fm = f(m);
+
+                    if (Math.Abs(fm) < 1e-6f)
+                        return m;
+
+                    if (fa * fm < 0f)
+                    {
+                        b = m; fb = fm;
+                    }
+                    else
+                    {
+                        a = m; fa = fm;
+                    }
+                }
+
+                return 0.5f * (a + b);
+            }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
@@ -141,11 +175,19 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability distribution function.
         /// </summary>
+        /// <remarks>
+        /// The CDF is expressed through the regularized incomplete beta function
+        /// after converting <paramref name="x"/> to the corresponding
+        /// F-distribution variable.
+        /// </remarks>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            throw new NotSupportedException();
+            float y = d1 * Maths.Exp(2f * x);
+            if (float.IsPositiveInfinity(y)) return 1f;
+            float u = y / (y + d2);
+            return Special.BetaIncompleteRegularized(d1 * 0.5f, d2 * 0.5f, u);
         }
         /// <summary>
         /// Returns the value of the probability density function.
