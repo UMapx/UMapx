@@ -115,13 +115,13 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         /// <summary>
-        /// Gets the value of entropy.
+        /// Gets the value of differential entropy (h = 1 + ln√(2πc)).
         /// </summary>
         public float Entropy
         {
             get
             {
-                return 1.0f + Maths.Log(2.0f * Maths.Sqrt(Maths.Pi * scale));
+                return 1f + 0.5f * Maths.Log(2f * Maths.Pi * scale);
             }
         }
         /// <summary>
