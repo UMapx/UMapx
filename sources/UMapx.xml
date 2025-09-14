@@ -14629,6 +14629,7 @@
         <member name="P:UMapx.Distribution.Burr.Mean">
             <summary>
             Gets the mean value.
+            Mean does not exist for k ≤ 1/c.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Burr.Variance">
