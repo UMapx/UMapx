@@ -4,7 +4,6 @@ namespace UMapx.Distance
 {
     /// <summary>
     /// Defines Kulczynski distance.
-    /// D = 0.5 * (tf / (tt + tf) + ft / (tt + ft)).
     /// See https://en.wikipedia.org/wiki/Kulczynski_dissimilarity.
     /// </summary>
     public class Kulczynski : DistanceBase, IDistance

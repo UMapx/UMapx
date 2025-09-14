@@ -13906,7 +13906,7 @@
         <member name="T:UMapx.Distance.Kulczynski">
             <summary>
             Defines Kulczynski distance.
-            For details see https://en.wikipedia.org/wiki/Kulczynski_dissimilarity.
+            See https://en.wikipedia.org/wiki/Kulczynski_dissimilarity.
             </summary>
         </member>
         <member name="M:UMapx.Distance.Kulczynski.Compute(System.Single[],System.Single[])">
