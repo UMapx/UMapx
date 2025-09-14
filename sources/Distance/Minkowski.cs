@@ -16,13 +16,16 @@ namespace UMapx.Distance
         /// <summary>
         /// Initializes Minkowski distance.
         /// </summary>
-        /// <param name="order">Order (0, +inf)</param>
+        /// <param name="order">Order [1, +inf)</param>
         public Minkowski(float order)
         {
+            if (order < 1)
+                throw new ArgumentException("Order must be greater or equal to 1 to preserve metric properties.");
+
             this.order = order;
         }
         /// <summary>
-        /// Gets or sets order (0, +inf).
+        /// Gets or sets order [1, +inf).
         /// </summary>
         public float Order
         {
@@ -32,8 +35,8 @@ namespace UMapx.Distance
             }
             set
             {
-                if (value <= 0)
-                    throw new ArgumentException("Order cannot be less or equal 0");
+                if (value < 1)
+                    throw new ArgumentException("Order must be greater or equal to 1 to preserve metric properties.");
 
                 order = value;
             }
