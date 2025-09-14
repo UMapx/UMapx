@@ -4,6 +4,7 @@ namespace UMapx.Distribution
 {
     /// <summary>
     /// Defines the Bayes probability class.
+    /// Input probabilities must have non-zero total mass.
     /// </summary>
     [Serializable]
     public class Bayes
@@ -20,6 +21,7 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="stat">Array of statistical probabilities</param>
         /// <param name="prior">An array of a priori probabilities (before experiment)</param>
+        /// <remarks>The total probability mass must be non-zero.</remarks>
         public Bayes(float[] stat, float[] prior)
         {
             if (stat.Length != prior.Length)
@@ -34,6 +36,9 @@ namespace UMapx.Distribution
             {
                 Pa += stat[i] * prior[i];
             }
+
+            if (Pa == 0)
+                throw new ArgumentException("Input probabilities must have non-zero total mass");
 
             for (i = 0; i < N; i++)
             {
