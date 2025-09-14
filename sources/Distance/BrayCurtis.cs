@@ -26,6 +26,8 @@ namespace UMapx.Distance
                 y += Math.Abs(p[i] - q[i]);
                 x += Math.Abs(p[i] + q[i]);
             }
+            if (x == 0)
+                return 0f;
 
             return y / x;
         }
@@ -46,6 +48,8 @@ namespace UMapx.Distance
                 y += Maths.Abs(p[i] - q[i]);
                 x += Maths.Abs(p[i] + q[i]);
             }
+            if (x == 0)
+                return 0f;
 
             return y / x;
         }
