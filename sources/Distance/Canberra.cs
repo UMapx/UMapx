@@ -22,7 +22,9 @@ namespace UMapx.Distance
 
             for (int i = 0; i < n; i++)
             {
-                sum += Math.Abs(p[i] - q[i]) / (Math.Abs(p[i]) + Math.Abs(q[i]));
+                float den = Math.Abs(p[i]) + Math.Abs(q[i]);
+                if (den > 0)
+                    sum += Math.Abs(p[i] - q[i]) / den;
             }
             return sum;
         }
@@ -39,7 +41,9 @@ namespace UMapx.Distance
 
             for (int i = 0; i < n; i++)
             {
-                sum += Maths.Abs(p[i] - q[i]) / (Maths.Abs(p[i]) + Maths.Abs(q[i]));
+                float den = Maths.Abs(p[i]) + Maths.Abs(q[i]);
+                if (den > 0)
+                    sum += Maths.Abs(p[i] - q[i]) / den;
             }
             return sum;
         }
