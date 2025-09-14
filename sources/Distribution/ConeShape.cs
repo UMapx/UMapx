@@ -119,12 +119,20 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="t">Value</param>
         /// <param name="tau">Value</param>
-        /// <returns>Value</returns>
+        /// <returns>
+        /// Value. When <paramref name="tau"/> equals zero the method
+        /// returns <c>1</c> for <paramref name="t"/> equal to zero and throws
+        /// <see cref="ArgumentException"/> otherwise.
+        /// </returns>
         public float Distribution(float t, float tau)
         {
             if (tau == 0)
             {
-                return t == 0 ? float.PositiveInfinity : 0f;
+                if (t == 0)
+                {
+                    return 1f;
+                }
+                throw new ArgumentException("Distribution undefined for τ = 0 when t ≠ 0.", nameof(tau));
             }
             if (Math.Abs(tau) >= 2 * Math.Abs(t))
             {
