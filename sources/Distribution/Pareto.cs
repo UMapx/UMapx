@@ -143,9 +143,10 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the kurtosis coefficient.
+        /// Gets the excess kurtosis (kurtosis minus 3).
         /// </summary>
         /// <remarks>
+        /// Full kurtosis equals 3 plus this value.
         /// Formula: 6 * (k^3 + k^2 - 6k - 2) / (k * (k - 3) * (k - 4))
         /// </remarks>
         public float Excess

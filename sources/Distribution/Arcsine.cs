@@ -54,8 +54,11 @@ namespace UMapx.Distribution
             get { return 0; }
         }
         /// <summary>
-        /// Gets the kurtosis coefficient.
+        /// Gets the excess kurtosis (kurtosis minus 3).
         /// </summary>
+        /// <remarks>
+        /// Full kurtosis equals 3 plus this value.
+        /// </remarks>
         public float Excess
         {
             get { return -1.5f; }
