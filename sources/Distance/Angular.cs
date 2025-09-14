@@ -30,7 +30,7 @@ namespace UMapx.Distance
 
             float den = Maths.Sqrt(x) * Maths.Sqrt(y);
             if (den == 0)
-                return 0;
+                return Maths.Pi / 2;
             float cosine = s / den;
 
             return Maths.Acos(cosine);
@@ -59,8 +59,8 @@ namespace UMapx.Distance
 
             float den = Maths.Sqrt(x) * Maths.Sqrt(y);
             if (den == 0)
-                return 0;
-            Complex32 cosine = s / den;
+                return Maths.Pi / 2;
+            float cosine = Maths.Abs(s) / den;
 
             return Maths.Acos(cosine);
         }
