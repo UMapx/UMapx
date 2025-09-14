@@ -21,13 +21,13 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the logarithmic distribution.
         /// </summary>
-        /// <param name="p">Parameter</param>
+        /// <param name="p">Parameter (0 &lt; p &lt; 1)</param>
         public Logarithmic(float p)
         {
             P = p;
         }
         /// <summary>
-        /// Gets or sets the value of the parameter p ∈ (0, 1].
+        /// Gets or sets the value of the parameter p ∈ (0, 1).
         /// </summary>
         public float P
         {
@@ -37,7 +37,7 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (value <= 0 || value > 1)
+                if (value <= 0 || value >= 1)
                     throw new ArgumentException("Invalid argument value");
 
                 this.p = value;
