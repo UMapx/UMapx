@@ -83,8 +83,8 @@ namespace UMapx.Distribution
         {
             get
             {
-                float alpha = MomentGeneratingFunction(2, a, b);
-                float beta = Maths.Pow(MomentGeneratingFunction(1, a, b), 2);
+                float alpha = RawMoment(2, a, b);
+                float beta = Maths.Pow(RawMoment(1, a, b), 2);
                 return alpha - beta;
             }
         }
@@ -188,9 +188,8 @@ namespace UMapx.Distribution
         /// Returns the n-th raw moment expressed via the Euler Beta function.
         /// </summary>
         /// <remarks>
-        /// This method computes <c>b · B(1 + n / a, b)</c>, where <c>B(·,·)</c> is the Euler Beta function.
-        /// Despite the name, this is not an MGF <c>M_X(t)=E[e^{tX}]</c>; it returns the coefficient
-        /// related to the n-th raw moment <c>E[X^n]</c> for distributions whose moments admit this Beta form.
+        /// Computes <c>b · B(1 + n / a, b)</c>, where <c>B(·,·)</c> is the Euler Beta function.
+        /// The result corresponds to the coefficient of the n-th raw moment <c>E[X^n]</c>.
         /// <para/>
         /// Preconditions:
         /// <list type="bullet">
@@ -207,7 +206,7 @@ namespace UMapx.Distribution
         /// <param name="a">Shape parameter (must be positive)</param>
         /// <param name="b">Shape/scale parameter depending on context (must be positive)</param>
         /// <returns>The value <c>b · B(1 + n / a, b)</c></returns>
-        private static float MomentGeneratingFunction(int n, float a, float b)
+        private static float RawMoment(int n, float a, float b)
         {
             return b * Special.Beta(1.0f + ((float)n) / a, b);
         }
