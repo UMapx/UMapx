@@ -130,19 +130,43 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
+        /// <remarks>
+        /// Defined only for <c>β &gt; 3</c>. Returns <see cref="float.PositiveInfinity"/> when the moment diverges.
+        /// </remarks>
         public float Skewness
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                if (beta <= 3f)
+                {
+                    return float.PositiveInfinity;
+                }
+
+                float num = 2f * (2f * alpha + beta - 1f) * Maths.Sqrt(beta - 2f);
+                float den = (beta - 3f) * Maths.Sqrt(alpha * (alpha + beta - 1f));
+                return num / den;
+            }
         }
         /// <summary>
         /// Gets the excess kurtosis (kurtosis minus 3).
         /// </summary>
         /// <remarks>
-        /// Full kurtosis equals 3 plus this value.
+        /// Full kurtosis equals 3 plus this value. Defined only for <c>β &gt; 4</c>. Returns
+        /// <see cref="float.PositiveInfinity"/> when the moment diverges.
         /// </remarks>
         public float Excess
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                if (beta <= 4f)
+                {
+                    return float.PositiveInfinity;
+                }
+
+                float num = 6f * (alpha * (alpha + beta - 1f) * (5f * beta - 11f) + (beta - 2f) * (beta - 3f));
+                float den = alpha * (alpha + beta - 1f) * (beta - 4f) * (beta - 3f);
+                return num / den;
+            }
         }
         /// <summary>
         /// Gets the value of entropy.
