@@ -144,7 +144,7 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Function(float x)
         {
-            return Maths.Exp(Maths.Pow((x - mu), 2) / (-2.0f * sigma * sigma)) / (Maths.Sqrt(2.0f * Maths.Pi) * sigma);
+            return Maths.Exp(Maths.Pow(x - mu, 2) / (-2.0f * sigma * sigma)) / (Maths.Sqrt(2.0f * Maths.Pi) * sigma);
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
