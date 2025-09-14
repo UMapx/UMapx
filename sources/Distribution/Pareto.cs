@@ -93,6 +93,9 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
+        /// <remarks>
+        /// For k ≤ 2, the variance diverges to infinity.
+        /// </remarks>
         public float Variance
         {
             get
@@ -102,7 +105,7 @@ namespace UMapx.Distribution
                     float kMinus1 = k - 1;
                     return (k * xm * xm) / (kMinus1 * kMinus1 * (k - 2));
                 }
-                return float.NaN;
+                return float.PositiveInfinity;
             }
         }
         /// <summary>
