@@ -23,7 +23,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Configures distribution parameters and precomputes constants.
         /// </summary>
-        /// <param name="mu">Shape factor</param>
+        /// <param name="mu">Shape factor (μ ≥ 0.5)</param>
         /// <param name="omega">Spread coefficient</param>
         private void Initialize(float mu, float omega)
         {
@@ -49,7 +49,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the distribution of Nakagami.
         /// </summary>
-        /// <param name="mu">Shape factor</param>
+        /// <param name="mu">Shape factor (μ ≥ 0.5)</param>
         /// <param name="omega">Spread rate</param>
         public Nakagami(float mu, float omega)
         {
@@ -57,7 +57,7 @@ namespace UMapx.Distribution
             Omega = omega;
         }
         /// <summary>
-        /// Gets or sets the value of the shape factor.
+        /// Gets or sets the value of the shape factor (μ ≥ 0.5).
         /// </summary>
         public float Mu
         {
@@ -67,8 +67,8 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (value <= 0.5)
-                    throw new ArgumentException("Invalid argument value");
+                if (value < 0.5f)
+                    throw new ArgumentException("Mu must be greater than or equal to 0.5.");
 
                 this.mu = value;
                 Initialize(this.mu, this.omega);
