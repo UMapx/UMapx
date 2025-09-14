@@ -64,13 +64,16 @@ namespace UMapx.Distribution
         }
         /// <summary>
         /// Gets the mean value.
+        /// Mean does not exist for k ≤ 1/c.
         /// </summary>
         public float Mean
         {
-            get 
+            get
             {
-                if (k <= 1.0f / c) return float.NaN;
-                return k * Special.Beta(k - 1.0f / c, 1.0f + 1.0f / c); 
+                if (k <= 1.0f / c)
+                    return float.PositiveInfinity; // mean does not exist for k ≤ 1/c
+
+                return k * Special.Beta(k - 1.0f / c, 1.0f + 1.0f / c);
             }
         }
         /// <summary>
