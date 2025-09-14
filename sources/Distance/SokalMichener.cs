@@ -30,8 +30,8 @@ namespace UMapx.Distance
                 if (p[i] == 0 && q[i] == 0) ff++;
             }
 
-            int r = 2 * (tf + ft);
-            return r / (float)(ff + tt + r);
+            n = tt + tf + ft + ff;
+            return (tf + ft) / (float)n;
         }
         /// <summary>
         /// Returns distance value.
@@ -55,8 +55,8 @@ namespace UMapx.Distance
                 if (p[i] == 0 && q[i] == 0) ff++;
             }
 
-            int r = 2 * (tf + ft);
-            return r / (float)(ff + tt + r);
+            n = tt + tf + ft + ff;
+            return (tf + ft) / (float)n;
         }
         #endregion
     }
