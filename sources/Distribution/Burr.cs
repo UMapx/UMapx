@@ -79,9 +79,24 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
+        /// <remarks>
+        /// The variance is defined only for <c>k &gt; 2/c</c>. For
+        /// <c>k ≤ 2/c</c> the second moment diverges and the method
+        /// returns <see cref="float.PositiveInfinity"/>.
+        /// </remarks>
         public float Variance
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                if (k > 2.0f / c)
+                {
+                    float m1 = k * Special.Beta(k - 1.0f / c, 1.0f + 1.0f / c);
+                    float m2 = k * Special.Beta(k - 2.0f / c, 1.0f + 2.0f / c);
+                    return m2 - m1 * m1;
+                }
+
+                return float.PositiveInfinity;
+            }
         }
         /// <summary>
         /// Gets the mode value.
@@ -109,26 +124,78 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
+        /// <remarks>
+        /// Defined only when <c>k &gt; 3/c</c>; otherwise returns
+        /// <see cref="float.NaN"/>.
+        /// </remarks>
         public float Skewness
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                if (k > 3.0f / c)
+                {
+                    float m1 = k * Special.Beta(k - 1.0f / c, 1.0f + 1.0f / c);
+                    float m2 = k * Special.Beta(k - 2.0f / c, 1.0f + 2.0f / c);
+                    float m3 = k * Special.Beta(k - 3.0f / c, 1.0f + 3.0f / c);
+
+                    float mu = m1;
+                    float var = m2 - mu * mu;
+                    float mu3 = m3 - 3.0f * mu * m2 + 2.0f * mu * mu * mu;
+
+                    return mu3 / (var * Maths.Sqrt(var));
+                }
+
+                return float.NaN;
+            }
         }
         /// <summary>
         /// Gets the excess kurtosis (kurtosis minus 3).
         /// </summary>
         /// <remarks>
-        /// Full kurtosis equals 3 plus this value.
+        /// Full kurtosis equals 3 plus this value. The excess is defined only
+        /// for <c>k &gt; 4/c</c>; for <c>2/c &lt; k ≤ 4/c</c> the fourth moment
+        /// diverges and the method returns <see cref="float.PositiveInfinity"/>.
+        /// For <c>k ≤ 2/c</c> the result is <see cref="float.NaN"/>.
         /// </remarks>
         public float Excess
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                if (k > 4.0f / c)
+                {
+                    float m1 = k * Special.Beta(k - 1.0f / c, 1.0f + 1.0f / c);
+                    float m2 = k * Special.Beta(k - 2.0f / c, 1.0f + 2.0f / c);
+                    float m3 = k * Special.Beta(k - 3.0f / c, 1.0f + 3.0f / c);
+                    float m4 = k * Special.Beta(k - 4.0f / c, 1.0f + 4.0f / c);
+
+                    float mu = m1;
+                    float mu2 = m2 - mu * mu;
+                    float mu4 = m4 - 4.0f * mu * m3 + 6.0f * mu * mu * m2 - 3.0f * mu * mu * mu * mu;
+
+                    return mu4 / (mu2 * mu2) - 3.0f;
+                }
+
+                if (k > 2.0f / c)
+                    return float.PositiveInfinity;
+
+                return float.NaN;
+            }
         }
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
+        /// <remarks>
+        /// Defined for all <c>c &gt; 0</c> and <c>k &gt; 0</c>.
+        /// </remarks>
         public float Entropy
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                float dig1 = Special.DiGamma(1.0f);
+                float digk = Special.DiGamma(k);
+
+                return -Maths.Log(c * k) - (c - 1.0f) / c * (dig1 - digk) + (k + 1.0f) / k;
+            }
         }
         /// <summary>
         /// Gets the support interval of the argument.
