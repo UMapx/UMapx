@@ -131,7 +131,8 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the excess kurtosis (kurtosis minus 3).
+        /// Gets the excess kurtosis.
+        /// The returned value already equals kurtosis minus 3.
         /// </summary>
         public float Excess
         {
@@ -142,7 +143,7 @@ namespace UMapx.Distribution
                     return float.NaN;
                 }
 
-                return (6 * p * p - 6 * p + 1) / (p * (1 - p)) - 3f;
+                return 1f / (p * q) - 6f;
             }
         }
         /// <summary>
