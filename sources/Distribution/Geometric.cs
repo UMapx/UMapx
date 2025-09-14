@@ -107,7 +107,7 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the excess kurtosis (kurtosis minus 3).
+        /// Returns the excess kurtosis (kurtosis minus 3).
         /// </summary>
         /// <remarks>
         /// Full kurtosis equals 3 plus this value.
@@ -116,7 +116,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return 6 + p * p / q;
+                return p * p / q + 3f;
             }
         }
         /// <summary>
