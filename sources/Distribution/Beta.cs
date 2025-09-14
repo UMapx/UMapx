@@ -101,12 +101,24 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode value. If <c>a ≤ 1</c> and <c>b > 1</c>,
+        /// the mode is at 0. If <c>b ≤ 1</c> and <c>a > 1</c>,
+        /// the mode is at 1. When both parameters are greater than
+        /// one, the mode is calculated as <c>(a - 1) / (a + b - 2)</c>;
+        /// otherwise, the mode is undefined and returns <see cref="float.NaN" />.
         /// </summary>
         public float Mode
         {
             get
             {
+                if (a <= 1 && b > 1)
+                {
+                    return 0f;
+                }
+                if (b <= 1 && a > 1)
+                {
+                    return 1f;
+                }
                 if (a > 1 && b > 1)
                 {
                     return (a - 1) / (a + b - 2);
