@@ -119,6 +119,9 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mode value.
         /// </summary>
+        /// <remarks>
+        /// When <c>d1 ≤ 2</c>, the mode occurs at zero.
+        /// </remarks>
         public float Mode
         {
             get
@@ -130,7 +133,7 @@ namespace UMapx.Distribution
                     return a * b;
                 }
 
-                return float.NaN;
+                return 0f;
             }
         }
         /// <summary>
