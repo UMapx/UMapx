@@ -110,11 +110,11 @@ namespace UMapx.Distribution
                 float median;
                 if (c >= (a + b) / 2.0)
                 {
-                    median = a + Maths.Sqrt((b - a) * (c - a)) / Maths.Sqrt2;
+                    median = b - Maths.Sqrt((b - a) * (b - c)) / Maths.Sqrt2;
                 }
                 else
                 {
-                    median = b - Maths.Sqrt((b - a) * (b - c)) / Maths.Sqrt2;
+                    median = a + Maths.Sqrt((b - a) * (c - a)) / Maths.Sqrt2;
                 }
 
                 return median;
