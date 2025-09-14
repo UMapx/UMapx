@@ -1,6 +1,4 @@
+            <param name="order">Order [1, +inf)</param>
+            Gets or sets order [1, +inf).
             <param name="p">Array of non-negative values</param>
             <param name="q">Array of non-negative values</param>
-            <exception cref="T:System.ArgumentException">Exception</exception>
-            <param name="p">Array of complex numbers with non-negative real parts</param>
-            <param name="q">Array of complex numbers with non-negative real parts</param>
-            <exception cref="T:System.ArgumentException">Exception</exception>
