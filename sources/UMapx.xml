@@ -13733,7 +13733,7 @@
             </summary>
             <param name="p">Vector</param>
             <param name="b">Vector</param>
-            <returns>Value; returns 0 if either vector has zero magnitude</returns>
+            <returns>Value; when either vector has zero magnitude, returns 0 if <see cref="P:UMapx.Distance.Cosine.Similarity"/> is true; otherwise returns 1</returns>
         </member>
         <member name="M:UMapx.Distance.Cosine.Compute(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
             <summary>
@@ -13741,7 +13741,7 @@
             </summary>
             <param name="p">Vector</param>
             <param name="b">Vector</param>
-            <returns>Value; returns 0 if either vector has zero magnitude</returns>
+            <returns>Value; when either vector has zero magnitude, returns 0 if <see cref="P:UMapx.Distance.Cosine.Similarity"/> is true; otherwise returns 1</returns>
         </member>
         <member name="T:UMapx.Distance.Dice">
             <summary>
@@ -15324,6 +15324,10 @@
             <summary>
             Returns the value of the probability density function.
             </summary>
+            <remarks>
+            The density is given by:
+            f(x; d1, d2) = 2^{-(d1 + d2)/2} · d1^{d1/2} · d2^{d2/2} · e^{d1·x} / (B(d1/2, d2/2) · (d1·e^{2x} + d2)^{(d1 + d2)/2}).
+            </remarks>
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
@@ -16234,11 +16238,11 @@
             <summary>
             Initializes the logarithmic distribution.
             </summary>
-            <param name="p">Parameter</param>
+            <param name="p">Parameter (0 &lt; p &lt; 1)</param>
         </member>
         <member name="P:UMapx.Distribution.Logarithmic.P">
             <summary>
-            Gets or sets the value of the parameter p ∈ (0, 1].
+            Gets or sets the value of the parameter p ∈ (0, 1).
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Logarithmic.Support">
