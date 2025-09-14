@@ -27,7 +27,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the hypergeometric distribution.
         /// </summary>
-        /// <param name="n">Parameter N [0, +inf]</param>
+        /// <param name="n">Parameter N (0, +inf]</param>
         /// <param name="k">Parameter K [0, N]</param>
         /// <param name="d">Parameter D [0, N]</param>
         public Hypergeometric(float n, float k, float d)
@@ -35,7 +35,7 @@ namespace UMapx.Distribution
             N = n; K = k; D = d;
         }
         /// <summary>
-        /// Gets or sets the value of the parameter N [0, +inf].
+        /// Gets or sets the value of the parameter N (0, +inf].
         /// </summary>
         public float N
         {
@@ -45,7 +45,7 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (value < 0)
+                if (value <= 0)
                     throw new ArgumentException("Invalid argument value");
 
                 this.n = value;
@@ -102,6 +102,9 @@ namespace UMapx.Distribution
         {
             get
             {
+                if (n <= 0f)
+                    return 0f;
+
                 return k * d / n;
             }
         }
@@ -110,7 +113,13 @@ namespace UMapx.Distribution
         /// </summary>
         public float Variance
         {
-            get { return k * (d / n) * ((n - d) / n) * ((n - k) / (n - 1.0f)); }
+            get
+            {
+                if (n <= 1f)
+                    return 0f;
+
+                return k * (d / n) * ((n - d) / n) * ((n - k) / (n - 1.0f));
+            }
         }
         /// <summary>
         /// Gets the mode value.
