@@ -7,6 +7,7 @@ namespace UMapx.Distribution
     /// Defines the Gompertz distribution.
     /// </summary>
     /// <remarks>
+    /// Valid for <c>&eta; &gt; 0</c> and <c>b &gt; 0</c>.<br/>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Gompertz_distribution
     /// </remarks>
@@ -67,14 +68,25 @@ namespace UMapx.Distribution
         /// </summary>
         public float Mean
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                float e1 = -Special.Ei(-eta);
+                return Maths.Exp(eta) * e1 / b;
+            }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
         public float Variance
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                float e1 = -Special.Ei(-eta);
+                float e2 = -Special.Ei(-2f * eta);
+                float expEta = Maths.Exp(eta);
+                float exp2Eta = expEta * expEta;
+                return (2f * expEta * e1 - exp2Eta * e2 - exp2Eta * e1 * e1) / (b * b);
+            }
         }
         /// <summary>
         /// Gets the mode value.
