@@ -28,7 +28,7 @@ namespace UMapx.Distance
         /// </summary>
         /// <param name="p">Vector</param>
         /// <param name="b">Vector</param>
-        /// <returns>Value; returns 0 if either vector has zero magnitude</returns>
+        /// <returns>Value; when either vector has zero magnitude, returns 0 if <see cref="Similarity"/> is true; otherwise returns 1</returns>
         public override float Compute(float[] p, float[] b)
         {
             int length = p.Length;
@@ -40,7 +40,7 @@ namespace UMapx.Distance
                 s += p[i] * b[i];
 
             if (A == 0 || B == 0)
-                return 0;
+                return Similarity ? 0f : 1f;
 
             var similarity = s / (A * B);
             return Similarity ? similarity : 1f - similarity;
@@ -50,7 +50,7 @@ namespace UMapx.Distance
         /// </summary>
         /// <param name="p">Vector</param>
         /// <param name="b">Vector</param>
-        /// <returns>Value; returns 0 if either vector has zero magnitude</returns>
+        /// <returns>Value; when either vector has zero magnitude, returns 0 if <see cref="Similarity"/> is true; otherwise returns 1</returns>
         public override Complex32 Compute(Complex32[] p, Complex32[] b)
         {
             int length = p.Length;
@@ -69,9 +69,9 @@ namespace UMapx.Distance
 
             float den = Maths.Sqrt(A) * Maths.Sqrt(B);
             if (den == 0)
-                return 0;
+                return Similarity ? 0f : 1f;
 
-            var similarity = s / (A * B);
+            float similarity = Maths.Abs(s) / den;
             return Similarity ? similarity : 1f - similarity;
         }
         #endregion
