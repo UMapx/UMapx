@@ -158,11 +158,23 @@ namespace UMapx.Distribution
         /// Gets the excess kurtosis (kurtosis minus 3).
         /// </summary>
         /// <remarks>
-        /// Full kurtosis equals 3 plus this value.
+        /// Full kurtosis equals 3 plus this value. The excess is defined
+        /// only for <c>d2 &gt; 8</c>; otherwise, the fourth central moment
+        /// diverges and <see cref="float.PositiveInfinity"/> is returned.
         /// </remarks>
         public float Excess
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                if (d2 <= 8)
+                {
+                    return float.PositiveInfinity;
+                }
+
+                float num = 12f * (d1 * (5f * d2 - 22f) * (d1 + d2 - 2f) + (d2 - 4f) * (d2 - 6f));
+                float den = d1 * (d2 - 2f) * (d2 - 4f) * (d2 - 6f) * (d2 - 8f);
+                return num / den;
+            }
         }
         /// <summary>
         /// Gets the support interval of the argument.
