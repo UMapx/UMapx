@@ -32,6 +32,8 @@ namespace UMapx.Distance
             if (den == 0)
                 return Maths.Pi / 2;
             float cosine = s / den;
+            // clamp cosine for numerical stability
+            cosine = Maths.Max(-1f, Maths.Min(1f, cosine));
 
             return Maths.Acos(cosine);
         }
@@ -61,6 +63,8 @@ namespace UMapx.Distance
             if (den == 0)
                 return Maths.Pi / 2;
             float cosine = Maths.Abs(s) / den;
+            // clamp cosine for numerical stability
+            cosine = Maths.Max(-1f, Maths.Min(1f, cosine));
 
             return Maths.Acos(cosine);
         }
