@@ -36,11 +36,11 @@ namespace UMapx.Distribution
         /// Gets the variance value.
         /// </summary>
         /// <remarks>
-        /// For the standard hyperbolic secant distribution, the variance is π² / 4.
+        /// For the standard hyperbolic secant distribution, the variance equals 1.
         /// </remarks>
         public float Variance
         {
-            get { return Maths.Pow(Maths.Pi, 2) / 4f; }
+            get { return 1f; }
         }
         /// <summary>
         /// Gets the mode value.
