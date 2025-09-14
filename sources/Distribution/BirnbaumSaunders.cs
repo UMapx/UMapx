@@ -19,6 +19,16 @@ namespace UMapx.Distribution
         private float gamma = 1;
         #endregion
 
+        #region Utility
+        /// <summary>
+        /// Returns the real cube root of the given value.
+        /// </summary>
+        private static float Cbrt(float x)
+        {
+            return (x >= 0f) ? Maths.Pow(x, 1f / 3f) : -Maths.Pow(-x, 1f / 3f);
+        }
+        #endregion
+
         #region Birnbaum-Saunders components
         /// <summary>
         /// Initializes the Birnbaum-Saunders distribution.
@@ -104,9 +114,17 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
+        /// <remarks>
+        /// The expression is valid for γ &gt; 0.
+        /// </remarks>
         public float Median
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                float g2 = gamma * gamma;
+                float t = 0.5f * gamma + Maths.Sqrt(0.25f * g2 + 1f);
+                return mu + beta * t * t;
+            }
         }
         /// <summary>
         /// Gets the variance value.
@@ -118,16 +136,41 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mode value.
         /// </summary>
+        /// <remarks>
+        /// Derived from solving a cubic equation; valid for γ &gt; 0.
+        /// </remarks>
         public float Mode
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                float g2 = gamma * gamma;
+                float a = 1f + g2;
+                float b = 3f * g2 - 1f;
+                float p = b - a * a / 3f;
+                float q = 2f * a * a * a / 27f - a * b / 3f + 1f;
+                float d = q * q / 4f + p * p * p / 27f;
+                if (d < 0) return float.NaN;
+                float sqrt = Maths.Sqrt(d);
+                float u = Cbrt(-q / 2f + sqrt);
+                float v = Cbrt(-q / 2f - sqrt);
+                float t = u + v - a / 3f;
+                return mu + beta * t;
+            }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
+        /// <remarks>
+        /// The skewness exists for all γ &gt; 0.
+        /// </remarks>
         public float Skewness
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                float g2 = gamma * gamma;
+                float den = Maths.Pow(5f * g2 + 4f, 1.5f);
+                return 4f * gamma * (11f * g2 + 6f) / den;
+            }
         }
         /// <summary>
         /// Gets the excess kurtosis (kurtosis minus 3).
@@ -135,16 +178,33 @@ namespace UMapx.Distribution
         /// <remarks>
         /// Full kurtosis equals 3 plus this value.
         /// </remarks>
+        /// <remarks>
+        /// The expression is valid for γ &gt; 0.
+        /// </remarks>
         public float Excess
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                float g2 = gamma * gamma;
+                float den = (5f * g2 + 4f);
+                den *= den;
+                return 6f * g2 * (93f * g2 + 40f) / den;
+            }
         }
         /// <summary>
         /// Gets the value of entropy.
         /// </summary>
+        /// <remarks>
+        /// Closed-form expression for γ &gt; 0.
+        /// </remarks>
         public float Entropy
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                float g2 = gamma * gamma;
+                return 0.5f * (1f + Maths.Log(2f * Maths.Pi)) +
+                       Maths.Log(beta * gamma / 2f) + 0.5f * g2;
+            }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
