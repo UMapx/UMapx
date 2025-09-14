@@ -14825,8 +14825,11 @@
         </member>
         <member name="P:UMapx.Distribution.ChiSquare.Median">
             <summary>
-            Gets the median value (approximation).
+            Gets the median value using the Wilson–Hilferty approximation.
             </summary>
+            <remarks>
+            The approximation is truncated to zero for very small degrees of freedom.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.ChiSquare.Mode">
             <summary>
