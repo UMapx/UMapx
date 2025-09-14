@@ -133,6 +133,10 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
+        /// <remarks>
+        /// The density is given by:
+        /// f(x; d1, d2) = 2^{-(d1 + d2)/2} · d1^{d1/2} · d2^{d2/2} · e^{d1·x} / (B(d1/2, d2/2) · (d1·e^{2x} + d2)^{(d1 + d2)/2}).
+        /// </remarks>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public float Function(float x)
@@ -141,12 +145,13 @@ namespace UMapx.Distribution
 
             float d12 = d1 / 2.0f;
             float d22 = d2 / 2.0f;
+            float h = d12 + d22;
 
             // first equation:
 
             float a = Maths.Pow(d1, d12);
             float b = Maths.Pow(d2, d22);
-            float c = 2 * a * b;
+            float c = Maths.Pow(2f, -h) * a * b;
             float d = Special.Beta(d12, d22);
             float e = c / d;
 
@@ -154,7 +159,6 @@ namespace UMapx.Distribution
 
             float f = Maths.Exp(d1 * x);
             float g = d1 * Maths.Exp(2 * x) + d2;
-            float h = d12 + d22;
             float j = f / Maths.Pow(g, h);
 
             // result of F(x, d1, d2):
