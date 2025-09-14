@@ -26,7 +26,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the logarithmic Gaussian distribution.
         /// </summary>
-        /// <param name="sigma">Standard deviation</param>
+        /// <param name="sigma">Standard deviation (σ > 0)</param>
         /// <param name="mu">Mathematical expectation</param>
         public LogGaussian(float sigma, float mu)
         {
@@ -34,7 +34,7 @@ namespace UMapx.Distribution
             Mu = mu;
         }
         /// <summary>
-        /// Gets or sets the standard deviation.
+        /// Gets or sets the standard deviation (σ > 0).
         /// </summary>
         public float Sigma
         {
@@ -44,7 +44,7 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (value < 0)
+                if (value <= 0)
                     throw new ArgumentException("Invalid argument value");
 
                 this.sigma = value;
