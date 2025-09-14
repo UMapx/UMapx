@@ -153,12 +153,17 @@ namespace UMapx.Distribution
         }
         /// <summary>
         /// Returns the value of differential entropy.
+        /// When <c>p = 1</c>, the distribution is degenerate and the entropy equals zero.
         /// </summary>
         /// <returns>Value</returns>
         public float Entropy
         {
             get
             {
+                if (p == 1f)
+                {
+                    return 0f;
+                }
                 return -Maths.Log2(p) - q / p * Maths.Log2(q);
             }
         }
