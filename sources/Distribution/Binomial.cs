@@ -134,10 +134,15 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
+        /// <remarks>
+        /// Skewness is undefined when all trials succeed or fail.
+        /// </remarks>
         public float Skewness
         {
             get
             {
+                if (p == 0f || p == 1f)
+                    return float.NaN;
                 return (q - p) / Maths.Sqrt(n * p * q);
             }
         }
