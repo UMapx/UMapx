@@ -33,8 +33,11 @@ namespace UMapx.Distribution
         /// </summary>
         float Skewness { get; }
         /// <summary>
-        /// Gets the kurtosis coefficient.
+        /// Gets the excess kurtosis (kurtosis minus 3).
         /// </summary>
+        /// <remarks>
+        /// Full kurtosis equals 3 plus this value.
+        /// </remarks>
         float Excess { get; }
         /// <summary>
         /// Returns the value of differential entropy.

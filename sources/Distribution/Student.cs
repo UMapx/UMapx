@@ -112,12 +112,13 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the kurtosis coefficient.
+        /// Gets the excess kurtosis (kurtosis minus 3).
         /// </summary>
         /// <remarks>
-        /// For degrees of freedom in the interval (2, 4], the kurtosis is infinite and
+        /// Full kurtosis equals 3 plus this value.
+        /// For degrees of freedom in the interval (2, 4], the excess kurtosis is infinite and
         /// returns <see cref="float.PositiveInfinity"/>. For degrees of freedom ≤ 2, the
-        /// kurtosis is undefined and returns <see cref="float.NaN"/>.
+        /// excess kurtosis is undefined and returns <see cref="float.NaN"/>.
         /// </remarks>
         public float Excess
         {
