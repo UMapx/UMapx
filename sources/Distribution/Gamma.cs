@@ -113,9 +113,16 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
+        /// <remarks>
+        /// Uses Wilson–Hilferty approximation.
+        /// </remarks>
         public float Median
         {
-            get { throw new NotSupportedException(); }
+            get
+            {
+                float median = thetta * k * Maths.Pow(1f - 1f / (9f * k), 3f);
+                return Maths.Max(median, 0f);
+            }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
