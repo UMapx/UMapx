@@ -28,7 +28,8 @@ namespace UMapx.Distance
                 if (p[i] != 0 && q[i] != 0) tt++;
             }
 
-            return (tf + ft) / (float)(2 * tt + ft + tf);
+            int den = 2 * tt + ft + tf;
+            return den == 0 ? 0f : (tf + ft) / (float)den;
         }
         /// <summary>
         /// Returns distance value.
@@ -50,7 +51,8 @@ namespace UMapx.Distance
                 if (p[i] != 0 && q[i] != 0) tt++;
             }
 
-            return (tf + ft) / (float)(2.0f * tt + ft + tf);
+            int den = 2 * tt + ft + tf;
+            return den == 0 ? 0f : (tf + ft) / (float)den;
         }
         #endregion
     }
