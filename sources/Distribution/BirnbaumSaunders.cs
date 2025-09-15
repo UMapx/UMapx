@@ -161,34 +161,34 @@ namespace UMapx.Distribution
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
         /// <remarks>
-        /// The skewness exists for all γ &gt; 0.
+        /// See the standard moment expressions for the Birnbaum–Saunders distribution.
         /// </remarks>
         public float Skewness
         {
             get
             {
                 float g2 = gamma * gamma;
-                float den = Maths.Pow(5f * g2 + 4f, 1.5f);
-                return 4f * gamma * (11f * g2 + 6f) / den;
+                float numerator = 4f * gamma * (g2 + 3f);
+                float denominator = Maths.Pow(g2 + 2f, 1.5f);
+                return numerator / denominator;
             }
         }
         /// <summary>
         /// Gets the excess kurtosis (kurtosis minus 3).
         /// </summary>
         /// <remarks>
-        /// Full kurtosis equals 3 plus this value.
-        /// </remarks>
-        /// <remarks>
-        /// The expression is valid for γ &gt; 0.
+        /// See the standard moment expressions for the Birnbaum–Saunders distribution.
         /// </remarks>
         public float Excess
         {
             get
             {
                 float g2 = gamma * gamma;
-                float den = (5f * g2 + 4f);
-                den *= den;
-                return 6f * g2 * (93f * g2 + 40f) / den;
+                float g4 = g2 * g2;
+                float numerator = 6f * g2 * (g4 + 2f * g2);
+                float denominator = (g2 + 2f);
+                denominator *= denominator;
+                return numerator / denominator;
             }
         }
         /// <summary>
