@@ -155,7 +155,7 @@ namespace UMapx.Distribution
                 return 0;
             }
             x = Maths.Floor(x);
-            return Special.GammaP(x + 1, l);
+            return Special.GammaQ(x + 1, l);
         }
         /// <summary>
         /// Returns the value of differential entropy.
