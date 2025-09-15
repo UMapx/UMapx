@@ -159,6 +159,9 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
+        /// <remarks>
+        /// The normalization ensures that the integral of the PDF over its support equals one.
+        /// </remarks>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public float Function(float x)
@@ -168,11 +171,9 @@ namespace UMapx.Distribution
                 return 0;
             }
 
-            // Normalization does not contain factor exp(η).
-            float a1 = b * eta;
-            float a2 = Maths.Exp(b * x);
-            float a3 = Maths.Exp(-eta * Maths.Exp(b * x));
-            return a1 * a2 * a3;
+            float expBx = Maths.Exp(b * x);
+            float exponent = b * x - eta * (expBx - 1f);
+            return b * eta * Maths.Exp(exponent);
         }
         #endregion
     }
