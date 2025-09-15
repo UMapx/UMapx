@@ -25332,7 +25332,7 @@
             A filter with a finite impulse response, also called a transversal (FIR) filter, is one type of linear
             digital filter whose impulse response becomes exactly zero after a finite time.
             Such a filter is also called non-recursive due to the lack of feedback.
-            The denominator of the transfer function of such a filter is a certain constant.
+            The denominator of the transfer function of such a filter is a constant.
             </remarks>
         </member>
         <member name="M:UMapx.Response.FIR.#ctor">
@@ -25362,28 +25362,28 @@
             <summary>
             Returns the frequency response of the filter.
             </summary>
-            <param name="w">Array of frequencies (rad / s)</param>
+            <param name="w">Array of frequencies (rad / sample)</param>
             <returns>Discrete function in a Cartesian coordinate system</returns>
         </member>
         <member name="M:UMapx.Response.FIR.Phase(System.Single[])">
             <summary>
             Returns the phase-frequency response of a filter.
             </summary>
-            <param name="w">Array of frequencies (rad / s)</param>
+            <param name="w">Array of frequencies (rad / sample)</param>
             <returns>Discrete function in a Cartesian coordinate system</returns>
         </member>
         <member name="M:UMapx.Response.FIR.Amplitude(System.Single)">
             <summary>
             Returns the amplitude value at the given frequency.
             </summary>
-            <param name="w">Frequency (rad / s)</param>
+            <param name="w">Frequency (rad / sample)</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Response.FIR.Phase(System.Single)">
             <summary>
             Returns the phase value at the given frequency.
             </summary>
-            <param name="w">Frequency (rad / s)</param>
+            <param name="w">Frequency (rad / sample)</param>
             <returns>Value</returns>
         </member>
         <member name="P:UMapx.Response.FIR.LowPass">
@@ -25411,10 +25411,12 @@
             Defines a filter with an infinite impulse response.
             </summary>
             <remarks>
-            Filter with infinite impulse response (recursive filter, IIR filter or IIR filter) - a linear electronic filter,
-            using one or more of its outputs as an input, i.e. forms a feedback. The main property of such filters
-            is that their impulse response is of infinite length in the time domain, and the transfer function
-            has a fractional rational look.
+            Filter with infinite impulse response (recursive filter, IIR filter) — a linear digital filter with feedback.
+            The impulse response is of infinite length in time, and the transfer function is rational.
+            Convention used here:
+                H(e^{i w}) = (Σ_{i=0}^{P-1} b[i] e^{-i w i}) / (1 - Σ_{k=0}^{Q-1} a[k] e^{-i w k})
+            which leads to the difference equation:
+                y[n] = ( Σ_i b[i] x[n-i] + Σ_{k=1}^{Q-1} a[k] y[n-k] ) / (1 - a[0])
             </remarks>
         </member>
         <member name="M:UMapx.Response.IIR.#ctor">
@@ -25450,33 +25452,33 @@
             <summary>
             Returns the frequency response of the filter.
             </summary>
-            <param name="w">Array of frequencies (rad / s)</param>
+            <param name="w">Array of frequencies (rad / sample)</param>
             <returns>Discrete function in a Cartesian coordinate system</returns>
         </member>
         <member name="M:UMapx.Response.IIR.Phase(System.Single[])">
             <summary>
             Returns the phase-frequency response of a filter.
             </summary>
-            <param name="w">Array of frequencies (rad / s)</param>
+            <param name="w">Array of frequencies (rad / sample)</param>
             <returns>Discrete function in a Cartesian coordinate system</returns>
         </member>
         <member name="M:UMapx.Response.IIR.Amplitude(System.Single)">
             <summary>
             Returns the amplitude value at the given frequency.
             </summary>
-            <param name="w">Frequency (rad / s)</param>
+            <param name="w">Frequency (rad / sample)</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Response.IIR.Phase(System.Single)">
             <summary>
             Returns the phase value at the given frequency.
             </summary>
-            <param name="w">Frequency (rad / s)</param>
+            <param name="w">Frequency (rad / sample)</param>
             <returns>Value</returns>
         </member>
         <member name="P:UMapx.Response.IIR.Stability">
             <summary>
-            Checks if the specified filter is stable.
+            Checks if the specified filter is stable (all poles inside the unit circle).
             </summary>
         </member>
         <member name="P:UMapx.Response.IIR.LowPass">

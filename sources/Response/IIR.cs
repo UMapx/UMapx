@@ -1,4 +1,5 @@
 ﻿using System;
+using UMapx.Analysis;
 using UMapx.Core;
 
 namespace UMapx.Response
@@ -7,10 +8,12 @@ namespace UMapx.Response
     /// Defines a filter with an infinite impulse response.
     /// </summary>
     /// <remarks>
-    /// Filter with infinite impulse response (recursive filter, IIR filter or IIR filter) - a linear electronic filter,
-    /// using one or more of its outputs as an input, i.e. forms a feedback. The main property of such filters
-    /// is that their impulse response is of infinite length in the time domain, and the transfer function
-    /// has a fractional rational look.
+    /// Filter with infinite impulse response (recursive filter, IIR filter) — a linear digital filter with feedback.
+    /// The impulse response is of infinite length in time, and the transfer function is rational.
+    /// Convention used here:
+    ///     H(e^{i w}) = (Σ_{i=0}^{P-1} b[i] e^{-i w i}) / (1 - Σ_{k=0}^{Q-1} a[k] e^{-i w k})
+    /// which leads to the difference equation:
+    ///     y[n] = ( Σ_i b[i] x[n-i] + Σ_{k=1}^{Q-1} a[k] y[n-k] ) / (1 - a[0])
     /// </remarks>
     [Serializable]
     public class IIR : IResponse
@@ -39,28 +42,16 @@ namespace UMapx.Response
         /// </summary>
         public float[] A
         {
-            get
-            {
-                return this.a;
-            }
-            set
-            {
-                this.a = value;
-            }
+            get { return this.a; }
+            set { this.a = value; }
         }
         /// <summary>
         /// Gets or sets the array of signal coefficients.
         /// </summary>
         public float[] B
         {
-            get
-            {
-                return this.b;
-            }
-            set
-            {
-                this.b = value;
-            }
+            get { return this.b; }
+            set { this.b = value; }
         }
         /// <summary>
         /// Returns an array of filter response values when a discrete function is supplied.
@@ -71,54 +62,58 @@ namespace UMapx.Response
         {
             int length = u.Length;
             float[] y = new float[length];
-            float input, output;
-            int t, P = b.Length, Q = a.Length;
-            int n, i, k;
 
-            for (n = 0; n < length; n++)
+            int P = (b != null) ? b.Length : 0;
+            int Q = (a != null) ? a.Length : 0;
+
+            float a0 = (Q > 0) ? a[0] : 0f;
+            float denom = 1f - a0;
+
+            if (denom == 0f)
+                throw new InvalidOperationException("IIR.Reaction: a[0] = 1 → denominator is zero (pole on z=1)");
+
+            for (int n = 0; n < length; n++)
             {
-                input = 0; output = 0;
+                float accX = 0f, accY = 0f;
 
-                for (i = 0; i < P; i++)
+                // feedforward (x-part)
+                for (int i = 0; i < P; i++)
                 {
-                    t = n - i;
-                    if (t < 0) continue;
-                    input += b[i] * u[t];
+                    int t = n - i;
+                    if (t < 0) break;
+                    accX += b[i] * u[t];
                 }
 
-                for (k = 0; k < Q; k++)
+                // feedback (y-part), starts from k = 1
+                for (int k = 1; k < Q; k++)
                 {
-                    t = n - k;
-                    if (t < 0) continue;
-                    output += a[k] * y[t];
+                    int t = n - k;
+                    if (t < 0) break;
+                    accY += a[k] * y[t];
                 }
 
-                y[n] = input + output;
-
+                y[n] = (accX + accY) / denom;
             }
             return y;
         }
         /// <summary>
         /// Returns the frequency response of the filter.
         /// </summary>
-        /// <param name="w">Array of frequencies (rad / s)</param>
+        /// <param name="w">Array of frequencies (rad / sample)</param>
         /// <returns>Discrete function in a Cartesian coordinate system</returns>
         public float[] Amplitude(float[] w)
         {
-            int i, j;
-            Complex32 K1;
-            Complex32 K2;
             int length = w.Length;
             int P = b.Length, Q = a.Length;
             float[] amplitude = new float[length];
 
-            for (j = 0; j < length; j++)
+            for (int j = 0; j < length; j++)
             {
-                K1 = Complex32.Zero;
-                K2 = Complex32.One;
+                Complex32 K1 = Complex32.Zero;
+                Complex32 K2 = Complex32.One;
 
-                for (i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i); }
-                for (i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w[j] * i); }
+                for (int i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i); }
+                for (int i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w[j] * i); }
 
                 amplitude[j] = K1.Abs / K2.Abs;
             }
@@ -127,24 +122,21 @@ namespace UMapx.Response
         /// <summary>
         /// Returns the phase-frequency response of a filter.
         /// </summary>
-        /// <param name="w">Array of frequencies (rad / s)</param>
+        /// <param name="w">Array of frequencies (rad / sample)</param>
         /// <returns>Discrete function in a Cartesian coordinate system</returns>
         public float[] Phase(float[] w)
         {
-            int i, j;
-            Complex32 K1;
-            Complex32 K2;
             int length = w.Length;
             int P = b.Length, Q = a.Length;
             float[] phase = new float[length];
 
-            for (j = 0; j < w.Length; j++)
+            for (int j = 0; j < length; j++)
             {
-                K1 = Complex32.Zero;
-                K2 = Complex32.One;
+                Complex32 K1 = Complex32.Zero;
+                Complex32 K2 = Complex32.One;
 
-                for (i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i); }
-                for (i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w[j] * i); }
+                for (int i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i); }
+                for (int i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w[j] * i); }
 
                 phase[j] = K1.Angle - K2.Angle;
             }
@@ -153,57 +145,60 @@ namespace UMapx.Response
         /// <summary>
         /// Returns the amplitude value at the given frequency.
         /// </summary>
-        /// <param name="w">Frequency (rad / s)</param>
+        /// <param name="w">Frequency (rad / sample)</param>
         /// <returns>Value</returns>
         public float Amplitude(float w)
         {
-            int i;
-            Complex32 K1 = new Complex32(0, 0);
-            Complex32 K2 = new Complex32(1, 0);
+            Complex32 K1 = Complex32.Zero;
+            Complex32 K2 = Complex32.One;
 
-            for (i = 0; i < b.Length; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w * i); }
-            for (i = 0; i < a.Length; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w * i); }
+            for (int i = 0; i < b.Length; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w * i); }
+            for (int i = 0; i < a.Length; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w * i); }
 
             return K1.Abs / K2.Abs;
         }
         /// <summary>
         /// Returns the phase value at the given frequency.
         /// </summary>
-        /// <param name="w">Frequency (rad / s)</param>
+        /// <param name="w">Frequency (rad / sample)</param>
         /// <returns>Value</returns>
         public float Phase(float w)
         {
-            int i;
-            Complex32 K1 = new Complex32(0, 0);
-            Complex32 K2 = new Complex32(1, 0);
+            Complex32 K1 = Complex32.Zero;
+            Complex32 K2 = Complex32.One;
+
             int P = b.Length, Q = a.Length;
 
-            for (i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w * i); }
-            for (i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w * i); }
+            for (int i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w * i); }
+            for (int i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w * i); }
 
             return K1.Angle - K2.Angle;
         }
         /// <summary>
-        /// Checks if the specified filter is stable.
+        /// Checks if the specified filter is stable (all poles inside the unit circle).
         /// </summary>
         public bool Stability
         {
             get
             {
-                Complex32 sum = Complex32.Zero;
-                Complex32 exp = Maths.Exp(-Maths.I);
-                int length = a.Length;
+                if (a == null || a.Length == 0) return true;
 
-                for (int j = 0; j < length; j++)
-                {
-                    sum += a[j] * exp;
-                }
+                int Q = a.Length;
+                float[] p = new float[Q + 1];
 
-                if (sum == Complex32.Zero)
+                p[0] = 1f;
+                for (int k = 0; k < Q; k++)
+                    p[k + 1] = -a[k];
+
+                var eps = 1e-8f;
+                var rts = new Roots(eps).Compute(p);  // p(1)*x^n + ... + p(n+1) = 0
+
+                for (int i = 0; i < rts.Length; i++)
                 {
-                    return true;
+                    if (rts[i].Abs >= 1f - eps)
+                        return false;
                 }
-                return false;
+                return true;
             }
         }
         #endregion
@@ -216,9 +211,10 @@ namespace UMapx.Response
         {
             get
             {
+                // Demo 2nd-order low-pass style (stable): D(z) = 1 - 0.5 z^{-1} - 0.25 z^{-2}
                 IIR cv = new IIR();
                 cv.B = new float[3] { 1.0f, 1.0f, 0.0f };
-                cv.A = new float[3] { 0.0f, 0.5f, 0.5f };
+                cv.A = new float[3] { 0.0f, 0.5f, 0.25f };
                 return cv;
             }
         }
@@ -229,9 +225,10 @@ namespace UMapx.Response
         {
             get
             {
+                // Demo 2nd-order high-pass style (stable): same poles as LowPass, different zeros
                 IIR cv = new IIR();
                 cv.B = new float[3] { 1.0f, -1.0f, 0.0f };
-                cv.A = new float[3] { 0.0f, 0.5f, 0.5f };
+                cv.A = new float[3] { 0.0f, 0.5f, 0.25f };
                 return cv;
             }
         }
@@ -242,6 +239,7 @@ namespace UMapx.Response
         {
             get
             {
+                // Demo (stable): complex-conjugate poles with radius 0.5
                 IIR cv = new IIR();
                 cv.B = new float[3] { 1.0f, 1.0f, -1.0f };
                 cv.A = new float[3] { 0.0f, 0.5f, -0.5f };
@@ -255,9 +253,10 @@ namespace UMapx.Response
         {
             get
             {
+                // Demo notch, stable poles (reuse LowPass poles)
                 IIR cv = new IIR();
                 cv.B = new float[3] { 1.0f, -1.0f, 1.0f };
-                cv.A = new float[3] { 0.0f, 0.5f, 0.5f };
+                cv.A = new float[3] { 0.0f, 0.5f, 0.25f };
                 return cv;
             }
         }

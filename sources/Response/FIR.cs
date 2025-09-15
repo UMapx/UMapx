@@ -10,7 +10,7 @@ namespace UMapx.Response
     /// A filter with a finite impulse response, also called a transversal (FIR) filter, is one type of linear
     /// digital filter whose impulse response becomes exactly zero after a finite time.
     /// Such a filter is also called non-recursive due to the lack of feedback.
-    /// The denominator of the transfer function of such a filter is a certain constant.
+    /// The denominator of the transfer function of such a filter is a constant.
     /// </remarks>
     [Serializable]
     public class FIR : IResponse
@@ -37,14 +37,8 @@ namespace UMapx.Response
         /// </summary>
         public float[] B
         {
-            get
-            {
-                return this.b;
-            }
-            set
-            {
-                this.b = value;
-            }
+            get { return this.b; }
+            set { this.b = value; }
         }
         /// <summary>
         /// Returns an array of filter response values when a discrete function is supplied.
@@ -56,42 +50,37 @@ namespace UMapx.Response
             int length = u.Length;
             float[] y = new float[length];
 
-            float input;
-            int t, P = b.Length;
-            int n, i;
+            int P = b.Length;
 
-            for (n = 0; n < length; n++)
+            for (int n = 0; n < length; n++)
             {
-                input = 0;
+                float accX = 0f;
 
-                for (i = 0; i < P; i++)
+                for (int i = 0; i < P; i++)
                 {
-                    t = n - i;
-                    if (t < 0) continue;
-                    input += b[i] * u[t];
+                    int t = n - i;
+                    if (t < 0) break;
+                    accX += b[i] * u[t];
                 }
 
-                y[n] = input;
-
+                y[n] = accX;
             }
             return y;
         }
         /// <summary>
         /// Returns the frequency response of the filter.
         /// </summary>
-        /// <param name="w">Array of frequencies (rad / s)</param>
+        /// <param name="w">Array of frequencies (rad / sample)</param>
         /// <returns>Discrete function in a Cartesian coordinate system</returns>
         public float[] Amplitude(float[] w)
         {
-            int i, j, length = b.Length;
-            Complex32 K1;
+            int length = b.Length;
             float[] amplitude = new float[w.Length];
 
-            for (j = 0; j < w.Length; j++)
+            for (int j = 0; j < w.Length; j++)
             {
-                K1 = Complex32.Zero;
-
-                for (i = 0; i < length; i++)
+                Complex32 K1 = Complex32.Zero;
+                for (int i = 0; i < length; i++)
                 {
                     K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i);
                 }
@@ -102,19 +91,17 @@ namespace UMapx.Response
         /// <summary>
         /// Returns the phase-frequency response of a filter.
         /// </summary>
-        /// <param name="w">Array of frequencies (rad / s)</param>
+        /// <param name="w">Array of frequencies (rad / sample)</param>
         /// <returns>Discrete function in a Cartesian coordinate system</returns>
         public float[] Phase(float[] w)
         {
-            int j, i, length = b.Length;
-            Complex32 K1;
+            int length = b.Length;
             float[] phase = new float[w.Length];
 
-            for (j = 0; j < w.Length; j++)
+            for (int j = 0; j < w.Length; j++)
             {
-                K1 = Complex32.Zero;
-
-                for (i = 0; i < length; i++)
+                Complex32 K1 = Complex32.Zero;
+                for (int i = 0; i < length; i++)
                 {
                     K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i);
                 }
@@ -125,15 +112,14 @@ namespace UMapx.Response
         /// <summary>
         /// Returns the amplitude value at the given frequency.
         /// </summary>
-        /// <param name="w">Frequency (rad / s)</param>
+        /// <param name="w">Frequency (rad / sample)</param>
         /// <returns>Value</returns>
         public float Amplitude(float w)
         {
-            int i;
+            Complex32 K1 = Complex32.Zero;
             int length = b.Length;
-            Complex32 K1 = new Complex32(0, 0);
 
-            for (i = 0; i < length; i++)
+            for (int i = 0; i < length; i++)
             {
                 K1 += b[i] * Maths.Exp(-Maths.I * w * i);
             }
@@ -142,15 +128,14 @@ namespace UMapx.Response
         /// <summary>
         /// Returns the phase value at the given frequency.
         /// </summary>
-        /// <param name="w">Frequency (rad / s)</param>
+        /// <param name="w">Frequency (rad / sample)</param>
         /// <returns>Value</returns>
         public float Phase(float w)
         {
-            int i;
+            Complex32 K1 = Complex32.Zero;
             int length = b.Length;
-            Complex32 K1 = new Complex32(0, 0);
 
-            for (i = 0; i < length; i++)
+            for (int i = 0; i < length; i++)
             {
                 K1 += b[i] * Maths.Exp(-Maths.I * w * i);
             }
