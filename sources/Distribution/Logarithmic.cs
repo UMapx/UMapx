@@ -118,7 +118,7 @@ namespace UMapx.Distribution
                 return 0;
             }
 
-            int n = (int)Maths.Floor(x);
+            var n = Maths.Floor(x);
             float c = -1 / Maths.Log(1 - p);
             float sum = 0;
 
@@ -141,7 +141,7 @@ namespace UMapx.Distribution
                 return 0;
             }
 
-            int k = (int)Maths.Floor(x);
+            var k = Maths.Floor(x);
 
             if (x != k)
             {

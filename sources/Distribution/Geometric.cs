@@ -130,7 +130,8 @@ namespace UMapx.Distribution
             {
                 return 0f;
             }
-            int k = (int)Maths.Floor(x);
+
+            var k = Maths.Floor(x);
             if (x != k)
             {
                 return 0f;

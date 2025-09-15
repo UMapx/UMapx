@@ -221,12 +221,7 @@ namespace UMapx.Distribution
         /// </remarks>
         public float Function(float x)
         {
-            if (x != Math.Floor(x))
-            {
-                return 0f;
-            }
-
-            int k = (int)x;
+            int k = (int)Math.Floor(x);
 
             if (k < Math.Max(0, this.k + d - n) || k > Math.Min(d, this.k))
             {
