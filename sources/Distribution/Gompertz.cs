@@ -76,6 +76,9 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
+        /// <remarks>
+        /// Variance equals (2·e^{η}·E₁(η) − e^{η}·E₁(2η) − e^{η}·E₁(η)²) / b².
+        /// </remarks>
         public float Variance
         {
             get
@@ -83,8 +86,7 @@ namespace UMapx.Distribution
                 float e1 = -Special.Ei(-eta);
                 float e2 = -Special.Ei(-2f * eta);
                 float expEta = Maths.Exp(eta);
-                float exp2Eta = expEta * expEta;
-                return (2f * expEta * e1 - exp2Eta * e2 - exp2Eta * e1 * e1) / (b * b);
+                return (2f * expEta * e1 - expEta * e2 - expEta * e1 * e1) / (b * b);
             }
         }
         /// <summary>
