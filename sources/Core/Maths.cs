@@ -767,6 +767,16 @@ namespace UMapx.Core
             return (float)Math.Atan(a);
         }
         /// <summary>
+        /// Returns the arctangent2 of a number.
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static float Atan2(float a, float b)
+        {
+            return (float)Math.Atan2(a, b);
+        }
+        /// <summary>
         /// Returns the arccotangent of a number.
         /// </summary>
         /// <param name="a">Value</param>
@@ -876,6 +886,20 @@ namespace UMapx.Core
         public static Complex32 Atan(Complex32 a)
         {
             return I / 2.0 * (Maths.Log(1.0 - I * a) - Maths.Log(1.0 + I * a));
+        }
+        /// <summary>
+        /// Returns the arctangent2 of a number.
+        /// </summary>
+        /// <param name="a">Value</param>
+        /// <param name="b">Value</param>
+        /// <returns>Value</returns>
+        public static Complex32 Atan2(Complex32 a, Complex32 b)
+        {
+            float re = b.Real - a.Imag;
+            float im = b.Imag + a.Real;
+
+            float angle = Maths.Atan2(im, re);
+            return new Complex32(angle, 0f);
         }
         /// <summary>
         /// Returns the arccotangent of a number.
@@ -1292,9 +1316,9 @@ namespace UMapx.Core
         {
             if (modified == true)
             {
-                return (int)leftmodexp(a, x, p);
+                return (int)Leftmodexp(a, x, p);
             }
-            return (int)rightmodexp(a, x, p);
+            return (int)Rightmodexp(a, x, p);
         }
         /// <summary>
         /// Returns the result of raising the number "a" to the power of "x" modulo p.
@@ -1308,9 +1332,9 @@ namespace UMapx.Core
         {
             if (modified == true)
             {
-                return leftmodexp(a, x, p);
+                return Leftmodexp(a, x, p);
             }
-            return rightmodexp(a, x, p);
+            return Rightmodexp(a, x, p);
         }
         /// <summary>
         /// Computes modular exponentiation using the left-to-right binary method.
@@ -1319,7 +1343,7 @@ namespace UMapx.Core
         /// <param name="x">Exponent</param>
         /// <param name="p">Modulus</param>
         /// <returns>Result of a^x mod p</returns>
-        private static long leftmodexp(long a, long x, long p)
+        private static long Leftmodexp(long a, long x, long p)
         {
             int[] X = Maths.Decimal2Base(x, 2);
             int t = X.Length, i;
@@ -1342,7 +1366,7 @@ namespace UMapx.Core
         /// <param name="x">Exponent</param>
         /// <param name="p">Modulus</param>
         /// <returns>Result of a^x mod p</returns>
-        private static long rightmodexp(long a, long x, long p)
+        private static long Rightmodexp(long a, long x, long p)
         {
             int[] X = Maths.Decimal2Base(x, 2);
             int t = X.Length, i;

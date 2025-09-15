@@ -57,7 +57,7 @@ namespace UMapx.Response
         /// Returns an array of filter response values when a discrete function is supplied.
         /// </summary>
         /// <param name="u">Array</param>
-        /// <returns>Discrete function in a Cartesian coordinate system</returns>
+        /// <returns>Array</returns>
         public float[] Reaction(float[] u)
         {
             int length = u.Length;
@@ -100,7 +100,7 @@ namespace UMapx.Response
         /// Returns the frequency response of the filter.
         /// </summary>
         /// <param name="w">Array of frequencies (rad / sample)</param>
-        /// <returns>Discrete function in a Cartesian coordinate system</returns>
+        /// <returns>Array</returns>
         public float[] Amplitude(float[] w)
         {
             int length = w.Length;
@@ -123,7 +123,7 @@ namespace UMapx.Response
         /// Returns the phase-frequency response of a filter.
         /// </summary>
         /// <param name="w">Array of frequencies (rad / sample)</param>
-        /// <returns>Discrete function in a Cartesian coordinate system</returns>
+        /// <returns>Array</returns>
         public float[] Phase(float[] w)
         {
             int length = w.Length;

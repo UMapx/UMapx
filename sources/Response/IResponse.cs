@@ -10,19 +10,19 @@
         /// Returns an array of filter response values when a discrete function is supplied.
         /// </summary>
         /// <param name="u">Array</param>
-        /// <returns>Discrete function in a Cartesian coordinate system</returns>
+        /// <returns>Array</returns>
         float[] Reaction(float[] u);
         /// <summary>
         /// Returns the frequency response of the filter.
         /// </summary>
         /// <param name="w">Array of frequencies (rad / s)</param>
-        /// <returns>Discrete function in a Cartesian coordinate system</returns>
+        /// <returns>Array</returns>
         float[] Amplitude(float[] w);
         /// <summary>
         /// Returns the phase-frequency response of a filter.
         /// </summary>
         /// <param name="w">Array of frequencies (rad / s)</param>
-        /// <returns>Discrete function in a Cartesian coordinate system</returns>
+        /// <returns>Array</returns>
         float[] Phase(float[] w);
         /// <summary>
         /// Returns the amplitude value at the given frequency.

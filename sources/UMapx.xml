@@ -5700,6 +5700,14 @@
             <param name="a">Value</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Core.Maths.Atan2(System.Single,System.Single)">
+            <summary>
+            Returns the arctangent2 of a number.
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Core.Maths.Actan(System.Single)">
             <summary>
             Returns the arccotangent of a number.
@@ -5783,6 +5791,14 @@
             </summary>
             <param name="a">Complex number</param>
             <returns>Complex number</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.Atan2(UMapx.Core.Complex32,UMapx.Core.Complex32)">
+            <summary>
+            Returns the arctangent2 of a number.
+            </summary>
+            <param name="a">Value</param>
+            <param name="b">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Actan(UMapx.Core.Complex32)">
             <summary>
@@ -6053,7 +6069,7 @@
             <param name="modified">Use modified algorithm or not</param>
             <returns>Integer number</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.leftmodexp(System.Int64,System.Int64,System.Int64)">
+        <member name="M:UMapx.Core.Maths.Leftmodexp(System.Int64,System.Int64,System.Int64)">
             <summary>
             Computes modular exponentiation using the left-to-right binary method.
             </summary>
@@ -6062,7 +6078,7 @@
             <param name="p">Modulus</param>
             <returns>Result of a^x mod p</returns>
         </member>
-        <member name="M:UMapx.Core.Maths.rightmodexp(System.Int64,System.Int64,System.Int64)">
+        <member name="M:UMapx.Core.Maths.Rightmodexp(System.Int64,System.Int64,System.Int64)">
             <summary>
             Computes modular exponentiation using the right-to-left binary method.
             </summary>
@@ -25378,21 +25394,21 @@
             Returns an array of filter response values when a discrete function is supplied.
             </summary>
             <param name="u">Array</param>
-            <returns>Discrete function in a Cartesian coordinate system</returns>
+            <returns>Array</returns>
         </member>
         <member name="M:UMapx.Response.FIR.Amplitude(System.Single[])">
             <summary>
             Returns the frequency response of the filter.
             </summary>
             <param name="w">Array of frequencies (rad / sample)</param>
-            <returns>Discrete function in a Cartesian coordinate system</returns>
+            <returns>Array</returns>
         </member>
         <member name="M:UMapx.Response.FIR.Phase(System.Single[])">
             <summary>
             Returns the phase-frequency response of a filter.
             </summary>
             <param name="w">Array of frequencies (rad / sample)</param>
-            <returns>Discrete function in a Cartesian coordinate system</returns>
+            <returns>Array</returns>
         </member>
         <member name="M:UMapx.Response.FIR.Amplitude(System.Single)">
             <summary>
@@ -25468,21 +25484,21 @@
             Returns an array of filter response values when a discrete function is supplied.
             </summary>
             <param name="u">Array</param>
-            <returns>Discrete function in a Cartesian coordinate system</returns>
+            <returns>Array</returns>
         </member>
         <member name="M:UMapx.Response.IIR.Amplitude(System.Single[])">
             <summary>
             Returns the frequency response of the filter.
             </summary>
             <param name="w">Array of frequencies (rad / sample)</param>
-            <returns>Discrete function in a Cartesian coordinate system</returns>
+            <returns>Array</returns>
         </member>
         <member name="M:UMapx.Response.IIR.Phase(System.Single[])">
             <summary>
             Returns the phase-frequency response of a filter.
             </summary>
             <param name="w">Array of frequencies (rad / sample)</param>
-            <returns>Discrete function in a Cartesian coordinate system</returns>
+            <returns>Array</returns>
         </member>
         <member name="M:UMapx.Response.IIR.Amplitude(System.Single)">
             <summary>
@@ -25533,21 +25549,21 @@
             Returns an array of filter response values when a discrete function is supplied.
             </summary>
             <param name="u">Array</param>
-            <returns>Discrete function in a Cartesian coordinate system</returns>
+            <returns>Array</returns>
         </member>
         <member name="M:UMapx.Response.IResponse.Amplitude(System.Single[])">
             <summary>
             Returns the frequency response of the filter.
             </summary>
             <param name="w">Array of frequencies (rad / s)</param>
-            <returns>Discrete function in a Cartesian coordinate system</returns>
+            <returns>Array</returns>
         </member>
         <member name="M:UMapx.Response.IResponse.Phase(System.Single[])">
             <summary>
             Returns the phase-frequency response of a filter.
             </summary>
             <param name="w">Array of frequencies (rad / s)</param>
-            <returns>Discrete function in a Cartesian coordinate system</returns>
+            <returns>Array</returns>
         </member>
         <member name="M:UMapx.Response.IResponse.Amplitude(System.Single)">
             <summary>
