@@ -82,14 +82,15 @@ namespace UMapx.Distribution
         /// Gets the variance value.
         /// </summary>
         /// <remarks>
-        /// The variance is finite only when <c>d2 &gt; 4</c>;
-        /// otherwise, <see cref="float.PositiveInfinity"/> is returned.
+        /// The variance is finite only when <c>d2 &gt; 4</c>, explicitly requiring
+        /// that the second degree of freedom exceeds 4; otherwise,
+        /// <see cref="float.PositiveInfinity"/> is returned.
         /// </remarks>
         public float Variance
         {
             get
             {
-                return (d2 > 4) ? 2f * (d1 + d2 - 2f) / (d1 * (d2 - 2f)) : float.PositiveInfinity;
+                return (d2 > 4) ? 2f * (d1 + d2 - 2f) / (d1 * (d2 - 4f)) : float.PositiveInfinity;
             }
         }
         /// <summary>
