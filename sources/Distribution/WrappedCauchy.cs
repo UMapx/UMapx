@@ -83,11 +83,11 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the circular mode, which equals the location parameter μ.
         /// </summary>
         public float Mode
         {
-            get { throw new NotSupportedException(); }
+            get { return mu; }
         }
         /// <summary>
         /// Gets the support interval of the argument.
