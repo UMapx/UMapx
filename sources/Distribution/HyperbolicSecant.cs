@@ -77,11 +77,11 @@ namespace UMapx.Distribution
         /// Returns the value of differential entropy.
         /// </summary>
         /// <remarks>
-        /// This value corresponds to the hyperbolic secant distribution with scale σ = 1.
+        /// This value corresponds to the hyperbolic secant distribution with the variance-1 (σ = 1) parametrization.
         /// </remarks>
         public float Entropy
         {
-            get { return Maths.Log(4f); }
+            get { return Maths.Log(2 * Maths.Pi); }
         }
         /// <summary>
         /// Returns the value of the probability distribution function.
