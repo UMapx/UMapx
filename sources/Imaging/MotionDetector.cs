@@ -55,7 +55,7 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Apply filter and returns motion level in range [0, 1].
+        /// Applies the filter and returns motion level in range [0, 1].
         /// </summary>
         /// <param name="Data">Bitmap</param>
         /// <returns>Motion level</returns>
