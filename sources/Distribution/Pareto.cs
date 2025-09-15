@@ -146,13 +146,22 @@ namespace UMapx.Distribution
         /// Gets the excess kurtosis (kurtosis minus 3).
         /// </summary>
         /// <remarks>
-        /// Full kurtosis equals 3 plus this value.
+        /// Full kurtosis equals 3 plus this value. Requires k > 4 for a finite result.
         /// Formula: 6 * (k^3 + k^2 - 6k - 2) / (k * (k - 3) * (k - 4))
         /// </remarks>
         public float Excess
         {
             get
             {
+                if (k <= 2)
+                {
+                    return float.NaN;
+                }
+                if (k <= 4)
+                {
+                    return float.PositiveInfinity;
+                }
+
                 float k2 = k * k;
                 float k3 = k2 * k;
                 return 6 * (k3 + k2 - 6 * k - 2) / (k * (k - 3) * (k - 4));
