@@ -91,14 +91,14 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mode value. Since the uniform distribution has no unique mode,
+        /// Gets the mode values. Since the uniform distribution has no unique mode,
         /// the value is undefined and represented by <see cref="float.NaN"/>.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
-                return float.NaN;
+                return new float[] { float.NaN };
             }
         }
         /// <summary>

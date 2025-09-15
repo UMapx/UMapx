@@ -91,17 +91,17 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
                 if (b > 1)
                 {
-                    return a * Maths.Pow((b - 1) / (b + 1), 1 / b);
+                    return new float[] { a * Maths.Pow((b - 1) / (b + 1), 1 / b) };
                 }
-                return 0;
+                return new float[] { 0 };
             }
         }
         /// <summary>

@@ -134,12 +134,12 @@ namespace UMapx.Distribution
             get { return beta * beta * gamma * gamma * (1 + 5f * gamma * gamma / 4f); }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
         /// <remarks>
         /// Derived from solving a cubic equation; valid for γ &gt; 0.
         /// </remarks>
-        public float Mode
+        public float[] Mode
         {
             get
             {
@@ -149,12 +149,16 @@ namespace UMapx.Distribution
                 float p = b - a * a / 3f;
                 float q = 2f * a * a * a / 27f - a * b / 3f + 1f;
                 float d = q * q / 4f + p * p * p / 27f;
-                if (d < 0) return float.NaN;
+                if (d < 0)
+                {
+                    return new float[] { float.NaN };
+                }
+
                 float sqrt = Maths.Sqrt(d);
                 float u = Cbrt(-q / 2f + sqrt);
                 float v = Cbrt(-q / 2f - sqrt);
                 float t = u + v - a / 3f;
-                return mu + beta * t;
+                return new float[] { mu + beta * t };
             }
         }
         /// <summary>

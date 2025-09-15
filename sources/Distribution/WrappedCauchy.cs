@@ -85,9 +85,9 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the circular mode, which equals the location parameter μ.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
-            get { return mu; }
+            get { return new float[] { mu }; }
         }
         /// <summary>
         /// Gets the support interval of the argument.

@@ -105,13 +105,13 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
-                return Maths.Exp(mu - sigma * sigma);
+                return new float[] { Maths.Exp(mu - sigma * sigma) };
             }
         }
         /// <summary>

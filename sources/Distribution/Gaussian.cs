@@ -105,13 +105,13 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
-                return this.mu;
+                return new float[] { this.mu };
             }
         }
         /// <summary>

@@ -99,16 +99,16 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
                 if (c > 1)
-                    return Maths.Pow((c - 1) / (k * c + 1), 1.0f / c);
+                    return new float[] { Maths.Pow((c - 1) / (k * c + 1), 1.0f / c) };
 
-                return 0;
+                return new float[] { 0f };
             }
         }
         /// <summary>

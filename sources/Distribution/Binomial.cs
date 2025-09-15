@@ -99,24 +99,43 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
                 float test = (n + 1) * p;
 
-                if (test <= 0 || (int)test != test)
-                    return Maths.Floor(test);
+                if (test <= 0f)
+                {
+                    return new float[] { 0f };
+                }
 
-                if (test <= n)
-                    return test;
+                if (test >= n + 1f)
+                {
+                    return new float[] { n };
+                }
 
-                if (test == n + 1)
-                    return n;
+                float floor = Maths.Floor(test);
+                float rounded = Maths.Round(test);
 
-                return float.NaN;
+                if (Maths.Abs(test - rounded) < 1e-6f)
+                {
+                    if (rounded <= 0f)
+                    {
+                        return new float[] { 0f };
+                    }
+
+                    if (rounded >= n + 1f)
+                    {
+                        return new float[] { n };
+                    }
+
+                    return new float[] { rounded - 1f, rounded };
+                }
+
+                return new float[] { floor };
             }
         }
         /// <summary>

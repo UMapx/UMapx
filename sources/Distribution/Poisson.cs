@@ -78,13 +78,20 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
-                return Maths.Floor(l);
+                float mode = Maths.Floor(l);
+
+                if (mode > 0f && Maths.Abs(l - mode) < 1e-6f)
+                {
+                    return new float[] { mode - 1f, mode };
+                }
+
+                return new float[] { mode };
             }
         }
         /// <summary>

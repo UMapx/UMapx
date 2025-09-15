@@ -117,12 +117,12 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
         /// <remarks>
         /// When <c>d1 ≤ 2</c>, the mode occurs at zero.
         /// </remarks>
-        public float Mode
+        public float[] Mode
         {
             get
             {
@@ -130,10 +130,10 @@ namespace UMapx.Distribution
                 {
                     float a = (d1 - 2.0f) / d1;
                     float b = d2 / (d2 + 2.0f);
-                    return a * b;
+                    return new float[] { a * b };
                 }
 
-                return 0f;
+                return new float[] { 0f };
             }
         }
         /// <summary>
