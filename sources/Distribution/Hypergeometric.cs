@@ -111,6 +111,9 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
+        /// <remarks>
+        /// Variance equals d * (k / n) * ((n - k) / n) * ((n - d) / (n - 1)).
+        /// </remarks>
         public float Variance
         {
             get
@@ -118,7 +121,7 @@ namespace UMapx.Distribution
                 if (n <= 1f)
                     return 0f;
 
-                return k * (d / n) * ((n - d) / n) * ((n - k) / (n - 1.0f));
+                return d * (k / n) * ((n - k) / n) * ((n - d) / (n - 1f));
             }
         }
         /// <summary>
