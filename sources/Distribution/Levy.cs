@@ -72,9 +72,12 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mean value.
         /// </summary>
+        /// <remarks>
+        /// The first moment does not exist for the Lévy distribution.
+        /// </remarks>
         public float Mean
         {
-            get { return float.PositiveInfinity; }
+            get { return float.NaN; }
         }
         /// <summary>
         /// Gets the median value.
@@ -86,9 +89,12 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
+        /// <remarks>
+        /// The second moment does not exist for the Lévy distribution.
+        /// </remarks>
         public float Variance
         {
-            get { return float.PositiveInfinity; }
+            get { return float.NaN; }
         }
         /// <summary>
         /// Gets the mode value.
