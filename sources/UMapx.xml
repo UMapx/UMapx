@@ -14114,7 +14114,7 @@
         </member>
         <member name="P:UMapx.Distribution.Arcsine.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Arcsine.Skewness">
@@ -14220,7 +14220,7 @@
         </member>
         <member name="P:UMapx.Distribution.Bernoulli.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Bernoulli.Median">
@@ -14309,11 +14309,13 @@
         </member>
         <member name="P:UMapx.Distribution.Beta.Mode">
             <summary>
-            Gets the mode value. If <c>a ≤ 1</c> and <c>b > 1</c>,
-            the mode is at 0. If <c>b ≤ 1</c> and <c>a > 1</c>,
+            Gets the mode values. If <c>a ≤ 1</c> and <c>b ≥ 1</c>,
+            the mode is at 0. If <c>b ≤ 1</c> and <c>a ≥ 1</c>,
             the mode is at 1. When both parameters are greater than
-            one, the mode is calculated as <c>(a - 1) / (a + b - 2)</c>;
-            otherwise, the mode is undefined and returns <see cref="F:System.Single.NaN" />.
+            one, the mode is calculated as <c>(a - 1) / (a + b - 2)</c>.
+            If both parameters are less than one, the distribution is bimodal
+            with modes at the boundaries 0 and 1. When both parameters equal
+            one, the mode is undefined and represented by <see cref="F:System.Single.NaN" />.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Beta.Median">
@@ -14402,7 +14404,7 @@
         </member>
         <member name="P:UMapx.Distribution.BetaPrime.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.BetaPrime.Variance">
@@ -14494,7 +14496,7 @@
         </member>
         <member name="P:UMapx.Distribution.Binomial.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Binomial.Median">
@@ -14600,7 +14602,7 @@
         </member>
         <member name="P:UMapx.Distribution.BirnbaumSaunders.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
             <remarks>
             Derived from solving a cubic equation; valid for γ &gt; 0.
@@ -14611,7 +14613,7 @@
             Gets the value of the asymmetry coefficient.
             </summary>
             <remarks>
-            The skewness exists for all γ &gt; 0.
+            See the standard moment expressions for the Birnbaum–Saunders distribution.
             </remarks>
         </member>
         <member name="P:UMapx.Distribution.BirnbaumSaunders.Excess">
@@ -14619,10 +14621,7 @@
             Gets the excess kurtosis (kurtosis minus 3).
             </summary>
             <remarks>
-            Full kurtosis equals 3 plus this value.
-            </remarks>
-            <remarks>
-            The expression is valid for γ &gt; 0.
+            See the standard moment expressions for the Birnbaum–Saunders distribution.
             </remarks>
         </member>
         <member name="P:UMapx.Distribution.BirnbaumSaunders.Entropy">
@@ -14691,7 +14690,7 @@
         </member>
         <member name="P:UMapx.Distribution.Burr.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Burr.Median">
@@ -14794,7 +14793,7 @@
         </member>
         <member name="P:UMapx.Distribution.Cauchy.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Cauchy.Median">
@@ -14875,7 +14874,7 @@
         </member>
         <member name="P:UMapx.Distribution.ChiSquare.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.ChiSquare.Variance">
@@ -14952,7 +14951,7 @@
         </member>
         <member name="P:UMapx.Distribution.ChoiWilliams.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.ChoiWilliams.Skewness">
@@ -15031,7 +15030,7 @@
         </member>
         <member name="P:UMapx.Distribution.ConeShape.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.ConeShape.Skewness">
@@ -15125,7 +15124,7 @@
         </member>
         <member name="P:UMapx.Distribution.Erlang.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Erlang.Skewness">
@@ -15203,7 +15202,7 @@
         </member>
         <member name="P:UMapx.Distribution.Exponential.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Exponential.Median">
@@ -15297,7 +15296,7 @@
         </member>
         <member name="P:UMapx.Distribution.FisherSnedecor.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
             <remarks>
             When <c>d1 ≤ 2</c>, the mode occurs at zero.
@@ -15390,7 +15389,7 @@
         </member>
         <member name="P:UMapx.Distribution.FisherZ.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.FisherZ.Median">
@@ -15492,7 +15491,7 @@
         </member>
         <member name="P:UMapx.Distribution.Gamma.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Gamma.Median">
@@ -15589,7 +15588,7 @@
         </member>
         <member name="P:UMapx.Distribution.Gaussian.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Gaussian.Skewness">
@@ -15667,7 +15666,7 @@
         </member>
         <member name="P:UMapx.Distribution.Geometric.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Geometric.Median">
@@ -15744,10 +15743,13 @@
             <summary>
             Gets the variance value.
             </summary>
+            <remarks>
+            Variance equals (2·e^{η}·E₁(η) − e^{η}·E₁(2η) − e^{η}·E₁(η)²) / b².
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Gompertz.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Gompertz.Median">
@@ -15843,7 +15845,7 @@
         </member>
         <member name="P:UMapx.Distribution.Gumbel.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Gumbel.Skewness">
@@ -15912,7 +15914,7 @@
         </member>
         <member name="P:UMapx.Distribution.HyperbolicSecant.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.HyperbolicSecant.Skewness">
@@ -16009,7 +16011,7 @@
         </member>
         <member name="P:UMapx.Distribution.Hypergeometric.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Hypergeometric.Median">
@@ -16077,7 +16079,7 @@
         </member>
         <member name="P:UMapx.Distribution.IDistribution.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.IDistribution.Skewness">
@@ -16142,7 +16144,7 @@
         </member>
         <member name="P:UMapx.Distribution.Kumaraswamy.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Kumaraswamy.Entropy">
@@ -16254,7 +16256,7 @@
         </member>
         <member name="P:UMapx.Distribution.Laplace.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Laplace.Median">
@@ -16330,6 +16332,9 @@
             <summary>
             Gets the mean value.
             </summary>
+            <remarks>
+            The first moment does not exist for the Lévy distribution.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Levy.Median">
             <summary>
@@ -16340,10 +16345,13 @@
             <summary>
             Gets the variance value.
             </summary>
+            <remarks>
+            The second moment does not exist for the Lévy distribution.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Levy.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Levy.Skewness">
@@ -16420,7 +16428,7 @@
         </member>
         <member name="P:UMapx.Distribution.Logarithmic.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Logarithmic.Skewness">
@@ -16508,7 +16516,7 @@
         </member>
         <member name="P:UMapx.Distribution.LogGaussian.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.LogGaussian.Skewness">
@@ -16597,7 +16605,7 @@
         </member>
         <member name="P:UMapx.Distribution.Logistic.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Logistic.Skewness">
@@ -16680,7 +16688,7 @@
         </member>
         <member name="P:UMapx.Distribution.LogLogistic.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.LogLogistic.Median">
@@ -16771,8 +16779,8 @@
         </member>
         <member name="P:UMapx.Distribution.Nakagami.Mode">
             <summary>
-            Gets the mode value.
-            The mode is calculated as <c>sqrt((2 * μ - 1) * ω / (2 * μ))</c>.
+            Gets the mode values.
+            The mode is calculated as <c>sqrt((2 * μ - 1) * ω / (2 * μ))</c> when defined.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Nakagami.Median">
@@ -16868,7 +16876,7 @@
         </member>
         <member name="P:UMapx.Distribution.Pareto.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Pareto.Median">
@@ -16952,7 +16960,7 @@
         </member>
         <member name="P:UMapx.Distribution.Poisson.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Poisson.Median">
@@ -17039,7 +17047,7 @@
         </member>
         <member name="P:UMapx.Distribution.Rademacher.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Rademacher.Skewness">
@@ -17123,7 +17131,7 @@
         </member>
         <member name="P:UMapx.Distribution.Rayleigh.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Rayleigh.Skewness">
@@ -17204,7 +17212,7 @@
         </member>
         <member name="P:UMapx.Distribution.Student.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Student.Skewness">
@@ -17305,10 +17313,14 @@
             <summary>
             Gets the median value.
             </summary>
+            <remarks>
+            The <c>c ≥ (a + b) / 2</c> branch returns the median on the rising side of the PDF;
+            otherwise the median lies on the falling side.
+            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Triangular.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Triangular.Skewness">
@@ -17391,7 +17403,7 @@
         </member>
         <member name="P:UMapx.Distribution.Uniform.Mode">
             <summary>
-            Gets the mode value. Since the uniform distribution has no unique mode,
+            Gets the mode values. Since the uniform distribution has no unique mode,
             the value is undefined and represented by <see cref="F:System.Single.NaN"/>.
             </summary>
         </member>
@@ -17466,7 +17478,7 @@
         </member>
         <member name="P:UMapx.Distribution.UQuadratic.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.UQuadratic.Mean">
@@ -17569,7 +17581,7 @@
         </member>
         <member name="P:UMapx.Distribution.Weibull.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Weibull.Median">
@@ -17652,7 +17664,7 @@
         </member>
         <member name="P:UMapx.Distribution.Wigner.Mode">
             <summary>
-            Gets the mode value.
+            Gets the mode values.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Wigner.Skewness">
