@@ -15383,8 +15383,9 @@
             Gets the variance value.
             </summary>
             <remarks>
-            The variance is finite only when <c>d2 &gt; 4</c>;
-            otherwise, <see cref="F:System.Single.PositiveInfinity"/> is returned.
+            The variance is finite only when <c>d2 &gt; 4</c>, explicitly requiring
+            that the second degree of freedom exceeds 4; otherwise,
+            <see cref="F:System.Single.PositiveInfinity"/> is returned.
             </remarks>
         </member>
         <member name="P:UMapx.Distribution.FisherZ.Mode">
