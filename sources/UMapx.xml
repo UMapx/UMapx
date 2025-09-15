@@ -15789,6 +15789,9 @@
             <summary>
             Returns the value of the probability density function.
             </summary>
+            <remarks>
+            The normalization ensures that the integral of the PDF over its support equals one.
+            </remarks>
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
@@ -16769,7 +16772,7 @@
         <member name="P:UMapx.Distribution.Nakagami.Mode">
             <summary>
             Gets the mode value.
-            The mode is calculated as <c>sqrt((2 * μ - 1) * ω / μ)</c>.
+            The mode is calculated as <c>sqrt((2 * μ - 1) * ω / (2 * μ))</c>.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.Nakagami.Median">
@@ -16883,7 +16886,7 @@
             Gets the excess kurtosis (kurtosis minus 3).
             </summary>
             <remarks>
-            Full kurtosis equals 3 plus this value.
+            Full kurtosis equals 3 plus this value. Requires k > 4 for a finite result.
             Formula: 6 * (k^3 + k^2 - 6k - 2) / (k * (k - 3) * (k - 4))
             </remarks>
         </member>
