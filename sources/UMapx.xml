@@ -15685,7 +15685,7 @@
             Gets the excess kurtosis (kurtosis minus 3).
             </summary>
             <remarks>
-            Full kurtosis equals 3 plus this value.
+            The full kurtosis equals this value plus 3.
             </remarks>
         </member>
         <member name="M:UMapx.Distribution.Geometric.Function(System.Single)">
@@ -15935,7 +15935,7 @@
             Returns the value of differential entropy.
             </summary>
             <remarks>
-            This value corresponds to the hyperbolic secant distribution with scale σ = 1.
+            This value corresponds to the hyperbolic secant distribution with the variance-1 (σ = 1) parametrization.
             </remarks>
         </member>
         <member name="M:UMapx.Distribution.HyperbolicSecant.Distribution(System.Single)">
@@ -17729,7 +17729,7 @@
         </member>
         <member name="P:UMapx.Distribution.WrappedCauchy.Mode">
             <summary>
-            Gets the mode value.
+            Gets the circular mode, which equals the location parameter μ.
             </summary>
         </member>
         <member name="P:UMapx.Distribution.WrappedCauchy.Support">
