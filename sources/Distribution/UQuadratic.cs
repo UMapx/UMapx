@@ -83,7 +83,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return new float[] { (int)a & (int)b };
+                return new float[] { a, b };
             }
         }
         /// <summary>
