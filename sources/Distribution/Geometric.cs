@@ -116,7 +116,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return 6f + p * p / q;
+                return 3f + p * p / q;
             }
         }
         /// <summary>
