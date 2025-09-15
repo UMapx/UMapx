@@ -103,21 +103,20 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
+        /// <remarks>
+        /// The <c>c ≥ (a + b) / 2</c> branch returns the median on the rising side of the PDF;
+        /// otherwise the median lies on the falling side.
+        /// </remarks>
         public float Median
         {
             get
             {
-                float median;
-                if (c >= (a + b) / 2.0)
+                if (c >= (a + b) / 2.0f)
                 {
-                    median = b - Maths.Sqrt((b - a) * (b - c)) / Maths.Sqrt2;
-                }
-                else
-                {
-                    median = a + Maths.Sqrt((b - a) * (c - a)) / Maths.Sqrt2;
+                    return a + Maths.Sqrt((b - a) * (c - a) / 2.0f);
                 }
 
-                return median;
+                return b - Maths.Sqrt((b - a) * (b - c) / 2.0f);
             }
         }
         /// <summary>
