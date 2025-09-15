@@ -105,7 +105,7 @@ namespace UMapx.Distribution
         /// </summary>
         public float Variance
         {
-            get { return (1f / 20f) * Maths.Pow(b - a, 2f); }
+            get { return (3f / 20f) * Maths.Pow(b - a, 2f); }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
