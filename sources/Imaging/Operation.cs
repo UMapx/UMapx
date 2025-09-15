@@ -9,8 +9,7 @@ namespace UMapx.Imaging
     /// Defines the linear operation filter.
     /// </summary>
     /// <remarks>
-    /// This filter works by applying the following algorithm: C (x, y) = a * A (x, y) + b * B (x, y), where A, B are the original images,
-    /// a, b are the coefficients.
+    /// This filter applies C(x, y) = a · A(x, y) + b · B(x, y), where A and B are the original images and a and b are their coefficients.
     /// </remarks>
     [Serializable]
     public class Operation : IBitmapFilter2
