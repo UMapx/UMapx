@@ -80,21 +80,22 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
                 if (q > p)
                 {
-                    return 0;
+                    return new float[] { 0f };
                 }
                 else if (q < p)
                 {
-                    return 1;
+                    return new float[] { 1f };
                 }
-                return 0.5f;
+
+                return new float[] { 0f, 1f };
             }
         }
         /// <summary>

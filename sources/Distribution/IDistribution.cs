@@ -25,9 +25,9 @@ namespace UMapx.Distribution
         /// </summary>
         float Median { get; }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        float Mode { get; }
+        float[] Mode { get; }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>

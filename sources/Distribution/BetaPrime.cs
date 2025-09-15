@@ -95,18 +95,18 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
                 if (alpha >= 1)
                 {
-                    return (alpha - 1) / (beta + 1);
+                    return new float[] { (alpha - 1) / (beta + 1) };
                 }
 
-                return 0.0f;
+                return new float[] { 0.0f };
             }
         }
         /// <summary>

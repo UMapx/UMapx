@@ -99,30 +99,45 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
-                if (a < 1 && b >= 1)
+                const float eps = 1e-6f;
+
+                bool approxA1 = Maths.Abs(a - 1f) < eps;
+                bool approxB1 = Maths.Abs(b - 1f) < eps;
+
+                if (a < 1f && b < 1f)
                 {
-                    return 0f;
+                    return new float[] { 0f, 1f };
                 }
 
-                if (b < 1 && a >= 1)
+                if (approxA1 && approxB1)
                 {
-                    return 1f;
+                    return new float[] { float.NaN };
                 }
 
-                if ((a >= 1) && (b >= 1) && (a != 1 && b != 1))
+                if (a <= 1f && b >= 1f)
                 {
-                    float num = a - 1;
-                    float den = a * b - 1;
-                    return Maths.Pow(num / den, 1 / a);
+                    return new float[] { 0f };
                 }
 
-                return float.NaN;
+                if (a >= 1f && b <= 1f)
+                {
+                    return new float[] { 1f };
+                }
+
+                if (a > 1f && b > 1f)
+                {
+                    float num = a - 1f;
+                    float den = a * b - 1f;
+                    return new float[] { Maths.Pow(num / den, 1f / a) };
+                }
+
+                return new float[] { float.NaN };
             }
         }
         /// <summary>

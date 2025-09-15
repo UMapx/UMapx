@@ -89,13 +89,13 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
-                return x0;
+                return new float[] { x0 };
             }
         }
         /// <summary>

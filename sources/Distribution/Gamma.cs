@@ -97,17 +97,17 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
                 if (k >= 1)
                 {
-                    return (k - 1) * thetta;
+                    return new float[] { (k - 1) * thetta };
                 }
-                return 0;
+                return new float[] { 0 };
             }
         }
         /// <summary>

@@ -97,13 +97,13 @@ namespace UMapx.Distribution
             get { return (float)((Math.PI * Math.PI) / 6.0) * beta * beta; }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
-                return mu;
+                return new float[] { mu };
             }
         }
         /// <summary>

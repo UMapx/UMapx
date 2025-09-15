@@ -101,29 +101,46 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mode value. If <c>a ≤ 1</c> and <c>b > 1</c>,
-        /// the mode is at 0. If <c>b ≤ 1</c> and <c>a > 1</c>,
+        /// Gets the mode values. If <c>a ≤ 1</c> and <c>b ≥ 1</c>,
+        /// the mode is at 0. If <c>b ≤ 1</c> and <c>a ≥ 1</c>,
         /// the mode is at 1. When both parameters are greater than
-        /// one, the mode is calculated as <c>(a - 1) / (a + b - 2)</c>;
-        /// otherwise, the mode is undefined and returns <see cref="float.NaN" />.
+        /// one, the mode is calculated as <c>(a - 1) / (a + b - 2)</c>.
+        /// If both parameters are less than one, the distribution is bimodal
+        /// with modes at the boundaries 0 and 1. When both parameters equal
+        /// one, the mode is undefined and represented by <see cref="float.NaN" />.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
-                if (a <= 1 && b > 1)
+                const float eps = 1e-6f;
+
+                if (a < 1f && b < 1f)
                 {
-                    return 0f;
+                    return new float[] { 0f, 1f };
                 }
-                if (b <= 1 && a > 1)
+
+                bool approxA1 = Maths.Abs(a - 1f) < eps;
+                bool approxB1 = Maths.Abs(b - 1f) < eps;
+
+                if (approxA1 && approxB1)
                 {
-                    return 1f;
+                    return new float[] { float.NaN };
                 }
-                if (a > 1 && b > 1)
+
+                if (a <= 1f && b >= 1f)
                 {
-                    return (a - 1) / (a + b - 2);
+                    return new float[] { 0f };
                 }
-                return float.NaN;
+                if (b <= 1f && a >= 1f)
+                {
+                    return new float[] { 1f };
+                }
+                if (a > 1f && b > 1f)
+                {
+                    return new float[] { (a - 1f) / (a + b - 2f) };
+                }
+                return new float[] { float.NaN };
             }
         }
         /// <summary>

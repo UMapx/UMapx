@@ -121,11 +121,11 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
-            get { return c; }
+            get { return new float[] { c }; }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.

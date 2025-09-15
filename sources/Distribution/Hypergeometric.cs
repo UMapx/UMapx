@@ -122,15 +122,51 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
-                float num = (k + 1) * (d + 1);
-                float den = n + 2;
-                return Maths.Floor(num / den);
+                float value = ((k + 1f) * (d + 1f)) / (n + 2f);
+                float lower = Maths.Max(0f, k + d - n);
+                float upper = Maths.Min(d, k);
+
+                float floor = Maths.Range(Maths.Floor(value), lower, upper);
+                float rounded = Maths.Round(value);
+
+                if (Maths.Abs(value - rounded) < 1e-6f)
+                {
+                    float candidate1 = rounded - 1f;
+                    float candidate2 = rounded;
+                    bool firstValid = candidate1 >= lower - 1e-6f && candidate1 <= upper + 1e-6f;
+                    bool secondValid = candidate2 >= lower - 1e-6f && candidate2 <= upper + 1e-6f;
+
+                    if (firstValid && secondValid)
+                    {
+                        float mode1 = Maths.Range(candidate1, lower, upper);
+                        float mode2 = Maths.Range(candidate2, lower, upper);
+
+                        if (Maths.Abs(mode1 - mode2) < 1e-6f)
+                        {
+                            return new float[] { mode1 };
+                        }
+
+                        return new float[] { mode1, mode2 };
+                    }
+
+                    if (firstValid)
+                    {
+                        return new float[] { Maths.Range(candidate1, lower, upper) };
+                    }
+
+                    if (secondValid)
+                    {
+                        return new float[] { Maths.Range(candidate2, lower, upper) };
+                    }
+                }
+
+                return new float[] { floor };
             }
         }
         /// <summary>

@@ -91,13 +91,13 @@ namespace UMapx.Distribution
             get { return float.PositiveInfinity; }
         }
         /// <summary>
-        /// Gets the mode value.
+        /// Gets the mode values.
         /// </summary>
-        public float Mode
+        public float[] Mode
         {
             get
             {
-                return mu + scale / 3.0f;
+                return new float[] { mu + scale / 3.0f };
             }
         }
         /// <summary>
