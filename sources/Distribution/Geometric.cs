@@ -110,13 +110,13 @@ namespace UMapx.Distribution
         /// Gets the excess kurtosis (kurtosis minus 3).
         /// </summary>
         /// <remarks>
-        /// Full kurtosis equals 3 plus this value.
+        /// The full kurtosis equals this value plus 3.
         /// </remarks>
         public float Excess
         {
             get
             {
-                return p * p / q + 3f;
+                return p * p / q;
             }
         }
         /// <summary>
