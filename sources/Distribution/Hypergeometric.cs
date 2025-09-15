@@ -216,16 +216,26 @@ namespace UMapx.Distribution
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
+        /// <remarks>
+        /// The function is defined only for integer values of <paramref name="x"/>.
+        /// </remarks>
         public float Function(float x)
         {
-            if (x < Math.Max(0, k + d - n) || x > Math.Min(d, k))
+            if (x != Math.Floor(x))
             {
-                return 0;
+                return 0f;
             }
 
-            double a = Special.Binomial(d, x);
-            double b = Special.Binomial(n - d, k - x);
-            double c = Special.Binomial(n, k);
+            int k = (int)x;
+
+            if (k < Math.Max(0, this.k + d - n) || k > Math.Min(d, this.k))
+            {
+                return 0f;
+            }
+
+            double a = Special.Binomial(d, k);
+            double b = Special.Binomial(n - d, this.k - k);
+            double c = Special.Binomial(n, this.k);
             return (float)(a * b / c);
         }
         /// <summary>
