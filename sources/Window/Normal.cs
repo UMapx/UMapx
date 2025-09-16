@@ -68,7 +68,7 @@ namespace UMapx.Window
         {
             float a = (frameSize - 1) / 2;
             float t = (x - a) / (sigma * a);
-            return Maths.Exp(-Maths.Pow(t, p));
+            return Maths.Exp(-Maths.Pow(Maths.Abs(t), p));
         }
         /// <summary>
         /// Returns the window function.
