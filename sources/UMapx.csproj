@@ -42,19 +42,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Analysis\**" />
-    <None Remove="Colorspace\**" />
-    <None Remove="Decomposition\**" />
-    <None Remove="Distribution\**" />
-    <None Remove="Imaging\**" />
-    <None Remove="Response\**" />
-    <None Remove="Transform\**" />
-    <None Remove="Visualization\**" />
-    <None Remove="Wavelet\**" />
-    <None Remove="Window\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="8.0.1" />
   </ItemGroup>
 
