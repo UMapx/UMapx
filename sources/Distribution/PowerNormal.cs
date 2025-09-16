@@ -105,32 +105,44 @@ namespace UMapx.Distribution
 
         #region Methods
         /// <summary>
-        /// Returns the value of the probability density function.
+        /// Returns the value of the probability density function f(x) = power · φ(x) · Φ(x)^(power - 1).
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public float Function(float x)
         {
             double pdf = StandardNormalPdf(x);
-            double cdf = StandardNormalCdf(-x);
+            double cdf = StandardNormalCdf(x);
 
-            if (cdf <= 0)
+            if (cdf <= double.Epsilon)
             {
                 return 0f;
             }
 
+            cdf = Math.Min(cdf, 1.0);
             double value = power * pdf * Math.Pow(cdf, power - 1.0);
             return (float)value;
         }
         /// <summary>
-        /// Returns the value of the cumulative distribution function.
+        /// Returns the value of the cumulative distribution function F(x) = Φ(x)^power.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            double cdf = StandardNormalCdf(-x);
-            double result = 1.0 - Math.Pow(cdf, power);
+            double cdf = StandardNormalCdf(x);
+
+            if (cdf <= 0.0)
+            {
+                return 0f;
+            }
+
+            if (cdf >= 1.0)
+            {
+                return 1f;
+            }
+
+            double result = Math.Pow(cdf, power);
             return (float)result;
         }
         #endregion
