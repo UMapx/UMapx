@@ -24,10 +24,10 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the trapezoidal distribution with default slopes and boundary ratio.
         /// </summary>
-        /// <param name="a">Minimum value.</param>
-        /// <param name="b">Beginning of the stability region.</param>
-        /// <param name="c">End of the stability region.</param>
-        /// <param name="d">Maximum value.</param>
+        /// <param name="a">Minimum value</param>
+        /// <param name="b">Beginning of the stability region</param>
+        /// <param name="c">End of the stability region</param>
+        /// <param name="d">Maximum value</param>
         public Trapezoidal(float a, float b, float c, float d)
             : this(a, b, c, d, 2f, 2f, 1f)
         {
@@ -35,12 +35,12 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the trapezoidal distribution with specified slopes.
         /// </summary>
-        /// <param name="a">Minimum value.</param>
-        /// <param name="b">Beginning of the stability region.</param>
-        /// <param name="c">End of the stability region.</param>
-        /// <param name="d">Maximum value.</param>
-        /// <param name="n1">Growth slope.</param>
-        /// <param name="n3">Decay slope.</param>
+        /// <param name="a">Minimum value</param>
+        /// <param name="b">Beginning of the stability region</param>
+        /// <param name="c">End of the stability region</param>
+        /// <param name="d">Maximum value</param>
+        /// <param name="n1">Growth slope</param>
+        /// <param name="n3">Decay slope</param>
         public Trapezoidal(float a, float b, float c, float d, float n1, float n3)
             : this(a, b, c, d, n1, n3, 1f)
         {
@@ -48,13 +48,13 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the trapezoidal distribution with the specified parameters.
         /// </summary>
-        /// <param name="a">Minimum value.</param>
-        /// <param name="b">Beginning of the stability region.</param>
-        /// <param name="c">End of the stability region.</param>
-        /// <param name="d">Maximum value.</param>
-        /// <param name="n1">Growth slope.</param>
-        /// <param name="n3">Decay slope.</param>
-        /// <param name="alpha">Boundary ratio.</param>
+        /// <param name="a">Minimum value</param>
+        /// <param name="b">Beginning of the stability region</param>
+        /// <param name="c">End of the stability region</param>
+        /// <param name="d">Maximum value</param>
+        /// <param name="n1">Growth slope</param>
+        /// <param name="n3">Decay slope</param>
+        /// <param name="alpha">Boundary ratio</param>
         public Trapezoidal(float a, float b, float c, float d, float n1, float n3, float alpha)
         {
             if (a > b)

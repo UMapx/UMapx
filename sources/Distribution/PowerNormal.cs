@@ -21,7 +21,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the power normal distribution with the given shape parameter.
         /// </summary>
-        /// <param name="power">Shape parameter (must be greater than zero).</param>
+        /// <param name="power">Shape parameter (must be greater than zero)</param>
         public PowerNormal(float power)
         {
             Power = power;
@@ -107,8 +107,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value.</param>
-        /// <returns>Value.</returns>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
         public float Function(float x)
         {
             double pdf = StandardNormalPdf(x);
@@ -125,8 +125,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value.</param>
-        /// <returns>Value.</returns>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
         public float Distribution(float x)
         {
             double cdf = StandardNormalCdf(-x);

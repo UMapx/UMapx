@@ -26,8 +26,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the folded normal distribution.
         /// </summary>
-        /// <param name="mu">Mean value of the underlying Gaussian variable.</param>
-        /// <param name="sigma">Standard deviation of the underlying Gaussian variable.</param>
+        /// <param name="mu">Mean value of the underlying Gaussian variable</param>
+        /// <param name="sigma">Standard deviation of the underlying Gaussian variable</param>
         public FoldedNormal(float mu, float sigma)
         {
             Mu = mu;

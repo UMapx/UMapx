@@ -30,8 +30,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the inverse gamma distribution.
         /// </summary>
-        /// <param name="alpha">Shape parameter α (0, +inf).</param>
-        /// <param name="beta">Scale parameter β (0, +inf).</param>
+        /// <param name="alpha">Shape parameter α (0, +inf)</param>
+        /// <param name="beta">Scale parameter β (0, +inf)</param>
         public InverseGamma(float alpha, float beta)
         {
             Alpha = alpha;

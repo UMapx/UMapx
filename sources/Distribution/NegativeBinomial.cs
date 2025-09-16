@@ -29,8 +29,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the negative binomial distribution.
         /// </summary>
-        /// <param name="r">Number of required successes (&gt; 0).</param>
-        /// <param name="p">Success probability in each trial (0, 1].</param>
+        /// <param name="r">Number of required successes (&gt; 0)</param>
+        /// <param name="p">Success probability in each trial (0, 1]</param>
         public NegativeBinomial(int r, float p)
         {
             R = r;
@@ -182,8 +182,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability mass function.
         /// </summary>
-        /// <param name="x">Value.</param>
-        /// <returns>Value.</returns>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
         public float Function(float x)
         {
             if (x < 0f)
@@ -208,8 +208,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value.</param>
-        /// <returns>Value.</returns>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
         public float Distribution(float x)
         {
             if (x < 0f)

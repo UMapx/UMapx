@@ -22,8 +22,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the power lognormal distribution with the given parameters.
         /// </summary>
-        /// <param name="power">Shape parameter (must be greater than zero).</param>
-        /// <param name="sigma">Scale parameter (must be greater than zero).</param>
+        /// <param name="power">Shape parameter (must be greater than zero)</param>
+        /// <param name="sigma">Scale parameter (must be greater than zero)</param>
         public PowerLognormal(float power, float sigma)
         {
             Power = power;
@@ -126,8 +126,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value.</param>
-        /// <returns>Value.</returns>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
         public float Function(float x)
         {
             if (x <= 0f)
@@ -151,8 +151,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value.</param>
-        /// <returns>Value.</returns>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
         public float Distribution(float x)
         {
             if (x <= 0f)

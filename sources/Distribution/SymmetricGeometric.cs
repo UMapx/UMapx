@@ -29,7 +29,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the symmetric geometric distribution.
         /// </summary>
-        /// <param name="p">Probability of zero (0, 1].</param>
+        /// <param name="p">Probability of zero (0, 1]</param>
         public SymmetricGeometric(float p)
         {
             P = p;
@@ -134,8 +134,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability mass function.
         /// </summary>
-        /// <param name="x">Value.</param>
-        /// <returns>Value.</returns>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
         public float Function(float x)
         {
             int k = (int)Maths.Floor(x);
@@ -154,8 +154,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value.</param>
-        /// <returns>Value.</returns>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
         public float Distribution(float x)
         {
             int k = (int)Maths.Floor(x);

@@ -29,8 +29,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the discrete uniform distribution.
         /// </summary>
-        /// <param name="a">Lower bound (inclusive).</param>
-        /// <param name="b">Upper bound (inclusive).</param>
+        /// <param name="a">Lower bound (inclusive)</param>
+        /// <param name="b">Upper bound (inclusive)</param>
         public UniformDiscrete(int a, int b)
         {
             this.a = a;
@@ -153,8 +153,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability mass function.
         /// </summary>
-        /// <param name="x">Value.</param>
-        /// <returns>Value.</returns>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
         public float Function(float x)
         {
             int k = (int)Maths.Floor(x);
@@ -173,8 +173,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value.</param>
-        /// <returns>Value.</returns>
+        /// <param name="x">Value</param>
+        /// <returns>Value</returns>
         public float Distribution(float x)
         {
             if (x < a)

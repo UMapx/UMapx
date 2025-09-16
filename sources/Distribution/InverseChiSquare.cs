@@ -25,7 +25,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the inverse chi-square distribution.
         /// </summary>
-        /// <param name="degreesOfFreedom">Degrees of freedom (positive integer).</param>
+        /// <param name="degreesOfFreedom">Degrees of freedom (positive integer)</param>
         public InverseChiSquare(int degreesOfFreedom)
         {
             V = degreesOfFreedom;

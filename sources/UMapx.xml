@@ -15086,7 +15086,7 @@
             <summary>
             Initializes the degenerate distribution.
             </summary>
-            <param name="value">Single supported value.</param>
+            <param name="value">Single supported value</param>
         </member>
         <member name="P:UMapx.Distribution.Degenerate.Value">
             <summary>
@@ -15132,15 +15132,15 @@
             <summary>
             Returns the value of the probability mass function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.Degenerate.Distribution(System.Single)">
             <summary>
             Returns the value of the cumulative distribution function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Degenerate.Entropy">
             <summary>
@@ -15533,8 +15533,8 @@
             <summary>
             Initializes the folded normal distribution.
             </summary>
-            <param name="mu">Mean value of the underlying Gaussian variable.</param>
-            <param name="sigma">Standard deviation of the underlying Gaussian variable.</param>
+            <param name="mu">Mean value of the underlying Gaussian variable</param>
+            <param name="sigma">Standard deviation of the underlying Gaussian variable</param>
         </member>
         <member name="P:UMapx.Distribution.FoldedNormal.Mu">
             <summary>
@@ -15803,9 +15803,9 @@
             <summary>
             Initializes the generalized normal distribution.
             </summary>
-            <param name="mu">Location parameter.</param>
-            <param name="alpha">Scale parameter (0, +inf).</param>
-            <param name="beta">Shape parameter (0, +inf).</param>
+            <param name="mu">Location parameter</param>
+            <param name="alpha">Scale parameter (0, +inf)</param>
+            <param name="beta">Shape parameter (0, +inf)</param>
         </member>
         <member name="P:UMapx.Distribution.GeneralizedNormal.Mu">
             <summary>
@@ -16381,7 +16381,7 @@
             <summary>
             Initializes the inverse chi-square distribution.
             </summary>
-            <param name="degreesOfFreedom">Degrees of freedom (positive integer).</param>
+            <param name="degreesOfFreedom">Degrees of freedom (positive integer)</param>
         </member>
         <member name="P:UMapx.Distribution.InverseChiSquare.V">
             <summary>
@@ -16464,8 +16464,8 @@
             <summary>
             Initializes the inverse gamma distribution.
             </summary>
-            <param name="alpha">Shape parameter α (0, +inf).</param>
-            <param name="beta">Scale parameter β (0, +inf).</param>
+            <param name="alpha">Shape parameter α (0, +inf)</param>
+            <param name="beta">Scale parameter β (0, +inf)</param>
         </member>
         <member name="P:UMapx.Distribution.InverseGamma.Alpha">
             <summary>
@@ -16553,8 +16553,8 @@
             <summary>
             Initializes the inverse Gaussian distribution.
             </summary>
-            <param name="mu">Mean parameter μ (0, +inf).</param>
-            <param name="lambda">Shape parameter λ (0, +inf).</param>
+            <param name="mu">Mean parameter μ (0, +inf)</param>
+            <param name="lambda">Shape parameter λ (0, +inf)</param>
         </member>
         <member name="P:UMapx.Distribution.InverseGaussian.Mu">
             <summary>
@@ -17366,8 +17366,8 @@
             <summary>
             Initializes the negative binomial distribution.
             </summary>
-            <param name="r">Number of required successes (&gt; 0).</param>
-            <param name="p">Success probability in each trial (0, 1].</param>
+            <param name="r">Number of required successes (&gt; 0)</param>
+            <param name="p">Success probability in each trial (0, 1]</param>
         </member>
         <member name="P:UMapx.Distribution.NegativeBinomial.R">
             <summary>
@@ -17418,15 +17418,15 @@
             <summary>
             Returns the value of the probability mass function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.NegativeBinomial.Distribution(System.Single)">
             <summary>
             Returns the value of the cumulative distribution function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.NegativeBinomial.Entropy">
             <summary>
@@ -17632,8 +17632,8 @@
             <summary>
             Initializes the power lognormal distribution with the given parameters.
             </summary>
-            <param name="power">Shape parameter (must be greater than zero).</param>
-            <param name="sigma">Scale parameter (must be greater than zero).</param>
+            <param name="power">Shape parameter (must be greater than zero)</param>
+            <param name="sigma">Scale parameter (must be greater than zero)</param>
         </member>
         <member name="P:UMapx.Distribution.PowerLognormal.Power">
             <summary>
@@ -17689,15 +17689,15 @@
             <summary>
             Returns the value of the probability density function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.PowerLognormal.Distribution(System.Single)">
             <summary>
             Returns the value of the cumulative distribution function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.PowerNormal">
             <summary>
@@ -17712,7 +17712,7 @@
             <summary>
             Initializes the power normal distribution with the given shape parameter.
             </summary>
-            <param name="power">Shape parameter (must be greater than zero).</param>
+            <param name="power">Shape parameter (must be greater than zero)</param>
         </member>
         <member name="P:UMapx.Distribution.PowerNormal.Power">
             <summary>
@@ -17763,15 +17763,15 @@
             <summary>
             Returns the value of the probability density function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.PowerNormal.Distribution(System.Single)">
             <summary>
             Returns the value of the cumulative distribution function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Rademacher">
             <summary>
@@ -17947,22 +17947,22 @@
             <summary>
             Initializes the shifted log-logistic distribution with the given location parameter.
             </summary>
-            <param name="location">Location parameter.</param>
+            <param name="location">Location parameter</param>
         </member>
         <member name="M:UMapx.Distribution.ShiftedLogLogistic.#ctor(System.Single,System.Single)">
             <summary>
             Initializes the shifted log-logistic distribution with the given location and scale parameters.
             </summary>
-            <param name="location">Location parameter.</param>
-            <param name="scale">Scale parameter (must be greater than zero).</param>
+            <param name="location">Location parameter</param>
+            <param name="scale">Scale parameter (must be greater than zero)</param>
         </member>
         <member name="M:UMapx.Distribution.ShiftedLogLogistic.#ctor(System.Single,System.Single,System.Single)">
             <summary>
             Initializes the shifted log-logistic distribution with the given parameters.
             </summary>
-            <param name="location">Location parameter.</param>
-            <param name="scale">Scale parameter (must be greater than zero).</param>
-            <param name="shape">Shape parameter.</param>
+            <param name="location">Location parameter</param>
+            <param name="scale">Scale parameter (must be greater than zero)</param>
+            <param name="shape">Shape parameter</param>
         </member>
         <member name="P:UMapx.Distribution.ShiftedLogLogistic.Mu">
             <summary>
@@ -18023,15 +18023,15 @@
             <summary>
             Returns the value of the probability density function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.ShiftedLogLogistic.Distribution(System.Single)">
             <summary>
             Returns the value of the cumulative distribution function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Student">
             <summary>
@@ -18141,7 +18141,7 @@
             <summary>
             Initializes the symmetric geometric distribution.
             </summary>
-            <param name="p">Probability of zero (0, 1].</param>
+            <param name="p">Probability of zero (0, 1]</param>
         </member>
         <member name="P:UMapx.Distribution.SymmetricGeometric.P">
             <summary>
@@ -18187,15 +18187,15 @@
             <summary>
             Returns the value of the probability mass function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.SymmetricGeometric.Distribution(System.Single)">
             <summary>
             Returns the value of the cumulative distribution function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.SymmetricGeometric.Entropy">
             <summary>
@@ -18211,33 +18211,33 @@
             <summary>
             Initializes the trapezoidal distribution with default slopes and boundary ratio.
             </summary>
-            <param name="a">Minimum value.</param>
-            <param name="b">Beginning of the stability region.</param>
-            <param name="c">End of the stability region.</param>
-            <param name="d">Maximum value.</param>
+            <param name="a">Minimum value</param>
+            <param name="b">Beginning of the stability region</param>
+            <param name="c">End of the stability region</param>
+            <param name="d">Maximum value</param>
         </member>
         <member name="M:UMapx.Distribution.Trapezoidal.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
             <summary>
             Initializes the trapezoidal distribution with specified slopes.
             </summary>
-            <param name="a">Minimum value.</param>
-            <param name="b">Beginning of the stability region.</param>
-            <param name="c">End of the stability region.</param>
-            <param name="d">Maximum value.</param>
-            <param name="n1">Growth slope.</param>
-            <param name="n3">Decay slope.</param>
+            <param name="a">Minimum value</param>
+            <param name="b">Beginning of the stability region</param>
+            <param name="c">End of the stability region</param>
+            <param name="d">Maximum value</param>
+            <param name="n1">Growth slope</param>
+            <param name="n3">Decay slope</param>
         </member>
         <member name="M:UMapx.Distribution.Trapezoidal.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
             <summary>
             Initializes the trapezoidal distribution with the specified parameters.
             </summary>
-            <param name="a">Minimum value.</param>
-            <param name="b">Beginning of the stability region.</param>
-            <param name="c">End of the stability region.</param>
-            <param name="d">Maximum value.</param>
-            <param name="n1">Growth slope.</param>
-            <param name="n3">Decay slope.</param>
-            <param name="alpha">Boundary ratio.</param>
+            <param name="a">Minimum value</param>
+            <param name="b">Beginning of the stability region</param>
+            <param name="c">End of the stability region</param>
+            <param name="d">Maximum value</param>
+            <param name="n1">Growth slope</param>
+            <param name="n3">Decay slope</param>
+            <param name="alpha">Boundary ratio</param>
         </member>
         <member name="P:UMapx.Distribution.Trapezoidal.Support">
             <summary>
@@ -18400,7 +18400,7 @@
             <summary>
             Initializes the Tukey-Lambda distribution with the specified shape parameter.
             </summary>
-            <param name="lambda">Shape parameter.</param>
+            <param name="lambda">Shape parameter</param>
         </member>
         <member name="P:UMapx.Distribution.TukeyLambda.Support">
             <summary>
@@ -18446,15 +18446,15 @@
             <summary>
             Returns the value of the probability density function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.TukeyLambda.Distribution(System.Single)">
             <summary>
             Returns the value of the cumulative distribution function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.Uniform">
             <summary>
@@ -18564,8 +18564,8 @@
             <summary>
             Initializes the discrete uniform distribution.
             </summary>
-            <param name="a">Lower bound (inclusive).</param>
-            <param name="b">Upper bound (inclusive).</param>
+            <param name="a">Lower bound (inclusive)</param>
+            <param name="b">Upper bound (inclusive)</param>
         </member>
         <member name="P:UMapx.Distribution.UniformDiscrete.A">
             <summary>
@@ -18616,15 +18616,15 @@
             <summary>
             Returns the value of the probability mass function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.UniformDiscrete.Distribution(System.Single)">
             <summary>
             Returns the value of the cumulative distribution function.
             </summary>
-            <param name="x">Value.</param>
-            <returns>Value.</returns>
+            <param name="x">Value</param>
+            <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.UniformDiscrete.Entropy">
             <summary>

@@ -26,8 +26,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the inverse Gaussian distribution.
         /// </summary>
-        /// <param name="mu">Mean parameter μ (0, +inf).</param>
-        /// <param name="lambda">Shape parameter λ (0, +inf).</param>
+        /// <param name="mu">Mean parameter μ (0, +inf)</param>
+        /// <param name="lambda">Shape parameter λ (0, +inf)</param>
         public InverseGaussian(float mu, float lambda)
         {
             Mu = mu;

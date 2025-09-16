@@ -27,9 +27,9 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the generalized normal distribution.
         /// </summary>
-        /// <param name="mu">Location parameter.</param>
-        /// <param name="alpha">Scale parameter (0, +inf).</param>
-        /// <param name="beta">Shape parameter (0, +inf).</param>
+        /// <param name="mu">Location parameter</param>
+        /// <param name="alpha">Scale parameter (0, +inf)</param>
+        /// <param name="beta">Shape parameter (0, +inf)</param>
         public GeneralizedNormal(float mu, float alpha, float beta)
         {
             Mu = mu;
