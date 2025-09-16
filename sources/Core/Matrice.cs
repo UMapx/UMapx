@@ -11189,7 +11189,9 @@ namespace UMapx.Core
         /// <param name="a">Matrix</param>
         /// <param name="s">Input string</param>
         /// <returns>Matrix</returns>
+#pragma warning disable IDE0060 // Remove unused parameter
         public static float[,] Parse(this float[,] a, string s)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             string[] rows = StringOptions.Matpar(s);
             string[] nums = rows[0].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
@@ -11245,7 +11247,9 @@ namespace UMapx.Core
         /// <param name="a">Matrix</param>
         /// <param name="s">Input string</param>
         /// <returns>Matrix</returns>
+#pragma warning disable IDE0060 // Remove unused parameter
         public static Complex32[,] Parse(this Complex32[,] a, string s)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             string[] rows = StringOptions.Matpar(s);
             string[] nums = rows[0].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
@@ -11303,7 +11307,9 @@ namespace UMapx.Core
         /// <param name="a">Matrix</param>
         /// <param name="s">Input string</param>
         /// <returns>Matrix</returns>
+#pragma warning disable IDE0060 // Remove unused parameter
         public static float[] Parse(this float[] a, string s)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             string[] rows = StringOptions.Matpar(s);
             int r = rows.Length;
@@ -11356,7 +11362,9 @@ namespace UMapx.Core
         /// <param name="a">Matrix</param>
         /// <param name="s">Input string</param>
         /// <returns>Matrix</returns>
+#pragma warning disable IDE0060 // Remove unused parameter
         public static Complex32[] Parse(this Complex32[] a, string s)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             string[] rows = StringOptions.Matpar(s);
             int r = rows.Length;
