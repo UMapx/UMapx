@@ -56,7 +56,6 @@
 
   <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="8.0.1" />
-    <PackageReference Include="Accord.Statistics" Version="3.8.0" />
   </ItemGroup>
 
   <ItemGroup>
