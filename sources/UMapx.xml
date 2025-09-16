@@ -15068,6 +15068,85 @@
             <see cref="T:System.ArgumentException"/> otherwise.
             </returns>
         </member>
+        <member name="T:UMapx.Distribution.Degenerate">
+            <summary>
+            Defines the degenerate distribution.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Degenerate_distribution
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.Degenerate.#ctor">
+            <summary>
+            Initializes the degenerate distribution at zero.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.Degenerate.#ctor(System.Int32)">
+            <summary>
+            Initializes the degenerate distribution.
+            </summary>
+            <param name="value">Single supported value.</param>
+        </member>
+        <member name="P:UMapx.Distribution.Degenerate.Value">
+            <summary>
+            Gets or sets the unique value whose probability is equal to one.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.Degenerate.Support">
+            <summary>
+            Gets the support interval consisting of a single point.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.Degenerate.Mean">
+            <summary>
+            Gets the mean value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.Degenerate.Variance">
+            <summary>
+            Gets the variance value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.Degenerate.Mode">
+            <summary>
+            Gets the mode value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.Degenerate.Median">
+            <summary>
+            Gets the median value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.Degenerate.Skewness">
+            <summary>
+            Gets the value of the asymmetry coefficient.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.Degenerate.Excess">
+            <summary>
+            Gets the excess kurtosis (kurtosis minus 3).
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.Degenerate.Function(System.Single)">
+            <summary>
+            Returns the value of the probability mass function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
+        </member>
+        <member name="M:UMapx.Distribution.Degenerate.Distribution(System.Single)">
+            <summary>
+            Returns the value of the cumulative distribution function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
+        </member>
+        <member name="P:UMapx.Distribution.Degenerate.Entropy">
+            <summary>
+            Gets the entropy value.
+            </summary>
+        </member>
         <member name="T:UMapx.Distribution.Erlang">
             <summary>
             Defines the distribution of Erlang.
@@ -17269,6 +17348,91 @@
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
+        <member name="T:UMapx.Distribution.NegativeBinomial">
+            <summary>
+            Defines the negative binomial distribution.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Negative_binomial_distribution
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.NegativeBinomial.#ctor">
+            <summary>
+            Initializes the negative binomial distribution with r = 1 and p = 0.5.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.NegativeBinomial.#ctor(System.Int32,System.Single)">
+            <summary>
+            Initializes the negative binomial distribution.
+            </summary>
+            <param name="r">Number of required successes (&gt; 0).</param>
+            <param name="p">Success probability in each trial (0, 1].</param>
+        </member>
+        <member name="P:UMapx.Distribution.NegativeBinomial.R">
+            <summary>
+            Gets or sets the required number of successes (&gt; 0).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.NegativeBinomial.P">
+            <summary>
+            Gets or sets the success probability in each trial (0, 1].
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.NegativeBinomial.Support">
+            <summary>
+            Gets the support interval of the argument.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.NegativeBinomial.Mean">
+            <summary>
+            Gets the mean value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.NegativeBinomial.Variance">
+            <summary>
+            Gets the variance value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.NegativeBinomial.Mode">
+            <summary>
+            Gets the mode values.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.NegativeBinomial.Median">
+            <summary>
+            Gets the median value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.NegativeBinomial.Skewness">
+            <summary>
+            Gets the value of the asymmetry coefficient.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.NegativeBinomial.Excess">
+            <summary>
+            Gets the excess kurtosis (kurtosis minus 3).
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.NegativeBinomial.Function(System.Single)">
+            <summary>
+            Returns the value of the probability mass function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
+        </member>
+        <member name="M:UMapx.Distribution.NegativeBinomial.Distribution(System.Single)">
+            <summary>
+            Returns the value of the cumulative distribution function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
+        </member>
+        <member name="P:UMapx.Distribution.NegativeBinomial.Entropy">
+            <summary>
+            Gets the entropy value.
+            </summary>
+        </member>
         <member name="T:UMapx.Distribution.Pareto">
             <summary>
             Defines the Pareto distribution.
@@ -17959,6 +18123,85 @@
             <param name="x">Input value</param>
             <returns>Logarithm of the density</returns>
         </member>
+        <member name="T:UMapx.Distribution.SymmetricGeometric">
+            <summary>
+            Defines the symmetric geometric (discrete Laplace) distribution.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Discrete_Laplace_distribution
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.SymmetricGeometric.#ctor">
+            <summary>
+            Initializes the symmetric geometric distribution with p = 0.5.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.SymmetricGeometric.#ctor(System.Single)">
+            <summary>
+            Initializes the symmetric geometric distribution.
+            </summary>
+            <param name="p">Probability of zero (0, 1].</param>
+        </member>
+        <member name="P:UMapx.Distribution.SymmetricGeometric.P">
+            <summary>
+            Gets or sets the probability assigned to zero (0, 1].
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.SymmetricGeometric.Support">
+            <summary>
+            Gets the support interval of the argument.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.SymmetricGeometric.Mean">
+            <summary>
+            Gets the mean value (always zero).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.SymmetricGeometric.Variance">
+            <summary>
+            Gets the variance value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.SymmetricGeometric.Mode">
+            <summary>
+            Gets the mode values.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.SymmetricGeometric.Median">
+            <summary>
+            Gets the median value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.SymmetricGeometric.Skewness">
+            <summary>
+            Gets the value of the asymmetry coefficient.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.SymmetricGeometric.Excess">
+            <summary>
+            Gets the excess kurtosis (kurtosis minus 3).
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.SymmetricGeometric.Function(System.Single)">
+            <summary>
+            Returns the value of the probability mass function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
+        </member>
+        <member name="M:UMapx.Distribution.SymmetricGeometric.Distribution(System.Single)">
+            <summary>
+            Returns the value of the cumulative distribution function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
+        </member>
+        <member name="P:UMapx.Distribution.SymmetricGeometric.Entropy">
+            <summary>
+            Gets the entropy value.
+            </summary>
+        </member>
         <member name="T:UMapx.Distribution.Trapezoidal">
             <summary>
             Defines the trapezoidal distribution.
@@ -18302,6 +18545,96 @@
             Returns the value of differential entropy.
             </summary>
             <returns>Value</returns>
+        </member>
+        <member name="T:UMapx.Distribution.UniformDiscrete">
+            <summary>
+            Defines the discrete uniform distribution.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Discrete_uniform_distribution
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.UniformDiscrete.#ctor">
+            <summary>
+            Initializes the discrete uniform distribution on the interval [0, 1].
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.UniformDiscrete.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes the discrete uniform distribution.
+            </summary>
+            <param name="a">Lower bound (inclusive).</param>
+            <param name="b">Upper bound (inclusive).</param>
+        </member>
+        <member name="P:UMapx.Distribution.UniformDiscrete.A">
+            <summary>
+            Gets or sets the lower bound (inclusive).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.UniformDiscrete.B">
+            <summary>
+            Gets or sets the upper bound (inclusive).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.UniformDiscrete.Support">
+            <summary>
+            Gets the support interval of the argument.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.UniformDiscrete.Mean">
+            <summary>
+            Gets the mean value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.UniformDiscrete.Variance">
+            <summary>
+            Gets the variance value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.UniformDiscrete.Mode">
+            <summary>
+            Gets the mode values.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.UniformDiscrete.Median">
+            <summary>
+            Gets the median value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.UniformDiscrete.Skewness">
+            <summary>
+            Gets the value of the asymmetry coefficient.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.UniformDiscrete.Excess">
+            <summary>
+            Gets the excess kurtosis (kurtosis minus 3).
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.UniformDiscrete.Function(System.Single)">
+            <summary>
+            Returns the value of the probability mass function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
+        </member>
+        <member name="M:UMapx.Distribution.UniformDiscrete.Distribution(System.Single)">
+            <summary>
+            Returns the value of the cumulative distribution function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
+        </member>
+        <member name="P:UMapx.Distribution.UniformDiscrete.Entropy">
+            <summary>
+            Gets the entropy value.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.UniformDiscrete.UpdateN">
+            <summary>
+            Updates the number of points in the support.
+            </summary>
         </member>
         <member name="T:UMapx.Distribution.UQuadratic">
             <summary>
