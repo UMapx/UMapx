@@ -17687,14 +17687,15 @@
         </member>
         <member name="M:UMapx.Distribution.PowerLognormal.Function(System.Single)">
             <summary>
-            Returns the value of the probability density function.
+            Returns the value of the probability density function f(x) = power · φ(z) · Φ(z)^(power - 1) / (x · sigma).
+            Here z = ln(x) / sigma.
             </summary>
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.PowerLognormal.Distribution(System.Single)">
             <summary>
-            Returns the value of the cumulative distribution function.
+            Returns the value of the cumulative distribution function F(x) = Φ(z)^power, where z = ln(x) / sigma.
             </summary>
             <param name="x">Value</param>
             <returns>Value</returns>
@@ -17761,14 +17762,14 @@
         </member>
         <member name="M:UMapx.Distribution.PowerNormal.Function(System.Single)">
             <summary>
-            Returns the value of the probability density function.
+            Returns the value of the probability density function f(x) = power · φ(x) · Φ(x)^(power - 1).
             </summary>
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.PowerNormal.Distribution(System.Single)">
             <summary>
-            Returns the value of the cumulative distribution function.
+            Returns the value of the cumulative distribution function F(x) = Φ(x)^power.
             </summary>
             <param name="x">Value</param>
             <returns>Value</returns>
