@@ -15436,6 +15436,95 @@
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
+        <member name="T:UMapx.Distribution.FoldedNormal">
+            <summary>
+            Defines the folded normal distribution.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Folded_normal_distribution
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.FoldedNormal.#ctor">
+            <summary>
+            Initializes the folded normal distribution.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.FoldedNormal.#ctor(System.Single,System.Single)">
+            <summary>
+            Initializes the folded normal distribution.
+            </summary>
+            <param name="mu">Mean value of the underlying Gaussian variable.</param>
+            <param name="sigma">Standard deviation of the underlying Gaussian variable.</param>
+        </member>
+        <member name="P:UMapx.Distribution.FoldedNormal.Mu">
+            <summary>
+            Gets or sets the mean value of the underlying Gaussian variable.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.FoldedNormal.Sigma">
+            <summary>
+            Gets or sets the standard deviation of the underlying Gaussian variable.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.FoldedNormal.Support">
+            <summary>
+            Gets the support interval of the argument.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.FoldedNormal.Mean">
+            <summary>
+            Gets the mean value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.FoldedNormal.Variance">
+            <summary>
+            Gets the variance value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.FoldedNormal.Median">
+            <summary>
+            Gets the median value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.FoldedNormal.Mode">
+            <summary>
+            Gets the mode values.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.FoldedNormal.Skewness">
+            <summary>
+            Gets the value of the asymmetry coefficient.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.FoldedNormal.Excess">
+            <summary>
+            Gets the excess kurtosis (kurtosis minus 3).
+            </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.FoldedNormal.Function(System.Single)">
+            <summary>
+            Returns the value of the probability density function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Distribution.FoldedNormal.Distribution(System.Single)">
+            <summary>
+            Returns the value of the probability distribution function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="P:UMapx.Distribution.FoldedNormal.Entropy">
+            <summary>
+            Returns the value of differential entropy.
+            </summary>
+            <returns>Value</returns>
+        </member>
         <member name="T:UMapx.Distribution.Gamma">
             <summary>
             Defines the Gamma-distribution.
@@ -15612,6 +15701,101 @@
             <returns>Value</returns>
         </member>
         <member name="P:UMapx.Distribution.Gaussian.Entropy">
+            <summary>
+            Returns the value of differential entropy.
+            </summary>
+            <returns>Value</returns>
+        </member>
+        <member name="T:UMapx.Distribution.GeneralizedNormal">
+            <summary>
+            Defines the generalized normal distribution (version 1 / exponential power distribution).
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Generalized_normal_distribution
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.GeneralizedNormal.#ctor">
+            <summary>
+            Initializes the generalized normal distribution.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.GeneralizedNormal.#ctor(System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes the generalized normal distribution.
+            </summary>
+            <param name="mu">Location parameter.</param>
+            <param name="alpha">Scale parameter (0, +inf).</param>
+            <param name="beta">Shape parameter (0, +inf).</param>
+        </member>
+        <member name="P:UMapx.Distribution.GeneralizedNormal.Mu">
+            <summary>
+            Gets or sets the location parameter.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.GeneralizedNormal.Alpha">
+            <summary>
+            Gets or sets the scale parameter (0, +inf).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.GeneralizedNormal.Beta">
+            <summary>
+            Gets or sets the shape parameter (0, +inf).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.GeneralizedNormal.Support">
+            <summary>
+            Gets the support interval of the argument.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.GeneralizedNormal.Mean">
+            <summary>
+            Gets the mean value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.GeneralizedNormal.Variance">
+            <summary>
+            Gets the variance value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.GeneralizedNormal.Median">
+            <summary>
+            Gets the median value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.GeneralizedNormal.Mode">
+            <summary>
+            Gets the mode values.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.GeneralizedNormal.Skewness">
+            <summary>
+            Gets the value of the asymmetry coefficient.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.GeneralizedNormal.Excess">
+            <summary>
+            Gets the excess kurtosis (kurtosis minus 3).
+            </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.GeneralizedNormal.Function(System.Single)">
+            <summary>
+            Returns the value of the probability density function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Distribution.GeneralizedNormal.Distribution(System.Single)">
+            <summary>
+            Returns the value of the probability distribution function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="P:UMapx.Distribution.GeneralizedNormal.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
@@ -16095,6 +16279,267 @@
             </remarks>
         </member>
         <member name="P:UMapx.Distribution.IDistribution.Entropy">
+            <summary>
+            Returns the value of differential entropy.
+            </summary>
+            <returns>Value</returns>
+        </member>
+        <member name="T:UMapx.Distribution.InverseChiSquare">
+            <summary>
+            Defines the inverse chi-square distribution.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Inverse-chi-squared_distribution
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.InverseChiSquare.#ctor">
+            <summary>
+            Initializes the inverse chi-square distribution.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.InverseChiSquare.#ctor(System.Int32)">
+            <summary>
+            Initializes the inverse chi-square distribution.
+            </summary>
+            <param name="degreesOfFreedom">Degrees of freedom (positive integer).</param>
+        </member>
+        <member name="P:UMapx.Distribution.InverseChiSquare.V">
+            <summary>
+            Gets or sets the degrees of freedom (positive integer).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseChiSquare.Support">
+            <summary>
+            Gets the support interval of the argument.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseChiSquare.Mean">
+            <summary>
+            Gets the mean value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseChiSquare.Variance">
+            <summary>
+            Gets the variance value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseChiSquare.Median">
+            <summary>
+            Gets the median value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseChiSquare.Mode">
+            <summary>
+            Gets the mode values.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseChiSquare.Skewness">
+            <summary>
+            Gets the value of the asymmetry coefficient.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseChiSquare.Excess">
+            <summary>
+            Gets the excess kurtosis (kurtosis minus 3).
+            </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.InverseChiSquare.Function(System.Single)">
+            <summary>
+            Returns the value of the probability density function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Distribution.InverseChiSquare.Distribution(System.Single)">
+            <summary>
+            Returns the value of the probability distribution function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="P:UMapx.Distribution.InverseChiSquare.Entropy">
+            <summary>
+            Returns the value of differential entropy.
+            </summary>
+            <returns>Value</returns>
+        </member>
+        <member name="T:UMapx.Distribution.InverseGamma">
+            <summary>
+            Defines the inverse gamma distribution.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Inverse-gamma_distribution
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.InverseGamma.#ctor">
+            <summary>
+            Initializes the inverse gamma distribution.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.InverseGamma.#ctor(System.Single,System.Single)">
+            <summary>
+            Initializes the inverse gamma distribution.
+            </summary>
+            <param name="alpha">Shape parameter α (0, +inf).</param>
+            <param name="beta">Scale parameter β (0, +inf).</param>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGamma.Alpha">
+            <summary>
+            Gets or sets the shape parameter α (0, +inf).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGamma.Beta">
+            <summary>
+            Gets or sets the scale parameter β (0, +inf).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGamma.Support">
+            <summary>
+            Gets the support interval of the argument.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGamma.Mean">
+            <summary>
+            Gets the mean value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGamma.Variance">
+            <summary>
+            Gets the variance value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGamma.Median">
+            <summary>
+            Gets the median value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGamma.Mode">
+            <summary>
+            Gets the mode values.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGamma.Skewness">
+            <summary>
+            Gets the value of the asymmetry coefficient.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGamma.Excess">
+            <summary>
+            Gets the excess kurtosis (kurtosis minus 3).
+            </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.InverseGamma.Function(System.Single)">
+            <summary>
+            Returns the value of the probability density function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Distribution.InverseGamma.Distribution(System.Single)">
+            <summary>
+            Returns the value of the probability distribution function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGamma.Entropy">
+            <summary>
+            Returns the value of differential entropy.
+            </summary>
+            <returns>Value</returns>
+        </member>
+        <member name="T:UMapx.Distribution.InverseGaussian">
+            <summary>
+            Defines the inverse Gaussian (Wald) distribution.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Inverse_Gaussian_distribution
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.InverseGaussian.#ctor">
+            <summary>
+            Initializes the inverse Gaussian distribution.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.InverseGaussian.#ctor(System.Single,System.Single)">
+            <summary>
+            Initializes the inverse Gaussian distribution.
+            </summary>
+            <param name="mu">Mean parameter μ (0, +inf).</param>
+            <param name="lambda">Shape parameter λ (0, +inf).</param>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGaussian.Mu">
+            <summary>
+            Gets or sets the mean parameter μ (0, +inf).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGaussian.Lambda">
+            <summary>
+            Gets or sets the shape parameter λ (0, +inf).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGaussian.Support">
+            <summary>
+            Gets the support interval of the argument.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGaussian.Mean">
+            <summary>
+            Gets the mean value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGaussian.Variance">
+            <summary>
+            Gets the variance value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGaussian.Median">
+            <summary>
+            Gets the median value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGaussian.Mode">
+            <summary>
+            Gets the mode values.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGaussian.Skewness">
+            <summary>
+            Gets the value of the asymmetry coefficient.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGaussian.Excess">
+            <summary>
+            Gets the excess kurtosis (kurtosis minus 3).
+            </summary>
+            <remarks>
+            Full kurtosis equals 3 plus this value.
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.InverseGaussian.Function(System.Single)">
+            <summary>
+            Returns the value of the probability density function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Distribution.InverseGaussian.Distribution(System.Single)">
+            <summary>
+            Returns the value of the probability distribution function.
+            </summary>
+            <param name="x">Value</param>
+            <returns>Value</returns>
+        </member>
+        <member name="P:UMapx.Distribution.InverseGaussian.Entropy">
             <summary>
             Returns the value of differential entropy.
             </summary>
