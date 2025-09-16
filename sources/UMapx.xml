@@ -17455,6 +17455,160 @@
             <param name="l">Value</param>
             <returns>Value</returns>
         </member>
+        <member name="T:UMapx.Distribution.PowerLognormal">
+            <summary>
+            Defines the power lognormal distribution.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://www.itl.nist.gov/div898/handbook/eda/section3/eda366e.htm
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.PowerLognormal.#ctor(System.Single,System.Single)">
+            <summary>
+            Initializes the power lognormal distribution with the given parameters.
+            </summary>
+            <param name="power">Shape parameter (must be greater than zero).</param>
+            <param name="sigma">Scale parameter (must be greater than zero).</param>
+        </member>
+        <member name="P:UMapx.Distribution.PowerLognormal.Power">
+            <summary>
+            Gets or sets the shape parameter (must be greater than zero).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerLognormal.Sigma">
+            <summary>
+            Gets or sets the scale parameter (must be greater than zero).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerLognormal.Support">
+            <summary>
+            Gets the support interval of the argument.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerLognormal.Mean">
+            <summary>
+            Gets the mean value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerLognormal.Variance">
+            <summary>
+            Gets the variance value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerLognormal.Median">
+            <summary>
+            Gets the median value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerLognormal.Mode">
+            <summary>
+            Gets the mode values.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerLognormal.Skewness">
+            <summary>
+            Gets the value of the asymmetry coefficient.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerLognormal.Excess">
+            <summary>
+            Gets the excess kurtosis (kurtosis minus 3).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerLognormal.Entropy">
+            <summary>
+            Gets the value of differential entropy.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.PowerLognormal.Function(System.Single)">
+            <summary>
+            Returns the value of the probability density function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
+        </member>
+        <member name="M:UMapx.Distribution.PowerLognormal.Distribution(System.Single)">
+            <summary>
+            Returns the value of the cumulative distribution function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
+        </member>
+        <member name="T:UMapx.Distribution.PowerNormal">
+            <summary>
+            Defines the power normal distribution.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://www.itl.nist.gov/div898/handbook/eda/section3/eda366d.htm
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.PowerNormal.#ctor(System.Single)">
+            <summary>
+            Initializes the power normal distribution with the given shape parameter.
+            </summary>
+            <param name="power">Shape parameter (must be greater than zero).</param>
+        </member>
+        <member name="P:UMapx.Distribution.PowerNormal.Power">
+            <summary>
+            Gets or sets the shape parameter (must be greater than zero).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerNormal.Support">
+            <summary>
+            Gets the support interval of the argument.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerNormal.Mean">
+            <summary>
+            Gets the mean value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerNormal.Variance">
+            <summary>
+            Gets the variance value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerNormal.Median">
+            <summary>
+            Gets the median value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerNormal.Mode">
+            <summary>
+            Gets the mode values.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerNormal.Skewness">
+            <summary>
+            Gets the value of the asymmetry coefficient.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerNormal.Excess">
+            <summary>
+            Gets the excess kurtosis (kurtosis minus 3).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.PowerNormal.Entropy">
+            <summary>
+            Gets the value of differential entropy.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.PowerNormal.Function(System.Single)">
+            <summary>
+            Returns the value of the probability density function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
+        </member>
+        <member name="M:UMapx.Distribution.PowerNormal.Distribution(System.Single)">
+            <summary>
+            Returns the value of the cumulative distribution function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
+        </member>
         <member name="T:UMapx.Distribution.Rademacher">
             <summary>
             Defines the Rademacher distribution.
@@ -17611,6 +17765,110 @@
             </summary>
             <returns>Value</returns>
         </member>
+        <member name="T:UMapx.Distribution.ShiftedLogLogistic">
+            <summary>
+            Defines the shifted log-logistic distribution.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Shifted_log-logistic_distribution
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.ShiftedLogLogistic.#ctor">
+            <summary>
+            Initializes the shifted log-logistic distribution with zero location, unit scale and zero shape.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.ShiftedLogLogistic.#ctor(System.Single)">
+            <summary>
+            Initializes the shifted log-logistic distribution with the given location parameter.
+            </summary>
+            <param name="location">Location parameter.</param>
+        </member>
+        <member name="M:UMapx.Distribution.ShiftedLogLogistic.#ctor(System.Single,System.Single)">
+            <summary>
+            Initializes the shifted log-logistic distribution with the given location and scale parameters.
+            </summary>
+            <param name="location">Location parameter.</param>
+            <param name="scale">Scale parameter (must be greater than zero).</param>
+        </member>
+        <member name="M:UMapx.Distribution.ShiftedLogLogistic.#ctor(System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes the shifted log-logistic distribution with the given parameters.
+            </summary>
+            <param name="location">Location parameter.</param>
+            <param name="scale">Scale parameter (must be greater than zero).</param>
+            <param name="shape">Shape parameter.</param>
+        </member>
+        <member name="P:UMapx.Distribution.ShiftedLogLogistic.Mu">
+            <summary>
+            Gets or sets the location parameter.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.ShiftedLogLogistic.Sigma">
+            <summary>
+            Gets or sets the scale parameter (must be greater than zero).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.ShiftedLogLogistic.Ksi">
+            <summary>
+            Gets or sets the shape parameter.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.ShiftedLogLogistic.Support">
+            <summary>
+            Gets the support interval of the argument.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.ShiftedLogLogistic.Mean">
+            <summary>
+            Gets the mean value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.ShiftedLogLogistic.Variance">
+            <summary>
+            Gets the variance value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.ShiftedLogLogistic.Median">
+            <summary>
+            Gets the median value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.ShiftedLogLogistic.Mode">
+            <summary>
+            Gets the mode values.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.ShiftedLogLogistic.Skewness">
+            <summary>
+            Gets the value of the asymmetry coefficient.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.ShiftedLogLogistic.Excess">
+            <summary>
+            Gets the excess kurtosis (kurtosis minus 3).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.ShiftedLogLogistic.Entropy">
+            <summary>
+            Gets the value of differential entropy.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.ShiftedLogLogistic.Function(System.Single)">
+            <summary>
+            Returns the value of the probability density function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
+        </member>
+        <member name="M:UMapx.Distribution.ShiftedLogLogistic.Distribution(System.Single)">
+            <summary>
+            Returns the value of the cumulative distribution function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
+        </member>
         <member name="T:UMapx.Distribution.Student">
             <summary>
             Defines the Student's distribution.
@@ -17700,6 +17958,93 @@
             </summary>
             <param name="x">Input value</param>
             <returns>Logarithm of the density</returns>
+        </member>
+        <member name="T:UMapx.Distribution.Trapezoidal">
+            <summary>
+            Defines the trapezoidal distribution.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.Trapezoidal.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes the trapezoidal distribution with default slopes and boundary ratio.
+            </summary>
+            <param name="a">Minimum value.</param>
+            <param name="b">Beginning of the stability region.</param>
+            <param name="c">End of the stability region.</param>
+            <param name="d">Maximum value.</param>
+        </member>
+        <member name="M:UMapx.Distribution.Trapezoidal.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes the trapezoidal distribution with specified slopes.
+            </summary>
+            <param name="a">Minimum value.</param>
+            <param name="b">Beginning of the stability region.</param>
+            <param name="c">End of the stability region.</param>
+            <param name="d">Maximum value.</param>
+            <param name="n1">Growth slope.</param>
+            <param name="n3">Decay slope.</param>
+        </member>
+        <member name="M:UMapx.Distribution.Trapezoidal.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes the trapezoidal distribution with the specified parameters.
+            </summary>
+            <param name="a">Minimum value.</param>
+            <param name="b">Beginning of the stability region.</param>
+            <param name="c">End of the stability region.</param>
+            <param name="d">Maximum value.</param>
+            <param name="n1">Growth slope.</param>
+            <param name="n3">Decay slope.</param>
+            <param name="alpha">Boundary ratio.</param>
+        </member>
+        <member name="P:UMapx.Distribution.Trapezoidal.Support">
+            <summary>
+            Gets the support interval of the argument.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.Trapezoidal.Mean">
+            <summary>
+            Gets the mean value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.Trapezoidal.Variance">
+            <summary>
+            Gets the variance value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.Trapezoidal.Median">
+            <summary>
+            Gets the median value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.Trapezoidal.Mode">
+            <summary>
+            Gets the mode values.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.Trapezoidal.Skewness">
+            <summary>
+            Gets the value of the asymmetry coefficient.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.Trapezoidal.Excess">
+            <summary>
+            Gets the excess kurtosis (kurtosis minus 3).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.Trapezoidal.Entropy">
+            <summary>
+            Gets the value of differential entropy.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.Trapezoidal.Function(System.Single)">
+            <summary>
+            Returns the value of the probability density function.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.Trapezoidal.Distribution(System.Single)">
+            <summary>
+            Returns the value of the cumulative distribution function.
+            </summary>
         </member>
         <member name="T:UMapx.Distribution.Triangular">
             <summary>
@@ -17798,6 +18143,75 @@
             </summary>
             <param name="x">Value</param>
             <returns>Value</returns>
+        </member>
+        <member name="T:UMapx.Distribution.TukeyLambda">
+            <summary>
+            Defines the Tukey-Lambda distribution.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Tukey_lambda_distribution
+            </remarks>
+        </member>
+        <member name="M:UMapx.Distribution.TukeyLambda.#ctor(System.Single)">
+            <summary>
+            Initializes the Tukey-Lambda distribution with the specified shape parameter.
+            </summary>
+            <param name="lambda">Shape parameter.</param>
+        </member>
+        <member name="P:UMapx.Distribution.TukeyLambda.Support">
+            <summary>
+            Gets the support interval of the argument.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.TukeyLambda.Mean">
+            <summary>
+            Gets the mean value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.TukeyLambda.Variance">
+            <summary>
+            Gets the variance value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.TukeyLambda.Median">
+            <summary>
+            Gets the median value.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.TukeyLambda.Mode">
+            <summary>
+            Gets the mode values.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.TukeyLambda.Skewness">
+            <summary>
+            Gets the value of the asymmetry coefficient.
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.TukeyLambda.Excess">
+            <summary>
+            Gets the excess kurtosis (kurtosis minus 3).
+            </summary>
+        </member>
+        <member name="P:UMapx.Distribution.TukeyLambda.Entropy">
+            <summary>
+            Gets the value of differential entropy.
+            </summary>
+        </member>
+        <member name="M:UMapx.Distribution.TukeyLambda.Function(System.Single)">
+            <summary>
+            Returns the value of the probability density function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
+        </member>
+        <member name="M:UMapx.Distribution.TukeyLambda.Distribution(System.Single)">
+            <summary>
+            Returns the value of the cumulative distribution function.
+            </summary>
+            <param name="x">Value.</param>
+            <returns>Value.</returns>
         </member>
         <member name="T:UMapx.Distribution.Uniform">
             <summary>

@@ -166,12 +166,10 @@ namespace UMapx.Distribution
             {
                 if (Maths.Abs(ksi) < 1e-6f)
                 {
-                    double s = sigma;
-                    return (float)(s * s * Math.PI * Math.PI / 3.0);
+                    return (float)(sigma * sigma * Math.PI * Math.PI / 3.0);
                 }
 
                 double shape = ksi;
-                double s = sigma;
                 double pb = Math.PI * shape;
                 double sinPb = Math.Sin(pb);
                 double sin2Pb = Math.Sin(2.0 * pb);
@@ -181,7 +179,7 @@ namespace UMapx.Distribution
                     return float.NaN;
                 }
 
-                double a = (s * s) / (shape * shape);
+                double a = sigma * sigma / (shape * shape);
                 double b = 2.0 * pb / sin2Pb;
                 double c = pb / sinPb;
                 double variance = a * (b - c * c);
@@ -253,18 +251,20 @@ namespace UMapx.Distribution
                 float denom = sigma * (1f + e);
                 return e / (denom * (1f + e));
             }
-
-            float zeta = (x - mu) / sigma;
-            float baseValue = 1f + ksi * zeta;
-
-            if ((ksi > 0f && baseValue <= 0f) || (ksi < 0f && baseValue <= 0f))
+            else
             {
-                return 0f;
-            }
+                float zeta = (x - mu) / sigma;
+                float baseValue = 1f + ksi * zeta;
 
-            double power = Math.Pow(baseValue, -1.0 / ksi - 1.0);
-            double denom = sigma * Math.Pow(1.0 + Math.Pow(baseValue, -1.0 / ksi), 2.0);
-            return (float)(power / denom);
+                if ((ksi > 0f && baseValue <= 0f) || (ksi < 0f && baseValue <= 0f))
+                {
+                    return 0f;
+                }
+
+                double power = Math.Pow(baseValue, -1.0 / ksi - 1.0);
+                double denom = sigma * Math.Pow(1.0 + Math.Pow(baseValue, -1.0 / ksi), 2.0);
+                return (float)(power / denom);
+            }
         }
         /// <summary>
         /// Returns the value of the cumulative distribution function.
