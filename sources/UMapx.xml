@@ -14170,30 +14170,6 @@
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="T:UMapx.Distribution.Bayes">
-            <summary>
-            Defines the Bayes probability class.
-            Input probabilities must have non-zero total mass.
-            </summary>
-        </member>
-        <member name="M:UMapx.Distribution.Bayes.#ctor(System.Single[],System.Single[])">
-            <summary>
-            Initializes the Bayes probability class.
-            </summary>
-            <param name="stat">Array of statistical probabilities</param>
-            <param name="prior">An array of a priori probabilities (before experiment)</param>
-            <remarks>The total probability mass must be non-zero.</remarks>
-        </member>
-        <member name="P:UMapx.Distribution.Bayes.General">
-            <summary>
-            Returns the value of the total probability.
-            </summary>
-        </member>
-        <member name="P:UMapx.Distribution.Bayes.Probabilities">
-            <summary>
-            Returns an array of values of posterior probabilities (after the experiment).
-            </summary>
-        </member>
         <member name="T:UMapx.Distribution.Bernoulli">
             <summary>
             Defines the distribution of Bernoulli.
