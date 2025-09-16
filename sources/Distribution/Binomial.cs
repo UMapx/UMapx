@@ -192,7 +192,7 @@ namespace UMapx.Distribution
 
             float a = Special.LogBinomial(n, x);
             float b = x == 0 ? 0 : x * Maths.Log(p);
-            float c = (n - x);
+            float c = n - x;
             float d = Maths.Log(1 - p);
             float log = a + b + c * d;
 

@@ -222,6 +222,10 @@ namespace UMapx.Distribution
         public float Function(float x)
         {
             int k = (int)Math.Floor(x);
+            if (x != k)
+            {
+                return 0f;
+            }
 
             if (k < Math.Max(0, this.k + d - n) || k > Math.Min(d, this.k))
             {
