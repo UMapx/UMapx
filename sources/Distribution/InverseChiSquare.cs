@@ -60,7 +60,8 @@ namespace UMapx.Distribution
             {
                 if (v > 2)
                     return 1f / (v - 2f);
-                return float.NaN;
+
+                return float.PositiveInfinity;
             }
         }
         /// <summary>
