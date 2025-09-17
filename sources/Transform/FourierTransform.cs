@@ -21,7 +21,8 @@ namespace UMapx.Transform
         /// <param name="direction">Processing direction</param>
         public FourierTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
-            this.Normalized = normalized; this.Direction = direction;
+            this.Normalized = normalized;
+            this.Direction = direction;
         }
         #endregion
 
