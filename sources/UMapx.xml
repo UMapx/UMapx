@@ -26565,7 +26565,21 @@
             <param name="u">Array</param>
             <returns>Array</returns>
         </member>
+        <member name="M:UMapx.Response.FIR.Reaction(UMapx.Core.Complex32[])">
+            <summary>
+            Returns an array of filter response values when a discrete function is supplied.
+            </summary>
+            <param name="u">Array</param>
+            <returns>Array</returns>
+        </member>
         <member name="M:UMapx.Response.FIR.Amplitude(System.Single[])">
+            <summary>
+            Returns the frequency response of the filter.
+            </summary>
+            <param name="w">Array of frequencies (rad / sample)</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Response.FIR.Amplitude(UMapx.Core.Complex32[])">
             <summary>
             Returns the frequency response of the filter.
             </summary>
@@ -26579,7 +26593,21 @@
             <param name="w">Array of frequencies (rad / sample)</param>
             <returns>Array</returns>
         </member>
+        <member name="M:UMapx.Response.FIR.Phase(UMapx.Core.Complex32[])">
+            <summary>
+            Returns the phase-frequency response of a filter.
+            </summary>
+            <param name="w">Array of frequencies (rad / sample)</param>
+            <returns>Array</returns>
+        </member>
         <member name="M:UMapx.Response.FIR.Amplitude(System.Single)">
+            <summary>
+            Returns the amplitude value at the given frequency.
+            </summary>
+            <param name="w">Frequency (rad / sample)</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Response.FIR.Amplitude(UMapx.Core.Complex32)">
             <summary>
             Returns the amplitude value at the given frequency.
             </summary>
@@ -26592,6 +26620,18 @@
             </summary>
             <param name="w">Frequency (rad / sample)</param>
             <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Response.FIR.Phase(UMapx.Core.Complex32)">
+            <summary>
+            Returns the phase value at the given frequency.
+            </summary>
+            <param name="w">Frequency (rad / sample)</param>
+            <returns>Value</returns>
+        </member>
+        <member name="P:UMapx.Response.FIR.Stability">
+            <summary>
+            Checks if the specified filter is stable.
+            </summary>
         </member>
         <member name="P:UMapx.Response.FIR.LowPass">
             <summary>
@@ -26655,7 +26695,21 @@
             <param name="u">Array</param>
             <returns>Array</returns>
         </member>
+        <member name="M:UMapx.Response.IIR.Reaction(UMapx.Core.Complex32[])">
+            <summary>
+            Returns an array of filter response values when a discrete function is supplied.
+            </summary>
+            <param name="u">Array</param>
+            <returns>Array</returns>
+        </member>
         <member name="M:UMapx.Response.IIR.Amplitude(System.Single[])">
+            <summary>
+            Returns the frequency response of the filter.
+            </summary>
+            <param name="w">Array of frequencies (rad / sample)</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Response.IIR.Amplitude(UMapx.Core.Complex32[])">
             <summary>
             Returns the frequency response of the filter.
             </summary>
@@ -26669,6 +26723,13 @@
             <param name="w">Array of frequencies (rad / sample)</param>
             <returns>Array</returns>
         </member>
+        <member name="M:UMapx.Response.IIR.Phase(UMapx.Core.Complex32[])">
+            <summary>
+            Returns the phase-frequency response of a filter.
+            </summary>
+            <param name="w">Array of frequencies (rad / sample)</param>
+            <returns>Array</returns>
+        </member>
         <member name="M:UMapx.Response.IIR.Amplitude(System.Single)">
             <summary>
             Returns the amplitude value at the given frequency.
@@ -26676,7 +26737,21 @@
             <param name="w">Frequency (rad / sample)</param>
             <returns>Value</returns>
         </member>
+        <member name="M:UMapx.Response.IIR.Amplitude(UMapx.Core.Complex32)">
+            <summary>
+            Returns the amplitude value at the given frequency.
+            </summary>
+            <param name="w">Frequency (rad / sample)</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:UMapx.Response.IIR.Phase(System.Single)">
+            <summary>
+            Returns the phase value at the given frequency.
+            </summary>
+            <param name="w">Frequency (rad / sample)</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Response.IIR.Phase(UMapx.Core.Complex32)">
             <summary>
             Returns the phase value at the given frequency.
             </summary>
@@ -26747,6 +26822,46 @@
             </summary>
             <param name="w">Frequency (rad / s)</param>
             <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Response.IResponse.Reaction(UMapx.Core.Complex32[])">
+            <summary>
+            Returns an array of filter response values when a discrete function is supplied.
+            </summary>
+            <param name="u">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Response.IResponse.Amplitude(UMapx.Core.Complex32[])">
+            <summary>
+            Returns the frequency response of the filter.
+            </summary>
+            <param name="w">Array of frequencies (rad / s)</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Response.IResponse.Phase(UMapx.Core.Complex32[])">
+            <summary>
+            Returns the phase-frequency response of a filter.
+            </summary>
+            <param name="w">Array of frequencies (rad / s)</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Response.IResponse.Amplitude(UMapx.Core.Complex32)">
+            <summary>
+            Returns the amplitude value at the given frequency.
+            </summary>
+            <param name="w">Frequency (rad / s)</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Response.IResponse.Phase(UMapx.Core.Complex32)">
+            <summary>
+            Returns the phase value at the given frequency.
+            </summary>
+            <param name="w">Frequency (rad / s)</param>
+            <returns>Value</returns>
+        </member>
+        <member name="P:UMapx.Response.IResponse.Stability">
+            <summary>
+            Checks if the specified filter is stable.
+            </summary>
         </member>
         <member name="T:UMapx.Transform.BilateralFilter">
             <summary>

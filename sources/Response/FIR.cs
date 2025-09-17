@@ -68,6 +68,33 @@ namespace UMapx.Response
             return y;
         }
         /// <summary>
+        /// Returns an array of filter response values when a discrete function is supplied.
+        /// </summary>
+        /// <param name="u">Array</param>
+        /// <returns>Array</returns>
+        public Complex32[] Reaction(Complex32[] u)
+        {
+            int length = u.Length;
+            Complex32[] y = new Complex32[length];
+
+            int P = b.Length;
+
+            for (int n = 0; n < length; n++)
+            {
+                Complex32 accX = 0f;
+
+                for (int i = 0; i < P; i++)
+                {
+                    int t = n - i;
+                    if (t < 0) break;
+                    accX += b[i] * u[t];
+                }
+
+                y[n] = accX;
+            }
+            return y;
+        }
+        /// <summary>
         /// Returns the frequency response of the filter.
         /// </summary>
         /// <param name="w">Array of frequencies (rad / sample)</param>
@@ -76,6 +103,27 @@ namespace UMapx.Response
         {
             int length = b.Length;
             float[] amplitude = new float[w.Length];
+
+            for (int j = 0; j < w.Length; j++)
+            {
+                Complex32 K1 = Complex32.Zero;
+                for (int i = 0; i < length; i++)
+                {
+                    K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i);
+                }
+                amplitude[j] = K1.Abs;
+            }
+            return amplitude;
+        }
+        /// <summary>
+        /// Returns the frequency response of the filter.
+        /// </summary>
+        /// <param name="w">Array of frequencies (rad / sample)</param>
+        /// <returns>Array</returns>
+        public Complex32[] Amplitude(Complex32[] w)
+        {
+            int length = b.Length;
+            Complex32[] amplitude = new Complex32[w.Length];
 
             for (int j = 0; j < w.Length; j++)
             {
@@ -110,11 +158,48 @@ namespace UMapx.Response
             return phase;
         }
         /// <summary>
+        /// Returns the phase-frequency response of a filter.
+        /// </summary>
+        /// <param name="w">Array of frequencies (rad / sample)</param>
+        /// <returns>Array</returns>
+        public Complex32[] Phase(Complex32[] w)
+        {
+            int length = b.Length;
+            Complex32[] phase = new Complex32[w.Length];
+
+            for (int j = 0; j < w.Length; j++)
+            {
+                Complex32 K1 = Complex32.Zero;
+                for (int i = 0; i < length; i++)
+                {
+                    K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i);
+                }
+                phase[j] = K1.Angle;
+            }
+            return phase;
+        }
+        /// <summary>
         /// Returns the amplitude value at the given frequency.
         /// </summary>
         /// <param name="w">Frequency (rad / sample)</param>
         /// <returns>Value</returns>
         public float Amplitude(float w)
+        {
+            Complex32 K1 = Complex32.Zero;
+            int length = b.Length;
+
+            for (int i = 0; i < length; i++)
+            {
+                K1 += b[i] * Maths.Exp(-Maths.I * w * i);
+            }
+            return K1.Abs;
+        }
+        /// <summary>
+        /// Returns the amplitude value at the given frequency.
+        /// </summary>
+        /// <param name="w">Frequency (rad / sample)</param>
+        /// <returns>Value</returns>
+        public Complex32 Amplitude(Complex32 w)
         {
             Complex32 K1 = Complex32.Zero;
             int length = b.Length;
@@ -140,6 +225,32 @@ namespace UMapx.Response
                 K1 += b[i] * Maths.Exp(-Maths.I * w * i);
             }
             return K1.Angle;
+        }
+        /// <summary>
+        /// Returns the phase value at the given frequency.
+        /// </summary>
+        /// <param name="w">Frequency (rad / sample)</param>
+        /// <returns>Value</returns>
+        public Complex32 Phase(Complex32 w)
+        {
+            Complex32 K1 = Complex32.Zero;
+            int length = b.Length;
+
+            for (int i = 0; i < length; i++)
+            {
+                K1 += b[i] * Maths.Exp(-Maths.I * w * i);
+            }
+            return K1.Angle;
+        }
+        /// <summary>
+        /// Checks if the specified filter is stable.
+        /// </summary>
+        public bool Stability
+        {
+            get
+            {
+                return true;
+            }
         }
         #endregion
 

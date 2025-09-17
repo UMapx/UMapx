@@ -97,6 +97,49 @@ namespace UMapx.Response
             return y;
         }
         /// <summary>
+        /// Returns an array of filter response values when a discrete function is supplied.
+        /// </summary>
+        /// <param name="u">Array</param>
+        /// <returns>Array</returns>
+        public Complex32[] Reaction(Complex32[] u)
+        {
+            int length = u.Length;
+            Complex32[] y = new Complex32[length];
+
+            int P = (b != null) ? b.Length : 0;
+            int Q = (a != null) ? a.Length : 0;
+
+            Complex32 a0 = (Q > 0) ? a[0] : 0f;
+            Complex32 denom = 1f - a0;
+
+            if (denom == 0f)
+                throw new InvalidOperationException("IIR.Reaction: a[0] = 1 → denominator is zero (pole on z=1)");
+
+            for (int n = 0; n < length; n++)
+            {
+                Complex32 accX = 0f, accY = 0f;
+
+                // feedforward (x-part)
+                for (int i = 0; i < P; i++)
+                {
+                    int t = n - i;
+                    if (t < 0) break;
+                    accX += b[i] * u[t];
+                }
+
+                // feedback (y-part), starts from k = 1
+                for (int k = 1; k < Q; k++)
+                {
+                    int t = n - k;
+                    if (t < 0) break;
+                    accY += a[k] * y[t];
+                }
+
+                y[n] = (accX + accY) / denom;
+            }
+            return y;
+        }
+        /// <summary>
         /// Returns the frequency response of the filter.
         /// </summary>
         /// <param name="w">Array of frequencies (rad / sample)</param>
@@ -106,6 +149,29 @@ namespace UMapx.Response
             int length = w.Length;
             int P = b.Length, Q = a.Length;
             float[] amplitude = new float[length];
+
+            for (int j = 0; j < length; j++)
+            {
+                Complex32 K1 = Complex32.Zero;
+                Complex32 K2 = Complex32.One;
+
+                for (int i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i); }
+                for (int i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w[j] * i); }
+
+                amplitude[j] = K1.Abs / K2.Abs;
+            }
+            return amplitude;
+        }
+        /// <summary>
+        /// Returns the frequency response of the filter.
+        /// </summary>
+        /// <param name="w">Array of frequencies (rad / sample)</param>
+        /// <returns>Array</returns>
+        public Complex32[] Amplitude(Complex32[] w)
+        {
+            int length = w.Length;
+            int P = b.Length, Q = a.Length;
+            Complex32[] amplitude = new Complex32[length];
 
             for (int j = 0; j < length; j++)
             {
@@ -143,6 +209,29 @@ namespace UMapx.Response
             return phase;
         }
         /// <summary>
+        /// Returns the phase-frequency response of a filter.
+        /// </summary>
+        /// <param name="w">Array of frequencies (rad / sample)</param>
+        /// <returns>Array</returns>
+        public Complex32[] Phase(Complex32[] w)
+        {
+            int length = w.Length;
+            int P = b.Length, Q = a.Length;
+            Complex32[] phase = new Complex32[length];
+
+            for (int j = 0; j < length; j++)
+            {
+                Complex32 K1 = Complex32.Zero;
+                Complex32 K2 = Complex32.One;
+
+                for (int i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w[j] * i); }
+                for (int i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w[j] * i); }
+
+                phase[j] = K1.Angle - K2.Angle;
+            }
+            return phase;
+        }
+        /// <summary>
         /// Returns the amplitude value at the given frequency.
         /// </summary>
         /// <param name="w">Frequency (rad / sample)</param>
@@ -158,11 +247,43 @@ namespace UMapx.Response
             return K1.Abs / K2.Abs;
         }
         /// <summary>
+        /// Returns the amplitude value at the given frequency.
+        /// </summary>
+        /// <param name="w">Frequency (rad / sample)</param>
+        /// <returns>Value</returns>
+        public Complex32 Amplitude(Complex32 w)
+        {
+            Complex32 K1 = Complex32.Zero;
+            Complex32 K2 = Complex32.One;
+
+            for (int i = 0; i < b.Length; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w * i); }
+            for (int i = 0; i < a.Length; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w * i); }
+
+            return K1.Abs / K2.Abs;
+        }
+        /// <summary>
         /// Returns the phase value at the given frequency.
         /// </summary>
         /// <param name="w">Frequency (rad / sample)</param>
         /// <returns>Value</returns>
         public float Phase(float w)
+        {
+            Complex32 K1 = Complex32.Zero;
+            Complex32 K2 = Complex32.One;
+
+            int P = b.Length, Q = a.Length;
+
+            for (int i = 0; i < P; i++) { K1 += b[i] * Maths.Exp(-Maths.I * w * i); }
+            for (int i = 0; i < Q; i++) { K2 -= a[i] * Maths.Exp(-Maths.I * w * i); }
+
+            return K1.Angle - K2.Angle;
+        }
+        /// <summary>
+        /// Returns the phase value at the given frequency.
+        /// </summary>
+        /// <param name="w">Frequency (rad / sample)</param>
+        /// <returns>Value</returns>
+        public Complex32 Phase(Complex32 w)
         {
             Complex32 K1 = Complex32.Zero;
             Complex32 K2 = Complex32.One;
