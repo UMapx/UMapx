@@ -75,7 +75,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (d2 > 2) ? 0f : float.NaN;
+                return 0.5f * (Special.DiGamma(d1 / 2f) - Special.DiGamma(d2 / 2f) + Maths.Log(d2 / d1));
             }
         }
         /// <summary>
@@ -90,7 +90,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return (d2 > 4) ? 2f * (d1 + d2 - 2f) / (d1 * (d2 - 4f)) : float.PositiveInfinity;
+                return 0.25f * (Special.TriGamma(d1 / 2f) + Special.TriGamma(d2 / 2f));
             }
         }
         /// <summary>

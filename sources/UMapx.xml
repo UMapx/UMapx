@@ -26988,10 +26988,10 @@
         </member>
         <member name="M:UMapx.Transform.ChebyshevTransform.Matrix(System.Int32)">
             <summary>
-            Constructs the orthonormal Chebyshev (DCT-I) matrix of size n×n.
+            Constructs the orthonormal Chebyshev (DCT-I) matrix.
             </summary>
-            <param name="n">Size (n ≥ 1)</param>
-            <returns>Matrix H</returns>
+            <param name="n">Size</param>
+            <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.ChebyshevTransform.Forward(System.Single[])">
             <summary>

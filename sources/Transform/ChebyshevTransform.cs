@@ -26,10 +26,10 @@ namespace UMapx.Transform
 
         #region Chebyshev static components
         /// <summary>
-        /// Constructs the orthonormal Chebyshev (DCT-I) matrix of size n×n.
+        /// Constructs the orthonormal Chebyshev (DCT-I) matrix.
         /// </summary>
-        /// <param name="n">Size (n ≥ 1)</param>
-        /// <returns>Matrix H</returns>
+        /// <param name="n">Size</param>
+        /// <returns>Matrix</returns>
         public static float[,] Matrix(int n)
         {
             if (n == 1)
