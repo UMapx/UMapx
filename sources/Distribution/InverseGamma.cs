@@ -83,6 +83,7 @@ namespace UMapx.Distribution
             {
                 if (alpha <= 1f)
                     return float.PositiveInfinity;
+
                 return beta / (alpha - 1f);
             }
         }
@@ -118,7 +119,15 @@ namespace UMapx.Distribution
         /// </summary>
         public float Skewness
         {
-            get { return alpha > 3f ? (4f * Maths.Sqrt(alpha - 2f)) / (alpha - 3f) : float.NaN; }
+            get 
+            {
+                if (alpha <= 2f)
+                    return float.NaN;
+                if (alpha <= 3f)
+                    return float.PositiveInfinity;
+
+                return 4f * Maths.Sqrt(alpha - 2f) / (alpha - 3f);
+            }
         }
         /// <summary>
         /// Gets the excess kurtosis (kurtosis minus 3).
@@ -130,8 +139,10 @@ namespace UMapx.Distribution
         {
             get
             {
-                if (alpha <= 4f)
+                if (alpha <= 2f)
                     return float.NaN;
+                if (alpha <= 4f)
+                    return float.PositiveInfinity;
 
                 float a = alpha;
                 float num = 6f * (a * a * a + a * a - 6f * a - 2f);

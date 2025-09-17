@@ -77,7 +77,7 @@ namespace UMapx.Distribution
         /// </remarks>
         public float Mean
         {
-            get { return float.NaN; }
+            get { return float.PositiveInfinity; }
         }
         /// <summary>
         /// Gets the median value.
@@ -94,7 +94,7 @@ namespace UMapx.Distribution
         /// </remarks>
         public float Variance
         {
-            get { return float.NaN; }
+            get { return float.PositiveInfinity; }
         }
         /// <summary>
         /// Gets the mode values.
