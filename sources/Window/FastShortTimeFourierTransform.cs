@@ -17,7 +17,7 @@ namespace UMapx.Window
         #region Private data
         private readonly FastFourierTransform FFT;
         private IWindow window;
-        private readonly float[] coefs;
+        private float[] coefs;
         #endregion
 
         #region Initialize
@@ -33,9 +33,6 @@ namespace UMapx.Window
             this.FFT = new FastFourierTransform(normalized, direction);
             Direction = direction;
             Window = function;
-
-            // sampling window function:
-            this.coefs = function.GetWindow().Add(1e-3f);
         }
         /// <summary>
         /// Normalized transform or not.
@@ -56,8 +53,15 @@ namespace UMapx.Window
         /// </summary>
         public IWindow Window
         {
-            get { return window; }
-            set { window = value; }
+            get 
+            { 
+                return window; 
+            }
+            set 
+            { 
+                window = value;
+                coefs = window.GetWindow().Add(1e-3f);
+            }
         }
         #endregion
 
