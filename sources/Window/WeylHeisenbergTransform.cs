@@ -187,7 +187,7 @@ namespace UMapx.Window
         /// <param name="window">Windows function</param>
         /// <param name="length">Number of samples</param>
         /// <returns>Array</returns>
-        private static float[] Symmetry(IWindow window, int length)
+        protected static float[] Symmetry(IWindow window, int length)
         {
             // creating window function
             float[] g = window.GetWindow(length + 1);
