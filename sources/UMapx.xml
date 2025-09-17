@@ -26967,6 +26967,84 @@
             <param name="grid">Grid</param>
             <param name="radius">Radius</param>
         </member>
+        <member name="T:UMapx.Transform.ChebyshevTransform">
+            <summary>
+            Discrete Chebyshev transform of the first kind (Type-I), orthonormal.
+            </summary>
+            <remarks>
+            More information can be found on the website:
+            https://en.wikipedia.org/wiki/Discrete_Chebyshev_transform
+            </remarks>
+        </member>
+        <member name="M:UMapx.Transform.ChebyshevTransform.#ctor(UMapx.Core.Direction)">
+            <summary>
+            Initializes the Chebyshev transform (Type-I, orthonormal).
+            </summary>
+            <param name="direction">Processing direction</param>
+        </member>
+        <member name="M:UMapx.Transform.ChebyshevTransform.Matrix(System.Int32)">
+            <summary>
+            Constructs the orthonormal Chebyshev (DCT-I) matrix of size n×n.
+            </summary>
+            <param name="n">Size (n ≥ 1)</param>
+            <returns>Matrix H</returns>
+        </member>
+        <member name="M:UMapx.Transform.ChebyshevTransform.Forward(System.Single[])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.ChebyshevTransform.Backward(System.Single[])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.ChebyshevTransform.Forward(System.Single[0:,0:])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.ChebyshevTransform.Backward(System.Single[0:,0:])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.ChebyshevTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.ChebyshevTransform.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.ChebyshevTransform.Forward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.ChebyshevTransform.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
         <member name="T:UMapx.Transform.CosineTransform">
             <summary>
             Defines the cosine transform.
@@ -26991,56 +27069,56 @@
         </member>
         <member name="M:UMapx.Transform.CosineTransform.Forward(System.Single[])">
             <summary>
-            Forward cosine transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.CosineTransform.Backward(System.Single[])">
             <summary>
-            Backward cosine transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.CosineTransform.Forward(System.Single[0:,0:])">
             <summary>
-            Forward cosine transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.CosineTransform.Backward(System.Single[0:,0:])">
             <summary>
-            Backward cosine transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.CosineTransform.Forward(UMapx.Core.Complex32[])">
             <summary>
-            Forward cosine transform.
+            Forward transform.
             </summary>
             <param name="A">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.CosineTransform.Backward(UMapx.Core.Complex32[])">
             <summary>
-            Backward cosine transform.
+            Backward transform.
             </summary>
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Transform.CosineTransform.Forward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Forward cosine transform.
+            Forward transform.
             </summary>
             <param name="A">Matrix</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.CosineTransform.Backward(UMapx.Core.Complex32[0:,0:])">
             <summary>
-            Backward cosine transform.
+            Backward transform.
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
@@ -27262,6 +27340,36 @@
             <param name="F">Input signal</param>
             <param name="D">Difference</param>
             <param name="sigma">Sigma</param>
+        </member>
+        <member name="T:UMapx.Transform.FastChebyshevTransform">
+            <summary>
+            Fast Chebyshev transform of the first kind (Type-I), orthonormal.
+            </summary>
+            <remarks>
+            Uses one FFT of the even-symmetric extension (length 2M, where M=N-1) and exact endpoint handling
+            to reproduce the same result as <see cref="T:UMapx.Transform.ChebyshevTransform"/>. Forward and inverse are numerically
+            stable and bitwise consistent with the matrix version up to floating-point rounding.
+            </remarks>
+        </member>
+        <member name="M:UMapx.Transform.FastChebyshevTransform.#ctor(UMapx.Core.Direction)">
+            <summary>
+            Initializes the fast Chebyshev transform (Type-I, orthonormal).
+            </summary>
+            <param name="direction">Processing direction (unused for 1D)</param>
+        </member>
+        <member name="M:UMapx.Transform.FastChebyshevTransform.Forward(System.Single[])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.FastChebyshevTransform.Backward(System.Single[])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
         </member>
         <member name="T:UMapx.Transform.FastCosineTransform">
             <summary>

@@ -4,53 +4,57 @@ using UMapx.Core;
 namespace UMapx.Transform
 {
     /// <summary>
-    /// Defines the cosine transform.
+    /// Discrete Chebyshev transform of the first kind (Type-I), orthonormal.
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Discrete_cosine_transform
+    /// https://en.wikipedia.org/wiki/Discrete_Chebyshev_transform
     /// </remarks>
     [Serializable]
-    public class CosineTransform : TransformBase, ITransform
+    public class ChebyshevTransform : TransformBase, ITransform
     {
         #region Initialize
         /// <summary>
-        /// Initializes the cosine transform.
+        /// Initializes the Chebyshev transform (Type-I, orthonormal).
         /// </summary>
         /// <param name="direction">Processing direction</param>
-        public CosineTransform(Direction direction = Direction.Vertical)
+        public ChebyshevTransform(Direction direction = Direction.Vertical)
         {
             this.Direction = direction;
         }
         #endregion
 
-        #region Cosine static components
+        #region Chebyshev static components
         /// <summary>
-        /// Implements the construction of the cosine transform matrix.
+        /// Constructs the orthonormal Chebyshev (DCT-I) matrix of size n×n.
         /// </summary>
-        /// <param name="n">Size</param>
-        /// <returns>Matrix</returns>
+        /// <param name="n">Size (n ≥ 1)</param>
+        /// <returns>Matrix H</returns>
         public static float[,] Matrix(int n)
         {
-            int j, i;
-            float[,] H = new float[n, n];
-            float c = Maths.Pi / (2.0f * n);
-            float g1 = Maths.Sqrt(1.0f / n);
-            float g2 = Maths.Sqrt(2.0f / n);
+            if (n == 1)
+                return new float[1, 1] { { 1f } };
 
-            for (i = 0; i < n; i++)
+            int M = n - 1;
+            float[,] H = new float[n, n];
+            float cm = Maths.Pi / M;                // π / M
+            float norm = Maths.Sqrt(2.0f / M);      // √(2/M)
+            float invSqrt2 = 1.0f / Maths.Sqrt2;    // 1/√2
+
+            for (int k = 0; k < n; k++)
             {
-                for (j = 0; j < n; j++)
+                float ak = (k == 0 || k == M) ? invSqrt2 : 1.0f;
+                for (int j = 0; j < n; j++)
                 {
-                    H[i, j] = (i == 0) ? g1 : Maths.Cos((2 * j + 1) * i * c) * g2;
+                    float aj = (j == 0 || j == M) ? invSqrt2 : 1.0f;
+                    H[k, j] = norm * ak * aj * Maths.Cos(cm * k * j);
                 }
             }
-
             return H;
         }
         #endregion
 
-        #region Cosine Transform
+        #region Chebyshev Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
@@ -59,8 +63,8 @@ namespace UMapx.Transform
         public float[] Forward(float[] A)
         {
             int N = A.Length;
-            float[,] U = CosineTransform.Matrix(N);
-            return Core.Matrice.Dot(A, U);
+            float[,] U = ChebyshevTransform.Matrix(N);
+            return Matrice.Dot(A, U);
         }
         /// <summary>
         /// Backward transform.
@@ -70,8 +74,8 @@ namespace UMapx.Transform
         public float[] Backward(float[] B)
         {
             int N = B.Length;
-            float[,] U = CosineTransform.Matrix(N);
-            return Core.Matrice.Dot(B, Matrice.Transpose(U));
+            float[,] U = ChebyshevTransform.Matrix(N);
+            return Matrice.Dot(B, Matrice.Transpose(U));
         }
         /// <summary>
         /// Forward transform.
@@ -81,8 +85,8 @@ namespace UMapx.Transform
         public float[,] Forward(float[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            float[,] U = CosineTransform.Matrix(N);
-            float[,] V = CosineTransform.Matrix(M);
+            float[,] U = ChebyshevTransform.Matrix(N);
+            float[,] V = ChebyshevTransform.Matrix(M);
 
             if (Direction == Direction.Both)
             {
@@ -102,8 +106,8 @@ namespace UMapx.Transform
         public float[,] Backward(float[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            float[,] U = CosineTransform.Matrix(N);
-            float[,] V = CosineTransform.Matrix(M);
+            float[,] U = ChebyshevTransform.Matrix(N);
+            float[,] V = ChebyshevTransform.Matrix(M);
 
             if (Direction == Direction.Both)
             {
@@ -123,8 +127,8 @@ namespace UMapx.Transform
         public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
-            float[,] U = CosineTransform.Matrix(N);
-            return Core.Matrice.Dot(A, U);
+            float[,] U = ChebyshevTransform.Matrix(N);
+            return Matrice.Dot(A, U);
         }
         /// <summary>
         /// Backward transform.
@@ -134,8 +138,8 @@ namespace UMapx.Transform
         public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
-            float[,] U = CosineTransform.Matrix(N);
-            return Core.Matrice.Dot(B, Matrice.Transpose(U));
+            float[,] U = ChebyshevTransform.Matrix(N);
+            return Matrice.Dot(B, Matrice.Transpose(U));
         }
         /// <summary>
         /// Forward transform.
@@ -145,8 +149,8 @@ namespace UMapx.Transform
         public Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            float[,] U = CosineTransform.Matrix(N);
-            float[,] V = CosineTransform.Matrix(M);
+            float[,] U = ChebyshevTransform.Matrix(N);
+            float[,] V = ChebyshevTransform.Matrix(M);
 
             if (Direction == Direction.Both)
             {
@@ -166,8 +170,8 @@ namespace UMapx.Transform
         public Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            float[,] U = CosineTransform.Matrix(N);
-            float[,] V = CosineTransform.Matrix(M);
+            float[,] U = ChebyshevTransform.Matrix(N);
+            float[,] V = ChebyshevTransform.Matrix(M);
 
             if (Direction == Direction.Both)
             {
