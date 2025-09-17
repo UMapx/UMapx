@@ -29609,6 +29609,75 @@
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
         </member>
+        <member name="T:UMapx.Transform.TransformBaseMatrixFloat">
+            <summary>
+            Defines an adapter class for a matrix transform.
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.TransformBaseMatrixFloat.Matrix(System.Int32,System.Boolean)">
+            <summary>
+            Implements the construction of the transform matrix.
+            </summary>
+            <param name="n">Size</param>
+            <param name="backward">Backward transform or not</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.TransformBaseMatrixFloat.Forward(System.Single[])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.TransformBaseMatrixFloat.Backward(System.Single[])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.TransformBaseMatrixFloat.Forward(System.Single[0:,0:])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.TransformBaseMatrixFloat.Backward(System.Single[0:,0:])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.TransformBaseMatrixFloat.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.TransformBaseMatrixFloat.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.TransformBaseMatrixFloat.Forward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Transform.TransformBaseMatrixFloat.Backward(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
         <member name="T:UMapx.Transform.WalshHadamardTransform">
             <summary>
             Defines the Walsh-Hadamard transform.
