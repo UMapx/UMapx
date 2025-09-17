@@ -110,13 +110,18 @@ namespace UMapx.Distribution
         /// Gets the kurtosis value.
         /// </summary>
         /// <remarks>
-        /// For the geometric distribution the kurtosis is 6 + p^2 / (1 - p); subtract 3 to obtain the excess kurtosis.
+        /// For the geometric distribution the kurtosis is 6 + p^2 / (1 - p).
         /// </remarks>
         public float Excess
         {
             get
             {
-                return 3f + p * p / q;
+                if (q == 0f)
+                {
+                    return float.PositiveInfinity;
+                }
+
+                return 6f + p * p / q;
             }
         }
         /// <summary>

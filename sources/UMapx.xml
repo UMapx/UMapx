@@ -15940,7 +15940,7 @@
             Gets the kurtosis value.
             </summary>
             <remarks>
-            For the geometric distribution the kurtosis is 6 + p^2 / (1 - p); subtract 3 to obtain the excess kurtosis.
+            For the geometric distribution the kurtosis is 6 + p^2 / (1 - p).
             </remarks>
         </member>
         <member name="M:UMapx.Distribution.Geometric.Function(System.Single)">
