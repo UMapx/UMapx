@@ -96,8 +96,8 @@ namespace UMapx.Transform
         public virtual float[,] Backward(float[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            var Nu = ForwardMatrixSize(N);
-            var Mv = ForwardMatrixSize(M);
+            var Nu = BackwardMatrixSize(N);
+            var Mv = BackwardMatrixSize(M);
 
             float[,] U = TransformationMatrix(Nu);
             float[,] V = TransformationMatrix(Mv);
@@ -200,8 +200,8 @@ namespace UMapx.Transform
         public virtual Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            var Nu = ForwardMatrixSize(N);
-            var Mv = ForwardMatrixSize(M);
+            var Nu = BackwardMatrixSize(N);
+            var Mv = BackwardMatrixSize(M);
 
             float[,] U = TransformationMatrix(Nu);
             float[,] V = TransformationMatrix(Mv);

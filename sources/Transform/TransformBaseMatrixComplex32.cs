@@ -97,8 +97,8 @@ namespace UMapx.Transform
         public virtual Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            var Nu = ForwardMatrixSize(N);
-            var Mv = ForwardMatrixSize(M);
+            var Nu = BackwardMatrixSize(N);
+            var Mv = BackwardMatrixSize(M);
 
             Complex32[,] U = TransformationMatrix(Nu);
             Complex32[,] V = TransformationMatrix(Mv);
