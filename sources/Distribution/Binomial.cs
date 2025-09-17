@@ -190,9 +190,16 @@ namespace UMapx.Distribution
                 return 0;
             }
 
-            float a = Special.LogBinomial(n, x);
-            float b = x == 0 ? 0 : x * Maths.Log(p);
-            float c = n - x;
+            int k = (int)Maths.Floor(x);
+
+            if (x != k)
+            {
+                return 0f;
+            }
+
+            float a = Special.LogBinomial(n, k);
+            float b = k == 0 ? 0 : k * Maths.Log(p);
+            float c = n - k;
             float d = Maths.Log(1 - p);
             float log = a + b + c * d;
 
