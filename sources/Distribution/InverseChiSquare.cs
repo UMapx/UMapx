@@ -70,9 +70,14 @@ namespace UMapx.Distribution
         {
             get
             {
-                if (v > 4)
-                    return (v - 2f) * (v - 2f) * (v - 4f);
-                return float.NaN;
+                if (v <= 2)
+                    return float.NaN;
+                if (v <= 4)
+                    return float.PositiveInfinity;
+
+                float vf = v;
+                float denom = (vf - 2f) * (vf - 2f) * (vf - 4f);
+                return 2f / denom;
             }
         }
         /// <summary>
