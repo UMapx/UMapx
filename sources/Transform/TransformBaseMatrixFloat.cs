@@ -9,6 +9,16 @@ namespace UMapx.Transform
     {
         #region Matrix methods
         /// <summary>
+        /// Returns normalization factor.
+        /// </summary>
+        /// <param name="n">Size</param>
+        /// <param name="backward">Backward transform or not</param>
+        /// <returns>Value</returns>
+        public virtual float NormalizationFactor(int n, bool backward = false)
+        {
+            return 1.0f;
+        }
+        /// <summary>
         /// Implements the construction of the transform matrix.
         /// </summary>
         /// <param name="n">Size</param>

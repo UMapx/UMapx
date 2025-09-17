@@ -41,10 +41,9 @@ namespace UMapx.Transform
         /// Implements the construction of the Hartley transform matrix.
         /// </summary>
         /// <param name="n">Size</param>
-        /// <param name="normalized">Normalized transform or not</param>
         /// <param name="spectrumType">Spectrum type</param>
         /// <returns>Matrix</returns>
-        public static float[,] Matrix(int n, bool normalized = false, SpectrumType spectrumType = SpectrumType.Hartley)
+        public static float[,] Matrix(int n, SpectrumType spectrumType = SpectrumType.Hartley)
         {
             if (spectrumType == SpectrumType.Fourier)
             {
@@ -64,16 +63,16 @@ namespace UMapx.Transform
                 }
             }
 
-            if (normalized)
-            {
-                H = H.Div(Maths.Sqrt(n));
-            }
-
             return H;
         }
         #endregion
 
         #region Hartley Transform
+        /// <inheritdoc/>
+        public override float NormalizationFactor(int n, bool backward = false)
+        {
+            return Maths.Sqrt(n);
+        }
         /// <inheritdoc/>
         public override float[,] Matrix(int n, bool backward)
         {
