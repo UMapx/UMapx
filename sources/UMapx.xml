@@ -29089,34 +29089,6 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="M:UMapx.Transform.TransformBase.ForwardNormalizationFactor(System.Int32)">
-            <summary>
-            Returns the forward normalization factor.
-            </summary>
-            <param name="n">Size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Transform.TransformBase.BackwardNormalizationFactor(System.Int32)">
-            <summary>
-            Returns the backward normalization factor.
-            </summary>
-            <param name="n">Size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Transform.TransformBase.ForwardMatrixSize(System.Int32)">
-            <summary>
-            Returns the forward matrix size.
-            </summary>
-            <param name="n">Size</param>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Transform.TransformBase.BackwardMatrixSize(System.Int32)">
-            <summary>
-            Returns the backward matrix size.
-            </summary>
-            <param name="n">Size</param>
-            <returns>Value</returns>
-        </member>
         <member name="T:UMapx.Transform.TransformBaseComplex32">
             <summary>
             Defines an adapter class for a complex transform.
@@ -29238,6 +29210,39 @@
             </summary>
             <param name="B">Matrix</param>
             <returns>Matrix</returns>
+        </member>
+        <member name="T:UMapx.Transform.TransformBaseMatrix">
+            <summary>
+            Defines an adapter class for a matrix transform.
+            </summary>
+        </member>
+        <member name="M:UMapx.Transform.TransformBaseMatrix.ForwardNormalizationFactor(System.Int32)">
+            <summary>
+            Returns the forward normalization factor.
+            </summary>
+            <param name="n">Size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Transform.TransformBaseMatrix.BackwardNormalizationFactor(System.Int32)">
+            <summary>
+            Returns the backward normalization factor.
+            </summary>
+            <param name="n">Size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Transform.TransformBaseMatrix.ForwardMatrixSize(System.Int32)">
+            <summary>
+            Returns the forward matrix size.
+            </summary>
+            <param name="n">Size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Transform.TransformBaseMatrix.BackwardMatrixSize(System.Int32)">
+            <summary>
+            Returns the backward matrix size.
+            </summary>
+            <param name="n">Size</param>
+            <returns>Value</returns>
         </member>
         <member name="T:UMapx.Transform.TransformBaseMatrixComplex32">
             <summary>

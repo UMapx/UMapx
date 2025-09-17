@@ -30,7 +30,7 @@ namespace UMapx.Window
             : base(window, m, spectrumType, direction) { }
         #endregion
 
-        #region Weyl-Heisenberg Transform
+        #region Real Weyl-Heisenberg Transform
         /// <summary>
         /// Forward real Weyl-Heisenberg transform.
         /// </summary>

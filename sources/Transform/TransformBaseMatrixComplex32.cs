@@ -6,7 +6,7 @@ namespace UMapx.Transform
     /// <summary>
     /// Defines an adapter class for a matrix transform.
     /// </summary>
-    public abstract class TransformBaseMatrixComplex32 : TransformBase, ITransform
+    public abstract class TransformBaseMatrixComplex32 : TransformBaseMatrix, ITransform
     {
         #region Matrix methods
         /// <summary>

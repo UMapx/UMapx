@@ -5,7 +5,7 @@ namespace UMapx.Transform
     /// <summary>
     /// Defines an adapter class for a matrix transform.
     /// </summary>
-    public abstract class TransformBaseMatrixFloat : TransformBase, ITransform
+    public abstract class TransformBaseMatrixFloat : TransformBaseMatrix, ITransform
     {
         #region Matrix methods
         /// <summary>

@@ -212,7 +212,7 @@ namespace UMapx.Window
         }
         #endregion
 
-        #region Weyl-Heisenberg Transform
+        #region Real Weyl-Heisenberg Transform
         /// <inheritdoc/>
         protected override int ForwardMatrixSize(int n)
         {
