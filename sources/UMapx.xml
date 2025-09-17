@@ -16264,9 +16264,6 @@
             <summary>
             Gets the variance value.
             </summary>
-            <remarks>
-            Variance equals d * (k / n) * ((n - k) / n) * ((n - d) / (n - 1)).
-            </remarks>
         </member>
         <member name="P:UMapx.Distribution.Hypergeometric.Mode">
             <summary>

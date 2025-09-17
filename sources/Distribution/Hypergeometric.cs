@@ -111,9 +111,6 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        /// <remarks>
-        /// Variance equals d * (k / n) * ((n - k) / n) * ((n - d) / (n - 1)).
-        /// </remarks>
         public float Variance
         {
             get
@@ -131,10 +128,9 @@ namespace UMapx.Distribution
         {
             get
             {
-                float value = ((k + 1f) * (d + 1f)) / (n + 2f);
+                float value = (k + 1f) * (d + 1f) / (n + 2f);
                 float lower = Maths.Max(0f, k + d - n);
                 float upper = Maths.Min(d, k);
-
                 float floor = Maths.Range(Maths.Floor(value), lower, upper);
                 float rounded = Maths.Round(value);
 
@@ -204,11 +200,24 @@ namespace UMapx.Distribution
         {
             get
             {
-                float n2 = n * n;
-                float k1 = (n2 * (n - 1)) / (k * (n - 2) * (n - 3) * (n - k));
-                float k2 = (n * (n + 1) - 6 * n * (n - k)) / (d * (n - d));
-                float k3 = (3 * n * (n - k) * (n + 6)) / n2 - 6;
-                return k1 * (k2 + k3);
+                double population = n;
+                double successes = k;
+                double draws = d;
+
+                double numerator = population * population * (population - 1d) *
+                                   (population * (population + 1d) - 6d * successes * (population - successes) -
+                                    6d * draws * (population - draws)) +
+                                   6d * draws * successes * (population - successes) * (population - draws) *
+                                   (5d * population - 6d);
+                double denominator = draws * successes * (population - successes) * (population - draws) *
+                                     (population - 2d) * (population - 3d);
+
+                if (denominator <= 0d)
+                {
+                    return numerator > 0d ? float.PositiveInfinity : float.NaN;
+                }
+
+                return (float)(numerator / denominator);
             }
         }
         /// <summary>
