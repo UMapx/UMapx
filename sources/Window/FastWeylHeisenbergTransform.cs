@@ -49,7 +49,7 @@ namespace UMapx.Window
         {
             int N = B.Length / 2;
             var cache = PolyphaseCache.Build(N, this.m, this.window);
-            return IFWHT(B, cache);
+            return IFWHT(B, cache, Normalized);
         }
         /// <summary>
         /// Forward Weyl-Heisenberg transform.
@@ -218,7 +218,7 @@ namespace UMapx.Window
                         row[j] = new Complex32(row[j].Real, -row[j].Imag); // conj(B_row)
                     }
 
-                    var inv = IFWHT(row, cacheRows); // length M2/2
+                    var inv = IFWHT(row, cacheRows, Normalized); // length M2/2
 
                     for (int j = 0; j < M2 / 2; j++)
                     {
@@ -239,7 +239,7 @@ namespace UMapx.Window
                         col[i] = tmp[i, j];
                     }
 
-                    var inv = IFWHT(col, cacheCols); // length N2/2
+                    var inv = IFWHT(col, cacheCols, Normalized); // length N2/2
 
                     for (int i = 0; i < N2 / 2; i++)
                     {
@@ -264,7 +264,7 @@ namespace UMapx.Window
                         col[i] = B[i, j];
                     }
 
-                    var inv = IFWHT(col, cacheCols); // N2/2
+                    var inv = IFWHT(col, cacheCols, Normalized); // N2/2
                     
                     for (int i = 0; i < N2 / 2; i++)
                     {
@@ -293,7 +293,7 @@ namespace UMapx.Window
                         row[j] = new Complex32(row[j].Real, -row[j].Imag); // conj(B_row)
                     }
 
-                    var inv = IFWHT(row, cacheRows); // M2/2
+                    var inv = IFWHT(row, cacheRows, Normalized); // M2/2
 
                     for (int j = 0; j < M2 / 2; j++)
                     {

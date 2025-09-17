@@ -36,7 +36,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Normalized transform or not.
         /// </summary>
-        public bool Normalized
+        public override bool Normalized
         {
             get
             {

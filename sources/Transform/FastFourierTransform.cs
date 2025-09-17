@@ -14,13 +14,6 @@ namespace UMapx.Transform
     [Serializable]
     public class FastFourierTransform : TransformBaseComplex32, ITransform
     {
-        #region Private data
-        /// <summary>
-        /// Normalized transform or not.
-        /// </summary>
-        private bool normalized;
-        #endregion
-
         #region Initialize
         /// <summary>
         /// Initializes the fast Fourier transform using the Cooley-Tukey and Bluestein algorithms.
@@ -31,20 +24,6 @@ namespace UMapx.Transform
         {
             this.Normalized = normalized;
             this.Direction = direction;
-        }
-        /// <summary>
-        /// Normalized transform or not.
-        /// </summary>
-        public bool Normalized
-        {
-            get
-            {
-                return this.normalized;
-            }
-            set
-            {
-                this.normalized = value;
-            }
         }
         #endregion
 
@@ -64,7 +43,7 @@ namespace UMapx.Transform
             else
                 BluesteinFFT(B, inverse: false);
 
-            if (normalized)
+            if (Normalized)
                 Scale(B, 1f / Maths.Sqrt(N));
 
             return B;
@@ -84,7 +63,7 @@ namespace UMapx.Transform
             else
                 BluesteinFFT(A, inverse: true);
 
-            if (normalized)
+            if (Normalized)
                 Scale(A, 1f / Maths.Sqrt(N));
             //else
             //    Scale(A, 1f / N);
