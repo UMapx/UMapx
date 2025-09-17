@@ -20,11 +20,20 @@ namespace UMapx.Transform
 
         #region Normalization methods
         /// <summary>
-        /// Returns normalization factor.
+        /// Returns the forward normalization factor.
         /// </summary>
         /// <param name="n">Size</param>
         /// <returns>Value</returns>
-        protected virtual float NormalizationFactor(int n)
+        protected virtual float ForwardNormalizationFactor(int n)
+        {
+            return 1.0f;
+        }
+        /// <summary>
+        /// Returns the backward normalization factor.
+        /// </summary>
+        /// <param name="n">Size</param>
+        /// <returns>Value</returns>
+        protected virtual float BackwardNormalizationFactor(int n)
         {
             return 1.0f;
         }

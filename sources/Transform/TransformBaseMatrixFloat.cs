@@ -30,7 +30,7 @@ namespace UMapx.Transform
 
             if (Normalized)
             {
-                B = B.Div(NormalizationFactor(N));
+                B = B.Div(ForwardNormalizationFactor(N));
             }
 
             return B;
@@ -48,7 +48,7 @@ namespace UMapx.Transform
 
             if (Normalized)
             {
-                A = A.Div(NormalizationFactor(N));
+                A = A.Div(BackwardNormalizationFactor(N));
             }
 
             return A;
@@ -68,17 +68,17 @@ namespace UMapx.Transform
             if (Direction == Direction.Both)
             {
                 B = U.Dot(A).Dot(V.Transpose());
-                B = Normalized ? B.Div(NormalizationFactor(N * M)) : B;
+                B = Normalized ? B.Div(ForwardNormalizationFactor(N * M)) : B;
             }
             else if (Direction == Direction.Vertical)
             {
                 B = U.Dot(A);
-                B = Normalized ? B.Div(NormalizationFactor(N)) : B;
+                B = Normalized ? B.Div(ForwardNormalizationFactor(N)) : B;
             }
             else
             {
                 B = A.Dot(V.Transpose());
-                B = Normalized ? B.Div(NormalizationFactor(M)) : B;
+                B = Normalized ? B.Div(ForwardNormalizationFactor(M)) : B;
             }
 
             return B;
@@ -98,17 +98,17 @@ namespace UMapx.Transform
             if (Direction == Direction.Both)
             {
                 A = U.Transpose().Dot(B).Dot(V);
-                A = Normalized ? A.Div(NormalizationFactor(N * M)) : A;
+                A = Normalized ? A.Div(BackwardNormalizationFactor(N * M)) : A;
             }
             else if (Direction == Direction.Vertical)
             {
                 A = U.Transpose().Dot(B);
-                A = Normalized ? A.Div(NormalizationFactor(N)) : A;
+                A = Normalized ? A.Div(BackwardNormalizationFactor(N)) : A;
             }
             else
             {
                 A = B.Dot(V);
-                A = Normalized ? A.Div(NormalizationFactor(M)) : A;
+                A = Normalized ? A.Div(BackwardNormalizationFactor(M)) : A;
             }
 
             return A;
@@ -126,7 +126,7 @@ namespace UMapx.Transform
 
             if (Normalized)
             {
-                B = B.Div(NormalizationFactor(N));
+                B = B.Div(ForwardNormalizationFactor(N));
             }
 
             return B;
@@ -144,7 +144,7 @@ namespace UMapx.Transform
 
             if (Normalized)
             {
-                A = A.Div(NormalizationFactor(N));
+                A = A.Div(BackwardNormalizationFactor(N));
             }
 
             return A;
@@ -164,17 +164,17 @@ namespace UMapx.Transform
             if (Direction == Direction.Both)
             {
                 B = U.Dot(A).Dot(V.Transpose());
-                B = Normalized ? B.Div(NormalizationFactor(N * M)) : B;
+                B = Normalized ? B.Div(ForwardNormalizationFactor(N * M)) : B;
             }
             else if (Direction == Direction.Vertical)
             {
                 B = U.Dot(A);
-                B = Normalized ? B.Div(NormalizationFactor(N)) : B;
+                B = Normalized ? B.Div(ForwardNormalizationFactor(N)) : B;
             }
             else
             {
                 B = A.Dot(V.Transpose());
-                B = Normalized ? B.Div(NormalizationFactor(M)) : B;
+                B = Normalized ? B.Div(ForwardNormalizationFactor(M)) : B;
             }
 
             return B;
@@ -194,17 +194,17 @@ namespace UMapx.Transform
             if (Direction == Direction.Both)
             {
                 A = U.Transpose().Dot(B).Dot(V);
-                A = Normalized ? A.Div(NormalizationFactor(N * M)) : A;
+                A = Normalized ? A.Div(BackwardNormalizationFactor(N * M)) : A;
             }
             else if (Direction == Direction.Vertical)
             {
                 A = U.Transpose().Dot(B);
-                A = Normalized ? A.Div(NormalizationFactor(N)) : A;
+                A = Normalized ? A.Div(BackwardNormalizationFactor(N)) : A;
             }
             else
             {
                 A = B.Dot(V);
-                A = Normalized ? A.Div(NormalizationFactor(M)) : A;
+                A = Normalized ? A.Div(BackwardNormalizationFactor(M)) : A;
             }
 
             return A;

@@ -65,7 +65,12 @@ namespace UMapx.Transform
 
         #region Hartley Transform
         /// <inheritdoc/>
-        protected override float NormalizationFactor(int n)
+        protected override float ForwardNormalizationFactor(int n)
+        {
+            return Maths.Sqrt(n);
+        }
+        /// <inheritdoc/>
+        protected override float BackwardNormalizationFactor(int n)
         {
             return Maths.Sqrt(n);
         }

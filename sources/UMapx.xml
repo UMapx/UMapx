@@ -27712,7 +27712,10 @@
             <param name="n">Size</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.FourierTransform.NormalizationFactor(System.Int32)">
+        <member name="M:UMapx.Transform.FourierTransform.ForwardNormalizationFactor(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Transform.FourierTransform.BackwardNormalizationFactor(System.Int32)">
             <inheritdoc/>
         </member>
         <member name="M:UMapx.Transform.FourierTransform.TransformationMatrix(System.Int32)">
@@ -28166,7 +28169,10 @@
             <param name="spectrumType">Spectrum type</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.HartleyTransform.NormalizationFactor(System.Int32)">
+        <member name="M:UMapx.Transform.HartleyTransform.ForwardNormalizationFactor(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Transform.HartleyTransform.BackwardNormalizationFactor(System.Int32)">
             <inheritdoc/>
         </member>
         <member name="M:UMapx.Transform.HartleyTransform.TransformationMatrix(System.Int32)">
@@ -29083,9 +29089,16 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="M:UMapx.Transform.TransformBase.NormalizationFactor(System.Int32)">
+        <member name="M:UMapx.Transform.TransformBase.ForwardNormalizationFactor(System.Int32)">
             <summary>
-            Returns normalization factor.
+            Returns the forward normalization factor.
+            </summary>
+            <param name="n">Size</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Transform.TransformBase.BackwardNormalizationFactor(System.Int32)">
+            <summary>
+            Returns the backward normalization factor.
             </summary>
             <param name="n">Size</param>
             <returns>Value</returns>
@@ -29377,7 +29390,10 @@
             </summary>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.WalshHadamardTransform.NormalizationFactor(System.Int32)">
+        <member name="M:UMapx.Transform.WalshHadamardTransform.ForwardNormalizationFactor(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:UMapx.Transform.WalshHadamardTransform.BackwardNormalizationFactor(System.Int32)">
             <inheritdoc/>
         </member>
         <member name="M:UMapx.Transform.WalshHadamardTransform.TransformationMatrix(System.Int32)">
