@@ -16195,9 +16195,6 @@
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <remarks>
-            This value corresponds to the hyperbolic secant distribution with the variance-1 (σ = 1) parametrization.
-            </remarks>
         </member>
         <member name="M:UMapx.Distribution.HyperbolicSecant.Distribution(System.Single)">
             <summary>
