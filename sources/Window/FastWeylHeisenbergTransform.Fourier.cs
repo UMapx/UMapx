@@ -175,8 +175,9 @@ namespace UMapx.Window
         /// </summary>
         /// <param name="B">Input coefficients B ∈ ℂ^{2N}: main in [0..N-1], half in [N..2N-1]</param>
         /// <param name="C">Polyphase cache with the same orthonormal window spectra S_hat/T_hat</param>
+        /// <param name="normalized">Normalized transform or not</param>
         /// <returns>Reconstructed signal A ∈ ℂ^N</returns>
-        internal static Complex32[] IFWHT(Complex32[] B, PolyphaseCache C)
+        internal static Complex32[] IFWHT(Complex32[] B, PolyphaseCache C, bool normalized = true)
         {
             int N = C.N;
             int M = C.M;
@@ -212,7 +213,13 @@ namespace UMapx.Window
 
             // In the original codebase, the inverse unpacking used invGain = 1/(2√L).
             // We keep this constant to fully match the established normalization and the slow matrix.
-            float invGain = 1.0f / (2 * Maths.Sqrt(L));
+            float invGain = 1.0f / Maths.Sqrt(L);
+
+            // normalized inverse transform or not.
+            if (normalized)
+            {
+                invGain /= 2.0f;
+            }
 
             // Compensate the internal 1/√M applied by IFFT_M in FFT(..., true) to keep unit gain.
             float cM = Maths.Sqrt(M);

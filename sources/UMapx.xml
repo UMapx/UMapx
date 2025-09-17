@@ -34436,7 +34436,7 @@
              <param name="C">Polyphase cache holding S_hat and T_hat computed from the orthonormal window</param>
              <returns>B ∈ ℂ^{2N}: main in B[0..N-1], half in B[N..2N-1], packed as u = l·M + k</returns>
         </member>
-        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.IFWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache)">
+        <member name="M:UMapx.Window.FastWeylHeisenbergTransform.IFWHT(UMapx.Core.Complex32[],UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache,System.Boolean)">
              <summary>
              Inverse fast Weyl–Heisenberg transform (synthesis), inverting the forward packing exactly.
              
@@ -34456,6 +34456,7 @@
              </summary>
              <param name="B">Input coefficients B ∈ ℂ^{2N}: main in [0..N-1], half in [N..2N-1]</param>
              <param name="C">Polyphase cache with the same orthonormal window spectra S_hat/T_hat</param>
+             <param name="normalized">Normalized transform or not</param>
              <returns>Reconstructed signal A ∈ ℂ^N</returns>
         </member>
         <member name="T:UMapx.Window.FastWeylHeisenbergTransform.PolyphaseCache">
