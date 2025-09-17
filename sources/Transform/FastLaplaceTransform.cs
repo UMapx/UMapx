@@ -73,7 +73,7 @@ namespace UMapx.Transform
         }
         #endregion
 
-        #region Laplace Transform
+        #region Fast Laplace Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
