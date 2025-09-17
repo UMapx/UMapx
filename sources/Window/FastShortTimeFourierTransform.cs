@@ -37,7 +37,7 @@ namespace UMapx.Window
         /// <summary>
         /// Normalized transform or not.
         /// </summary>
-        public bool Normalized
+        public override bool Normalized
         {
             get
             {

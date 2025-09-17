@@ -56,7 +56,7 @@ namespace UMapx.Transform
 
         #region Chebyshev Transform
         /// <inheritdoc/>
-        public override float[,] Matrix(int n, bool backward)
+        protected override float[,] Matrix(int n, bool backward)
         {
             var U = Matrix(n);
 

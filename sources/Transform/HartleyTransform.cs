@@ -27,10 +27,6 @@ namespace UMapx.Transform
             this.SpectrumType = spectrumType;
         }
         /// <summary>
-        /// Normalized transform or not.
-        /// </summary>
-        public bool Normalized { get; set; }
-        /// <summary>
         /// Gets or sets spectrum type.
         /// </summary>
         public SpectrumType SpectrumType { get; set; }
@@ -69,14 +65,14 @@ namespace UMapx.Transform
 
         #region Hartley Transform
         /// <inheritdoc/>
-        public override float NormalizationFactor(int n, bool backward = false)
+        protected override float NormalizationFactor(int n, bool backward = false)
         {
             return Maths.Sqrt(n);
         }
         /// <inheritdoc/>
-        public override float[,] Matrix(int n, bool backward)
+        protected override float[,] Matrix(int n, bool backward)
         {
-            var U = Matrix(n, Normalized, SpectrumType);
+            var U = Matrix(n, SpectrumType);
 
             if (backward)
             {

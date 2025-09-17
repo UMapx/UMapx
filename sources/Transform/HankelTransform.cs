@@ -14,7 +14,7 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Hankel_transform
     /// </remarks>
     [Serializable]
-    public class HankelTransform : TransformBase, ITransform
+    public class HankelTransform : TransformBaseMatrixFloat, ITransform
     {
         #region Private data
         /// <summary>
@@ -122,133 +122,17 @@ namespace UMapx.Transform
         #endregion
 
         #region Hankel Transform
-        /// <summary>
-        /// Forward transform.
-        /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
-        public float[] Forward(float[] A)
+        /// <inheritdoc/>
+        protected override float[,] Matrix(int n, bool backward)
         {
-            int N = A.Length;
-            float[,] U = HankelTransform.Matrix(N, a);
-            return Matrice.Dot(A, U);
-        }
-        /// <summary>
-        /// Backward transform.
-        /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
-        public float[] Backward(float[] B)
-        {
-            int N = B.Length;
-            float[,] U = HankelTransform.Matrix(N, a);
-            return Matrice.Dot(B, Matrice.Transpose(U));
-        }
-        /// <summary>
-        /// Forward transform.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
-        public float[,] Forward(float[,] A)
-        {
-            int N = A.GetLength(0), M = A.GetLength(1);
-            float[,] U = HankelTransform.Matrix(N, a);
-            float[,] V = HankelTransform.Matrix(M, a);
+            var U = Matrix(n, this.a);
 
-            if (Direction == Direction.Both)
+            if (backward)
             {
-                return U.Dot(A).Dot(V.Transpose());
+                U = U.Transpose();
             }
-            else if (Direction == Direction.Vertical)
-            {
-                return U.Dot(A);
-            }
-            return A.Dot(V.Transpose());
-        }
-        /// <summary>
-        /// Backward transform.
-        /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
-        public float[,] Backward(float[,] B)
-        {
-            int N = B.GetLength(0), M = B.GetLength(1);
-            float[,] U = HankelTransform.Matrix(N, a);
-            float[,] V = HankelTransform.Matrix(M, a);
 
-            if (Direction == Direction.Both)
-            {
-                return U.Transpose().Dot(B).Dot(V);
-            }
-            else if (Direction == Direction.Vertical)
-            {
-                return U.Transpose().Dot(B);
-            }
-            return B.Dot(V);
-        }
-        /// <summary>
-        /// Forward transform.
-        /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
-        public Complex32[] Forward(Complex32[] A)
-        {
-            int N = A.Length;
-            float[,] U = HankelTransform.Matrix(N, a);
-            return Matrice.Dot(A, U);
-        }
-        /// <summary>
-        /// Backward transform.
-        /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
-        public Complex32[] Backward(Complex32[] B)
-        {
-            int N = B.Length;
-            float[,] U = HankelTransform.Matrix(N, a);
-            return Matrice.Dot(B, Matrice.Transpose(U));
-        }
-        /// <summary>
-        /// Forward transform.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
-        public Complex32[,] Forward(Complex32[,] A)
-        {
-            int N = A.GetLength(0), M = A.GetLength(1);
-            float[,] U = HankelTransform.Matrix(N, a);
-            float[,] V = HankelTransform.Matrix(M, a);
-
-            if (Direction == Direction.Both)
-            {
-                return U.Dot(A).Dot(V.Transpose());
-            }
-            else if (Direction == Direction.Vertical)
-            {
-                return U.Dot(A);
-            }
-            return A.Dot(V.Transpose());
-        }
-        /// <summary>
-        /// Backward transform.
-        /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
-        public Complex32[,] Backward(Complex32[,] B)
-        {
-            int N = B.GetLength(0), M = B.GetLength(1);
-            float[,] U = HankelTransform.Matrix(N, a);
-            float[,] V = HankelTransform.Matrix(M, a);
-
-            if (Direction == Direction.Both)
-            {
-                return U.Transpose().Dot(B).Dot(V);
-            }
-            else if (Direction == Direction.Vertical)
-            {
-                return U.Transpose().Dot(B);
-            }
-            return B.Dot(V);
+            return U;
         }
         #endregion
     }
