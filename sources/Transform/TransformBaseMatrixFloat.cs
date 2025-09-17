@@ -22,15 +22,16 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public float[] Forward(float[] A)
+        public virtual float[] Forward(float[] A)
         {
             int N = A.Length;
-            float[,] U = TransformationMatrix(N);
+            int Nu = ForwardMatrixSize(N);
+            float[,] U = TransformationMatrix(Nu);
             float[] B = Matrice.Dot(A, U);
 
             if (Normalized)
             {
-                B = B.Div(ForwardNormalizationFactor(N));
+                B = B.Div(ForwardNormalizationFactor(Nu));
             }
 
             return B;
@@ -40,15 +41,16 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public float[] Backward(float[] B)
+        public virtual float[] Backward(float[] B)
         {
             int N = B.Length;
-            float[,] U = TransformationMatrix(N);
+            var Nu = BackwardMatrixSize(N);
+            float[,] U = TransformationMatrix(Nu);
             float[] A = Matrice.Dot(B, Matrice.Transpose(U));
 
             if (Normalized)
             {
-                A = A.Div(BackwardNormalizationFactor(N));
+                A = A.Div(BackwardNormalizationFactor(Nu));
             }
 
             return A;
@@ -58,27 +60,30 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public float[,] Forward(float[,] A)
+        public virtual float[,] Forward(float[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            float[,] U = TransformationMatrix(N);
-            float[,] V = TransformationMatrix(M);
+            var Nu = ForwardMatrixSize(N);
+            var Mv = ForwardMatrixSize(M);
+
+            float[,] U = TransformationMatrix(Nu);
+            float[,] V = TransformationMatrix(Mv);
             float[,] B;
 
             if (Direction == Direction.Both)
             {
                 B = U.Dot(A).Dot(V.Transpose());
-                B = Normalized ? B.Div(ForwardNormalizationFactor(N * M)) : B;
+                B = Normalized ? B.Div(ForwardNormalizationFactor(Nu * Mv)) : B;
             }
             else if (Direction == Direction.Vertical)
             {
                 B = U.Dot(A);
-                B = Normalized ? B.Div(ForwardNormalizationFactor(N)) : B;
+                B = Normalized ? B.Div(ForwardNormalizationFactor(Nu)) : B;
             }
             else
             {
                 B = A.Dot(V.Transpose());
-                B = Normalized ? B.Div(ForwardNormalizationFactor(M)) : B;
+                B = Normalized ? B.Div(ForwardNormalizationFactor(Mv)) : B;
             }
 
             return B;
@@ -88,27 +93,30 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public float[,] Backward(float[,] B)
+        public virtual float[,] Backward(float[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            float[,] U = TransformationMatrix(N);
-            float[,] V = TransformationMatrix(M);
+            var Nu = ForwardMatrixSize(N);
+            var Mv = ForwardMatrixSize(M);
+
+            float[,] U = TransformationMatrix(Nu);
+            float[,] V = TransformationMatrix(Mv);
             float[,] A;
 
             if (Direction == Direction.Both)
             {
                 A = U.Transpose().Dot(B).Dot(V);
-                A = Normalized ? A.Div(BackwardNormalizationFactor(N * M)) : A;
+                A = Normalized ? A.Div(BackwardNormalizationFactor(Nu * Mv)) : A;
             }
             else if (Direction == Direction.Vertical)
             {
                 A = U.Transpose().Dot(B);
-                A = Normalized ? A.Div(BackwardNormalizationFactor(N)) : A;
+                A = Normalized ? A.Div(BackwardNormalizationFactor(Nu)) : A;
             }
             else
             {
                 A = B.Dot(V);
-                A = Normalized ? A.Div(BackwardNormalizationFactor(M)) : A;
+                A = Normalized ? A.Div(BackwardNormalizationFactor(Mv)) : A;
             }
 
             return A;
@@ -118,15 +126,16 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Forward(Complex32[] A)
+        public virtual Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
-            float[,] U = TransformationMatrix(N);
+            int Nu = ForwardMatrixSize(N);
+            float[,] U = TransformationMatrix(Nu);
             Complex32[] B = Matrice.Dot(A, U);
 
             if (Normalized)
             {
-                B = B.Div(ForwardNormalizationFactor(N));
+                B = B.Div(ForwardNormalizationFactor(Nu));
             }
 
             return B;
@@ -136,15 +145,16 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Array</param>
         /// <returns>Array</returns>
-        public Complex32[] Backward(Complex32[] B)
+        public virtual Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
-            float[,] U = TransformationMatrix(N);
+            var Nu = BackwardMatrixSize(N);
+            float[,] U = TransformationMatrix(Nu);
             Complex32[] A = Matrice.Dot(B, Matrice.Transpose(U));
 
             if (Normalized)
             {
-                A = A.Div(BackwardNormalizationFactor(N));
+                A = A.Div(BackwardNormalizationFactor(Nu));
             }
 
             return A;
@@ -154,27 +164,30 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Forward(Complex32[,] A)
+        public virtual Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            float[,] U = TransformationMatrix(N);
-            float[,] V = TransformationMatrix(M);
+            var Nu = ForwardMatrixSize(N);
+            var Mv = ForwardMatrixSize(M);
+
+            float[,] U = TransformationMatrix(Nu);
+            float[,] V = TransformationMatrix(Mv);
             Complex32[,] B;
 
             if (Direction == Direction.Both)
             {
                 B = U.Dot(A).Dot(V.Transpose());
-                B = Normalized ? B.Div(ForwardNormalizationFactor(N * M)) : B;
+                B = Normalized ? B.Div(ForwardNormalizationFactor(Nu * Mv)) : B;
             }
             else if (Direction == Direction.Vertical)
             {
                 B = U.Dot(A);
-                B = Normalized ? B.Div(ForwardNormalizationFactor(N)) : B;
+                B = Normalized ? B.Div(ForwardNormalizationFactor(Nu)) : B;
             }
             else
             {
                 B = A.Dot(V.Transpose());
-                B = Normalized ? B.Div(ForwardNormalizationFactor(M)) : B;
+                B = Normalized ? B.Div(ForwardNormalizationFactor(Mv)) : B;
             }
 
             return B;
@@ -184,27 +197,30 @@ namespace UMapx.Transform
         /// </summary>
         /// <param name="B">Matrix</param>
         /// <returns>Matrix</returns>
-        public Complex32[,] Backward(Complex32[,] B)
+        public virtual Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            float[,] U = TransformationMatrix(N);
-            float[,] V = TransformationMatrix(M);
+            var Nu = ForwardMatrixSize(N);
+            var Mv = ForwardMatrixSize(M);
+
+            float[,] U = TransformationMatrix(Nu);
+            float[,] V = TransformationMatrix(Mv);
             Complex32[,] A;
 
             if (Direction == Direction.Both)
             {
                 A = U.Transpose().Dot(B).Dot(V);
-                A = Normalized ? A.Div(BackwardNormalizationFactor(N * M)) : A;
+                A = Normalized ? A.Div(BackwardNormalizationFactor(Nu * Mv)) : A;
             }
             else if (Direction == Direction.Vertical)
             {
                 A = U.Transpose().Dot(B);
-                A = Normalized ? A.Div(BackwardNormalizationFactor(N)) : A;
+                A = Normalized ? A.Div(BackwardNormalizationFactor(Nu)) : A;
             }
             else
             {
                 A = B.Dot(V);
-                A = Normalized ? A.Div(BackwardNormalizationFactor(M)) : A;
+                A = Normalized ? A.Div(BackwardNormalizationFactor(Mv)) : A;
             }
 
             return A;

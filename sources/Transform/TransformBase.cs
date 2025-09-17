@@ -37,6 +37,24 @@ namespace UMapx.Transform
         {
             return 1.0f;
         }
+        /// <summary>
+        /// Returns the forward matrix size.
+        /// </summary>
+        /// <param name="n">Size</param>
+        /// <returns>Value</returns>
+        protected virtual int ForwardMatrixSize(int n)
+        {
+            return n;
+        }
+        /// <summary>
+        /// Returns the backward matrix size.
+        /// </summary>
+        /// <param name="n">Size</param>
+        /// <returns>Value</returns>
+        protected virtual int BackwardMatrixSize(int n)
+        {
+            return n;
+        }
         #endregion
     }
 }

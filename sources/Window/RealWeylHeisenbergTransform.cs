@@ -13,19 +13,56 @@ namespace UMapx.Window
     /// https://ieeexplore.ieee.org/document/8711969/
     /// </remarks>
     [Serializable]
-    public class RealWeylHeisenbergTransform : WeylHeisenbergTransform, IWindowTransform, ITransform
+    public class RealWeylHeisenbergTransform : TransformBaseMatrixFloat, IWindowTransform, ITransform
     {
+        #region Private data
+        /// <summary>
+        /// Windows function.
+        /// </summary>
+        protected IWindow window;
+        /// <summary>
+        /// Number of frequency shifts.
+        /// </summary>
+        protected int m;
+        #endregion
+
         #region Initialize
         /// <summary>
         /// Initializes a group of real orthogonal bases and Weyl-Heisenberg transformations.
         /// </summary>
         /// <param name="window">Windows function</param>
-        /// <param name="m">Number of frequency shifts [4, N/4]</param>
+        /// <param name="m">Number of frequency shifts [2, N/2]</param>
         /// <param name="spectrumType">Spectrum type</param>
         /// <param name="direction">Processing direction</param>
-        public RealWeylHeisenbergTransform(IWindow window, int m = 8, SpectrumType spectrumType = SpectrumType.Fourier, Direction direction = Direction.Vertical) 
-            : base(window, m, direction) { SpectrumType = spectrumType; }
+        public RealWeylHeisenbergTransform(IWindow window, int m = 8, SpectrumType spectrumType = SpectrumType.Fourier, Direction direction = Direction.Vertical)
+        {
+            Window = window; M = m; SpectrumType = spectrumType; Direction = direction;
+        }
+        /// <summary>
+        /// Gets or sets number of frequency shifts [2, N].
+        /// </summary>
+        public int M
+        {
+            get
+            {
+                return this.m;
+            }
+            set
+            {
+                if (value < 2 || Maths.IsNotEven(value))
+                    throw new ArgumentException("M must be positive and even");
 
+                this.m = value;
+            }
+        }
+        /// <summary>
+        /// Gets or sets the window function.
+        /// </summary>
+        public IWindow Window
+        {
+            get { return window; }
+            set { window = value; }
+        }
         /// <summary>
         /// Gets or sets spectrum type.
         /// </summary>
@@ -176,157 +213,20 @@ namespace UMapx.Window
         #endregion
 
         #region Weyl-Heisenberg Transform
-        /// <summary>
-        /// Forward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
-        public override float[] Forward(float[] A)
+        /// <inheritdoc/>
+        protected override int ForwardMatrixSize(int n)
         {
-            int N = A.Length;
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
-            float[] B = Matrice.Dot(A, Matrice.Transpose(U));
-            return B;
+            return n / 2;
         }
-        /// <summary>
-        /// Backward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
-        public override float[] Backward(float[] B)
+        /// <inheritdoc/>
+        protected override int BackwardMatrixSize(int n)
         {
-            int N = B.Length;
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
-            float[] A = Matrice.Dot(B, U);
-            return A;
+            return n / 2;
         }
-        /// <summary>
-        /// Forward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
-        public override float[,] Forward(float[,] A)
+        /// <inheritdoc/>
+        protected override float[,] TransformationMatrix(int n)
         {
-            int N = A.GetLength(0), M = A.GetLength(1);
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
-            float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true, SpectrumType);
-            float[,] B;
-
-            if (Direction == Direction.Both)
-            {
-                B = U.Transpose().Dot(A).Dot(V);
-            }
-            else if (Direction == Direction.Vertical)
-            {
-                B = U.Transpose().Dot(A);
-            }
-            else
-            {
-                B = A.Dot(V);
-            }
-            return B;
-        }
-        /// <summary>
-        /// Backward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
-        public override float[,] Backward(float[,] B)
-        {
-            int N = B.GetLength(0), M = B.GetLength(1);
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
-            float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true, SpectrumType);
-            float[,] A;
-
-            if (Direction == Direction.Both)
-            {
-                A = U.Dot(B).Dot(V.Transpose());
-            }
-            else if (Direction == Direction.Vertical)
-            {
-                A = U.Dot(B);
-            }
-            else
-            {
-                A = B.Dot(V.Transpose());
-            }
-            return A.Div(2);
-        }
-        /// <summary>
-        /// Forward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
-        public override Complex32[] Forward(Complex32[] A)
-        {
-            int N = A.Length;
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
-            Complex32[] B = Matrice.Dot(A, Matrice.Transpose(U));
-            return B;
-        }
-        /// <summary>
-        /// Backward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
-        public override Complex32[] Backward(Complex32[] B)
-        {
-            int N = B.Length;
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
-            Complex32[] A = Matrice.Dot(B, U);
-            return A;
-        }
-        /// <summary>
-        /// Forward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
-        public override Complex32[,] Forward(Complex32[,] A)
-        {
-            int N = A.GetLength(0), M = A.GetLength(1);
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
-            float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true, SpectrumType);
-            Complex32[,] B;
-
-            if (Direction == Direction.Both)
-            {
-                B = U.Transpose().Dot(A).Dot(V);
-            }
-            else if (Direction == Direction.Vertical)
-            {
-                B = U.Transpose().Dot(A);
-            }
-            else
-            {
-                B = A.Dot(V);
-            }
-            return B;
-        }
-        /// <summary>
-        /// Backward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
-        public override Complex32[,] Backward(Complex32[,] B)
-        {
-            int N = B.GetLength(0), M = B.GetLength(1);
-            float[,] U = RealWeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true, SpectrumType);
-            float[,] V = RealWeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true, SpectrumType);
-            Complex32[,] A;
-
-            if (Direction == Direction.Both)
-            {
-                A = U.Dot(B).Dot(V.Transpose());
-            }
-            else if (Direction == Direction.Vertical)
-            {
-                A = U.Dot(B);
-            }
-            else
-            {
-                A = B.Dot(V.Transpose());
-            }
-            return A;
+            return Matrix(this.window, n, this.m, true, SpectrumType).Transpose();
         }
         #endregion
     }

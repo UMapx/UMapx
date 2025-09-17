@@ -13,7 +13,7 @@ namespace UMapx.Window
     /// https://ieeexplore.ieee.org/document/8711969/
     /// </remarks>
     [Serializable]
-    public class WeylHeisenbergTransform : TransformBase, IWindowTransform, ITransform
+    public class WeylHeisenbergTransform : TransformBaseMatrixComplex32, IWindowTransform, ITransform
     {
         #region Private data
         /// <summary>
@@ -187,7 +187,7 @@ namespace UMapx.Window
         /// <param name="window">Windows function</param>
         /// <param name="length">Number of samples</param>
         /// <returns>Array</returns>
-        protected static float[] Symmetry(IWindow window, int length)
+        public static float[] Symmetry(IWindow window, int length)
         {
             // creating window function
             float[] g = window.GetWindow(length + 1);
@@ -202,117 +202,25 @@ namespace UMapx.Window
         #endregion
 
         #region Weyl-Heisenberg Transform
-        /// <summary>
-        /// Forward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
-        public virtual Complex32[] Forward(Complex32[] A)
+        /// <inheritdoc/>
+        protected override float ForwardNormalizationFactor(int n)
         {
-            int N = A.Length;
-            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
-            Complex32[] B = Matrice.Dot(A, Matrice.Hermitian(U));
-            return B;
+            return 1;
         }
-        /// <summary>
-        /// Backward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
-        public virtual Complex32[] Backward(Complex32[] B)
+        /// <inheritdoc/>
+        protected override float BackwardNormalizationFactor(int n)
         {
-            int N = B.Length;
-            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            Complex32[] A = Matrice.Dot(B, U);
-            return A.Div(2);
+            return 2;
         }
-        /// <summary>
-        /// Forward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
-        public virtual Complex32[,] Forward(Complex32[,] A)
+        /// <inheritdoc/>
+        protected override int BackwardMatrixSize(int n)
         {
-            int N = A.GetLength(0), M = A.GetLength(1);
-            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N, this.m, true);
-            Complex32[,] V = WeylHeisenbergTransform.Matrix(this.window, M, this.m, true);
-            Complex32[,] B;
-
-            if (Direction == Direction.Both)
-            {
-                B = U.Hermitian().Dot(A).Dot(V);
-            }
-            else if (Direction == Direction.Vertical)
-            {
-                B = U.Hermitian().Dot(A);
-            }
-            else
-            {
-                B = A.Dot(V);
-            }
-            return B;
+            return n / 2;
         }
-        /// <summary>
-        /// Backward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
-        public virtual Complex32[,] Backward(Complex32[,] B)
+        /// <inheritdoc/>
+        protected override Complex32[,] TransformationMatrix(int n)
         {
-            int N = B.GetLength(0), M = B.GetLength(1);
-            Complex32[,] U = WeylHeisenbergTransform.Matrix(this.window, N / 2, this.m, true);
-            Complex32[,] V = WeylHeisenbergTransform.Matrix(this.window, M / 2, this.m, true);
-            Complex32[,] A;
-
-            if (Direction == Direction.Both)
-            {
-                A = U.Dot(B).Dot(V.Hermitian());
-            }
-            else if (Direction == Direction.Vertical)
-            {
-                A = U.Dot(B);
-            }
-            else
-            {
-                A = B.Dot(V.Hermitian());
-            }
-            return A.Div(2);
-        }
-        /// <summary>
-        /// Forward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
-        public virtual float[] Forward(float[] A)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Backward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
-        public virtual float[] Backward(float[] B)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Forward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
-        public virtual float[,] Forward(float[,] A)
-        {
-            throw new NotSupportedException();
-        }
-        /// <summary>
-        /// Backward Weyl-Heisenberg transform.
-        /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
-        public virtual float[,] Backward(float[,] B)
-        {
-            throw new NotSupportedException();
+            return Matrix(this.window, n, this.m, true).Hermitian();
         }
         #endregion
     }
