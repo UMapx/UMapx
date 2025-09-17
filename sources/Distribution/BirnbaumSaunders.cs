@@ -172,8 +172,8 @@ namespace UMapx.Distribution
             get
             {
                 float g2 = gamma * gamma;
-                float numerator = 4f * gamma * (g2 + 3f);
-                float denominator = Maths.Pow(g2 + 2f, 1.5f);
+                float numerator = 4f * gamma * (11f * g2 + 6f);
+                float denominator = Maths.Pow(5f * g2 + 4f, 1.5f);
                 return numerator / denominator;
             }
         }
@@ -188,9 +188,8 @@ namespace UMapx.Distribution
             get
             {
                 float g2 = gamma * gamma;
-                float g4 = g2 * g2;
-                float numerator = 6f * g2 * (g4 + 2f * g2);
-                float denominator = (g2 + 2f);
+                float numerator = 6f * g2 * (93f * g2 + 40f);
+                float denominator = 5f * g2 + 4f;
                 denominator *= denominator;
                 return numerator / denominator;
             }
