@@ -73,7 +73,7 @@ namespace UMapx.Transform
             if (Direction == Direction.Both)
             {
                 B = U.Dot(A).Dot(V.Transpose());
-                B = Normalized ? B.Div(ForwardNormalizationFactor(Nu * Mv)) : B;
+                B = Normalized ? B.Div(ForwardNormalizationFactor(Nu) * ForwardNormalizationFactor(Mv)) : B;
             }
             else if (Direction == Direction.Vertical)
             {
@@ -106,7 +106,7 @@ namespace UMapx.Transform
             if (Direction == Direction.Both)
             {
                 A = U.Transpose().Dot(B).Dot(V);
-                A = Normalized ? A.Div(BackwardNormalizationFactor(Nu * Mv)) : A;
+                A = Normalized ? A.Div(BackwardNormalizationFactor(Nu) * BackwardNormalizationFactor(Mv)) : A;
             }
             else if (Direction == Direction.Vertical)
             {
@@ -177,7 +177,7 @@ namespace UMapx.Transform
             if (Direction == Direction.Both)
             {
                 B = U.Dot(A).Dot(V.Transpose());
-                B = Normalized ? B.Div(ForwardNormalizationFactor(Nu * Mv)) : B;
+                B = Normalized ? B.Div(ForwardNormalizationFactor(Nu) * ForwardNormalizationFactor(Mv)) : B;
             }
             else if (Direction == Direction.Vertical)
             {
@@ -210,7 +210,7 @@ namespace UMapx.Transform
             if (Direction == Direction.Both)
             {
                 A = U.Transpose().Dot(B).Dot(V);
-                A = Normalized ? A.Div(BackwardNormalizationFactor(Nu * Mv)) : A;
+                A = Normalized ? A.Div(BackwardNormalizationFactor(Nu) * BackwardNormalizationFactor(Mv)) : A;
             }
             else if (Direction == Direction.Vertical)
             {
