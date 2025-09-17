@@ -51,16 +51,9 @@ namespace UMapx.Transform
 
         #region Sine Transform
         /// <inheritdoc/>
-        protected override float[,] Matrix(int n, bool backward)
+        protected override float[,] TransformationMatrix(int n)
         {
-            var U = Matrix(n);
-
-            if (backward)
-            {
-                U = U.Transpose();
-            }
-
-            return U;
+            return Matrix(n);
         }
         #endregion
     }

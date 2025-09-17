@@ -13,9 +13,8 @@ namespace UMapx.Transform
         /// Implements the construction of the transform matrix.
         /// </summary>
         /// <param name="n">Size</param>
-        /// <param name="backward">Backward transform or not</param>
         /// <returns>Matrix</returns>
-        protected abstract Complex32[,] Matrix(int n, bool backward = false);
+        protected abstract Complex32[,] TransformationMatrix(int n);
         #endregion
 
         #region Transform methods
@@ -27,12 +26,12 @@ namespace UMapx.Transform
         public Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
-            Complex32[,] U = Matrix(N, false);
+            Complex32[,] U = TransformationMatrix(N);
             Complex32[] B = Matrice.Dot(A, U);
 
             if (Normalized)
             {
-                B = B.Div(NormalizationFactor(N, false));
+                B = B.Div(NormalizationFactor(N));
             }
 
             return B;
@@ -45,12 +44,12 @@ namespace UMapx.Transform
         public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
-            Complex32[,] U = Matrix(N, true);
+            Complex32[,] U = TransformationMatrix(N);
             Complex32[] A = Matrice.Dot(B, Matrice.Hermitian(U));
 
             if (Normalized)
             {
-                A = A.Div(NormalizationFactor(N, true));
+                A = A.Div(NormalizationFactor(N));
             }
 
             return A;
@@ -63,24 +62,24 @@ namespace UMapx.Transform
         public Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
-            Complex32[,] U = Matrix(N, false);
-            Complex32[,] V = Matrix(M, false);
+            Complex32[,] U = TransformationMatrix(N);
+            Complex32[,] V = TransformationMatrix(M);
             Complex32[,] B;
 
             if (Direction == Direction.Both)
             {
                 B = U.Dot(A).Dot(V.Hermitian());
-                B = Normalized ? B.Div(NormalizationFactor(N * M, false)) : B;
+                B = Normalized ? B.Div(NormalizationFactor(N * M)) : B;
             }
             else if (Direction == Direction.Vertical)
             {
                 B = U.Dot(A);
-                B = Normalized ? B.Div(NormalizationFactor(N, false)) : B;
+                B = Normalized ? B.Div(NormalizationFactor(N)) : B;
             }
             else
             {
                 B = A.Dot(V.Hermitian());
-                B = Normalized ? B.Div(NormalizationFactor(N, false)) : B;
+                B = Normalized ? B.Div(NormalizationFactor(N)) : B;
             }
 
             return B;
@@ -93,24 +92,24 @@ namespace UMapx.Transform
         public Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
-            Complex32[,] U = Matrix(N, true);
-            Complex32[,] V = Matrix(M, true);
+            Complex32[,] U = TransformationMatrix(N);
+            Complex32[,] V = TransformationMatrix(M);
             Complex32[,] A;
 
             if (Direction == Direction.Both)
             {
                 A = U.Hermitian().Dot(B).Dot(V);
-                A = Normalized ? A.Div(NormalizationFactor(N * M, true)) : A;
+                A = Normalized ? A.Div(NormalizationFactor(N * M)) : A;
             }
             else if (Direction == Direction.Vertical)
             {
                 A = U.Hermitian().Dot(B);
-                A = Normalized ? A.Div(NormalizationFactor(N, true)) : A;
+                A = Normalized ? A.Div(NormalizationFactor(N)) : A;
             }
             else
             {
                 A = B.Dot(V);
-                A = Normalized ? A.Div(NormalizationFactor(N, true)) : A;
+                A = Normalized ? A.Div(NormalizationFactor(N)) : A;
             }
 
             return A;

@@ -123,16 +123,9 @@ namespace UMapx.Transform
 
         #region Hankel Transform
         /// <inheritdoc/>
-        protected override float[,] Matrix(int n, bool backward)
+        protected override float[,] TransformationMatrix(int n)
         {
-            var U = Matrix(n, this.a);
-
-            if (backward)
-            {
-                U = U.Transpose();
-            }
-
-            return U;
+            return Matrix(n, this.a);
         }
         #endregion
     }

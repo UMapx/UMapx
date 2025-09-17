@@ -26990,7 +26990,7 @@
             <param name="n">Size</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.ChebyshevTransform.Matrix(System.Int32,System.Boolean)">
+        <member name="M:UMapx.Transform.ChebyshevTransform.TransformationMatrix(System.Int32)">
             <inheritdoc/>
         </member>
         <member name="T:UMapx.Transform.CosineTransform">
@@ -27015,7 +27015,7 @@
             <param name="n">Size</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.CosineTransform.Matrix(System.Int32,System.Boolean)">
+        <member name="M:UMapx.Transform.CosineTransform.TransformationMatrix(System.Int32)">
             <inheritdoc/>
         </member>
         <member name="T:UMapx.Transform.DeltaTransform">
@@ -27619,20 +27619,6 @@
             <param name="B">Array</param>
             <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Transform.FastLaplaceTransform.ApplyLaplaceOperator(UMapx.Core.Complex32[],System.Single)">
-            <summary>
-            Applies Laplace transform operator.
-            </summary>
-            <param name="v">Array</param>
-            <param name="sigma">Sigma</param>
-        </member>
-        <member name="M:UMapx.Transform.FastLaplaceTransform.ApplyLaplaceInverseOperator(UMapx.Core.Complex32[],System.Single)">
-            <summary>
-            Applies inverse Laplace transform operator.
-            </summary>
-            <param name="v">Array</param>
-            <param name="sigma">Sigma</param>
-        </member>
         <member name="T:UMapx.Transform.FastSineTransform">
             <summary>
             Defines the fast sine transform.
@@ -27726,10 +27712,10 @@
             <param name="n">Size</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.FourierTransform.NormalizationFactor(System.Int32,System.Boolean)">
+        <member name="M:UMapx.Transform.FourierTransform.NormalizationFactor(System.Int32)">
             <inheritdoc/>
         </member>
-        <member name="M:UMapx.Transform.FourierTransform.Matrix(System.Int32,System.Boolean)">
+        <member name="M:UMapx.Transform.FourierTransform.TransformationMatrix(System.Int32)">
             <inheritdoc/>
         </member>
         <member name="T:UMapx.Transform.FrequencyFilter">
@@ -28147,7 +28133,7 @@
             <param name="k">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Transform.HankelTransform.Matrix(System.Int32,System.Boolean)">
+        <member name="M:UMapx.Transform.HankelTransform.TransformationMatrix(System.Int32)">
             <inheritdoc/>
         </member>
         <member name="T:UMapx.Transform.HartleyTransform">
@@ -28180,10 +28166,10 @@
             <param name="spectrumType">Spectrum type</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.HartleyTransform.NormalizationFactor(System.Int32,System.Boolean)">
+        <member name="M:UMapx.Transform.HartleyTransform.NormalizationFactor(System.Int32)">
             <inheritdoc/>
         </member>
-        <member name="M:UMapx.Transform.HartleyTransform.Matrix(System.Int32,System.Boolean)">
+        <member name="M:UMapx.Transform.HartleyTransform.TransformationMatrix(System.Int32)">
             <inheritdoc/>
         </member>
         <member name="T:UMapx.Transform.HilbertTransform">
@@ -28394,6 +28380,11 @@
             https://en.wikipedia.org/wiki/Laplace_transform
             </remarks>
         </member>
+        <member name="F:UMapx.Transform.LaplaceTransform.DFT">
+            <summary>
+            Fourier transform.
+            </summary>
+        </member>
         <member name="F:UMapx.Transform.LaplaceTransform.sigma">
             <summary>
             Damping factor.
@@ -28415,20 +28406,38 @@
             If σ = 0, then the Laplace transform takes the form of a Fourier transform.
             </remarks>
         </member>
-        <member name="M:UMapx.Transform.LaplaceTransform.Matrix(System.Int32,System.Single,System.Boolean)">
+        <member name="P:UMapx.Transform.LaplaceTransform.Normalized">
             <summary>
-            Implements the construction of the Laplace matrix.
+            Normalized transform or not.
             </summary>
-            <param name="n">Size</param>
-            <param name="sigma">Damping factor (0, 1)</param>
-            <param name="backward">Return backward transformation matrix or not</param>
-            <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.LaplaceTransform.NormalizationFactor(System.Int32,System.Boolean)">
-            <inheritdoc/>
+        <member name="M:UMapx.Transform.LaplaceTransform.Forward(UMapx.Core.Complex32[])">
+            <summary>
+            Forward transform.
+            </summary>
+            <param name="A">Array</param>
+            <returns>Array</returns>
         </member>
-        <member name="M:UMapx.Transform.LaplaceTransform.Matrix(System.Int32,System.Boolean)">
-            <inheritdoc/>
+        <member name="M:UMapx.Transform.LaplaceTransform.Backward(UMapx.Core.Complex32[])">
+            <summary>
+            Backward transform.
+            </summary>
+            <param name="B">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Transform.LaplaceTransform.ApplyLaplaceOperator(UMapx.Core.Complex32[],System.Single)">
+            <summary>
+            Applies Laplace transform operator.
+            </summary>
+            <param name="v">Array</param>
+            <param name="sigma">Sigma</param>
+        </member>
+        <member name="M:UMapx.Transform.LaplaceTransform.ApplyLaplaceInverseOperator(UMapx.Core.Complex32[],System.Single)">
+            <summary>
+            Applies inverse Laplace transform operator.
+            </summary>
+            <param name="v">Array</param>
+            <param name="sigma">Sigma</param>
         </member>
         <member name="T:UMapx.Transform.LaplacianPyramidFilter">
             <summary>
@@ -28960,7 +28969,7 @@
             <param name="n">Size</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.SineTransform.Matrix(System.Int32,System.Boolean)">
+        <member name="M:UMapx.Transform.SineTransform.TransformationMatrix(System.Int32)">
             <inheritdoc/>
         </member>
         <member name="T:UMapx.Transform.SpectrumType">
@@ -29074,12 +29083,11 @@
             Normalized transform or not.
             </summary>
         </member>
-        <member name="M:UMapx.Transform.TransformBase.NormalizationFactor(System.Int32,System.Boolean)">
+        <member name="M:UMapx.Transform.TransformBase.NormalizationFactor(System.Int32)">
             <summary>
             Returns normalization factor.
             </summary>
             <param name="n">Size</param>
-            <param name="backward">Backward transform or not</param>
             <returns>Value</returns>
         </member>
         <member name="T:UMapx.Transform.TransformBaseComplex32">
@@ -29209,12 +29217,11 @@
             Defines an adapter class for a matrix transform.
             </summary>
         </member>
-        <member name="M:UMapx.Transform.TransformBaseMatrixComplex32.Matrix(System.Int32,System.Boolean)">
+        <member name="M:UMapx.Transform.TransformBaseMatrixComplex32.TransformationMatrix(System.Int32)">
             <summary>
             Implements the construction of the transform matrix.
             </summary>
             <param name="n">Size</param>
-            <param name="backward">Backward transform or not</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.TransformBaseMatrixComplex32.Forward(UMapx.Core.Complex32[])">
@@ -29278,12 +29285,11 @@
             Defines an adapter class for a matrix transform.
             </summary>
         </member>
-        <member name="M:UMapx.Transform.TransformBaseMatrixFloat.Matrix(System.Int32,System.Boolean)">
+        <member name="M:UMapx.Transform.TransformBaseMatrixFloat.TransformationMatrix(System.Int32)">
             <summary>
             Implements the construction of the transform matrix.
             </summary>
             <param name="n">Size</param>
-            <param name="backward">Backward transform or not</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Transform.TransformBaseMatrixFloat.Forward(System.Single[])">
@@ -29371,10 +29377,10 @@
             </summary>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Transform.WalshHadamardTransform.NormalizationFactor(System.Int32,System.Boolean)">
+        <member name="M:UMapx.Transform.WalshHadamardTransform.NormalizationFactor(System.Int32)">
             <inheritdoc/>
         </member>
-        <member name="M:UMapx.Transform.WalshHadamardTransform.Matrix(System.Int32,System.Boolean)">
+        <member name="M:UMapx.Transform.WalshHadamardTransform.TransformationMatrix(System.Int32)">
             <inheritdoc/>
         </member>
         <member name="T:UMapx.Video.ByteArrayUtils">

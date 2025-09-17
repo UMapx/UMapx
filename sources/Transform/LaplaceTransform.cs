@@ -11,9 +11,13 @@ namespace UMapx.Transform
     /// https://en.wikipedia.org/wiki/Laplace_transform
     /// </remarks>
     [Serializable]
-    public class LaplaceTransform : TransformBaseMatrixComplex32, ITransform
+    public class LaplaceTransform : TransformBaseComplex32, ITransform
     {
         #region Private data
+        /// <summary>
+        /// Fourier transform.
+        /// </summary>
+        private readonly FourierTransform DFT;
         /// <summary>
         /// Damping factor.
         /// </summary>
@@ -29,8 +33,8 @@ namespace UMapx.Transform
         /// <param name="direction">Processing direction</param>
         public LaplaceTransform(float sigma = 0.0005f, bool normalized = true, Direction direction = Direction.Vertical)
         {
-            this.Sigma = sigma; 
-            this.Normalized = normalized; 
+            this.DFT = new FourierTransform(normalized, Direction.Vertical);
+            this.Sigma = sigma;
             this.Direction = direction;
         }
         /// <summary>
@@ -53,68 +57,85 @@ namespace UMapx.Transform
                 this.sigma = value;
             }
         }
-        #endregion
-
-        #region Laplace static components
         /// <summary>
-        /// Implements the construction of the Laplace matrix.
+        /// Normalized transform or not.
         /// </summary>
-        /// <param name="n">Size</param>
-        /// <param name="sigma">Damping factor (0, 1)</param>
-        /// <param name="backward">Return backward transformation matrix or not</param>
-        /// <returns>Matrix</returns>
-        public static Complex32[,] Matrix(int n, float sigma, bool backward = false)
+        public override bool Normalized
         {
-            Complex32[,] H = new Complex32[n, n];
-            float factor;
-            int i, j;
-
-            // inverse matrix or not?
-            if (backward)
+            get
             {
-                for (i = 0; i < n; i++)
-                {
-                    factor = Maths.Exp(-sigma * i);
-
-                    for (j = 0; j < n; j++)
-                    {
-                        H[i, j] = Maths.Exp(-2 * Maths.Pi * Maths.I * j / n * i) / factor;
-                    }
-                }
+                return this.DFT.Normalized;
             }
-            else
+            set
             {
-                for (i = 0; i < n; i++)
-                {
-                    factor = Maths.Exp(-sigma * i);
-
-                    for (j = 0; j < n; j++)
-                    {
-                        H[i, j] = factor * Maths.Exp(-2 * Maths.Pi * Maths.I * j / n * i);
-                    }
-                }
+                this.DFT.Normalized = value;
             }
-            return H;
         }
         #endregion
 
         #region Laplace Transform
-        /// <inheritdoc/>
-        protected override float NormalizationFactor(int n, bool backward = false)
+        /// <summary>
+        /// Forward transform.
+        /// </summary>
+        /// <param name="A">Array</param>
+        /// <returns>Array</returns>
+        public override Complex32[] Forward(Complex32[] A)
         {
-            return Maths.Sqrt(n);
+            // Fourier transform:
+            Complex32[] B = DFT.Forward(A);
+
+            // Fourier to Laplace transform:
+            LaplaceTransform.ApplyLaplaceOperator(B, sigma);
+            return B;
         }
-        /// <inheritdoc/>
-        protected override Complex32[,] Matrix(int n, bool backward)
+        /// <summary>
+        /// Backward transform.
+        /// </summary>
+        /// <param name="B">Array</param>
+        /// <returns>Array</returns>
+        public override Complex32[] Backward(Complex32[] B)
         {
-            var U = Matrix(n, sigma, backward);
+            // Laplace to Fourier transform:
+            Complex32[] A = (Complex32[])B.Clone();
+            LaplaceTransform.ApplyLaplaceInverseOperator(A, sigma);
 
-            if (backward)
+            // Fourier transform:
+            return DFT.Backward(A);
+        }
+        #endregion
+
+        #region Private voids
+        /// <summary>
+        /// Applies Laplace transform operator.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="sigma">Sigma</param>
+        internal static void ApplyLaplaceOperator(Complex32[] v, float sigma = 0.003f)
+        {
+            // forward laplacian transform
+            // for signal:
+            int N = v.Length;
+
+            for (int i = 0; i < N; i++)
             {
-                U = U.Hermitian();
+                v[i] = Math.Exp(-sigma * i) * v[i];
             }
+        }
+        /// <summary>
+        /// Applies inverse Laplace transform operator.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <param name="sigma">Sigma</param>
+        internal static void ApplyLaplaceInverseOperator(Complex32[] v, float sigma = 0.003f)
+        {
+            // inverse laplacian transform
+            // for signal:
+            int N = v.Length;
 
-            return U;
+            for (int i = 0; i < N; i++)
+            {
+                v[i] = v[i] / Math.Exp(-sigma * i);
+            }
         }
         #endregion
     }

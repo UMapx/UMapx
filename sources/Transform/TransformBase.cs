@@ -23,9 +23,8 @@ namespace UMapx.Transform
         /// Returns normalization factor.
         /// </summary>
         /// <param name="n">Size</param>
-        /// <param name="backward">Backward transform or not</param>
         /// <returns>Value</returns>
-        protected virtual float NormalizationFactor(int n, bool backward = false)
+        protected virtual float NormalizationFactor(int n)
         {
             return 1.0f;
         }

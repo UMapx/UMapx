@@ -65,21 +65,14 @@ namespace UMapx.Transform
 
         #region Hartley Transform
         /// <inheritdoc/>
-        protected override float NormalizationFactor(int n, bool backward = false)
+        protected override float NormalizationFactor(int n)
         {
             return Maths.Sqrt(n);
         }
         /// <inheritdoc/>
-        protected override float[,] Matrix(int n, bool backward)
+        protected override float[,] TransformationMatrix(int n)
         {
-            var U = Matrix(n, SpectrumType);
-
-            if (backward)
-            {
-                U = U.Transpose();
-            }
-
-            return U;
+            return Matrix(n, SpectrumType);
         }
         #endregion
     }

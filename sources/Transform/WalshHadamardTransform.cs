@@ -68,26 +68,18 @@ namespace UMapx.Transform
 
         #region Walsh-Hadamard Transform
         /// <inheritdoc/>
-        protected override float NormalizationFactor(int n, bool backward = false)
+        protected override float NormalizationFactor(int n)
         {
             return Maths.Sqrt(n);
         }
         /// <inheritdoc/>
-        protected override float[,] Matrix(int n, bool backward)
+        protected override float[,] TransformationMatrix(int n)
         {
             if (!Maths.IsPower(n, 2))
                 throw new ArgumentException("Dimension of the signal must be a power of 2");
 
             int N = (int)Maths.Log2(n);
-
-            var U = Matrix(N);
-
-            if (backward)
-            {
-                U = U.Transpose();
-            }
-
-            return U;
+            return Matrix(N);
         }
         #endregion
     }

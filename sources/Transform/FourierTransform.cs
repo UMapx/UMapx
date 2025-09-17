@@ -50,21 +50,14 @@ namespace UMapx.Transform
 
         #region Fourier Transform
         /// <inheritdoc/>
-        protected override float NormalizationFactor(int n, bool backward = false)
+        protected override float NormalizationFactor(int n)
         {
             return Maths.Sqrt(n);
         }
         /// <inheritdoc/>
-        protected override Complex32[,] Matrix(int n, bool backward)
+        protected override Complex32[,] TransformationMatrix(int n)
         {
-            var U = Matrix(n);
-
-            if (backward)
-            {
-                U = U.Hermitian();
-            }
-
-            return U;
+            return Matrix(n);
         }
         #endregion
     }
