@@ -129,13 +129,20 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
+        /// <remarks>
+        /// Computed using the standard triangular distribution skewness formula
+        /// γ₁ = (a + b - 2c)(2a - b - c)(a - 2b + c) /
+        /// [5 (a^2 + b^2 + c^2 - ab - ac - bc)^(3/2)], see, for example,
+        /// N. L. Johnson, S. Kotz, and N. Balakrishnan, <i>Continuous Univariate Distributions</i>,
+        /// Vol. 1, 2nd ed., Wiley, 1994.
+        /// </remarks>
         public float Skewness
         {
             get
             {
                 float k1 = (a + b - 2 * c) * (2 * a - b - c) * (a - 2 * b + c);
-                float k2 = 5 * (a * a + b * b + c * c - a * b - a * c - b * c);
-                return Maths.Sqrt2 * k1 / Maths.Pow(k2, 1.5f);
+                float s = a * a + b * b + c * c - a * b - a * c - b * c;
+                return Maths.Sqrt2 * k1 / (5f * Maths.Pow(s, 1.5f));
             }
         }
         /// <summary>
