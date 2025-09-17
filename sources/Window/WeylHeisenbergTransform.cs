@@ -120,7 +120,7 @@ namespace UMapx.Window
         /// </remarks>
         /// <param name="window">Windows function</param>
         /// <param name="N">Number of samples</param>
-        /// <param name="M">Number of frequency shifts [4, N/2]</param>
+        /// <param name="M">Number of frequency shifts</param>
         /// <param name="orthogonalize">Orthogonalized matrix or not</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Matrix(IWindow window, int N, int M, bool orthogonalize = true)
@@ -134,7 +134,7 @@ namespace UMapx.Window
         /// Matrix dimension [N, 2N], where N = M * L.
         /// </remarks>
         /// <param name="g0">Function</param>
-        /// <param name="M">Number of frequency shifts [4, N/2]</param>
+        /// <param name="M">Number of frequency shifts</param>
         /// <param name="orthogonalize">Orthogonalized matrix or not</param>
         /// <returns>Matrix</returns>
         public static Complex32[,] Matrix(float[] g0, int M, bool orthogonalize = true)

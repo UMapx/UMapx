@@ -77,7 +77,7 @@ namespace UMapx.Window
         /// Matrix dimension [2N, 2N], where N = M * L.
         /// </remarks>
         /// <param name="g0">Function</param>
-        /// <param name="M">Number of frequency shifts [4, N/4]</param>
+        /// <param name="M">Number of frequency shifts [2, N/2]</param>
         /// <param name="spectrumType">Spectrum type</param>
         /// <returns>Matrix</returns>
         public static float[,] Matrix(float[] g0, int M, SpectrumType spectrumType = SpectrumType.Fourier)
@@ -180,13 +180,13 @@ namespace UMapx.Window
         /// </remarks>
         /// <param name="window">Windows function</param>
         /// <param name="N">Number of samples</param>
-        /// <param name="M">Number of frequency shifts [4, N/4]</param>
-        /// <param name="orthogonalize">Orthogonalized matrix or not</param>
+        /// <param name="M">Number of frequency shifts [2, N/2]</param>
         /// <param name="spectrumType">Spectrum type</param>
+        /// <param name="orthogonalize">Orthogonalized matrix or not</param>
         /// <returns>Matrix</returns>
-        public static float[,] Matrix(IWindow window, int N, int M, bool orthogonalize = true, SpectrumType spectrumType = SpectrumType.Fourier)
+        public static float[,] Matrix(IWindow window, int N, int M, SpectrumType spectrumType = SpectrumType.Fourier, bool orthogonalize = true)
         {
-            return RealWeylHeisenbergTransform.Matrix(WeylHeisenbergTransform.Packet(window, N), M, orthogonalize, spectrumType);
+            return RealWeylHeisenbergTransform.Matrix(WeylHeisenbergTransform.Packet(window, N), M, spectrumType, orthogonalize);
         }
         /// <summary>
         /// Returns the real Weyl-Heisenberg basis matrix.
@@ -195,11 +195,11 @@ namespace UMapx.Window
         /// Matrix dimension [2N, 2N], where N = M * L.
         /// </remarks>
         /// <param name="g0">Function</param>
-        /// <param name="M">Number of frequency shifts [4, N/4]</param>
-        /// <param name="orthogonalize">Orthogonalized matrix or not</param>
+        /// <param name="M">Number of frequency shifts [2, N/2]</param>
         /// <param name="spectrumType">Spectrum type</param>
+        /// <param name="orthogonalize">Orthogonalized matrix or not</param>
         /// <returns>Matrix</returns>
-        public static float[,] Matrix(float[] g0, int M, bool orthogonalize = true, SpectrumType spectrumType = SpectrumType.Fourier)
+        public static float[,] Matrix(float[] g0, int M, SpectrumType spectrumType = SpectrumType.Fourier, bool orthogonalize = true)
         {
             if (orthogonalize)
             {
@@ -226,7 +226,7 @@ namespace UMapx.Window
         /// <inheritdoc/>
         protected override float[,] TransformationMatrix(int n)
         {
-            return Matrix(this.window, n, this.m, true, SpectrumType).Transpose();
+            return Matrix(this.window, n, this.m, SpectrumType, true).Transpose();
         }
         #endregion
     }

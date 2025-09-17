@@ -35059,11 +35059,11 @@
             Matrix dimension [2N, 2N], where N = M * L.
             </remarks>
             <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts [4, N/4]</param>
+            <param name="M">Number of frequency shifts [2, N/2]</param>
             <param name="spectrumType">Spectrum type</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(UMapx.Window.IWindow,System.Int32,System.Int32,System.Boolean,UMapx.Transform.SpectrumType)">
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(UMapx.Window.IWindow,System.Int32,System.Int32,UMapx.Transform.SpectrumType,System.Boolean)">
             <summary>
             Returns the real Weyl-Heisenberg basis matrix.
             </summary>
@@ -35072,12 +35072,12 @@
             </remarks>
             <param name="window">Windows function</param>
             <param name="N">Number of samples</param>
-            <param name="M">Number of frequency shifts [4, N/4]</param>
-            <param name="orthogonalize">Orthogonalized matrix or not</param>
+            <param name="M">Number of frequency shifts [2, N/2]</param>
             <param name="spectrumType">Spectrum type</param>
+            <param name="orthogonalize">Orthogonalized matrix or not</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32,System.Boolean,UMapx.Transform.SpectrumType)">
+        <member name="M:UMapx.Window.RealWeylHeisenbergTransform.Matrix(System.Single[],System.Int32,UMapx.Transform.SpectrumType,System.Boolean)">
             <summary>
             Returns the real Weyl-Heisenberg basis matrix.
             </summary>
@@ -35085,9 +35085,9 @@
             Matrix dimension [2N, 2N], where N = M * L.
             </remarks>
             <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts [4, N/4]</param>
-            <param name="orthogonalize">Orthogonalized matrix or not</param>
+            <param name="M">Number of frequency shifts [2, N/2]</param>
             <param name="spectrumType">Spectrum type</param>
+            <param name="orthogonalize">Orthogonalized matrix or not</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Window.RealWeylHeisenbergTransform.ForwardMatrixSize(System.Int32)">
@@ -35287,7 +35287,7 @@
             </remarks>
             <param name="window">Windows function</param>
             <param name="N">Number of samples</param>
-            <param name="M">Number of frequency shifts [4, N/2]</param>
+            <param name="M">Number of frequency shifts</param>
             <param name="orthogonalize">Orthogonalized matrix or not</param>
             <returns>Matrix</returns>
         </member>
@@ -35299,7 +35299,7 @@
             Matrix dimension [N, 2N], where N = M * L.
             </remarks>
             <param name="g0">Function</param>
-            <param name="M">Number of frequency shifts [4, N/2]</param>
+            <param name="M">Number of frequency shifts</param>
             <param name="orthogonalize">Orthogonalized matrix or not</param>
             <returns>Matrix</returns>
         </member>
