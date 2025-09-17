@@ -35,7 +35,7 @@ namespace UMapx.Window
         /// <param name="direction">Processing direction</param>
         public WeylHeisenbergTransform(IWindow window, int m = 8, Direction direction = Direction.Vertical)
         {
-            Window = window; M = m; Direction = direction;
+            Window = window; M = m; Direction = direction; Normalized = true;
         }
         /// <summary>
         /// Gets or sets number of frequency shifts [1, N].
