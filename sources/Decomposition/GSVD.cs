@@ -10,7 +10,7 @@ namespace UMapx.Decomposition
     /// Based on the algorithm proposed by Paige and Saunders and implemented in
     /// https://github.com/baptistefraisse/gsvd. The decomposition factorizes two
     /// real matrices A and B with the same column dimension according to
-    /// A = U1 * S1 * X and B = U2 * S2 * X, where U1 and U2 have orthonormal
+    /// A = U1 * S1 * Xᵀ and B = U2 * S2 * Xᵀ, where U1 and U2 have orthonormal
     /// columns, S1 and S2 are diagonal (with non-negative entries) and X is an
     /// invertible matrix.
     /// </remarks>
@@ -34,7 +34,7 @@ namespace UMapx.Decomposition
         /// <param name="A">Matrix A (m x n, with m ≥ n)</param>
         /// <param name="B">Matrix B (p x n, with p ≥ n)</param>
         /// <param name="eps">Tolerance used to treat near-zero values</param>
-        public GSVD(float[,] A, float[,] B, float eps = 1e-6f)
+        public GSVD(float[,] A, float[,] B, float eps = 1e-8f)
         {
             if (A == null)
                 throw new ArgumentNullException(nameof(A));
@@ -182,6 +182,10 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Extracts a consecutive block of rows from a matrix.
         /// </summary>
+        /// <param name="matrix">Matrix</param>
+        /// <param name="rowStart">Row start</param>
+        /// <param name="rowCount">Row count</param>
+        /// <returns>Matrix</returns>
         private static float[,] ExtractRows(float[,] matrix, int rowStart, int rowCount)
         {
             int cols = matrix.GetLength(1);
@@ -198,10 +202,11 @@ namespace UMapx.Decomposition
 
             return result;
         }
-
         /// <summary>
         /// Returns the inverse of a diagonal matrix represented by its diagonal.
         /// </summary>
+        /// <param name="diagonal">Array</param>
+        /// <returns>Array</returns>
         private float[] InvertDiagonal(float[] diagonal)
         {
             int n = diagonal.Length;
