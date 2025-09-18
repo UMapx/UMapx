@@ -67,29 +67,26 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        /// <remarks>
-        /// The mean exists only for <c>d2 &gt; 2</c>.
-        /// Otherwise, <see cref="float.NaN"/> is returned.
-        /// </remarks>
         public float Mean
         {
             get
             {
+                if (d2 <= 2f)
+                    return float.NaN;
+
                 return 0.5f * (Special.DiGamma(d1 / 2f) - Special.DiGamma(d2 / 2f) + Maths.Log(d2 / d1));
             }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
-        /// <remarks>
-        /// The variance is finite only when <c>d2 &gt; 4</c>, explicitly requiring
-        /// that the second degree of freedom exceeds 4; otherwise,
-        /// <see cref="float.PositiveInfinity"/> is returned.
-        /// </remarks>
         public float Variance
         {
             get
             {
+                if (d2 <= 4f)
+                    return float.NaN;
+
                 return 0.25f * (Special.TriGamma(d1 / 2f) + Special.TriGamma(d2 / 2f));
             }
         }

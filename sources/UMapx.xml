@@ -15538,20 +15538,11 @@
             <summary>
             Gets the mean value.
             </summary>
-            <remarks>
-            The mean exists only for <c>d2 &gt; 2</c>.
-            Otherwise, <see cref="F:System.Single.NaN"/> is returned.
-            </remarks>
         </member>
         <member name="P:UMapx.Distribution.FisherZ.Variance">
             <summary>
             Gets the variance value.
             </summary>
-            <remarks>
-            The variance is finite only when <c>d2 &gt; 4</c>, explicitly requiring
-            that the second degree of freedom exceeds 4; otherwise,
-            <see cref="F:System.Single.PositiveInfinity"/> is returned.
-            </remarks>
         </member>
         <member name="P:UMapx.Distribution.FisherZ.Mode">
             <summary>
