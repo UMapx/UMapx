@@ -80,7 +80,7 @@ namespace UMapx.Decomposition
 
             int columns = aCols;
             float[] S1 = singular;
-            float[] sigma2 = new float[columns];
+            float[] sigma2 = Matrice.Zero(columns);
 
             for (int i = 0; i < columns; i++)
             {
@@ -93,11 +93,11 @@ namespace UMapx.Decomposition
 
             // Step 3: compute U2 = Q2 * V * inv(S2)
             float[] S2 = sigma2;
-            float[] S2inv = Matrice.Invert(sigma2);
             float[,] U2;
+
             try
             {
-                float[,] temp = V.Dot(S2inv);
+                float[,] temp = V.Dot(S2, true);
                 U2 = q2.Dot(temp);
             }
             catch (Exception)
@@ -154,7 +154,7 @@ namespace UMapx.Decomposition
             }
 
             // Step 7: generalized singular values gamma = diag(S1)/diag(S2)
-            float[] Gamma = new float[columns];
+            float[] Gamma = Matrice.Zero(columns);
 
             for (int i = 0; i < columns; i++)
             {
