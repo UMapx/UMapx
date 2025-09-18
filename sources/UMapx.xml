@@ -13118,6 +13118,73 @@
             Gets the orthogonal matrix Q.
             </summary>
         </member>
+        <member name="T:UMapx.Decomposition.GSVD">
+            <summary>
+            Defines the generalized singular value decomposition (GSVD).
+            </summary>
+            <remarks>
+            Based on the algorithm proposed by Paige and Saunders and implemented in
+            https://github.com/baptistefraisse/gsvd. The decomposition factorizes two
+            real matrices A and B with the same column dimension according to
+            A = U1 * S1 * X and B = U2 * S2 * X, where U1 and U2 have orthonormal
+            columns, S1 and S2 are diagonal (with non-negative entries) and X is an
+            invertible matrix.
+            </remarks>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.#ctor(System.Single[0:,0:],System.Single[0:,0:],System.Single)">
+            <summary>
+            Initializes generalized singular value decomposition.
+            </summary>
+            <param name="A">Matrix A (m x n, with m ≥ n)</param>
+            <param name="B">Matrix B (p x n, with p ≥ n)</param>
+            <param name="eps">Tolerance used to treat near-zero values</param>
+        </member>
+        <member name="P:UMapx.Decomposition.GSVD.U1">
+            <summary>
+            Returns matrix U1.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.GSVD.U2">
+            <summary>
+            Returns matrix U2.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.GSVD.S1">
+            <summary>
+            Returns diagonal matrix S1.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.GSVD.S2">
+            <summary>
+            Returns diagonal matrix S2.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.GSVD.X">
+            <summary>
+            Returns matrix X.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.GSVD.Gamma">
+            <summary>
+            Returns the generalized singular values.
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.ExtractRows(System.Single[0:,0:],System.Int32,System.Int32)">
+            <summary>
+            Extracts a consecutive block of rows from a matrix.
+            </summary>
+            <param name="matrix">Matrix</param>
+            <param name="rowStart">Row start</param>
+            <param name="rowCount">Row count</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.InvertDiagonal(System.Single[])">
+            <summary>
+            Returns the inverse of a diagonal matrix represented by its diagonal.
+            </summary>
+            <param name="diagonal">Array</param>
+            <returns>Array</returns>
+        </member>
         <member name="T:UMapx.Decomposition.Hessenberg">
             <summary>
             Defines decomposition with a cast to Hessenberg form.
