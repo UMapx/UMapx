@@ -13126,7 +13126,7 @@
             Based on the algorithm proposed by Paige and Saunders and implemented in
             https://github.com/baptistefraisse/gsvd. The decomposition factorizes two
             real matrices A and B with the same column dimension according to
-            A = U1 * S1 * Xᵀ and B = U2 * S2 * Xᵀ, where U1 and U2 have orthonormal
+            A = U1 * S1 * X and B = U2 * S2 * X, where U1 and U2 have orthonormal
             columns, S1 and S2 are diagonal (with non-negative entries) and X is an
             invertible matrix.
             </remarks>

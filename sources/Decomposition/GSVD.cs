@@ -10,7 +10,7 @@ namespace UMapx.Decomposition
     /// Based on the algorithm proposed by Paige and Saunders and implemented in
     /// https://github.com/baptistefraisse/gsvd. The decomposition factorizes two
     /// real matrices A and B with the same column dimension according to
-    /// A = U1 * S1 * Xᵀ and B = U2 * S2 * Xᵀ, where U1 and U2 have orthonormal
+    /// A = U1 * S1 * X and B = U2 * S2 * X, where U1 and U2 have orthonormal
     /// columns, S1 and S2 are diagonal (with non-negative entries) and X is an
     /// invertible matrix.
     /// </remarks>
@@ -129,9 +129,23 @@ namespace UMapx.Decomposition
             // Step 5: refine S1, S2 and compute X
             S1 = S1.Dot(sqrtH);
             S2 = S2.Dot(sqrtH);
-            float[,] X = invSqrtH.Dot(VTR).Transpose();
+            float[,] X = invSqrtH.Dot(VTR);
 
-            // Step 6: generalized singular values gamma = diag(S1)/diag(S2)
+            // Step 6: refine X to satisfy S1^2 + S2^2 = 1
+            int n = S1.Length;
+            var D = Matrice.Eye(n, n);
+            for (int i = 0; i < n; i++)
+            {
+                float d = Maths.Sqrt(S1[i] * S1[i] + S2[i] * S2[i]);
+                if (d > 0f)
+                {
+                    S1[i] /= d; S2[i] /= d;
+                    D[i, i] = d;
+                }
+            }
+            X = D.Dot(X);
+
+            // Step 7: generalized singular values gamma = diag(S1)/diag(S2)
             float[] Gamma = new float[columns];
 
             for (int i = 0; i < columns; i++)
