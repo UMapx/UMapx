@@ -13,6 +13,9 @@ namespace UMapx.Decomposition
     /// A = U1 * S1 * X and B = U2 * S2 * X, where U1 and U2 have orthonormal
     /// columns, S1 and S2 are diagonal (with non-negative entries) and X is an
     /// invertible matrix.
+    /// 
+    /// More information can be found on the website:
+    /// https://en.wikipedia.org/wiki/Generalized_singular_value_decomposition
     /// </remarks>
     [Serializable]
     public class GSVD
