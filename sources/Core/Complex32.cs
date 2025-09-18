@@ -87,7 +87,7 @@ namespace UMapx.Core
         /// <returns>Text as a sequence of Unicode characters</returns>
         public override string ToString()
         {
-            return this.ToString("G6");
+            return this.ToString(Globals.DefaultFormat);
         }
         /// <summary>
         /// Converts complex number to its corresponding string representation.

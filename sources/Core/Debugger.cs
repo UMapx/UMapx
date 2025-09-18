@@ -40,6 +40,15 @@ namespace UMapx.Core
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
         /// <param name="A">Array</param>
+        public static void Print<T>(this T[]A)
+        {
+            Debugger.Print<T>(A, false);
+        }
+        /// <summary>
+        /// Prints a vector to console.
+        /// </summary>
+        /// <typeparam name="T">Type</typeparam>
+        /// <param name="A">Array</param>
         /// <param name="vertical">Vertical or not</param>
         public static void Print<T>(this T[] A, bool vertical = false)
         {

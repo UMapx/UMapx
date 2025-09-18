@@ -2977,7 +2977,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float[,] Dot(this float[,] m, float[,] n)
         {
-            return Jagged.FromJagged(LinealgOptions.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n)));
+            return Jagged.FromJagged(LinealgOptions.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n), Globals.SIMD));
         }
         /// <summary>
         /// Implements a scalar product of matrices.
@@ -2987,7 +2987,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Dot(this Complex32[,] m, Complex32[,] n)
         {
-            return Jagged.FromJagged(LinealgOptions.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n)));
+            return Jagged.FromJagged(LinealgOptions.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n), Globals.SIMD));
         }
         /// <summary>
         /// Implements a scalar product of matrices.
@@ -2997,7 +2997,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Dot(this Complex32[,] m, float[,] n)
         {
-            return Jagged.FromJagged(LinealgOptions.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n)));
+            return Jagged.FromJagged(LinealgOptions.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n), Globals.SIMD));
         }
         /// <summary>
         /// Implements a scalar product of matrices.
@@ -3007,7 +3007,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Dot(this float[,] m, Complex32[,] n)
         {
-            return Jagged.FromJagged(LinealgOptions.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n)));
+            return Jagged.FromJagged(LinealgOptions.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n), Globals.SIMD));
         }
         #endregion
 
@@ -5894,8 +5894,7 @@ namespace UMapx.Core
                 {
                     temp[i] += v[j] * m[i, j];
                 }
-            }
-            );
+            });
 
             return temp;
         }
@@ -5917,8 +5916,7 @@ namespace UMapx.Core
                 {
                     temp[i] += v[j] * m[i, j];
                 }
-            }
-            );
+            });
 
             return temp;
         }
@@ -5940,8 +5938,7 @@ namespace UMapx.Core
                 {
                     temp[i] += v[j] * m[i, j];
                 }
-            }
-            );
+            });
 
             return temp;
         }

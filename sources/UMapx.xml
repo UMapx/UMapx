@@ -4116,6 +4116,13 @@
             </summary>
             <param name="A">Value</param>
         </member>
+        <member name="M:UMapx.Core.Debugger.Print``1(``0[])">
+            <summary>
+            Prints a vector to console.
+            </summary>
+            <typeparam name="T">Type</typeparam>
+            <param name="A">Array</param>
+        </member>
         <member name="M:UMapx.Core.Debugger.Print``1(``0[],System.Boolean)">
             <summary>
             Prints a vector to console.
@@ -4221,6 +4228,21 @@
         <member name="F:UMapx.Core.Direction.Both">
             <summary>
             Both direction.
+            </summary>
+        </member>
+        <member name="T:UMapx.Core.Globals">
+            <summary>
+            Used to configure the UMapx environment.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Globals.SIMD">
+            <summary>
+            Use SIMD optimization or not.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Globals.DefaultFormat">
+            <summary>
+            Numbers format (works for Complex32 and Quaternion32).
             </summary>
         </member>
         <member name="T:UMapx.Core.Gradient">
@@ -10836,22 +10858,6 @@
             <param name="b">Factor</param>
             <returns>Quaternion</returns>
         </member>
-        <member name="M:UMapx.Core.Quaternion32.op_Equality(UMapx.Core.Quaternion32,UMapx.Core.Quaternion32)">
-            <summary>
-            Checks if two quaternions are equal.
-            </summary>
-            <param name="a">Quaternion</param>
-            <param name="b">Quaternion</param>
-            <returns>Boolean</returns>
-        </member>
-        <member name="M:UMapx.Core.Quaternion32.op_Inequality(UMapx.Core.Quaternion32,UMapx.Core.Quaternion32)">
-            <summary>
-            Checks if two quaternions are not equal.
-            </summary>
-            <param name="a">Quaternion</param>
-            <param name="b">Quaternion</param>
-            <returns>Boolean</returns>
-        </member>
         <member name="M:UMapx.Core.Quaternion32.Equals(System.Object)">
             <summary>
             Gets a value indicating whether this instance is equal to the specified value of type quaternion.
@@ -10877,6 +10883,22 @@
             Returns the hash code for this object.
             </summary>
             <returns>Integer number</returns>
+        </member>
+        <member name="M:UMapx.Core.Quaternion32.op_Equality(UMapx.Core.Quaternion32,UMapx.Core.Quaternion32)">
+            <summary>
+            Checks if two quaternions are equal.
+            </summary>
+            <param name="a">Quaternion</param>
+            <param name="b">Quaternion</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:UMapx.Core.Quaternion32.op_Inequality(UMapx.Core.Quaternion32,UMapx.Core.Quaternion32)">
+            <summary>
+            Checks if two quaternions are not equal.
+            </summary>
+            <param name="a">Quaternion</param>
+            <param name="b">Quaternion</param>
+            <returns>Boolean</returns>
         </member>
         <member name="M:UMapx.Core.Quaternion32.System#ICloneable#Clone">
             <summary>

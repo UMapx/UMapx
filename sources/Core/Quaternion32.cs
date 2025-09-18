@@ -375,7 +375,44 @@ namespace UMapx.Core
         }
         #endregion
 
-        #region Bools & overrides
+        #region Overrides
+        /// <summary>
+        /// Gets a value indicating whether this instance is equal to the specified value of type quaternion.
+        /// </summary>
+        /// <param name="obj">Object</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object obj)
+        {
+            return (obj is Quaternion32) ? (this == (Quaternion32)obj) : false;
+        }
+        /// <summary>
+        /// Converts quaternion to its corresponding string representation.
+        /// </summary>
+        /// <returns>Text as a sequence of Unicode characters</returns>
+        public override string ToString()
+        {
+            return this.ToString(Globals.DefaultFormat);
+        }
+        /// <summary>
+        /// Converts quaternion to its corresponding string representation.
+        /// </summary>
+        /// <param name="format">Format string</param>
+        /// <returns>Text as a sequence of Unicode characters</returns>
+        public string ToString(string format)
+        {
+            return StringOptions.Disp(new float[] { this.X, this.Y, this.Z, this.W }, format, StringOptions.Q);
+        }
+        /// <summary>
+        /// Returns the hash code for this object.
+        /// </summary>
+        /// <returns>Integer number</returns>
+        public override int GetHashCode()
+        {
+            return this.X.GetHashCode() + this.Y.GetHashCode() + this.Z.GetHashCode() + this.W.GetHashCode();
+        }
+        #endregion
+
+        #region Bools
         /// <summary>
         /// Checks if two quaternions are equal.
         /// </summary>
@@ -395,40 +432,6 @@ namespace UMapx.Core
         public static bool operator !=(Quaternion32 a, Quaternion32 b)
         {
             return !(a == b);
-        }
-        /// <summary>
-        /// Gets a value indicating whether this instance is equal to the specified value of type quaternion.
-        /// </summary>
-        /// <param name="obj">Object</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object obj)
-        {
-            return (obj is Quaternion32) ? (this == (Quaternion32)obj) : false;
-        }
-        /// <summary>
-        /// Converts quaternion to its corresponding string representation.
-        /// </summary>
-        /// <returns>Text as a sequence of Unicode characters</returns>
-        public override string ToString()
-        {
-            return this.ToString("G3");
-        }
-        /// <summary>
-        /// Converts quaternion to its corresponding string representation.
-        /// </summary>
-        /// <param name="format">Format string</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
-        public string ToString(string format)
-        {
-            return StringOptions.Disp(new float[] { this.X, this.Y, this.Z, this.W }, format, StringOptions.Q);
-        }
-        /// <summary>
-        /// Returns the hash code for this object.
-        /// </summary>
-        /// <returns>Integer number</returns>
-        public override int GetHashCode()
-        {
-            return this.X.GetHashCode() + this.Y.GetHashCode() + this.Z.GetHashCode() + this.W.GetHashCode();
         }
         #endregion
 
