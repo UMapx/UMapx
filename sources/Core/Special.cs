@@ -444,10 +444,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Gompertz(float t, float a, float b, float c)
         {
-            float x = -c * t;
-            float y = -b * Maths.E;
-            float z = a * Maths.E;
-            return Maths.Pow(z, Maths.Pow(y, x));
+            return a * Maths.Exp(-b * Maths.Exp(-c * t));
         }
         /// <summary>
         /// Gets the value of the Gompertz function.
@@ -459,10 +456,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Gompertz(Complex32 t, Complex32 a, Complex32 b, Complex32 c)
         {
-            Complex32 x = -c * t;
-            Complex32 y = -b * Maths.E;
-            Complex32 z = a * Maths.E;
-            return Maths.Pow(z, Maths.Pow(y, x));
+            return a * Maths.Exp(-b * Maths.Exp(-c * t));
         }
         #endregion
 
