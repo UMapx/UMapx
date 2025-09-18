@@ -20,8 +20,8 @@ namespace UMapx.Decomposition
         #region Private data
         private readonly float[,] u1;
         private readonly float[,] u2;
-        private readonly float[,] s1;
-        private readonly float[,] s2;
+        private readonly float[] s1;
+        private readonly float[] s2;
         private readonly float[,] x;
         private readonly float[] gamma;
         private readonly float tolerance;
@@ -63,7 +63,7 @@ namespace UMapx.Decomposition
 
             // Step 1: QR decomposition of [A; B]
             float[,] stacked = A.Concat(B, Direction.Vertical);
-            QR qr = new QR(stacked);
+            var qr = new QR(stacked);
             float[,] Q = qr.Q; // (aRows + bRows) x columns
             float[,] R = qr.R; // columns x columns (upper triangular)
 
@@ -91,7 +91,7 @@ namespace UMapx.Decomposition
             float[,] S2 = sigma2.Diag();
 
             // Step 3: compute U2 = Q2 * V * inv(S2)
-            float[,] S2inv = InvertDiagonal(sigma2);
+            float[] S2inv = InvertDiagonal(sigma2);
             float[,] U2;
             try
             {
@@ -147,8 +147,8 @@ namespace UMapx.Decomposition
             // Store results
             this.u1 = U1;
             this.u2 = U2;
-            this.s1 = S1;
-            this.s2 = S2;
+            this.s1 = s1Diag;
+            this.s2 = s2Diag;
             this.x = X;
             this.gamma = Gamma;
         }
@@ -166,11 +166,11 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns diagonal matrix S1.
         /// </summary>
-        public float[,] S1 { get { return s1; } }
+        public float[] S1 { get { return s1; } }
         /// <summary>
         /// Returns diagonal matrix S2.
         /// </summary>
-        public float[,] S2 { get { return s2; } }
+        public float[] S2 { get { return s2; } }
         /// <summary>
         /// Returns matrix X.
         /// </summary>
@@ -205,10 +205,10 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the inverse of a diagonal matrix represented by its diagonal.
         /// </summary>
-        private float[,] InvertDiagonal(float[] diagonal)
+        private float[] InvertDiagonal(float[] diagonal)
         {
             int n = diagonal.Length;
-            float[,] result = Matrice.Zero(n, n);
+            float[] result = Matrice.Zero(n);
 
             for (int i = 0; i < n; i++)
             {
@@ -216,7 +216,7 @@ namespace UMapx.Decomposition
                 if (Maths.Abs(value) <= tolerance)
                     throw new ArgumentException("Error: A and B similarly singular");
 
-                result[i, i] = 1.0f / value;
+                result[i] = 1.0f / value;
             }
 
             return result;
