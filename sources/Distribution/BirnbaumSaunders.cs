@@ -33,7 +33,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the Birnbaum-Saunders distribution.
         /// </summary>
-        /// <param name="mu">Shear rate μ ∈ (0, +inf)</param>
+        /// <param name="mu">Shear rate μ ∈ (-inf, +inf)</param>
         /// <param name="beta">Scale factor β ∈ (0, +inf)</param>
         /// <param name="gamma">Shape factor γ ∈ (0, +inf)</param>
         public BirnbaumSaunders(float mu, float beta, float gamma)
@@ -41,8 +41,14 @@ namespace UMapx.Distribution
             Mu = mu; Beta = beta; Gamma = gamma;
         }
         /// <summary>
-        /// Gets or sets the shift factor μ ∈ (0, +inf).
+        /// Gets or sets the shift factor μ ∈ (-inf, +inf).
         /// </summary>
+        /// <example>
+        /// <code>
+        /// var distribution = new BirnbaumSaunders(-2f, 1f, 0.5f);
+        /// float probability = distribution.Distribution(-1f); // returns 0.5
+        /// </code>
+        /// </example>
         public float Mu
         {
             get
@@ -51,9 +57,6 @@ namespace UMapx.Distribution
             }
             set
             {
-                if (value <= 0)
-                    throw new ArgumentException("Invalid argument value");
-
                 this.mu = value;
             }
         }
