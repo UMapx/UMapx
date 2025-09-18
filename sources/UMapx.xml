@@ -13118,6 +13118,49 @@
             Gets the orthogonal matrix Q.
             </summary>
         </member>
+        <member name="T:UMapx.Decomposition.GSVD">
+            <summary>
+            Defines generalized singular value decomposition for a pair of real matrices.
+            </summary>
+            <remarks>
+            Finds orthogonal matrices U and V, and a nonsingular matrix Q such that
+            Uᵀ * A * Q = diag(C) and Vᵀ * B * Q = diag(S) with non-negative diagonals
+            satisfying Cᵀ * C + Sᵀ * S = I. Only single precision (float) arithmetic is supported.
+            </remarks>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.#ctor(System.Single[0:,0:],System.Single[0:,0:],System.Single)">
+            <summary>
+            Initializes generalized singular value decomposition.
+            </summary>
+            <param name="A">Matrix A (m × n)</param>
+            <param name="B">Matrix B (p × n)</param>
+            <param name="eps">Tolerance used when detecting rank deficiencies</param>
+        </member>
+        <member name="P:UMapx.Decomposition.GSVD.U">
+            <summary>
+            Gets the left orthogonal factor U (m × n with orthonormal columns).
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.GSVD.V">
+            <summary>
+            Gets the right orthogonal factor V (p × n with orthonormal columns).
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.GSVD.Q">
+            <summary>
+            Gets the nonsingular transformation matrix Q.
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.GSVD.C">
+            <summary>
+            Gets the generalized cosines (diagonal of C).
+            </summary>
+        </member>
+        <member name="P:UMapx.Decomposition.GSVD.S">
+            <summary>
+            Gets the generalized sines (diagonal of S).
+            </summary>
+        </member>
         <member name="T:UMapx.Decomposition.Hessenberg">
             <summary>
             Defines decomposition with a cast to Hessenberg form.

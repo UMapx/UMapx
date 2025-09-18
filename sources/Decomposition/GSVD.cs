@@ -33,7 +33,7 @@ namespace UMapx.Decomposition
         /// <param name="A">Matrix A (m × n)</param>
         /// <param name="B">Matrix B (p × n)</param>
         /// <param name="eps">Tolerance used when detecting rank deficiencies</param>
-        public GSVD(float[,] A, float[,] B, float eps = 1e-6f)
+        public GSVD(float[,] A, float[,] B, float eps = 1e-8f)
         {
             if (A == null || B == null)
                 throw new ArgumentNullException(A == null ? nameof(A) : nameof(B));
