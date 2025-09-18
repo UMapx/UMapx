@@ -28,7 +28,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the fast Laplace transform.
         /// </summary>
-        /// <param name="sigma">Damping factor (0, 1)</param>
+        /// <param name="sigma">Non-negative damping factor</param>
         /// <param name="normalized">Normalized transform or not</param>
         /// <param name="direction">Processing direction</param>
         public FastLaplaceTransform(float sigma = 0.0005f, bool normalized = true, Direction direction = Direction.Vertical)
@@ -38,7 +38,7 @@ namespace UMapx.Transform
             this.Direction = direction;
         }
         /// <summary>
-        /// Gets or sets the damping factor (0, 1).
+        /// Gets or sets the non-negative damping factor.
         /// </summary>
         /// <remarks>
         /// If σ = 0, then the Laplace transform takes the form of a Fourier transform.
