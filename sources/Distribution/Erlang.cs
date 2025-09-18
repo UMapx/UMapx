@@ -160,7 +160,7 @@ namespace UMapx.Distribution
             return Maths.Pow(lambda, k) * Maths.Pow(x, k - 1) * Maths.Exp(-lambda * x) / (float)Special.Factorial(k - 1);
         }
         /// <summary>
-        /// Returns the value of the probability distribution function.
+        /// Returns the value of the cumulative distribution function.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>

@@ -136,7 +136,7 @@ namespace UMapx.Distribution
             return x / sigma / sigma * Maths.Exp(-(x * x) / (2 * sigma * sigma));
         }
         /// <summary>
-        /// Returns the value of the probability distribution function.
+        /// Returns the value of the cumulative distribution function.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>

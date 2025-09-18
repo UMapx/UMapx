@@ -205,7 +205,7 @@ namespace UMapx.Distribution
             get { return new RangeFloat(0, float.PositiveInfinity); }
         }
         /// <summary>
-        /// Returns the value of the probability distribution function.
+        /// Returns the value of the cumulative distribution function.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>

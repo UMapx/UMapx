@@ -161,7 +161,7 @@ namespace UMapx.Distribution
             return Maths.Pow(x, k - 1) * Maths.Exp(-x / thetta) / (Special.Gamma(k) * Maths.Pow(thetta, k));
         }
         /// <summary>
-        /// Returns the value of the probability distribution function.
+        /// Returns the value of the cumulative distribution function.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>

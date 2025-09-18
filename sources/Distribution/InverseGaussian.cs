@@ -134,7 +134,7 @@ namespace UMapx.Distribution
             return (float)(coef * Math.Exp(expo));
         }
         /// <summary>
-        /// Returns the value of the probability distribution function.
+        /// Returns the value of the cumulative distribution function.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
