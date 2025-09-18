@@ -253,8 +253,23 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            float sum = 0;
-            int k = (int)x;
+            var support = Support;
+            float lower = support.Min;
+            float upper = support.Max;
+
+            if (x < lower)
+            {
+                return 0f;
+            }
+
+            if (x >= upper)
+            {
+                return 1f;
+            }
+
+            float sum = 0f;
+            int k = (int)Math.Floor(x);
+
             for (int i = 0; i <= k; i++)
             {
                 sum += Function(i);
