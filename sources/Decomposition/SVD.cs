@@ -30,7 +30,7 @@ namespace UMapx.Decomposition
         /// </summary>
         /// <param name="A">Matrix</param>
         /// <param name="iterations">Number of iterations</param>
-        public SVD(float[,] A, int iterations = 5)
+        public SVD(float[,] A, int iterations = 10)
         {
             // set:
             this.iterations = iterations;

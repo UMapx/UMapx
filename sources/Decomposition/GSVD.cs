@@ -36,8 +36,9 @@ namespace UMapx.Decomposition
         /// </summary>
         /// <param name="A">Matrix A (m x n, with m ≥ n)</param>
         /// <param name="B">Matrix B (p x n, with p ≥ n)</param>
+        /// <param name="iterations">Number of iterations of SVD</param>
         /// <param name="eps">Tolerance used to treat near-zero values</param>
-        public GSVD(float[,] A, float[,] B, float eps = 1e-8f)
+        public GSVD(float[,] A, float[,] B, int iterations = 10, float eps = 1e-8f)
         {
             if (A == null)
                 throw new ArgumentNullException(nameof(A));
@@ -72,7 +73,7 @@ namespace UMapx.Decomposition
             float[,] q2 = ExtractRows(Q, aRows, bRows);
 
             // Step 2: SVD of the upper part of Q
-            SVD svd = new SVD(q1);
+            var svd = new SVD(q1, iterations);
             float[,] U1 = svd.U;
             float[,] V = svd.V;
             float[] singular = svd.S;
