@@ -76,7 +76,7 @@ namespace UMapx.Decomposition
             float[,] V = svd.V;
             float[] singular = svd.S;
 
-            float[,] S1 = singular.Diag();
+            float[] S1 = singular;
             float[] sigma2 = new float[columns];
 
             for (int i = 0; i < columns; i++)
@@ -88,9 +88,8 @@ namespace UMapx.Decomposition
                 sigma2[i] = value > tolerance ? Maths.Sqrt(value) : 0.0f;
             }
 
-            float[,] S2 = sigma2.Diag();
-
             // Step 3: compute U2 = Q2 * V * inv(S2)
+            float[] S2 = sigma2;
             float[] S2inv = InvertDiagonal(sigma2);
             float[,] U2;
             try
@@ -134,21 +133,19 @@ namespace UMapx.Decomposition
             float[,] X = invSqrtH.Dot(VTR).Transpose();
 
             // Step 6: generalized singular values gamma = diag(S1)/diag(S2)
-            float[] s1Diag = S1.Diag();
-            float[] s2Diag = S2.Diag();
             float[] Gamma = new float[columns];
 
             for (int i = 0; i < columns; i++)
             {
-                float denom = s2Diag[i];
-                Gamma[i] = Maths.Abs(denom) <= tolerance ? 0.0f : s1Diag[i] / denom;
+                float denom = S2[i];
+                Gamma[i] = Maths.Abs(denom) <= tolerance ? 0.0f : S1[i] / denom;
             }
 
             // Store results
             this.u1 = U1;
             this.u2 = U2;
-            this.s1 = s1Diag;
-            this.s2 = s2Diag;
+            this.s1 = S1;
+            this.s2 = S2;
             this.x = X;
             this.gamma = Gamma;
         }
