@@ -133,17 +133,21 @@ namespace UMapx.Decomposition
 
             // Step 6: refine X to satisfy S1^2 + S2^2 = 1
             int n = S1.Length;
-            var D = Matrice.Eye(n, n);
             for (int i = 0; i < n; i++)
             {
-                float d = Maths.Sqrt(S1[i] * S1[i] + S2[i] * S2[i]);
+                float d = Maths.Hypotenuse(S1[i], S2[i]);
+
                 if (d > 0f)
                 {
-                    S1[i] /= d; S2[i] /= d;
-                    D[i, i] = d;
+                    float inv = 1f / d;
+                    S1[i] *= inv;
+                    S2[i] *= inv;
+
+                    // X' = D * X  ⇒  scale i-th row of X by d
+                    for (int j = 0; j < n; j++)
+                        X[i, j] *= d;
                 }
             }
-            X = D.Dot(X);
 
             // Step 7: generalized singular values gamma = diag(S1)/diag(S2)
             float[] Gamma = new float[columns];
