@@ -171,7 +171,7 @@ namespace UMapx.Distribution
             get { return new RangeFloat(float.NegativeInfinity, float.PositiveInfinity); }
         }
         /// <summary>
-        /// Returns the value of the probability distribution function.
+        /// Returns the value of the cumulative distribution function.
         /// </summary>
         /// <remarks>
         /// The CDF is expressed through the regularized incomplete beta function

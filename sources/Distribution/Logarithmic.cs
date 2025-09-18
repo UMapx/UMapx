@@ -107,7 +107,7 @@ namespace UMapx.Distribution
             get { throw new NotSupportedException(); }
         }
         /// <summary>
-        /// Returns the value of the probability distribution function.
+        /// Returns the value of the probability mass cumulative function.
         /// </summary>
         /// <param name="x">Value (x ≥ 1)</param>
         /// <returns>Value</returns>

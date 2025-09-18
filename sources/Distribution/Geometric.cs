@@ -144,7 +144,7 @@ namespace UMapx.Distribution
             return Maths.Pow(q, k) * p;
         }
         /// <summary>
-        /// Returns the value of the probability distribution function.
+        /// Returns the value of the probability mass cumulative function.
         /// </summary>
         /// <param name="x">Number of failures before the first success</param>
         /// <returns>Value</returns>

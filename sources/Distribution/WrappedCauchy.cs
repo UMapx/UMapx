@@ -121,7 +121,7 @@ namespace UMapx.Distribution
             get { return Maths.Log(2 * Maths.Pi * (1 - Maths.Exp(-2 * gamma))); }
         }
         /// <summary>
-        /// Returns the value of the probability distribution function.
+        /// Returns the value of the cumulative distribution function.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
