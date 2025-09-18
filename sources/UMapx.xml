@@ -13173,11 +13173,17 @@
             <summary>
             Extracts a consecutive block of rows from a matrix.
             </summary>
+            <param name="matrix">Matrix</param>
+            <param name="rowStart">Row start</param>
+            <param name="rowCount">Row count</param>
+            <returns>Matrix</returns>
         </member>
         <member name="M:UMapx.Decomposition.GSVD.InvertDiagonal(System.Single[])">
             <summary>
             Returns the inverse of a diagonal matrix represented by its diagonal.
             </summary>
+            <param name="diagonal">Array</param>
+            <returns>Array</returns>
         </member>
         <member name="T:UMapx.Decomposition.Hessenberg">
             <summary>

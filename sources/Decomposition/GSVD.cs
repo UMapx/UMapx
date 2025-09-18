@@ -59,8 +59,6 @@ namespace UMapx.Decomposition
             if (aRows < aCols || bRows < bCols)
                 throw new ArgumentException("Error: A and B must have full column rank (m>n)");
 
-            int columns = aCols;
-
             // Step 1: QR decomposition of [A; B]
             float[,] stacked = A.Concat(B, Direction.Vertical);
             var qr = new QR(stacked);
@@ -76,6 +74,7 @@ namespace UMapx.Decomposition
             float[,] V = svd.V;
             float[] singular = svd.S;
 
+            int columns = aCols;
             float[] S1 = singular;
             float[] sigma2 = new float[columns];
 
