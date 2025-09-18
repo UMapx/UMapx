@@ -13120,45 +13120,107 @@
         </member>
         <member name="T:UMapx.Decomposition.GSVD">
             <summary>
-            Defines generalized singular value decomposition for a pair of real matrices.
+            Generalized SVD (thin GSVD) for a pair of matrices A (m×n), B (p×n).
+            Returns orthonormal U (m×n), V (p×n), invertible Q (n×n),
+            and vectors C[i] = ||A q_i||, S[i] = ||B q_i|| with C[i]^2 + S[i]^2 = 1.
             </summary>
-            <remarks>
-            Finds orthogonal matrices U and V, and a nonsingular matrix Q such that
-            Uᵀ * A * Q = diag(C) and Vᵀ * B * Q = diag(S) with non-negative diagonals
-            satisfying Cᵀ * C + Sᵀ * S = I. Only single precision (float) arithmetic is supported.
-            </remarks>
-        </member>
-        <member name="M:UMapx.Decomposition.GSVD.#ctor(System.Single[0:,0:],System.Single[0:,0:],System.Single)">
-            <summary>
-            Initializes generalized singular value decomposition.
-            </summary>
-            <param name="A">Matrix A (m × n)</param>
-            <param name="B">Matrix B (p × n)</param>
-            <param name="eps">Tolerance used when detecting rank deficiencies</param>
         </member>
         <member name="P:UMapx.Decomposition.GSVD.U">
             <summary>
-            Gets the left orthogonal factor U (m × n with orthonormal columns).
+            Left factor with orthonormal columns (m×n).
             </summary>
         </member>
         <member name="P:UMapx.Decomposition.GSVD.V">
             <summary>
-            Gets the right orthogonal factor V (p × n with orthonormal columns).
+            Right factor with orthonormal columns (p×n).
             </summary>
         </member>
         <member name="P:UMapx.Decomposition.GSVD.Q">
             <summary>
-            Gets the nonsingular transformation matrix Q.
+            Common right invertible factor (n×n); columns are C-orthonormal.
             </summary>
         </member>
         <member name="P:UMapx.Decomposition.GSVD.C">
             <summary>
-            Gets the generalized cosines (diagonal of C).
+            c[i] = ||A q_i||.
             </summary>
         </member>
         <member name="P:UMapx.Decomposition.GSVD.S">
             <summary>
-            Gets the generalized sines (diagonal of S).
+            s[i] = ||B q_i||.
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.#ctor(System.Single[0:,0:],System.Single[0:,0:],System.Single)">
+            <summary>
+            Computes thin GSVD for A (m×n) and B (p×n).
+            </summary>
+            <param name="A">Matrix m×n</param>
+            <param name="B">Matrix p×n</param>
+            <param name="eps">Numerical tolerance</param>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.Symmetrize(System.Single[0:,0:])">
+            <summary>
+            Symmetrizes a square matrix: 0.5*(M + M^T).
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.AddRidge(System.Single[0:,0:],System.Single)">
+            <summary>
+            Adds ridge (tau * I) to a square matrix.
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.SolveLower(System.Single[0:,0:],System.Single[],System.Single[])">
+            <summary>
+            Forward substitution: solve L x = b for lower-triangular L (n×n).
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.SolveUpperT(System.Single[0:,0:],System.Single[],System.Single[])">
+            <summary>
+            Back substitution for transpose: solve L^T x = b with L lower-triangular.
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.Multiply(System.Single[0:,0:],System.Single[])">
+            <summary>
+            Matrix-vector product (M v).
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.Norm2(System.Single[])">
+            <summary>
+            Euclidean 2-norm of vector.
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.Dot(System.Single[],System.Single[])">
+            <summary>
+            Dot product of vectors.
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.Scale(System.Single[],System.Single)">
+            <summary>
+            Returns a scaled copy of vector.
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.GetCol(System.Single[0:,0:],System.Int32)">
+            <summary>
+            Gets a column j from matrix M as a vector.
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.SetCol(System.Single[0:,0:],System.Int32,System.Single[])">
+            <summary>
+            Sets column j of matrix M to vector v.
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.MgsReorth(System.Single[0:,0:],System.Int32,System.Single[],System.Single)">
+            <summary>
+            Modified Gram–Schmidt re-orthogonalization of vector 'v' against first 'uptoCol' columns of M.
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.CreateOrthonormalVector(System.Int32,System.Single[0:,0:],System.Int32,System.Single)">
+            <summary>
+            Creates an orthonormal vector completing the current set of columns in M (fallback when scale ~ 0).
+            </summary>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.ArgsortRealDesc(UMapx.Core.Complex32[])">
+            <summary>
+            Returns indices that sort eigenvalues (Complex32) by descending real part.
             </summary>
         </member>
         <member name="T:UMapx.Decomposition.Hessenberg">
