@@ -249,6 +249,14 @@ namespace UMapx.Response
         {
             get
             {
+                var l1Gain = 0.0f;
+
+                foreach (var t in b)
+                {
+                    if (float.IsNaN(t) || float.IsInfinity(t)) return false;
+                    l1Gain += Maths.Abs(t);
+                    if (float.IsInfinity(l1Gain)) return false;
+                }
                 return true;
             }
         }
