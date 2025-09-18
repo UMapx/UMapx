@@ -93,7 +93,7 @@ namespace UMapx.Decomposition
 
             // Step 3: compute U2 = Q2 * V * inv(S2)
             float[] S2 = sigma2;
-            float[] S2inv = InvertDiagonal(sigma2);
+            float[] S2inv = Matrice.Invert(sigma2);
             float[,] U2;
             try
             {
@@ -219,27 +219,6 @@ namespace UMapx.Decomposition
                 {
                     result[i, j] = matrix[row, j];
                 }
-            }
-
-            return result;
-        }
-        /// <summary>
-        /// Returns the inverse of a diagonal matrix represented by its diagonal.
-        /// </summary>
-        /// <param name="diagonal">Array</param>
-        /// <returns>Array</returns>
-        private float[] InvertDiagonal(float[] diagonal)
-        {
-            int n = diagonal.Length;
-            float[] result = Matrice.Zero(n);
-
-            for (int i = 0; i < n; i++)
-            {
-                float value = diagonal[i];
-                if (Maths.Abs(value) <= tolerance)
-                    throw new ArgumentException("Error: A and B similarly singular");
-
-                result[i] = 1.0f / value;
             }
 
             return result;
