@@ -770,6 +770,7 @@ namespace UMapx.Core
                 float[] Cim = new float[width];
 
                 int j;
+
                 for (j = 0; j < width; j++)
                 {
                     Cre[j] = iRowC[j].Real;
@@ -787,6 +788,7 @@ namespace UMapx.Core
                     var vAi = new Vector<float>(a.Imag);
 
                     j = 0;
+
                     for (; j < simdStop; j += simd)
                     {
                         var vCr = new Vector<float>(Cre, j);
@@ -838,6 +840,7 @@ namespace UMapx.Core
                 float[] Bim = new float[width];
 
                 int j;
+
                 for (j = 0; j < width; j++)
                 {
                     Cre[j] = iRowC[j].Real;
@@ -861,6 +864,7 @@ namespace UMapx.Core
                     var vS = new Vector<float>(s);
 
                     j = 0;
+
                     for (; j < simdStop; j += simd)
                     {
                         var vCr = new Vector<float>(Cre, j);
