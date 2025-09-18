@@ -82,6 +82,10 @@ namespace UMapx.Analysis
                 c[i] = polynomial[i + index + 1] / scale;
             }
 
+            // Companion matrix expects coefficients ordered from the constant term
+            // through increasing powers of x. Ensure the array follows that layout.
+            Array.Reverse(c);
+
             // Eigen-value decomposition for
             // companion matrix:
             eig = new EVD(Matrice.Companion(c), this.eps);
