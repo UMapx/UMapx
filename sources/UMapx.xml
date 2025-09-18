@@ -4823,12 +4823,13 @@
             <param name="width">Width</param>
             <param name="i">Index</param>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.SIMD_Mul(UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.SIMD_Mul(UMapx.Core.Complex32[][],System.Single[][],System.Single[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
             <summary>
             Implements matrix multiplication using modified SIMD optimization.
             </summary>
             <param name="A">Row of A</param>
-            <param name="B">Matrix B</param>
+            <param name="B_re">Real part of matrix B</param>
+            <param name="B_im">Imag part of matrix B</param>
             <param name="C">Row of C</param>
             <param name="length">Length</param>
             <param name="width">Width</param>
@@ -4845,16 +4846,39 @@
             <param name="width">Width</param>
             <param name="i">Index</param>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.SIMD_Mul(System.Single[][],UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.SIMD_Mul(System.Single[][],System.Single[][],System.Single[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
             <summary>
             Implements matrix multiplication using modified SIMD optimization.
             </summary>
             <param name="A">Row of A</param>
-            <param name="B">Matrix B</param>
+            <param name="B_re">Real part of matrix B</param>
+            <param name="B_im">Imag part of matrix B</param>
             <param name="C">Row of C</param>
             <param name="length">Length</param>
             <param name="width">Width</param>
             <param name="i">Index</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.PrecomputeSoA(UMapx.Core.Complex32[][],System.Single[][]@,System.Single[][]@)">
+            <summary>
+            Precomputes a Structure-of-Arrays (SoA) view for a complex matrix B.
+            Splits B (stored as AoS: Complex32[][] with interleaved Real/Imag parts) into two
+            float jagged matrices: Bre (real parts) and Bim (imag parts).
+            This is useful to improve cache locality and enable efficient SIMD code that
+            loads contiguous real/imag streams.
+            </summary>
+            <param name="B">
+            Source complex matrix of shape [length][width] in Array-of-Structures layout:
+            B[k][j].Real / B[k][j].Imag.
+            Assumes rectangular jagged array (all rows have the same width)
+            </param>
+            <param name="Bre">
+            Output: real-part matrix (SoA) with the same shape [length][width],
+            where Bre[k][j] = B[k][j].Real
+            </param>
+            <param name="Bim">
+            Output: imag-part matrix (SoA) with the same shape [length][width],
+            where Bim[k][j] = B[k][j].Imag
+            </param>
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Copy(System.Single[0:,0:],System.Single[0:,0:],System.Int32,System.Int32)">
             <summary>

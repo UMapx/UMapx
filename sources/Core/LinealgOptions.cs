@@ -450,9 +450,10 @@ namespace UMapx.Core
 
                 if (useSIMD)
                 {
+                    PrecomputeSoA(B, out var B_re, out var B_im);
                     Parallel.For(0, height, i =>
                     {
-                        LinealgOptions.MatrixOperation.SIMD_Mul(A, B, C, length, width, i);
+                        LinealgOptions.MatrixOperation.SIMD_Mul(A, B_re, B_im, C, length, width, i);
                     });
                 }
                 else
@@ -518,9 +519,10 @@ namespace UMapx.Core
 
                 if (useSIMD)
                 {
+                    PrecomputeSoA(B, out var B_re, out var B_im);
                     Parallel.For(0, height, i =>
                     {
-                        LinealgOptions.MatrixOperation.SIMD_Mul(A, B, C, length, width, i);
+                        LinealgOptions.MatrixOperation.SIMD_Mul(A, B_re, B_im, C, length, width, i);
                     });
                 }
                 else
@@ -684,39 +686,29 @@ namespace UMapx.Core
             /// Implements matrix multiplication using modified SIMD optimization.
             /// </summary>
             /// <param name="A">Row of A</param>
-            /// <param name="B">Matrix B</param>
+            /// <param name="B_re">Real part of matrix B</param>
+            /// <param name="B_im">Imag part of matrix B</param>
             /// <param name="C">Row of C</param>
             /// <param name="length">Length</param>
             /// <param name="width">Width</param>
             /// <param name="i">Index</param>
-            private static void SIMD_Mul(Complex32[][] A, Complex32[][] B, Complex32[][] C, int length, int width, int i)
+            private static void SIMD_Mul(Complex32[][] A, float[][] B_re, float[][] B_im, Complex32[][] C, int length, int width, int i)
             {
                 var iRowA = A[i];
                 var iRowC = C[i];
 
                 float[] Cre = new float[width];
                 float[] Cim = new float[width];
-                float[] Bre = new float[width];
-                float[] Bim = new float[width];
 
                 int j;
-
-                for (j = 0; j < width; j++)
-                { 
-                    Cre[j] = iRowC[j].Real; Cim[j] = iRowC[j].Imag; 
-                }
 
                 int simd = Vector<float>.Count;
                 int simdStop = width - (width % simd);
 
                 for (int k = 0; k < length; k++)
                 {
-                    var Bk = B[k];
-
-                    for (j = 0; j < width; j++) 
-                    { 
-                        var bj = Bk[j]; Bre[j] = bj.Real; Bim[j] = bj.Imag; 
-                    }
+                    var Bre = B_re[k];
+                    var Bim = B_im[k];
 
                     var a = iRowA[k];
                     var vAr = new Vector<float>(a.Real);
@@ -749,7 +741,10 @@ namespace UMapx.Core
 
                 for (j = 0; j < width; j++) 
                 {
-                    var c = iRowC[j]; c.Real = Cre[j]; c.Imag = Cim[j]; iRowC[j] = c;
+                    var c = iRowC[j]; 
+                    c.Real = Cre[j];
+                    c.Imag = Cim[j]; 
+                    iRowC[j] = c;
                 }
             }
             /// <summary>
@@ -770,12 +765,6 @@ namespace UMapx.Core
                 float[] Cim = new float[width];
 
                 int j;
-
-                for (j = 0; j < width; j++)
-                {
-                    Cre[j] = iRowC[j].Real;
-                    Cim[j] = iRowC[j].Imag;
-                }
 
                 int simd = Vector<float>.Count;
                 int simdStop = width - (width % simd);
@@ -823,12 +812,13 @@ namespace UMapx.Core
             /// Implements matrix multiplication using modified SIMD optimization.
             /// </summary>
             /// <param name="A">Row of A</param>
-            /// <param name="B">Matrix B</param>
+            /// <param name="B_re">Real part of matrix B</param>
+            /// <param name="B_im">Imag part of matrix B</param>
             /// <param name="C">Row of C</param>
             /// <param name="length">Length</param>
             /// <param name="width">Width</param>
             /// <param name="i">Index</param>
-            private static void SIMD_Mul(float[][] A, Complex32[][] B, Complex32[][] C, int length, int width, int i)
+            private static void SIMD_Mul(float[][] A, float[][] B_re, float[][] B_im, Complex32[][] C, int length, int width, int i)
             {
                 var iRowA = A[i];
                 var iRowC = C[i];
@@ -836,29 +826,15 @@ namespace UMapx.Core
                 float[] Cre = new float[width];
                 float[] Cim = new float[width];
 
-                float[] Bre = new float[width];
-                float[] Bim = new float[width];
-
                 int j;
-
-                for (j = 0; j < width; j++)
-                {
-                    Cre[j] = iRowC[j].Real;
-                    Cim[j] = iRowC[j].Imag;
-                }
 
                 int simd = Vector<float>.Count;
                 int simdStop = width - (width % simd);
 
                 for (int k = 0; k < length; k++)
                 {
-                    var Bk = B[k];
-                    for (j = 0; j < width; j++)
-                    {
-                        var bj = Bk[j];
-                        Bre[j] = bj.Real;
-                        Bim[j] = bj.Imag;
-                    }
+                    var Bre = B_re[k];
+                    var Bim = B_im[k];
 
                     float s = iRowA[k];
                     var vS = new Vector<float>(s);
@@ -892,6 +868,47 @@ namespace UMapx.Core
                     c.Real = Cre[j];
                     c.Imag = Cim[j];
                     iRowC[j] = c;
+                }
+            }
+            /// <summary>
+            /// Precomputes a Structure-of-Arrays (SoA) view for a complex matrix B.
+            /// Splits B (stored as AoS: Complex32[][] with interleaved Real/Imag parts) into two
+            /// float jagged matrices: Bre (real parts) and Bim (imag parts).
+            /// This is useful to improve cache locality and enable efficient SIMD code that
+            /// loads contiguous real/imag streams.
+            /// </summary>
+            /// <param name="B">
+            /// Source complex matrix of shape [length][width] in Array-of-Structures layout:
+            /// B[k][j].Real / B[k][j].Imag.
+            /// Assumes rectangular jagged array (all rows have the same width)
+            /// </param>
+            /// <param name="Bre">
+            /// Output: real-part matrix (SoA) with the same shape [length][width],
+            /// where Bre[k][j] = B[k][j].Real
+            /// </param>
+            /// <param name="Bim">
+            /// Output: imag-part matrix (SoA) with the same shape [length][width],
+            /// where Bim[k][j] = B[k][j].Imag
+            /// </param>
+            private static void PrecomputeSoA(Complex32[][] B, out float[][] Bre, out float[][] Bim)
+            {
+                int length = B.Length;
+                int width = B[0].Length;
+                Bre = new float[length][];
+                Bim = new float[length][];
+
+                for (int k = 0; k < length; k++)
+                {
+                    var bk = B[k];
+                    var re = new float[width];
+                    var im = new float[width];
+
+                    for (int j = 0; j < width; j++) 
+                    { 
+                        var z = bk[j]; re[j] = z.Real; im[j] = z.Imag; 
+                    }
+
+                    Bre[k] = re; Bim[k] = im;
                 }
             }
             #endregion
