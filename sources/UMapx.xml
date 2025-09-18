@@ -4710,36 +4710,40 @@
             <param name="working">Square matrix</param>
             <returns>Matrix</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Mul(System.Single[][],System.Single[][])">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Mul(System.Single[][],System.Single[][],System.Boolean)">
             <summary>
             Implements the multiplication of matrices presented in the form of jagged arrays.
             </summary>
             <param name="A">Jagged array</param>
             <param name="B">Jagged array</param>
+            <param name="useSIMD">Use SIMD or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Mul(UMapx.Core.Complex32[][],UMapx.Core.Complex32[][])">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Mul(UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],System.Boolean)">
             <summary>
             Implements the multiplication of matrices presented in the form of jagged arrays.
             </summary>
             <param name="A">Jagged array</param>
             <param name="B">Jagged array</param>
+            <param name="useSIMD">Use SIMD or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Mul(UMapx.Core.Complex32[][],System.Single[][])">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Mul(UMapx.Core.Complex32[][],System.Single[][],System.Boolean)">
             <summary>
             Implements the multiplication of matrices presented in the form of jagged arrays.
             </summary>
             <param name="A">Jagged array</param>
             <param name="B">Jagged array</param>
+            <param name="useSIMD">Use SIMD or not</param>
             <returns>Jagged array</returns>
         </member>
-        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Mul(System.Single[][],UMapx.Core.Complex32[][])">
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Mul(System.Single[][],UMapx.Core.Complex32[][],System.Boolean)">
             <summary>
             Implements the multiplication of matrices presented in the form of jagged arrays.
             </summary>
             <param name="A">Jagged array</param>
             <param name="B">Jagged array</param>
+            <param name="useSIMD">Use SIMD or not</param>
             <returns>Jagged array</returns>
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Whittle_Mul(System.Single[][],System.Single[][],System.Single[][],System.Int32,System.Int32,System.Int32)">
@@ -4778,6 +4782,50 @@
         <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.Whittle_Mul(System.Single[][],UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
             <summary>
             Implements matrix multiplication using modified Whittle optimization.
+            </summary>
+            <param name="A">Row of A</param>
+            <param name="B">Matrix B</param>
+            <param name="C">Row of C</param>
+            <param name="length">Length</param>
+            <param name="width">Width</param>
+            <param name="i">Index</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.SIMD_Mul(System.Single[][],System.Single[][],System.Single[][],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Implements matrix multiplication using modified SIMD optimization.
+            </summary>
+            <param name="A">Row of A</param>
+            <param name="B">Matrix B</param>
+            <param name="C">Row of C</param>
+            <param name="length">Length</param>
+            <param name="width">Width</param>
+            <param name="i">Index</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.SIMD_Mul(UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Implements matrix multiplication using modified SIMD optimization.
+            </summary>
+            <param name="A">Row of A</param>
+            <param name="B">Matrix B</param>
+            <param name="C">Row of C</param>
+            <param name="length">Length</param>
+            <param name="width">Width</param>
+            <param name="i">Index</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.SIMD_Mul(UMapx.Core.Complex32[][],System.Single[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Implements matrix multiplication using modified SIMD optimization.
+            </summary>
+            <param name="A">Row of A</param>
+            <param name="B">Matrix B</param>
+            <param name="C">Row of C</param>
+            <param name="length">Length</param>
+            <param name="width">Width</param>
+            <param name="i">Index</param>
+        </member>
+        <member name="M:UMapx.Core.LinealgOptions.MatrixOperation.SIMD_Mul(System.Single[][],UMapx.Core.Complex32[][],UMapx.Core.Complex32[][],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Implements matrix multiplication using modified SIMD optimization.
             </summary>
             <param name="A">Row of A</param>
             <param name="B">Matrix B</param>

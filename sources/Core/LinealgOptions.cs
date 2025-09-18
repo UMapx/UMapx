@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Threading.Tasks;
 
 namespace UMapx.Core
@@ -401,8 +402,9 @@ namespace UMapx.Core
             /// </summary>
             /// <param name="A">Jagged array</param>
             /// <param name="B">Jagged array</param>
+            /// <param name="useSIMD">Use SIMD or not</param>
             /// <returns>Jagged array</returns>
-            public static float[][] Mul(float[][] A, float[][] B)
+            public static float[][] Mul(float[][] A, float[][] B, bool useSIMD = true)
             {
                 if (A[0].GetLength(0) != B.GetLength(0))
                     throw new ArgumentException(exception);
@@ -412,10 +414,20 @@ namespace UMapx.Core
                 int length = B.GetLength(0);
                 float[][] C = Jagged.Zero(height, width);
 
-                Parallel.For(0, height, i =>
+                if (useSIMD)
                 {
-                    LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
-                });
+                    Parallel.For(0, height, i =>
+                    {
+                        LinealgOptions.MatrixOperation.SIMD_Mul(A, B, C, length, width, i);
+                    });
+                }
+                else
+                {
+                    Parallel.For(0, height, i =>
+                    {
+                        LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
+                    });
+                }
 
                 return C;
             }
@@ -424,8 +436,9 @@ namespace UMapx.Core
             /// </summary>
             /// <param name="A">Jagged array</param>
             /// <param name="B">Jagged array</param>
+            /// <param name="useSIMD">Use SIMD or not</param>
             /// <returns>Jagged array</returns>
-            public static Complex32[][] Mul(Complex32[][] A, Complex32[][] B)
+            public static Complex32[][] Mul(Complex32[][] A, Complex32[][] B, bool useSIMD = true)
             {
                 if (A[0].GetLength(0) != B.GetLength(0))
                     throw new ArgumentException(exception);
@@ -435,10 +448,20 @@ namespace UMapx.Core
                 int length = B.GetLength(0);
                 Complex32[][] C = Jagged.Zero(height, width).ToComplex();
 
-                Parallel.For(0, height, i =>
+                if (useSIMD)
                 {
-                    LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
-                });
+                    Parallel.For(0, height, i =>
+                    {
+                        LinealgOptions.MatrixOperation.SIMD_Mul(A, B, C, length, width, i);
+                    });
+                }
+                else
+                {
+                    Parallel.For(0, height, i =>
+                    {
+                        LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
+                    });
+                }
 
                 return C;
             }
@@ -447,8 +470,9 @@ namespace UMapx.Core
             /// </summary>
             /// <param name="A">Jagged array</param>
             /// <param name="B">Jagged array</param>
+            /// <param name="useSIMD">Use SIMD or not</param>
             /// <returns>Jagged array</returns>
-            public static Complex32[][] Mul(Complex32[][] A, float[][] B)
+            public static Complex32[][] Mul(Complex32[][] A, float[][] B, bool useSIMD = true)
             {
                 if (A[0].GetLength(0) != B.GetLength(0))
                     throw new ArgumentException(exception);
@@ -458,10 +482,20 @@ namespace UMapx.Core
                 int length = B.GetLength(0);
                 Complex32[][] C = Jagged.Zero(height, width).ToComplex();
 
-                Parallel.For(0, height, i =>
+                if (useSIMD)
                 {
-                    LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
-                });
+                    Parallel.For(0, height, i =>
+                    {
+                        LinealgOptions.MatrixOperation.SIMD_Mul(A, B, C, length, width, i);
+                    });
+                }
+                else
+                {
+                    Parallel.For(0, height, i =>
+                    {
+                        LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
+                    });
+                }
 
                 return C;
             }
@@ -470,8 +504,9 @@ namespace UMapx.Core
             /// </summary>
             /// <param name="A">Jagged array</param>
             /// <param name="B">Jagged array</param>
+            /// <param name="useSIMD">Use SIMD or not</param>
             /// <returns>Jagged array</returns>
-            public static Complex32[][] Mul(float[][] A, Complex32[][] B)
+            public static Complex32[][] Mul(float[][] A, Complex32[][] B, bool useSIMD = true)
             {
                 if (A[0].GetLength(0) != B.GetLength(0))
                     throw new ArgumentException(exception);
@@ -481,10 +516,20 @@ namespace UMapx.Core
                 int length = B.GetLength(0);
                 Complex32[][] C = Jagged.Zero(height, width).ToComplex();
 
-                Parallel.For(0, height, i =>
+                if (useSIMD)
                 {
-                    LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
-                });
+                    Parallel.For(0, height, i =>
+                    {
+                        LinealgOptions.MatrixOperation.SIMD_Mul(A, B, C, length, width, i);
+                    });
+                }
+                else
+                {
+                    Parallel.For(0, height, i =>
+                    {
+                        LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
+                    });
+                }
 
                 return C;
             }
@@ -592,6 +637,257 @@ namespace UMapx.Core
                     {
                         iRowC[j] += ikA * kRowB[j];
                     }
+                }
+            }
+            #endregion
+
+            #region SIMD matrix multiplication
+            /// <summary>
+            /// Implements matrix multiplication using modified SIMD optimization.
+            /// </summary>
+            /// <param name="A">Row of A</param>
+            /// <param name="B">Matrix B</param>
+            /// <param name="C">Row of C</param>
+            /// <param name="length">Length</param>
+            /// <param name="width">Width</param>
+            /// <param name="i">Index</param>
+            private static void SIMD_Mul(float[][] A, float[][] B, float[][] C, int length, int width, int i)
+            {
+                float[] iRowA = A[i];
+                float[] iRowC = C[i];
+                int k, j;
+
+                int simd = Vector<float>.Count;
+                int simdStop = width - (width % simd);
+
+                for (k = 0; k < length; k++)
+                {
+                    float[] kRowB = B[k];
+                    float ikA = iRowA[k];
+                    var vScale = new Vector<float>(ikA);
+
+                    for (j = 0; j < simdStop; j += simd)
+                    {
+                        var vB = new Vector<float>(kRowB, j);
+                        var vC = new Vector<float>(iRowC, j);
+                        vC = Vector.Multiply(vB, vScale) + vC;
+                        vC.CopyTo(iRowC, j);
+                    }
+
+                    for (; j < width; j++)
+                    {
+                        iRowC[j] += ikA * kRowB[j];
+                    }
+                }
+            }
+            /// <summary>
+            /// Implements matrix multiplication using modified SIMD optimization.
+            /// </summary>
+            /// <param name="A">Row of A</param>
+            /// <param name="B">Matrix B</param>
+            /// <param name="C">Row of C</param>
+            /// <param name="length">Length</param>
+            /// <param name="width">Width</param>
+            /// <param name="i">Index</param>
+            private static void SIMD_Mul(Complex32[][] A, Complex32[][] B, Complex32[][] C, int length, int width, int i)
+            {
+                var iRowA = A[i];
+                var iRowC = C[i];
+
+                float[] Cre = new float[width];
+                float[] Cim = new float[width];
+                float[] Bre = new float[width];
+                float[] Bim = new float[width];
+
+                int j;
+
+                for (j = 0; j < width; j++)
+                { 
+                    Cre[j] = iRowC[j].Real; Cim[j] = iRowC[j].Imag; 
+                }
+
+                int simd = Vector<float>.Count;
+                int simdStop = width - (width % simd);
+
+                for (int k = 0; k < length; k++)
+                {
+                    var Bk = B[k];
+
+                    for (j = 0; j < width; j++) 
+                    { 
+                        var bj = Bk[j]; Bre[j] = bj.Real; Bim[j] = bj.Imag; 
+                    }
+
+                    var a = iRowA[k];
+                    var vAr = new Vector<float>(a.Real);
+                    var vAi = new Vector<float>(a.Imag);
+
+                    j = 0;
+
+                    for (; j < simdStop; j += simd)
+                    {
+                        var vCr = new Vector<float>(Cre, j);
+                        var vCi = new Vector<float>(Cim, j);
+                        var vBr = new Vector<float>(Bre, j);
+                        var vBi = new Vector<float>(Bim, j);
+
+                        // vCr += vBr*vAr - vBi*vAi
+                        vCr = Vector.Add(vCr, Vector.Subtract(Vector.Multiply(vBr, vAr), Vector.Multiply(vBi, vAi)));
+                        // vCi += vBr*vAi + vBi*vAr
+                        vCi = Vector.Add(vCi, Vector.Add(Vector.Multiply(vBr, vAi), Vector.Multiply(vBi, vAr)));
+
+                        vCr.CopyTo(Cre, j);
+                        vCi.CopyTo(Cim, j);
+                    }
+
+                    for (; j < width; j++)
+                    {
+                        Cre[j] += a.Real * Bre[j] - a.Imag * Bim[j];
+                        Cim[j] += a.Real * Bim[j] + a.Imag * Bre[j];
+                    }
+                }
+
+                for (j = 0; j < width; j++) 
+                {
+                    var c = iRowC[j]; c.Real = Cre[j]; c.Imag = Cim[j]; iRowC[j] = c;
+                }
+            }
+            /// <summary>
+            /// Implements matrix multiplication using modified SIMD optimization.
+            /// </summary>
+            /// <param name="A">Row of A</param>
+            /// <param name="B">Matrix B</param>
+            /// <param name="C">Row of C</param>
+            /// <param name="length">Length</param>
+            /// <param name="width">Width</param>
+            /// <param name="i">Index</param>
+            private static void SIMD_Mul(Complex32[][] A, float[][] B, Complex32[][] C, int length, int width, int i)
+            {
+                var iRowA = A[i];
+                var iRowC = C[i];
+
+                float[] Cre = new float[width];
+                float[] Cim = new float[width];
+
+                int j;
+                for (j = 0; j < width; j++)
+                {
+                    Cre[j] = iRowC[j].Real;
+                    Cim[j] = iRowC[j].Imag;
+                }
+
+                int simd = Vector<float>.Count;
+                int simdStop = width - (width % simd);
+
+                for (int k = 0; k < length; k++)
+                {
+                    float[] kRowB = B[k];
+                    var a = iRowA[k];
+                    var vAr = new Vector<float>(a.Real);
+                    var vAi = new Vector<float>(a.Imag);
+
+                    j = 0;
+                    for (; j < simdStop; j += simd)
+                    {
+                        var vCr = new Vector<float>(Cre, j);
+                        var vCi = new Vector<float>(Cim, j);
+                        var vB = new Vector<float>(kRowB, j);
+
+                        // (ar + i ai) * vB
+                        vCr = Vector.Add(vCr, Vector.Multiply(vB, vAr)); // Re += vB*ar
+                        vCi = Vector.Add(vCi, Vector.Multiply(vB, vAi)); // Im += vB*ai
+
+                        vCr.CopyTo(Cre, j);
+                        vCi.CopyTo(Cim, j);
+                    }
+
+                    for (; j < width; j++)
+                    {
+                        float s = kRowB[j];
+                        Cre[j] += a.Real * s;
+                        Cim[j] += a.Imag * s;
+                    }
+                }
+
+                for (j = 0; j < width; j++)
+                {
+                    var c = iRowC[j];
+                    c.Real = Cre[j];
+                    c.Imag = Cim[j];
+                    iRowC[j] = c;
+                }
+            }
+            /// <summary>
+            /// Implements matrix multiplication using modified SIMD optimization.
+            /// </summary>
+            /// <param name="A">Row of A</param>
+            /// <param name="B">Matrix B</param>
+            /// <param name="C">Row of C</param>
+            /// <param name="length">Length</param>
+            /// <param name="width">Width</param>
+            /// <param name="i">Index</param>
+            private static void SIMD_Mul(float[][] A, Complex32[][] B, Complex32[][] C, int length, int width, int i)
+            {
+                var iRowA = A[i];
+                var iRowC = C[i];
+
+                float[] Cre = new float[width];
+                float[] Cim = new float[width];
+
+                float[] Bre = new float[width];
+                float[] Bim = new float[width];
+
+                int j;
+                for (j = 0; j < width; j++)
+                {
+                    Cre[j] = iRowC[j].Real;
+                    Cim[j] = iRowC[j].Imag;
+                }
+
+                int simd = Vector<float>.Count;
+                int simdStop = width - (width % simd);
+
+                for (int k = 0; k < length; k++)
+                {
+                    var Bk = B[k];
+                    for (j = 0; j < width; j++)
+                    {
+                        var bj = Bk[j];
+                        Bre[j] = bj.Real;
+                        Bim[j] = bj.Imag;
+                    }
+
+                    float s = iRowA[k];
+                    var vS = new Vector<float>(s);
+
+                    j = 0;
+                    for (; j < simdStop; j += simd)
+                    {
+                        var vCr = new Vector<float>(Cre, j);
+                        var vCi = new Vector<float>(Cim, j);
+                        var vBr = new Vector<float>(Bre, j);
+                        var vBi = new Vector<float>(Bim, j);
+
+                        vCr = Vector.Add(vCr, Vector.Multiply(vBr, vS)); // Re += Br*s
+                        vCi = Vector.Add(vCi, Vector.Multiply(vBi, vS)); // Im += Bi*s
+
+                        vCr.CopyTo(Cre, j);
+                        vCi.CopyTo(Cim, j);
+                    }
+
+                    for (; j < width; j++)
+                    {
+                        Cre[j] += s * Bre[j];
+                        Cim[j] += s * Bim[j];
+                    }
+                }
+
+                for (j = 0; j < width; j++)
+                {
+                    var c = iRowC[j];
+                    c.Real = Cre[j];
+                    c.Imag = Cim[j];
+                    iRowC[j] = c;
                 }
             }
             #endregion
