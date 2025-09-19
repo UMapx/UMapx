@@ -64,7 +64,8 @@ namespace UMapx.Distribution
         /// </remarks>
         public float Excess
         {
-            get { return -1f; }
+            // E[X^4] = 5 for the standard hyperbolic secant, so kurtosis 5 ⇒ excess 2.
+            get { return 2f; }
         }
         /// <summary>
         /// Gets the support interval of the argument.
