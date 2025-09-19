@@ -37,18 +37,8 @@ namespace UMapx.Decomposition
         /// <param name="A">Matrix A (m x n, with m ≥ n)</param>
         /// <param name="B">Matrix B (p x n, with p ≥ n)</param>
         /// <param name="iterations">Number of iterations of SVD</param>
-        /// <param name="eps">Tolerance used to treat near-zero values</param>
-        public GSVD(float[,] A, float[,] B, int iterations = 10, float eps = 1e-8f)
+        public GSVD(float[,] A, float[,] B, int iterations = 10)
         {
-            if (A == null)
-                throw new ArgumentNullException(nameof(A));
-            if (B == null)
-                throw new ArgumentNullException(nameof(B));
-            if (eps <= 0)
-                throw new ArgumentOutOfRangeException(nameof(eps));
-
-            tolerance = eps;
-
             int aRows = A.GetLength(0);
             int aCols = A.GetLength(1);
             int bRows = B.GetLength(0);
@@ -85,55 +75,28 @@ namespace UMapx.Decomposition
             for (int i = 0; i < columns; i++)
             {
                 float value = 1.0f - singular[i] * singular[i];
-                if (value < -tolerance)
-                    throw new ArgumentException("Error: A and B similarly singular");
-
-                sigma2[i] = value > tolerance ? Maths.Sqrt(value) : 0.0f;
+                sigma2[i] = value > 0 ? Maths.Sqrt(value) : 0.0f;
             }
 
             // Step 3: compute U2 = Q2 * V * inv(S2)
             float[] S2 = sigma2;
             float[,] U2;
-
-            try
-            {
-                float[,] temp = V.Dot(S2, true);
-                U2 = q2.Dot(temp);
-            }
-            catch (Exception)
-            {
-                throw new ArgumentException("Error: A and B similarly singular");
-            }
+            float[,] temp = V.Dot(S2, true);
+            U2 = q2.Dot(temp);
 
             // Step 4: diagonal matrix H built from Vᵀ * R
             float[,] VT = V.Transpose();
             float[,] VTR = VT.Dot(R);
             float[,] Hproduct = VTR.Dot(VTR.Transpose());
             float[] hDiag = Hproduct.Diag();
-
-            float[,] sqrtH = Matrice.Zero(columns, columns);
-            float[,] invSqrtH = Matrice.Zero(columns, columns);
-
-            for (int i = 0; i < columns; i++)
-            {
-                float value = hDiag[i];
-                if (value < 0 && Maths.Abs(value) <= tolerance)
-                {
-                    value = 0.0f;
-                }
-
-                if (value < -tolerance)
-                    throw new ArgumentException("Error: A and B similarly singular");
-
-                float sqrtVal = value > tolerance ? Maths.Sqrt(value) : 0.0f;
-                sqrtH[i, i] = sqrtVal;
-                invSqrtH[i, i] = sqrtVal > tolerance ? 1.0f / sqrtVal : 0.0f;
-            }
+            float[] sqrtH = Matrice.Compute(hDiag, Maths.Sqrt);
+            float[,] sqrtHDiag = sqrtH.Diag();
+            float[,] invSqrtHDiag = sqrtH.Invert().Diag();
 
             // Step 5: refine S1, S2 and compute X
-            S1 = S1.Dot(sqrtH);
-            S2 = S2.Dot(sqrtH);
-            float[,] X = invSqrtH.Dot(VTR);
+            S1 = S1.Dot(sqrtHDiag);
+            S2 = S2.Dot(sqrtHDiag);
+            float[,] X = invSqrtHDiag.Dot(VTR);
 
             // Step 6: refine X to satisfy S1^2 + S2^2 = 1
             int n = S1.Length;
@@ -159,7 +122,7 @@ namespace UMapx.Decomposition
             for (int i = 0; i < columns; i++)
             {
                 float denom = S2[i];
-                Gamma[i] = Maths.Abs(denom) <= tolerance ? 0.0f : S1[i] / denom;
+                Gamma[i] = Maths.Abs(denom) <= 0 ? 0.0f : S1[i] / denom;
             }
 
             // Store results

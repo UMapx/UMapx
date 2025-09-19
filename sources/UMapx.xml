@@ -13134,14 +13134,13 @@
             https://en.wikipedia.org/wiki/Generalized_singular_value_decomposition
             </remarks>
         </member>
-        <member name="M:UMapx.Decomposition.GSVD.#ctor(System.Single[0:,0:],System.Single[0:,0:],System.Int32,System.Single)">
+        <member name="M:UMapx.Decomposition.GSVD.#ctor(System.Single[0:,0:],System.Single[0:,0:],System.Int32)">
             <summary>
             Initializes generalized singular value decomposition.
             </summary>
             <param name="A">Matrix A (m x n, with m ≥ n)</param>
             <param name="B">Matrix B (p x n, with p ≥ n)</param>
             <param name="iterations">Number of iterations of SVD</param>
-            <param name="eps">Tolerance used to treat near-zero values</param>
         </member>
         <member name="P:UMapx.Decomposition.GSVD.U1">
             <summary>
