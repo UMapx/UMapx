@@ -51,7 +51,7 @@ namespace UMapx.Decomposition
                 throw new ArgumentException("Error: A and B must have matching column ranks");
 
             if (aRows < aCols || bRows < bCols)
-                throw new ArgumentException("Error: A and B must have full column rank (m>n)");
+                throw new ArgumentException("Error: A and B must have full column rank (m > n)");
 
             // Step 1: QR decomposition of [A; B]
             float[,] stacked = A.Concat(B, Direction.Vertical);
