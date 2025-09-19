@@ -16,7 +16,7 @@ namespace UMapx.Distribution
         #region Private data
         private float p = 0.5f;
         private float q = 0.5f;
-        private float halfP = 0.25f;
+        private float r = 1f / 3f;
         #endregion
 
         #region Symmetric geometric components
@@ -50,7 +50,7 @@ namespace UMapx.Distribution
 
                 p = value;
                 q = 1f - p;
-                halfP = 0.5f * p;
+                r = q / (1f + p);
             }
         }
         /// <summary>
@@ -83,7 +83,7 @@ namespace UMapx.Distribution
                 if (p == 0f)
                     return float.NaN;
 
-                return ((2f - p) * (1f - p)) / (p * p);
+                return (1f - p * p) / (2f * p * p);
             }
         }
         /// <summary>
@@ -126,8 +126,8 @@ namespace UMapx.Distribution
                 if (q <= 0f)
                     return float.NaN;
 
-                float numerator = -2f * p * p - 3f * p + 6f;
-                float denominator = p * p - 3f * p + 2f;
+                float numerator = p * p - 3f;
+                float denominator = p * p - 1f;
                 return numerator / denominator;
             }
         }
@@ -149,7 +149,7 @@ namespace UMapx.Distribution
                 return p;
             }
 
-            return halfP * Maths.Pow(q, Maths.Abs(k));
+            return p * Maths.Pow(r, Maths.Abs(k));
         }
         /// <summary>
         /// Returns the value of the cumulative distribution function.
@@ -163,10 +163,10 @@ namespace UMapx.Distribution
             if (k < 0)
             {
                 int n = -k;
-                return 0.5f * Maths.Pow(q, n);
+                return 0.5f * (1f + p) * Maths.Pow(r, n);
             }
 
-            return 1f - 0.5f * Maths.Pow(q, k + 1);
+            return 1f - 0.5f * (1f + p) * Maths.Pow(r, k + 1);
         }
         /// <summary>
         /// Gets the entropy value.
@@ -180,7 +180,8 @@ namespace UMapx.Distribution
                     return 0f;
                 }
 
-                return -Maths.Log(p) + q * Maths.Log(2f) - (q / p) * Maths.Log(q);
+                float logR = Maths.Log(r);
+                return -Maths.Log(p) - ((1f - p * p) / (2f * p)) * logR;
             }
         }
         #endregion
