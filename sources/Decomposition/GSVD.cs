@@ -26,7 +26,6 @@ namespace UMapx.Decomposition
         private readonly float[] s1;
         private readonly float[] s2;
         private readonly float[,] x;
-        private readonly float[] gamma;
         #endregion
 
         #region Initialize
@@ -112,22 +111,12 @@ namespace UMapx.Decomposition
                 }
             }
 
-            // Step 7: generalized singular values gamma = diag(S1)/diag(S2)
-            float[] Gamma = Matrice.Zero(columns);
-
-            for (int i = 0; i < columns; i++)
-            {
-                float denom = S2[i];
-                Gamma[i] = Maths.Abs(denom) <= 0 ? 0.0f : S1[i] / denom;
-            }
-
             // Store results
             this.u1 = U1;
             this.u2 = U2;
             this.s1 = S1;
             this.s2 = S2;
             this.x = X;
-            this.gamma = Gamma;
         }
         #endregion
 
@@ -155,7 +144,22 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Returns the generalized singular values.
         /// </summary>
-        public float[] Gamma { get { return gamma; } }
+        public float[] Gamma 
+        { 
+            get 
+            {
+                // generalized singular values: gamma = diag(s1) / diag(s2)
+                var length = s1.Length;
+                var gamma = new float[length];
+
+                for (int i = 0; i < length; i++)
+                {
+                    float denom = s2[i];
+                    gamma[i] = Maths.Abs(denom) <= 0 ? 0.0f : s1[i] / denom;
+                }
+                return gamma; 
+            } 
+        }
         /// <summary>
         /// Returns the identity vector.
         /// </summary>
@@ -163,6 +167,7 @@ namespace UMapx.Decomposition
         {
             get
             {
+                // identity vector: s1[i] * s1[i] + s2[i] * s2[i] = 1
                 var length = s1.Length;
                 var one = new float[length];
                 for (int i = 0; i < length; i++) one[i] = s1[i] * s1[i] + s2[i] * s2[i];
