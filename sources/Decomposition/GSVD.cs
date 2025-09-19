@@ -63,12 +63,11 @@ namespace UMapx.Decomposition
             float[,] q2 = ExtractRows(Q, aRows, bRows);
 
             // Step 2: SVD of the upper part of Q
-            var svd = new SVD(q1, iterations);
+            var svd = new SVD(q1, iterations); 
+            int columns = aCols;
             float[,] U1 = svd.U;
             float[,] V = svd.V;
             float[] singular = svd.S;
-
-            int columns = aCols;
             float[] S1 = singular;
             float[] sigma2 = Matrice.Zero(columns);
 
@@ -160,6 +159,19 @@ namespace UMapx.Decomposition
         /// Returns the generalized singular values.
         /// </summary>
         public float[] Gamma { get { return gamma; } }
+        /// <summary>
+        /// Returns the identity vector.
+        /// </summary>
+        public float[] Identity
+        {
+            get
+            {
+                var length = s1.Length;
+                var one = new float[length];
+                for (int i = 0; i < length; i++) one[i] = s1[i] * s1[i] + s2[i] * s2[i];
+                return one;
+            }
+        }
         #endregion
 
         #region Private voids

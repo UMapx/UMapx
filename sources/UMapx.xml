@@ -13172,6 +13172,11 @@
             Returns the generalized singular values.
             </summary>
         </member>
+        <member name="P:UMapx.Decomposition.GSVD.Identity">
+            <summary>
+            Returns the identity vector.
+            </summary>
+        </member>
         <member name="M:UMapx.Decomposition.GSVD.ExtractRows(System.Single[0:,0:],System.Int32,System.Int32)">
             <summary>
             Extracts a consecutive block of rows from a matrix.
