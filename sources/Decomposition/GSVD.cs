@@ -76,7 +76,6 @@ namespace UMapx.Decomposition
             }
 
             // Step 3: compute U2 = Q2 * V * inv(S2)
-            //float[] S2 = sigma2;
             float[,] U2;
             float[,] temp = V.Dot(S2, true);
             U2 = q2.Dot(temp);
