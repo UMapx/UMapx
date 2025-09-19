@@ -27,7 +27,6 @@ namespace UMapx.Decomposition
         private readonly float[] s2;
         private readonly float[,] x;
         private readonly float[] gamma;
-        private readonly float tolerance;
         #endregion
 
         #region Initialize
@@ -67,18 +66,17 @@ namespace UMapx.Decomposition
             int columns = aCols;
             float[,] U1 = svd.U;
             float[,] V = svd.V;
-            float[] singular = svd.S;
-            float[] S1 = singular;
-            float[] sigma2 = Matrice.Zero(columns);
+            float[] S1 = svd.S;
+            float[] S2 = Matrice.Zero(columns);
 
             for (int i = 0; i < columns; i++)
             {
-                float value = 1.0f - singular[i] * singular[i];
-                sigma2[i] = value > 0 ? Maths.Sqrt(value) : 0.0f;
+                float value = 1.0f - S1[i] * S1[i];
+                S2[i] = value > 0 ? Maths.Sqrt(value) : 0.0f;
             }
 
             // Step 3: compute U2 = Q2 * V * inv(S2)
-            float[] S2 = sigma2;
+            //float[] S2 = sigma2;
             float[,] U2;
             float[,] temp = V.Dot(S2, true);
             U2 = q2.Dot(temp);
