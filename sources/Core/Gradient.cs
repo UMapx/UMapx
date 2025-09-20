@@ -9,35 +9,35 @@
         /// <summary>
         /// North direction.
         /// </summary>
-        North = 0,
+        North,
         /// <summary>
         /// North-West direction.
         /// </summary>
-        NorthWest = 1,
+        NorthWest,
         /// <summary>
         /// West direction.
         /// </summary>
-        West = 2,
+        West,
         /// <summary>
         /// South-West direction.
         /// </summary>
-        SouthWest = 3,
+        SouthWest,
         /// <summary>
         /// South direction.
         /// </summary>
-        South = 4,
+        South,
         /// <summary>
         /// South-East direction.
         /// </summary>
-        SouthEast = 5,
+        SouthEast,
         /// <summary>
         /// East direction.
         /// </summary>
-        East = 6,
+        East,
         /// <summary>
         /// North-East direction.
         /// </summary>
-        NorthEast = 7,
+        NorthEast,
         #endregion
     }
 }

@@ -8,7 +8,7 @@ namespace UMapx.Core
     /// <summary>
     /// Used to debug data such as matrices and vectors.
     /// </summary>
-    public static class Debugger
+    public static partial class Debugger
     {
         #region Private data
         /// <summary>

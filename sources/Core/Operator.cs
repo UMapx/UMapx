@@ -288,6 +288,7 @@ namespace UMapx.Core
         /// <param name="radius">Size</param>
         /// <param name="angle">Angle in degrees</param>
         /// <param name="blur">Edge blur factor [0, 1]</param>
+        /// <returns>Matrix</returns>
         public static float[,] MotionBlur(int radius, float angle, float blur)
         {
             if (radius < 1) radius = 1;

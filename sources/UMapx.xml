@@ -10573,6 +10573,7 @@
             <param name="radius">Size</param>
             <param name="angle">Angle in degrees</param>
             <param name="blur">Edge blur factor [0, 1]</param>
+            <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Core.PointFloat">
             <summary>
