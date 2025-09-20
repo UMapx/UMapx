@@ -11,19 +11,19 @@ namespace UMapx.Wavelet
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    public partial class WaveletPack
+    public partial class WaveletPacket
     {
         #region Gabor-Zak wavelets
         /// <summary>
         /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=4).
         /// </summary>
-        public static WaveletPack GZ2
+        public static WaveletPacket GZ2
         {
             get
             {
                 // Original procedure:
                 //return WaveletPack.GaborZak(2);
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                     0f,
                     0.70710677f,
                     0.70710677f,
@@ -34,13 +34,13 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=8).
         /// </summary>
-        public static WaveletPack GZ3
+        public static WaveletPacket GZ3
         {
             get
             {
                 // Original procedure:
                 //return WaveletPack.GaborZak(3);
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                     0.0012465268f,
                     -0.029662542f,
                     0.02966249f,
@@ -55,13 +55,13 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=16).
         /// </summary>
-        public static WaveletPack GZ4
+        public static WaveletPacket GZ4
         {
             get
             {
                 // Original procedure:
                 //return WaveletPack.GaborZak(4);
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                     0.001059331f,
                     -0.0049649402f,
                     0.00089050457f,
@@ -84,13 +84,13 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=32).
         /// </summary>
-        public static WaveletPack GZ5
+        public static WaveletPacket GZ5
         {
             get
             {
                 // Original procedure:
                 //return WaveletPack.GaborZak(5);
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                     0.0006670952f,
                     -0.0014538579f,
                     -0.00018056482f,
@@ -129,13 +129,13 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=64).
         /// </summary>
-        public static WaveletPack GZ6
+        public static WaveletPacket GZ6
         {
             get
             {
                 // Original procedure:
                 //return WaveletPack.GaborZak(6);
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                     0.0003711935f,
                     -0.0005511902f,
                     -0.00023291633f,
@@ -206,13 +206,13 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=128).
         /// </summary>
-        public static WaveletPack GZ7
+        public static WaveletPacket GZ7
         {
             get
             {
                 // Original procedure:
                 //return WaveletPack.GaborZak(7);
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                     0.0001938641f,
                     -0.00023879297f,
                     -0.00015845615f,
@@ -355,7 +355,7 @@ namespace UMapx.Wavelet
         /// <returns>
         /// WaveletPack with (h0, h1, g0, g1), each of length N = 2^n.
         /// </returns>
-        internal static WaveletPack GaborZak(int n)
+        internal static WaveletPacket GaborZak(int n)
         {
             if (n < 2) throw new ArgumentException("Wavelet size must be greater or equal 2");
             if (n > 7) throw new ArgumentException("Wavelet size must be less or equal 7");
@@ -384,7 +384,7 @@ namespace UMapx.Wavelet
             var zak = new FastZakTransform(m: 2);
             var g0 = window.GetWindow();
             var h0 = zak.Orthogonalize(g0);
-            return WaveletPack.Create(h0);
+            return WaveletPacket.Create(h0);
         }
 
         #endregion

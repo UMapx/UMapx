@@ -32519,7 +32519,7 @@
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="T:UMapx.Wavelet.WaveletPack">
+        <member name="T:UMapx.Wavelet.WaveletPacket">
             <summary>
             Defines the discrete wavelet.
             </summary>
@@ -32633,27 +32633,27 @@
             https://en.wikipedia.org/wiki/Wavelet
             </remarks>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.BL2">
+        <member name="P:UMapx.Wavelet.WaveletPacket.BL2">
             <summary>
             Returns Battle-Lemarie wavelet (2).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.BL4">
+        <member name="P:UMapx.Wavelet.WaveletPacket.BL4">
             <summary>
             Returns Battle-Lemarie wavelet (4).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.BL6">
+        <member name="P:UMapx.Wavelet.WaveletPacket.BL6">
             <summary>
             Returns Battle-Lemarie wavelet (6).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Beylkin">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Beylkin">
             <summary>
             Returns Beylkin wavelet.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Bior11">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Bior11">
             <summary>
             Returns a biorthogonal wavelet 1.1.
             </summary>
@@ -32661,167 +32661,167 @@
             Haar wavelet.
             </remarks>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Bior13">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Bior13">
             <summary>
             Returns a biorthogonal wavelet 1.3.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Bior15">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Bior15">
             <summary>
             Returns a biorthogonal wavelet 1.5.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Bior22">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Bior22">
             <summary>
             Returns a biorthogonal wavelet 2.2.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Bior24">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Bior24">
             <summary>
             Returns a biorthogonal wavelet 2.4.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Bior26">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Bior26">
             <summary>
             Returns a biorthogonal wavelet 2.6.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Bior28">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Bior28">
             <summary>
             Returns a biorthogonal wavelet 2.8.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Bior31">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Bior31">
             <summary>
             Returns a biorthogonal wavelet 3.1.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Bior33">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Bior33">
             <summary>
             Returns a biorthogonal wavelet 3.3.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Bior35">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Bior35">
             <summary>
             Returns a biorthogonal wavelet 3.5.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Bior37">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Bior37">
             <summary>
             Returns a biorthogonal wavelet 3.7.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF11">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF11">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 1/1).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF13">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF13">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 1/3).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF15">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF15">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 1/5).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF31">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF31">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 3/1).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF51">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF51">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 5/1).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF53">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF53">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 5/3).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF55">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF55">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 5/5).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF22">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF22">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 2/2).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF24">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF24">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 2/4).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF26">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF26">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 2/6).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF42">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF42">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 4/2).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF44">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF44">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 4/4).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF46">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF46">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 4/6).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF62">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF62">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 6/2).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF64">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF64">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 6/4).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF66">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF66">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 6/6).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.CDF97">
+        <member name="P:UMapx.Wavelet.WaveletPacket.CDF97">
             <summary>
             Returns Cohen-Daubechies-Feaveau wavelet (CDF 9/7).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.C1">
+        <member name="P:UMapx.Wavelet.WaveletPacket.C1">
             <summary>
             Returns wavelet coiflet of 1 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.C2">
+        <member name="P:UMapx.Wavelet.WaveletPacket.C2">
             <summary>
             Returns wavelet coiflet of 2 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.C3">
+        <member name="P:UMapx.Wavelet.WaveletPacket.C3">
             <summary>
             Returns wavelet coiflet of 3 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.C4">
+        <member name="P:UMapx.Wavelet.WaveletPacket.C4">
             <summary>
             Returns wavelet coiflet of 4 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.C5">
+        <member name="P:UMapx.Wavelet.WaveletPacket.C5">
             <summary>
             Returns wavelet coiflet of 5 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D1">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D1">
             <summary>
             Returns Daubechies wavelet of 1 order.
             </summary>
@@ -32829,192 +32829,192 @@
             Haar wavelet.
             </remarks>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D2">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D2">
             <summary>
             Returns Daubechies wavelet of 2 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D3">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D3">
             <summary>
             Returns Daubechies wavelet of 3 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D4">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D4">
             <summary>
             Returns Daubechies wavelet of 4 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D5">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D5">
             <summary>
             Returns Daubechies wavelet of 5 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D6">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D6">
             <summary>
             Returns Daubechies wavelet of 6 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D7">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D7">
             <summary>
             Returns Daubechies wavelet of 7 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D8">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D8">
             <summary>
             Returns Daubechies wavelet of 8 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D9">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D9">
             <summary>
             Returns Daubechies wavelet of 9 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D10">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D10">
             <summary>
             Returns Daubechies wavelet of 10 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D11">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D11">
             <summary>
             Returns Daubechies wavelet of 11 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D12">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D12">
             <summary>
             Returns Daubechies wavelet of 12 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D13">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D13">
             <summary>
             Returns Daubechies wavelet of 13 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D14">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D14">
             <summary>
             Returns Daubechies wavelet of 14 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D15">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D15">
             <summary>
             Returns Daubechies wavelet of 15 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D16">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D16">
             <summary>
             Returns Daubechies wavelet of 16 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D17">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D17">
             <summary>
             Returns Daubechies wavelet of 17 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D18">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D18">
             <summary>
             Returns Daubechies wavelet of 18 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D19">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D19">
             <summary>
             Returns Daubechies wavelet of 19 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D20">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D20">
             <summary>
             Returns Daubechies wavelet of 20 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D21">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D21">
             <summary>
             Returns Daubechies wavelet of 21 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D22">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D22">
             <summary>
             Returns Daubechies wavelet of 22 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D23">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D23">
             <summary>
             Returns Daubechies wavelet of 23 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D24">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D24">
             <summary>
             Returns Daubechies wavelet of 24 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D25">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D25">
             <summary>
             Returns Daubechies wavelet of 25 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D26">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D26">
             <summary>
             Returns Daubechies wavelet of 26 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D27">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D27">
             <summary>
             Returns Daubechies wavelet of 27 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D28">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D28">
             <summary>
             Returns Daubechies wavelet of 28 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D29">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D29">
             <summary>
             Returns Daubechies wavelet of 29 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D30">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D30">
             <summary>
             Returns Daubechies wavelet of 30 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D31">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D31">
             <summary>
             Returns Daubechies wavelet of 31 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D32">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D32">
             <summary>
             Returns Daubechies wavelet of 32 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D33">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D33">
             <summary>
             Returns Daubechies wavelet of 33 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D34">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D34">
             <summary>
             Returns Daubechies wavelet of 34 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D35">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D35">
             <summary>
             Returns Daubechies wavelet of 35 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D36">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D36">
             <summary>
             Returns Daubechies wavelet of 36 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D37">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D37">
             <summary>
             Returns Daubechies wavelet of 37 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.D38">
+        <member name="P:UMapx.Wavelet.WaveletPacket.D38">
             <summary>
             Returns Daubechies wavelet of 38 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Fbsp100">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Fbsp100">
             <summary>
             Returns B-spline wavelet 1-0-0.
             </summary>
@@ -33022,72 +33022,72 @@
             Haar wavelet (delayed).
             </remarks>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Fbsp103">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Fbsp103">
             <summary>
             Returns B-spline wavelet 1-0-3.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Fbsp105">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Fbsp105">
             <summary>
             Returns B-spline wavelet 1-0-5.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.FK4">
+        <member name="P:UMapx.Wavelet.WaveletPacket.FK4">
             <summary>
             Returns the Fejer-Korovkin wavelet of 4 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.FK6">
+        <member name="P:UMapx.Wavelet.WaveletPacket.FK6">
             <summary>
             Returns the Fejer-Korovkin wavelet of 6 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.FK8">
+        <member name="P:UMapx.Wavelet.WaveletPacket.FK8">
             <summary>
             Returns the Fejer-Korovkin wavelet of 8 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.FK14">
+        <member name="P:UMapx.Wavelet.WaveletPacket.FK14">
             <summary>
             Returns the Fejer-Korovkin wavelet of 14 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.FK22">
+        <member name="P:UMapx.Wavelet.WaveletPacket.FK22">
             <summary>
             Returns the Fejer-Korovkin wavelet of 22 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.GZ2">
+        <member name="P:UMapx.Wavelet.WaveletPacket.GZ2">
             <summary>
             Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=4).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.GZ3">
+        <member name="P:UMapx.Wavelet.WaveletPacket.GZ3">
             <summary>
             Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=8).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.GZ4">
+        <member name="P:UMapx.Wavelet.WaveletPacket.GZ4">
             <summary>
             Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=16).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.GZ5">
+        <member name="P:UMapx.Wavelet.WaveletPacket.GZ5">
             <summary>
             Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=32).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.GZ6">
+        <member name="P:UMapx.Wavelet.WaveletPacket.GZ6">
             <summary>
             Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=64).
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.GZ7">
+        <member name="P:UMapx.Wavelet.WaveletPacket.GZ7">
             <summary>
             Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT for N=128).
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletPack.GaborZak(System.Int32)">
+        <member name="M:UMapx.Wavelet.WaveletPacket.GaborZak(System.Int32)">
             <summary>
             Returns a symmetric dyadic Gabor–Zak wavelet filter bank (periodic DWT).
             Total filter length is N = 2^n; the pack contains four N-tap filters
@@ -33100,17 +33100,17 @@
             WaveletPack with (h0, h1, g0, g1), each of length N = 2^n.
             </returns>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Haar">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Haar">
             <summary>
             Returns Haar wavelet.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Kravchenko">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Kravchenko">
             <summary>
             Returns Kravchenko wavelet.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.L1">
+        <member name="P:UMapx.Wavelet.WaveletPacket.L1">
             <summary>
             Returns Legendre wavelet of 1 order.
             </summary>
@@ -33118,7 +33118,7 @@
             Haar wavelet.
             </remarks>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.L2">
+        <member name="P:UMapx.Wavelet.WaveletPacket.L2">
             <summary>
             Returns Legendre wavelet of 2 order.
             </summary>
@@ -33126,7 +33126,7 @@
             Nonorthogonal wavelet.
             </remarks>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.L3">
+        <member name="P:UMapx.Wavelet.WaveletPacket.L3">
             <summary>
             Returns Legendre wavelet of 3 order.
             </summary>
@@ -33134,7 +33134,7 @@
             Nonorthogonal wavelet.
             </remarks>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.L4">
+        <member name="P:UMapx.Wavelet.WaveletPacket.L4">
             <summary>
             Returns Legendre wavelet of 4 order.
             </summary>
@@ -33142,7 +33142,7 @@
             Nonorthogonal wavelet.
             </remarks>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.L5">
+        <member name="P:UMapx.Wavelet.WaveletPacket.L5">
             <summary>
             Returns Legendre wavelet of 5 order.
             </summary>
@@ -33150,7 +33150,7 @@
             Nonorthogonal wavelet.
             </remarks>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.L6">
+        <member name="P:UMapx.Wavelet.WaveletPacket.L6">
             <summary>
             Returns Legendre wavelet of 6 order.
             </summary>
@@ -33158,7 +33158,7 @@
             Nonorthogonal wavelet.
             </remarks>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.L7">
+        <member name="P:UMapx.Wavelet.WaveletPacket.L7">
             <summary>
             Returns Legendre wavelet of 7 order.
             </summary>
@@ -33166,7 +33166,7 @@
             Nonorthogonal wavelet.
             </remarks>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.L8">
+        <member name="P:UMapx.Wavelet.WaveletPacket.L8">
             <summary>
             Returns Legendre wavelet of 8 order.
             </summary>
@@ -33174,7 +33174,7 @@
             Nonorthogonal wavelet.
             </remarks>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.L9">
+        <member name="P:UMapx.Wavelet.WaveletPacket.L9">
             <summary>
             Returns Legendre wavelet of 9 order.
             </summary>
@@ -33182,12 +33182,12 @@
             Nonorthogonal wavelet.
             </remarks>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Meyer">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Meyer">
             <summary>
             Returns the Meyer wavelet.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S1">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S1">
             <summary>
             Returns wavelet symlet of 1 order.
             </summary>
@@ -33195,107 +33195,107 @@
             Haar wavelet.
             </remarks>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S2">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S2">
             <summary>
             Returns wavelet symlet of 2 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S3">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S3">
             <summary>
             Returns wavelet symlet of 3 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S4">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S4">
             <summary>
             Returns wavelet symlet of 4 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S5">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S5">
             <summary>
             Returns wavelet symlet of 5 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S6">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S6">
             <summary>
             Returns wavelet symlet of 6 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S7">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S7">
             <summary>
             Returns wavelet symlet of 7 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S8">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S8">
             <summary>
             Returns wavelet symlet of 8 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S9">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S9">
             <summary>
             Returns wavelet symlet of 9 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S10">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S10">
             <summary>
             Returns wavelet symlet of 10 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S11">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S11">
             <summary>
             Returns wavelet symlet of 11 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S12">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S12">
             <summary>
             Returns wavelet symlet of 12 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S13">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S13">
             <summary>
             Returns wavelet symlet of 13 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S14">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S14">
             <summary>
             Returns wavelet symlet of 14 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S15">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S15">
             <summary>
             Returns wavelet symlet of 15 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S16">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S16">
             <summary>
             Returns wavelet symlet of 16 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S17">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S17">
             <summary>
             Returns wavelet symlet of 17 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S18">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S18">
             <summary>
             Returns wavelet symlet of 18 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S19">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S19">
             <summary>
             Returns wavelet symlet of 19 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.S20">
+        <member name="P:UMapx.Wavelet.WaveletPacket.S20">
             <summary>
             Returns wavelet symlet of 20 order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.Vaidyanathan">
+        <member name="P:UMapx.Wavelet.WaveletPacket.Vaidyanathan">
             <summary>
             Returns Vaidyanathan wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletPack.#ctor(System.Single[],System.Single[],System.Single[],System.Single[])">
+        <member name="M:UMapx.Wavelet.WaveletPacket.#ctor(System.Single[],System.Single[],System.Single[],System.Single[])">
             <summary>
             Initializes the discrete wavelet.
             </summary>
@@ -33304,27 +33304,27 @@
             <param name="ilp">Scaling function of backward transform</param>
             <param name="ihp">Wavelet function of backward transform</param>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.LowPass">
+        <member name="P:UMapx.Wavelet.WaveletPacket.LowPass">
             <summary>
             Gets or sets the scaling function of forward transform.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.HighPass">
+        <member name="P:UMapx.Wavelet.WaveletPacket.HighPass">
             <summary>
             Gets or sets the wavelet function of forward transform.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.ILowPass">
+        <member name="P:UMapx.Wavelet.WaveletPacket.ILowPass">
             <summary>
             Gets or sets the scaling function of backward transform.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.WaveletPack.IHighPass">
+        <member name="P:UMapx.Wavelet.WaveletPacket.IHighPass">
             <summary>
             Gets or sets the wavelet function of backward transform.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletPack.CQF(System.Single[])">
+        <member name="M:UMapx.Wavelet.WaveletPacket.CQF(System.Single[])">
             <summary>
             Builds the analysis high-pass filter h1 from a real-valued analysis low-pass h0
             using the Conjugate-Quadrature-Filter (CQF) relation:
@@ -33335,14 +33335,14 @@
             <param name="v">Scaling function</param>
             <returns>Wavelet function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletPack.Create(System.Single[])">
+        <member name="M:UMapx.Wavelet.WaveletPacket.Create(System.Single[])">
             <summary>
             Creates the discrete wavelet.
             </summary>
             <param name="scaling">Scaling function</param>
             <returns>Discrete wavelet</returns>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletPack.Create(System.Single[],System.Single[])">
+        <member name="M:UMapx.Wavelet.WaveletPacket.Create(System.Single[],System.Single[])">
             <summary>
             Creates the discrete wavelet.
             </summary>
@@ -33350,19 +33350,19 @@
             <param name="wavelet">Wavelet function</param>
             <returns>Discrete wavelet</returns>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletPack.System#ICloneable#Clone">
+        <member name="M:UMapx.Wavelet.WaveletPacket.System#ICloneable#Clone">
             <summary>
             Creates a copy of the discrete wavelet.
             </summary>
             <returns>Discrete wavelet</returns>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletPack.Clone">
+        <member name="M:UMapx.Wavelet.WaveletPacket.Clone">
             <summary>
             Creates a copy of the discrete wavelet.
             </summary>
             <returns>Discrete wavelet</returns>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletPack.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+        <member name="M:UMapx.Wavelet.WaveletPacket.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Gets information about the object.
             </summary>
@@ -33897,7 +33897,7 @@
             https://en.wikipedia.org/wiki/Discrete_wavelet_transform
             </remarks>
         </member>
-        <member name="M:UMapx.Wavelet.WaveletDecomposition.#ctor(UMapx.Wavelet.WaveletPack,System.Int32,System.Boolean)">
+        <member name="M:UMapx.Wavelet.WaveletDecomposition.#ctor(UMapx.Wavelet.WaveletPacket,System.Int32,System.Boolean)">
             <summary>
             Initializes a discrete wavelet decomposition.
             </summary>

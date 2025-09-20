@@ -7,7 +7,7 @@
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    public partial class WaveletPack
+    public partial class WaveletPacket
     {
         #region Biorthogonal wavelets
         /// <summary>
@@ -16,7 +16,7 @@
         /// <remarks>
         /// Haar wavelet.
         /// </remarks>
-        public static WaveletPack Bior11
+        public static WaveletPacket Bior11
         {
             get
             {
@@ -27,7 +27,7 @@
         /// <summary>
         /// Returns a biorthogonal wavelet 1.3.
         /// </summary>
-        public static WaveletPack Bior13
+        public static WaveletPacket Bior13
         {
             get
             {
@@ -37,7 +37,7 @@
         /// <summary>
         /// Returns a biorthogonal wavelet 1.5.
         /// </summary>
-        public static WaveletPack Bior15
+        public static WaveletPacket Bior15
         {
             get
             {
@@ -47,7 +47,7 @@
         /// <summary>
         /// Returns a biorthogonal wavelet 2.2.
         /// </summary>
-        public static WaveletPack Bior22
+        public static WaveletPacket Bior22
         {
             get
             {
@@ -57,7 +57,7 @@
         /// <summary>
         /// Returns a biorthogonal wavelet 2.4.
         /// </summary>
-        public static WaveletPack Bior24
+        public static WaveletPacket Bior24
         {
             get
             {
@@ -87,7 +87,7 @@
         /// <summary>
         /// Returns a biorthogonal wavelet 2.6.
         /// </summary>
-        public static WaveletPack Bior26
+        public static WaveletPacket Bior26
         {
             get
             {
@@ -125,7 +125,7 @@
         /// <summary>
         /// Returns a biorthogonal wavelet 2.8.
         /// </summary>
-        public static WaveletPack Bior28
+        public static WaveletPacket Bior28
         {
             get
             {
@@ -167,7 +167,7 @@
         /// <summary>
         /// Returns a biorthogonal wavelet 3.1.
         /// </summary>
-        public static WaveletPack Bior31
+        public static WaveletPacket Bior31
         {
             get
             {
@@ -185,7 +185,7 @@
         /// <summary>
         /// Returns a biorthogonal wavelet 3.3.
         /// </summary>
-        public static WaveletPack Bior33
+        public static WaveletPacket Bior33
         {
             get
             {
@@ -211,7 +211,7 @@
         /// <summary>
         /// Returns a biorthogonal wavelet 3.5.
         /// </summary>
-        public static WaveletPack Bior35
+        public static WaveletPacket Bior35
         {
             get
             {
@@ -245,7 +245,7 @@
         /// <summary>
         /// Returns a biorthogonal wavelet 3.7.
         /// </summary>
-        public static WaveletPack Bior37
+        public static WaveletPacket Bior37
         {
             get
             {

@@ -7,7 +7,7 @@
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    public partial class WaveletPack
+    public partial class WaveletPacket
     {
         #region Daubechies wavelets
         /// <summary>
@@ -16,7 +16,7 @@
         /// <remarks>
         /// Haar wavelet.
         /// </remarks>
-        public static WaveletPack D1
+        public static WaveletPacket D1
         {
             get
             {
@@ -29,7 +29,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 2 order.
         /// </summary>
-        public static WaveletPack D2
+        public static WaveletPacket D2
         {
             get
             {
@@ -43,7 +43,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 3 order.
         /// </summary>
-        public static WaveletPack D3
+        public static WaveletPacket D3
         {
             get
             {
@@ -59,7 +59,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 4 order.
         /// </summary>
-        public static WaveletPack D4
+        public static WaveletPacket D4
         {
             get
             {
@@ -77,7 +77,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 5 order.
         /// </summary>
-        public static WaveletPack D5
+        public static WaveletPacket D5
         {
             get
             {
@@ -97,7 +97,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 6 order.
         /// </summary>
-        public static WaveletPack D6
+        public static WaveletPacket D6
         {
             get
             {
@@ -119,7 +119,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 7 order.
         /// </summary>
-        public static WaveletPack D7
+        public static WaveletPacket D7
         {
             get
             {
@@ -143,7 +143,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 8 order.
         /// </summary>
-        public static WaveletPack D8
+        public static WaveletPacket D8
         {
             get
             {
@@ -169,7 +169,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 9 order.
         /// </summary>
-        public static WaveletPack D9
+        public static WaveletPacket D9
         {
             get
             {
@@ -197,7 +197,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 10 order.
         /// </summary>
-        public static WaveletPack D10
+        public static WaveletPacket D10
         {
             get
             {
@@ -228,7 +228,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 11 order.
         /// </summary>
-        public static WaveletPack D11
+        public static WaveletPacket D11
         {
             get
             {
@@ -261,7 +261,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 12 order.
         /// </summary>
-        public static WaveletPack D12
+        public static WaveletPacket D12
         {
             get
             {
@@ -297,7 +297,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 13 order.
         /// </summary>
-        public static WaveletPack D13
+        public static WaveletPacket D13
         {
             get
             {
@@ -335,7 +335,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 14 order.
         /// </summary>
-        public static WaveletPack D14
+        public static WaveletPacket D14
         {
             get
             {
@@ -376,7 +376,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 15 order.
         /// </summary>
-        public static WaveletPack D15
+        public static WaveletPacket D15
         {
             get
             {
@@ -419,7 +419,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 16 order.
         /// </summary>
-        public static WaveletPack D16
+        public static WaveletPacket D16
         {
             get
             {
@@ -464,7 +464,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 17 order.
         /// </summary>
-        public static WaveletPack D17
+        public static WaveletPacket D17
         {
             get
             {
@@ -511,7 +511,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 18 order.
         /// </summary>
-        public static WaveletPack D18
+        public static WaveletPacket D18
         {
             get
             {
@@ -560,7 +560,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 19 order.
         /// </summary>
-        public static WaveletPack D19
+        public static WaveletPacket D19
         {
             get
             {
@@ -611,7 +611,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 20 order.
         /// </summary>
-        public static WaveletPack D20
+        public static WaveletPacket D20
         {
             get
             {
@@ -664,7 +664,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 21 order.
         /// </summary>
-        public static WaveletPack D21
+        public static WaveletPacket D21
         {
             get
             {
@@ -719,7 +719,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 22 order.
         /// </summary>
-        public static WaveletPack D22
+        public static WaveletPacket D22
         {
             get
             {
@@ -776,7 +776,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 23 order.
         /// </summary>
-        public static WaveletPack D23
+        public static WaveletPacket D23
         {
             get
             {
@@ -835,7 +835,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 24 order.
         /// </summary>
-        public static WaveletPack D24
+        public static WaveletPacket D24
         {
             get
             {
@@ -896,7 +896,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 25 order.
         /// </summary>
-        public static WaveletPack D25
+        public static WaveletPacket D25
         {
             get
             {
@@ -959,7 +959,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 26 order.
         /// </summary>
-        public static WaveletPack D26
+        public static WaveletPacket D26
         {
             get
             {
@@ -1024,7 +1024,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 27 order.
         /// </summary>
-        public static WaveletPack D27
+        public static WaveletPacket D27
         {
             get
             {
@@ -1091,7 +1091,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 28 order.
         /// </summary>
-        public static WaveletPack D28
+        public static WaveletPacket D28
         {
             get
             {
@@ -1160,7 +1160,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 29 order.
         /// </summary>
-        public static WaveletPack D29
+        public static WaveletPacket D29
         {
             get
             {
@@ -1231,7 +1231,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 30 order.
         /// </summary>
-        public static WaveletPack D30
+        public static WaveletPacket D30
         {
             get
             {
@@ -1304,7 +1304,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 31 order.
         /// </summary>
-        public static WaveletPack D31
+        public static WaveletPacket D31
         {
             get
             {
@@ -1379,7 +1379,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 32 order.
         /// </summary>
-        public static WaveletPack D32
+        public static WaveletPacket D32
         {
             get
             {
@@ -1456,7 +1456,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 33 order.
         /// </summary>
-        public static WaveletPack D33
+        public static WaveletPacket D33
         {
             get
             {
@@ -1535,7 +1535,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 34 order.
         /// </summary>
-        public static WaveletPack D34
+        public static WaveletPacket D34
         {
             get
             {
@@ -1616,7 +1616,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 35 order.
         /// </summary>
-        public static WaveletPack D35
+        public static WaveletPacket D35
         {
             get
             {
@@ -1699,7 +1699,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 36 order.
         /// </summary>
-        public static WaveletPack D36
+        public static WaveletPacket D36
         {
             get
             {
@@ -1784,7 +1784,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 37 order.
         /// </summary>
-        public static WaveletPack D37
+        public static WaveletPacket D37
         {
             get
             {
@@ -1871,7 +1871,7 @@
         /// <summary>
         /// Returns Daubechies wavelet of 38 order.
         /// </summary>
-        public static WaveletPack D38
+        public static WaveletPacket D38
         {
             get
             {

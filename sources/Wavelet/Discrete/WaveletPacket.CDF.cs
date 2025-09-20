@@ -7,28 +7,28 @@
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    public partial class WaveletPack
+    public partial class WaveletPacket
     {
         #region Cohen-Daubechies-Feaveau wavelets
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 1/1).
         /// </summary>
-        public static WaveletPack CDF11
+        public static WaveletPacket CDF11
         {
             get
             {
-                return WaveletPack.Bior11;
+                return WaveletPacket.Bior11;
             }
         }
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 1/3).
         /// </summary>
-        public static WaveletPack CDF13
+        public static WaveletPacket CDF13
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                    0.707106781186548f,
                    0.707106781186548f }, new float[] {
                    0.088388347648318f,
@@ -43,12 +43,12 @@
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 1/5).
         /// </summary>
-        public static WaveletPack CDF15
+        public static WaveletPacket CDF15
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                    0.707106781186548f,
                    0.707106781186548f }, new float[] {
                   -0.016572815184060f,
@@ -67,12 +67,12 @@
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 3/1).
         /// </summary>
-        public static WaveletPack CDF31
+        public static WaveletPacket CDF31
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                    0.176776695296637f,
                    0.530330085889911f,
                    0.530330085889911f,
@@ -87,12 +87,12 @@
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 5/1).
         /// </summary>
-        public static WaveletPack CDF51
+        public static WaveletPacket CDF51
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                    0.044194173824159f,
                    0.220970869120796f,
                    0.441941738241592f,
@@ -111,12 +111,12 @@
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 5/3).
         /// </summary>
-        public static WaveletPack CDF53
+        public static WaveletPacket CDF53
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                    0.044194173824159f,
                    0.220970869120796f,
                    0.441941738241592f,
@@ -139,12 +139,12 @@
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 5/5).
         /// </summary>
-        public static WaveletPack CDF55
+        public static WaveletPacket CDF55
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                    0.044194173824159f,
                    0.220970869120796f,
                    0.441941738241592f,
@@ -171,12 +171,12 @@
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 2/2).
         /// </summary>
-        public static WaveletPack CDF22
+        public static WaveletPacket CDF22
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                    0.353553390593274f,
                    0.707106781186548f,
                    0.353553390593274f,
@@ -193,12 +193,12 @@
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 2/4).
         /// </summary>
-        public static WaveletPack CDF24
+        public static WaveletPacket CDF24
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                    0.353553390593274f,
                    0.707106781186548f,
                    0.353553390593274f,
@@ -219,12 +219,12 @@
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 2/6).
         /// </summary>
-        public static WaveletPack CDF26
+        public static WaveletPacket CDF26
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                    0.353553390593274f,
                    0.707106781186548f,
                    0.353553390593274f,
@@ -249,12 +249,12 @@
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 4/2).
         /// </summary>
-        public static WaveletPack CDF42
+        public static WaveletPacket CDF42
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                    0.088388347648318f,
                    0.353553390593274f,
                    0.530330085889911f,
@@ -275,12 +275,12 @@
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 4/4).
         /// </summary>
-        public static WaveletPack CDF44
+        public static WaveletPacket CDF44
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                    0.088388347648318f,
                    0.353553390593274f,
                    0.530330085889911f,
@@ -305,12 +305,12 @@
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 4/6).
         /// </summary>
-        public static WaveletPack CDF46
+        public static WaveletPacket CDF46
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                    0.088388347648318f,
                    0.353553390593274f,
                    0.530330085889911f,
@@ -339,12 +339,12 @@
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 6/2).
         /// </summary>
-        public static WaveletPack CDF62
+        public static WaveletPacket CDF62
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                    0.022097086912080f,
                    0.132582521472478f,
                    0.331456303681194f,
@@ -368,12 +368,12 @@
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 6/4).
         /// </summary>
-        public static WaveletPack CDF64
+        public static WaveletPacket CDF64
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                    0.022097086912080f,
                    0.132582521472478f,
                    0.331456303681194f,
@@ -401,12 +401,12 @@
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 6/6).
         /// </summary>
-        public static WaveletPack CDF66
+        public static WaveletPacket CDF66
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                    0.022097086912080f,
                    0.132582521472478f,
                    0.331456303681194f,
@@ -438,12 +438,12 @@
         /// <summary>
         /// Returns Cohen-Daubechies-Feaveau wavelet (CDF 9/7).
         /// </summary>
-        public static WaveletPack CDF97
+        public static WaveletPacket CDF97
         {
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPack.Create(new float[] {
+                return WaveletPacket.Create(new float[] {
                  3.782845550750114e-02f,
                 -2.384946501955685e-02f,
                 -1.106244044092826e-01f,

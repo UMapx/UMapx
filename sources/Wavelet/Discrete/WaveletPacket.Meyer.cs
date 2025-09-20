@@ -9,13 +9,13 @@ namespace UMapx.Wavelet
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    public partial class WaveletPack
+    public partial class WaveletPacket
     {
         #region Meyer wavelet
         /// <summary>
         /// Returns the Meyer wavelet.
         /// </summary>
-        public static WaveletPack Meyer
+        public static WaveletPacket Meyer
         {
             get
             {
@@ -229,7 +229,7 @@ namespace UMapx.Wavelet
 
                 float[] ilp = Matrice.Flip(lp);
                 float[] ihp = Matrice.Flip(hp);
-                return new WaveletPack(lp, hp, ilp, ihp);
+                return new WaveletPacket(lp, hp, ilp, ihp);
             }
         }
         #endregion

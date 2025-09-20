@@ -7,13 +7,13 @@
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    public partial class WaveletPack
+    public partial class WaveletPacket
     {
         #region Coiflets wavelets
         /// <summary>
         /// Returns wavelet coiflet of 1 order.
         /// </summary>
-        public static WaveletPack C1
+        public static WaveletPacket C1
         {
             get
             {
@@ -29,7 +29,7 @@
         /// <summary>
         /// Returns wavelet coiflet of 2 order.
         /// </summary>
-        public static WaveletPack C2
+        public static WaveletPacket C2
         {
             get
             {
@@ -51,7 +51,7 @@
         /// <summary>
         /// Returns wavelet coiflet of 3 order.
         /// </summary>
-        public static WaveletPack C3
+        public static WaveletPacket C3
         {
             get
             {
@@ -79,7 +79,7 @@
         /// <summary>
         /// Returns wavelet coiflet of 4 order.
         /// </summary>
-        public static WaveletPack C4
+        public static WaveletPacket C4
         {
             get
             {
@@ -113,7 +113,7 @@
         /// <summary>
         /// Returns wavelet coiflet of 5 order.
         /// </summary>
-        public static WaveletPack C5
+        public static WaveletPacket C5
         {
             get
             {

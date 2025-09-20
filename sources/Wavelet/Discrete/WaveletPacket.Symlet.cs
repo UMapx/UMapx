@@ -7,7 +7,7 @@
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    public partial class WaveletPack
+    public partial class WaveletPacket
     {
         #region Symlets wavelets
         /// <summary>
@@ -16,18 +16,18 @@
         /// <remarks>
         /// Haar wavelet.
         /// </remarks>
-        public static WaveletPack S1
+        public static WaveletPacket S1
         {
             get
             {
                 // Haar's wavelet:
-                return WaveletPack.Haar;
+                return WaveletPacket.Haar;
             }
         }
         /// <summary>
         /// Returns wavelet symlet of 2 order.
         /// </summary>
-        public static WaveletPack S2
+        public static WaveletPacket S2
         {
             get
             {
@@ -37,7 +37,7 @@
         /// <summary>
         /// Returns wavelet symlet of 3 order.
         /// </summary>
-        public static WaveletPack S3
+        public static WaveletPacket S3
         {
             get
             {
@@ -47,7 +47,7 @@
         /// <summary>
         /// Returns wavelet symlet of 4 order.
         /// </summary>
-        public static WaveletPack S4
+        public static WaveletPacket S4
         {
             get
             {
@@ -57,7 +57,7 @@
         /// <summary>
         /// Returns wavelet symlet of 5 order.
         /// </summary>
-        public static WaveletPack S5
+        public static WaveletPacket S5
         {
             get
             {
@@ -77,7 +77,7 @@
         /// <summary>
         /// Returns wavelet symlet of 6 order.
         /// </summary>
-        public static WaveletPack S6
+        public static WaveletPacket S6
         {
             get
             {
@@ -99,7 +99,7 @@
         /// <summary>
         /// Returns wavelet symlet of 7 order.
         /// </summary>
-        public static WaveletPack S7
+        public static WaveletPacket S7
         {
             get
             {
@@ -123,7 +123,7 @@
         /// <summary>
         /// Returns wavelet symlet of 8 order.
         /// </summary>
-        public static WaveletPack S8
+        public static WaveletPacket S8
         {
             get
             {
@@ -149,7 +149,7 @@
         /// <summary>
         /// Returns wavelet symlet of 9 order.
         /// </summary>
-        public static WaveletPack S9
+        public static WaveletPacket S9
         {
             get
             {
@@ -177,7 +177,7 @@
         /// <summary>
         /// Returns wavelet symlet of 10 order.
         /// </summary>
-        public static WaveletPack S10
+        public static WaveletPacket S10
         {
             get
             {
@@ -207,7 +207,7 @@
         /// <summary>
         /// Returns wavelet symlet of 11 order.
         /// </summary>
-        public static WaveletPack S11
+        public static WaveletPacket S11
         {
             get
             {
@@ -217,7 +217,7 @@
         /// <summary>
         /// Returns wavelet symlet of 12 order.
         /// </summary>
-        public static WaveletPack S12
+        public static WaveletPacket S12
         {
             get
             {
@@ -227,7 +227,7 @@
         /// <summary>
         /// Returns wavelet symlet of 13 order.
         /// </summary>
-        public static WaveletPack S13
+        public static WaveletPacket S13
         {
             get
             {
@@ -237,7 +237,7 @@
         /// <summary>
         /// Returns wavelet symlet of 14 order.
         /// </summary>
-        public static WaveletPack S14
+        public static WaveletPacket S14
         {
             get
             {
@@ -247,7 +247,7 @@
         /// <summary>
         /// Returns wavelet symlet of 15 order.
         /// </summary>
-        public static WaveletPack S15
+        public static WaveletPacket S15
         {
             get
             {
@@ -257,7 +257,7 @@
         /// <summary>
         /// Returns wavelet symlet of 16 order.
         /// </summary>
-        public static WaveletPack S16
+        public static WaveletPacket S16
         {
             get
             {
@@ -267,7 +267,7 @@
         /// <summary>
         /// Returns wavelet symlet of 17 order.
         /// </summary>
-        public static WaveletPack S17
+        public static WaveletPacket S17
         {
             get
             {
@@ -277,7 +277,7 @@
         /// <summary>
         /// Returns wavelet symlet of 18 order.
         /// </summary>
-        public static WaveletPack S18
+        public static WaveletPacket S18
         {
             get
             {
@@ -287,7 +287,7 @@
         /// <summary>
         /// Returns wavelet symlet of 19 order.
         /// </summary>
-        public static WaveletPack S19
+        public static WaveletPacket S19
         {
             get
             {
@@ -297,7 +297,7 @@
         /// <summary>
         /// Returns wavelet symlet of 20 order.
         /// </summary>
-        public static WaveletPack S20
+        public static WaveletPacket S20
         {
             get
             {

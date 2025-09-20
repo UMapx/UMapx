@@ -29,7 +29,7 @@ namespace UMapx.Wavelet
         /// <param name="wavelet">Discrete wavelet</param>
         /// <param name="levels">Number of levels</param>
         /// <param name="normalized">Normalized transform or not</param>
-        public WaveletDecomposition(WaveletPack wavelet, int levels = 1, bool normalized = true)
+        public WaveletDecomposition(WaveletPacket wavelet, int levels = 1, bool normalized = true)
         {
             Wavelet = wavelet;
             Levels = levels;
@@ -69,11 +69,11 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Gets or sets the discrete wavelet.
         /// </summary>
-        public WaveletPack Wavelet
+        public WaveletPacket Wavelet
         {
             get
             {
-                return new WaveletPack(lp, hp, ilp, ihp);
+                return new WaveletPacket(lp, hp, ilp, ihp);
             }
             set
             {

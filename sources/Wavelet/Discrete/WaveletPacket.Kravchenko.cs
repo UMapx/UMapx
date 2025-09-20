@@ -9,13 +9,13 @@ namespace UMapx.Wavelet
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    public partial class WaveletPack
+    public partial class WaveletPacket
     {
         #region Kravchenko wavelet
         /// <summary>
         /// Returns Kravchenko wavelet.
         /// </summary>
-        public static WaveletPack Kravchenko
+        public static WaveletPacket Kravchenko
         {
             get
             {
@@ -96,7 +96,7 @@ namespace UMapx.Wavelet
                 };
 
                 // Kravchenko orthogonal wavelet:
-                return WaveletPack.Create(Matrice.Concat(left.Flip(), right));
+                return WaveletPacket.Create(Matrice.Concat(left.Flip(), right));
             }
         }
         #endregion

@@ -12,7 +12,7 @@ namespace UMapx.Wavelet
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
     [Serializable]
-    public partial class WaveletPack : ICloneable, ISerializable
+    public partial class WaveletPacket : ICloneable, ISerializable
     {
         #region Private data
         private float[] lp;        // Low-Pass filter
@@ -29,7 +29,7 @@ namespace UMapx.Wavelet
         /// <param name="hp">Wavelet function of forward transform</param>
         /// <param name="ilp">Scaling function of backward transform</param>
         /// <param name="ihp">Wavelet function of backward transform</param>
-        public WaveletPack(float[] lp, float[] hp, float[] ilp, float[] ihp)
+        public WaveletPacket(float[] lp, float[] hp, float[] ilp, float[] ihp)
         {
             this.lp = lp; this.hp = hp; this.ilp = ilp; this.ihp = ihp;
         }
@@ -123,14 +123,14 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="scaling">Scaling function</param>
         /// <returns>Discrete wavelet</returns>
-        public static WaveletPack Create(float[] scaling)
+        public static WaveletPacket Create(float[] scaling)
         {
             float[] lp = scaling;
             float[] hp = CQF(lp);
             float[] ilp = Matrice.Flip(lp);
             float[] ihp = Matrice.Flip(hp);
 
-            return new WaveletPack(lp, hp, ilp, ihp);
+            return new WaveletPacket(lp, hp, ilp, ihp);
         }
         /// <summary>
         /// Creates the discrete wavelet.
@@ -138,14 +138,14 @@ namespace UMapx.Wavelet
         /// <param name="scaling">Scaling function</param>
         /// <param name="wavelet">Wavelet function</param>
         /// <returns>Discrete wavelet</returns>
-        public static WaveletPack Create(float[] scaling, float[] wavelet)
+        public static WaveletPacket Create(float[] scaling, float[] wavelet)
         {
             float[] lp = scaling;
             float[] hp = wavelet;
             float[] ilp = Matrice.Flip(lp);
             float[] ihp = Matrice.Flip(hp);
 
-            return new WaveletPack(lp, hp, ilp, ihp);
+            return new WaveletPacket(lp, hp, ilp, ihp);
         }
         #endregion
 
@@ -156,7 +156,7 @@ namespace UMapx.Wavelet
         /// <returns>Discrete wavelet</returns>
         object ICloneable.Clone()
         {
-            return new WaveletPack(
+            return new WaveletPacket(
                 (float[])this.lp.Clone(),
                 (float[])this.hp.Clone(),
                 (float[])this.ilp.Clone(),
@@ -166,9 +166,9 @@ namespace UMapx.Wavelet
         /// Creates a copy of the discrete wavelet.
         /// </summary>
         /// <returns>Discrete wavelet</returns>
-        public WaveletPack Clone()
+        public WaveletPacket Clone()
         {
-            return new WaveletPack(
+            return new WaveletPacket(
                 (float[])this.lp.Clone(),
                 (float[])this.hp.Clone(),
                 (float[])this.ilp.Clone(),

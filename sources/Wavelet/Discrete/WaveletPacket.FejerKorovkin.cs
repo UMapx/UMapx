@@ -7,13 +7,13 @@
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    public partial class WaveletPack
+    public partial class WaveletPacket
     {
         #region Fejer-Korovkin wavelets
         /// <summary>
         /// Returns the Fejer-Korovkin wavelet of 4 order.
         /// </summary>
-        public static WaveletPack FK4
+        public static WaveletPacket FK4
         {
             get
             {
@@ -32,7 +32,7 @@
         /// <summary>
         /// Returns the Fejer-Korovkin wavelet of 6 order.
         /// </summary>
-        public static WaveletPack FK6
+        public static WaveletPacket FK6
         {
             get
             {
@@ -54,7 +54,7 @@
         /// <summary>
         /// Returns the Fejer-Korovkin wavelet of 8 order.
         /// </summary>
-        public static WaveletPack FK8
+        public static WaveletPacket FK8
         {
             get
             {
@@ -80,7 +80,7 @@
         /// <summary>
         /// Returns the Fejer-Korovkin wavelet of 14 order.
         /// </summary>
-        public static WaveletPack FK14
+        public static WaveletPacket FK14
         {
             get
             {
@@ -118,7 +118,7 @@
         /// <summary>
         /// Returns the Fejer-Korovkin wavelet of 22 order.
         /// </summary>
-        public static WaveletPack FK22
+        public static WaveletPacket FK22
         {
             get
             {

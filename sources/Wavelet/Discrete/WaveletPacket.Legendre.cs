@@ -7,7 +7,7 @@
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    public partial class WaveletPack
+    public partial class WaveletPacket
     {
         #region Legendre wavelets
         /// <summary>
@@ -16,12 +16,12 @@
         /// <remarks>
         /// Haar wavelet.
         /// </remarks>
-        public static WaveletPack L1
+        public static WaveletPacket L1
         {
             get
             {
                 // Haar's wavelet:
-                return WaveletPack.Haar;
+                return WaveletPacket.Haar;
             }
         }
         /// <summary>
@@ -30,7 +30,7 @@
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        public static WaveletPack L2
+        public static WaveletPacket L2
         {
             get
             {
@@ -43,7 +43,7 @@
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        public static WaveletPack L3
+        public static WaveletPacket L3
         {
             get
             {
@@ -56,7 +56,7 @@
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        public static WaveletPack L4
+        public static WaveletPacket L4
         {
             get
             {
@@ -77,7 +77,7 @@
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        public static WaveletPack L5
+        public static WaveletPacket L5
         {
             get
             {
@@ -100,7 +100,7 @@
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        public static WaveletPack L6
+        public static WaveletPacket L6
         {
             get
             {
@@ -129,7 +129,7 @@
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        public static WaveletPack L7
+        public static WaveletPacket L7
         {
             get
             {
@@ -159,7 +159,7 @@
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        public static WaveletPack L8
+        public static WaveletPacket L8
         {
             get
             {
@@ -191,7 +191,7 @@
         /// <remarks>
         /// Nonorthogonal wavelet.
         /// </remarks>
-        public static WaveletPack L9
+        public static WaveletPacket L9
         {
             get
             {

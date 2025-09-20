@@ -7,7 +7,7 @@
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Wavelet
     /// </remarks>
-    public partial class WaveletPack
+    public partial class WaveletPacket
     {
         #region Fbsp wavelets
         /// <summary>
@@ -16,7 +16,7 @@
         /// <remarks>
         /// Haar wavelet (delayed).
         /// </remarks>
-        public static WaveletPack Fbsp100
+        public static WaveletPacket Fbsp100
         {
             get
             {
@@ -26,7 +26,7 @@
         /// <summary>
         /// Returns B-spline wavelet 1-0-3.
         /// </summary>
-        public static WaveletPack Fbsp103
+        public static WaveletPacket Fbsp103
         {
             get
             {
@@ -36,7 +36,7 @@
         /// <summary>
         /// Returns B-spline wavelet 1-0-5.
         /// </summary>
-        public static WaveletPack Fbsp105
+        public static WaveletPacket Fbsp105
         {
             get
             {
