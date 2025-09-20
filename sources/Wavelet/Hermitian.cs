@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous Hermitian wavelet.
     /// </summary>
     [Serializable]
-    public class HermitianWavelet : IWaveletComplex32
+    public class Hermitian : IWaveletComplex32
     {
         #region Private data
         private int derivative;
@@ -18,7 +18,7 @@ namespace UMapx.Wavelet
         /// Initializes the continuous Hermitian wavelet.
         /// </summary>
         /// <param name="derivative">Derivative order [1, 3]</param>
-        public HermitianWavelet(int derivative = 1)
+        public Hermitian(int derivative = 1)
         {
             Derivative = derivative;
         }

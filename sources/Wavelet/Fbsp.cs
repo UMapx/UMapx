@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous complex frequency B-spline wavelet.
     /// </summary>
     [Serializable]
-    public class FbspWavelet : IWaveletComplex32
+    public class Fbsp : IWaveletComplex32
     {
         #region Private data
         private float m;
@@ -22,7 +22,7 @@ namespace UMapx.Wavelet
         /// <param name="m">Order</param>
         /// <param name="fb">Bandwidth</param>
         /// <param name="fc">Center frequency</param>
-        public FbspWavelet(float m = 3, float fb = 1, float fc = 2)
+        public Fbsp(float m = 3, float fb = 1, float fc = 2)
         {
             M = m; Fb = fb; Fc = fc;
         }

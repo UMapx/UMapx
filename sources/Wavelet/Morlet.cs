@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the normalized continuous Morlet wavelet with zero mean.
     /// </summary>
     [Serializable]
-    public class MorletWavelet : IWaveletFloat
+    public class Morlet : IWaveletFloat
     {
         #region Private data
         private float omega0 = 5;
@@ -18,7 +18,7 @@ namespace UMapx.Wavelet
         /// Initializes the continuous Morlet wavelet.
         /// </summary>
         /// <param name="omega0">Central frequency</param>
-        public MorletWavelet(float omega0)
+        public Morlet(float omega0)
         {
             this.Omega0 = omega0;
         }

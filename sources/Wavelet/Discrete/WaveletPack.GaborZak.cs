@@ -380,7 +380,7 @@ namespace UMapx.Wavelet
             // • This discrete wavelet filter bank was found and introduced by Valery Asiryan (Yerevan, Armenia, 2025).
 
             var N = (int)Maths.Pow(2, n);
-            var window = Gabor.Scaled(frameSize: N);
+            var window = Window.Gabor.Scaled(frameSize: N);
             var zak = new FastZakTransform(m: 2);
             var g0 = window.GetWindow();
             var h0 = zak.Orthogonalize(g0);

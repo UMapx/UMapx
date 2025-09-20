@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous complex Gaussian wavelet.
     /// </summary>
     [Serializable]
-    public class ComplexGaussianWavelet : IWaveletComplex32
+    public class ComplexGaussian : IWaveletComplex32
     {
         #region Private data
         private int derivative;
@@ -18,7 +18,7 @@ namespace UMapx.Wavelet
         /// Initializes the continuous complex Gaussian wavelet.
         /// </summary>
         /// <param name="derivative">Derivative order [1, 8]</param>
-        public ComplexGaussianWavelet(int derivative = 1)
+        public ComplexGaussian(int derivative = 1)
         {
             Derivative = derivative;
         }

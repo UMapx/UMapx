@@ -7,13 +7,13 @@ namespace UMapx.Wavelet
     /// Defines the continuous Meyer wavelet.
     /// </summary>
     [Serializable]
-    public class MeyerWavelet : IWaveletFloat
+    public class Meyer : IWaveletFloat
     {
         #region Wavelet components
         /// <summary>
         /// Initializes the continuous Meyer wavelet.
         /// </summary>
-        public MeyerWavelet() { }
+        public Meyer() { }
         /// <summary>
         /// Returns the value of the scaling function.
         /// </summary>

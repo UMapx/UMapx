@@ -1,18 +1,19 @@
 ﻿using System;
+using UMapx.Core;
 
 namespace UMapx.Wavelet
 {
     /// <summary>
-    /// Defines the continuous Haar wavelet on [0,1).
+    /// Defines the continuous Mexican hat wavelet.
     /// </summary>
     [Serializable]
-    public class HaarWavelet : IWaveletFloat
+    public class MexicanHat : IWaveletFloat
     {
-        #region Haar wavelet components
+        #region Wavelet components
         /// <summary>
-        /// Initializes the continuous Haar wavelet.
+        /// Initializes the continuous Mexican hat wavelet.
         /// </summary>
-        public HaarWavelet() { }
+        public MexicanHat() { }
         /// <summary>
         /// Returns the value of the scaling function.
         /// </summary>
@@ -20,22 +21,17 @@ namespace UMapx.Wavelet
         /// <returns>Function</returns>
         public float Scaling(float x)
         {
-            if (0 <= x && x < 1)
-            {
-                return 1.0f;
-            }
-            return 0.0f;
+            throw new NotSupportedException();
         }
         /// <summary>
-        /// Returns the value of the wavelet function defined on [0,1).
+        /// Returns the value of the wavelet function.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Function</returns>
         public float Wavelet(float x)
         {
-            if (0 <= x && x < 0.5f) return 1f;
-            if (0.5f <= x && x < 1f) return -1f;
-            return 0f;
+            float x2 = x * x;
+            return 2.0f / (float)(Math.Sqrt(3) * Maths.Pow(Maths.Pi, 0.25f)) * (1 - x2) * Maths.Exp(-x2 / 2);
         }
         #endregion
     }

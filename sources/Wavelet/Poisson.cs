@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the continuous Poisson wavelet.
     /// </summary>
     [Serializable]
-    public class PoissonWavelet : IWaveletFloat
+    public class Poisson : IWaveletFloat
     {
         #region Private data
         private int n;
@@ -18,7 +18,7 @@ namespace UMapx.Wavelet
         /// Initializes the continuous Poisson wavelet.
         /// </summary>
         /// <param name="n">Order [1, +inf)</param>
-        public PoissonWavelet(int n = 1)
+        public Poisson(int n = 1)
         {
             N = n;
         }

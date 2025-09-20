@@ -32453,66 +32453,66 @@
             Polygon.
             </summary>
         </member>
-        <member name="T:UMapx.Wavelet.ComplexGaussianWavelet">
+        <member name="T:UMapx.Wavelet.ComplexGaussian">
             <summary>
             Defines the continuous complex Gaussian wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.ComplexGaussianWavelet.#ctor(System.Int32)">
+        <member name="M:UMapx.Wavelet.ComplexGaussian.#ctor(System.Int32)">
             <summary>
             Initializes the continuous complex Gaussian wavelet.
             </summary>
             <param name="derivative">Derivative order [1, 8]</param>
         </member>
-        <member name="P:UMapx.Wavelet.ComplexGaussianWavelet.Derivative">
+        <member name="P:UMapx.Wavelet.ComplexGaussian.Derivative">
             <summary>
             Gets or sets the derivative order [1, 8].
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.ComplexGaussianWavelet.Scaling(System.Single)">
+        <member name="M:UMapx.Wavelet.ComplexGaussian.Scaling(System.Single)">
             <summary>
             Returns the value of the scaling function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.ComplexGaussianWavelet.Wavelet(System.Single)">
+        <member name="M:UMapx.Wavelet.ComplexGaussian.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="T:UMapx.Wavelet.ComplexMorletWavelet">
+        <member name="T:UMapx.Wavelet.ComplexMorlet">
             <summary>
             Defines the normalized continuous complex Morlet wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.ComplexMorletWavelet.#ctor(System.Single,System.Single)">
+        <member name="M:UMapx.Wavelet.ComplexMorlet.#ctor(System.Single,System.Single)">
             <summary>
             Initializes the continuous complex Morlet wavelet.
             </summary>
             <param name="fb">Bandwidth</param>
             <param name="fc">Center frequency</param>
         </member>
-        <member name="P:UMapx.Wavelet.ComplexMorletWavelet.Fb">
+        <member name="P:UMapx.Wavelet.ComplexMorlet.Fb">
             <summary>
             Gets or sets the bandwidth.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.ComplexMorletWavelet.Fc">
+        <member name="P:UMapx.Wavelet.ComplexMorlet.Fc">
             <summary>
             Gets or sets the center frequency.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.ComplexMorletWavelet.Scaling(System.Single)">
+        <member name="M:UMapx.Wavelet.ComplexMorlet.Scaling(System.Single)">
             <summary>
             Returns the value of the scaling function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.ComplexMorletWavelet.Wavelet(System.Single)">
+        <member name="M:UMapx.Wavelet.ComplexMorlet.Wavelet(System.Single)">
             <summary>
             Returns the value of the normalized wavelet function.
             </summary>
@@ -33507,12 +33507,12 @@
             </summary>
             <param name="input">Input</param>
         </member>
-        <member name="T:UMapx.Wavelet.FbspWavelet">
+        <member name="T:UMapx.Wavelet.Fbsp">
             <summary>
             Defines the continuous complex frequency B-spline wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.FbspWavelet.#ctor(System.Single,System.Single,System.Single)">
+        <member name="M:UMapx.Wavelet.Fbsp.#ctor(System.Single,System.Single,System.Single)">
             <summary>
             Initializes the continuous complex frequency B-spline wavelet.
             </summary>
@@ -33520,41 +33520,41 @@
             <param name="fb">Bandwidth</param>
             <param name="fc">Center frequency</param>
         </member>
-        <member name="P:UMapx.Wavelet.FbspWavelet.M">
+        <member name="P:UMapx.Wavelet.Fbsp.M">
             <summary>
             Gets or sets the value of the wavelet order.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.FbspWavelet.Fb">
+        <member name="P:UMapx.Wavelet.Fbsp.Fb">
             <summary>
             Gets or sets the value of the bandwidth parameter.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.FbspWavelet.Fc">
+        <member name="P:UMapx.Wavelet.Fbsp.Fc">
             <summary>
             Gets or sets the center frequency value of the wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.FbspWavelet.Scaling(System.Single)">
+        <member name="M:UMapx.Wavelet.Fbsp.Scaling(System.Single)">
             <summary>
             Returns the value of the scaling function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.FbspWavelet.Wavelet(System.Single)">
+        <member name="M:UMapx.Wavelet.Fbsp.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="T:UMapx.Wavelet.GaborWavelet">
+        <member name="T:UMapx.Wavelet.Gabor">
             <summary>
             Defines the continuous complex Gabor wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.GaborWavelet.#ctor(System.Single,System.Single,System.Single)">
+        <member name="M:UMapx.Wavelet.Gabor.#ctor(System.Single,System.Single,System.Single)">
             <summary>
             Initializes the continuous complex Gabor wavelet.
             </summary>
@@ -33562,144 +33562,144 @@
             <param name="k0">Modulation factor</param>
             <param name="a">Factor</param>
         </member>
-        <member name="P:UMapx.Wavelet.GaborWavelet.X0">
+        <member name="P:UMapx.Wavelet.Gabor.X0">
             <summary>
             Gets or sets the initial value.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.GaborWavelet.K0">
+        <member name="P:UMapx.Wavelet.Gabor.K0">
             <summary>
             Gets or sets the modulation factor.
             </summary>
         </member>
-        <member name="P:UMapx.Wavelet.GaborWavelet.A">
+        <member name="P:UMapx.Wavelet.Gabor.A">
             <summary>
             Gets or sets the factor.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.GaborWavelet.Scaling(System.Single)">
+        <member name="M:UMapx.Wavelet.Gabor.Scaling(System.Single)">
             <summary>
             Returns the value of the scaling function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.GaborWavelet.Wavelet(System.Single)">
+        <member name="M:UMapx.Wavelet.Gabor.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.GaborWavelet.WaveletReal(System.Single)">
+        <member name="M:UMapx.Wavelet.Gabor.WaveletReal(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="T:UMapx.Wavelet.GaussianWavelet">
+        <member name="T:UMapx.Wavelet.Gaussian">
             <summary>
             Defines the continuous Gaussian wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.GaussianWavelet.#ctor(System.Int32)">
+        <member name="M:UMapx.Wavelet.Gaussian.#ctor(System.Int32)">
             <summary>
             Initializes the continuous Gaussian wavelet.
             </summary>
             <param name="derivative">Derivative order [1, 8]</param>
         </member>
-        <member name="P:UMapx.Wavelet.GaussianWavelet.Derivative">
+        <member name="P:UMapx.Wavelet.Gaussian.Derivative">
             <summary>
             Gets or sets the derivative order [1, 8].
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.GaussianWavelet.Scaling(System.Single)">
+        <member name="M:UMapx.Wavelet.Gaussian.Scaling(System.Single)">
             <summary>
             Returns the value of the scaling function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.GaussianWavelet.Wavelet(System.Single)">
+        <member name="M:UMapx.Wavelet.Gaussian.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="T:UMapx.Wavelet.HaarWavelet">
+        <member name="T:UMapx.Wavelet.Haar">
             <summary>
             Defines the continuous Haar wavelet on [0,1).
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.HaarWavelet.#ctor">
+        <member name="M:UMapx.Wavelet.Haar.#ctor">
             <summary>
             Initializes the continuous Haar wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.HaarWavelet.Scaling(System.Single)">
+        <member name="M:UMapx.Wavelet.Haar.Scaling(System.Single)">
             <summary>
             Returns the value of the scaling function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.HaarWavelet.Wavelet(System.Single)">
+        <member name="M:UMapx.Wavelet.Haar.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function defined on [0,1).
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="T:UMapx.Wavelet.HermitianHatWavelet">
+        <member name="T:UMapx.Wavelet.Hermitian">
             <summary>
-            Defines the continuous Hermitian hat wavelet.
+            Defines the continuous Hermitian wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.HermitianHatWavelet.#ctor">
+        <member name="M:UMapx.Wavelet.Hermitian.#ctor(System.Int32)">
             <summary>
-            Initializes the continuous Hermitian Hat wavelet.
+            Initializes the continuous Hermitian wavelet.
+            </summary>
+            <param name="derivative">Derivative order [1, 3]</param>
+        </member>
+        <member name="P:UMapx.Wavelet.Hermitian.Derivative">
+            <summary>
+            Gets or sets the derivative order [1, 3].
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.HermitianHatWavelet.Scaling(System.Single)">
+        <member name="M:UMapx.Wavelet.Hermitian.Scaling(System.Single)">
             <summary>
             Returns the value of the scaling function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.HermitianHatWavelet.Wavelet(System.Single)">
+        <member name="M:UMapx.Wavelet.Hermitian.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="T:UMapx.Wavelet.HermitianWavelet">
+        <member name="T:UMapx.Wavelet.HermitianHat">
             <summary>
-            Defines the continuous Hermitian wavelet.
+            Defines the continuous Hermitian hat wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.HermitianWavelet.#ctor(System.Int32)">
+        <member name="M:UMapx.Wavelet.HermitianHat.#ctor">
             <summary>
-            Initializes the continuous Hermitian wavelet.
-            </summary>
-            <param name="derivative">Derivative order [1, 3]</param>
-        </member>
-        <member name="P:UMapx.Wavelet.HermitianWavelet.Derivative">
-            <summary>
-            Gets or sets the derivative order [1, 3].
+            Initializes the continuous Hermitian Hat wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.HermitianWavelet.Scaling(System.Single)">
+        <member name="M:UMapx.Wavelet.HermitianHat.Scaling(System.Single)">
             <summary>
             Returns the value of the scaling function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.HermitianWavelet.Wavelet(System.Single)">
+        <member name="M:UMapx.Wavelet.HermitianHat.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
@@ -33754,132 +33754,132 @@
             Gets or sets the discrete wavelet decomposition.
             </summary>
         </member>
-        <member name="T:UMapx.Wavelet.MexicanHatWavelet">
+        <member name="T:UMapx.Wavelet.MexicanHat">
             <summary>
             Defines the continuous Mexican hat wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.MexicanHatWavelet.#ctor">
+        <member name="M:UMapx.Wavelet.MexicanHat.#ctor">
             <summary>
             Initializes the continuous Mexican hat wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.MexicanHatWavelet.Scaling(System.Single)">
+        <member name="M:UMapx.Wavelet.MexicanHat.Scaling(System.Single)">
             <summary>
             Returns the value of the scaling function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.MexicanHatWavelet.Wavelet(System.Single)">
+        <member name="M:UMapx.Wavelet.MexicanHat.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="T:UMapx.Wavelet.MeyerWavelet">
+        <member name="T:UMapx.Wavelet.Meyer">
             <summary>
             Defines the continuous Meyer wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.MeyerWavelet.#ctor">
+        <member name="M:UMapx.Wavelet.Meyer.#ctor">
             <summary>
             Initializes the continuous Meyer wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.MeyerWavelet.Scaling(System.Single)">
+        <member name="M:UMapx.Wavelet.Meyer.Scaling(System.Single)">
             <summary>
             Returns the value of the scaling function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.MeyerWavelet.Wavelet(System.Single)">
+        <member name="M:UMapx.Wavelet.Meyer.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="T:UMapx.Wavelet.MorletWavelet">
+        <member name="T:UMapx.Wavelet.Morlet">
             <summary>
             Defines the normalized continuous Morlet wavelet with zero mean.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.MorletWavelet.#ctor(System.Single)">
+        <member name="M:UMapx.Wavelet.Morlet.#ctor(System.Single)">
             <summary>
             Initializes the continuous Morlet wavelet.
             </summary>
             <param name="omega0">Central frequency</param>
         </member>
-        <member name="P:UMapx.Wavelet.MorletWavelet.Omega0">
+        <member name="P:UMapx.Wavelet.Morlet.Omega0">
             <summary>
             Gets or sets the central frequency.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.MorletWavelet.Scaling(System.Single)">
+        <member name="M:UMapx.Wavelet.Morlet.Scaling(System.Single)">
             <summary>
             Returns the value of the scaling function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.MorletWavelet.Wavelet(System.Single)">
+        <member name="M:UMapx.Wavelet.Morlet.Wavelet(System.Single)">
             <summary>
             Returns the value of the normalized wavelet function with zero mean.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="T:UMapx.Wavelet.PoissonWavelet">
+        <member name="T:UMapx.Wavelet.Poisson">
             <summary>
             Defines the continuous Poisson wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.PoissonWavelet.#ctor(System.Int32)">
+        <member name="M:UMapx.Wavelet.Poisson.#ctor(System.Int32)">
             <summary>
             Initializes the continuous Poisson wavelet.
             </summary>
             <param name="n">Order [1, +inf)</param>
         </member>
-        <member name="P:UMapx.Wavelet.PoissonWavelet.N">
+        <member name="P:UMapx.Wavelet.Poisson.N">
             <summary>
             Gets or sets the order [1, +inf).
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.PoissonWavelet.Scaling(System.Single)">
+        <member name="M:UMapx.Wavelet.Poisson.Scaling(System.Single)">
             <summary>
             Returns the value of the scaling function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.PoissonWavelet.Wavelet(System.Single)">
+        <member name="M:UMapx.Wavelet.Poisson.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="T:UMapx.Wavelet.ShannonWavelet">
+        <member name="T:UMapx.Wavelet.Shannon">
             <summary>
             Defines the continuous Shannon wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.ShannonWavelet.#ctor">
+        <member name="M:UMapx.Wavelet.Shannon.#ctor">
             <summary>
             Initializes the continuous Shannon wavelet.
             </summary>
         </member>
-        <member name="M:UMapx.Wavelet.ShannonWavelet.Scaling(System.Single)">
+        <member name="M:UMapx.Wavelet.Shannon.Scaling(System.Single)">
             <summary>
             Returns the value of the scaling function.
             </summary>
             <param name="x">Value</param>
             <returns>Function</returns>
         </member>
-        <member name="M:UMapx.Wavelet.ShannonWavelet.Wavelet(System.Single)">
+        <member name="M:UMapx.Wavelet.Shannon.Wavelet(System.Single)">
             <summary>
             Returns the value of the wavelet function.
             </summary>

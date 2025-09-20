@@ -7,7 +7,7 @@ namespace UMapx.Wavelet
     /// Defines the normalized continuous complex Morlet wavelet.
     /// </summary>
     [Serializable]
-    public class ComplexMorletWavelet : IWaveletComplex32
+    public class ComplexMorlet : IWaveletComplex32
     {
         #region Private data
         private float fb;
@@ -20,7 +20,7 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="fb">Bandwidth</param>
         /// <param name="fc">Center frequency</param>
-        public ComplexMorletWavelet(float fb = 0.5f, float fc = 1)
+        public ComplexMorlet(float fb = 0.5f, float fc = 1)
         {
             Fb = fb; Fc = fc;
         }
@@ -68,10 +68,25 @@ namespace UMapx.Wavelet
         /// <returns>Function</returns>
         public Complex32 Wavelet(float x)
         {
-            float amplitude = Maths.Pow(Maths.Pi, -0.25f) / Maths.Sqrt(fb);
-            float correction = Maths.Exp(-2 * Maths.Pi * Maths.Pi * fc * fc * fb);
-            Complex32 exponent = Maths.Exp(2 * Maths.Pi * Maths.I * fc * x) - correction;
-            return amplitude * exponent * Maths.Exp(-(x * x) / fb);
+            // Validate (optional but recommended)
+            if (fb <= 0)
+                throw new ArgumentException("Fb (variance) must be > 0");
+            if (fc < 0)
+                throw new ArgumentException("Fc (center frequency) must be >= 0");
+
+            // Normalization: (π·fb)^(-1/4)
+            float amplitude = Maths.Pow(Maths.Pi * fb, -0.25f);
+
+            // Zero-mean correction for admissibility with Gaussian exp(-x^2 / (2·fb))
+            float correction = Maths.Exp(-2f * Maths.Pi * Maths.Pi * fb * fc * fc);
+
+            // Complex carrier exp(i·2π·fc·x)
+            Complex32 carrier = Maths.Exp(2f * Maths.Pi * Maths.I * fc * x);
+
+            // Gaussian envelope with variance fb (σ² = fb)
+            float gaussian = Maths.Exp(-(x * x) / (2f * fb));
+
+            return amplitude * (carrier - correction) * gaussian;
         }
         #endregion
     }

@@ -4,22 +4,22 @@ using UMapx.Core;
 namespace UMapx.Wavelet
 {
     /// <summary>
-    /// Defines the continuous Mexican hat wavelet.
+    /// Defines the continuous Hermitian hat wavelet.
     /// </summary>
     [Serializable]
-    public class MexicanHatWavelet : IWaveletFloat
+    public class HermitianHat : IWaveletComplex32
     {
         #region Wavelet components
         /// <summary>
-        /// Initializes the continuous Mexican hat wavelet.
+        /// Initializes the continuous Hermitian Hat wavelet.
         /// </summary>
-        public MexicanHatWavelet() { }
+        public HermitianHat() { }
         /// <summary>
         /// Returns the value of the scaling function.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Function</returns>
-        public float Scaling(float x)
+        public Complex32 Scaling(float x)
         {
             throw new NotSupportedException();
         }
@@ -28,10 +28,11 @@ namespace UMapx.Wavelet
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Function</returns>
-        public float Wavelet(float x)
+        public Complex32 Wavelet(float x)
         {
             float x2 = x * x;
-            return 2.0f / (float)(Math.Sqrt(3) * Maths.Pow(Maths.Pi, 0.25f)) * (1 - x2) * Maths.Exp(-x2 / 2);
+            float cf = 2.0f / Maths.Sqrt(5) * Maths.Pow(Maths.Pi, -0.25f);
+            return cf * (1 - x2 + Maths.I * x) * Maths.Exp(-0.5f * x2);
         }
         #endregion
     }
