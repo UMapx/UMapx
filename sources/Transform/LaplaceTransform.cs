@@ -81,12 +81,12 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public override Complex32[] Forward(Complex32[] A)
         {
-            // Fourier transform:
-            Complex32[] B = DFT.Forward(A);
+            // Apply Laplace damping before Fourier transform:
+            Complex32[] weighted = (Complex32[])A.Clone();
+            LaplaceTransform.ApplyLaplaceOperator(weighted, sigma);
 
-            // Fourier to Laplace transform:
-            LaplaceTransform.ApplyLaplaceOperator(B, sigma);
-            return B;
+            // Fourier transform of damped signal:
+            return DFT.Forward(weighted);
         }
         /// <summary>
         /// Backward transform.
@@ -95,12 +95,12 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public override Complex32[] Backward(Complex32[] B)
         {
-            // Laplace to Fourier transform:
-            Complex32[] A = (Complex32[])B.Clone();
-            LaplaceTransform.ApplyLaplaceInverseOperator(A, sigma);
-
             // Fourier transform:
-            return DFT.Backward(A);
+            Complex32[] A = DFT.Backward(B);
+
+            // Compensate Laplace damping:
+            LaplaceTransform.ApplyLaplaceInverseOperator(A, sigma);
+            return A;
         }
         #endregion
 
