@@ -47,8 +47,8 @@ namespace UMapx.Decomposition
                 // Symmetric path: eigen-Jacobi -> SVD
                 var (evals, Q) = JacobiEigenSymmetric(X, eps, maxSweeps); // Q: n×n
                 var S = new float[n];
-                var U = (float[][])Q.Clone();
-                var V = (float[][])Q.Clone();
+                var U = Q.Copy();
+                var V = Q.Copy();
 
                 for (int j = 0; j < n; j++)
                 {

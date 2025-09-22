@@ -563,5 +563,26 @@ namespace UMapx.Core
             return H;
         }
         #endregion
+
+        #region Copy
+        /// <summary>
+        /// Returns a copy of the input jagged array.
+        /// </summary>
+        /// <param name="m">Jagged array</param>
+        /// <returns>Jagged array</returns>
+        public static float[][] Copy(this float[][] m)
+        {
+            int r0 = m.GetLength(0), r1;
+            var n = new float[r0][];
+
+            for (int i = 0; i < r0; i++)
+            {
+                r1 = m[i].GetLength(0);
+                n[i] = new float[r1];
+                Array.Copy(m[i], n[i], r1);
+            }
+            return n;
+        }
+        #endregion
     }
 }

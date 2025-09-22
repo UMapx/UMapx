@@ -4564,6 +4564,13 @@
             <param name="m">Matrix</param>
             <returns>Matrix</returns>
         </member>
+        <member name="M:UMapx.Core.Jagged.Copy(System.Single[][])">
+            <summary>
+            Returns a copy of the input jagged array.
+            </summary>
+            <param name="m">Jagged array</param>
+            <returns>Jagged array</returns>
+        </member>
         <member name="T:UMapx.Core.Kernel">
             <summary>
             Used to work with kernel functions.
