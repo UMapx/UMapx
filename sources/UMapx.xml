@@ -10418,6 +10418,34 @@
             <param name="result">Matrix</param>
             <returns>Boolean</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.Copy(System.Single[])">
+            <summary>
+            Returns a copy of the input array.
+            </summary>
+            <param name="v">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Copy(UMapx.Core.Complex32[])">
+            <summary>
+            Returns a copy of the input array.
+            </summary>
+            <param name="v">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Copy(System.Single[0:,0:])">
+            <summary>
+            Returns a copy of the input matrix.
+            </summary>
+            <param name="m">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.Copy(UMapx.Core.Complex32[0:,0:])">
+            <summary>
+            Returns a copy of the input matrix.
+            </summary>
+            <param name="m">Matrix</param>
+            <returns>Matrix</returns>
+        </member>
         <member name="M:UMapx.Core.Matrice.Solve(System.Single[0:,0:])">
             <summary>
             Returns a vector corresponding to the solution of a system of linear algebraic equations: Ax = b.

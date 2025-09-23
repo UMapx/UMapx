@@ -11407,6 +11407,59 @@ namespace UMapx.Core
         }
         #endregion
 
+        #region Copy methods
+        /// <summary>
+        /// Returns a copy of the input array.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
+        public static float[] Copy(this float[] v)
+        {
+            int n0 = v.Length;
+            var n = new float[n0];
+            Array.Copy(v, n, n0);
+            return n;
+        }
+        /// <summary>
+        /// Returns a copy of the input array.
+        /// </summary>
+        /// <param name="v">Array</param>
+        /// <returns>Array</returns>
+        public static Complex32[] Copy(this Complex32[] v)
+        {
+            int n0 = v.Length;
+            var n = new Complex32[n0];
+            Array.Copy(v, n, n0);
+            return n;
+        }
+        /// <summary>
+        /// Returns a copy of the input matrix.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
+        public static float[,] Copy(this float[,] m)
+        {
+            int r0 = m.GetLength(0);
+            int r1 = m.GetLength(1);
+            var n = new float[r0, r1];
+            Array.Copy(m, n, m.Length);
+            return n;
+        }
+        /// <summary>
+        /// Returns a copy of the input matrix.
+        /// </summary>
+        /// <param name="m">Matrix</param>
+        /// <returns>Matrix</returns>
+        public static Complex32[,] Copy(this Complex32[,] m)
+        {
+            int r0 = m.GetLength(0);
+            int r1 = m.GetLength(1);
+            var n = new Complex32[r0, r1];
+            Array.Copy(m, n, m.Length);
+            return n;
+        }
+        #endregion
+
         // Solvers
 
         #region Gauss-Jordan elimination
