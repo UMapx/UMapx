@@ -50,7 +50,7 @@ namespace UMapx.Core
         /// <typeparam name="T">Type</typeparam>
         /// <param name="A">Array</param>
         /// <param name="vertical">Vertical or not</param>
-        public static void Print<T>(this T[] A, bool vertical = false)
+        public static void Print<T>(this T[] A, bool vertical)
         {
             int n = A?.Length ?? 0;
 
