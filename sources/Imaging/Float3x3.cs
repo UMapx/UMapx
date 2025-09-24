@@ -259,7 +259,7 @@ namespace UMapx.Imaging
         /// <returns>New matrix equal to <c>this * T(x,y)</c></returns>
         public Float3x3 Translate(float x, float y)
         {
-            var matrix = Clone();
+            var matrix = Copy();
             var g = matrix.coefficients[2][0];
             var h = matrix.coefficients[2][1];
             var i = matrix.coefficients[2][2];
@@ -280,7 +280,7 @@ namespace UMapx.Imaging
         /// <returns>New matrix equal to <c>this * S(x,y)</c></returns>
         public Float3x3 Scale(float x, float y)
         {
-            var matrix = Clone();
+            var matrix = Copy();
             matrix.coefficients[0][0] *= x;
             matrix.coefficients[0][1] *= x;
             matrix.coefficients[0][2] *= x;
@@ -296,7 +296,7 @@ namespace UMapx.Imaging
         /// Deep copy of the matrix.
         /// </summary>
         /// <returns>Cloned matrix</returns>
-        public Float3x3 Clone()
+        public Float3x3 Copy()
         {
             var r = new Float3x3();
             for (int i = 0; i < 3; i++)

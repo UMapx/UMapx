@@ -21846,7 +21846,7 @@
             <param name="y">Scale on Y</param>
             <returns>New matrix equal to <c>this * S(x,y)</c></returns>
         </member>
-        <member name="M:UMapx.Imaging.Float3x3.Clone">
+        <member name="M:UMapx.Imaging.Float3x3.Copy">
             <summary>
             Deep copy of the matrix.
             </summary>
