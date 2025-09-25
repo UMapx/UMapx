@@ -79,19 +79,22 @@ namespace UMapx.Imaging
         /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb || bmSrc.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             // filter
             switch (space)
             {
-                case Imaging.Space.HSB:
+                case Space.HSB:
                     ApplyHSB(bmData, bmSrc);
                     break;
-                case Imaging.Space.HSL:
+                case Space.HSL:
                     ApplyHSL(bmData, bmSrc);
                     break;
-                case Imaging.Space.YCbCr:
+                case Space.YCbCr:
                     ApplyYCbCr(bmData, bmSrc);
                     break;
-                case Imaging.Space.RGB:
+                case Space.RGB:
                     ApplyRGB(bmData, bmSrc);
                     break;
                 default:

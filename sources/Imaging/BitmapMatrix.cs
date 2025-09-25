@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
 using UMapx.Colorspace;
@@ -33,6 +34,9 @@ namespace UMapx.Imaging
         /// <returns>RGBA structure array</returns>
         public unsafe static float[][,] ToRGB(BitmapData bmData, bool alpha = false)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             // params
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -144,7 +148,7 @@ namespace UMapx.Imaging
                         p[k + 0] = Maths.Byte(x[j, i] * 255.0f);
                         p[k + 1] = Maths.Byte(y[j, i] * 255.0f);
                         p[k + 2] = Maths.Byte(z[j, i] * 255.0f);
-                        p[k + 3] = (byte)255;
+                        p[k + 3] = 255;
                     }
                 });
             }
@@ -160,6 +164,9 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public unsafe static void FromRGB(this float[][,] array, BitmapData bmData)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             // matrices
             float[,] x = array[0];
             float[,] y = array[1];
@@ -209,7 +216,7 @@ namespace UMapx.Imaging
                         p[k + 0] = Maths.Byte(x[j, i] * 255.0f);
                         p[k + 1] = Maths.Byte(y[j, i] * 255.0f);
                         p[k + 2] = Maths.Byte(z[j, i] * 255.0f);
-                        p[k + 3] = (byte)255;
+                        p[k + 3] = 255;
                     }
                 });
             }
@@ -249,6 +256,9 @@ namespace UMapx.Imaging
         /// <returns>HSB structure array</returns>
         public unsafe static float[][,] ToHSB(this BitmapData bmData, bool alpha = false)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             // params
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -372,7 +382,7 @@ namespace UMapx.Imaging
                         p[k + 0] = rgb.Blue;
                         p[k + 1] = rgb.Green;
                         p[k + 2] = rgb.Red;
-                        p[k + 3] = (byte)255;
+                        p[k + 3] = 255;
                     }
                 });
             }
@@ -387,6 +397,9 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public unsafe static void FromHSB(this float[][,] array, BitmapData bmData)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             // matrices
             float[,] x = array[0];
             float[,] y = array[1];
@@ -444,7 +457,7 @@ namespace UMapx.Imaging
                         p[k + 0] = rgb.Blue;
                         p[k + 1] = rgb.Green;
                         p[k + 2] = rgb.Red;
-                        p[k + 3] = (byte)255;
+                        p[k + 3] = 255;
                     }
                 });
             }
@@ -486,6 +499,9 @@ namespace UMapx.Imaging
         /// <returns>HSL structure array</returns>
         public unsafe static float[][,] ToHSL(this BitmapData bmData, bool alpha = false)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             // params
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -609,7 +625,7 @@ namespace UMapx.Imaging
                         p[k + 0] = rgb.Blue;
                         p[k + 1] = rgb.Green;
                         p[k + 2] = rgb.Red;
-                        p[k + 3] = (byte)255;
+                        p[k + 3] = 255;
                     }
                 });
             }
@@ -624,6 +640,9 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public unsafe static void FromHSL(this float[][,] array, BitmapData bmData)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             // matrices
             float[,] x = array[0];
             float[,] y = array[1];
@@ -681,7 +700,7 @@ namespace UMapx.Imaging
                         p[k + 0] = rgb.Blue;
                         p[k + 1] = rgb.Green;
                         p[k + 2] = rgb.Red;
-                        p[k + 3] = (byte)255;
+                        p[k + 3] = 255;
                     }
                 });
             }
@@ -721,6 +740,9 @@ namespace UMapx.Imaging
         /// <returns>YCbCr structure array</returns>
         public unsafe static float[][,] ToYCbCr(this BitmapData bmData, bool alpha = false)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             // params
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -844,7 +866,7 @@ namespace UMapx.Imaging
                         p[k + 0] = rgb.Blue;
                         p[k + 1] = rgb.Green;
                         p[k + 2] = rgb.Red;
-                        p[k + 3] = (byte)255;
+                        p[k + 3] = 255;
                     }
                 });
             }
@@ -859,6 +881,9 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public unsafe static void FromYCbCr(this float[][,] array, BitmapData bmData)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             // matrices
             float[,] x = array[0];
             float[,] y = array[1];
@@ -916,7 +941,7 @@ namespace UMapx.Imaging
                         p[k + 0] = rgb.Blue;
                         p[k + 1] = rgb.Green;
                         p[k + 2] = rgb.Red;
-                        p[k + 3] = (byte)255;
+                        p[k + 3] = 255;
                     }
                 });
             }
@@ -954,6 +979,9 @@ namespace UMapx.Imaging
         /// <returns>Matrix</returns>
         public unsafe static float[,] ToGrayscale(this BitmapData bmData)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             float[,] rgb = new float[height, width];
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -1006,6 +1034,9 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public unsafe static void FromGrayscale(this float[,] m, BitmapData bmData)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             int width = m.GetLength(1), height = m.GetLength(0);
             int stride = bmData.Stride;
             byte* p = (byte*)bmData.Scan0.ToPointer();

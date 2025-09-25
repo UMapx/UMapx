@@ -75,57 +75,11 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         /// <param name="bmSrc">Bitmap data</param>
-        public void Apply(BitmapData bmData, BitmapData bmSrc)
+        public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
-            ApplyInternal(bmData, bmSrc);
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="Src">Bitmap</param>
-        public void Apply(Bitmap Data, Bitmap Src)
-        {
-            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
-            Apply(bmData, bmSrc);
-            BitmapFormat.Unlock(Data, bmData);
-            BitmapFormat.Unlock(Src, bmSrc);
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        public void Apply(BitmapData bmData)
-        {
-            Bitmap current = BitmapFormat.Bitmap(bmData);
-            Bitmap src = (Bitmap)current.Clone();
-            BitmapData bmSrc = BitmapFormat.Lock32bpp(src);
-            Apply(bmData, bmSrc);
-            BitmapFormat.Unlock(src, bmSrc);
-            src.Dispose();
-            current.Dispose();
-        }
-        /// <summary>
-        /// Apply filter.
-        /// </summary>
-        /// <param name="Data">Bitmap</param>
-        public void Apply(Bitmap Data)
-        {
-            var src = (Bitmap)Data.Clone();
-            Apply(Data, src);
-            src.Dispose();
-        }
-        #endregion
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb || bmSrc.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
 
-        #region Private voids
-        /// <summary>
-        /// Internal apply method.
-        /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
-        private unsafe void ApplyInternal(BitmapData bmData, BitmapData bmSrc)
-        {
             int width = bmData.Width;
             int height = bmData.Height;
             int stride = bmData.Stride;
@@ -193,6 +147,41 @@ namespace UMapx.Imaging
                     pDst[3] = pSrc[3];
                 }
             });
+        }
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="Data">Bitmap</param>
+        /// <param name="Src">Bitmap</param>
+        public void Apply(Bitmap Data, Bitmap Src)
+        {
+            BitmapData bmData = BitmapFormat.Lock32bpp(Data);
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
+            Apply(bmData, bmSrc);
+            BitmapFormat.Unlock(Data, bmData);
+            BitmapFormat.Unlock(Src, bmSrc);
+        }
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        public void Apply(BitmapData bmData)
+        {
+            Bitmap src = BitmapFormat.ToBitmap(bmData);
+            BitmapData bmSrc = BitmapFormat.Lock32bpp(src);
+            Apply(bmData, bmSrc);
+            BitmapFormat.Unlock(src, bmSrc);
+            src.Dispose();
+        }
+        /// <summary>
+        /// Apply filter.
+        /// </summary>
+        /// <param name="Data">Bitmap</param>
+        public void Apply(Bitmap Data)
+        {
+            var src = (Bitmap)Data.Clone();
+            Apply(Data, src);
+            src.Dispose();
         }
         #endregion
     }

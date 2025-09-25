@@ -19,6 +19,9 @@ namespace UMapx.Imaging
         /// <returns>Array</returns>
         public unsafe static int[] Histogram(this BitmapData bmData)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             int[] rgb = new int[256];
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int y, x, width = bmData.Width, height = bmData.Height;
@@ -42,6 +45,9 @@ namespace UMapx.Imaging
         /// <returns>Array</returns>
         public unsafe static int[] Histogram(this BitmapData bmData, RGBA channel)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             int[] rgb = new int[256];
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int y, x, width = bmData.Width, height = bmData.Height;
@@ -168,6 +174,9 @@ namespace UMapx.Imaging
         /// <returns>Integer number</returns>
         public static int OtsuThreshold(this BitmapData bmData)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             float[] v = new float[256];
             int[] h = Statistics.Histogram(bmData);
             float diff, w1, w2;
@@ -205,6 +214,9 @@ namespace UMapx.Imaging
         /// <returns>Integer number</returns>
         public unsafe static int SISThreshold(this BitmapData bmData)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             int width1 = width - 1, height1 = height - 1, offset = stride - width;
             double ex, ey, weight, weightTotal = 0, total = 0;
@@ -262,7 +274,7 @@ namespace UMapx.Imaging
             return sum;
         }
         /// <summary>
-        /// Mean.
+        /// Mu.
         /// </summary>
         /// <param name="init">Init</param>
         /// <param name="end">End</param>

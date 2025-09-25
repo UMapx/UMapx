@@ -64,6 +64,9 @@ namespace UMapx.Imaging
         /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb || bmSrc.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             byte* p = (byte*)bmData.Scan0.ToPointer();
             byte* pSrc = (byte*)bmSrc.Scan0.ToPointer();
             int y, x, width = bmData.Width, height = bmData.Height;

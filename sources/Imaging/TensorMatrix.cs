@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
 using UMapx.Core;
 
@@ -31,6 +32,9 @@ namespace UMapx.Imaging
         /// <returns>RGB tensor arrays</returns>
         public unsafe static byte[][] ToByteTensor(this BitmapData bmData, bool rgb = false)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             // params
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -145,6 +149,9 @@ namespace UMapx.Imaging
         /// <returns>RGB tensor arrays</returns>
         public unsafe static float[][] ToFloatTensor(this BitmapData bmData, bool rgb = false)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             // params
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
             byte* p = (byte*)bmData.Scan0.ToPointer();

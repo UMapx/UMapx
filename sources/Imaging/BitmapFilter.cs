@@ -61,6 +61,9 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public void Apply(BitmapData bmData)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             // filter
             switch (space)
             {
@@ -98,7 +101,7 @@ namespace UMapx.Imaging
         /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
-        private unsafe void ApplyRGB(BitmapData bmData)
+        private void ApplyRGB(BitmapData bmData)
         {
             float[][,] rgb = BitmapMatrix.ToRGB(bmData, true);
 
@@ -112,7 +115,7 @@ namespace UMapx.Imaging
         /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
-        private unsafe void ApplyHSB(BitmapData bmData)
+        private void ApplyHSB(BitmapData bmData)
         {
             float[][,] hsb = BitmapMatrix.ToHSB(bmData, true);
             this.filter.Apply(hsb[2]);
@@ -122,7 +125,7 @@ namespace UMapx.Imaging
         /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
-        private unsafe void ApplyHSL(BitmapData bmData)
+        private void ApplyHSL(BitmapData bmData)
         {
             float[][,] hsl = BitmapMatrix.ToHSL(bmData, true);
             this.filter.Apply(hsl[2]);
@@ -132,7 +135,7 @@ namespace UMapx.Imaging
         /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
-        private unsafe void ApplyYCbCr(BitmapData bmData)
+        private void ApplyYCbCr(BitmapData bmData)
         {
             float[][,] ycbcr = BitmapMatrix.ToYCbCr(bmData, true);
             this.filter.Apply(ycbcr[0]);
@@ -142,7 +145,7 @@ namespace UMapx.Imaging
         /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
-        private unsafe void ApplyGrayscale(BitmapData bmData)
+        private void ApplyGrayscale(BitmapData bmData)
         {
             float[,] y = BitmapMatrix.ToGrayscale(bmData);
             this.filter.Apply(y);
