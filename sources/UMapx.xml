@@ -21041,11 +21041,18 @@
         </member>
         <member name="M:UMapx.Imaging.DepthMatrix.ToDepth(System.Drawing.Bitmap)">
             <summary>
-            Converts Bitmap into unshort matrix.
+            Converts Bitmap into ushort matrix.
             </summary>
-            <param name="depth">Image</param>
-            <returns>Bitmap</returns>
+            <param name="bitmap">Bitmap</param>
+            <returns>Depth</returns>
             <remarks>It locks bitmap in 24bpp RGB format.</remarks>
+        </member>
+        <member name="M:UMapx.Imaging.DepthMatrix.ToDepth(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Converts Bitmap data into ushort matrix.
+            </summary>
+            <param name="bmData">Bitmap data</param>
+            <returns>Depth</returns>
         </member>
         <member name="M:UMapx.Imaging.DepthMatrix.FromDepth(System.UInt16[0:,0:])">
             <summary>

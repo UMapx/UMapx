@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
 using UMapx.Colorspace;
 using UMapx.Core;
@@ -12,17 +13,34 @@ namespace UMapx.Imaging
     {
         #region Depth convert components
         /// <summary>
-        /// Converts Bitmap into unshort matrix.
+        /// Converts Bitmap into ushort matrix.
         /// </summary>
-        /// <param name="depth">Image</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="bitmap">Bitmap</param>
+        /// <returns>Depth</returns>
         /// <remarks>It locks bitmap in 24bpp RGB format.</remarks>
-        public unsafe static ushort[,] ToDepth(this Bitmap depth)
+        public unsafe static ushort[,] ToDepth(this Bitmap bitmap)
         {
-            var width = depth.Width;
-            var height = depth.Height;
+            var width = bitmap.Width;
+            var height = bitmap.Height;
             var rectangle = new Rectangle(0, 0, width, height);
-            var bmData = depth.LockBits(rectangle, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            var bmData = bitmap.LockBits(rectangle, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            var output = ToDepth(bmData);
+            bitmap.Unlock(bmData);
+            return output;
+        }
+        /// <summary>
+        /// Converts Bitmap data into ushort matrix.
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <returns>Depth</returns>
+        public unsafe static ushort[,] ToDepth(this BitmapData bmData)
+        {
+            var p = bmData.PixelFormat == PixelFormat.Format24bppRgb  ? 3 :
+                    bmData.PixelFormat == PixelFormat.Format32bppArgb ? 4 : 
+                    throw new NotSupportedException("Only support Format24bppRgb and Format32bppArgb pixelFormat");
+
+            var width = bmData.Width;
+            var height = bmData.Height;
             var stride = bmData.Stride;
             var src = (byte*)bmData.Scan0.ToPointer();
             var output = new ushort[height, width];
@@ -31,13 +49,12 @@ namespace UMapx.Imaging
             {
                 for (int y = 0; y < height; y++)
                 {
-                    var k = x * 3 + y * stride;
-                    output[y, x] = (ushort)RGB.Average(src[k + 0], src[k + 1], src[k + 2]);
+                    var k = x * p + y * stride;
+                    output[y, x] = (ushort)RGB.Average(src[k + 2], src[k + 1], src[k + 0]);
                     // ignore alpha channel
                 }
             }
 
-            depth.Unlock(bmData);
             return output;
         }
         /// <summary>
