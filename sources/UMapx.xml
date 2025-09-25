@@ -21061,7 +21061,7 @@
             </summary>
             <param name="depth">Image</param>
             <returns>Bitmap</returns>
-            <remarks>It returns bitmap in 24bpp RGB format.</remarks>
+            <remarks>It locks bitmap in 24bpp RGB format.</remarks>
         </member>
         <member name="M:UMapx.Imaging.DepthMatrix.FromDepth(System.UInt16[0:,0:])">
             <summary>
