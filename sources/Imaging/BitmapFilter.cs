@@ -61,9 +61,6 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public void Apply(BitmapData bmData)
         {
-            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
-                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
-
             // filter
             switch (space)
             {
