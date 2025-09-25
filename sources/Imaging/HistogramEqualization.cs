@@ -26,6 +26,9 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+            
             int[] H = Statistics.Histogram(bmData);
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int y, x, width = bmData.Width, height = bmData.Height;

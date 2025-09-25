@@ -76,13 +76,11 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public void Apply(BitmapData bmData)
         {
-            Bitmap current = BitmapFormat.Bitmap(bmData);
-            Bitmap Src = (Bitmap)current.Clone();
+            Bitmap Src = BitmapFormat.ToBitmap(bmData);
             BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
             Apply(bmData, bmSrc);
             BitmapFormat.Unlock(Src, bmSrc);
             Src.Dispose();
-            current.Dispose();
         }
         /// <summary>
         /// Apply filter.
@@ -101,6 +99,9 @@ namespace UMapx.Imaging
         /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb || bmSrc.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             var width = bmData.Width;
             var height = bmData.Height;
             var rectangle = new Rectangle(0, 0, width, height);

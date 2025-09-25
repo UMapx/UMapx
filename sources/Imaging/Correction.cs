@@ -45,7 +45,7 @@ namespace UMapx.Imaging
         public Correction()
         {
             Values = new float[256];
-            Space = Imaging.Space.RGB;
+            Space = Space.RGB;
         }
         /// <summary>
         /// Gets or sets the mask array.
@@ -84,6 +84,9 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             // rebuild?
             if (rebuild == true)
             {
@@ -93,16 +96,16 @@ namespace UMapx.Imaging
             // filter
             switch (space)
             {
-                case Imaging.Space.HSB:
+                case Space.HSB:
                     ApplyHSB(bmData);
                     break;
-                case Imaging.Space.HSL:
+                case Space.HSL:
                     ApplyHSL(bmData);
                     break;
-                case Imaging.Space.YCbCr:
+                case Space.YCbCr:
                     ApplyYCbCr(bmData);
                     break;
-                case Imaging.Space.RGB:
+                case Space.RGB:
                     ApplyRGB(bmData);
                     break;
                 default:

@@ -137,8 +137,10 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public void Apply(BitmapData bmData)
         {
-            Bitmap current = BitmapFormat.Bitmap(bmData);
-            Bitmap Max = (Bitmap)current.Clone();
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
+            Bitmap Max = BitmapFormat.ToBitmap(bmData);
             Bitmap Min = (Bitmap)Max.Clone();
 
             di.Apply(Max); er.Apply(Min);
@@ -147,14 +149,16 @@ namespace UMapx.Imaging
             BitmapData bmMin = BitmapFormat.Lock32bpp(Min);
 
             if (smoothing)
+            {
                 gb.Apply(bmMax); gb.Apply(bmMin);
+            }
 
             Apply(bmData, bmMax, bmMin);
 
             BitmapFormat.Unlock(Max, bmMax);
             BitmapFormat.Unlock(Min, bmMin);
 
-            Max.Dispose(); Min.Dispose(); current.Dispose();
+            Max.Dispose(); Min.Dispose();
         }
         /// <summary>
         /// Apply filter.
@@ -172,7 +176,9 @@ namespace UMapx.Imaging
             BitmapData bmMin = BitmapFormat.Lock32bpp(Min);
 
             if (smoothing)
+            {
                 gb.Apply(bmMax); gb.Apply(bmMin);
+            }
 
             Apply(bmData, bmMax, bmMin);
 

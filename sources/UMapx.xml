@@ -19404,19 +19404,11 @@
             <param name="b">Bitmap</param>
             <returns>Bitmap</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.Bitmap(System.Drawing.Imaging.BitmapData)">
+        <member name="M:UMapx.Imaging.BitmapFormat.ToBitmap(System.Drawing.Imaging.BitmapData)">
             <summary>
-            Gets the Bitmap from the BitmapData.
+            Converts BitmapData to Bitmap.
             </summary>
             <param name="bmData">Bitmap data</param>
-            <returns>Bitmap</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.Bitmap(System.Drawing.Bitmap,System.Drawing.Imaging.PixelFormat)">
-            <summary>
-            Converts Bitmap to a specific format
-            </summary>
-            <param name="b">Bitmap</param>
-            <param name="pixelformat">Pixel format</param>
             <returns>Bitmap</returns>
         </member>
         <member name="M:UMapx.Imaging.BitmapFormat.Lock32bpp(System.Drawing.Bitmap)">
@@ -19432,14 +19424,6 @@
             </summary>
             <param name="b">Bitmap</param>
             <param name="bmData">Bitmap data</param>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.CreateBitmap(System.Drawing.Size,System.Drawing.Color)">
-            <summary>
-            Returns new bitmap.
-            </summary>
-            <param name="size">Size</param>
-            <param name="color">Color</param>
-            <returns>Bitmap</returns>
         </member>
         <member name="T:UMapx.Imaging.BitmapMatrix">
             <summary>
@@ -25833,7 +25817,7 @@
         </member>
         <member name="M:UMapx.Imaging.Statistics.Mu(System.Int32,System.Int32,System.Int32[])">
             <summary>
-            Mean.
+            Mu.
             </summary>
             <param name="init">Init</param>
             <param name="end">End</param>
@@ -26592,13 +26576,6 @@
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
-        </member>
-        <member name="M:UMapx.Imaging.Wiener.ApplyInternal(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
-            <summary>
-            Internal apply method.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="bmSrc">Bitmap data</param>
         </member>
         <member name="T:UMapx.Imaging.YCbCrFilter">
             <summary>

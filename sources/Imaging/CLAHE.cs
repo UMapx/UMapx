@@ -68,6 +68,9 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             int width = bmData.Width;
             int height = bmData.Height;
             int stride = bmData.Stride;

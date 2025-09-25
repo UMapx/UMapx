@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
@@ -103,23 +104,44 @@ namespace UMapx.Imaging
             return new Bitmap(stream);
         }
         /// <summary>
-        /// Gets the Bitmap from the BitmapData (not a copy).
+        /// Converts BitmapData to Bitmap.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         /// <returns>Bitmap</returns>
-        public static Bitmap Bitmap(this BitmapData bmData)
+        public unsafe static Bitmap ToBitmap(this BitmapData bmData)
         {
-            return new Bitmap(bmData.Width, bmData.Height, bmData.Stride, bmData.PixelFormat, bmData.Scan0);
-        }
-        /// <summary>
-        /// Converts Bitmap to a specific format.
-        /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <param name="pixelformat">Pixel format</param>
-        /// <returns>Bitmap</returns>
-        public static Bitmap Bitmap(this Bitmap b, PixelFormat pixelformat)
-        {
-            return b.Clone(new Rectangle(0, 0, b.Width, b.Height), pixelformat);
+            int w = bmData.Width;
+            int h = bmData.Height;
+            var format = bmData.PixelFormat;
+
+            var dst = new Bitmap(w, h, format);
+            var rect = new Rectangle(0, 0, w, h);
+            var dstData = dst.LockBits(rect, ImageLockMode.WriteOnly, format);
+
+            try
+            {
+                int bpp = Image.GetPixelFormatSize(format) / 8;
+                int rowBytes = checked(w * bpp);
+
+                byte* sBase = (byte*)bmData.Scan0;
+                int sStride = bmData.Stride;
+
+                byte* dBase = (byte*)dstData.Scan0;
+                int dStride = dstData.Stride;
+
+                for (int y = 0; y < h; y++)
+                {
+                    byte* s = sBase + (sStride > 0 ? y * sStride : (h - 1 - y) * (-sStride));
+                    byte* d = dBase + y * dStride;
+                    Buffer.MemoryCopy(s, d, rowBytes, rowBytes);
+                }
+
+                return dst;
+            }
+            finally
+            {
+                dst.UnlockBits(dstData);
+            }
         }
         #endregion
 
@@ -141,22 +163,6 @@ namespace UMapx.Imaging
         public static void Unlock(this Bitmap b, BitmapData bmData)
         {
             b.UnlockBits(bmData);
-        }
-        #endregion
-
-        #region Bitmap voids
-        /// <summary>
-        /// Returns new bitmap.
-        /// </summary>
-        /// <param name="size">Size</param>
-        /// <param name="color">Color</param>
-        /// <returns>Bitmap</returns>
-        public static Bitmap CreateBitmap(this Size size, Color color)
-        {
-            var bitmap = new Bitmap(size.Width, size.Height);
-            using var graphics = Graphics.FromImage(bitmap);
-            graphics.Clear(color);
-            return bitmap;
         }
         #endregion
     }
