@@ -103,7 +103,7 @@ namespace UMapx.Imaging
             return new Bitmap(stream);
         }
         /// <summary>
-        /// Gets the Bitmap from the BitmapData.
+        /// Gets the Bitmap from the BitmapData (not a copy).
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         /// <returns>Bitmap</returns>
@@ -112,7 +112,7 @@ namespace UMapx.Imaging
             return new Bitmap(bmData.Width, bmData.Height, bmData.Stride, bmData.PixelFormat, bmData.Scan0);
         }
         /// <summary>
-        /// Converts Bitmap to a specific format
+        /// Converts Bitmap to a specific format.
         /// </summary>
         /// <param name="b">Bitmap</param>
         /// <param name="pixelformat">Pixel format</param>
