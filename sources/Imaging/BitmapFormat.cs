@@ -143,6 +143,15 @@ namespace UMapx.Imaging
                 dst.UnlockBits(dstData);
             }
         }
+        /// <summary>
+        /// Converts Bitmap to 32bpp ARGB format.
+        /// </summary>
+        /// <param name="b">Bitmap</param>
+        /// <returns>Bitmap</returns>
+        public static Bitmap To32bpp(this Bitmap b)
+        {
+            return b.Clone(new Rectangle(0, 0, b.Width, b.Height), PixelFormat.Format32bppArgb);
+        }
         #endregion
 
         #region BitmapData voids

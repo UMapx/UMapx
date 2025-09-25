@@ -13165,7 +13165,6 @@
             A = U1 * S1 * X and B = U2 * S2 * X, where U1 and U2 have orthonormal
             columns, S1 and S2 are diagonal (with non-negative entries) and X is an
             invertible matrix.
-            
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Generalized_singular_value_decomposition
             </remarks>
@@ -19409,6 +19408,13 @@
             Converts BitmapData to Bitmap.
             </summary>
             <param name="bmData">Bitmap data</param>
+            <returns>Bitmap</returns>
+        </member>
+        <member name="M:UMapx.Imaging.BitmapFormat.To32bpp(System.Drawing.Bitmap)">
+            <summary>
+            Converts Bitmap to 32bpp ARGB format.
+            </summary>
+            <param name="b">Bitmap</param>
             <returns>Bitmap</returns>
         </member>
         <member name="M:UMapx.Imaging.BitmapFormat.Lock32bpp(System.Drawing.Bitmap)">
