@@ -16,6 +16,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="depth">Image</param>
         /// <returns>Bitmap</returns>
+        /// <remarks>It returns bitmap in 24bpp RGB format.</remarks>
         public unsafe static ushort[,] ToDepth(this Bitmap depth)
         {
             var width = depth.Width;
@@ -44,6 +45,7 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="depth">Matrix</param>
         /// <returns>Bitmap</returns>
+        /// <remarks>It returns bitmap in 24bpp RGB format.</remarks>
         public unsafe static Bitmap FromDepth(this ushort[,] depth)
         {
             var width = depth.GetLength(1);
