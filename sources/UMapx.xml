@@ -19426,20 +19426,6 @@
             <param name="b">Bitmap</param>
             <returns>Bitmap data</returns>
         </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.Lock24bpp(System.Drawing.Bitmap)">
-            <summary>
-            Blocks Bitmap in system memory.
-            </summary>
-            <param name="b">Bitmap</param>
-            <returns>Bitmap data</returns>
-        </member>
-        <member name="M:UMapx.Imaging.BitmapFormat.Lock8bpp(System.Drawing.Bitmap)">
-            <summary>
-            Blocks Bitmap in system memory.
-            </summary>
-            <param name="b">Bitmap</param>
-            <returns>Bitmap data</returns>
-        </member>
         <member name="M:UMapx.Imaging.BitmapFormat.Unlock(System.Drawing.Bitmap,System.Drawing.Imaging.BitmapData)">
             <summary>
             Unblocks Bitmap in system memory.

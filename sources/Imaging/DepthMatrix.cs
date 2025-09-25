@@ -18,9 +18,10 @@ namespace UMapx.Imaging
         /// <returns>Bitmap</returns>
         public unsafe static ushort[,] ToDepth(this Bitmap depth)
         {
-            var bmData = depth.Lock32bpp();
-            var width = bmData.Width;
-            var height = bmData.Height;
+            var width = depth.Width;
+            var height = depth.Height;
+            var rectangle = new Rectangle(0, 0, width, height);
+            var bmData = depth.LockBits(rectangle, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
             var stride = bmData.Stride;
             var src = (byte*)bmData.Scan0.ToPointer();
             var output = new ushort[height, width];
@@ -31,6 +32,7 @@ namespace UMapx.Imaging
                 {
                     var k = x * 3 + y * stride;
                     output[y, x] = (ushort)RGB.Average(src[k + 0], src[k + 1], src[k + 2]);
+                    // ignore alpha channel
                 }
             }
 
@@ -58,6 +60,7 @@ namespace UMapx.Imaging
                 {
                     var k = x * 3 + y * stride;
                     dst[k + 0] = dst[k + 1] = dst[k + 2] = Maths.Byte((float)depth[y, x] / byte.MaxValue);
+                    // ignore alpha channel
                 }
             }
 
