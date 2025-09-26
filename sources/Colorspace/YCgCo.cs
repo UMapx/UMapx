@@ -16,7 +16,7 @@ namespace UMapx.Colorspace
 
         #region Structure components
         /// <summary>
-        /// Creates an instance of the structure YDbDr.
+        /// Creates an instance of the structure YCgCo.
         /// </summary>
         /// <param name="y">Y [0, 1]</param>
         /// <param name="cg">Cg [-0.5, 0.5]</param>
