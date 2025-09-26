@@ -177,26 +177,23 @@ namespace UMapx.Decomposition
             qzit(n, a, b, eps, matz, z, ref ierr);
         }
         /// <summary>
-        ///   Adaptation of the original Fortran QZHES routine from EISPACK.
+        /// First QZ stage: reduce B to upper triangular form and A to upper Hessenberg form using orthogonal transformations.
         /// </summary>
         /// <remarks>
-        ///   This subroutine is the first step of the qz algorithm
-        ///   for solving generalized matrix eigenvalue problems,
-        ///   Siam J. Number. anal. 10, 241-256(1973) by Moler and Stewart.
-        ///
-        ///   This subroutine accepts a pair of real general matrices and
-        ///   reduces one of them to upper Hessenberg form and the other
-        ///   to upper triangular form using orthogonal transformations.
-        ///   it is usually followed by  qzit,  qzval  and, possibly,  qzvec.
-        ///   
-        ///   For the full documentation, please check the original function.
+        /// Port of EISPACK <c>QZHES</c> (Moler–Stewart, SIAM J. Numer. Anal., 1973).
+        /// <para>On exit: B is upper triangular; A is upper Hessenberg. If <paramref name="matz"/> is true, Z accumulates the
+        /// right transformations such that the similarity actions A ← GᵀAG, B ← GᵀBG are recorded in Z ← ZG.</para>
+        /// <para>All operations are in place; input matrices are overwritten.</para>
         /// </remarks>
-        /// <param name="n"></param>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <param name="matz"></param>
-        /// <param name="z"></param>
-        /// <returns></returns>
+        /// <param name="n">Matrix order (rows = cols = n)</param>
+        /// <param name="a">Input A; overwritten with its upper-Hessenberg form. Modified in place</param>
+        /// <param name="b">Input B; overwritten with its upper-triangular form. Modified in place</param>
+        /// <param name="matz">
+        /// If true, right orthogonal transformations are accumulated into <paramref name="z"/>; otherwise Z is ignored
+        /// </param>
+        /// <param name="z">
+        /// Right transformation accumulator Z (n×n). If <paramref name="matz"/> is true, updated as Z ← ZG; otherwise unused
+        /// </param>
         private static void qzhes(int n, float[][] a, float[][] b, bool matz, float[][] z)
         {
             int i, j, k, l;
@@ -335,31 +332,26 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        ///   Adaptation of the original Fortran QZIT routine from EISPACK.
+        /// Second QZ stage: iterative QZ step (bulge chasing) to drive A to quasi-triangular form while keeping B triangular.
         /// </summary>
         /// <remarks>
-        ///   This subroutine is the second step of the qz algorithm
-        ///   for solving generalized matrix eigenvalue problems,
-        ///   Siam J. Number. anal. 10, 241-256(1973) by Moler and Stewart,
-        ///   as modified in technical note nasa tn d-7305(1973) by ward.
-        ///   
-        ///   This subroutine accepts a pair of real matrices, one of them
-        ///   in upper Hessenberg form and the other in upper triangular form.
-        ///   it reduces the Hessenberg matrix to quasi-triangular form using
-        ///   orthogonal transformations while maintaining the triangular form
-        ///   of the other matrix.  it is usually preceded by  qzhes  and
-        ///   followed by  qzval  and, possibly,  qzvec.
-        ///   
-        ///   For the full documentation, please check the original function.
+        /// Port of EISPACK <c>QZIT</c> with Ward's NASA TN D-7305 modification. Implements single- and double-shift
+        /// iterations, choosing shifts from trailing 1×1 or 2×2 blocks. Converges subdiagonals of A to zero (up to tolerance),
+        /// revealing 1×1 (real) and 2×2 (complex-conjugate) blocks.
+        /// <para>Overwrites A, B, and (optionally) Z in place. <paramref name="ierr"/> is set if the iteration cap (≈ 30·n)
+        /// is exceeded.</para>
         /// </remarks>
-        /// <param name="n"></param>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <param name="eps1"></param>
-        /// <param name="matz"></param>
-        /// <param name="z"></param>
-        /// <param name="ierr"></param>
-        /// <returns></returns>
+        /// <param name="n">Matrix order</param>
+        /// <param name="a">On entry: upper-Hessenberg from <see cref="qzhes"/>; on exit: quasi-triangular S. Modified in place</param>
+        /// <param name="b">On entry: upper-triangular from <see cref="qzhes"/>; on exit: upper-triangular T. Modified in place</param>
+        /// <param name="eps1">
+        /// Relative convergence tolerance. If zero, machine roundoff is used (via <see cref="Epsilon(float)"/>)
+        /// </param>
+        /// <param name="matz">If true, accumulate right transformations into <paramref name="z"/></param>
+        /// <param name="z">Right orthogonal accumulator Z (updated if <paramref name="matz"/> is true)</param>
+        /// <param name="ierr">
+        /// Output status: 0 if all subdiagonals converged; otherwise set to <c>en+1</c> at failure as in EISPACK
+        /// </param>
         private static void qzit(int n, float[][] a, float[][] b, float eps1, bool matz, float[][] z, ref int ierr)
         {
 
@@ -744,32 +736,24 @@ namespace UMapx.Decomposition
             return;
         }
         /// <summary>
-        ///   Adaptation of the original Fortran QZVAL routine from EISPACK.
+        /// Third QZ stage: extract generalized eigenvalue numerators/denominators from (S,T) after convergence.
         /// </summary>
         /// <remarks>
-        ///   This subroutine is the third step of the qz algorithm
-        ///   for solving generalized matrix eigenvalue problems,
-        ///   Siam J. Number. anal. 10, 241-256(1973) by Moler and Stewart.
-        ///   
-        ///   This subroutine accepts a pair of real matrices, one of them
-        ///   in quasi-triangular form and the other in upper triangular form.
-        ///   it reduces the quasi-triangular matrix further, so that any
-        ///   remaining 2-by-2 blocks correspond to pairs of complex
-        ///   Eigenvalues, and returns quantities whose ratios give the
-        ///   generalized eigenvalues.  it is usually preceded by  qzhes
-        ///   and  qzit  and may be followed by  qzvec.
-        ///   
-        ///   For the full documentation, please check the original function.
+        /// Port of EISPACK <c>QZVAL</c>. Given S (quasi-triangular) and T (upper triangular), this routine
+        /// reduces any remaining 2×2 blocks in S consistently with T, and fills arrays such that
+        /// λ_j = (alfr[j] + i·alfi[j]) / beta[j].
+        /// <para>
+        /// If <paramref name="matz"/> is true, right transformations are accumulated into Z for later use by <see cref="qzvec"/>.
+        /// </para>
         /// </remarks>
-        /// <param name="n"></param>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <param name="alfr"></param>
-        /// <param name="alfi"></param>
-        /// <param name="beta"></param>
-        /// <param name="matz"></param>
-        /// <param name="z"></param>
-        /// <returns></returns>
+        /// <param name="n">Matrix order</param>
+        /// <param name="a">On entry: S from <see cref="qzit"/>; may be locally modified. On exit: still quasi-triangular</param>
+        /// <param name="b">On entry: T from <see cref="qzit"/>; may be locally modified. On exit: still upper triangular</param>
+        /// <param name="alfr">Real parts of α_j (numerators) for generalized λ_j = α_j / β_j. Length n. Written by the routine</param>
+        /// <param name="alfi">Imag parts of α_j. Length n. Written by the routine (zero for real eigenvalues)</param>
+        /// <param name="beta">Denominators β_j (nonnegative). Length n. Written by the routine</param>
+        /// <param name="matz">If true, accumulate right transformations into <paramref name="z"/></param>
+        /// <param name="z">Right transformation accumulator Z (updated if <paramref name="matz"/> is true)</param>
         private static void qzval(int n, float[][] a, float[][] b, float[] alfr, float[] alfi, float[] beta, bool matz, float[][] z)
         {
             int i, j;
@@ -1062,30 +1046,27 @@ namespace UMapx.Decomposition
             return;
         }
         /// <summary>
-        ///   Adaptation of the original Fortran QZVEC routine from EISPACK.
+        /// Optional fourth QZ stage: compute (right) generalized eigenvectors and map them back via Z.
         /// </summary>
         /// <remarks>
-        ///   This subroutine is the optional fourth step of the qz algorithm
-        ///   for solving generalized matrix eigenvalue problems,
-        ///   Siam J. Number. anal. 10, 241-256(1973) by Moler and Stewart.
-        ///   
-        ///   This subroutine accepts a pair of real matrices, one of them in
-        ///   quasi-triangular form (in which each 2-by-2 block corresponds to
-        ///   a pair of complex eigenvalues) and the other in upper triangular
-        ///   form.  It computes the eigenvectors of the triangular problem and
-        ///   transforms the results back to the original coordinate system.
-        ///   it is usually preceded by  qzhes,  qzit, and  qzval.
-        ///   
-        ///   For the full documentation, please check the original function.
+        /// Port of EISPACK <c>QZVEC</c>. Solves the triangular generalized eigenvalue problems for (S,T),
+        /// performing back-substitution to obtain eigenvectors in the deflated coordinate system and then
+        /// transforms them to the original coordinates via Z.
+        /// <para>
+        /// On entry, (alfr, alfi, beta) must come from <see cref="qzval"/>. On exit, Z contains eigenvectors
+        /// (real columns for real λ; 2 columns for each complex-conjugate pair).
+        /// </para>
         /// </remarks>
-        /// <param name="n"></param>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <param name="alfr"></param>
-        /// <param name="alfi"></param>
-        /// <param name="beta"></param>
-        /// <param name="z"></param>
-        /// <returns></returns>
+        /// <param name="n">Matrix order</param>
+        /// <param name="a">Quasi-triangular S (read-only here). Notation follows EISPACK; may be referenced</param>
+        /// <param name="b">Upper triangular T (read-only here). Notation follows EISPACK; may be referenced</param>
+        /// <param name="alfr">Real parts of α_j from <see cref="qzval"/></param>
+        /// <param name="alfi">Imag parts of α_j from <see cref="qzval"/></param>
+        /// <param name="beta">β_j from <see cref="qzval"/></param>
+        /// <param name="z">
+        /// On entry: right transformation accumulator from prior stages. On exit: columns replaced by the (right)
+        /// generalized eigenvectors in the original coordinate system. Modified in place
+        /// </param>
         private static void qzvec(int n, float[][] a, float[][] b, float[] alfr, float[] alfi, float[] beta, float[][] z)
         {
             int i, j, k, m;
@@ -1356,14 +1337,15 @@ namespace UMapx.Decomposition
             return;
         }
         /// <summary>
-        ///   Estimates unit round-off in quantities of size x.
+        /// Estimates unit round-off (machine epsilon scaled by |x|) using the classic EISPACK strategy.
         /// </summary>
         /// <remarks>
-        ///   This is a port of the epslon function from EISPACK.
+        /// Port of EISPACK <c>EPSLON</c>. It returns an estimate of the smallest ε such that 1+ε ≠ 1,
+        /// multiplied by <paramref name="x"/> in magnitude. Used when a caller passes 0 to request
+        /// “use machine precision” as the iteration tolerance.
         /// </remarks>
-        /// 
-        /// <param name="x"></param>
-        /// <returns></returns>
+        /// <param name="x">Reference magnitude. The result is approximately eps_machine * |x|</param>
+        /// <returns>Estimated round-off scaled to |x|</returns>
         private static float Epsilon(float x)
         {
             float a, b, c, eps;
@@ -1381,18 +1363,15 @@ namespace UMapx.Decomposition
             return eps * System.Math.Abs(x);
         }
         /// <summary>
-        ///   Returns <paramref name="a"/> with the sign of <paramref name="b"/>. 
+        /// Returns <paramref name="a"/> with the sign of <paramref name="b"/> (sign transfer / copysign).
         /// </summary>
-        /// 
         /// <remarks>
-        ///   This is a port of the sign transfer function from EISPACK,
-        ///   and is equivalent to C++'s std::copysign function.
+        /// Equivalent to C/C++ <c>copysignf</c>: result is |a| if b ≥ 0, otherwise −|a|.
+        /// Used throughout to stabilize reflector/rotation constructions.
         /// </remarks>
-        /// 
-        /// <returns>If B > 0 then the result is ABS(A), else it is -ABS(A)</returns>
-        /// 
-        /// <param name="a"></param>
-        /// <param name="b"></param>
+        /// <param name="a">Magnitude donor</param>
+        /// <param name="b">Sign donor</param>
+        /// <returns>|a| with the sign of b</returns>
         private static float Sign(float a, float b)
         {
             float x = a >= 0 ? a : -a;
