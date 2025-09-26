@@ -198,7 +198,6 @@ namespace UMapx.Transform
         /// <param name="r">Radius</param>
         /// <param name="s">Range Gaussian sigma</param>
         /// <param name="samples">Number of quantization levels for intensity</param>
-        /// <returns>Filtered image</returns>
         private static void Bilateralfilter(float[,] array, int r, float s = 0.1f, int samples = 32)
         {
             int height = array.GetLength(0);
@@ -281,7 +280,6 @@ namespace UMapx.Transform
         /// <param name="r">Radius</param>
         /// <param name="s">Range Gaussian sigma</param>
         /// <param name="samples">Number of quantization levels for intensity</param>
-        /// <returns>Filtered image</returns>
         private static void Bilateralfilter(Complex32[,] array, int r, float s = 0.1f, int samples = 32)
         {
             int height = array.GetLength(0);
@@ -364,7 +362,6 @@ namespace UMapx.Transform
         /// <param name="r">Radius</param>
         /// <param name="s">Range Gaussian sigma</param>
         /// <param name="samples">Number of quantization levels for intensity</param>
-        /// <returns>Filtered image</returns>
         private static void Bilateralfilter(float[] input, int r, float s = 0.1f, int samples = 32)
         {
             int length = input.Length;
@@ -433,7 +430,6 @@ namespace UMapx.Transform
         /// <param name="r">Radius</param>
         /// <param name="s">Range Gaussian sigma</param>
         /// <param name="samples">Number of quantization levels for intensity</param>
-        /// <returns>Filtered image</returns>
         private static void Bilateralfilter(Complex32[] input, int r, float s = 0.1f, int samples = 32)
         {
             int length = input.Length;

@@ -313,7 +313,6 @@ namespace UMapx.Imaging
         /// </summary>s
         /// <param name="background">Background bitmap</param>
         /// <param name="foreground">Foreground bitmap</param>
-        /// <returns>Bitmap</returns>
         public static void Merge(this Bitmap background, Bitmap foreground)
         {
             var rectangle = new Rectangle(0, 0, foreground.Width, foreground.Height);
