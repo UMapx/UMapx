@@ -21438,14 +21438,12 @@
             Apply filter.
             </summary>
             <param name="bmData">Bitmap data</param>
-            <returns>Bitmap</returns>
         </member>
         <member name="M:UMapx.Imaging.ErrorDiffusionDithering.Apply(System.Drawing.Bitmap)">
             <summary>
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
-            <returns>Bitmap</returns>
         </member>
         <member name="M:UMapx.Imaging.ErrorDiffusionDithering.Rebuild">
             <summary>
@@ -29074,28 +29072,24 @@
             Forward multidimensional filter.
             </summary>
             <param name="A">Jagged array</param>
-            <returns>Jagged array</returns>
         </member>
         <member name="M:UMapx.Transform.MultidimensionalFilter.Apply(System.Single[0:,0:][])">
             <summary>
             Forward multidimensional filter.
             </summary>
             <param name="A">Jagged matrix</param>
-            <returns>Jagged matrix</returns>
         </member>
         <member name="M:UMapx.Transform.MultidimensionalFilter.Apply(UMapx.Core.Complex32[][])">
             <summary>
             Forward multidimensional filter.
             </summary>
             <param name="A">Jagged array</param>
-            <returns>Jagged array</returns>
         </member>
         <member name="M:UMapx.Transform.MultidimensionalFilter.Apply(UMapx.Core.Complex32[0:,0:][])">
             <summary>
             Forward multidimensional filter.
             </summary>
             <param name="A">Jagged matrix</param>
-            <returns>Jagged matrix</returns>
         </member>
         <member name="T:UMapx.Transform.MultidimensionalPyramidTransform">
             <summary>

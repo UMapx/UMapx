@@ -86,7 +86,6 @@ namespace UMapx.Imaging
         /// Apply filter.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
-        /// <returns>Bitmap</returns>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -133,7 +132,6 @@ namespace UMapx.Imaging
         /// Apply filter.
         /// </summary>
         /// <param name="Data">Bitmap</param>
-        /// <returns>Bitmap</returns>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
