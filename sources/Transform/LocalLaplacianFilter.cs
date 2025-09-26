@@ -178,13 +178,12 @@ namespace UMapx.Transform
         /// <summary>
         /// Local laplacian filter.
         /// </summary>
-        /// <param name="radius">Radius</param>
         /// <param name="input">Input data</param>
+        /// <param name="radius">Radius</param>
         /// <param name="sigma">Sigma</param>
         /// <param name="factor">Factor</param>
         /// <param name="n">Number of steps</param>
         /// <param name="levels">Levels</param>
-        /// <returns>Output data</returns>
         private static void Llfilter(float[,] input, int radius, float sigma, float factor, int n, int levels)
         {
             // exception
@@ -271,7 +270,6 @@ namespace UMapx.Transform
         /// <param name="factor">Factor</param>
         /// <param name="n">Number of steps</param>
         /// <param name="levels">Levels</param>
-        /// <returns>Output data</returns>
         private static void Llfilter(float[] input, int radius, float sigma, float factor, int n, int levels)
         {
             // exception
