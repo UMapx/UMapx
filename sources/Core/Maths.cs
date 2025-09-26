@@ -165,11 +165,11 @@ namespace UMapx.Core
             return x;
         }
         /// <summary>
-        /// Crops value in the specified range.
+        /// Wraps a value into the specified range by cyclically adjusting it.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <param name="xmin">Minimum value</param>
-        /// <param name="xmax">Maximum value</param>
+        /// <param name="xmin">Lower bound of the target interval</param>
+        /// <param name="xmax">Period used for cyclic adjustment and upper bound of the interval</param>
         /// <returns>float</returns>
         public static float Scale(float x, float xmin, float xmax)
         {
@@ -190,11 +190,11 @@ namespace UMapx.Core
             return h;
         }
         /// <summary>
-        /// Crops value in the specified range.
+        /// Wraps a value into the specified range by cyclically adjusting it.
         /// </summary>
         /// <param name="x">Value</param>
-        /// <param name="xmin">Minimum value</param>
-        /// <param name="xmax">Maximum value</param>
+        /// <param name="xmin">Lower bound of the target interval</param>
+        /// <param name="xmax">Period used for cyclic adjustment and upper bound of the interval</param>
         /// <returns>int</returns>
         public static int Scale(int x, int xmin, int xmax)
         {
