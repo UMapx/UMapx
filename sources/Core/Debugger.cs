@@ -388,9 +388,8 @@ namespace UMapx.Core
             tic = Environment.TickCount;
         }
         /// <summary>
-        /// Prints elapsed time in milliseconds.
+        /// Prints elapsed time in milliseconds to the console.
         /// </summary>
-        /// <returns>Int</returns>
         public static void Toc()
         {
             Console.WriteLine($"Elapsed time is {Environment.TickCount - tic} milliseconds");
