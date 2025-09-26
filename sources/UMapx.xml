@@ -4176,9 +4176,8 @@
         </member>
         <member name="M:UMapx.Core.Debugger.Toc">
             <summary>
-            Prints elapsed time in milliseconds.
+            Prints elapsed time in milliseconds to the console.
             </summary>
-            <returns>Int</returns>
         </member>
         <member name="T:UMapx.Core.IFloat">
             <summary>
@@ -19731,7 +19730,6 @@
             </summary>s
             <param name="background">Background bitmap</param>
             <param name="foreground">Foreground bitmap</param>
-            <returns>Bitmap</returns>
         </member>
         <member name="M:UMapx.Imaging.BitmapTransform.Merge(System.Drawing.Bitmap,System.Drawing.Bitmap,System.Drawing.Rectangle)">
             <summary>
@@ -21690,10 +21688,9 @@
         </member>
         <member name="M:UMapx.Imaging.FlatFieldCorrection.GlobalMeans(System.Drawing.Imaging.BitmapData)">
             <summary>
-            Global means.
+            Computes global channel means and stores them in <see cref="F:UMapx.Imaging.FlatFieldCorrection.mR"/>, <see cref="F:UMapx.Imaging.FlatFieldCorrection.mG"/> and <see cref="F:UMapx.Imaging.FlatFieldCorrection.mB"/>.
             </summary>
             <param name="bmData">Bitmap data</param>
-            <returns>Array</returns>
         </member>
         <member name="T:UMapx.Imaging.Flip">
             <summary>
@@ -27105,7 +27102,6 @@
             <param name="r">Radius</param>
             <param name="s">Range Gaussian sigma</param>
             <param name="samples">Number of quantization levels for intensity</param>
-            <returns>Filtered image</returns>
         </member>
         <member name="M:UMapx.Transform.BilateralFilter.Bilateralfilter(UMapx.Core.Complex32[0:,0:],System.Int32,System.Single,System.Int32)">
             <summary>
@@ -27115,7 +27111,6 @@
             <param name="r">Radius</param>
             <param name="s">Range Gaussian sigma</param>
             <param name="samples">Number of quantization levels for intensity</param>
-            <returns>Filtered image</returns>
         </member>
         <member name="M:UMapx.Transform.BilateralFilter.Bilateralfilter(System.Single[],System.Int32,System.Single,System.Int32)">
             <summary>
@@ -27125,7 +27120,6 @@
             <param name="r">Radius</param>
             <param name="s">Range Gaussian sigma</param>
             <param name="samples">Number of quantization levels for intensity</param>
-            <returns>Filtered image</returns>
         </member>
         <member name="M:UMapx.Transform.BilateralFilter.Bilateralfilter(UMapx.Core.Complex32[],System.Int32,System.Single,System.Int32)">
             <summary>
@@ -27135,7 +27129,6 @@
             <param name="r">Radius</param>
             <param name="s">Range Gaussian sigma</param>
             <param name="samples">Number of quantization levels for intensity</param>
-            <returns>Filtered image</returns>
         </member>
         <member name="T:UMapx.Transform.BilateralGridFilter">
             <summary>
@@ -28993,13 +28986,12 @@
             <summary>
             Local laplacian filter.
             </summary>
-            <param name="radius">Radius</param>
             <param name="input">Input data</param>
+            <param name="radius">Radius</param>
             <param name="sigma">Sigma</param>
             <param name="factor">Factor</param>
             <param name="n">Number of steps</param>
             <param name="levels">Levels</param>
-            <returns>Output data</returns>
         </member>
         <member name="M:UMapx.Transform.LocalLaplacianFilter.Llfilter(System.Single[],System.Int32,System.Single,System.Single,System.Int32,System.Int32)">
             <summary>
@@ -29011,7 +29003,6 @@
             <param name="factor">Factor</param>
             <param name="n">Number of steps</param>
             <param name="levels">Levels</param>
-            <returns>Output data</returns>
         </member>
         <member name="M:UMapx.Transform.LocalLaplacianFilter.Rec(System.Single,System.Single,System.Single)">
             <summary>
