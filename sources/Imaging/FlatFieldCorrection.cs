@@ -149,10 +149,9 @@ namespace UMapx.Imaging
             });
         }
         /// <summary>
-        /// Global means.
+        /// Computes global channel means and stores them in <see cref="mR"/>, <see cref="mG"/> and <see cref="mB"/>.
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
-        /// <returns>Array</returns>
         private unsafe void GlobalMeans(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
