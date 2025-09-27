@@ -171,7 +171,7 @@ namespace UMapx.Imaging
             }
 
             // data
-            int N = images.GetLength(0);
+            int N = images.Length;
             float[][][,] data = new float[N][][,];
             int height = images[0].Height;
             int width = images[0].Width;
