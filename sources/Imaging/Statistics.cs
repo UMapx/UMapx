@@ -229,27 +229,46 @@ namespace UMapx.Imaging
                 throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
 
             int width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
-            int width1 = width - 1, height1 = height - 1, offset = stride - width;
-            double ex, ey, weight, weightTotal = 0, total = 0;
-            byte* p = (byte*)bmData.Scan0.ToPointer(); p += stride;
-            int y, x;
+            int width1 = width - 1, height1 = height - 1;
 
-            for (y = 1; y < height1; y++)
+            if (width < 3 || height < 3)
             {
-                p++;
-
-                for (x = 1; x < width1; x++, p++)
-                {
-                    ex = Math.Abs(p[1] - p[-1]);
-                    ey = Math.Abs(p[stride] - p[-stride]);
-                    weight = (ex > ey) ? ex : ey;
-                    weightTotal += weight;
-                    total += weight * (*p);
-                }
-                p += offset + 1;
+                return 0;
             }
 
-            return (weightTotal == 0) ? 0 : (byte)(total / weightTotal);
+            double weightTotal = 0, total = 0;
+            byte* basePtr = (byte*)bmData.Scan0.ToPointer();
+            byte* rowPtr = basePtr + stride; // start from the second row
+
+            for (int y = 1; y < height1; y++)
+            {
+                byte* p = rowPtr + 4; // skip the first pixel in the row
+
+                for (int x = 1; x < width1; x++, p += 4)
+                {
+                    byte* left = p - 4;
+                    byte* right = p + 4;
+                    byte* up = p - stride;
+                    byte* down = p + stride;
+
+                    double brightness = RGB.Average(p[2], p[1], p[0]);
+                    double brightnessLeft = RGB.Average(left[2], left[1], left[0]);
+                    double brightnessRight = RGB.Average(right[2], right[1], right[0]);
+                    double brightnessUp = RGB.Average(up[2], up[1], up[0]);
+                    double brightnessDown = RGB.Average(down[2], down[1], down[0]);
+
+                    double ex = Math.Abs(brightnessRight - brightnessLeft);
+                    double ey = Math.Abs(brightnessDown - brightnessUp);
+                    double weight = Math.Max(ex, ey);
+
+                    weightTotal += weight;
+                    total += weight * brightness;
+                }
+
+                rowPtr += stride;
+            }
+
+            return (weightTotal == 0) ? 0 : (int)Math.Round(total / weightTotal);
         }
         /// <summary>
         /// Calculates the optimal threshold for the original bitmap.
