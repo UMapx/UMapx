@@ -37,8 +37,17 @@ namespace UMapx.Imaging
         /// </summary>
         public float Strength
         {
-            get => strength;
-            set => strength = Maths.Max(0f, value);
+            get
+            {
+                return strength;
+            }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(nameof(strength), "Strength must be greater or equal to 0");
+
+                strength = value;
+            }
         }
         /// <summary>
         /// Invert the Y/green channel (true for DirectX, false for OpenGL).

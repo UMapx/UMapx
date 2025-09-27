@@ -42,7 +42,7 @@ namespace UMapx.Distribution
             {
                 if (value <= 0f)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(Power), "Power must be greater than zero");
+                    throw new ArgumentOutOfRangeException(nameof(power), "Power must be greater than zero");
                 }
 
                 power = value;
@@ -58,7 +58,7 @@ namespace UMapx.Distribution
             {
                 if (value <= 0f)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(Sigma), "Sigma must be greater than zero");
+                    throw new ArgumentOutOfRangeException(nameof(sigma), "Sigma must be greater than zero");
                 }
 
                 sigma = value;

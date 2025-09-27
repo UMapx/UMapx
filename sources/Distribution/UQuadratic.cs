@@ -70,7 +70,7 @@ namespace UMapx.Distribution
             set
             {
                 if (value <= a)
-                    throw new ArgumentException("The value of parameter b must be greater than a");
+                    throw new ArgumentOutOfRangeException(nameof(b), "The value of parameter b must be greater than a");
 
                 this.b = value;
                 UpdateCoefficients();

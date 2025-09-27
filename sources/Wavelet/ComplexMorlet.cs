@@ -70,9 +70,9 @@ namespace UMapx.Wavelet
         {
             // Validate (optional but recommended)
             if (fb <= 0)
-                throw new ArgumentException("Fb (variance) must be > 0");
+                throw new ArgumentOutOfRangeException(nameof(fb), "Fb (variance) must be greater than 0");
             if (fc < 0)
-                throw new ArgumentException("Fc (center frequency) must be >= 0");
+                throw new ArgumentException(nameof(fc), "Fc (center frequency) must be greater or equal to 0");
 
             // Normalization: (π·fb)^(-1/4)
             float amplitude = Maths.Pow(Maths.Pi * fb, -0.25f);

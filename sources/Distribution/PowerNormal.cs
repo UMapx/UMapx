@@ -39,7 +39,7 @@ namespace UMapx.Distribution
             {
                 if (value <= 0f)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(Power), "Power must be greater than zero");
+                    throw new ArgumentOutOfRangeException(nameof(power), "Power must be greater than zero");
                 }
 
                 power = value;

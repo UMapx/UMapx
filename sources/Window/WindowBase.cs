@@ -31,7 +31,7 @@ namespace UMapx.Window
             set
             {
                 if (value <= 0)
-                    throw new ArgumentException("Window size must be greater than 0");
+                    throw new ArgumentOutOfRangeException(nameof(frameSize), "Window size must be greater than 0");
 
                 this.frameSize = value;
             }

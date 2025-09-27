@@ -46,11 +46,6 @@ namespace UMapx.Distribution
         /// <param name="scale">Scale parameter (must be greater than zero)</param>
         public ShiftedLogLogistic(float location, float scale)
         {
-            if (scale <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(scale), "Scale must be positive");
-            }
-
             this.mu = location;
             this.sigma = scale;
             this.ksi = 0f;
@@ -63,11 +58,6 @@ namespace UMapx.Distribution
         /// <param name="shape">Shape parameter</param>
         public ShiftedLogLogistic(float location, float scale, float shape)
         {
-            if (scale <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(scale), "Scale must be positive");
-            }
-
             this.mu = location;
             this.sigma = scale;
             this.ksi = shape;
@@ -93,7 +83,7 @@ namespace UMapx.Distribution
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(Sigma), "Scale must be positive");
+                    throw new ArgumentOutOfRangeException(nameof(sigma), "Scale must be positive");
                 }
 
                 sigma = value;

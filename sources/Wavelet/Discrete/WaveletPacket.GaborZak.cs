@@ -357,8 +357,8 @@ namespace UMapx.Wavelet
         /// </returns>
         internal static WaveletPacket GaborZak(int n)
         {
-            if (n < 2) throw new ArgumentException("Wavelet size must be greater or equal 2");
-            if (n > 7) throw new ArgumentException("Wavelet size must be less or equal 7");
+            if (n < 2) throw new ArgumentOutOfRangeException(nameof(n), "Wavelet size must be greater or equal 2");
+            if (n > 7) throw new ArgumentOutOfRangeException(nameof(n), "Wavelet size must be less or equal 7");
 
             // Gabor–Zak wavelets (dyadic, periodic).
             // Builds an orthonormal 2-channel (M=2) wavelet filter bank on ℓ²(ℤ_N)
