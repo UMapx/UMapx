@@ -56,44 +56,43 @@ namespace UMapx.Imaging
         /// <param name="bmSrc">Bitmap data</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
-            // get source image:
-            int width = bmSrc.Width;
-            int height = bmSrc.Height;
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb || bmSrc.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
 
-            // images strides:
+            int srcW = bmSrc.Width;
+            int srcH = bmSrc.Height;
+
+            int rx = rectangle.X;
+            int ry = rectangle.Y;
+            int rw = rectangle.Width;
+            int rh = rectangle.Height;
+
+            if (rw < 0) { rx += rw; rw = -rw; }
+            if (rh < 0) { ry += rh; rh = -rh; }
+
+            int startX = Maths.Range(rx, 0, srcW);
+            int startY = Maths.Range(ry, 0, srcH);
+
+            int cropW = Math.Max(0, Math.Min(rw, srcW - startX));
+            int cropH = Math.Max(0, Math.Min(rh, srcH - startY));
+
+            if (bmData.Width != cropW || bmData.Height != cropH)
+                throw new ArgumentException("Destination BitmapData size must match crop rectangle");
+
             int srcStride = bmSrc.Stride;
             int dstStride = bmData.Stride;
 
-            // do the job:
             byte* pSrc = (byte*)bmSrc.Scan0.ToPointer();
             byte* pDst = (byte*)bmData.Scan0.ToPointer();
-            byte* dst, src, p;
 
-            // source pixel's coordinates from rectangle:
-            int startX = Maths.Range(rectangle.X, 0, width);
-            int startY = Maths.Range(rectangle.Y, 0, height);
-            int endX = Maths.Range(rectangle.Width - startX, 0, width);
-            int endY = Maths.Range(rectangle.Height - startY, 0, height);
+            int rowBytes = checked(cropW * 4);
 
-            // pixel offsets:
-            int x, y, i;
-
-            // for each line:
-            for (y = 0; y < endY; y++)
+            for (int y = 0; y < cropH; y++)
             {
-                dst = pDst + dstStride * y;
-                src = pSrc + srcStride * (y + startX);
+                byte* srcRow = pSrc + srcStride * (y + startY) + 4 * startX;
+                byte* dstRow = pDst + dstStride * y;
 
-                // for each pixel:
-                for (x = 0; x < endX; x++)
-                {
-                    p = src + 4 * (x + startX);
-
-                    for (i = 0; i < 4; i++, dst++, p++)
-                    {
-                        *dst = *p;
-                    }
-                }
+                Buffer.MemoryCopy(srcRow, dstRow, dstStride, rowBytes);
             }
         }
         /// <summary>
