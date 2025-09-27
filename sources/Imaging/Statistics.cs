@@ -306,20 +306,20 @@ namespace UMapx.Imaging
 
         #region AForge
         /// <summary>
-        /// Gets the index of the maximum element of the array.
+        /// Gets the maximum value of the array.
         /// </summary>
         /// <param name="data">Array</param>
-        /// <returns>Integer number</returns>
+        /// <returns>Maximum value</returns>
         public static int Max(int[] data)
         {
             return Max(data, out _);
         }
         /// <summary>
-        /// Gets the index of the maximum element of the array.
+        /// Gets the maximum value of the array and outputs the index of that value.
         /// </summary>
         /// <param name="data">Array</param>
-        /// <param name="index">Max index</param>
-        /// <returns>Integer number</returns>
+        /// <param name="index">Outputs the index of the maximum element</param>
+        /// <returns>Maximum value</returns>
         public static int Max(int[] data, out int index)
         {
             index = 0;
@@ -338,20 +338,20 @@ namespace UMapx.Imaging
             return maximum;
         }
         /// <summary>
-        /// Gets the index of the minimum element of the array.
+        /// Gets the minimum value of the array.
         /// </summary>
         /// <param name="data">Array</param>
-        /// <returns>Integer number</returns>
+        /// <returns>Minimum value</returns>
         public static int Min(int[] data)
         {
             return Min(data, out _);
         }
         /// <summary>
-        /// Gets the index of the minimum element of the array.
+        /// Gets the minimum value of the array and outputs the index of that value.
         /// </summary>
         /// <param name="data">Array</param>
-        /// <param name="index">Min index</param>
-        /// <returns>Tuple of integer numbers</returns>
+        /// <param name="index">Outputs the index of the minimum element</param>
+        /// <returns>Minimum value</returns>
         public static int Min(int[] data, out int index)
         {
             index = 0;
