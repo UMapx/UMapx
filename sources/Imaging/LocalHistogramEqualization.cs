@@ -102,22 +102,22 @@ namespace UMapx.Imaging
                 int ystride, v;
                 byte* p;
 
-                yr = y - rw;
+                yr = y - rh;
                 ystride = y * stride;
 
                 for (x = 0; x < width; x++)
                 {
-                    xr = x - rh;
+                    xr = x - rw;
                     v = ystride + x * 4;
 
                     #region Convolution filtering
-                    for (i = 0; i < l0; i++)
+                    for (i = 0; i < l1; i++)
                     {
                         ir = yr + i;
                         if (ir < 0) continue; if (ir >= height) break;
                         irstride = ir * stride;
 
-                        for (j = 0; j < l1; j++)
+                        for (j = 0; j < l0; j++)
                         {
                             jr = xr + j;
 
@@ -142,7 +142,7 @@ namespace UMapx.Imaging
                     #region Recording pixel
                     dst[v + 2] = Maths.Byte(cdf[src[v + 2]] * dn);
                     dst[v + 1] = Maths.Byte(cdf[src[v + 1]] * dn);
-                    dst[v] = Maths.Byte(cdf[src[v]] * dn);
+                    dst[v + 0] = Maths.Byte(cdf[src[v + 0]] * dn);
                     #endregion
 
                     #region Clear data
