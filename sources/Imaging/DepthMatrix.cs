@@ -35,10 +35,10 @@ namespace UMapx.Imaging
         /// <returns>Depth</returns>
         public unsafe static ushort[,] ToDepth(this BitmapData bmData)
         {
-            var p = bmData.PixelFormat == PixelFormat.Format24bppRgb  ? 3 :
-                    bmData.PixelFormat == PixelFormat.Format32bppArgb ? 4 : 
-                    throw new NotSupportedException("Only support Format24bppRgb and Format32bppArgb pixelFormat");
+            if (bmData.PixelFormat == PixelFormat.Format24bppRgb || bmData.PixelFormat == PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format24bppRgb and Format32bppArgb pixelFormat");
 
+            var p = Image.GetPixelFormatSize(bmData.PixelFormat) / 8;
             var width = bmData.Width;
             var height = bmData.Height;
             var stride = bmData.Stride;
