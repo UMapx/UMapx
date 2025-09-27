@@ -94,9 +94,8 @@ namespace UMapx.Imaging
             {
                 int[] H = new int[256];
                 int[] cdf = new int[256];
-                int n = l0 * l1;
                 int brightness;
-                float dn = 255.0f / n;
+                float dn;
 
                 int x, i, j, ir, jr, yr, xr, irstride;
                 int ystride, v;
@@ -107,6 +106,7 @@ namespace UMapx.Imaging
 
                 for (x = 0; x < width; x++)
                 {
+                    int hits = 0;
                     xr = x - rh;
                     v = ystride + x * 4;
 
@@ -126,11 +126,13 @@ namespace UMapx.Imaging
                             p = &src[irstride + jr * 4];
                             brightness = (p[2] + p[1] + p[0]) / 3;
                             H[brightness]++;
+                            hits++;
                         }
                     }
                     #endregion
 
                     #region Density function
+                    dn = hits > 0 ? 255.0f / hits : 0.0f;
                     cdf[0] = H[0];
 
                     for (i = 1; i < 256; i++)
