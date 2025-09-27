@@ -25468,26 +25468,6 @@
             </summary>
             <param name="Data">Bitmap</param>
         </member>
-        <member name="M:UMapx.Imaging.Shift.ShiftY(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="bmSrc">Bitmap data</param>
-            <param name="width">Image width</param>
-            <param name="height">Image height</param>
-            <param name="stride">Stride</param>
-        </member>
-        <member name="M:UMapx.Imaging.Shift.ShiftX(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Apply filter.
-            </summary>
-            <param name="bmData">Bitmap data</param>
-            <param name="bmSrc">Bitmap data</param>
-            <param name="width">Image width</param>
-            <param name="height">Image height</param>
-            <param name="stride">Stride</param>
-        </member>
         <member name="T:UMapx.Imaging.ShiftCorrection">
             <summary>
             Defines the shift correction filter.
