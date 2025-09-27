@@ -199,7 +199,7 @@ namespace UMapx.Imaging
             var length = rectangles.Length;
             var rectangle = Rectangle.Empty;
             var area = int.MaxValue;
-            var min = int.MaxValue;
+            var min = -1;
 
             // do job
             for (int i = 0; i < length; i++)
@@ -219,7 +219,7 @@ namespace UMapx.Imaging
             }
 
             // output
-            return length > 0 ? rectangles[min] : rectangle;
+            return min >= 0 ? rectangles[min] : Rectangle.Empty;
         }
 
         /// <summary>
