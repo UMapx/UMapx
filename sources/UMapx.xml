@@ -24024,7 +24024,7 @@
         </member>
         <member name="T:UMapx.Imaging.NormalBump">
             <summary>
-            Defines a normal bump filter.
+            Defines a normal bump filter (height → tangent-space normal map).
             </summary>
             <remarks>
             More information can be found on the website:
@@ -24035,11 +24035,26 @@
             <summary>
             Initializes the normal bump filter.
             </summary>
-            <param name="scale">Scale [-5, 5]</param>
+            <param name="strength">Strength (recommended 0.5..8.0)</param>
         </member>
-        <member name="P:UMapx.Imaging.NormalBump.Scale">
+        <member name="P:UMapx.Imaging.NormalBump.Strength">
             <summary>
-            Gets or sets the scale value [-5, 5].
+            Gets or sets bump strength (recommended 0.5..8.0).
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.NormalBump.InvertY">
+            <summary>
+            Invert the Y/green channel (true for DirectX, false for OpenGL).
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.NormalBump.UseSobel">
+            <summary>
+            Use Sobel 3x3 (true) or central differences (false).
+            </summary>
+        </member>
+        <member name="P:UMapx.Imaging.NormalBump.WrapEdges">
+            <summary>
+            Wrap edges for tiling (true) or clamp (false).
             </summary>
         </member>
         <member name="M:UMapx.Imaging.NormalBump.Apply(System.Drawing.Imaging.BitmapData,System.Drawing.Imaging.BitmapData)">
@@ -24067,13 +24082,6 @@
             Apply filter.
             </summary>
             <param name="Data">Bitmap</param>
-        </member>
-        <member name="M:UMapx.Imaging.NormalBump.NormalBumpOperator(System.Int32)">
-            <summary>
-            Returns the normal bump operator.
-            </summary>
-            <param name="scale">Scale</param>
-            <returns>Matrix</returns>
         </member>
         <member name="T:UMapx.Imaging.OilPainting">
             <summary>
