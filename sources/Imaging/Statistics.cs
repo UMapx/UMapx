@@ -323,7 +323,7 @@ namespace UMapx.Imaging
         public static int Max(int[] data, out int index)
         {
             index = 0;
-            int length = data.Length - 1, i;
+            int length = data.Length, i;
             int maximum = data[index];
 
             for (i = 1; i < length; i++)
@@ -355,7 +355,7 @@ namespace UMapx.Imaging
         public static int Min(int[] data, out int index)
         {
             index = 0;
-            int length = data.Length - 1, i;
+            int length = data.Length, i;
             int minimum = data[index];
 
             for (i = 1; i < length; i++)
