@@ -65,6 +65,9 @@ namespace UMapx.Imaging
         /// <param name="bmSrc">Bitmap data</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
+            if (bmData.Width != bmSrc.Width || bmData.Height != bmSrc.Height)
+                throw new ArgumentException("Bitmap sizes must match");
+
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb || bmSrc.PixelFormat != PixelFormat.Format32bppArgb)
                 throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
 
