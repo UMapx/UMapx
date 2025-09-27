@@ -20741,7 +20741,7 @@
         </member>
         <member name="M:UMapx.Imaging.Convolution.Tetta(System.Single,System.Single)">
             <summary>
-            Gets the angle of the gradient operator.
+            Gets the angle of the gradient operator using Atan2 for proper quadrant determination.
             </summary>
             <param name="Gx">Gradient X</param>
             <param name="Gy">Gradient Y</param>
@@ -25777,6 +25777,9 @@
             <summary>
             Gets an array of equalized histogram values by recalculating the brightness density function.
             </summary>
+            <remarks>
+            Returns a zero-filled lookup table when the histogram is degenerate and cannot be normalized.
+            </remarks>
             <param name="H">Histogram</param>
             <returns>Array</returns>
         </member>
@@ -25828,33 +25831,33 @@
         </member>
         <member name="M:UMapx.Imaging.Statistics.Max(System.Int32[])">
             <summary>
-            Gets the index of the maximum element of the array.
+            Gets the maximum value of the array.
             </summary>
             <param name="data">Array</param>
-            <returns>Integer number</returns>
+            <returns>Maximum value</returns>
         </member>
         <member name="M:UMapx.Imaging.Statistics.Max(System.Int32[],System.Int32@)">
             <summary>
-            Gets the index of the maximum element of the array.
+            Gets the maximum value of the array and outputs the index of that value.
             </summary>
             <param name="data">Array</param>
-            <param name="index">Max index</param>
-            <returns>Integer number</returns>
+            <param name="index">Outputs the index of the maximum element</param>
+            <returns>Maximum value</returns>
         </member>
         <member name="M:UMapx.Imaging.Statistics.Min(System.Int32[])">
             <summary>
-            Gets the index of the minimum element of the array.
+            Gets the minimum value of the array.
             </summary>
             <param name="data">Array</param>
-            <returns>Integer number</returns>
+            <returns>Minimum value</returns>
         </member>
         <member name="M:UMapx.Imaging.Statistics.Min(System.Int32[],System.Int32@)">
             <summary>
-            Gets the index of the minimum element of the array.
+            Gets the minimum value of the array and outputs the index of that value.
             </summary>
             <param name="data">Array</param>
-            <param name="index">Min index</param>
-            <returns>Tuple of integer numbers</returns>
+            <param name="index">Outputs the index of the minimum element</param>
+            <returns>Minimum value</returns>
         </member>
         <member name="M:UMapx.Imaging.Statistics.Sum(System.Int32[])">
             <summary>

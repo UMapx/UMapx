@@ -177,7 +177,7 @@ namespace UMapx.Imaging
                 {
                     r = r - src[p + 2] + src[w + 2];
                     g = g - src[p + 1] + src[w + 1];
-                    b = b - src[p + 0] + dst[w + 0];
+                    b = b - src[p + 0] + src[w + 0];
 
                     dst[q + 2] = Maths.Byte(r / h);
                     dst[q + 1] = Maths.Byte(g / h);
