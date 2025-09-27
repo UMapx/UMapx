@@ -52,6 +52,7 @@ namespace UMapx.Imaging
         {
             MemoryStream stream = new MemoryStream();
             b.Save(stream, ImageFormat.Jpeg);
+            stream.Position = 0;
 
             return new Bitmap(stream);
         }
@@ -64,6 +65,7 @@ namespace UMapx.Imaging
         {
             MemoryStream stream = new MemoryStream();
             b.Save(stream, ImageFormat.Bmp);
+            stream.Position = 0;
 
             return new Bitmap(stream);
         }
@@ -76,6 +78,7 @@ namespace UMapx.Imaging
         {
             MemoryStream stream = new MemoryStream();
             b.Save(stream, ImageFormat.Gif);
+            stream.Position = 0;
 
             return new Bitmap(stream);
         }
@@ -88,6 +91,7 @@ namespace UMapx.Imaging
         {
             MemoryStream stream = new MemoryStream();
             b.Save(stream, ImageFormat.Png);
+            stream.Position = 0;
 
             return new Bitmap(stream);
         }
@@ -100,6 +104,7 @@ namespace UMapx.Imaging
         {
             MemoryStream stream = new MemoryStream();
             b.Save(stream, ImageFormat.Tiff);
+            stream.Position = 0;
 
             return new Bitmap(stream);
         }
