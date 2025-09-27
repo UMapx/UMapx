@@ -449,7 +449,7 @@ namespace UMapx.Imaging
             {
                 for (j = 0; j < l1; j++)
                 {
-                    temp[i, j] = a[Maths.Mod(i - h, l1), Maths.Mod(j - w, l0)];
+                    temp[i, j] = a[Maths.Mod(i - h, l0), Maths.Mod(j - w, l1)];
                 }
             }
             return temp;
