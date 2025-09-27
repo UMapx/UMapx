@@ -161,6 +161,9 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data</param>
         public unsafe static bool IsGrayscale(BitmapData bmData)
         {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
             byte* p = (byte*)bmData.Scan0.ToPointer();
             int y, x, width = bmData.Width, height = bmData.Height;
 
@@ -168,7 +171,7 @@ namespace UMapx.Imaging
             {
                 for (y = 0; y < height; y++, p += 4)
                 {
-                    if (p[2] != p[1] && p[2] != p[0]) return false;
+                    if (p[2] != p[1] || p[2] != p[0]) return false;
                 }
             }
 
