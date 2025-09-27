@@ -309,14 +309,14 @@ namespace UMapx.Imaging
             return Maths.Sqrt(Gx * Gx + Gy * Gy);
         }
         /// <summary>
-        /// Gets the angle of the gradient operator.
+        /// Gets the angle of the gradient operator using Atan2 for proper quadrant determination.
         /// </summary>
         /// <param name="Gx">Gradient X</param>
         /// <param name="Gy">Gradient Y</param>
         /// <returns>Value</returns>
         public static float Tetta(float Gx, float Gy)
         {
-            return Maths.Atan(Gx / Gy);
+            return Maths.Atan2(Gy, Gx);
         }
         #endregion
 
