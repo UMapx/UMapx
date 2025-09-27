@@ -70,7 +70,9 @@ namespace UMapx.Imaging
                             break;
 
                         case RGBA.Alpha:
-                            p[0] = p[1] = p[2] = 255;
+                            byte alpha = p[3];
+                            p[0] = p[1] = p[2] = alpha;
+                            p[3] = alpha;
                             break;
                     }
                 }
