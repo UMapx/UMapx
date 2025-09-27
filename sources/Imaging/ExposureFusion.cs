@@ -70,11 +70,30 @@ namespace UMapx.Imaging
         /// <returns>Bitmap</returns>
         public Bitmap Apply(params Bitmap[] images)
         {
+            if (images == null || images.Length == 0)
+            {
+                throw new ArgumentException("At least one image is required", nameof(images));
+            }
+
             // data
-            int N = images.GetLength(0);
+            int N = images.Length;
             float[][][,] data = new float[N][][,];
             int height = images[0].Height;
-            int width = images[1].Width;
+            int width = images[0].Width;
+
+            for (int i = 0; i < N; i++)
+            {
+                if (images[i] == null)
+                {
+                    throw new ArgumentException("Image entries cannot be null", nameof(images));
+                }
+
+                if (images[i].Height != height || images[i].Width != width)
+                {
+                    throw new ArgumentException("All images must have the same dimensions", nameof(images));
+                }
+            }
+
             float[][,] weights = new float[N][,];
 
             // to rgb array
@@ -146,11 +165,30 @@ namespace UMapx.Imaging
         /// <returns>Bitmap</returns>
         public Bitmap Apply(params BitmapData[] images)
         {
+            if (images == null || images.Length == 0)
+            {
+                throw new ArgumentException("At least one image is required", nameof(images));
+            }
+
             // data
             int N = images.GetLength(0);
             float[][][,] data = new float[N][][,];
             int height = images[0].Height;
-            int width = images[1].Width;
+            int width = images[0].Width;
+
+            for (int i = 0; i < N; i++)
+            {
+                if (images[i] == null)
+                {
+                    throw new ArgumentException("Image entries cannot be null", nameof(images));
+                }
+
+                if (images[i].Height != height || images[i].Width != width)
+                {
+                    throw new ArgumentException("All images must have the same dimensions", nameof(images));
+                }
+            }
+
             float[][,] weights = new float[N][,];
 
             // to rgb array
