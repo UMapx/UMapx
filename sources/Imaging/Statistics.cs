@@ -142,6 +142,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets an array of equalized histogram values by recalculating the brightness density function.
         /// </summary>
+        /// <remarks>
+        /// Returns a zero-filled lookup table when the histogram is degenerate and cannot be normalized.
+        /// </remarks>
         /// <param name="H">Histogram</param>
         /// <returns>Array</returns>
         public static float[] Equalize(int[] H)
@@ -156,10 +159,18 @@ namespace UMapx.Imaging
             float[] table = new float[length];
             float factor = cdf[max] - cdf[min];
 
+            // avoid division by zero for degenerate histograms
+            if (factor == 0f)
+            {
+                return table;
+            }
+
+            float invFactor = 1f / factor;
+
             // scaling
             for (int i = 0; i < length; i++)
             {
-                table[i] = (cdf[i] - cdf[min]) / factor;
+                table[i] = (cdf[i] - cdf[min]) * invFactor;
             }
 
             return table;
