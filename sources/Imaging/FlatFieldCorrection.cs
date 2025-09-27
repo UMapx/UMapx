@@ -139,11 +139,11 @@ namespace UMapx.Imaging
                     }
                     if (pSrc[k + 1] != 0)
                     {
-                        p[k + 1] = Maths.Byte(p[k + 1] * mR / pSrc[k + 1]);
+                        p[k + 1] = Maths.Byte(p[k + 1] * mG / pSrc[k + 1]);
                     }
                     if (pSrc[k] != 0)
                     {
-                        p[k] = Maths.Byte(p[k] * mR / pSrc[k]);
+                        p[k] = Maths.Byte(p[k] * mB / pSrc[k]);
                     }
                 }
             });
