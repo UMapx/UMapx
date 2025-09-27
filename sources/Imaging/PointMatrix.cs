@@ -132,14 +132,14 @@ namespace UMapx.Imaging
                 {
                     newX = rnd.Next(value) - nHalf;
 
-                    if (x + newX > 0 && x + newX < width)
+                    if (x + newX >= 0 && x + newX < width)
                         noise[x, y].X = newX;
                     else
                         noise[x, y].X = 0;
 
                     newY = rnd.Next(value) - nHalf;
 
-                    if (y + newY > 0 && y + newY < width)
+                    if (y + newY >= 0 && y + newY < height)
                         noise[x, y].Y = newY;
                     else
                         noise[x, y].Y = 0;
