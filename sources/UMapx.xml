@@ -23959,7 +23959,14 @@
             <summary>
             Applies the filter and returns motion level in range [0, 1].
             </summary>
-            <param name="Data">Bitmap</param>
+            <param name="bitmap">Bitmap</param>
+            <returns>Motion level</returns>
+        </member>
+        <member name="M:UMapx.Imaging.MotionDetector.Apply(System.Drawing.Imaging.BitmapData)">
+            <summary>
+            Applies the filter and returns motion level in range [0, 1].
+            </summary>
+            <param name="bmData">Bitmap data</param>
             <returns>Motion level</returns>
         </member>
         <member name="M:UMapx.Imaging.MotionDetector.Dispose">

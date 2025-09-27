@@ -57,9 +57,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Applies the filter and returns motion level in range [0, 1].
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="bitmap">Bitmap</param>
         /// <returns>Motion level</returns>
-		public double Apply(Bitmap Data)
+		public float Apply(Bitmap bitmap)
         {
             // synchronize
             lock (locker)
@@ -67,17 +67,17 @@ namespace UMapx.Imaging
                 if (Frame == null)
                 {
                     // create initial background image
-                    Frame = (Bitmap)Data.Clone();
+                    Frame = (Bitmap)bitmap.Clone();
 
                     // just return for the first time
-                    return 0.0;
+                    return 0.0f;
                 }
 
                 // creating clone of current frame
-                var temp = (Bitmap)Data.Clone();
+                var temp = (Bitmap)bitmap.Clone();
 
                 // lock in memory
-                var bitmapData = BitmapFormat.Lock32bpp(Data);
+                var bitmapData = BitmapFormat.Lock32bpp(bitmap);
                 var frameData = BitmapFormat.Lock32bpp(Frame);
 
                 // calculate alarm
@@ -85,7 +85,50 @@ namespace UMapx.Imaging
                     ProcessFrameWithoutFilter(bitmapData, frameData);
 
                 // unlock
-                Data.Unlock(bitmapData);
+                bitmap.Unlock(bitmapData);
+                Frame.Unlock(frameData);
+
+                // update detector
+                Frame.Dispose();
+                Frame = temp;
+                return alarm;
+            }
+        }
+        /// <summary>
+        /// Applies the filter and returns motion level in range [0, 1].
+        /// </summary>
+        /// <param name="bmData">Bitmap data</param>
+        /// <returns>Motion level</returns>
+        public float Apply(BitmapData bmData)
+        {
+            if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
+
+            // synchronize
+            lock (locker)
+            {
+                if (Frame == null)
+                {
+                    // create initial background image
+                    Frame = BitmapFormat.ToBitmap(bmData);
+
+                    // just return for the first time
+                    return 0.0f;
+                }
+
+                // creating clone of current frame
+#pragma warning disable DF0010 // Marks undisposed local variables.
+                var temp = BitmapFormat.ToBitmap(bmData);
+#pragma warning restore DF0010 // Marks undisposed local variables.
+
+                // lock in memory
+                var frameData = BitmapFormat.Lock32bpp(Frame);
+
+                // calculate alarm
+                var alarm = UseFilter ? ProcessFrameWithFilter(bmData, frameData) :
+                    ProcessFrameWithoutFilter(bmData, frameData);
+
+                // unlock
                 Frame.Unlock(frameData);
 
                 // update detector
@@ -133,13 +176,13 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         /// <param name="bmSrc">Bitmap data</param>
-        private unsafe double ProcessFrameWithoutFilter(BitmapData bmData, BitmapData bmSrc)
+        private unsafe float ProcessFrameWithoutFilter(BitmapData bmData, BitmapData bmSrc)
         {
             byte* dst = (byte*)bmData.Scan0.ToPointer();
             byte* src = (byte*)bmSrc.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height;
 
-            double variance = 0.0;
+            float variance = 0.0f;
 
             for (int x = 0; x < width; x++)
             {
@@ -170,13 +213,13 @@ namespace UMapx.Imaging
         /// </summary>
         /// <param name="bmData">Bitmap data</param>
         /// <param name="bmSrc">Bitmap data</param>
-        private unsafe double ProcessFrameWithFilter(BitmapData bmData, BitmapData bmSrc)
+        private unsafe float ProcessFrameWithFilter(BitmapData bmData, BitmapData bmSrc)
         {
             byte* dst = (byte*)bmData.Scan0.ToPointer();
             byte* src = (byte*)bmSrc.Scan0.ToPointer();
             int width = bmData.Width, height = bmData.Height;
 
-            double variance = 0.0;
+            float variance = 0.0f;
 
             for (int x = 0; x < width; x++)
             {
