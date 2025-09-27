@@ -24031,7 +24031,7 @@
             https://en.wikipedia.org/wiki/Normal_mapping
             </remarks>
         </member>
-        <member name="M:UMapx.Imaging.NormalBump.#ctor(System.Int32)">
+        <member name="M:UMapx.Imaging.NormalBump.#ctor(System.Single)">
             <summary>
             Initializes the normal bump filter.
             </summary>

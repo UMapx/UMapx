@@ -17,7 +17,7 @@ namespace UMapx.Imaging
     public class NormalBump : IBitmapFilter2, IBitmapFilter
     {
         #region Private data
-        private float strength = 2.0f;
+        private float strength;
         private bool invertY = true;
         private bool useSobel = true;
         private bool wrapEdges = true;
@@ -28,9 +28,9 @@ namespace UMapx.Imaging
         /// Initializes the normal bump filter.
         /// </summary>
         /// <param name="strength">Strength (recommended 0.5..8.0)</param>
-        public NormalBump(int strength = 0)
+        public NormalBump(float strength = 1.0f)
         {
-            Strength = 1.0f + strength;
+            Strength = strength;
         }
         /// <summary>
         /// Gets or sets bump strength (recommended 0.5..8.0).
