@@ -91,6 +91,10 @@ namespace UMapx.Imaging
 
                     while (l < w2)
                     {
+                        b = p[3];
+                        p[3] = pSrc[3];
+                        pSrc[3] = b;
+
                         b = p[2];
                         p[2] = pSrc[2];
                         pSrc[2] = b;
