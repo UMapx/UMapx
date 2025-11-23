@@ -129,7 +129,7 @@ namespace UMapx.Window
                 var rowM = Cmain_rows[l]; // length M
                 var rowH = Chalf_rows[l]; // length M
 
-                // Forward DFT over residues n0 (positive exponent) via FFT.
+                // Forward DFT over residues n0 via FFT.
                 FFT(rowM, false);
                 FFT(rowH, false);
 
