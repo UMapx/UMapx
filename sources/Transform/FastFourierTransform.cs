@@ -65,8 +65,6 @@ namespace UMapx.Transform
 
             if (Normalized)
                 Scale(A, 1f / Maths.Sqrt(N));
-            //else
-            //    Scale(A, 1f / N);
 
             return A;
         }
