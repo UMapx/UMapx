@@ -122,7 +122,7 @@ namespace UMapx.Window
 
             // ----- Stage 2: per-row assembly over k (DFT_M with + exponent) + quarter-phase + packing -----
             var B = new Complex32[2 * N];
-            float gain = Maths.Sqrt(M) / Maths.Sqrt(N); // = 1/√L (unitary end-to-end)
+            float gain = 1.0f / L; // = 1/L (unitary end-to-end)
 
             for (int l = 0; l < L; l++)
             {
@@ -211,18 +211,15 @@ namespace UMapx.Window
             var Y_main = new Complex32[M]; // spectra over k for a fixed l (main)
             var Y_half = new Complex32[M]; // spectra over k for a fixed l (half)
 
-            // In the original codebase, the inverse unpacking used invGain = 1/(2√L).
+            // In the original codebase, the inverse unpacking used invGain = 1/L.
             // We keep this constant to fully match the established normalization and the slow matrix.
-            float invGain = 1.0f / Maths.Sqrt(L);
+            float invGain = 1.0f / L;
 
             // normalized inverse transform or not.
             if (normalized)
             {
                 invGain /= 2.0f;
             }
-
-            // Compensate the internal 1/√M applied by IFFT_M in FFT(..., true) to keep unit gain.
-            float cM = Maths.Sqrt(M);
 
             // ----- Stage 1: undo packing per (l,k) → IFFT_M over k to get row signals over n0 -----
             for (int l = 0; l < L; l++)
@@ -254,11 +251,11 @@ namespace UMapx.Window
                 FFT(Y_main, true);
                 FFT(Y_half, true);
 
-                // Compensate the internal 1/√M scaling to produce unit-gain rows.
+                // Produce unit-gain rows.
                 for (int n0 = 0; n0 < M; n0++)
                 {
-                    Cmain_rows[l][n0] = Y_main[n0] * cM;
-                    Chalf_rows[l][n0] = Y_half[n0] * cM;
+                    Cmain_rows[l][n0] = Y_main[n0];
+                    Chalf_rows[l][n0] = Y_half[n0];
                 }
             }
 
@@ -500,12 +497,9 @@ namespace UMapx.Window
                 // Perform the inverse FFT (frequency → time domain)
                 var b = fastFourierTransform.Backward(a);
 
-                // Apply orthonormal scaling by sqrt(1 / N) to match analysis/synthesis norms
-                float inv = Maths.Sqrt(1f / n);
-
                 for (int i = 0; i < n; i++)
                 {
-                    a[i] = b[i] * inv;
+                    a[i] = b[i];
                 }
             }
             else
