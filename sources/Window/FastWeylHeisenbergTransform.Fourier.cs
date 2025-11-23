@@ -146,7 +146,7 @@ namespace UMapx.Window
                     int u = l * M + k;
 
                     // Two-channel packing consistent with the slow matrix reference:
-                    //   main:  B[u]     =  P · gain,
+                    //   main:  B[u]     =        P · gain,
                     //   half:  B[u + N] = (−j) · Q · gain.
                     B[u + 0] = P * gain;
                     B[u + N] = -Complex32.I * Q * gain;
