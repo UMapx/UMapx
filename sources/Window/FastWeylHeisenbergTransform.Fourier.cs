@@ -26,12 +26,12 @@ namespace UMapx.Window
         ///       main : C_main[n0,l] = IFFT_L{ conj(S_hat[n0,q]) * Xhat[n0,q] }_q,
         ///       half : C_half[n0,l] = IFFT_L{ conj(T_hat[n0,q]) * Xhat[n0,q] * φ_carry(q) }_q,
         ///     where φ_carry(q) = exp(−j·2π q/L) iff (n0 + M/2) wraps modulo M (time shift +1 in r).
-        ///   • Across residues n0, assemble frequency shifts k by a forward DFT_M with positive exponent
+        ///   • Across residues n0, assemble frequency shifts k by a forward DFT_M 
         ///     and apply the quarter-period phase e^{+jπk/2} to account for the (n − M/4) centering.
         ///   • Two-channel packing:
         ///       B_main[u] =  P(l,k) · gain,
         ///       B_half[u] = −j · Q(l,k) · gain,
-        ///     with u = l·M + k and gain = √M / √N = 1/√L (orthonormal convention).
+        ///     with u = l·M + k and gain = 1/L (orthonormal convention).
         ///
         /// Exactness:
         ///   Matches the column-wise “slow” reference matrix G ∈ ℂ^{N×2N} built from the SAME
@@ -95,7 +95,7 @@ namespace UMapx.Window
                     Y[q] = Sh[q].Conjugate * X[q];
 
                 // IFFT_L over q: gives correlation sequence over time shifts l.
-                Y = FFT.Backward(Y); // inverse is orthonormal (applies 1/√L internally)
+                Y = FFT.Backward(Y);
                 for (int l = 0; l < L; l++)
                     Cmain_rows[l][n0] = Y[l];
 
