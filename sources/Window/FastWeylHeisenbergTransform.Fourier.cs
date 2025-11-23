@@ -87,7 +87,7 @@ namespace UMapx.Window
                     X[r] = A[r * M + n0];
 
                 // X[q] ← FFT_L{ A[r*M + n0] }_r  (forward FFT, no extra scaling).
-                FFT(X, false);
+                X = FFT.Forward(X);
 
                 // MAIN branch: Y[q] = conj(S_hat[n0,q]) * X[q].
                 var Sh = S_hat[n0];
@@ -95,7 +95,7 @@ namespace UMapx.Window
                     Y[q] = Sh[q].Conjugate * X[q];
 
                 // IFFT_L over q: gives correlation sequence over time shifts l.
-                FFT(Y, true); // inverse is orthonormal (applies 1/√L internally)
+                Y = FFT.Backward(Y); // inverse is orthonormal (applies 1/√L internally)
                 for (int l = 0; l < L; l++)
                     Cmain_rows[l][n0] = Y[l];
 
@@ -115,7 +115,7 @@ namespace UMapx.Window
                 }
 
                 // IFFT_L → half branch correlations over l.
-                FFT(Y, true);
+                Y = FFT.Backward(Y);
                 for (int l = 0; l < L; l++)
                     Chalf_rows[l][n0] = Y[l];
             }
@@ -130,8 +130,8 @@ namespace UMapx.Window
                 var rowH = Chalf_rows[l]; // length M
 
                 // Forward DFT over residues n0 via FFT.
-                FFT(rowM, false);
-                FFT(rowH, false);
+                rowM = FFT.Forward(rowM);
+                rowH = FFT.Forward(rowH);
 
                 // Apply quarter-phase e^{+jπk/2} (4-periodic: 1, +j, −1, −j) and pack outputs.
                 for (int k = 0; k < M; k++)
@@ -248,8 +248,8 @@ namespace UMapx.Window
                 }
 
                 // IFFT_M over k → row signals indexed by residue n0.
-                FFT(Y_main, true);
-                FFT(Y_half, true);
+                Y_main = FFT.Backward(Y_main);
+                Y_half = FFT.Backward(Y_half);
 
                 // Produce unit-gain rows.
                 for (int n0 = 0; n0 < M; n0++)
@@ -279,8 +279,8 @@ namespace UMapx.Window
                 }
 
                 // FFT_L over l → frequency domain along q.
-                FFT(bufMain, false);
-                FFT(bufHalf, false);
+                bufMain = FFT.Forward(bufMain);
+                bufHalf = FFT.Forward(bufHalf);
 
                 // Frequency-domain synthesis:
                 //   Xhat[n0,q] = S_hat[n0,q]*bufMain[q] + T_hat[n0,q]*bufHalf[q]*conj(φ_carry),
@@ -301,7 +301,7 @@ namespace UMapx.Window
                 }
 
                 // IFFT_L over q → r-domain samples for this residue n0, then de-interleave.
-                FFT(bufX, true);
+                bufX = FFT.Backward(bufX);
                 for (int r = 0; r < L; r++)
                     Arec[r * M + n0] = bufX[r];
             }
@@ -424,7 +424,7 @@ namespace UMapx.Window
                         s[r] = new Complex32(g[r * Mloc + n0], 0);
 
                     // Forward FFT along r (length L)
-                    FFT(s, false);
+                    s = FFT.Forward(s);
 
                     // Store as S_hat[n0, :]
                     for (int q = 0; q < L; q++)
@@ -438,7 +438,7 @@ namespace UMapx.Window
                         s[r] = new Complex32(g[r * Mloc + n1], 0);
 
                     // Forward FFT along r
-                    FFT(s, false);
+                    s = FFT.Forward(s);
 
                     // Store as T_hat[n0, :]
                     for (int q = 0; q < L; q++)
@@ -484,40 +484,9 @@ namespace UMapx.Window
         }
 
         /// <summary>
-        /// Fast Fourier transform.
-        /// </summary>
-        /// <param name="a">Input</param>
-        /// <param name="inverse">Inverse or not</param>
-        private static void FFT(Complex32[] a, bool inverse)
-        {
-            var n = a.Length;
-
-            if (inverse)
-            {
-                // Perform the inverse FFT (frequency → time domain)
-                var b = fastFourierTransform.Backward(a);
-
-                for (int i = 0; i < n; i++)
-                {
-                    a[i] = b[i];
-                }
-            }
-            else
-            {
-                // Perform the forward FFT (time → frequency domain)
-                var b = fastFourierTransform.Forward(a);
-
-                for (int i = 0; i < n; i++)
-                {
-                    a[i] = b[i];
-                }
-            }
-        }
-
-        /// <summary>
         /// UMapx fast Fourier transform.
         /// </summary>
-        private static readonly FastFourierTransform fastFourierTransform = new FastFourierTransform(false, Direction.Vertical);
+        private static readonly FastFourierTransform FFT = new FastFourierTransform(false, Direction.Vertical);
 
         #endregion
     }
