@@ -34698,8 +34698,8 @@
                • IFFT_L over q and interleave residues to reconstruct A[n] = A[r·M + n0].
             
              Normalization tracks the forward:
-               forward gain = √M/√N = 1/√L and inverse uses the corresponding 1/gain as part of the unpacking
-               (here kept as <c>invGain = 1/(2√L)</c> to match the user’s established convention and matrix reference).
+               forward gain = 1/L and inverse uses the corresponding 1/gain as part of the unpacking
+               (here kept as <c>invGain = 1/(2L)</c> to match the user’s established convention and matrix reference).
             
              Complexity:
                O(L·M·log M) for IFFT_M over k + O(M·L·log L) for synthesis along the r-axis.
