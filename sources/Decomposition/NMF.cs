@@ -118,7 +118,7 @@ namespace UMapx.Decomposition
                     for (i = j; i < r; i++)
                     {
                         s = 0.0f;
-                        for (l = 0; l < m; l++)
+                        for (l = 0; l < n; l++)
                             s += newH[i, l] * newH[j, l];
                         Z[i, j] = Z[j, i] = s;
                     }
