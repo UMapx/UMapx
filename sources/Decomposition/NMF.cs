@@ -76,11 +76,12 @@ namespace UMapx.Decomposition
             int i, j, l, t;
             float s, d;
 
+            // allocate
+            var newW = new float[m, r];
+            var newH = new float[r, n];
+
             for (t = 0; t < iterations; t++)
             {
-                var newW = new float[m, r];
-                var newH = new float[r, n];
-
                 // Update H using the multiplicative
                 // H = H .* (W'*A) ./ (W'*W*H + eps) 
                 for (i = 0; i < r; i++)
