@@ -33,10 +33,6 @@ namespace UMapx.Decomposition
         {
             this.m = A.GetLength(0);
             this.n = A.GetLength(1);
-
-            if (n < m)
-                throw new ArgumentException("The width of the matrix must be greater than the height");
-
             this.r = r;
 
             // decompose
