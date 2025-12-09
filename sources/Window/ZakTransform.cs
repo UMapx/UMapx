@@ -162,7 +162,7 @@ namespace UMapx.Window
             if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
-            int R = Maths.Gcd(M, L);           // number of Zak cosets to stitch
+            int R = (M % 2 == 0) ? 2 : 1;      // number of Zak cosets to stitch
             int RL = R * L;                    // vertical length
             int delta = M / R;                 // time shift step between cosets
             const float eps = 1e-8f;
@@ -224,7 +224,7 @@ namespace UMapx.Window
             if (N % M != 0) throw new ArgumentException("The length of the input must be a multiple of M");
 
             int L = N / M;
-            int R = Maths.Gcd(M, L);           // number of Zak cosets to stitch
+            int R = (M % 2 == 0) ? 2 : 1;      // number of Zak cosets to stitch
             int RL = R * L;                    // vertical length
             int delta = M / R;                 // time shift step between cosets
             const float eps = 1e-8f;
