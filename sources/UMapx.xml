@@ -32196,6 +32196,17 @@
             <param name="label">Label</param>
             <param name="seriesType">Series type</param>
         </member>
+        <member name="M:UMapx.Visualization.PlotSeries.#ctor(System.Single[],System.Single,System.Drawing.Color,UMapx.Visualization.SeriesType,UMapx.Visualization.ShapeType,System.String)">
+            <summary>
+            Initializes the plot series.
+            </summary>
+            <param name="y">Function</param>
+            <param name="depth">Depth</param>
+            <param name="color">Color</param>
+            <param name="shapeType">Shape type</param>
+            <param name="label">Label</param>
+            <param name="seriesType">Series type</param>
+        </member>
         <member name="P:UMapx.Visualization.PlotSeries.X">
             <summary>
             Gets or sets argument array.
