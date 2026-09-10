@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 
 namespace UMapx.Decomposition
@@ -28,10 +28,16 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Initializes singular value decomposition.
         /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <param name="iterations">Number of iterations</param>
+        /// <param name="A">Nonempty rectangular matrix with finite real entries.</param>
+        /// <param name="iterations">Positive maximum number of QR sweeps per singular value.</param>
+        /// <exception cref="ArgumentException">The matrix is empty or contains nonfinite entries.</exception>
+        /// <exception cref="InvalidOperationException">The QR iteration limit is reached before convergence.</exception>
         public SVD(float[,] A, int iterations = 10)
         {
+            if (A == null) throw new ArgumentNullException(nameof(A));
+            if (A.GetLength(0) == 0 || A.GetLength(1) == 0)
+                throw new ArgumentException("The matrix must be nonempty.", nameof(A));
+            if (iterations < 1) throw new ArgumentOutOfRangeException(nameof(iterations), "The iteration limit must be positive.");
             // set:
             this.iterations = iterations;
             this.n = A.GetLength(0);
@@ -85,22 +91,39 @@ namespace UMapx.Decomposition
         /// Gets the pseudoinverse matrix.
         /// </summary>
         /// <remarks>
-        /// NOT RECOMMENDED.
+        /// Singular values at or below max(rows, columns) * 2^-23 * max(S) are
+        /// treated as numerically zero. This rank threshold uses single-precision
+        /// input resolution; retained singular values are inverted in double precision.
         /// </remarks>
         public float[,] P
         {
             get
             {
-                // Moore–Penrose inverse:
-                // P = V * (I / S) * U'
-                return V.Dot(Matrice.One(m).Div(S)).Dot(U.Transpose());
+                int rows = reversed ? m : n, columns = reversed ? n : m;
+                var result = new float[columns, rows];
+                double largest = 0;
+                foreach (float singular in Sr) largest = Math.Max(largest, singular);
+                double threshold = Math.Max(n, m) * 1.1920928955078125e-7 * largest;
+                for (int i = 0; i < columns; i++)
+                    for (int j = 0; j < rows; j++)
+                    {
+                        double sum = 0;
+                        for (int k = 0; k < m; k++)
+                            if (Sr[k] > threshold)
+                                // Divide before narrowing to float, so a small singular value
+                                // cannot create infinity times a zero vector component.
+                                sum += reversed ? (double)Ur[i][k] * Vr[j][k] / Sr[k]
+                                                : (double)Vr[i][k] * Ur[j][k] / Sr[k];
+                        result[i, j] = (float)sum;
+                    }
+                return result;
             }
         }
         #endregion
 
         #region Private voids
         /// <summary>
-        /// Core SVD routine for real single-precision matrices.
+        /// Core SVD routine with double-precision work buffers for real single-precision inputs.
         /// Performs Householder bidiagonalization followed by Golub–Kahan QR iterations
         /// to compute singular values and left/right singular vectors.
         /// Populates the private fields: <c>Ur</c> (left vectors), <c>Vr</c> (right vectors),
@@ -116,13 +139,14 @@ namespace UMapx.Decomposition
         /// </remarks>
         private void svdcmp(float[,] A)
         {
-            this.Ur = Jagged.ToJagged(A);
-            this.Sr = new float[m];
-            this.Vr = Jagged.Zero(m, m);
-            float[] rv1 = new float[m];
+            var Ur = ScaleInput(A, out double inputScale);
+            var Sr = new double[m];
+            var Vr = new double[m][];
+            for (int row = 0; row < m; row++) Vr[row] = new double[m];
+            double[] rv1 = new double[m];
 
             int flag, i, its, j, jj, k, l = 0, nm = 0;
-            float anorm, c, f, g, h, e, scale, x, y, z;
+            double anorm, c, f, g, h, e, scale, x, y, z;
 
             // householder reduction to bidiagonal form
             g = scale = anorm = 0.0f;
@@ -149,7 +173,7 @@ namespace UMapx.Decomposition
                         }
 
                         f = Ur[i][i];
-                        g = -Maths.Sign(Maths.Sqrt(e), f);
+                        g = -CopySign(Math.Sqrt(e), f);
                         h = f * g - e;
                         Ur[i][i] = f - g;
 
@@ -197,7 +221,7 @@ namespace UMapx.Decomposition
                         }
 
                         f = Ur[i][l];
-                        g = -Maths.Sign(Maths.Sqrt(e), f);
+                        g = -CopySign(Math.Sqrt(e), f);
                         h = f * g - e;
                         Ur[i][l] = f - g;
 
@@ -319,7 +343,7 @@ namespace UMapx.Decomposition
             // and over allowed iterations
             for (k = m - 1; k >= 0; k--)
             {
-                for (its = 1; its <= iterations; its++)
+                for (its = 0; its <= iterations; its++)
                 {
                     flag = 1;
 
@@ -345,24 +369,23 @@ namespace UMapx.Decomposition
                         for (i = l; i <= k; i++)
                         {
                             f = e * rv1[i];
+                            rv1[i] *= c;
 
-                            if (Math.Abs(f) + anorm != anorm)
+                            if (Math.Abs(f) + anorm == anorm) break;
+                            g = Sr[i];
+                            h = Hypotenuse(f, g);
+                            Sr[i] = h;
+                            h = 1.0f / h;
+                            c = g * h;
+                            e = -f * h;
+
+                            // Apply the cancellation rotation to every row, including row zero.
+                            for (j = 0; j < n; j++)
                             {
-                                g = Sr[i];
-                                h = Maths.Hypotenuse(f, g);
-                                Sr[i] = h;
-                                h = 1.0f / h;
-                                c = g * h;
-                                e = -f * h;
-
-                                //for (j = 1; j <= m; j++)
-                                for (j = 1; j < n; j++)
-                                {
-                                    y = Ur[j][nm];
-                                    z = Ur[j][i];
-                                    Ur[j][nm] = y * c + z * e;
-                                    Ur[j][i] = z * c - y * e;
-                                }
+                                y = Ur[j][nm];
+                                z = Ur[j][i];
+                                Ur[j][nm] = y * c + z * e;
+                                Ur[j][i] = z * c - y * e;
                             }
                         }
                     }
@@ -385,10 +408,8 @@ namespace UMapx.Decomposition
                         break;
                     }
 
-                    //if (its == iterations)
-                    //{
-                    //    throw new Exception("No convergence in " + iterations.ToString() + " iterations of singular decomposition");
-                    //}
+                    if (its == iterations)
+                        throw new InvalidOperationException("Singular value decomposition failed to converge within the iteration limit.");
 
                     // shift from bottom 2-by-2 minor
                     x = Sr[l];
@@ -397,8 +418,8 @@ namespace UMapx.Decomposition
                     g = rv1[nm];
                     h = rv1[k];
                     f = ((y - z) * (y + z) + (g - h) * (g + h)) / (2.0f * h * y);
-                    g = Maths.Hypotenuse(f, 1.0f);
-                    f = ((x - z) * (x + z) + h * ((y / (f + Maths.Sign(g, f))) - h)) / x;
+                    g = Hypotenuse(f, 1.0f);
+                    f = ((x - z) * (x + z) + h * ((y / (f + CopySign(g, f))) - h)) / x;
 
                     // next QR transformation
                     c = e = 1.0f;
@@ -410,7 +431,7 @@ namespace UMapx.Decomposition
                         y = Sr[i];
                         h = e * g;
                         g = c * g;
-                        z = Maths.Hypotenuse(f, h);
+                        z = Hypotenuse(f, h);
                         rv1[j] = z;
                         c = f / z;
                         e = h / z;
@@ -427,7 +448,7 @@ namespace UMapx.Decomposition
                             Vr[jj][i] = z * c - x * e;
                         }
 
-                        z = Maths.Hypotenuse(f, h);
+                        z = Hypotenuse(f, h);
                         Sr[j] = z;
 
                         if (z != 0)
@@ -459,7 +480,7 @@ namespace UMapx.Decomposition
             for (i = 0; i < m - 1; i++)
             {
                 int maxIdx = i;
-                float maxVal = Sr[i];
+                double maxVal = Sr[i];
                 for (j = i + 1; j < m; j++)
                 {
                     if (Sr[j] > maxVal)
@@ -478,15 +499,50 @@ namespace UMapx.Decomposition
                     SwapColumns(Vr, i, maxIdx);
                 }
             }
+            // Orthogonal factors do not depend on a positive common scale.
+            this.Ur = Jagged.Zero(n, m);
+            this.Vr = Jagged.Zero(m, m);
+            this.Sr = new float[m];
+            for (i = 0; i < n; i++)
+                for (j = 0; j < m; j++) this.Ur[i][j] = (float)Ur[i][j];
+            for (i = 0; i < m; i++)
+            {
+                this.Sr[i] = (float)(Sr[i] * inputScale);
+                for (j = 0; j < m; j++) this.Vr[i][j] = (float)Vr[i][j];
+            }
         }
         /// <summary>
-        /// Swaps two columns in a jagged matrix <paramref name="M"/> (float[rows][cols]).
+        /// Copies a finite matrix and scales its largest magnitude to one before bidiagonalization.
+        /// </summary>
+        /// <param name="matrix">Real input matrix, with at least as many rows as columns.</param>
+        /// <param name="scale">Receives the original maximum magnitude, or one for a zero matrix.</param>
+        /// <returns>A scaled jagged copy; the caller must multiply the resulting singular values by scale.</returns>
+        private static double[][] ScaleInput(float[,] matrix, out double scale)
+        {
+            scale = 0;
+            foreach (float value in matrix)
+            {
+                if (float.IsNaN(value) || float.IsInfinity(value))
+                    throw new ArgumentException("The matrix must contain only finite values.", nameof(matrix));
+                scale = Math.Max(scale, Math.Abs((double)value));
+            }
+            if (scale == 0) scale = 1;
+            var result = new double[matrix.GetLength(0)][];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = new double[matrix.GetLength(1)];
+                for (int j = 0; j < result[i].Length; j++) result[i][j] = matrix[i, j] / scale;
+            }
+            return result;
+        }
+        /// <summary>
+        /// Swaps two columns in a jagged matrix <paramref name="M"/> (double[rows][cols]).
         /// No operation is performed if <paramref name="c1"/> equals <paramref name="c2"/>.
         /// </summary>
-        /// <param name="M">Matrix represented as an array of row arrays (float[rows][cols])</param>
+        /// <param name="M">Matrix represented as an array of row arrays (double[rows][cols])</param>
         /// <param name="c1">Index of the first column</param>
         /// <param name="c2">Index of the second column</param>
-        private static void SwapColumns(float[][] M, int c1, int c2)
+        private static void SwapColumns(double[][] M, int c1, int c2)
         {
             if (c1 == c2) return;
             int rows = M.Length;
@@ -497,6 +553,31 @@ namespace UMapx.Decomposition
                 M[r][c1] = M[r][c2];
                 M[r][c2] = tmp;
             }
+        }
+        /// <summary>
+        /// Computes sqrt(a*a + b*b) by a ratio to avoid squaring the larger magnitude.
+        /// </summary>
+        /// <param name="a">First finite real component.</param>
+        /// <param name="b">Second finite real component.</param>
+        /// <returns>The nonnegative Euclidean length, including zero for two zero components.</returns>
+        private static double Hypotenuse(double a, double b)
+        {
+            a = Math.Abs(a); b = Math.Abs(b);
+            if (a < b) { double temporary = a; a = b; b = temporary; }
+            if (a == 0) return 0;
+            double ratio = b / a;
+            return a * Math.Sqrt(1 + ratio * ratio);
+        }
+
+        /// <summary>
+        /// Transfers an algebraic sign to a magnitude for stable Householder and QR shifts.
+        /// </summary>
+        /// <param name="magnitude">Real magnitude donor.</param>
+        /// <param name="sign">Sign donor; zero selects the nonnegative sign.</param>
+        /// <returns>The absolute magnitude with the selected sign.</returns>
+        private static double CopySign(double magnitude, double sign)
+        {
+            return sign < 0 ? -Math.Abs(magnitude) : Math.Abs(magnitude);
         }
         #endregion
     }

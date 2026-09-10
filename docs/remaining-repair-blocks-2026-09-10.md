@@ -1,19 +1,17 @@
 # Remaining repair blocks — updated September 11, 2026
 
-After the [approximation and local-filter repairs](approximation-repair-2026-09-11.md),
-**183 failures remain in seven open blocks**. B01–B05 are closed. The latest mathematical repair
-resolved all 15 B05 failures and added 595 passing cases, with no regressions
+After the [matrix decomposition repairs](decomposition-repair-2026-09-11.md),
+**168 failures remain in six open blocks**. B01–B06 are closed. The latest repair
+resolved all 15 B06 failures and added 496 passing cases, with no regressions
 or removed tests. Every remaining failing test ID belongs to exactly one block.
-The complete verified run has 14,707 cases, with 14,524 passed and no skipped cases.
+The complete verified run has 15,203 cases, with 15,035 passed and no skipped cases.
 
-**Recommended next: B06 — matrix decompositions (15 failures).**
-Start with the zero-matrix Schur termination defect, then SVD and GEVD.
-The subsequent [helper consolidation](helper-consolidation-2026-09-11.md)
-preserved every test outcome and all block assignments.
+**Recommended next: B07 — wavelets (57 failures).**
+No failures outside B06 changed in the latest run.
 
 The table is a suggested work order. Blocks without dependencies can be taken earlier.
-The IsPrime(1) termination defect is fixed. Zero-matrix Schur remains a termination
-defect and should be the first subtask in B06. Keep the subprocess timeouts enabled.
+Both IsPrime(1) and zero-matrix Schur termination defects are fixed. Keep their
+subprocess timeout regressions enabled.
 
 | Block | Scope | Assigned failing cases | Recommended after |
 | --- | --- | ---: | --- |
@@ -22,14 +20,14 @@ defect and should be the first subtask in B06. Keep the subprocess timeouts enab
 | [B03](#b03) | Matrix indexing, complex statistics, and distances | 0 (46 resolved) | Closed |
 | [B04](#b04) | Probability distributions | 0 (67 resolved) | Closed |
 | [B05](#b05) | Approximation, interpolation, and local array filters | 0 (15 resolved) | Closed |
-| [B06](#b06) | Matrix decompositions | 15 | B01, B03 |
+| [B06](#b06) | Matrix decompositions | 0 (15 resolved) | Closed |
 | [B07](#b07) | Wavelets | 57 | B01 |
 | [B08](#b08) | Window functions | 18 | B01 |
 | [B09](#b09) | Transforms and response filters | 23 | B01, B05 |
 | [B10](#b10) | Color spaces | 21 | Independent |
 | [B11](#b11) | Images, geometry, and rendering | 44 | B03, B05, B10 |
 | [B12](#b12) | Video stream parsing | 5 | Independent |
-| **Remaining** | | **183** | |
+| **Remaining** | | **168** | |
 
 Counts represent failed test cases, not independent bugs. Several parameter sets and original
 regressions can expose the same cause. Fixing one block may also change another block's count.
@@ -212,22 +210,23 @@ Sources: [Pade.cs](../sources/Analysis/Pade.cs), [Interpolation.cs](../sources/A
 </details>
 
 <a id="b06"></a>
-## B06. Matrix decompositions — 15 cases
+## B06. Matrix decompositions — closed (15 resolved cases)
 
 Sources: [Schur.cs](../sources/Decomposition/Schur.cs), [SVD.cs](../sources/Decomposition/SVD.cs), [GEVD.cs](../sources/Decomposition/GEVD.cs).
 
-- Handle Schur zero-matrix deflation and termination first: 3 cases.
-- Separate SVD reconstruction from pseudoinverse singular-value thresholding: 9 cases.
-- Repair GEVD eigenvector accumulation/normalization: 3 cases.
+- Schur exact-zero deflation, bounded termination, and structural zeros are repaired.
+- SVD cancellation rotates every row and updates the auxiliary diagonal; pseudoinversion uses a relative rank threshold.
+- GEVD starts the transformation accumulator from identity and checks QZ convergence.
+- Scaled double work buffers retain large and small inputs; the public output types are unchanged.
 
-**Validation:** Check reconstruction, orthogonality/unitarity, all four Penrose equations, generalized eigen-equations, and bounded termination on zero/rank-deficient inputs.
-
-**Open point:** The exact internal cause of the rank-one SVD reconstruction failure is not fully localized. Fixing reciprocal zero singular values alone is insufficient to declare the SVD block complete.
+**Validation:** All 15 original failing cases and 496 new decomposition cases pass.
+Reconstruction, orthogonality, all four Penrose equations, generalized eigen-equations,
+normalization, and termination are checked. See the [repair report](decomposition-repair-2026-09-11.md).
 
 <details>
-<summary>Assigned failing test families</summary>
+<summary>Resolved failing test families</summary>
 
-| Test family | Cases |
+| Test family | Resolved cases |
 | --- | ---: |
 | [DecompositionAuditTests.GeneralizedFactorizationsSatisfyBothMatrixEquations](../tests/UMapx.Tests/DecompositionAuditTests.cs) | 3 |
 | [DecompositionAuditTests.RectangularAndRankDeficientMatricesRetainTheirInformation](../tests/UMapx.Tests/DecompositionAuditTests.cs) | 9 |
@@ -387,8 +386,10 @@ Sources: [Boundary.cs](../sources/Video/Internal/Boundary.cs), [MJPEGStreamParse
 
 ## Evidence and commands
 
-- [Current block metadata, focused filters, and all 183 unique test-ID assignments](audit-consolidation/repair-blocks.json).
-- [Current individual failures](audit-consolidation/failures.json) and [run summary](audit-consolidation/summary.json).
+- [Current block metadata, focused filters, and all 168 unique test-ID assignments](audit-decomposition/repair-blocks.json).
+- [Current individual failures](audit-decomposition/failures.json) and [run summary](audit-decomposition/summary.json).
+- [Previous 183-case snapshot](audit-consolidation/repair-blocks.json).
+- [Decomposition repair results](decomposition-repair-2026-09-11.md).
 - [Previous B05 snapshot](audit-approximation/repair-blocks.json).
 - [Approximation and local-filter repair results](approximation-repair-2026-09-11.md).
 - [Previous 198-case planning snapshot](audit-matrix-distribution/repair-blocks.json).
@@ -402,8 +403,8 @@ Sources: [Boundary.cs](../sources/Video/Internal/Boundary.cs), [MJPEGStreamParse
 Run a block's focused test families from the repository root:
 
 ```powershell
-$plan = Get-Content -Raw docs/audit-consolidation/repair-blocks.json | ConvertFrom-Json
-$block = $plan.blocks | Where-Object id -eq 'B06'
+$plan = Get-Content -Raw docs/audit-decomposition/repair-blocks.json | ConvertFrom-Json
+$block = $plan.blocks | Where-Object id -eq 'B07'
 dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter $block.focused_test_filter
 ```
 
@@ -418,5 +419,5 @@ dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filte
 ./tools/Run-MathAudit.ps1 -NoRestore -ResultsDirectory artifacts/math-audit/next-block
 ```
 
-The full suite currently exits with 1 because all 183 remaining expectations stay enabled.
-The historical snapshots are retained; the current JSON matches the verified helper-consolidation run.
+The full suite currently exits with 1 because all 168 remaining expectations stay enabled.
+The historical snapshots are retained; the current JSON matches the verified matrix-decomposition repair run.

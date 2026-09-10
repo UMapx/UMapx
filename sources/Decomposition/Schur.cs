@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 
 namespace UMapx.Decomposition
@@ -19,7 +19,7 @@ namespace UMapx.Decomposition
         private int n;
         private float[][] matrices; // unitary matrix
         private float[][] hessenberg; // schur form
-        private float[] Re, Im;
+        private double[] Re, Im;
         private float eps;
         #endregion
 
@@ -27,25 +27,28 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Initializes Schur decomposition.
         /// </summary>
-        /// <param name="A">Square matrix</param>
-        /// <param name="eps">Epsilon [0, 1]</param>
+        /// <param name="A">Nonempty square matrix with finite real entries.</param>
+        /// <param name="eps">Relative deflation tolerance, clamped to [0, 1] with a double-roundoff floor.</param>
+        /// <exception cref="ArgumentException">The input is empty, nonsquare, or contains nonfinite entries.</exception>
+        /// <exception cref="InvalidOperationException">The QR iteration limit is reached before convergence.</exception>
         public Schur(float[,] A, float eps = 1e-16f)
         {
+            if (A == null) throw new ArgumentNullException(nameof(A));
+            if (A.GetLength(0) == 0) throw new ArgumentException("The matrix must be nonempty.", nameof(A));
+            if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
             if (!Matrice.IsSquare(A))
                 throw new ArgumentException("The matrix must be square");
 
             this.n = A.GetLength(0);
-            this.Re = new float[n];
-            this.Im = new float[n];
+            this.Re = new double[n];
+            this.Im = new double[n];
             this.eps = Maths.Float(eps);
 
-            // reduce to Hessenberg form using existing decomposition
-            var h = new Hessenberg(A);
-            this.matrices = Jagged.ToJagged(h.P); // initial unitary matrix
-            this.hessenberg = Jagged.ToJagged(h.H); // Hessenberg form
-
-            // reduce Hessenberg to real Schur form
-            hqr2();
+            var hessenberg = ScaleInput(A, out double inputScale);
+            var matrices = ReduceToHessenberg(hessenberg);
+            this.matrices = Jagged.Zero(n, n);
+            this.hessenberg = Jagged.Zero(n, n);
+            hqr2(hessenberg, matrices, inputScale);
         }
         #endregion
 
@@ -68,28 +71,165 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
-        /// Reduces Hessenberg form to real Schur form.
+        /// Scales a finite square matrix before Hessenberg reduction to protect products in the QR shifts.
         /// </summary>
-        private void hqr2()
+        /// <param name="matrix">Original real square matrix.</param>
+        /// <param name="scale">Receives the maximum magnitude, or one for a zero matrix.</param>
+        /// <returns>A scaled copy; the Schur form must subsequently be multiplied by scale.</returns>
+        private static double[][] ScaleInput(float[,] matrix, out double scale)
+        {
+            scale = 0;
+            foreach (float value in matrix)
+            {
+                if (float.IsNaN(value) || float.IsInfinity(value))
+                    throw new ArgumentException("The matrix must contain only finite values.", nameof(matrix));
+                scale = Math.Max(scale, Math.Abs((double)value));
+            }
+            if (scale == 0) scale = 1;
+            var result = new double[matrix.GetLength(0)][];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = new double[matrix.GetLength(1)];
+                for (int j = 0; j < result[i].Length; j++) result[i][j] = matrix[i, j] / scale;
+            }
+            return result;
+        }
+        /// <summary>
+        /// Reduces a scaled square matrix to Hessenberg form by Householder similarities in double precision.
+        /// </summary>
+        /// <param name="hessenberg">Matrix overwritten by its upper Hessenberg form H.</param>
+        /// <returns>The orthogonal accumulator Q satisfying A = Q*H*Q^T before QR iteration.</returns>
+        private static double[][] ReduceToHessenberg(double[][] hessenberg)
+        {
+            int n = hessenberg.Length;
+            var matrices = new double[n][];
+            for (int row = 0; row < n; row++) matrices[row] = new double[n];
+            var orthogonal = new double[n];
+            int low = 0;
+            int high = n - 1;
+            int m, i, j;
+            double scale, h, g, f;
+
+            for (m = low + 1; m <= high - 1; m++)
+            {
+                // Scale column.
+
+                scale = 0;
+                for (i = m; i <= high; i++)
+                    scale = scale + System.Math.Abs(hessenberg[i][m - 1]);
+
+                if (scale != 0)
+                {
+                    // Compute Householder transformation.
+                    h = 0;
+                    for (i = high; i >= m; i--)
+                    {
+                        orthogonal[i] = hessenberg[i][m - 1] / scale;
+                        h += orthogonal[i] * orthogonal[i];
+                    }
+
+                    g = System.Math.Sqrt(h);
+                    if (orthogonal[m] > 0) g = -g;
+
+                    h = h - orthogonal[m] * g;
+                    orthogonal[m] = orthogonal[m] - g;
+
+                    // Apply Householder similarity transformation
+                    // H = (I - u * u' / h) * H * (I - u * u' / h).
+                    for (j = m; j < n; j++)
+                    {
+                        f = 0;
+                        for (i = high; i >= m; i--)
+                            f += orthogonal[i] * hessenberg[i][j];
+
+                        f = f / h;
+                        for (i = m; i <= high; i++)
+                            hessenberg[i][j] -= f * orthogonal[i];
+                    }
+
+                    for (i = 0; i <= high; i++)
+                    {
+                        f = 0;
+                        for (j = high; j >= m; j--)
+                            f += orthogonal[j] * hessenberg[i][j];
+
+                        f = f / h;
+                        for (j = m; j <= high; j++)
+                            hessenberg[i][j] -= f * orthogonal[j];
+                    }
+
+                    orthogonal[m] = scale * orthogonal[m];
+                    hessenberg[m][m - 1] = scale * g;
+                }
+            }
+
+            // Accumulate transformations (Algol's ortran).
+            for (i = 0; i < n; i++)
+                for (j = 0; j < n; j++)
+                    matrices[i][j] = (i == j ? 1 : 0);
+
+            for (m = high - 1; m >= low + 1; m--)
+            {
+                if (hessenberg[m][m - 1] != 0)
+                {
+                    for (i = m + 1; i <= high; i++)
+                        orthogonal[i] = hessenberg[i][m - 1];
+
+                    for (j = m; j <= high; j++)
+                    {
+                        g = 0;
+                        for (i = m; i <= high; i++)
+                            g += orthogonal[i] * matrices[i][j];
+
+                        // Double division avoids possible underflow.
+                        g = (g / orthogonal[m]) / hessenberg[m][m - 1];
+                        for (i = m; i <= high; i++)
+                            matrices[i][j] += g * orthogonal[i];
+                    }
+                }
+            }
+
+            // final reduction:
+            if (n > 2)
+            {
+                for (i = 0; i < n - 2; i++)
+                {
+                    for (j = i + 2; j < n; j++)
+                    {
+                        hessenberg[j][i] = 0;
+                    }
+                }
+            }
+
+            return matrices;
+        }
+        /// <summary>
+        /// Reduces Hessenberg form to real Schur form using bounded double-shift QR iteration.
+        /// </summary>
+        /// <param name="hessenberg">Scaled Hessenberg matrix, overwritten by its Schur form.</param>
+        /// <param name="matrices">Orthogonal reduction accumulator, overwritten by the Schur vectors.</param>
+        /// <param name="inputScale">Positive input scale restored when storing the single-precision Schur form.</param>
+        private void hqr2(double[][] hessenberg, double[][] matrices, double inputScale)
         {
             int nn = this.n;
+            double eps = Math.Max(this.eps, 2.2204460492503131e-16);
             int n = nn - 1;
             int low = 0;
             int high = nn - 1;
-            float exshift = 0;
-            float p = 0;
-            float q = 0;
-            float r = 0;
-            float s = 0;
-            float z = 0;
-            float w;
-            float x;
-            float y;
+            double exshift = 0;
+            double p = 0;
+            double q = 0;
+            double r = 0;
+            double s = 0;
+            double z = 0;
+            double w;
+            double x;
+            double y;
             int i, j, k, m;
             bool notlast;
 
             // Store roots isolated by balanc and compute matrix norm
-            float norm = 0;
+            double norm = 0;
             for (i = 0; i < nn; i++)
             {
                 if (i < low | i > high)
@@ -113,8 +253,12 @@ namespace UMapx.Decomposition
                     s = System.Math.Abs(hessenberg[l - 1][l - 1]) + System.Math.Abs(hessenberg[l][l]);
                     if (s == 0)
                         s = norm;
-                    if (System.Math.Abs(hessenberg[l][l - 1]) < eps * s)
+                    // Exact zeros must deflate even when the matrix norm or eps is zero.
+                    if (System.Math.Abs(hessenberg[l][l - 1]) <= eps * s)
+                    {
+                        hessenberg[l][l - 1] = 0;
                         break;
+                    }
                     l--;
                 }
 
@@ -134,7 +278,7 @@ namespace UMapx.Decomposition
                     w = hessenberg[n][n - 1] * hessenberg[n - 1][n];
                     p = (hessenberg[n - 1][n - 1] - hessenberg[n][n]) / 2;
                     q = p * p + w;
-                    z = (float)System.Math.Sqrt(System.Math.Abs(q));
+                    z = System.Math.Sqrt(System.Math.Abs(q));
                     hessenberg[n][n] = hessenberg[n][n] + exshift;
                     hessenberg[n - 1][n - 1] = hessenberg[n - 1][n - 1] + exshift;
                     x = hessenberg[n][n];
@@ -153,7 +297,7 @@ namespace UMapx.Decomposition
                         s = System.Math.Abs(x) + System.Math.Abs(z);
                         p = x / s;
                         q = z / s;
-                        r = (float)System.Math.Sqrt(p * p + q * q);
+                        r = System.Math.Sqrt(p * p + q * q);
                         p = p / r;
                         q = q / r;
 
@@ -189,6 +333,7 @@ namespace UMapx.Decomposition
                         Im[n - 1] = z;
                         Im[n] = -z;
                     }
+                    if (Im[n] == 0) hessenberg[n][n - 1] = 0;
                     n = n - 2;
                     iter = 0;
                 }
@@ -220,7 +365,7 @@ namespace UMapx.Decomposition
                         s = s * s + w;
                         if (s > 0)
                         {
-                            s = (float)System.Math.Sqrt(s);
+                            s = System.Math.Sqrt(s);
                             if (y < x)
                                 s = -s;
                             s = x - w / ((y - x) / 2 + s);
@@ -231,7 +376,9 @@ namespace UMapx.Decomposition
                         }
                     }
 
-                    iter = iter + 1; // (Could check iteration count here.)
+                    // A failed iteration must not leave the caller in an unbounded loop.
+                    if (++iter > 100 * nn)
+                        throw new InvalidOperationException("Schur decomposition failed to converge.");
 
                     // Look for two consecutive small sub-diagonal elements
                     m = n - 2;
@@ -262,7 +409,7 @@ namespace UMapx.Decomposition
                             hessenberg[i][i - 3] = 0;
                     }
 
-                    // float QR step involving rows l:n and columns m:n
+                    // Double-shift QR step involving rows l:n and columns m:n
                     for (k = m; k <= n - 1; k++)
                     {
                         notlast = (k != n - 1);
@@ -280,10 +427,10 @@ namespace UMapx.Decomposition
                             }
                         }
 
-                        if (x == 0)
+                        if (k != m && x == 0)
                             break;
 
-                        s = (float)System.Math.Sqrt(p * p + q * q + r * r);
+                        s = System.Math.Sqrt(p * p + q * q + r * r);
                         if (p < 0)
                             s = -s;
 
@@ -346,6 +493,14 @@ namespace UMapx.Decomposition
                     }
                 }
             }
+            for (int row = 0; row < nn; row++)
+                for (int column = 0; column < nn; column++)
+                {
+                    // Entries below the first subdiagonal are structural zeros;
+                    // roundoff from rotations must not leak into the public Schur form.
+                    this.hessenberg[row][column] = column < row - 1 ? 0 : (float)(hessenberg[row][column] * inputScale);
+                    this.matrices[row][column] = (float)matrices[row][column];
+                }
         }
         #endregion
     }

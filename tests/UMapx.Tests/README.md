@@ -2,20 +2,21 @@
 
 The audit covers every source area. The current source inventory contains 427 C#
 files after [helper consolidation](../../docs/helper-consolidation-2026-09-11.md).
-See the [approximation repair report](../../docs/approximation-repair-2026-09-11.md)
+See the [decomposition repair report](../../docs/decomposition-repair-2026-09-11.md)
 and [remaining repair blocks](../../docs/remaining-repair-blocks-2026-09-10.md).
-The [matrix and distribution repair report](../../docs/matrix-distribution-repair-2026-09-10.md),
+The [approximation repair report](../../docs/approximation-repair-2026-09-11.md),
+[matrix and distribution repair report](../../docs/matrix-distribution-repair-2026-09-10.md),
 [arithmetic repair report](../../docs/arithmetic-repair-2026-09-10.md),
 [special-function repair report](../../docs/special-functions-repair-2026-09-10.md),
 and [expanded baseline report](../../docs/math-audit-expanded-2026-09-10.md) remain historical records.
 
-The current complete run contains **14,707 cases: 14,524 passed, 183 failed, none
-skipped**. Consolidating the helper files preserved all 14,707 test IDs and
-their outcomes. The preceding B05 repair resolved 15 failures and added 595
-passing cases. B01–B05 are closed; B06–B12 remain open. Failing tests remain
-enabled and expect the mathematical answer; the full command exits with status 1.
+The current complete run contains **15,203 cases: 15,035 passed, 168 failed, none
+skipped**. All 14,707 previous cases remain: 15 B06 failures now pass and no
+passing cases regressed. All 496 added cases pass. B01–B06 are closed; B07–B12
+remain open. Failing tests remain enabled and expect the mathematical answer;
+the full command exits with status 1.
 
-Execution coverage is **83.26% of lines** and **76.49% of branches**. These figures
+Execution coverage is **83.55% of lines** and **77.07% of branches**. These figures
 include failing and contract tests. They are not a correctness percentage, and
 this suite does not establish absence of errors. The report explicitly lists
 unexecuted lines/methods, unsupported APIs, and incomplete parameter domains.
@@ -66,7 +67,7 @@ Available categories: `Identity`, `Regression`, `Reference`, `Core`, `Matrix`,
 `Analysis`, `ColorSpace`, `Decomposition`, `Distance`, `Distribution`, `Window`,
 `WindowTransform`, `Transform`, `Wavelet`, `Response`, `Imaging`, `Geometry`,
 `Video`, and `Contract`. Category totals and test-family counts are available in
-[the run summary](../../docs/audit-consolidation/summary.json).
+[the run summary](../../docs/audit-decomposition/summary.json).
 
 A numeric-only filter for environments without Windows bitmap support is:
 
@@ -101,6 +102,9 @@ The complete reported result is from Windows with .NET SDK 10.0.401.
 - 595 approximation/filter repair cases cover Padé Taylor equations, clamped
   grid interpolation, direct window sums, sorted morphology windows, independent
   cubic Hermite resampling, exact orthogonal rotations, and bitmap channels.
+- 496 decomposition repair cases cover matrix rank and scaling, all four Penrose
+  equations, Schur deflation and complex blocks, generalized eigen-equations,
+  homogeneous eigenvalues, QZ structure, and explicit convergence/input contracts.
 - Window formulas, wavelet analysis/synthesis coefficients, impulses, filter
   transfer polynomials, image pixel equations and neutral/constant invariants.
 - Real/complex vectors, rectangular matrices, even/odd sizes, singular inputs,
@@ -109,7 +113,7 @@ The complete reported result is from Windows with .NET SDK 10.0.401.
 Random test inputs use fixed seeds. Several production algorithms have internal
 random initialization without a public seed, so their tests use stated residual
 budgets. A dedicated nonparallel collection protects the global SIMD flag.
-Prime termination regressions, large factorization cases, and the known Schur hang run in `UMapx.AuditProbe` with a five-second
+Prime termination regressions, large factorization cases, and the repaired Schur zero-matrix termination cases run in `UMapx.AuditProbe` with a five-second
 process deadline and process-tree termination; they do not hang the test host.
 Subprocess execution is not added to the parent coverlet coverage totals.
 
@@ -155,6 +159,11 @@ Local mean parameters are window lengths. Windows are clipped and renormalized;
 even lengths have one extra sample on the left. Weighted matrix means retain
 separate horizontal and vertical passes. Bicubic resizing aligns sample centers
 using `(index+0.5)*sourceLength/destinationLength-0.5` and floors the anchor.
+
+SVD pseudoinversion discards singular values at or below
+`max(rows, columns) * 2^-23 * max(S)`. Schur and GEVD apply a binary64 roundoff
+floor to the requested relative tolerance. Their work buffers use scaled double
+arithmetic; public outputs remain float. Iteration failure is explicit.
 
 ## Reference generation
 
