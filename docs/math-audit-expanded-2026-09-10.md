@@ -1,5 +1,8 @@
 # UMapx expanded mathematical audit — September 10, 2026
 
+This is the historical baseline. The subsequent [special-function repair report](special-functions-repair-2026-09-10.md)
+records 423 resolved cases and the current 450 remaining failures.
+
 The audit targets library version **7.5.1.5**, source commit
 `0a1e916` (the preceding audit was committed there). No production algorithm was
 changed in this expansion. The solution now includes a small subprocess probe

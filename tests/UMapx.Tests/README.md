@@ -1,16 +1,17 @@
 # UMapx mathematical audit tests
 
-The expanded audit covers every source area and inventories all 426 C# source
-files. See the [expanded report](../../docs/math-audit-expanded-2026-09-10.md) for
-counterexamples, causes, repair priorities, conventions, and remaining gaps.
+The audit covers every source area. The current source inventory contains 432 C#
+files. See the [special-function repair report](../../docs/special-functions-repair-2026-09-10.md)
+for the changes and the [expanded baseline report](../../docs/math-audit-expanded-2026-09-10.md)
+for the original counterexamples and repair register.
 
-At source commit `0a1e916` (version 7.5.1.5), the final run contains **8,408 cases:
-7,535 passed, 873 failed, none skipped**. Two complete runs produced the same
-counts. The original 840-case suite remains included. Production algorithms have
-not been changed. Failing tests are enabled and expect the mathematical answer;
-the test command intentionally exits with status 1 while defects remain.
+The current complete run contains **10,504 cases: 10,054 passed, 450 failed, none
+skipped**. All 8,408 baseline cases remain: 423 previous failures pass now, with
+no passing cases regressed. All 2,096 new cases pass. Production changes are
+confined to the Special partial class. Failing tests remain enabled and expect
+the mathematical answer; the full command exits with status 1 while defects remain.
 
-Execution coverage is **82.56% of lines** and **74.42% of branches**. These figures
+Execution coverage is **83.01% of lines** and **75.67% of branches**. These figures
 include failing and contract tests. They are not a correctness percentage, and
 this suite does not establish absence of errors. The report explicitly lists
 unexecuted lines/methods, unsupported APIs, and incomplete parameter domains.
@@ -61,7 +62,7 @@ Available categories: `Identity`, `Regression`, `Reference`, `Core`, `Matrix`,
 `Analysis`, `ColorSpace`, `Decomposition`, `Distance`, `Distribution`, `Window`,
 `WindowTransform`, `Transform`, `Wavelet`, `Response`, `Imaging`, `Geometry`,
 `Video`, and `Contract`. Category totals and test-family counts are available in
-[the run summary](../../docs/audit/summary.json).
+[the run summary](../../docs/audit-special-functions/summary.json).
 
 A numeric-only filter for environments without Windows bitmap support is:
 
@@ -78,9 +79,10 @@ The complete reported result is from Windows with .NET SDK 10.0.401.
   reconstruction residuals, orthogonality, and all four Penrose equations.
 - BigInteger arithmetic, independent scalar and complex equations, exact index
   mappings, and component/stride tests with guarded memory.
-- 1,653 special-function reference cases, 1,991 distribution reference cases,
+- 3,727 special-function reference cases, 1,991 distribution reference cases,
   and 16 high-precision Hankel matrix fixtures. Fixtures use mpmath 1.3.0 at
-  40 or 60 decimal digits, with library inputs rounded to binary32 first.
+  40, 60, or 80 decimal digits, with library inputs rounded to binary32 first.
+  The dedicated special-function suites also contain 22 boundary/identity cases.
 - Independent PDF integration for distribution moments and entropy. Median/mode
   consistency checks supplement these references; they are not independent
   proofs when they call the library's own CDF/PDF.
@@ -100,7 +102,9 @@ Subprocess execution is not added to the parent coverlet coverage totals.
 
 `NumericAssert` uses mixed absolute and relative bounds and rejects nonfinite
 results when a finite result is expected. Scalar defaults are `2e-6 + 2e-5*abs(x)`.
-Special-function references use `2e-4 + 2e-4*abs(x)`. Distribution density/CDF
+Original special-function references use `2e-4 + 2e-4*abs(x)`. New special-function
+references use `1e-7 + 2e-5*abs(x)`, replacing the absolute term with `1e-44` for
+nonzero reference magnitudes below `1e-4` to test small tails. Distribution density/CDF
 references normally use `3e-4 + 3e-4*abs(x)`; integrated moments use `2e-3` for
 both terms. Individual tests tighten or relax these explicitly according to the
 operation, conditioning, approximation, or pixel quantization. Hankel matrix
@@ -117,9 +121,9 @@ right-side matrix, and some wavelet prototypes do not promise perfect
 reconstruction. Geometric entropy uses bits in the existing API. Wrapped-Cauchy
 variance is circular variance. These differences are not silently called bugs.
 
-One left-half-plane complex LogGamma record is excluded because the API does not
-specify its unwrapped branch. Complex generalized-erf continuation remains an
-explicit contract question. Unsupported distribution getters and undefined mode
+Complex LogGamma uses analytic continuation with a negative-real-axis cut; the
+previously excluded record now runs. Gerf uses the entire continuation of
+`n!/sqrt(pi) * integral(exp(-t^n), 0, x)`. Unsupported distribution getters and undefined mode
 sets are identified separately; a contract check returning successfully is not
 proof that an unimplemented numerical operation works.
 
@@ -132,12 +136,15 @@ To regenerate them in a Python environment with mpmath 1.3.0:
 python -m pip install mpmath==1.3.0
 python -X utf8 tests/UMapx.Tests/Data/generate_reference.py
 python -X utf8 tests/UMapx.Tests/Data/generate_extended_reference.py
+python -X utf8 tests/UMapx.Tests/Data/generate_special_repair_reference.py
 python -X utf8 tests/UMapx.Tests/Data/generate_distributions.py
 ```
 
-The generators retain their explicit domains and exclusion rules. Special-function
+The generators retain their explicit domains and exclusion rules. Original special-function
 fixtures omit poles, non-real answers for real APIs, nonfinite values and finite
-magnitudes above `1e35`. Distribution fixtures include selected divergent moments
+magnitudes above `1e35`. The repair generator permits magnitudes through `3e38`
+for single-precision results and `1e300` for its selected double-returning APIs.
+Distribution fixtures include selected divergent moments
 as explicit Infinity/NaN expectations. See the [mpmath documentation](https://mpmath.org/doc/1.3.0/).
 
 To refresh the checked-in report evidence after an intentional new audit, pass

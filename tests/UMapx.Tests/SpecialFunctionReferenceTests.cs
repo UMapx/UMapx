@@ -18,9 +18,6 @@ public class SpecialFunctionReferenceTests
         {
             string name = item.GetProperty("name").GetString()!;
             string kinds = string.Join(",", item.GetProperty("kinds").EnumerateArray().Select(k => k.GetString()));
-            // The current API does not specify loggamma's unwrapped branch.
-            // Do not confuse a 2*pi*i convention difference with a proven defect.
-            if (name == "LogGamma" && kinds == "c" && item.GetProperty("args")[0][0].GetDouble() < 0) continue;
             yield return new object[] { name, kinds, item.GetProperty("args").GetRawText(), item.GetProperty("re").GetDouble(), item.GetProperty("im").GetDouble() };
         }
         }

@@ -66,6 +66,11 @@ using UMapx.Window;
 **MIT**  
 
 # Mathematical audit
+The [special-function repair report](docs/special-functions-repair-2026-09-10.md)
+records 423 resolved audit failures, no regressions on the original cases, and
+3,749 passing dedicated special-function checks. The complete suite currently
+has 10,054 passing and 450 failing cases; the remaining defects stay visible.
+
 The [expanded audit report](docs/math-audit-expanded-2026-09-10.md) records known
 counterexamples, repair priorities, and coverage limits. See the
 [test project README](tests/UMapx.Tests/README.md) to run the enabled regression,
