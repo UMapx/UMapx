@@ -1,19 +1,20 @@
 # UMapx mathematical audit tests
 
-The audit covers every source area. The current source inventory contains 436 C#
-files. See the [matrix and distribution repair report](../../docs/matrix-distribution-repair-2026-09-10.md)
+The audit covers every source area. The current source inventory contains 437 C#
+files. See the [approximation repair report](../../docs/approximation-repair-2026-09-11.md)
 and [remaining repair blocks](../../docs/remaining-repair-blocks-2026-09-10.md).
-The [arithmetic repair report](../../docs/arithmetic-repair-2026-09-10.md),
+The [matrix and distribution repair report](../../docs/matrix-distribution-repair-2026-09-10.md),
+[arithmetic repair report](../../docs/arithmetic-repair-2026-09-10.md),
 [special-function repair report](../../docs/special-functions-repair-2026-09-10.md),
 and [expanded baseline report](../../docs/math-audit-expanded-2026-09-10.md) remain historical records.
 
-The current complete run contains **14,112 cases: 13,914 passed, 198 failed, none
-skipped**. All 12,130 cases from the previous snapshot remain: 113 previous failures
-now pass, with no passing cases regressed. All 1,982 added cases pass. B01–B04
-are closed; B05–B12 remain open. Failing tests remain
+The current complete run contains **14,707 cases: 14,524 passed, 183 failed, none
+skipped**. All 14,112 cases from the previous snapshot remain: 15 previous failures
+now pass, with no passing cases regressed. All 595 added cases pass. B01–B05
+are closed; B06–B12 remain open. Failing tests remain
 enabled and expect the mathematical answer; the full command exits with status 1.
 
-Execution coverage is **83.29% of lines** and **76.42% of branches**. These figures
+Execution coverage is **83.26% of lines** and **76.49% of branches**. These figures
 include failing and contract tests. They are not a correctness percentage, and
 this suite does not establish absence of errors. The report explicitly lists
 unexecuted lines/methods, unsupported APIs, and incomplete parameter domains.
@@ -64,7 +65,7 @@ Available categories: `Identity`, `Regression`, `Reference`, `Core`, `Matrix`,
 `Analysis`, `ColorSpace`, `Decomposition`, `Distance`, `Distribution`, `Window`,
 `WindowTransform`, `Transform`, `Wavelet`, `Response`, `Imaging`, `Geometry`,
 `Video`, and `Contract`. Category totals and test-family counts are available in
-[the run summary](../../docs/audit-matrix-distribution/summary.json).
+[the run summary](../../docs/audit-approximation/summary.json).
 
 A numeric-only filter for environments without Windows bitmap support is:
 
@@ -96,6 +97,9 @@ The complete reported result is from Windows with .NET SDK 10.0.401.
   discrete probability sums. A further 55 checks cover modes, scaling and support.
 - 316 matrix/distance repair cases cover clipping, empty/rectangular arrays,
   extreme shifts, mixed diagonal products, Hermitian statistics and contingency counts.
+- 595 approximation/filter repair cases cover Padé Taylor equations, clamped
+  grid interpolation, direct window sums, sorted morphology windows, independent
+  cubic Hermite resampling, exact orthogonal rotations, and bitmap channels.
 - Window formulas, wavelet analysis/synthesis coefficients, impulses, filter
   transfer polynomials, image pixel equations and neutral/constant invariants.
 - Real/complex vectors, rectangular matrices, even/odd sizes, singular inputs,
@@ -145,6 +149,11 @@ Complex sample statistics use squared magnitudes and Hermitian covariance.
 PowerNormal and PowerLognormal follow the NIST survival-power laws. Discrete
 median getters select the lower median; ChiSquare median uses CDF inversion.
 See the current repair report for compatibility details and numerical limits.
+
+Local mean parameters are window lengths. Windows are clipped and renormalized;
+even lengths have one extra sample on the left. Weighted matrix means retain
+separate horizontal and vertical passes. Bicubic resizing aligns sample centers
+using `(index+0.5)*sourceLength/destinationLength-0.5` and floors the anchor.
 
 ## Reference generation
 

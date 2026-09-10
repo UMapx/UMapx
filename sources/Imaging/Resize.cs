@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using UMapx.Core;
@@ -243,15 +243,15 @@ namespace UMapx.Imaging
             for (int y = 0; y < newHeight; y++)
             {
                 // Y coordinates
-                oy = y * yFactor - 0.5f;
-                oy1 = (int)oy;
+                oy = (y + 0.5f) * yFactor - 0.5f;
+                oy1 = (int)Math.Floor(oy);
                 dy = oy - oy1;
 
                 for (int x = 0; x < newWidth; x++, dst += 4)
                 {
                     // X coordinates
-                    ox = x * xFactor - 0.5f;
-                    ox1 = (int)ox;
+                    ox = (x + 0.5f) * xFactor - 0.5f;
+                    ox1 = (int)Math.Floor(ox);
                     dx = ox - ox1;
 
                     // initial pixel value

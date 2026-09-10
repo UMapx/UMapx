@@ -163,21 +163,21 @@ namespace UMapx.Analysis
             if (nx < 2 || ny < 2 || z == null || z.GetLength(0) != nx || z.GetLength(1) != ny)
                 throw new ArgumentException();
 
-            if (xval <= x[0]) return (yval <= y[0]) ? z[0, 0] : (yval >= y[ny - 1] ? z[0, ny - 1] : z[0, LowerIndex(y, yval)]);
-            if (xval >= x[nx - 1]) return (yval <= y[0]) ? z[nx - 1, 0] : (yval >= y[ny - 1] ? z[nx - 1, ny - 1] : z[nx - 1, LowerIndex(y, yval)]);
+            xval = Math.Max(x[0], Math.Min(x[nx - 1], xval));
+            yval = Math.Max(y[0], Math.Min(y[ny - 1], yval));
 
             int ix = LowerIndex(x, xval); // x[ix] <= xval < x[ix+1]
             int iy = LowerIndex(y, yval); // y[iy] <= yval < y[iy+1]
 
             float x0 = x[ix], x1 = x[ix + 1];
             float y0 = y[iy], y1 = y[iy + 1];
-            float tx = (xval - x0) / (x1 - x0);
-            float ty = (yval - y0) / (y1 - y0);
+            double tx = ((double)xval - x0) / ((double)x1 - x0);
+            double ty = ((double)yval - y0) / ((double)y1 - y0);
 
             float z00 = z[ix, iy], z10 = z[ix + 1, iy], z01 = z[ix, iy + 1], z11 = z[ix + 1, iy + 1];
-            float z0 = z00 + tx * (z10 - z00);
-            float z1 = z01 + tx * (z11 - z01);
-            return z0 + ty * (z1 - z0);
+            double z0 = z00 + tx * ((double)z10 - z00);
+            double z1 = z01 + tx * ((double)z11 - z01);
+            return (float)(z0 + ty * (z1 - z0));
 
             static int LowerIndex(float[] a, float v)
             {

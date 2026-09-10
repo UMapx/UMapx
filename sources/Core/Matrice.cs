@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 
@@ -3212,8 +3212,8 @@ namespace UMapx.Core
         /// Returns the result matrix of local averaging.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="r0">Height radius</param>
-        /// <param name="r1">Width radius</param>
+        /// <param name="r0">Height window length</param>
+        /// <param name="r1">Width window length</param>
         public static float[,] Mean(this float[,] m, int r0, int r1)
         {
             return LinealgOptions.MeanFilter.MeanVertical(LinealgOptions.MeanFilter.MeanHorizontal(m, r1), r0);
@@ -3222,8 +3222,8 @@ namespace UMapx.Core
         /// Returns the result matrix of local averaging.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="r0">Height radius</param>
-        /// <param name="r1">Width radius</param>
+        /// <param name="r0">Height window length</param>
+        /// <param name="r1">Width window length</param>
         public static Complex32[,] Mean(this Complex32[,] m, int r0, int r1)
         {
             return LinealgOptions.MeanFilter.MeanVertical(LinealgOptions.MeanFilter.MeanHorizontal(m, r1), r0);
@@ -3234,8 +3234,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <param name="w">Matrix</param>
-        /// <param name="r0">Height radius</param>
-        /// <param name="r1">Width radius</param>
+        /// <param name="r0">Height window length</param>
+        /// <param name="r1">Width window length</param>
         public static float[,] Mean(this float[,] m, float[,] w, int r0, int r1)
         {
             return LinealgOptions.MeanFilter.MeanVerticalWeighted(LinealgOptions.MeanFilter.MeanHorizontalWeighted(m, w, r1), w, r0);
@@ -3245,8 +3245,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <param name="w">Matrix</param>
-        /// <param name="r0">Height radius</param>
-        /// <param name="r1">Width radius</param>
+        /// <param name="r0">Height window length</param>
+        /// <param name="r1">Width window length</param>
         public static Complex32[,] Mean(this Complex32[,] m, Complex32[,] w, int r0, int r1)
         {
             return LinealgOptions.MeanFilter.MeanVerticalWeighted(LinealgOptions.MeanFilter.MeanHorizontalWeighted(m, w, r1), w, r0);
@@ -6222,7 +6222,7 @@ namespace UMapx.Core
         /// Returns the result vector of local averaging.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="r">Radius</param>
+        /// <param name="r">Window length</param>
         public static float[] Mean(this float[] v, int r)
         {
             return LinealgOptions.MeanFilter.Mean(v, r);
@@ -6231,7 +6231,7 @@ namespace UMapx.Core
         /// Returns the result vector of local averaging.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="r">Radius</param>
+        /// <param name="r">Window length</param>
         public static Complex32[] Mean(this Complex32[] v, int r)
         {
             return LinealgOptions.MeanFilter.Mean(v, r);
@@ -6241,7 +6241,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="w">Array</param>
-        /// <param name="r">Radius</param>
+        /// <param name="r">Window length</param>
         public static float[] Mean(this float[] v, float[] w, int r)
         {
             return LinealgOptions.MeanFilter.MeanWeighted(v, w, r);
@@ -6251,7 +6251,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="w">Array</param>
-        /// <param name="r">Radius</param>
+        /// <param name="r">Window length</param>
         public static Complex32[] Mean(this Complex32[] v, Complex32[] w, int r)
         {
             return LinealgOptions.MeanFilter.MeanWeighted(v, w, r);
@@ -6411,9 +6411,7 @@ namespace UMapx.Core
             double newYradius = (double)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            double angleRad = -angle * Math.PI / 180;
-            double angleCos = Math.Cos(angleRad);
-            double angleSin = Math.Sin(angleRad);
+            RotationCoefficients(angle, out double angleCos, out double angleSin);
 
             // destination pixel's coordinate relative to image center
             double cx, cy;
@@ -6475,9 +6473,7 @@ namespace UMapx.Core
             double newYradius = (double)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            double angleRad = -angle * Math.PI / 180;
-            double angleCos = Math.Cos(angleRad);
-            double angleSin = Math.Sin(angleRad);
+            RotationCoefficients(angle, out double angleCos, out double angleSin);
 
             // destination pixel's coordinate relative to image center
             double cx, cy;
@@ -6572,9 +6568,8 @@ namespace UMapx.Core
             float newYradius = (float)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            float angleRad = -angle * Maths.Pi / 180.0f;
-            float angleCos = Maths.Cos(angleRad);
-            float angleSin = Maths.Sin(angleRad);
+            RotationCoefficients(angle, out double cosine, out double sine);
+            float angleCos = (float)cosine, angleSin = (float)sine;
 
             // destination pixel's coordinate relative to image center
             float cx, cy;
@@ -6805,9 +6800,7 @@ namespace UMapx.Core
             double newYradius = (double)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            double angleRad = -angle * Math.PI / 180;
-            double angleCos = Math.Cos(angleRad);
-            double angleSin = Math.Sin(angleRad);
+            RotationCoefficients(angle, out double angleCos, out double angleSin);
 
             // destination pixel's coordinate relative to image center
             double cx, cy;
@@ -6869,9 +6862,7 @@ namespace UMapx.Core
             double newYradius = (double)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            double angleRad = -angle * Math.PI / 180;
-            double angleCos = Math.Cos(angleRad);
-            double angleSin = Math.Sin(angleRad);
+            RotationCoefficients(angle, out double angleCos, out double angleSin);
 
             // destination pixel's coordinate relative to image center
             double cx, cy;
@@ -6966,9 +6957,8 @@ namespace UMapx.Core
             float newYradius = (float)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            float angleRad = -angle * Maths.Pi / 180.0f;
-            float angleCos = Maths.Cos(angleRad);
-            float angleSin = Maths.Sin(angleRad);
+            RotationCoefficients(angle, out double cosine, out double sine);
+            float angleCos = (float)cosine, angleSin = (float)sine;
 
             // destination pixel's coordinate relative to image center
             float cx, cy;
@@ -7113,15 +7103,15 @@ namespace UMapx.Core
             for (int y = 0; y < h; y++)
             {
                 // Y coordinates
-                oy = y * yFactor - 0.5f;
-                oy1 = (int)oy;
+                oy = (y + 0.5f) * yFactor - 0.5f;
+                oy1 = (int)Math.Floor(oy);
                 dy = oy - oy1;
 
                 for (int x = 0; x < w; x++)
                 {
                     // X coordinates
-                    ox = x * xFactor - 0.5f;
-                    ox1 = (int)ox;
+                    ox = (x + 0.5f) * xFactor - 0.5f;
+                    ox1 = (int)Math.Floor(ox);
                     dx = ox - ox1;
 
                     // initial pixel value
@@ -7319,15 +7309,15 @@ namespace UMapx.Core
             for (int y = 0; y < h; y++)
             {
                 // Y coordinates
-                oy = y * yFactor - 0.5f;
-                oy1 = (int)oy;
+                oy = (y + 0.5f) * yFactor - 0.5f;
+                oy1 = (int)Math.Floor(oy);
                 dy = oy - oy1;
 
                 for (int x = 0; x < w; x++)
                 {
                     // X coordinates
-                    ox = x * xFactor - 0.5f;
-                    ox1 = (int)ox;
+                    ox = (x + 0.5f) * xFactor - 0.5f;
+                    ox1 = (int)Math.Floor(ox);
                     dx = ox - ox1;
 
                     // initial pixel value
@@ -7520,8 +7510,8 @@ namespace UMapx.Core
             for (int y = 0; y < h; y++)
             {
                 // Y coordinates
-                oy = y * yFactor - 0.5f;
-                oy1 = (int)oy;
+                oy = (y + 0.5f) * yFactor - 0.5f;
+                oy1 = (int)Math.Floor(oy);
                 dy = oy - oy1;
 
                 // initial pixel value
@@ -7676,8 +7666,8 @@ namespace UMapx.Core
             for (int y = 0; y < h; y++)
             {
                 // Y coordinates
-                oy = y * yFactor - 0.5f;
-                oy1 = (int)oy;
+                oy = (y + 0.5f) * yFactor - 0.5f;
+                oy1 = (int)Math.Floor(oy);
                 dy = oy - oy1;
 
                 // initial pixel value

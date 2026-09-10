@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -2093,91 +2093,56 @@ namespace UMapx.Core
         /// </summary>
         public static class MeanFilter
         {
+            // Window length r: floor(r/2) samples to the left and floor((r-1)/2) to the right.
+            // Clip at the boundary and normalize by the samples/weights actually present.
+            private static void FilterLine(int length, int r, Func<int, Complex> sample,
+                Func<int, Complex> weight, Action<int, Complex> write)
+            {
+                int left = r / 2, right = (r - 1) / 2, first = 0, end = 0;
+                Complex sum = 0, totalWeight = 0;
+                for (int i = 0; i < length; i++)
+                {
+                    int nextFirst = Math.Max(0, i - left);
+                    int nextEnd = (int)Math.Min(length, (long)i + right + 1);
+                    while (end < nextEnd)
+                    {
+                        Complex w = weight == null ? Complex.One : weight(end);
+                        sum += sample(end) * w; totalWeight += w; end++;
+                    }
+                    while (first < nextFirst)
+                    {
+                        Complex w = weight == null ? Complex.One : weight(first);
+                        sum -= sample(first) * w; totalWeight -= w; first++;
+                    }
+                    write(i, totalWeight == Complex.Zero ? Complex.Zero : sum / totalWeight);
+                }
+            }
+
             /// <summary>
             ///  Implements local average of vector.
             /// </summary>
             /// <param name="v">Array</param>
-            /// <param name="r">Radius</param>
+            /// <param name="r">Window length; clipped and renormalized at the boundaries</param>
             public static float[] Mean(float[] v, int r)
             {
-                int l = v.Length;
-
-                if (l < 2 || r < 2)
-                    return v;
-
-                float[] output = new float[l];
-                int h = r >= l ? l - 1 : r;
-                int w = r >> 1;
-                int dl = l - w;
-                float s = 0;
-                int x;
-
-                for (x = 0; x < h; x++)
-                {
-                    s += v[x];
-                }
-
-                for (x = 0; x < w; x++)
-                {
-                    output[x] = s / h;
-                }
-
-                for (x = w; x < dl; x++)
-                {
-                    s = s - v[x - w] + v[x + w];
-                    output[x] = s / h;
-                }
-
-                for (x = dl; x < l; x++)
-                {
-                    s = s - v[x - w] + v[x];
-                    output[x] = s / h;
-                }
-
-                return output;
+                int length = v.Length;
+                if (length < 2 || r < 2) return v;
+                var result = new float[length];
+                FilterLine(length, r, i => (Complex)v[i], null, (i, value) => result[i] = (float)value.Real);
+                return result;
             }
             /// <summary>
             ///  Implements local average of vector.
             /// </summary>
             /// <param name="v">Array</param>
-            /// <param name="r">Radius</param>
+            /// <param name="r">Window length; clipped and renormalized at the boundaries</param>
             public static Complex32[] Mean(Complex32[] v, int r)
             {
-                int l = v.Length;
-
-                if (l < 2 || r < 2)
-                    return v;
-
-                Complex32[] output = new Complex32[l];
-                int h = r >= l ? l - 1 : r;
-                int w = r >> 1;
-                int dl = l - w;
-                Complex32 s = 0;
-                int x;
-
-                for (x = 0; x < h; x++)
-                {
-                    s += v[x];
-                }
-
-                for (x = 0; x < w; x++)
-                {
-                    output[x] = s / h;
-                }
-
-                for (x = w; x < dl; x++)
-                {
-                    s = s - v[x - w] + v[x + w];
-                    output[x] = s / h;
-                }
-
-                for (x = dl; x < l; x++)
-                {
-                    s = s - v[x - w] + v[x];
-                    output[x] = s / h;
-                }
-
-                return output;
+                int length = v.Length;
+                if (length < 2 || r < 2) return v;
+                var result = new Complex32[length];
+                FilterLine(length, r, i => (Complex)v[i], null, (i, value) => result[i] = (Complex32)value);
+                return result;
             }
 
             /// <summary>
@@ -2189,44 +2154,12 @@ namespace UMapx.Core
             public static float[,] MeanHorizontal(float[,] A, int r1)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
-
-                if (width < 2 || r1 < 2)
-                    return A;
-
-                float[,] H = new float[height, width];
-                int h = r1 >= width ? width - 1 : r1;
-                int v = h >> 1;
-                int dl = width - v;
-
-                Parallel.For(0, height, y =>
-                {
-                    float s = 0;
-                    int x;
-
-                    for (x = 0; x < h; x++)
-                    {
-                        s += A[y, x];
-                    }
-
-                    for (x = 0; x < v; x++)
-                    {
-                        H[y, x] = s / h;
-                    }
-
-                    for (x = v; x < dl; x++)
-                    {
-                        s = s - A[y, x - v] + A[y, x + v];
-                        H[y, x] = s / h;
-                    }
-
-                    for (x = dl; x < width; x++)
-                    {
-                        s = s - A[y, x - v] + A[y, x];
-                        H[y, x] = s / h;
-                    }
-                });
-
-                return H;
+                if (width < 2 || r1 < 2) return A;
+                var result = new float[height, width];
+                Parallel.For(0, height, line =>
+                    FilterLine(width, r1, i => (Complex)A[line, i],
+                        null, (i, value) => result[line, i] = (float)value.Real));
+                return result;
             }
             /// <summary>
             /// Implements local average of matrix (vertical).
@@ -2237,45 +2170,12 @@ namespace UMapx.Core
             public static float[,] MeanVertical(float[,] A, int r0)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
-
-                if (height < 2 || r0 < 2)
-                    return A;
-
-                float[,] H = new float[height, width];
-                int h = r0 >= height ? height - 1 : r0;
-                int v = h >> 1;
-                int dl = height - v;
-
-                Parallel.For(0, width, x =>
-                {
-                    float s = 0;
-                    int y;
-
-                    for (y = 0; y < h; y++)
-                    {
-                        s += A[y, x];
-                    }
-
-                    for (y = 0; y < v; y++)
-                    {
-                        H[y, x] = s / h;
-                    }
-
-                    for (y = v; y < dl; y++)
-                    {
-                        s = s - A[y - v, x] + A[y + v, x];
-                        H[y, x] = s / h;
-                    }
-
-                    for (y = dl; y < height; y++)
-                    {
-                        s = s - A[y - v, x] + A[y, x];
-                        H[y, x] = s / h;
-                    }
-
-                });
-
-                return H;
+                if (height < 2 || r0 < 2) return A;
+                var result = new float[height, width];
+                Parallel.For(0, width, line =>
+                    FilterLine(height, r0, i => (Complex)A[i, line],
+                        null, (i, value) => result[i, line] = (float)value.Real));
+                return result;
             }
             /// <summary>
             /// Implements local average of matrix (horizontal).
@@ -2286,44 +2186,12 @@ namespace UMapx.Core
             public static Complex32[,] MeanHorizontal(Complex32[,] A, int r1)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
-
-                if (width < 2 || r1 < 2)
-                    return A;
-
-                Complex32[,] H = new Complex32[height, width];
-                int h = r1 >= width ? width - 1 : r1;
-                int v = h >> 1;
-                int dl = width - v;
-
-                Parallel.For(0, height, y =>
-                {
-                    Complex32 s = 0;
-                    int x;
-
-                    for (x = 0; x < h; x++)
-                    {
-                        s += A[y, x];
-                    }
-
-                    for (x = 0; x < v; x++)
-                    {
-                        H[y, x] = s / h;
-                    }
-
-                    for (x = v; x < dl; x++)
-                    {
-                        s = s - A[y, x - v] + A[y, x + v];
-                        H[y, x] = s / h;
-                    }
-
-                    for (x = dl; x < width; x++)
-                    {
-                        s = s - A[y, x - v] + A[y, x];
-                        H[y, x] = s / h;
-                    }
-                });
-
-                return H;
+                if (width < 2 || r1 < 2) return A;
+                var result = new Complex32[height, width];
+                Parallel.For(0, height, line =>
+                    FilterLine(width, r1, i => (Complex)A[line, i],
+                        null, (i, value) => result[line, i] = (Complex32)value));
+                return result;
             }
             /// <summary>
             /// Implements local average of matrix (vertical).
@@ -2334,45 +2202,12 @@ namespace UMapx.Core
             public static Complex32[,] MeanVertical(Complex32[,] A, int r0)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
-
-                if (height < 2 || r0 < 2)
-                    return A;
-
-                Complex32[,] H = new Complex32[height, width];
-                int h = r0 >= height ? height - 1 : r0;
-                int v = h >> 1;
-                int dl = height - v;
-
-                Parallel.For(0, width, x =>
-                {
-                    Complex32 s = 0;
-                    int y;
-
-                    for (y = 0; y < h; y++)
-                    {
-                        s += A[y, x];
-                    }
-
-                    for (y = 0; y < v; y++)
-                    {
-                        H[y, x] = s / h;
-                    }
-
-                    for (y = v; y < dl; y++)
-                    {
-                        s = s - A[y - v, x] + A[y + v, x];
-                        H[y, x] = s / h;
-                    }
-
-                    for (y = dl; y < height; y++)
-                    {
-                        s = s - A[y - v, x] + A[y, x];
-                        H[y, x] = s / h;
-                    }
-
-                });
-
-                return H;
+                if (height < 2 || r0 < 2) return A;
+                var result = new Complex32[height, width];
+                Parallel.For(0, width, line =>
+                    FilterLine(height, r0, i => (Complex)A[i, line],
+                        null, (i, value) => result[i, line] = (Complex32)value));
+                return result;
             }
 
             /// <summary>
@@ -2380,136 +2215,32 @@ namespace UMapx.Core
             /// </summary>
             /// <param name="values">Array of values</param>
             /// <param name="weights">Array of weights (same length as values)</param>
-            /// <param name="r">Radius</param>
+            /// <param name="r">Window length; clipped and renormalized at the boundaries</param>
             /// <returns>Weighted blurred array</returns>
             public static float[] MeanWeighted(float[] values, float[] weights, int r)
             {
-                int l = values.Length;
-
-                if (l < 2 || r < 2)
-                    return values;
-
-                float[] output = new float[l];
-                int h = r >= l ? l - 1 : r;
-                int w = r >> 1;
-                int dl = l - w;
-
-                float sumVal = 0;
-                float sumW = 0;
-                int x;
-
-                for (x = 0; x < h; x++)
-                {
-                    sumVal += values[x] * weights[x];
-                    sumW += weights[x];
-                }
-
-                for (x = 0; x < w; x++)
-                {
-                    output[x] = sumVal / (sumW + 1e-8f);
-                }
-
-                for (x = w; x < dl; x++)
-                {
-                    int xAdd = x + w;
-                    int xSub = x - w - 1;
-
-                    if (xAdd < l)
-                    {
-                        sumVal += values[xAdd] * weights[xAdd];
-                        sumW += weights[xAdd];
-                    }
-                    if (xSub >= 0)
-                    {
-                        sumVal -= values[xSub] * weights[xSub];
-                        sumW -= weights[xSub];
-                    }
-
-                    output[x] = sumVal / (sumW + 1e-8f);
-                }
-
-                for (x = dl; x < l; x++)
-                {
-                    int xSub = x - w - 1;
-
-                    if (xSub >= 0)
-                    {
-                        sumVal -= values[xSub] * weights[xSub];
-                        sumW -= weights[xSub];
-                    }
-
-                    output[x] = sumVal / (sumW + 1e-8f);
-                }
-
-                return output;
+                int length = values.Length;
+                if (length < 2 || r < 2) return values;
+                if (weights.Length != length) throw new ArgumentException("Weight dimensions must match.", nameof(weights));
+                var result = new float[length];
+                FilterLine(length, r, i => (Complex)values[i], i => (Complex)weights[i], (i, value) => result[i] = (float)value.Real);
+                return result;
             }
             /// <summary>
             /// Implements weighted local average of vector.
             /// </summary>
             /// <param name="values">Array of values</param>
             /// <param name="weights">Array of weights (same length as values)</param>
-            /// <param name="r">Radius</param>
+            /// <param name="r">Window length; clipped and renormalized at the boundaries</param>
             /// <returns>Weighted blurred array</returns>
             public static Complex32[] MeanWeighted(Complex32[] values, Complex32[] weights, int r)
             {
-                int l = values.Length;
-
-                if (l < 2 || r < 2)
-                    return values;
-
-                Complex32[] output = new Complex32[l];
-                int h = r >= l ? l - 1 : r;
-                int w = r >> 1;
-                int dl = l - w;
-
-                Complex32 sumVal = 0;
-                Complex32 sumW = 0;
-                int x;
-
-                for (x = 0; x < h; x++)
-                {
-                    sumVal += values[x] * weights[x];
-                    sumW += weights[x];
-                }
-
-                for (x = 0; x < w; x++)
-                {
-                    output[x] = sumVal / (sumW + 1e-8f);
-                }
-
-                for (x = w; x < dl; x++)
-                {
-                    int xAdd = x + w;
-                    int xSub = x - w - 1;
-
-                    if (xAdd < l)
-                    {
-                        sumVal += values[xAdd] * weights[xAdd];
-                        sumW += weights[xAdd];
-                    }
-                    if (xSub >= 0)
-                    {
-                        sumVal -= values[xSub] * weights[xSub];
-                        sumW -= weights[xSub];
-                    }
-
-                    output[x] = sumVal / (sumW + 1e-8f);
-                }
-
-                for (x = dl; x < l; x++)
-                {
-                    int xSub = x - w - 1;
-
-                    if (xSub >= 0)
-                    {
-                        sumVal -= values[xSub] * weights[xSub];
-                        sumW -= weights[xSub];
-                    }
-
-                    output[x] = sumVal / (sumW + 1e-8f);
-                }
-
-                return output;
+                int length = values.Length;
+                if (length < 2 || r < 2) return values;
+                if (weights.Length != length) throw new ArgumentException("Weight dimensions must match.", nameof(weights));
+                var result = new Complex32[length];
+                FilterLine(length, r, i => (Complex)values[i], i => (Complex)weights[i], (i, value) => result[i] = (Complex32)value);
+                return result;
             }
 
             /// <summary>
@@ -2523,66 +2254,13 @@ namespace UMapx.Core
             public static float[,] MeanHorizontalWeighted(float[,] A, float[,] weights, int r1)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
-
-                if (width < 2 || r1 < 2)
-                    return A;
-
-                float[,] result = new float[height, width];
-                int h = r1 >= width ? width - 1 : r1;
-                int v = h >> 1;
-                int dl = width - v;
-
-                Parallel.For(0, height, y =>
-                {
-                    float sumVal = 0;
-                    float sumW = 0;
-                    int x;
-
-                    for (x = 0; x < h; x++)
-                    {
-                        sumVal += A[y, x] * weights[y, x];
-                        sumW += weights[y, x];
-                    }
-
-                    for (x = 0; x < v; x++)
-                    {
-                        result[y, x] = sumVal / (sumW + 1e-8f);
-                    }
-
-                    for (x = v; x < dl; x++)
-                    {
-                        int xAdd = x + v;
-                        int xSub = x - v - 1;
-
-                        if (xAdd < width)
-                        {
-                            sumVal += A[y, xAdd] * weights[y, xAdd];
-                            sumW += weights[y, xAdd];
-                        }
-
-                        if (xSub >= 0)
-                        {
-                            sumVal -= A[y, xSub] * weights[y, xSub];
-                            sumW -= weights[y, xSub];
-                        }
-
-                        result[y, x] = sumVal / (sumW + 1e-8f);
-                    }
-
-                    for (x = dl; x < width; x++)
-                    {
-                        int xSub = x - v - 1;
-
-                        if (xSub >= 0)
-                        {
-                            sumVal -= A[y, xSub] * weights[y, xSub];
-                            sumW -= weights[y, xSub];
-                        }
-
-                        result[y, x] = sumVal / (sumW + 1e-8f);
-                    }
-                });
-
+                if (width < 2 || r1 < 2) return A;
+                if (weights.GetLength(0) != height || weights.GetLength(1) != width)
+                    throw new ArgumentException("Weight dimensions must match.", nameof(weights));
+                var result = new float[height, width];
+                Parallel.For(0, height, line =>
+                    FilterLine(width, r1, i => (Complex)A[line, i],
+                        i => (Complex)weights[line, i], (i, value) => result[line, i] = (float)value.Real));
                 return result;
             }
             /// <summary>
@@ -2595,66 +2273,13 @@ namespace UMapx.Core
             public static float[,] MeanVerticalWeighted(float[,] A, float[,] weights, int r0)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
-
-                if (height < 2 || r0 < 2)
-                    return A;
-
-                float[,] result = new float[height, width];
-                int h = r0 >= height ? height - 1 : r0;
-                int v = h >> 1;
-                int dl = height - v;
-
-                Parallel.For(0, width, x =>
-                {
-                    float sumVal = 0;
-                    float sumW = 0;
-                    int y;
-
-                    for (y = 0; y < h; y++)
-                    {
-                        sumVal += A[y, x] * weights[y, x];
-                        sumW += weights[y, x];
-                    }
-
-                    for (y = 0; y < v; y++)
-                    {
-                        result[y, x] = sumVal / (sumW + 1e-8f);
-                    }
-
-                    for (y = v; y < dl; y++)
-                    {
-                        int yAdd = y + v;
-                        int ySub = y - v - 1;
-
-                        if (yAdd < height)
-                        {
-                            sumVal += A[yAdd, x] * weights[yAdd, x];
-                            sumW += weights[yAdd, x];
-                        }
-
-                        if (ySub >= 0)
-                        {
-                            sumVal -= A[ySub, x] * weights[ySub, x];
-                            sumW -= weights[ySub, x];
-                        }
-
-                        result[y, x] = sumVal / (sumW + 1e-8f);
-                    }
-
-                    for (y = dl; y < height; y++)
-                    {
-                        int ySub = y - v - 1;
-
-                        if (ySub >= 0)
-                        {
-                            sumVal -= A[ySub, x] * weights[ySub, x];
-                            sumW -= weights[ySub, x];
-                        }
-
-                        result[y, x] = sumVal / (sumW + 1e-8f);
-                    }
-                });
-
+                if (height < 2 || r0 < 2) return A;
+                if (weights.GetLength(0) != height || weights.GetLength(1) != width)
+                    throw new ArgumentException("Weight dimensions must match.", nameof(weights));
+                var result = new float[height, width];
+                Parallel.For(0, width, line =>
+                    FilterLine(height, r0, i => (Complex)A[i, line],
+                        i => (Complex)weights[i, line], (i, value) => result[i, line] = (float)value.Real));
                 return result;
             }
             /// <summary>
@@ -2668,66 +2293,13 @@ namespace UMapx.Core
             public static Complex32[,] MeanHorizontalWeighted(Complex32[,] A, Complex32[,] weights, int r1)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
-
-                if (width < 2 || r1 < 2)
-                    return A;
-
-                Complex32[,] result = new Complex32[height, width];
-                int h = r1 >= width ? width - 1 : r1;
-                int v = h >> 1;
-                int dl = width - v;
-
-                Parallel.For(0, height, y =>
-                {
-                    Complex32 sumVal = 0;
-                    Complex32 sumW = 0;
-                    int x;
-
-                    for (x = 0; x < h; x++)
-                    {
-                        sumVal += A[y, x] * weights[y, x];
-                        sumW += weights[y, x];
-                    }
-
-                    for (x = 0; x < v; x++)
-                    {
-                        result[y, x] = sumVal / (sumW + 1e-8f);
-                    }
-
-                    for (x = v; x < dl; x++)
-                    {
-                        int xAdd = x + v;
-                        int xSub = x - v - 1;
-
-                        if (xAdd < width)
-                        {
-                            sumVal += A[y, xAdd] * weights[y, xAdd];
-                            sumW += weights[y, xAdd];
-                        }
-
-                        if (xSub >= 0)
-                        {
-                            sumVal -= A[y, xSub] * weights[y, xSub];
-                            sumW -= weights[y, xSub];
-                        }
-
-                        result[y, x] = sumVal / (sumW + 1e-8f);
-                    }
-
-                    for (x = dl; x < width; x++)
-                    {
-                        int xSub = x - v - 1;
-
-                        if (xSub >= 0)
-                        {
-                            sumVal -= A[y, xSub] * weights[y, xSub];
-                            sumW -= weights[y, xSub];
-                        }
-
-                        result[y, x] = sumVal / (sumW + 1e-8f);
-                    }
-                });
-
+                if (width < 2 || r1 < 2) return A;
+                if (weights.GetLength(0) != height || weights.GetLength(1) != width)
+                    throw new ArgumentException("Weight dimensions must match.", nameof(weights));
+                var result = new Complex32[height, width];
+                Parallel.For(0, height, line =>
+                    FilterLine(width, r1, i => (Complex)A[line, i],
+                        i => (Complex)weights[line, i], (i, value) => result[line, i] = (Complex32)value));
                 return result;
             }
             /// <summary>
@@ -2740,66 +2312,13 @@ namespace UMapx.Core
             public static Complex32[,] MeanVerticalWeighted(Complex32[,] A, Complex32[,] weights, int r0)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
-
-                if (height < 2 || r0 < 2)
-                    return A;
-
-                Complex32[,] result = new Complex32[height, width];
-                int h = r0 >= height ? height - 1 : r0;
-                int v = h >> 1;
-                int dl = height - v;
-
-                Parallel.For(0, width, x =>
-                {
-                    Complex32 sumVal = 0;
-                    Complex32 sumW = 0;
-                    int y;
-
-                    for (y = 0; y < h; y++)
-                    {
-                        sumVal += A[y, x] * weights[y, x];
-                        sumW += weights[y, x];
-                    }
-
-                    for (y = 0; y < v; y++)
-                    {
-                        result[y, x] = sumVal / (sumW + 1e-8f);
-                    }
-
-                    for (y = v; y < dl; y++)
-                    {
-                        int yAdd = y + v;
-                        int ySub = y - v - 1;
-
-                        if (yAdd < height)
-                        {
-                            sumVal += A[yAdd, x] * weights[yAdd, x];
-                            sumW += weights[yAdd, x];
-                        }
-
-                        if (ySub >= 0)
-                        {
-                            sumVal -= A[ySub, x] * weights[ySub, x];
-                            sumW -= weights[ySub, x];
-                        }
-
-                        result[y, x] = sumVal / (sumW + 1e-8f);
-                    }
-
-                    for (y = dl; y < height; y++)
-                    {
-                        int ySub = y - v - 1;
-
-                        if (ySub >= 0)
-                        {
-                            sumVal -= A[ySub, x] * weights[ySub, x];
-                            sumW -= weights[ySub, x];
-                        }
-
-                        result[y, x] = sumVal / (sumW + 1e-8f);
-                    }
-                });
-
+                if (height < 2 || r0 < 2) return A;
+                if (weights.GetLength(0) != height || weights.GetLength(1) != width)
+                    throw new ArgumentException("Weight dimensions must match.", nameof(weights));
+                var result = new Complex32[height, width];
+                Parallel.For(0, width, line =>
+                    FilterLine(height, r0, i => (Complex)A[i, line],
+                        i => (Complex)weights[i, line], (i, value) => result[i, line] = (Complex32)value));
                 return result;
             }
         }
@@ -2829,8 +2348,7 @@ namespace UMapx.Core
                 int wW = 2 * r1 + 1;
                 int K = hW * wW;
 
-                int rank1 = GetFilterRank(mode, K);
-                int rankIndex = Math.Max(0, Math.Min(K - 1, rank1 - 1));
+                int rankIndex = GetFilterRank(mode, K);
 
                 var result = new float[height, width];
 
@@ -2893,8 +2411,7 @@ namespace UMapx.Core
                 if (r < 0) throw new ArgumentOutOfRangeException(nameof(r));
 
                 int K = 2 * r + 1;
-                int rank1 = GetFilterRank(mode, K);
-                int rankIndex = Math.Max(0, Math.Min(K - 1, rank1 - 1));
+                int rankIndex = GetFilterRank(mode, K);
 
                 var result = new float[n];
                 var win = new float[K];

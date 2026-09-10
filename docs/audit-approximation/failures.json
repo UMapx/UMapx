@@ -1,0 +1,1832 @@
+[
+  {
+    "id": "27dce6e8-963d-f15d-b558-f565a9da7d6d",
+    "suite": "AdditionalTransformAuditTests",
+    "method": "HankelMatrixMatchesHighPrecisionBesselZeros",
+    "case": "UMapx.Tests.AdditionalTransformAuditTests.HankelMatrixMatchesHighPrecisionBesselZeros(order: 5, size: 16, values: \"[[0.00045426352213434666,-0.002639994660238784,0.0\"···)",
+    "outcome": "Failed",
+    "message": "Expected 0.00045426352213434666; actual NaN; tolerance 0.000500227.",
+    "test_file": "tests/UMapx.Tests/AdditionalTransformAuditTests.cs",
+    "test_line": 24
+  },
+  {
+    "id": "133329a8-fb1e-5563-a7ec-abf351f9bef5",
+    "suite": "AdditionalTransformAuditTests",
+    "method": "HankelMatrixMatchesHighPrecisionBesselZeros",
+    "case": "UMapx.Tests.AdditionalTransformAuditTests.HankelMatrixMatchesHighPrecisionBesselZeros(order: 5, size: 2, values: \"[[0.5246329328431766,-0.851408766662878],[-0.85140\"···)",
+    "outcome": "Failed",
+    "message": "Expected 0.52463293284317658; actual NaN; tolerance 0.000762316.",
+    "test_file": "tests/UMapx.Tests/AdditionalTransformAuditTests.cs",
+    "test_line": 24
+  },
+  {
+    "id": "3c896d35-6c91-17b1-98fe-046dd8ed026d",
+    "suite": "AdditionalTransformAuditTests",
+    "method": "HankelMatrixMatchesHighPrecisionBesselZeros",
+    "case": "UMapx.Tests.AdditionalTransformAuditTests.HankelMatrixMatchesHighPrecisionBesselZeros(order: 5, size: 4, values: \"[[0.11531419632528757,-0.41193988124636266,0.69318\"···)",
+    "outcome": "Failed",
+    "message": "Expected 0.11531419632528757; actual NaN; tolerance 0.000557657.",
+    "test_file": "tests/UMapx.Tests/AdditionalTransformAuditTests.cs",
+    "test_line": 24
+  },
+  {
+    "id": "8c070eb1-d0eb-f62a-55b3-9f25f2fa71b4",
+    "suite": "AdditionalTransformAuditTests",
+    "method": "HankelMatrixMatchesHighPrecisionBesselZeros",
+    "case": "UMapx.Tests.AdditionalTransformAuditTests.HankelMatrixMatchesHighPrecisionBesselZeros(order: 5, size: 8, values: \"[[0.010355783945353903,-0.05237741134580529,0.1481\"···)",
+    "outcome": "Failed",
+    "message": "Expected 0.010355783945353903; actual NaN; tolerance 0.000505178.",
+    "test_file": "tests/UMapx.Tests/AdditionalTransformAuditTests.cs",
+    "test_line": 24
+  },
+  {
+    "id": "cef0e91b-cef3-847f-d7f4-0f82e01b7aca",
+    "suite": "AdditionalTransformAuditTests",
+    "method": "TimeFrequencyKernelsMatchTheirFourierPair",
+    "case": "UMapx.Tests.AdditionalTransformAuditTests.TimeFrequencyKernelsMatchTheirFourierPair(tau: -0.5)",
+    "outcome": "Failed",
+    "message": "Expected 1.248456843919346; actual -1.2484568357467651; tolerance 2.69691E-05.",
+    "test_file": "tests/UMapx.Tests/AdditionalTransformAuditTests.cs",
+    "test_line": 64
+  },
+  {
+    "id": "5a8da1fe-94aa-86ec-98a3-184edb31b589",
+    "suite": "AdditionalTransformAuditTests",
+    "method": "TimeFrequencyKernelsMatchTheirFourierPair",
+    "case": "UMapx.Tests.AdditionalTransformAuditTests.TimeFrequencyKernelsMatchTheirFourierPair(tau: -2)",
+    "outcome": "Failed",
+    "message": "Expected 0.00026574593191981151; actual -0.00026574588264338672; tolerance 2.00531E-06.",
+    "test_file": "tests/UMapx.Tests/AdditionalTransformAuditTests.cs",
+    "test_line": 64
+  },
+  {
+    "id": "530d7c62-02cb-b8f9-7b6b-7cd48a8ee336",
+    "suite": "ColorSpaceAuditTests",
+    "method": "CieXyzAndLabMatchTheD65ReferenceWhite",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.CieXyzAndLabMatchTheD65ReferenceWhite(red: 0, green: 0, blue: 255)",
+    "outcome": "Failed",
+    "message": "Expected -107.85373425232731; actual -113.36367034912109; tolerance 0.00515707.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 60
+  },
+  {
+    "id": "fbed59db-f7f5-1726-aca8-be2fdfcd4a09",
+    "suite": "ColorSpaceAuditTests",
+    "method": "CieXyzAndLabMatchTheD65ReferenceWhite",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.CieXyzAndLabMatchTheD65ReferenceWhite(red: 0, green: 255, blue: 0)",
+    "outcome": "Failed",
+    "message": "Expected 83.186143545036813; actual 80.428184509277344; tolerance 0.00466372.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 60
+  },
+  {
+    "id": "04fff444-c87a-c881-a8df-92a9d384d512",
+    "suite": "ColorSpaceAuditTests",
+    "method": "CieXyzAndLabMatchTheD65ReferenceWhite",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.CieXyzAndLabMatchTheD65ReferenceWhite(red: 12, green: 64, blue: 190)",
+    "outcome": "Failed",
+    "message": "Expected -69.636429991516181; actual -74.071266174316406; tolerance 0.00439273.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 60
+  },
+  {
+    "id": "7f8dc3cb-9791-5f3e-3113-0a0121968f58",
+    "suite": "ColorSpaceAuditTests",
+    "method": "CieXyzAndLabMatchTheD65ReferenceWhite",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.CieXyzAndLabMatchTheD65ReferenceWhite(red: 128, green: 128, blue: 128)",
+    "outcome": "Failed",
+    "message": "Expected 0; actual -3.4585714340209961; tolerance 0.003.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 60
+  },
+  {
+    "id": "cde9c91d-1331-0530-bb9d-7d64b156eabc",
+    "suite": "ColorSpaceAuditTests",
+    "method": "CieXyzAndLabMatchTheD65ReferenceWhite",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.CieXyzAndLabMatchTheD65ReferenceWhite(red: 255, green: 0, blue: 0)",
+    "outcome": "Failed",
+    "message": "Expected 67.222781945436182; actual 65.719589233398438; tolerance 0.00434446.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 60
+  },
+  {
+    "id": "6ca95e86-f3ce-a6f1-c386-588faade847d",
+    "suite": "ColorSpaceAuditTests",
+    "method": "CieXyzAndLabMatchTheD65ReferenceWhite",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.CieXyzAndLabMatchTheD65ReferenceWhite(red: 255, green: 255, blue: 255)",
+    "outcome": "Failed",
+    "message": "Expected 1.089; actual 1; tolerance 3.178E-05.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 57
+  },
+  {
+    "id": "fabd8a60-1419-96a9-2de8-991e30ee9db0",
+    "suite": "ColorSpaceAuditTests",
+    "method": "ColorConversionsPreserveColorsWithinTheirQuantizationBudget",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"AHSL\", r: 64, g: 0, b: 128)",
+    "outcome": "Failed",
+    "message": "Expected RGB(64, 0, 128); actual RGB(64, 64, 64); channel tolerance 2.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 21
+  },
+  {
+    "id": "ab12d586-f975-9b5b-aecd-021f000757cd",
+    "suite": "ColorSpaceAuditTests",
+    "method": "ColorConversionsPreserveColorsWithinTheirQuantizationBudget",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"AHSL\", r: 64, g: 128, b: 0)",
+    "outcome": "Failed",
+    "message": "Expected RGB(64, 128, 0); actual RGB(64, 64, 64); channel tolerance 2.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 21
+  },
+  {
+    "id": "bc2eef65-ffe8-de33-416f-82047d9406e1",
+    "suite": "ColorSpaceAuditTests",
+    "method": "ColorConversionsPreserveColorsWithinTheirQuantizationBudget",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"LAB\", r: 0, g: 255, b: 255)",
+    "outcome": "Failed",
+    "message": "Expected RGB(0, 255, 255); actual RGB(52, 254, 246); channel tolerance 2.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 21
+  },
+  {
+    "id": "6666850d-29f0-b860-ac7e-c0fdf8c2ab9c",
+    "suite": "ColorSpaceAuditTests",
+    "method": "ColorConversionsPreserveColorsWithinTheirQuantizationBudget",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"LAB\", r: 128, g: 255, b: 255)",
+    "outcome": "Failed",
+    "message": "Expected RGB(128, 255, 255); actual RGB(137, 254, 246); channel tolerance 2.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 21
+  },
+  {
+    "id": "d4f464cc-64be-cebb-ad14-a3730cc38452",
+    "suite": "ColorSpaceAuditTests",
+    "method": "ColorConversionsPreserveColorsWithinTheirQuantizationBudget",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"LAB\", r: 255, g: 255, b: 255)",
+    "outcome": "Failed",
+    "message": "Expected RGB(255, 255, 255); actual RGB(255, 254, 244); channel tolerance 2.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 21
+  },
+  {
+    "id": "19b30d05-c5a0-ed4d-c8fe-fb2ba1ef1b1f",
+    "suite": "ColorSpaceAuditTests",
+    "method": "ColorConversionsPreserveColorsWithinTheirQuantizationBudget",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"LAB\", r: 64, g: 255, b: 255)",
+    "outcome": "Failed",
+    "message": "Expected RGB(64, 255, 255); actual RGB(83, 254, 246); channel tolerance 2.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 21
+  },
+  {
+    "id": "54f93adf-0e03-2083-faac-78092c725667",
+    "suite": "ColorSpaceAuditTests",
+    "method": "ColorConversionsPreserveColorsWithinTheirQuantizationBudget",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"RYB\", r: 128, g: 128, b: 128)",
+    "outcome": "Failed",
+    "message": "Expected RGB(128, 128, 128); actual RGB(0, 0, 0); channel tolerance 2.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 21
+  },
+  {
+    "id": "59609804-71bf-0002-380c-521e9243e781",
+    "suite": "ColorSpaceAuditTests",
+    "method": "ColorConversionsPreserveColorsWithinTheirQuantizationBudget",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"RYB\", r: 255, g: 255, b: 255)",
+    "outcome": "Failed",
+    "message": "Expected RGB(255, 255, 255); actual RGB(0, 0, 0); channel tolerance 2.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 21
+  },
+  {
+    "id": "4e164e06-fff5-f4b2-8986-2ce8be75b435",
+    "suite": "ColorSpaceAuditTests",
+    "method": "ColorConversionsPreserveColorsWithinTheirQuantizationBudget",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"RYB\", r: 64, g: 64, b: 64)",
+    "outcome": "Failed",
+    "message": "Expected RGB(64, 64, 64); actual RGB(0, 0, 0); channel tolerance 2.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 21
+  },
+  {
+    "id": "5b4317a6-0a71-46ae-aae7-009b9c5c37c2",
+    "suite": "ColorSpaceAuditTests",
+    "method": "ColorConversionsPreserveColorsWithinTheirQuantizationBudget",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"XYZ\", r: 0, g: 255, b: 255)",
+    "outcome": "Failed",
+    "message": "Expected RGB(0, 255, 255); actual RGB(52, 254, 246); channel tolerance 2.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 21
+  },
+  {
+    "id": "d63aa2f1-8fba-3208-3df0-6f6bcbbf505a",
+    "suite": "ColorSpaceAuditTests",
+    "method": "ColorConversionsPreserveColorsWithinTheirQuantizationBudget",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"XYZ\", r: 128, g: 255, b: 255)",
+    "outcome": "Failed",
+    "message": "Expected RGB(128, 255, 255); actual RGB(137, 254, 246); channel tolerance 2.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 21
+  },
+  {
+    "id": "c89c86fe-9711-eab6-7e53-b57d2003457f",
+    "suite": "ColorSpaceAuditTests",
+    "method": "ColorConversionsPreserveColorsWithinTheirQuantizationBudget",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"XYZ\", r: 255, g: 255, b: 255)",
+    "outcome": "Failed",
+    "message": "Expected RGB(255, 255, 255); actual RGB(255, 254, 244); channel tolerance 2.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 21
+  },
+  {
+    "id": "c90a1b06-61e5-ab6d-3c5f-aa7c8ca21e4a",
+    "suite": "ColorSpaceAuditTests",
+    "method": "ColorConversionsPreserveColorsWithinTheirQuantizationBudget",
+    "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"XYZ\", r: 64, g: 255, b: 255)",
+    "outcome": "Failed",
+    "message": "Expected RGB(64, 255, 255); actual RGB(83, 254, 246); channel tolerance 2.",
+    "test_file": "tests/UMapx.Tests/ColorSpaceAuditTests.cs",
+    "test_line": 21
+  },
+  {
+    "id": "1e174236-8089-0838-eb56-174cde14de1d",
+    "suite": "DecompositionAuditTests",
+    "method": "GeneralizedFactorizationsSatisfyBothMatrixEquations",
+    "case": "UMapx.Tests.DecompositionAuditTests.GeneralizedFactorizationsSatisfyBothMatrixEquations(n: 2)",
+    "outcome": "Failed",
+    "message": "GEVD returned nonfinite eigenvectors for a finite nonsingular matrix pair.",
+    "test_file": "tests/UMapx.Tests/DecompositionAuditTests.cs",
+    "test_line": 119
+  },
+  {
+    "id": "9d363047-9659-5ba7-1014-b4fcba4dc880",
+    "suite": "DecompositionAuditTests",
+    "method": "GeneralizedFactorizationsSatisfyBothMatrixEquations",
+    "case": "UMapx.Tests.DecompositionAuditTests.GeneralizedFactorizationsSatisfyBothMatrixEquations(n: 3)",
+    "outcome": "Failed",
+    "message": "GEVD returned nonfinite eigenvectors for a finite nonsingular matrix pair.",
+    "test_file": "tests/UMapx.Tests/DecompositionAuditTests.cs",
+    "test_line": 119
+  },
+  {
+    "id": "9b87a490-cb1c-0e94-674d-03c7ce27b184",
+    "suite": "DecompositionAuditTests",
+    "method": "GeneralizedFactorizationsSatisfyBothMatrixEquations",
+    "case": "UMapx.Tests.DecompositionAuditTests.GeneralizedFactorizationsSatisfyBothMatrixEquations(n: 5)",
+    "outcome": "Failed",
+    "message": "GEVD returned nonfinite eigenvectors for a finite nonsingular matrix pair.",
+    "test_file": "tests/UMapx.Tests/DecompositionAuditTests.cs",
+    "test_line": 119
+  },
+  {
+    "id": "8d3ea83b-4518-3c85-dccd-7196f2bcaf50",
+    "suite": "DecompositionAuditTests",
+    "method": "RectangularAndRankDeficientMatricesRetainTheirInformation",
+    "case": "UMapx.Tests.DecompositionAuditTests.RectangularAndRankDeficientMatricesRetainTheirInformation(name: \"SVD\", m: 1, n: 1, kind: \"Zero\")",
+    "outcome": "Failed",
+    "message": "Expected 0; actual NaN; tolerance 0.005.",
+    "test_file": "tests/UMapx.Tests/DecompositionAuditTests.cs",
+    "test_line": 106
+  },
+  {
+    "id": "ded19847-733c-2652-2704-b2957e22d783",
+    "suite": "DecompositionAuditTests",
+    "method": "RectangularAndRankDeficientMatricesRetainTheirInformation",
+    "case": "UMapx.Tests.DecompositionAuditTests.RectangularAndRankDeficientMatricesRetainTheirInformation(name: \"SVD\", m: 1, n: 4, kind: \"Zero\")",
+    "outcome": "Failed",
+    "message": "Expected 0; actual NaN; tolerance 0.005.",
+    "test_file": "tests/UMapx.Tests/DecompositionAuditTests.cs",
+    "test_line": 106
+  },
+  {
+    "id": "c6b5380a-9d32-142a-df85-4334c3446a06",
+    "suite": "DecompositionAuditTests",
+    "method": "RectangularAndRankDeficientMatricesRetainTheirInformation",
+    "case": "UMapx.Tests.DecompositionAuditTests.RectangularAndRankDeficientMatricesRetainTheirInformation(name: \"SVD\", m: 3, n: 5, kind: \"RankOne\")",
+    "outcome": "Failed",
+    "message": "Expected 1; actual NaN; tolerance 0.005.",
+    "test_file": "tests/UMapx.Tests/DecompositionAuditTests.cs",
+    "test_line": 106
+  },
+  {
+    "id": "443decbd-04f9-4b21-daf3-317ac1509a6b",
+    "suite": "DecompositionAuditTests",
+    "method": "RectangularAndRankDeficientMatricesRetainTheirInformation",
+    "case": "UMapx.Tests.DecompositionAuditTests.RectangularAndRankDeficientMatricesRetainTheirInformation(name: \"SVD\", m: 3, n: 5, kind: \"Zero\")",
+    "outcome": "Failed",
+    "message": "Expected 0; actual NaN; tolerance 0.005.",
+    "test_file": "tests/UMapx.Tests/DecompositionAuditTests.cs",
+    "test_line": 106
+  },
+  {
+    "id": "f24e0067-8bd5-abbd-c0ac-0dcf59a85939",
+    "suite": "DecompositionAuditTests",
+    "method": "RectangularAndRankDeficientMatricesRetainTheirInformation",
+    "case": "UMapx.Tests.DecompositionAuditTests.RectangularAndRankDeficientMatricesRetainTheirInformation(name: \"SVD\", m: 4, n: 1, kind: \"Zero\")",
+    "outcome": "Failed",
+    "message": "Expected 0; actual NaN; tolerance 0.005.",
+    "test_file": "tests/UMapx.Tests/DecompositionAuditTests.cs",
+    "test_line": 106
+  },
+  {
+    "id": "5cfcf375-0acd-6779-61f0-3e797f0850bb",
+    "suite": "DecompositionAuditTests",
+    "method": "RectangularAndRankDeficientMatricesRetainTheirInformation",
+    "case": "UMapx.Tests.DecompositionAuditTests.RectangularAndRankDeficientMatricesRetainTheirInformation(name: \"SVD\", m: 4, n: 4, kind: \"RankOne\")",
+    "outcome": "Failed",
+    "message": "Expected 1; actual -4.8093056678771973; tolerance 0.003.",
+    "test_file": "tests/UMapx.Tests/DecompositionAuditTests.cs",
+    "test_line": 102
+  },
+  {
+    "id": "043e4ef9-2997-0004-80b0-25396f384fde",
+    "suite": "DecompositionAuditTests",
+    "method": "RectangularAndRankDeficientMatricesRetainTheirInformation",
+    "case": "UMapx.Tests.DecompositionAuditTests.RectangularAndRankDeficientMatricesRetainTheirInformation(name: \"SVD\", m: 4, n: 4, kind: \"Zero\")",
+    "outcome": "Failed",
+    "message": "Expected 0; actual NaN; tolerance 0.005.",
+    "test_file": "tests/UMapx.Tests/DecompositionAuditTests.cs",
+    "test_line": 106
+  },
+  {
+    "id": "094f0526-5585-a3c5-b21c-0e5623613424",
+    "suite": "DecompositionAuditTests",
+    "method": "RectangularAndRankDeficientMatricesRetainTheirInformation",
+    "case": "UMapx.Tests.DecompositionAuditTests.RectangularAndRankDeficientMatricesRetainTheirInformation(name: \"SVD\", m: 5, n: 3, kind: \"RankOne\")",
+    "outcome": "Failed",
+    "message": "Expected 1; actual NaN; tolerance 0.005.",
+    "test_file": "tests/UMapx.Tests/DecompositionAuditTests.cs",
+    "test_line": 106
+  },
+  {
+    "id": "5709de28-0483-106e-867f-1f6c477343eb",
+    "suite": "DecompositionAuditTests",
+    "method": "RectangularAndRankDeficientMatricesRetainTheirInformation",
+    "case": "UMapx.Tests.DecompositionAuditTests.RectangularAndRankDeficientMatricesRetainTheirInformation(name: \"SVD\", m: 5, n: 3, kind: \"Zero\")",
+    "outcome": "Failed",
+    "message": "Expected 0; actual NaN; tolerance 0.005.",
+    "test_file": "tests/UMapx.Tests/DecompositionAuditTests.cs",
+    "test_line": 106
+  },
+  {
+    "id": "e913c762-d8ff-09ca-2029-725705deaf2d",
+    "suite": "DecompositionAuditTests",
+    "method": "SchurDecompositionOfTheZeroMatrixTerminates",
+    "case": "UMapx.Tests.DecompositionAuditTests.SchurDecompositionOfTheZeroMatrixTerminates(n: 2)",
+    "outcome": "Failed",
+    "message": "Assert.Equal() Failure: Strings differ\n           ↓ (pos 0)\nExpected: \"True\"\nActual:   \"False\"\n           ↑ (pos 0)",
+    "test_file": "tests/UMapx.Tests/DecompositionAuditTests.cs",
+    "test_line": 52
+  },
+  {
+    "id": "70017bdb-177c-d421-99f6-8b2141c73760",
+    "suite": "DecompositionAuditTests",
+    "method": "SchurDecompositionOfTheZeroMatrixTerminates",
+    "case": "UMapx.Tests.DecompositionAuditTests.SchurDecompositionOfTheZeroMatrixTerminates(n: 3)",
+    "outcome": "Failed",
+    "message": "SchurZero(3) did not terminate within five seconds.",
+    "test_file": "tests/UMapx.Tests/DecompositionAuditTests.cs",
+    "test_line": 52
+  },
+  {
+    "id": "a27b657d-207b-0b70-940a-bdebc17a45d6",
+    "suite": "DecompositionAuditTests",
+    "method": "SchurDecompositionOfTheZeroMatrixTerminates",
+    "case": "UMapx.Tests.DecompositionAuditTests.SchurDecompositionOfTheZeroMatrixTerminates(n: 5)",
+    "outcome": "Failed",
+    "message": "SchurZero(5) did not terminate within five seconds.",
+    "test_file": "tests/UMapx.Tests/DecompositionAuditTests.cs",
+    "test_line": 52
+  },
+  {
+    "id": "50418088-38ab-8c95-6736-908f5f84a9dd",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Ball, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "f15eb5ef-d42d-a76f-8850-4d88e0cd482c",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Circle, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "8c144e97-1c68-6717-768c-426071160824",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: None, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "721dec24-8907-b8af-773f-c300ba4f52a6",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Polygon, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "46800dfa-c24f-5fe3-d8e9-d1d1bb4f69bc",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Rectangle, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "a96fdd57-be22-ea5e-37c9-3e70f79055af",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Ball, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "0e9d26c1-9e4d-38c7-124d-0cce90aae190",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Circle, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "05caf80f-9241-76f6-ad4f-5bba08b45296",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: None, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "97760d80-9a51-040a-d0db-1050ece8bfe3",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Polygon, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "a65d23ec-e7f4-3262-3847-e28c192709fb",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Rectangle, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "fc067e99-c9f7-417c-a3a0-a78f5f40a4fa",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Ball, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "68b76e5e-fed2-b312-1a6e-207c6584fc20",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Circle, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "468479bc-145c-0d92-2891-88faa9e3a7ba",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: None, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "63d9ef81-5914-5aef-e7f8-f9434446e1b6",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Polygon, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "f9e1b906-6621-79a2-d3ed-34b46ea3854b",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Rectangle, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "d9656156-25ea-e0a4-d890-c7408f3813a2",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "RectangleOverlapUsesGeometricAreaWithoutIntegerOverflow",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.RectangleOverlapUsesGeometricAreaWithoutIntegerOverflow(ax: 0, ay: 0, aw: 50000, ah: 50000, bx: 0, by: 0, bw: 50000, bh: 50000)",
+    "outcome": "Failed",
+    "message": "Expected 1; actual 0.5600464940071106; tolerance 2.2E-05.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 21
+  },
+  {
+    "id": "e96e39ac-5cf1-df3d-2b6c-1382809ed92c",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "RectangularDepthTransformsPreserveCoordinateMeaning",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.RectangularDepthTransformsPreserveCoordinateMeaning(operation: \"Merge\")",
+    "outcome": "Failed",
+    "message": "Assert.Equal() Failure: Values differ\nExpected: 1000\nActual:   214",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 52
+  },
+  {
+    "id": "e637a663-8fcf-3bd4-aff4-aa1846a1f580",
+    "suite": "ImagingAuditTests",
+    "method": "HistogramMedianSelectsTheMiddleObservationForOddCounts",
+    "case": "UMapx.Tests.ImagingAuditTests.HistogramMedianSelectsTheMiddleObservationForOddCounts(count: 1)",
+    "outcome": "Failed",
+    "message": "Assert.Equal() Failure: Values differ\nExpected: 20\nActual:   0",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 152
+  },
+  {
+    "id": "546ec08a-b683-b292-b261-5e6c9c009173",
+    "suite": "ImagingAuditTests",
+    "method": "HistogramMedianSelectsTheMiddleObservationForOddCounts",
+    "case": "UMapx.Tests.ImagingAuditTests.HistogramMedianSelectsTheMiddleObservationForOddCounts(count: 3)",
+    "outcome": "Failed",
+    "message": "Assert.Equal() Failure: Values differ\nExpected: 50\nActual:   20",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 152
+  },
+  {
+    "id": "05c98742-35aa-1ee9-054b-46a46361d6fb",
+    "suite": "ImagingAuditTests",
+    "method": "HistogramMedianSelectsTheMiddleObservationForOddCounts",
+    "case": "UMapx.Tests.ImagingAuditTests.HistogramMedianSelectsTheMiddleObservationForOddCounts(count: 5)",
+    "outcome": "Failed",
+    "message": "Assert.Equal() Failure: Values differ\nExpected: 80\nActual:   50",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 152
+  },
+  {
+    "id": "5dd09798-b396-cdf7-5e8c-c95a38f5d738",
+    "suite": "ImagingAuditTests",
+    "method": "NeutralFilterSettingsPreservePixels",
+    "case": "UMapx.Tests.ImagingAuditTests.NeutralFilterSettingsPreservePixels(name: \"Brightness\", space: RGB)",
+    "outcome": "Failed",
+    "message": "Expected RGBA 47,11,89,57; actual 46,10,88,57; tolerance 0.",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 26
+  },
+  {
+    "id": "f930aee8-3af2-a239-5bfc-63ffc9b1592a",
+    "suite": "ImagingAuditTests",
+    "method": "NeutralFilterSettingsPreservePixels",
+    "case": "UMapx.Tests.ImagingAuditTests.NeutralFilterSettingsPreservePixels(name: \"Contrast\", space: RGB)",
+    "outcome": "Failed",
+    "message": "Expected RGBA 47,11,89,57; actual 46,10,88,57; tolerance 0.",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 26
+  },
+  {
+    "id": "f848c3f0-2474-8ac9-2a2c-ed647dd8d1d6",
+    "suite": "ImagingAuditTests",
+    "method": "NeutralFilterSettingsPreservePixels",
+    "case": "UMapx.Tests.ImagingAuditTests.NeutralFilterSettingsPreservePixels(name: \"Gamma\", space: RGB)",
+    "outcome": "Failed",
+    "message": "Expected RGBA 47,11,89,57; actual 46,10,88,57; tolerance 0.",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 26
+  },
+  {
+    "id": "3d2cec9a-fce4-20ba-2290-7330e8cbc748",
+    "suite": "ImagingAuditTests",
+    "method": "NeutralFilterSettingsPreservePixels",
+    "case": "UMapx.Tests.ImagingAuditTests.NeutralFilterSettingsPreservePixels(name: \"Levels\", space: RGB)",
+    "outcome": "Failed",
+    "message": "Expected RGBA 47,11,89,57; actual 46,10,88,57; tolerance 0.",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 26
+  },
+  {
+    "id": "c87bb276-b083-4012-a255-837352164f93",
+    "suite": "ImagingAuditTests",
+    "method": "NeutralFilterSettingsPreservePixels",
+    "case": "UMapx.Tests.ImagingAuditTests.NeutralFilterSettingsPreservePixels(name: \"Linear\", space: RGB)",
+    "outcome": "Failed",
+    "message": "Expected RGBA 47,11,89,57; actual 46,10,88,57; tolerance 0.",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 26
+  },
+  {
+    "id": "9e041a4e-8d30-1a3f-1ebf-aa8cbd6eec07",
+    "suite": "ImagingAuditTests",
+    "method": "NeutralFilterSettingsPreservePixels",
+    "case": "UMapx.Tests.ImagingAuditTests.NeutralFilterSettingsPreservePixels(name: \"ShiftCorrection\", space: RGB)",
+    "outcome": "Failed",
+    "message": "Expected RGBA 47,11,89,57; actual 46,10,88,57; tolerance 0.",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 26
+  },
+  {
+    "id": "8f88be8a-7edc-99e5-4fb6-711f498e97f8",
+    "suite": "ImagingAuditTests",
+    "method": "NeutralFilterSettingsPreservePixels",
+    "case": "UMapx.Tests.ImagingAuditTests.NeutralFilterSettingsPreservePixels(name: \"Transparency\", space: RGB)",
+    "outcome": "Failed",
+    "message": "Assert.InRange() Failure: Value not in range\nRange:  (0 - 0)\nActual: 1",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 25
+  },
+  {
+    "id": "e8643337-ad03-1653-b165-c68ac599deda",
+    "suite": "ImagingAuditTests",
+    "method": "PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched",
+    "case": "UMapx.Tests.ImagingAuditTests.PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched(name: \"Diffusion\", negative: False)",
+    "outcome": "Failed",
+    "message": "Expected RGBA 0,0,255,60; actual 0,0,0,60; tolerance 0.",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 26
+  },
+  {
+    "id": "e62358be-83a0-6273-f4dd-1168b9d39f63",
+    "suite": "ImagingAuditTests",
+    "method": "PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched",
+    "case": "UMapx.Tests.ImagingAuditTests.PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched(name: \"Diffusion\", negative: True)",
+    "outcome": "Failed",
+    "message": "Expected RGBA 0,0,255,60; actual 37,37,255,60; tolerance 0.",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 26
+  },
+  {
+    "id": "b762ba60-b6cb-b76e-b249-eeee59063534",
+    "suite": "ImagingAuditTests",
+    "method": "PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched",
+    "case": "UMapx.Tests.ImagingAuditTests.PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched(name: \"Grayscale\", negative: False)",
+    "outcome": "Failed",
+    "message": "Expected RGBA 122,122,122,100; actual 90,130,140,100; tolerance 0.",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 26
+  },
+  {
+    "id": "32c8a2c0-de25-9127-f7fb-0e493a1c66ba",
+    "suite": "ImagingAuditTests",
+    "method": "PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched",
+    "case": "UMapx.Tests.ImagingAuditTests.PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched(name: \"Grayscale\", negative: True)",
+    "outcome": "Failed",
+    "message": "Expected RGBA 107,107,107,60; actual 30,110,180,60; tolerance 0.",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 26
+  },
+  {
+    "id": "9307212b-e9ed-e33f-ccc3-5dd7335bbbab",
+    "suite": "ImagingAuditTests",
+    "method": "PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched",
+    "case": "UMapx.Tests.ImagingAuditTests.PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched(name: \"RGB\", negative: False)",
+    "outcome": "Failed",
+    "message": "Expected RGBA 102,153,125,100; actual 90,130,140,100; tolerance 0.",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 26
+  },
+  {
+    "id": "7bd48eda-f481-ebb7-7d99-c2539e94af91",
+    "suite": "ImagingAuditTests",
+    "method": "PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched",
+    "case": "UMapx.Tests.ImagingAuditTests.PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched(name: \"RGB\", negative: True)",
+    "outcome": "Failed",
+    "message": "Expected RGBA 42,133,165,60; actual 30,110,180,60; tolerance 0.",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 26
+  },
+  {
+    "id": "195e2be5-7fd2-ec9b-4a81-ba608372e22b",
+    "suite": "ImagingAuditTests",
+    "method": "PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched",
+    "case": "UMapx.Tests.ImagingAuditTests.PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched(name: \"Transparency\", negative: False)",
+    "outcome": "Failed",
+    "message": "Assert.InRange() Failure: Value not in range\nRange:  (0 - 0)\nActual: 50",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 25
+  },
+  {
+    "id": "2da94541-ff34-3eb2-d7a7-dddfac17c9d1",
+    "suite": "ImagingAuditTests",
+    "method": "PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched",
+    "case": "UMapx.Tests.ImagingAuditTests.PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched(name: \"Transparency\", negative: True)",
+    "outcome": "Failed",
+    "message": "Assert.InRange() Failure: Value not in range\nRange:  (0 - 0)\nActual: 50",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 25
+  },
+  {
+    "id": "bf39f7c9-a134-1aa0-b87c-53d1f9c577dc",
+    "suite": "ImagingAuditTests",
+    "method": "PixelwiseFiltersMatchIndependentChannelEquations",
+    "case": "UMapx.Tests.ImagingAuditTests.PixelwiseFiltersMatchIndependentChannelEquations(name: \"Gamma\")",
+    "outcome": "Failed",
+    "message": "Expected RGBA 216,11,140,125; actual 214,11,138,125; tolerance 1.",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 26
+  },
+  {
+    "id": "27b7e64e-1ef4-6f78-bf1c-e47bb94eb4ae",
+    "suite": "ImagingAuditTests",
+    "method": "TensorConversionsMatchPixelChannelOrder",
+    "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: False, floating: False)",
+    "outcome": "Failed",
+    "message": "Assert.InRange() Failure: Value not in range\nRange:  (0 - 0)\nActual: 255",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 25
+  },
+  {
+    "id": "2abd9d1d-daa7-535f-0376-6efc746f2c9f",
+    "suite": "ImagingAuditTests",
+    "method": "TensorConversionsMatchPixelChannelOrder",
+    "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: False, floating: True)",
+    "outcome": "Failed",
+    "message": "Assert.InRange() Failure: Value not in range\nRange:  (0 - 1)\nActual: 255",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 25
+  },
+  {
+    "id": "cda779f6-b6de-1728-3d78-80dd7690e6fb",
+    "suite": "ImagingAuditTests",
+    "method": "TensorConversionsMatchPixelChannelOrder",
+    "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: True, floating: False)",
+    "outcome": "Failed",
+    "message": "Assert.InRange() Failure: Value not in range\nRange:  (0 - 0)\nActual: 255",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 25
+  },
+  {
+    "id": "f86b9f0d-28d2-a3ff-8a3b-430b9f58fc49",
+    "suite": "ImagingAuditTests",
+    "method": "TensorConversionsMatchPixelChannelOrder",
+    "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: True, floating: True)",
+    "outcome": "Failed",
+    "message": "Assert.InRange() Failure: Value not in range\nRange:  (0 - 1)\nActual: 255",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 25
+  },
+  {
+    "id": "2c4d0ef7-27cd-6466-de5f-c4d100240b13",
+    "suite": "MathematicalRegressionTests",
+    "method": "BiorthogonalWaveletReconstructsImpulse",
+    "case": "UMapx.Tests.MathematicalRegressionTests.BiorthogonalWaveletReconstructsImpulse(normalized: False)",
+    "outcome": "Failed",
+    "message": "Expected 1; actual 1.0156248807907104; tolerance 0.0001.",
+    "test_file": "tests/UMapx.Tests/MathematicalRegressionTests.cs",
+    "test_line": 52
+  },
+  {
+    "id": "e24bf1ae-d7bf-cdd3-786a-6b97e1bdd331",
+    "suite": "MathematicalRegressionTests",
+    "method": "BiorthogonalWaveletReconstructsImpulse",
+    "case": "UMapx.Tests.MathematicalRegressionTests.BiorthogonalWaveletReconstructsImpulse(normalized: True)",
+    "outcome": "Failed",
+    "message": "Expected 1; actual 1.015625; tolerance 0.0001.",
+    "test_file": "tests/UMapx.Tests/MathematicalRegressionTests.cs",
+    "test_line": 52
+  },
+  {
+    "id": "0ba72556-e9e5-2873-81d0-51cdf06d36a0",
+    "suite": "MathematicalRegressionTests",
+    "method": "EvenConfinedWindowIsSymmetric",
+    "case": "UMapx.Tests.MathematicalRegressionTests.EvenConfinedWindowIsSymmetric",
+    "outcome": "Failed",
+    "message": "Expected 0.13257220387458801; actual -0.16181044280529022; tolerance 0.0001.",
+    "test_file": "tests/UMapx.Tests/MathematicalRegressionTests.cs",
+    "test_line": 111
+  },
+  {
+    "id": "4b142828-3624-6f7a-ec2e-c16f16becddd",
+    "suite": "MathematicalRegressionTests",
+    "method": "EvenNormalWindowIsSymmetric",
+    "case": "UMapx.Tests.MathematicalRegressionTests.EvenNormalWindowIsSymmetric",
+    "outcome": "Failed",
+    "message": "Expected 0.36787945032119751; actual 0.16901330649852753; tolerance 0.0001.",
+    "test_file": "tests/UMapx.Tests/MathematicalRegressionTests.cs",
+    "test_line": 109
+  },
+  {
+    "id": "ee3256a6-c6a6-db04-e0ac-ea8213872e89",
+    "suite": "MathematicalRegressionTests",
+    "method": "IirStabilityUsesTheSamePolynomialAsReaction",
+    "case": "UMapx.Tests.MathematicalRegressionTests.IirStabilityUsesTheSamePolynomialAsReaction",
+    "outcome": "Failed",
+    "message": "Assert.False() Failure\nExpected: False\nActual:   True",
+    "test_file": "tests/UMapx.Tests/MathematicalRegressionTests.cs",
+    "test_line": 107
+  },
+  {
+    "id": "e84bde7b-a0d5-bdad-ab03-a34ad1996421",
+    "suite": "MathematicalRegressionTests",
+    "method": "RybConversionPreservesWhite",
+    "case": "UMapx.Tests.MathematicalRegressionTests.RybConversionPreservesWhite",
+    "outcome": "Failed",
+    "message": "Assert.Equal() Failure: Values differ\nExpected: 255\nActual:   0",
+    "test_file": "tests/UMapx.Tests/MathematicalRegressionTests.cs",
+    "test_line": 115
+  },
+  {
+    "id": "e2d0b487-b598-5f0f-a49c-90c44cf1c92c",
+    "suite": "MathematicalRegressionTests",
+    "method": "XyzCanRepresentItsD65WhitePoint",
+    "case": "UMapx.Tests.MathematicalRegressionTests.XyzCanRepresentItsD65WhitePoint",
+    "outcome": "Failed",
+    "message": "Expected 1.089; actual 1; tolerance 2.378E-05.",
+    "test_file": "tests/UMapx.Tests/MathematicalRegressionTests.cs",
+    "test_line": 113
+  },
+  {
+    "id": "b0a82e19-4bad-29a2-ce99-49ebdb1e053e",
+    "suite": "RemainingImagingAuditTests",
+    "method": "ConstantColorTransferPreservesIdenticalImages",
+    "case": "UMapx.Tests.RemainingImagingAuditTests.ConstantColorTransferPreservesIdenticalImages(inverted: False)",
+    "outcome": "Failed",
+    "message": "Expected RGBA 77,99,123,255; actual 0,0,0,255; tolerance 1.",
+    "test_file": "tests/UMapx.Tests/RemainingImagingAuditTests.cs",
+    "test_line": 30
+  },
+  {
+    "id": "8dd4f8ac-fdb2-b36d-9968-00d8bb250b5e",
+    "suite": "RemainingImagingAuditTests",
+    "method": "ConstantColorTransferPreservesIdenticalImages",
+    "case": "UMapx.Tests.RemainingImagingAuditTests.ConstantColorTransferPreservesIdenticalImages(inverted: True)",
+    "outcome": "Failed",
+    "message": "Expected RGBA 77,99,123,255; actual 0,0,0,255; tolerance 1.",
+    "test_file": "tests/UMapx.Tests/RemainingImagingAuditTests.cs",
+    "test_line": 30
+  },
+  {
+    "id": "a4ab30ec-1f0e-4da4-9fc0-bffb22904455",
+    "suite": "ResponseAuditTests",
+    "method": "StabilityMatchesThePoleOfTheActualDifferenceEquation",
+    "case": "UMapx.Tests.ResponseAuditTests.StabilityMatchesThePoleOfTheActualDifferenceEquation(a0: -0.899999976, a1: 1.10000002, stable: True)",
+    "outcome": "Failed",
+    "message": "Assert.Equal() Failure: Values differ\nExpected: True\nActual:   False",
+    "test_file": "tests/UMapx.Tests/ResponseAuditTests.cs",
+    "test_line": 44
+  },
+  {
+    "id": "5ac29599-30e0-4adf-c8be-07958baa65a3",
+    "suite": "ResponseAuditTests",
+    "method": "StabilityMatchesThePoleOfTheActualDifferenceEquation",
+    "case": "UMapx.Tests.ResponseAuditTests.StabilityMatchesThePoleOfTheActualDifferenceEquation(a0: 0.899999976, a1: -0.800000012, stable: False)",
+    "outcome": "Failed",
+    "message": "Assert.Equal() Failure: Values differ\nExpected: False\nActual:   True",
+    "test_file": "tests/UMapx.Tests/ResponseAuditTests.cs",
+    "test_line": 44
+  },
+  {
+    "id": "0755e1e3-5d36-119b-a68f-9fe0029de6c9",
+    "suite": "TransformAuditTests",
+    "method": "LaplacianPyramidsReconstructVectors",
+    "case": "UMapx.Tests.TransformAuditTests.LaplacianPyramidsReconstructVectors(n: 4, complex: False)",
+    "outcome": "Failed",
+    "message": "System.IndexOutOfRangeException : Index was outside the bounds of the array.",
+    "test_file": "tests/UMapx.Tests/TransformAuditTests.cs",
+    "test_line": 127
+  },
+  {
+    "id": "2d291bfd-9872-e06e-655b-13a007054958",
+    "suite": "TransformAuditTests",
+    "method": "LaplacianPyramidsReconstructVectors",
+    "case": "UMapx.Tests.TransformAuditTests.LaplacianPyramidsReconstructVectors(n: 4, complex: True)",
+    "outcome": "Failed",
+    "message": "System.IndexOutOfRangeException : Index was outside the bounds of the array.",
+    "test_file": "tests/UMapx.Tests/TransformAuditTests.cs",
+    "test_line": 130
+  },
+  {
+    "id": "33ad1ad1-4fb1-6d4b-d792-25f0613af098",
+    "suite": "TransformAuditTests",
+    "method": "LaplacianPyramidsReconstructVectors",
+    "case": "UMapx.Tests.TransformAuditTests.LaplacianPyramidsReconstructVectors(n: 8, complex: False)",
+    "outcome": "Failed",
+    "message": "System.IndexOutOfRangeException : Index was outside the bounds of the array.",
+    "test_file": "tests/UMapx.Tests/TransformAuditTests.cs",
+    "test_line": 127
+  },
+  {
+    "id": "922444a6-7b92-af01-7d61-73d2ba834fae",
+    "suite": "TransformAuditTests",
+    "method": "LaplacianPyramidsReconstructVectors",
+    "case": "UMapx.Tests.TransformAuditTests.LaplacianPyramidsReconstructVectors(n: 8, complex: True)",
+    "outcome": "Failed",
+    "message": "System.IndexOutOfRangeException : Index was outside the bounds of the array.",
+    "test_file": "tests/UMapx.Tests/TransformAuditTests.cs",
+    "test_line": 130
+  },
+  {
+    "id": "b9da2faa-ffd6-effd-b031-a8de83396d4c",
+    "suite": "TransformAuditTests",
+    "method": "LaplacianPyramidsReconstructVectors",
+    "case": "UMapx.Tests.TransformAuditTests.LaplacianPyramidsReconstructVectors(n: 9, complex: False)",
+    "outcome": "Failed",
+    "message": "System.IndexOutOfRangeException : Index was outside the bounds of the array.",
+    "test_file": "tests/UMapx.Tests/TransformAuditTests.cs",
+    "test_line": 127
+  },
+  {
+    "id": "a572bb6a-0c63-2a50-e1be-3ddf3166ca71",
+    "suite": "TransformAuditTests",
+    "method": "LaplacianPyramidsReconstructVectors",
+    "case": "UMapx.Tests.TransformAuditTests.LaplacianPyramidsReconstructVectors(n: 9, complex: True)",
+    "outcome": "Failed",
+    "message": "System.IndexOutOfRangeException : Index was outside the bounds of the array.",
+    "test_file": "tests/UMapx.Tests/TransformAuditTests.cs",
+    "test_line": 130
+  },
+  {
+    "id": "caf68d8e-e9d5-fd39-d2c4-760e639e77a5",
+    "suite": "TransformAuditTests",
+    "method": "SmoothingAndDetailFiltersPreserveConstants",
+    "case": "UMapx.Tests.TransformAuditTests.SmoothingAndDetailFiltersPreserveConstants(name: \"BilateralGrid\", matrix: False, complex: True)",
+    "outcome": "Failed",
+    "message": "Assert.All() Failure: 16 out of 16 items in the collection did not pass.\n[0]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284742, 0); error 0.126635.\n[1]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.\n[2]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284742, 0); error 0.126635.\n[3]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.\n[4]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284742, 0); error 0.126635.\n[5]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.\n[6]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284742, 0); error 0.126635.\n[7]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.\n[8]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284742, 0); error 0.126635.\n[9]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.\n[10]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284742, 0); error 0.126635.\n[11]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.\n[12]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284742, 0); error 0.126635.\n[13]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284712, 0); error 0.126635.\n[14]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284712, 0); error 0.126635.\n[15]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.",
+    "test_file": "tests/UMapx.Tests/TransformAuditTests.cs",
+    "test_line": 177
+  },
+  {
+    "id": "9dc01316-a6bb-d46a-23b6-67c6f1fe6249",
+    "suite": "TransformAuditTests",
+    "method": "SmoothingAndDetailFiltersPreserveConstants",
+    "case": "UMapx.Tests.TransformAuditTests.SmoothingAndDetailFiltersPreserveConstants(name: \"BilateralGrid\", matrix: True, complex: True)",
+    "outcome": "Failed",
+    "message": "Assert.All() Failure: 96 out of 96 items in the collection did not pass.\n[0]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.\n[1]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[2]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.\n[3]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[4]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.\n[5]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[6]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.\n[7]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[8]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.\n[9]:  Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.\n[10]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.\n[11]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[12]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[13]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[14]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[15]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[16]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[17]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[18]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[19]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[20]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[21]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[22]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284623, 0); error 0.126635.\n[23]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[24]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.\n[25]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[26]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635.\n[27]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284653, 0); error 0.126635.\n[28]: Item:  0.395285\n      Error: Expected <0.375; 0.125>; actual (0.395284683, 0); error 0.126635",
+    "test_file": "tests/UMapx.Tests/TransformAuditTests.cs",
+    "test_line": 175
+  },
+  {
+    "id": "2bdde26d-b6ed-90a0-b97c-1fada69334da",
+    "suite": "TransformAuditTests",
+    "method": "SmoothingAndDetailFiltersPreserveConstants",
+    "case": "UMapx.Tests.TransformAuditTests.SmoothingAndDetailFiltersPreserveConstants(name: \"Laplacian\", matrix: False, complex: False)",
+    "outcome": "Failed",
+    "message": "System.IndexOutOfRangeException : Index was outside the bounds of the array.",
+    "test_file": "tests/UMapx.Tests/TransformAuditTests.cs",
+    "test_line": 178
+  },
+  {
+    "id": "8f33a007-0003-3f89-6e7d-137f0b4a4914",
+    "suite": "TransformAuditTests",
+    "method": "SmoothingAndDetailFiltersPreserveConstants",
+    "case": "UMapx.Tests.TransformAuditTests.SmoothingAndDetailFiltersPreserveConstants(name: \"Laplacian\", matrix: False, complex: True)",
+    "outcome": "Failed",
+    "message": "System.IndexOutOfRangeException : Index was outside the bounds of the array.",
+    "test_file": "tests/UMapx.Tests/TransformAuditTests.cs",
+    "test_line": 177
+  },
+  {
+    "id": "1b49c7bc-2dd1-1307-0587-d6f82c72a126",
+    "suite": "TransformAuditTests",
+    "method": "SmoothingAndDetailFiltersPreserveConstants",
+    "case": "UMapx.Tests.TransformAuditTests.SmoothingAndDetailFiltersPreserveConstants(name: \"LocalLaplacian\", matrix: False, complex: False)",
+    "outcome": "Failed",
+    "message": "System.IndexOutOfRangeException : Index was outside the bounds of the array.",
+    "test_file": "tests/UMapx.Tests/TransformAuditTests.cs",
+    "test_line": 178
+  },
+  {
+    "id": "4a532abb-a896-be35-08d3-a41cde7e63d3",
+    "suite": "TransformAuditTests",
+    "method": "SmoothingAndDetailFiltersPreserveConstants",
+    "case": "UMapx.Tests.TransformAuditTests.SmoothingAndDetailFiltersPreserveConstants(name: \"LocalLaplacian\", matrix: True, complex: False)",
+    "outcome": "Failed",
+    "message": "Assert.All() Failure: 96 out of 96 items in the collection did not pass.\n[0]:  Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[1]:  Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[2]:  Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[3]:  Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[4]:  Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[5]:  Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[6]:  Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[7]:  Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[8]:  Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[9]:  Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[10]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[11]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[12]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[13]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[14]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[15]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[16]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[17]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[18]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[19]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[20]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[21]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[22]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[23]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[24]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[25]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[26]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[27]: Item:  0.392453194\n      Error: Expected 0.375; actual 0.39245319366455078; tolerance 0.0010075.\n[28]: Item:  0.392453194\n      Error: Expec",
+    "test_file": "tests/UMapx.Tests/TransformAuditTests.cs",
+    "test_line": 176
+  },
+  {
+    "id": "35ca05c7-e59f-b7d3-0148-aa5f3cb0322b",
+    "suite": "TransformAuditTests",
+    "method": "ThresholdFiltersRespectEqualityAndSignedComponents",
+    "case": "UMapx.Tests.TransformAuditTests.ThresholdFiltersRespectEqualityAndSignedComponents(mode: Over)",
+    "outcome": "Failed",
+    "message": "Expected <0; -1>; actual (0, 0); error 1.",
+    "test_file": "tests/UMapx.Tests/TransformAuditTests.cs",
+    "test_line": 158
+  },
+  {
+    "id": "a55c1c98-f4f4-4dde-7eed-473b585ff132",
+    "suite": "TransformAuditTests",
+    "method": "ThresholdFiltersRespectEqualityAndSignedComponents",
+    "case": "UMapx.Tests.TransformAuditTests.ThresholdFiltersRespectEqualityAndSignedComponents(mode: Under)",
+    "outcome": "Failed",
+    "message": "Expected <0; 1>; actual (0, 0); error 1.",
+    "test_file": "tests/UMapx.Tests/TransformAuditTests.cs",
+    "test_line": 158
+  },
+  {
+    "id": "a3e0ae1d-1130-cbcd-7dcf-bea0da0640a9",
+    "suite": "UtilityContractAuditTests",
+    "method": "DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow",
+    "case": "UMapx.Tests.UtilityContractAuditTests.DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow(side: 256)",
+    "outcome": "Failed",
+    "message": "Assert.Equal() Failure: Values differ\nExpected: 65535\nActual:   0",
+    "test_file": "tests/UMapx.Tests/UtilityContractAuditTests.cs",
+    "test_line": 33
+  },
+  {
+    "id": "6939c7db-31d4-8dea-85fc-4484e9b7b91a",
+    "suite": "UtilityContractAuditTests",
+    "method": "DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow",
+    "case": "UMapx.Tests.UtilityContractAuditTests.DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow(side: 300)",
+    "outcome": "Failed",
+    "message": "Assert.Equal() Failure: Values differ\nExpected: 65535\nActual:   17813",
+    "test_file": "tests/UMapx.Tests/UtilityContractAuditTests.cs",
+    "test_line": 33
+  },
+  {
+    "id": "7dd250a4-8c91-02f7-f9f2-3f7587f1d77c",
+    "suite": "VideoAuditTests",
+    "method": "MjpegFramesSurviveArbitraryTransportChunkBoundaries",
+    "case": "UMapx.Tests.VideoAuditTests.MjpegFramesSurviveArbitraryTransportChunkBoundaries(chunk: 1)",
+    "outcome": "Failed",
+    "message": "System.ArgumentOutOfRangeException : Index was out of range. Must be non-negative and less than or equal to the size of the collection. (Parameter 'startIndex')",
+    "test_file": "tests/UMapx.Tests/VideoAuditTests.cs",
+    "test_line": 49
+  },
+  {
+    "id": "27a731e9-5daa-18fc-d2d9-ae615797d6b7",
+    "suite": "VideoAuditTests",
+    "method": "MjpegFramesSurviveArbitraryTransportChunkBoundaries",
+    "case": "UMapx.Tests.VideoAuditTests.MjpegFramesSurviveArbitraryTransportChunkBoundaries(chunk: 2)",
+    "outcome": "Failed",
+    "message": "System.ArgumentOutOfRangeException : Index was out of range. Must be non-negative and less than or equal to the size of the collection. (Parameter 'startIndex')",
+    "test_file": "tests/UMapx.Tests/VideoAuditTests.cs",
+    "test_line": 49
+  },
+  {
+    "id": "26d14848-7429-546b-b343-610e437d9cd6",
+    "suite": "VideoAuditTests",
+    "method": "MjpegFramesSurviveArbitraryTransportChunkBoundaries",
+    "case": "UMapx.Tests.VideoAuditTests.MjpegFramesSurviveArbitraryTransportChunkBoundaries(chunk: 3)",
+    "outcome": "Failed",
+    "message": "System.ArgumentOutOfRangeException : Index was out of range. Must be non-negative and less than or equal to the size of the collection. (Parameter 'startIndex')",
+    "test_file": "tests/UMapx.Tests/VideoAuditTests.cs",
+    "test_line": 49
+  },
+  {
+    "id": "32bbe7f8-e173-1aff-da30-bf0224c110c1",
+    "suite": "VideoAuditTests",
+    "method": "MultipartBoundaryParsingHonorsMimeParameters",
+    "case": "UMapx.Tests.VideoAuditTests.MultipartBoundaryParsingHonorsMimeParameters(contentType: \"Multipart/X-Mixed-Replace; Boundary=frame\", expected: \"frame\")",
+    "outcome": "Failed",
+    "message": "System.ArgumentException : Invalid content type",
+    "test_file": "tests/UMapx.Tests/VideoAuditTests.cs",
+    "test_line": 25
+  },
+  {
+    "id": "ef749fd8-1bd6-e673-485b-7a98715e1cdb",
+    "suite": "VideoAuditTests",
+    "method": "MultipartBoundaryParsingHonorsMimeParameters",
+    "case": "UMapx.Tests.VideoAuditTests.MultipartBoundaryParsingHonorsMimeParameters(contentType: \"multipart/x-mixed-replace; boundary=frame; charset\"···, expected: \"frame\")",
+    "outcome": "Failed",
+    "message": "Assert.Equal() Failure: Strings differ\nExpected: \"frame\"\nActual:   \"frame; charset=utf-8\"\n                ↑ (pos 5)",
+    "test_file": "tests/UMapx.Tests/VideoAuditTests.cs",
+    "test_line": 25
+  },
+  {
+    "id": "a762dd59-cd52-28c8-c4dc-eba8a69aeb7a",
+    "suite": "WaveletAuditTests",
+    "method": "MeyerWaveletAndScalingHaveFiniteRemovableSingularities",
+    "case": "UMapx.Tests.WaveletAuditTests.MeyerWaveletAndScalingHaveFiniteRemovableSingularities(wavelet: False, x: -0.75)",
+    "outcome": "Failed",
+    "message": "Expected 0.21220659078919379; actual 0; tolerance 1.42441E-05.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 157
+  },
+  {
+    "id": "87926853-3b94-e55f-b5b1-12898f01bab6",
+    "suite": "WaveletAuditTests",
+    "method": "MeyerWaveletAndScalingHaveFiniteRemovableSingularities",
+    "case": "UMapx.Tests.WaveletAuditTests.MeyerWaveletAndScalingHaveFiniteRemovableSingularities(wavelet: False, x: 0.75)",
+    "outcome": "Failed",
+    "message": "Expected 0.21220659078919379; actual -0; tolerance 1.42441E-05.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 157
+  },
+  {
+    "id": "f7beb39f-f144-3905-8019-9bc33da859f6",
+    "suite": "WaveletAuditTests",
+    "method": "MeyerWaveletAndScalingHaveFiniteRemovableSingularities",
+    "case": "UMapx.Tests.WaveletAuditTests.MeyerWaveletAndScalingHaveFiniteRemovableSingularities(wavelet: True, x: 0.5)",
+    "outcome": "Failed",
+    "message": "Expected 1.2732395447351628; actual NaN; tolerance 3.54648E-05.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 157
+  },
+  {
+    "id": "2ba7e993-f3df-9698-cc05-c248520a7fb4",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior13\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.12346269190311432; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "e4857d60-2c96-d14d-942e-927f7d24404e",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior13\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.069527201354503632; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "92d9ec79-6b4d-bffc-1e92-99334ba2156b",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior15\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.12121836841106415; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "76baa719-8f6a-d0d3-bb6a-1135ad6c05c2",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior15\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.049849316477775574; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "3054afde-4d67-a49a-f4b9-1e9c1aac4470",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior22\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.11414259672164917; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "d0691257-30f7-8d9f-8444-aa634a5a9051",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior22\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.0083202831447124481; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "b77b1e01-a4b9-b9e8-6fac-d2ec7e47463f",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior24\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.13846755027770996; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "ecd16ef8-96cf-1563-0f67-e22ae20c1c6a",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior24\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.077058494091033936; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "4dffe3dc-3227-1c9b-567a-62ca839e8b8c",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior26\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.1555284857749939; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "7fb0d517-8005-2061-2515-b8cbfcfd3675",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior26\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.12250813841819763; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "a8bb16a2-f27c-5031-b4f8-47aaaef789a0",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior28\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.16819335520267487; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "5002a22b-2cfa-61ec-3846-f75924d64379",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior28\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.15201003849506378; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "59faad89-560b-f0d3-4b28-14a08081e0be",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior31\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.50315713882446289; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "bae00261-1d2c-d470-a6dc-4625d01ab991",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior31\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 4.8098835945129395; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "21449bbd-f360-272a-ce3f-acbc37264a62",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior33\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.37997183203697205; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "32c2e0ad-a884-32d9-e4dc-962c06361514",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior33\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 1.5726157426834106; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "4372762f-946b-430c-5b4e-af8f7f0f9a59",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior35\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.35034579038619995; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "366b5425-056d-35b7-81c3-8ff22d5817ee",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior35\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.84520018100738525; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "f4038e47-930b-94e9-616e-dcb9848b891e",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior37\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.33212760090827942; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "5c82447e-901c-4d98-0226-20b68d2ce303",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior37\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.59470641613006592; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "4dfc2811-77db-9a24-6060-c29e0326f04f",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF13\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.18081244826316833; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "6858352f-d487-4666-0da7-2387e097db74",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF13\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.2436707615852356; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "e11bd38b-1f43-ec0b-b96e-29b85906021c",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF15\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.18829673528671265; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "114175e3-8c14-0b10-4624-12e8332cc313",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF15\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.27814719080924988; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "d7aab058-e2c6-bff7-f039-4d94e4ab7b24",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF22\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.33566302061080933; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "d290f43f-45ad-bf95-5133-e8bdce91d3bb",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF22\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.66855746507644653; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "bc3233f7-38ab-f5e4-5a94-8fe0eb8225c2",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF24\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.30695226788520813; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "1f083594-9750-2a10-b17d-6f86d69503dc",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF24\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.60826516151428223; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "093bf01a-517f-1f70-9e79-5311c0882372",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF26\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.2910098135471344; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "cfb01231-6645-3ed2-5948-78b5dc712572",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF26\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.58063286542892456; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "8a44a237-e4b3-4f7b-2685-7ee481dbe106",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF31\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual -0.010330234654247761; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "3bc860a3-9a36-2fc5-fcba-099b981d5228",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF31\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual -0.090077728033065796; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "216d6f06-78ff-cb5c-0d23-aa18df95b8d1",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF42\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.75396919250488281; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "1b4d4b71-dd48-ac02-b206-b829eaf42d99",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF42\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 1.6797744035720825; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "7a2261ec-73af-6753-1a61-4e1e23dea1a3",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF44\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.60369241237640381; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "ab6a4ac8-4b7c-a210-be61-172121921114",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF44\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 1.4036698341369629; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "e5384cf7-1768-b923-5a4d-9a34e0f03a96",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF46\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.51835727691650391; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "3b9d9018-4a4c-edb1-cf95-59854da65afa",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF46\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 1.2846927642822266; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "9e7e91fb-f40f-cd6d-e726-b2bfb0ed6b14",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF51\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual -0.013264071196317673; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "d14eecdd-f0df-747a-f859-eaa0971c2e55",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF51\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.016539061442017555; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "dfa49782-f3c0-23ad-63ba-93788dd5cb61",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF53\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.11764256656169891; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "708fd6df-1d65-c75b-b862-f8b870db1cca",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF53\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.073379606008529663; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "c480ff3a-cb1a-3f7f-8667-6e2e2edebad6",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF55\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.0042504370212554932; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "366b1350-b343-1694-c0e1-f67a87a1db72",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF55\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.1520465612411499; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "a9966bed-3941-1922-4ec4-cf1677194f06",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF62\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 3.0021111965179443; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "e7ae66c3-f671-6cce-549b-1a6492ce22d9",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF62\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 5.9589991569519043; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "3e2109dd-9c6d-595d-be32-2d5d33fdf44f",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF64\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 2.1737046241760254; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "431eae5b-f821-b281-af48-fdbba2f0851b",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF64\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 4.3360543251037598; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "6e9e989e-6887-e858-68be-9b5572823b15",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF66\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 1.6895759105682373; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "a56a9771-31fc-dad2-27e9-34a137fd71ea",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF66\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 3.7533392906188965; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "3539a243-6d80-32cd-4261-ba8c0cabe1f0",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF97\", levels: 1)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.19939634203910828; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "afa526d1-8c30-9223-6c70-5bf2f7662cbe",
+    "suite": "WaveletAuditTests",
+    "method": "ReconstructionBanksRecoverImpulsesAndDeterministicSignals",
+    "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF97\", levels: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.15000000596046448; actual 0.20123669505119324; tolerance 0.0005.",
+    "test_file": "tests/UMapx.Tests/WaveletAuditTests.cs",
+    "test_line": 73
+  },
+  {
+    "id": "1371b39b-17c6-c449-c908-0a8b7c64f5ab",
+    "suite": "WindowAuditTests",
+    "method": "ExplicitFrameSizeDoesNotDependOnStoredFrameSize",
+    "case": "UMapx.Tests.WindowAuditTests.ExplicitFrameSizeDoesNotDependOnStoredFrameSize(name: \"Confined\", n: 2)",
+    "outcome": "Failed",
+    "message": "Expected 0.99660146236419678; actual 2.8826443667639978E-06; tolerance 2.9932E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 88
+  },
+  {
+    "id": "9ed453eb-1343-c757-41f4-8b2ccd407b81",
+    "suite": "WindowAuditTests",
+    "method": "ExplicitFrameSizeDoesNotDependOnStoredFrameSize",
+    "case": "UMapx.Tests.WindowAuditTests.ExplicitFrameSizeDoesNotDependOnStoredFrameSize(name: \"Confined\", n: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0.23893208801746368; actual 2.8464323804655578E-06; tolerance 1.47786E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 88
+  },
+  {
+    "id": "5ca205cf-f441-34a9-bf62-7feee4a74f9e",
+    "suite": "WindowAuditTests",
+    "method": "ExplicitFrameSizeDoesNotDependOnStoredFrameSize",
+    "case": "UMapx.Tests.WindowAuditTests.ExplicitFrameSizeDoesNotDependOnStoredFrameSize(name: \"Confined\", n: 32)",
+    "outcome": "Failed",
+    "message": "Expected 0.019938021898269653; actual 0.0089839119464159012; tolerance 1.03988E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 88
+  },
+  {
+    "id": "e8cbaf72-8887-2cc8-de97-299732536752",
+    "suite": "WindowAuditTests",
+    "method": "ExplicitFrameSizeDoesNotDependOnStoredFrameSize",
+    "case": "UMapx.Tests.WindowAuditTests.ExplicitFrameSizeDoesNotDependOnStoredFrameSize(name: \"Confined\", n: 8)",
+    "outcome": "Failed",
+    "message": "Expected 0.13257220387458801; actual 0.0054649319499731064; tolerance 1.26514E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 88
+  },
+  {
+    "id": "e9d83317-21ef-6c73-c515-5f643ce54816",
+    "suite": "WindowAuditTests",
+    "method": "ExplicitFrameSizeDoesNotDependOnStoredFrameSize",
+    "case": "UMapx.Tests.WindowAuditTests.ExplicitFrameSizeDoesNotDependOnStoredFrameSize(name: \"Confined\", n: 9)",
+    "outcome": "Failed",
+    "message": "Expected 0.060986392199993134; actual 0.0026149442419409752; tolerance 1.12197E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 88
+  },
+  {
+    "id": "3673286b-4169-155a-e487-77b22846bbf0",
+    "suite": "WindowAuditTests",
+    "method": "SamplesAgreeWithIndependentWindowFormulas",
+    "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"BartlettHann\", n: 2)",
+    "outcome": "Failed",
+    "message": "Expected 0; actual 0.75999999046325684; tolerance 5E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 76
+  },
+  {
+    "id": "ee478398-a28f-2d75-2dd1-0012ed799042",
+    "suite": "WindowAuditTests",
+    "method": "SamplesAgreeWithIndependentWindowFormulas",
+    "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"BartlettHann\", n: 3)",
+    "outcome": "Failed",
+    "message": "Expected 0; actual 0.75999999046325684; tolerance 5E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 76
+  },
+  {
+    "id": "ba0a5d00-c3a9-f60d-bc8a-c0f1c9bcc990",
+    "suite": "WindowAuditTests",
+    "method": "SamplesAgreeWithIndependentWindowFormulas",
+    "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"BartlettHann\", n: 32)",
+    "outcome": "Failed",
+    "message": "Expected 0; actual 0.75999999046325684; tolerance 5E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 76
+  },
+  {
+    "id": "7504c3ec-169f-cfc5-016d-598837b7a041",
+    "suite": "WindowAuditTests",
+    "method": "SamplesAgreeWithIndependentWindowFormulas",
+    "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"BartlettHann\", n: 8)",
+    "outcome": "Failed",
+    "message": "Expected 0; actual 0.75999999046325684; tolerance 5E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 76
+  },
+  {
+    "id": "2dc83fee-e2be-6cbf-5292-90ff4fc6be66",
+    "suite": "WindowAuditTests",
+    "method": "SamplesAgreeWithIndependentWindowFormulas",
+    "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"BartlettHann\", n: 9)",
+    "outcome": "Failed",
+    "message": "Expected 0; actual 0.75999999046325684; tolerance 5E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 76
+  },
+  {
+    "id": "e658587a-9049-2f83-82ac-9b144bbb0803",
+    "suite": "WindowAuditTests",
+    "method": "SamplesAgreeWithIndependentWindowFormulas",
+    "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"Confined\", n: 2)",
+    "outcome": "Failed",
+    "message": "Expected 0.44982592672801958; actual 0.99660146236419678; tolerance 7.24913E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 76
+  },
+  {
+    "id": "8a5a2879-75c4-5608-41fa-c69ddf43006d",
+    "suite": "WindowAuditTests",
+    "method": "SamplesAgreeWithIndependentWindowFormulas",
+    "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"Confined\", n: 32)",
+    "outcome": "Failed",
+    "message": "Expected 0.016488652791921111; actual 0.019938021898269653; tolerance 5.08244E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 76
+  },
+  {
+    "id": "f4346077-d970-d9c0-634b-6ed4def4429c",
+    "suite": "WindowAuditTests",
+    "method": "SamplesAgreeWithIndependentWindowFormulas",
+    "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"Confined\", n: 8)",
+    "outcome": "Failed",
+    "message": "Expected 0.069366725688532943; actual 0.13257220387458801; tolerance 5.34683E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 76
+  },
+  {
+    "id": "689f77b9-063e-8cf2-d0dd-18185ba17842",
+    "suite": "WindowAuditTests",
+    "method": "SamplesAgreeWithIndependentWindowFormulas",
+    "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"Normal\", n: 2)",
+    "outcome": "Failed",
+    "message": "Expected 0.12992259927416636; actual NaN; tolerance 5.64961E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 76
+  },
+  {
+    "id": "51ff387f-ccc4-c7e6-554f-79cb141772fc",
+    "suite": "WindowAuditTests",
+    "method": "SamplesAgreeWithIndependentWindowFormulas",
+    "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"Normal\", n: 32)",
+    "outcome": "Failed",
+    "message": "Expected 0.16763273373525286; actual 0.16901330649852753; tolerance 5.83816E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 76
+  },
+  {
+    "id": "e19724d1-3e6e-9ad6-000a-6c0472c18a7d",
+    "suite": "WindowAuditTests",
+    "method": "SamplesAgreeWithIndependentWindowFormulas",
+    "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"Normal\", n: 8)",
+    "outcome": "Failed",
+    "message": "Expected 0.35301919204664495; actual 0.40372169017791748; tolerance 6.7651E-05.",
+    "test_file": "tests/UMapx.Tests/WindowAuditTests.cs",
+    "test_line": 76
+  }
+]

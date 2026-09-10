@@ -1,15 +1,14 @@
-# Remaining repair blocks — September 10, 2026
+# Remaining repair blocks — updated September 11, 2026
 
-After the [matrix and distribution repairs](matrix-distribution-repair-2026-09-10.md),
-**198 failures remain in eight open blocks**. B01–B04 are closed. The latest step
-resolved all 113 B03/B04 failures and added 1,982 passing cases, with no regressions
+After the [approximation and local-filter repairs](approximation-repair-2026-09-11.md),
+**183 failures remain in seven open blocks**. B01–B05 are closed. The latest step
+resolved all 15 B05 failures and added 595 passing cases, with no regressions
 or removed tests. Every remaining failing test ID belongs to exactly one block.
-The complete verified run has 14,112 cases, with 13,914 passed and no skipped cases.
+The complete verified run has 14,707 cases, with 14,524 passed and no skipped cases.
 
-**Recommended next: B05 — approximation, interpolation, and local array filters (15 failures).**
-Its interpolation and resampling fixes support subsequent transform and imaging work.
-No failures outside B03/B04 changed in the latest run. The decomposition failures
-remain reproducible after the matrix repairs.
+**Recommended next: B06 — matrix decompositions (15 failures).**
+Start with the zero-matrix Schur termination defect, then SVD and GEVD.
+No failures outside B05 changed in the latest run.
 
 The table is a suggested work order. Blocks without dependencies can be taken earlier.
 The IsPrime(1) termination defect is fixed. Zero-matrix Schur remains a termination
@@ -21,7 +20,7 @@ defect and should be the first subtask in B06. Keep the subprocess timeouts enab
 | [B02](#b02) | Exact integer arithmetic and number theory | 0 (108 resolved) | Closed |
 | [B03](#b03) | Matrix indexing, complex statistics, and distances | 0 (46 resolved) | Closed |
 | [B04](#b04) | Probability distributions | 0 (67 resolved) | Closed |
-| [B05](#b05) | Approximation, interpolation, and local array filters | 15 | B03 |
+| [B05](#b05) | Approximation, interpolation, and local array filters | 0 (15 resolved) | Closed |
 | [B06](#b06) | Matrix decompositions | 15 | B01, B03 |
 | [B07](#b07) | Wavelets | 57 | B01 |
 | [B08](#b08) | Window functions | 18 | B01 |
@@ -29,7 +28,7 @@ defect and should be the first subtask in B06. Keep the subprocess timeouts enab
 | [B10](#b10) | Color spaces | 21 | Independent |
 | [B11](#b11) | Images, geometry, and rendering | 44 | B03, B05, B10 |
 | [B12](#b12) | Video stream parsing | 5 | Independent |
-| **Remaining** | | **198** | |
+| **Remaining** | | **183** | |
 
 Counts represent failed test cases, not independent bugs. Several parameter sets and original
 regressions can expose the same cause. Fixing one block may also change another block's count.
@@ -179,7 +178,11 @@ regressions. Existing assertions and tolerances were retained.
 </details>
 
 <a id="b05"></a>
-## B05. Approximation, interpolation, and local array filters — 15 cases
+## B05. Approximation, interpolation, and local array filters — closed (15 cases resolved)
+
+The following list records the repaired baseline failures. The
+[repair report](approximation-repair-2026-09-11.md) also records 595 added passing
+cases and the boundary, sample-center, and averaging-window conventions.
 
 Sources: [Pade.cs](../sources/Analysis/Pade.cs), [Interpolation.cs](../sources/Analysis/Interpolation.cs), [LinealgOptions.cs](../sources/Core/LinealgOptions.cs), [Resize.cs](../sources/Imaging/Resize.cs).
 
@@ -383,8 +386,10 @@ Sources: [Boundary.cs](../sources/Video/Internal/Boundary.cs), [MJPEGStreamParse
 
 ## Evidence and commands
 
-- [Current block metadata, focused filters, and all 198 unique test-ID assignments](audit-matrix-distribution/repair-blocks.json).
-- [Current individual failures](audit-matrix-distribution/failures.json) and [run summary](audit-matrix-distribution/summary.json).
+- [Current block metadata, focused filters, and all 183 unique test-ID assignments](audit-approximation/repair-blocks.json).
+- [Current individual failures](audit-approximation/failures.json) and [run summary](audit-approximation/summary.json).
+- [Approximation and local-filter repair results](approximation-repair-2026-09-11.md).
+- [Previous 198-case planning snapshot](audit-matrix-distribution/repair-blocks.json).
 - [Matrix and distribution repair results](matrix-distribution-repair-2026-09-10.md).
 - [Previous 311-case planning snapshot](audit-arithmetic/repair-blocks.json).
 - [Arithmetic and number-theory repair results](arithmetic-repair-2026-09-10.md).
@@ -395,8 +400,8 @@ Sources: [Boundary.cs](../sources/Video/Internal/Boundary.cs), [MJPEGStreamParse
 Run a block's focused test families from the repository root:
 
 ```powershell
-$plan = Get-Content -Raw docs/audit-matrix-distribution/repair-blocks.json | ConvertFrom-Json
-$block = $plan.blocks | Where-Object id -eq 'B05'
+$plan = Get-Content -Raw docs/audit-approximation/repair-blocks.json | ConvertFrom-Json
+$block = $plan.blocks | Where-Object id -eq 'B06'
 dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter $block.focused_test_filter
 ```
 
@@ -411,5 +416,5 @@ dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filte
 ./tools/Run-MathAudit.ps1 -NoRestore -ResultsDirectory artifacts/math-audit/next-block
 ```
 
-The full suite currently exits with 1 because all 198 remaining expectations stay enabled.
-The historical snapshots are retained; the current JSON matches the verified matrix/distribution repair run.
+The full suite currently exits with 1 because all 183 remaining expectations stay enabled.
+The historical snapshots are retained; the current JSON matches the verified approximation/filter repair run.
