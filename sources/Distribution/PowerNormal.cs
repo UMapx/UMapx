@@ -105,59 +105,25 @@ namespace UMapx.Distribution
 
         #region Methods
         /// <summary>
-        /// Returns the value of the probability density function f(x) = power · φ(x) · Φ(x)^(power - 1).
+        /// Returns the value of the probability density function f(x) = power · φ(x) · Φ(-x)^(power - 1).
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public float Function(float x)
         {
-            double pdf = StandardNormalPdf(x);
-            double cdf = StandardNormalCdf(x);
-
-            if (cdf <= double.Epsilon)
-            {
-                return 0f;
-            }
-
-            cdf = Math.Min(cdf, 1.0);
-            double value = power * pdf * Math.Pow(cdf, power - 1.0);
-            return (float)value;
+            return (float)(DistributionNumerics.PowerNormalDensity(x, power));
         }
         /// <summary>
-        /// Returns the value of the cumulative distribution function F(x) = Φ(x)^power.
+        /// Returns the value of the cumulative distribution function F(x) = 1 - Φ(-x)^power.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            double cdf = StandardNormalCdf(x);
-
-            if (cdf <= 0.0)
-            {
-                return 0f;
-            }
-
-            if (cdf >= 1.0)
-            {
-                return 1f;
-            }
-
-            double result = Math.Pow(cdf, power);
-            return (float)result;
+            return (float)-Special.DistributionExpm1(power * DistributionNumerics.LogNormalSurvival(x));
         }
         #endregion
 
-        #region Private helpers
-        private static double StandardNormalPdf(double x)
-        {
-            const double invSqrt2Pi = 0.39894228040143267794;
-            return invSqrt2Pi * Math.Exp(-0.5 * x * x);
-        }
 
-        private static double StandardNormalCdf(double x)
-        {
-            return 0.5 * (1.0 + Special.Erf((float)(x / Math.Sqrt(2.0))));
-        }
-        #endregion
     }
 }

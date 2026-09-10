@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 
 namespace UMapx.Distribution
@@ -69,24 +69,20 @@ namespace UMapx.Distribution
         {
             get
             {
-                float e1 = -Special.Ei(-eta);
-                return Maths.Exp(eta) * e1 / b;
+                return (float)DistributionNumerics.GompertzMoment(eta, b, false);
             }
         }
         /// <summary>
         /// Gets the variance value.
         /// </summary>
         /// <remarks>
-        /// Variance equals (2·e^{η}·E₁(η) − e^{η}·E₁(2η) − e^{2η}·E₁(η)²) / b².
+        /// Computed from the centered second moment of log(1 + E/eta)/b, where E is exponential with mean one.
         /// </remarks>
         public float Variance
         {
             get
             {
-                float e1 = -Special.Ei(-eta);
-                float e2 = -Special.Ei(-2f * eta);
-                float expEta = Maths.Exp(eta);
-                return (2f * expEta * e1 - expEta * e2 - expEta * expEta * e1 * e1) / (b * b);
+                return (float)DistributionNumerics.GompertzMoment(eta, b, true);
             }
         }
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 
 namespace UMapx.Distribution
@@ -27,7 +27,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the binomial distribution.
         /// </summary>
-        /// <param name="n">Number of experiments (>0)</param>
+        /// <param name="n">Number of experiments (nonnegative)</param>
         /// <param name="p">Probability of success [0, 1]</param>
         public Binomial(int n, float p)
         {
@@ -141,13 +141,23 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
+        /// <remarks>Returns the lower median, rounded to binary32.</remarks>
         public float Median
         {
             get
             {
-                // See e.g. https://en.wikipedia.org/wiki/Binomial_distribution#Median
-                float median = Maths.Floor((n + 1) * p);
-                return median > n ? n : median;
+                if (p == 0 || n == 0) return 0;
+                if (p == 1) return n;
+                // Symmetry gives an exact lower median, including odd trial counts.
+                if (p == 0.5f) return n / 2;
+                int low = 0, high = n;
+                while (low < high)
+                {
+                    int mid = low + (high - low) / 2;
+                    double cumulative = Special.DistributionBeta(n - (double)mid, mid + 1.0, 1.0 - p);
+                    if (cumulative >= 0.5) high = mid; else low = mid + 1;
+                }
+                return low;
             }
         }
         /// <summary>
@@ -185,25 +195,15 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Function(float x)
         {
-            if (x < 0 || x > n)
-            {
-                return 0;
-            }
-
-            int k = (int)Maths.Floor(x);
-
-            if (x != k)
-            {
-                return 0f;
-            }
-
-            float a = Special.LogBinomial(n, k);
-            float b = k == 0 ? 0 : k * Maths.Log(p);
-            float c = n - k;
-            float d = Maths.Log(1 - p);
-            float log = a + b + c * d;
-
-            return Maths.Exp(log);
+            if (float.IsNaN(x)) return float.NaN;
+            if (x < 0 || (double)x > n || x != Math.Floor(x)) return 0;
+            if (n == 0 || p == 0) return x == 0 ? 1 : 0;
+            if (p == 1) return (double)x == n ? 1 : 0;
+            double k = x;
+            double log = Special.DistributionLogGamma(n + 1.0) - Special.DistributionLogGamma(k + 1)
+                - Special.DistributionLogGamma(n - k + 1) + k * Math.Log(p)
+                + (n - k) * DistributionNumerics.Log1p(-(double)p);
+            return (float)Math.Exp(log);
         }
         /// <summary>
         /// Returns the value of the probability mass cumulative function.
@@ -212,16 +212,13 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            if (x < 0)
-                return 0;
-            if (x >= n)
-                return 1;
-
-            // Interpret x as the integer number of successes k.
-            int k = (int)Maths.Floor(x);
-            float a = n - k;
-            float b = k + 1;
-            return Special.BetaIncompleteRegularized(a, b, q);
+            if (float.IsNaN(x)) return float.NaN;
+            if (x < 0) return 0;
+            if ((double)x >= n) return 1;
+            if (p == 0) return 1;
+            if (p == 1) return 0;
+            double k = Math.Floor(x);
+            return (float)Special.DistributionBeta(n - k, k + 1, 1.0 - p);
         }
         /// <summary>
         /// Returns the value of differential entropy.

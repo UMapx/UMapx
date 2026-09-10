@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 
 namespace UMapx.Distribution
@@ -17,16 +17,6 @@ namespace UMapx.Distribution
         private float mu = 0;
         private float beta = 1;
         private float gamma = 1;
-        #endregion
-
-        #region Utility
-        /// <summary>
-        /// Returns the real cube root of the given value.
-        /// </summary>
-        private static float Cbrt(float x)
-        {
-            return (x >= 0f) ? Maths.Pow(x, 1f / 3f) : -Maths.Pow(-x, 1f / 3f);
-        }
         #endregion
 
         #region Birnbaum-Saunders components
@@ -124,9 +114,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                float g2 = gamma * gamma;
-                float t = 0.5f * gamma + Maths.Sqrt(0.25f * g2 + 1f);
-                return mu + beta * t * t;
+                return (float)((double)mu + beta);
             }
         }
         /// <summary>
@@ -146,22 +134,15 @@ namespace UMapx.Distribution
         {
             get
             {
-                float g2 = gamma * gamma;
-                float a = 1f + g2;
-                float b = 3f * g2 - 1f;
-                float p = b - a * a / 3f;
-                float q = 2f * a * a * a / 27f - a * b / 3f + 1f;
-                float d = q * q / 4f + p * p * p / 27f;
-                if (d < 0)
+                double g2 = (double)gamma * gamma;
+                double low = 0, high = g2 > 1 ? 1 / (3 * g2 - 1) : 1;
+                for (int i = 0; i < 80; i++)
                 {
-                    return new float[] { float.NaN };
+                    double t = (low + high) / 2;
+                    double value = ((t + 1 + g2) * t + 3 * g2 - 1) * t - 1;
+                    if (value > 0) high = t; else low = t;
                 }
-
-                float sqrt = Maths.Sqrt(d);
-                float u = Cbrt(-q / 2f + sqrt);
-                float v = Cbrt(-q / 2f - sqrt);
-                float t = u + v - a / 3f;
-                return new float[] { mu + beta * t };
+                return new[] { (float)(mu + beta * ((low + high) / 2)) };
             }
         }
         /// <summary>
@@ -201,15 +182,17 @@ namespace UMapx.Distribution
         /// Gets the value of entropy.
         /// </summary>
         /// <remarks>
-        /// Closed-form expression for γ &gt; 0.
+        /// Computed from the normal-variable transformation for gamma &gt; 0.
         /// </remarks>
         public float Entropy
         {
             get
             {
-                float g2 = gamma * gamma;
-                return 0.5f * (1f + Maths.Log(2f * Maths.Pi)) +
-                       Maths.Log(beta * gamma / 2f) + 0.5f * g2;
+                double g = gamma;
+                double correction = DistributionNumerics.Integrate(z =>
+                    Math.Exp(-0.5 * z * z) / Math.Sqrt(2 * Math.PI) *
+                    DistributionNumerics.Log1p(g * g * z * z / 4), 0, 12);
+                return (float)(0.5 + DistributionNumerics.LogSqrtTwoPi + Math.Log(beta) + Math.Log(g) - correction);
             }
         }
         /// <summary>

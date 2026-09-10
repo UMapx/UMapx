@@ -66,13 +66,15 @@ using UMapx.Window;
 **MIT**  
 
 # Mathematical audit
-The [arithmetic and number-theory repair report](docs/arithmetic-repair-2026-09-10.md)
-records 139 resolved failures and 1,626 added passing tests, with no regressions or
-removed tests. The complete suite has **11,819 passing and 311 failing cases**.
+The [matrix and distribution repair report](docs/matrix-distribution-repair-2026-09-10.md)
+records 113 resolved failures and 1,982 added passing tests, with no regressions or
+removed tests. The complete suite has **13,914 passing and 198 failing cases**.
 The [remaining repair blocks](docs/remaining-repair-blocks-2026-09-10.md) assign
-the remaining failures to 10 open blocks; matrix operations and complex statistics
-are the recommended next step.
+the remaining failures to eight open blocks; approximation, interpolation, and
+local array filters (B05) are the recommended next step.
 
+The [arithmetic and number-theory repair report](docs/arithmetic-repair-2026-09-10.md)
+records the preceding 139 resolved failures and 1,626 added passing tests.
 The earlier [special-function repair report](docs/special-functions-repair-2026-09-10.md)
 records 423 resolved failures. All 3,749 dedicated special-function checks still pass.
 

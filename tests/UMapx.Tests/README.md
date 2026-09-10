@@ -1,18 +1,19 @@
 # UMapx mathematical audit tests
 
-The audit covers every source area. The current source inventory contains 433 C#
-files. See the [arithmetic repair report](../../docs/arithmetic-repair-2026-09-10.md)
+The audit covers every source area. The current source inventory contains 436 C#
+files. See the [matrix and distribution repair report](../../docs/matrix-distribution-repair-2026-09-10.md)
 and [remaining repair blocks](../../docs/remaining-repair-blocks-2026-09-10.md).
-The [special-function repair report](../../docs/special-functions-repair-2026-09-10.md)
+The [arithmetic repair report](../../docs/arithmetic-repair-2026-09-10.md),
+[special-function repair report](../../docs/special-functions-repair-2026-09-10.md),
 and [expanded baseline report](../../docs/math-audit-expanded-2026-09-10.md) remain historical records.
 
-The current complete run contains **12,130 cases: 11,819 passed, 311 failed, none
-skipped**. All 10,504 cases from the previous snapshot remain: 139 previous failures
-now pass, with no passing cases regressed. All 1,626 added cases pass. Production
-changes in this step are confined to Maths and Complex32. Failing tests remain
+The current complete run contains **14,112 cases: 13,914 passed, 198 failed, none
+skipped**. All 12,130 cases from the previous snapshot remain: 113 previous failures
+now pass, with no passing cases regressed. All 1,982 added cases pass. B01–B04
+are closed; B05–B12 remain open. Failing tests remain
 enabled and expect the mathematical answer; the full command exits with status 1.
 
-Execution coverage is **83.06% of lines** and **75.95% of branches**. These figures
+Execution coverage is **83.29% of lines** and **76.42% of branches**. These figures
 include failing and contract tests. They are not a correctness percentage, and
 this suite does not establish absence of errors. The report explicitly lists
 unexecuted lines/methods, unsupported APIs, and incomplete parameter domains.
@@ -63,7 +64,7 @@ Available categories: `Identity`, `Regression`, `Reference`, `Core`, `Matrix`,
 `Analysis`, `ColorSpace`, `Decomposition`, `Distance`, `Distribution`, `Window`,
 `WindowTransform`, `Transform`, `Wavelet`, `Response`, `Imaging`, `Geometry`,
 `Video`, and `Contract`. Category totals and test-family counts are available in
-[the run summary](../../docs/audit-arithmetic/summary.json).
+[the run summary](../../docs/audit-matrix-distribution/summary.json).
 
 A numeric-only filter for environments without Windows bitmap support is:
 
@@ -90,6 +91,11 @@ The complete reported result is from Windows with .NET SDK 10.0.401.
 - Independent PDF integration for distribution moments and entropy. Median/mode
   consistency checks supplement these references; they are not independent
   proofs when they call the library's own CDF/PDF.
+- 1,611 additional distribution references at 70 decimal digits, including small
+  tails, moment-existence boundaries, direct entropy/moment integrals, and exact
+  discrete probability sums. A further 55 checks cover modes, scaling and support.
+- 316 matrix/distance repair cases cover clipping, empty/rectangular arrays,
+  extreme shifts, mixed diagonal products, Hermitian statistics and contingency counts.
 - Window formulas, wavelet analysis/synthesis coefficients, impulses, filter
   transfer polynomials, image pixel equations and neutral/constant invariants.
 - Real/complex vectors, rectangular matrices, even/odd sizes, singular inputs,
@@ -114,6 +120,10 @@ both terms. Individual tests tighten or relax these explicitly according to the
 operation, conditioning, approximation, or pixel quantization. Hankel matrix
 entries use `5e-4 + 5e-4*abs(x)`.
 
+The distribution repair references use `2*float.Epsilon + 2e-5*abs(x)`, with
+exact discrete medians and explicit NaN/infinity checks. This keeps small tails
+under a relative accuracy budget. Existing reference tolerances were retained.
+
 These are audit acceptance budgets, not an existing library accuracy guarantee.
 Absolute tolerances near zero do not prove relative accuracy. Loosening a budget
 requires a documented mathematical reason, not merely a failing test.
@@ -131,6 +141,11 @@ previously excluded record now runs. Gerf uses the entire continuation of
 sets are identified separately; a contract check returning successfully is not
 proof that an unimplemented numerical operation works.
 
+Complex sample statistics use squared magnitudes and Hermitian covariance.
+PowerNormal and PowerLognormal follow the NIST survival-power laws. Discrete
+median getters select the lower median; ChiSquare median uses CDF inversion.
+See the current repair report for compatibility details and numerical limits.
+
 ## Reference generation
 
 Python and mpmath are not required to run the C# tests: JSON fixtures are embedded.
@@ -143,6 +158,7 @@ python -X utf8 tests/UMapx.Tests/Data/generate_extended_reference.py
 python -X utf8 tests/UMapx.Tests/Data/generate_special_repair_reference.py
 python -X utf8 tests/UMapx.Tests/Data/generate_arithmetic_reference.py
 python -X utf8 tests/UMapx.Tests/Data/generate_distributions.py
+python -X utf8 tests/UMapx.Tests/Data/generate_distribution_repair_reference.py
 ```
 
 The generators retain their explicit domains and exclusion rules. Original special-function

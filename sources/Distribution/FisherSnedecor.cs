@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 
 namespace UMapx.Distribution
@@ -166,14 +166,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                if (d2 <= 8)
-                {
-                    return float.PositiveInfinity;
-                }
-
-                float num = 12f * (d1 * (5f * d2 - 22f) * (d1 + d2 - 2f) + (d2 - 4f) * (d2 - 6f));
-                float den = d1 * (d2 - 2f) * (d2 - 4f) * (d2 - 6f) * (d2 - 8f);
-                return num / den;
+                return (float)DistributionNumerics.BetaPrimeExcess(d1 / 2.0, d2 / 2.0);
             }
         }
         /// <summary>

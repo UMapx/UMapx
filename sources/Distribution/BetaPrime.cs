@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 
 namespace UMapx.Distribution
@@ -158,14 +158,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                if (beta <= 4f)
-                {
-                    return float.PositiveInfinity;
-                }
-
-                float num = 6f * (alpha * (alpha + beta - 1f) * (5f * beta - 11f) + (beta - 2f) * (beta - 3f));
-                float den = alpha * (alpha + beta - 1f) * (beta - 4f) * (beta - 3f);
-                return num / den;
+                return (float)DistributionNumerics.BetaPrimeExcess(alpha, beta);
             }
         }
         /// <summary>

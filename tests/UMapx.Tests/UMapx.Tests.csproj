@@ -27,6 +27,7 @@
     <EmbeddedResource Include="Data/arithmetic-repair.json" />
     <EmbeddedResource Include="Data/hankel.json" />
     <EmbeddedResource Include="Data/distributions.json" />
+    <EmbeddedResource Include="Data/distribution-repair.json" />
     <EmbeddedResource Include="Data/distribution-catalog.json" />
   </ItemGroup>
 </Project>

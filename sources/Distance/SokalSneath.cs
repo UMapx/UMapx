@@ -28,7 +28,7 @@ namespace UMapx.Distance
                 if (p[i] != 0 && q[i] != 0) tt++;
             }
 
-            int denominator = 2 * tt + tf + ft;
+            long denominator = tt + 2L * (tf + ft);
             return denominator == 0 ? 0f : (2f * (tf + ft)) / denominator;
         }
         /// <summary>
@@ -51,7 +51,7 @@ namespace UMapx.Distance
                 if (p[i] != 0 && q[i] != 0) tt++;
             }
 
-            int denominator = 2 * tt + tf + ft;
+            long denominator = tt + 2L * (tf + ft);
             return denominator == 0 ? 0f : (2f * (tf + ft)) / denominator;
         }
         #endregion

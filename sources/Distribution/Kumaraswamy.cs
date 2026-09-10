@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 
 namespace UMapx.Distribution
@@ -145,10 +145,9 @@ namespace UMapx.Distribution
         /// </summary>
         public float Entropy
         {
-            get 
+            get
             {
-                return (1f - 1f / b) + (1f - 1f / a) * Special.DiGamma(1f + 1f / a)
-                    - Special.DiGamma(b) - Maths.Log(a) - Maths.Log(b);
+                return (float)(1 - 1.0 / b + (1 - 1.0 / a) * (Special.DistributionDigamma(b + 1.0) + DistributionNumerics.EulerGamma) - Math.Log(a) - Math.Log(b));
             }
         }
         /// <summary>

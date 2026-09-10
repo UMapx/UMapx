@@ -112,23 +112,9 @@ namespace UMapx.Distribution
         {
             get
             {
-                double expectationX1 = (a + n1 * b) / (n1 + 1.0);
-                double expectationX3 = (n3 * c + d) / (n3 + 1.0);
-
-                double num = (-2.0 / 3.0) * (alpha - 1.0) * (Math.Pow(c, 3) - Math.Pow(b, 3))
-                    + (alpha * c - b) * (Math.Pow(c, 2) - Math.Pow(b, 2));
-                double den = Math.Pow(c - b, 2) * (alpha + 1.0);
-                double expectationX2 = num / den;
-
-                num = (2.0 * alpha * (b - a) * n3 * expectationX1)
-                    + (n1 * n3 * expectationX2)
-                    + (2.0 * (d - c) * n1 * expectationX3);
-
-                den = (2.0 * alpha * (b - a) * n3)
-                    + ((alpha + 1.0) * (c - b) * n1 * n3)
-                    + (2.0 * (d - c) * n1);
-
-                return (float)(num / den);
+                double mean, variance;
+                Moments(out mean, out variance);
+                return (float)mean;
             }
         }
         /// <summary>
@@ -138,24 +124,9 @@ namespace UMapx.Distribution
         {
             get
             {
-                double expectationX1_2 = (2.0 * a * a + 2.0 * n1 * a * b + n1 * (n1 + 1.0) * b * b)
-                    / ((n1 + 2.0) * (n1 + 1.0));
-
-                double num = -0.5 * (alpha - 1.0) * (Math.Pow(c, 4) - Math.Pow(b, 4))
-                    + (2.0 / 3.0) * (alpha * c - b) * (Math.Pow(c, 3) - Math.Pow(b, 3));
-                double den = Math.Pow(c - b, 2) * (alpha + 1.0);
-                double expectationX2_2 = num / den;
-
-                double expectationX3_2 = (2.0 * d * d + 2.0 * n3 * c * d + n3 * (n3 + 1.0) * c * c)
-                    / ((n3 + 2.0) * (n3 + 1.0));
-
-                double common = 2.0 * alpha * (b - a) * n3 + (alpha + 1.0) * (c - b) * n1 * n3 + 2.0 * (d - c) * n1;
-
-                double x = (2.0 * alpha * (b - a) * n3) / common;
-                double y = (n1 * n3) / common;
-                double z = (2.0 * (d - c) * n1) / common;
-
-                return (float)(x * expectationX1_2 + y * expectationX2_2 + z * expectationX3_2);
+                double mean, variance;
+                Moments(out mean, out variance);
+                return (float)variance;
             }
         }
         /// <summary>
@@ -185,6 +156,23 @@ namespace UMapx.Distribution
         /// </summary>
         public float Entropy => float.NaN;
         #endregion
+
+        private void Moments(out double mean, out double variance)
+        {
+            // Mixture of the two power ramps and the linear middle region, measured relative to a.
+            double left = (double)b - a, middle = (double)c - b, right = (double)d - c;
+            double w1 = alpha * left / n1, w2 = (alpha + 1.0) * middle / 2, w3 = right / n3;
+            double total = w1 + w2 + w3;
+            double m1 = n1 * left / (n1 + 1.0), t = (alpha + 2.0) / (3 * (alpha + 1.0));
+            double m2 = left + middle * t, m3 = (double)d - a - n3 * right / (n3 + 1.0);
+            double center = (w1 * m1 + w2 * m2 + w3 * m3) / total;
+            double v1 = left * left * n1 / ((n1 + 1.0) * (n1 + 1.0) * (n1 + 2.0));
+            double v2 = middle * middle * ((alpha + 3.0) / (6 * (alpha + 1.0)) - t * t);
+            double v3 = right * right * n3 / ((n3 + 1.0) * (n3 + 1.0) * (n3 + 2.0));
+            mean = a + center;
+            variance = (w1 * (v1 + (m1 - center) * (m1 - center)) +
+                w2 * (v2 + (m2 - center) * (m2 - center)) + w3 * (v3 + (m3 - center) * (m3 - center))) / total;
+        }
 
         #region Methods
         /// <summary>
