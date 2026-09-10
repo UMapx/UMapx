@@ -1,0 +1,1313 @@
+[
+  {
+    "name": "Arcsine",
+    "constructor": [],
+    "signature": [],
+    "support": [
+      "0",
+      "1"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "Bernoulli",
+    "constructor": [
+      0.25
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "0",
+      "1"
+    ],
+    "discrete": true,
+    "unsupported": [
+      "Skewness",
+      "Excess"
+    ]
+  },
+  {
+    "name": "Bernoulli",
+    "constructor": [
+      0.699999988079071
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "0",
+      "1"
+    ],
+    "discrete": true,
+    "unsupported": [
+      "Skewness",
+      "Excess"
+    ]
+  },
+  {
+    "name": "Beta",
+    "constructor": [
+      2.0,
+      3.0
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "1"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Median",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Beta",
+    "constructor": [
+      0.5,
+      0.75
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "1"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Median",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Beta",
+    "constructor": [
+      20.0,
+      30.0
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "1"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Median",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "BetaPrime",
+    "constructor": [
+      2.0,
+      8.0
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Median",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Binomial",
+    "constructor": [
+      5.0,
+      0.30000001192092896
+    ],
+    "signature": [
+      "i",
+      "f"
+    ],
+    "support": [
+      "0",
+      "5"
+    ],
+    "discrete": true,
+    "unsupported": [
+      "Skewness",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Binomial",
+    "constructor": [
+      2.0,
+      0.699999988079071
+    ],
+    "signature": [
+      "i",
+      "f"
+    ],
+    "support": [
+      "0",
+      "2"
+    ],
+    "discrete": true,
+    "unsupported": [
+      "Skewness",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Binomial",
+    "constructor": [
+      10.0,
+      0.800000011920929
+    ],
+    "signature": [
+      "i",
+      "f"
+    ],
+    "support": [
+      "0",
+      "10"
+    ],
+    "discrete": true,
+    "unsupported": [
+      "Skewness",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "BirnbaumSaunders",
+    "constructor": [
+      0.0,
+      1.0,
+      1.0
+    ],
+    "signature": [
+      "f",
+      "f",
+      "f"
+    ],
+    "support": [
+      "0.0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "BirnbaumSaunders",
+    "constructor": [
+      0.5,
+      2.0,
+      0.699999988079071
+    ],
+    "signature": [
+      "f",
+      "f",
+      "f"
+    ],
+    "support": [
+      "0.5",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "Burr",
+    "constructor": [
+      2.0,
+      5.0
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "Cauchy",
+    "constructor": [
+      1.5,
+      0.25
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Mean",
+      "Variance",
+      "Skewness",
+      "Excess"
+    ]
+  },
+  {
+    "name": "ChiSquare",
+    "constructor": [
+      6.0
+    ],
+    "signature": [
+      "i"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "Degenerate",
+    "constructor": [
+      2.0
+    ],
+    "signature": [
+      "i"
+    ],
+    "support": [
+      "2",
+      "2"
+    ],
+    "discrete": true,
+    "unsupported": [
+      "Skewness",
+      "Excess"
+    ]
+  },
+  {
+    "name": "Erlang",
+    "constructor": [
+      3.0,
+      2.0
+    ],
+    "signature": [
+      "i",
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Median"
+    ]
+  },
+  {
+    "name": "Exponential",
+    "constructor": [
+      1.25
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "FisherSnedecor",
+    "constructor": [
+      4.0,
+      12.0
+    ],
+    "signature": [
+      "i",
+      "i"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Median",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "FisherZ",
+    "constructor": [
+      4.0,
+      12.0
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Mean",
+      "Variance",
+      "Skewness",
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "FoldedNormal",
+    "constructor": [
+      0.75,
+      1.25
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Skewness",
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Gamma",
+    "constructor": [
+      1.5,
+      4.0
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "Gaussian",
+    "constructor": [
+      1.25,
+      0.5
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "GeneralizedNormal",
+    "constructor": [
+      0.5,
+      1.5,
+      2.5
+    ],
+    "signature": [
+      "f",
+      "f",
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "Geometric",
+    "constructor": [
+      0.25
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": true,
+    "unsupported": [
+      "Median"
+    ]
+  },
+  {
+    "name": "Gompertz",
+    "constructor": [
+      0.75,
+      1.25
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Skewness",
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Gumbel",
+    "constructor": [
+      0.5,
+      1.5
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "HyperbolicSecant",
+    "constructor": [],
+    "signature": [],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "Hypergeometric",
+    "constructor": [
+      30.0,
+      12.0,
+      8.0
+    ],
+    "signature": [
+      "f",
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "8.0"
+    ],
+    "discrete": true,
+    "unsupported": [
+      "Median",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "InverseChiSquare",
+    "constructor": [
+      12.0
+    ],
+    "signature": [
+      "i"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Variance",
+      "Median",
+      "Skewness",
+      "Excess"
+    ]
+  },
+  {
+    "name": "InverseGamma",
+    "constructor": [
+      6.0,
+      2.0
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Median",
+      "Skewness",
+      "Excess"
+    ]
+  },
+  {
+    "name": "InverseGaussian",
+    "constructor": [
+      1.25,
+      2.0
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Kumaraswamy",
+    "constructor": [
+      2.0,
+      3.0
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "1"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Skewness",
+      "Excess"
+    ]
+  },
+  {
+    "name": "Laplace",
+    "constructor": [
+      1.25,
+      0.5
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "Levy",
+    "constructor": [
+      0.5,
+      1.5
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0.5",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Median",
+      "Skewness",
+      "Excess"
+    ]
+  },
+  {
+    "name": "Logarithmic",
+    "constructor": [
+      0.6000000238418579
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "1",
+      "+inf"
+    ],
+    "discrete": true,
+    "unsupported": [
+      "Median",
+      "Skewness",
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "LogGaussian",
+    "constructor": [
+      0.6000000238418579,
+      0.20000000298023224
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "Logistic",
+    "constructor": [
+      0.5,
+      1.5
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "LogLogistic",
+    "constructor": [
+      1.5,
+      6.0
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Mean",
+      "Variance",
+      "Median",
+      "Skewness",
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Nakagami",
+    "constructor": [
+      2.0,
+      1.5
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Median",
+      "Skewness",
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "NegativeBinomial",
+    "constructor": [
+      4.0,
+      0.6000000238418579
+    ],
+    "signature": [
+      "i",
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": true,
+    "unsupported": [
+      "Median",
+      "Skewness",
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Pareto",
+    "constructor": [
+      1.25,
+      6.0
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "1.25",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Excess"
+    ]
+  },
+  {
+    "name": "Poisson",
+    "constructor": [
+      3.5
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": true,
+    "unsupported": []
+  },
+  {
+    "name": "Poisson",
+    "constructor": [
+      100.0
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": true,
+    "unsupported": []
+  },
+  {
+    "name": "PowerNormal",
+    "constructor": [
+      2.0
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Mean",
+      "Variance",
+      "Median",
+      "Mode",
+      "Skewness",
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "PowerLognormal",
+    "constructor": [
+      2.0,
+      1.0
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Mean",
+      "Variance",
+      "Median",
+      "Mode",
+      "Skewness",
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Rademacher",
+    "constructor": [],
+    "signature": [],
+    "support": [
+      "-1",
+      "1"
+    ],
+    "discrete": true,
+    "unsupported": []
+  },
+  {
+    "name": "Rayleigh",
+    "constructor": [
+      1.5
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "ShiftedLogLogistic",
+    "constructor": [
+      0.5,
+      1.5,
+      0.0
+    ],
+    "signature": [
+      "f",
+      "f",
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Skewness",
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "ShiftedLogLogistic",
+    "constructor": [
+      0.5,
+      1.5,
+      0.20000000298023224
+    ],
+    "signature": [
+      "f",
+      "f",
+      "f"
+    ],
+    "support": [
+      "-6.999999888241292711477090247316803823161",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Skewness",
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "ShiftedLogLogistic",
+    "constructor": [
+      0.5,
+      1.5,
+      -0.20000000298023224
+    ],
+    "signature": [
+      "f",
+      "f",
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "7.999999888241292711477090247316803823161"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Skewness",
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Student",
+    "constructor": [
+      8.0
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Variance",
+      "Excess"
+    ]
+  },
+  {
+    "name": "SymmetricGeometric",
+    "constructor": [
+      0.4000000059604645
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": true,
+    "unsupported": [
+      "Variance",
+      "Excess"
+    ]
+  },
+  {
+    "name": "Trapezoidal",
+    "constructor": [
+      0.0,
+      1.0,
+      2.0,
+      4.0
+    ],
+    "signature": [
+      "f",
+      "f",
+      "f",
+      "f"
+    ],
+    "support": [
+      "0.0",
+      "4.0"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Median",
+      "Skewness",
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Trapezoidal",
+    "constructor": [
+      1.0,
+      2.0,
+      4.0,
+      8.0
+    ],
+    "signature": [
+      "f",
+      "f",
+      "f",
+      "f"
+    ],
+    "support": [
+      "1.0",
+      "8.0"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Median",
+      "Skewness",
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Triangular",
+    "constructor": [
+      0.0,
+      4.0,
+      1.0
+    ],
+    "signature": [
+      "f",
+      "f",
+      "f"
+    ],
+    "support": [
+      "0.0",
+      "4.0"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "TukeyLambda",
+    "constructor": [
+      0.0
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "TukeyLambda",
+    "constructor": [
+      0.25
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "-4.0",
+      "4.0"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "TukeyLambda",
+    "constructor": [
+      1.0
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "-1.0",
+      "1.0"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "TukeyLambda",
+    "constructor": [
+      2.0
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "-0.5",
+      "0.5"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "TukeyLambda",
+    "constructor": [
+      -0.25
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "TukeyLambda",
+    "constructor": [
+      -0.75
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "TukeyLambda",
+    "constructor": [
+      -2.0
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "-inf",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Excess",
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Uniform",
+    "constructor": [
+      -1.0,
+      3.0
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "-1.0",
+      "3.0"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "UniformDiscrete",
+    "constructor": [
+      -2.0,
+      3.0
+    ],
+    "signature": [
+      "i",
+      "i"
+    ],
+    "support": [
+      "-2",
+      "3"
+    ],
+    "discrete": true,
+    "unsupported": [
+      "Skewness",
+      "Excess"
+    ]
+  },
+  {
+    "name": "UQuadratic",
+    "constructor": [
+      1.0,
+      5.0
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "1.0",
+      "5.0"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Entropy"
+    ]
+  },
+  {
+    "name": "Weibull",
+    "constructor": [
+      1.5,
+      2.0
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "0",
+      "+inf"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "Wigner",
+    "constructor": [
+      2.0
+    ],
+    "signature": [
+      "f"
+    ],
+    "support": [
+      "-2.0",
+      "2.0"
+    ],
+    "discrete": false,
+    "unsupported": []
+  },
+  {
+    "name": "WrappedCauchy",
+    "constructor": [
+      0.5,
+      1.2000000476837158
+    ],
+    "signature": [
+      "f",
+      "f"
+    ],
+    "support": [
+      "-3.141592653589793238462643383279502884197",
+      "3.141592653589793238462643383279502884197"
+    ],
+    "discrete": false,
+    "unsupported": [
+      "Median",
+      "Skewness",
+      "Excess",
+      "Distribution"
+    ]
+  }
+]

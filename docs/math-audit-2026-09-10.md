@@ -1,5 +1,8 @@
 # UMapx Mathematical Audit — September 10, 2026
 
+> Historical first-stage report. The [expanded audit](math-audit-expanded-2026-09-10.md)
+> supersedes the test counts and coverage scope below and retains these 31 issue groups.
+
 The library working copy was audited against commit
 `9d623dcdede20411f220dee976e62cf4c8cf5728`, project version 7.5.1.5.
 The algorithms were not modified. The `UMapx.Tests` project was added to the

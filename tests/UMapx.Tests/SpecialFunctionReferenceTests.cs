@@ -10,7 +10,9 @@ public class SpecialFunctionReferenceTests
 {
     public static IEnumerable<object[]> Cases()
     {
-        using var stream = typeof(SpecialFunctionReferenceTests).Assembly.GetManifestResourceStream("UMapx.Tests.Data.special-functions.json");
+        foreach(var resource in new[]{"special-functions.json","special-functions-extended.json"})
+        {
+        using var stream = typeof(SpecialFunctionReferenceTests).Assembly.GetManifestResourceStream("UMapx.Tests.Data."+resource);
         using var data = JsonDocument.Parse(stream!);
         foreach (var item in data.RootElement.EnumerateArray())
         {
@@ -21,6 +23,7 @@ public class SpecialFunctionReferenceTests
             if (name == "LogGamma" && kinds == "c" && item.GetProperty("args")[0][0].GetDouble() < 0) continue;
             yield return new object[] { name, kinds, item.GetProperty("args").GetRawText(), item.GetProperty("re").GetDouble(), item.GetProperty("im").GetDouble() };
         }
+        }
     }
 
     [Theory]
@@ -29,10 +32,10 @@ public class SpecialFunctionReferenceTests
     {
         string[] kinds = signature.Split(',');
         using var data = JsonDocument.Parse(arguments);
-        Type[] types = kinds.Select(k => k == "c" ? typeof(Complex32) : k == "i" ? typeof(int) : typeof(float)).ToArray();
+        Type[] types = kinds.Select(k => k == "c" ? typeof(Complex32) : k == "i" ? typeof(int) : k == "b" ? typeof(bool) : typeof(float)).ToArray();
         object[] args = data.RootElement.EnumerateArray().Select((v, i) => kinds[i] == "c"
             ? (object)new Complex32(v[0].GetSingle(), v[1].GetSingle())
-            : kinds[i] == "i" ? (object)v[0].GetInt32() : v[0].GetSingle()).ToArray();
+            : kinds[i] == "i" ? (object)v[0].GetInt32() : kinds[i] == "b" ? (object)(v[0].GetInt32()!=0) : v[0].GetSingle()).ToArray();
         var method = typeof(Special).GetMethod(name, types);
         Assert.NotNull(method);
         object? result = method.Invoke(null, args);

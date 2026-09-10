@@ -65,5 +65,12 @@ using UMapx.Window;
 # License
 **MIT**  
 
+# Mathematical audit
+The [expanded audit report](docs/math-audit-expanded-2026-09-10.md) records known
+counterexamples, repair priorities, and coverage limits. See the
+[test project README](tests/UMapx.Tests/README.md) to run the enabled regression,
+reference, and invariant tests. The current audit contains failing tests that
+reproduce known defects; it does not certify the library as mathematically correct.
+
 # References
 A full list of references is given in a separate [file](docs/references.md).  
