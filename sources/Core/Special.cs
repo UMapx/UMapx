@@ -878,7 +878,7 @@ namespace UMapx.Core
             int maxIter = 120;
             double s = x;
             double term = x;
-            double z4 = (double)x * x; z4 *= z4; // x^4 в double
+            double z4 = (double)x * x; z4 *= z4; // x^4 in double precision
 
             // term_{n+1} = term_n * [ -(4n+1) z^4 / ((2n+2)(2n+1)(4n+5)) ]
             for (int n = 0; n < maxIter; n++)
@@ -1314,7 +1314,7 @@ namespace UMapx.Core
         #region Gamma functions
 
         /// <summary>
-        /// Returns the value of the Euler Gamma function: Г(z).
+        /// Returns the value of the Euler Gamma function: Gamma(z).
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
@@ -1340,7 +1340,7 @@ namespace UMapx.Core
             return (float)GammaLanczos((double)x);
         }
         /// <summary>
-        /// Returns the value of the Euler Gamma function: Г(z).
+        /// Returns the value of the Euler Gamma function: Gamma(z).
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
@@ -1364,7 +1364,7 @@ namespace UMapx.Core
         }
 
         /// <summary>
-        /// Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
+        /// Returns the value of the natural logarithm of the Euler Gamma function: ln[Gamma(z)].
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
@@ -1386,7 +1386,7 @@ namespace UMapx.Core
             return (float)LogGammaLanczos((double)x);
         }
         /// <summary>
-        /// Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
+        /// Returns the value of the natural logarithm of the Euler Gamma function: ln[Gamma(z)].
         /// </summary>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
@@ -2199,7 +2199,7 @@ namespace UMapx.Core
 
         #region Binomial function
         /// <summary>
-        /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
+        /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! for k > 0.
         /// </summary>
         /// <param name="n">Value</param>
         /// <param name="k">Value</param>
@@ -2213,7 +2213,7 @@ namespace UMapx.Core
             return Special.Factorial(n) / Special.Factorial(k) / Special.Factorial(n - k);
         }
         /// <summary>
-        /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
+        /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! for k > 0.
         /// </summary>
         /// <param name="n">Value</param>
         /// <param name="k">Value</param>
@@ -2896,7 +2896,7 @@ namespace UMapx.Core
 
         #region Beta functions
         /// <summary>
-        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(a + b).
+        /// Returns the value of the beta function: B(a, b) = Gamma(a) * Gamma(b) / Gamma(a + b).
         /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
@@ -2906,7 +2906,7 @@ namespace UMapx.Core
             return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
         }
         /// <summary>
-        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(a + b).
+        /// Returns the value of the beta function: B(a, b) = Gamma(a) * Gamma(b) / Gamma(a + b).
         /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
