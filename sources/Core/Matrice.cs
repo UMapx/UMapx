@@ -11497,5 +11497,70 @@ namespace UMapx.Core
             return x;
         }
         #endregion
+
+        #region Private Hermitian statistics helpers
+        /// <summary>
+        /// Returns sum(abs(x[i] - y[i])^2) / (n - 1), accumulating squared magnitudes in double precision.
+        /// </summary>
+        /// <remarks>This is a difference statistic, not a cross-covariance.</remarks>
+        /// <param name="x">First vector; must have the same length as y.</param>
+        /// <param name="y">Second vector.</param>
+        /// <returns>The normalized squared difference, or NaN for fewer than two observations.</returns>
+        private static double HermitianSquaredDifference(Complex32[] x, Complex32[] y)
+        {
+            if (x.Length != y.Length) throw new ArgumentException("Vector lengths must match.", nameof(y));
+            if (x.Length < 2) return double.NaN;
+            double sum = 0;
+            for (int i = 0; i < x.Length; i++)
+            {
+                double re = (double)x[i].Real - y[i].Real, im = (double)x[i].Imag - y[i].Imag;
+                sum += re * re + im * im;
+            }
+            return sum / (x.Length - 1);
+        }
+
+        /// <summary>
+        /// Computes the Hermitian sample variance with a double-precision mean and centered squared magnitudes.
+        /// </summary>
+        /// <param name="values">Complex observations.</param>
+        /// <returns>A nonnegative sample variance, or NaN for fewer than two observations.</returns>
+        private static double HermitianVariance(Complex32[] values)
+        {
+            if (values.Length < 2) return double.NaN;
+            double meanReal = 0, meanImag = 0;
+            foreach (var value in values) { meanReal += value.Real; meanImag += value.Imag; }
+            meanReal /= values.Length; meanImag /= values.Length;
+            double sum = 0;
+            foreach (var value in values)
+            {
+                double re = value.Real - meanReal, im = value.Imag - meanImag;
+                sum += re * re + im * im;
+            }
+            return sum / (values.Length - 1);
+        }
+        #endregion
+
+        #region Private rotation helpers
+        /// <summary>
+        /// Computes cosine and sine for the inverse rotation in degrees, exactly at multiples of 90 degrees.
+        /// </summary>
+        /// <param name="angle">Forward rotation angle in degrees.</param>
+        /// <param name="cosine">Receives the cosine of the inverse rotation.</param>
+        /// <param name="sine">Receives the sine of the inverse rotation.</param>
+        private static void RotationCoefficients(float angle, out double cosine, out double sine)
+        {
+            double reduced = angle % 360.0;
+            if (reduced < 0) reduced += 360;
+            if (reduced == 0) { cosine = 1; sine = 0; }
+            else if (reduced == 90) { cosine = 0; sine = -1; }
+            else if (reduced == 180) { cosine = -1; sine = 0; }
+            else if (reduced == 270) { cosine = 0; sine = 1; }
+            else
+            {
+                double radians = -reduced * Math.PI / 180;
+                cosine = Math.Cos(radians); sine = Math.Sin(radians);
+            }
+        }
+        #endregion
     }
 }

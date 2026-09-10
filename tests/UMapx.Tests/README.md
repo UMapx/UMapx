@@ -1,7 +1,8 @@
 # UMapx mathematical audit tests
 
-The audit covers every source area. The current source inventory contains 437 C#
-files. See the [approximation repair report](../../docs/approximation-repair-2026-09-11.md)
+The audit covers every source area. The current source inventory contains 427 C#
+files after [helper consolidation](../../docs/helper-consolidation-2026-09-11.md).
+See the [approximation repair report](../../docs/approximation-repair-2026-09-11.md)
 and [remaining repair blocks](../../docs/remaining-repair-blocks-2026-09-10.md).
 The [matrix and distribution repair report](../../docs/matrix-distribution-repair-2026-09-10.md),
 [arithmetic repair report](../../docs/arithmetic-repair-2026-09-10.md),
@@ -9,9 +10,9 @@ The [matrix and distribution repair report](../../docs/matrix-distribution-repai
 and [expanded baseline report](../../docs/math-audit-expanded-2026-09-10.md) remain historical records.
 
 The current complete run contains **14,707 cases: 14,524 passed, 183 failed, none
-skipped**. All 14,112 cases from the previous snapshot remain: 15 previous failures
-now pass, with no passing cases regressed. All 595 added cases pass. B01–B05
-are closed; B06–B12 remain open. Failing tests remain
+skipped**. Consolidating the helper files preserved all 14,707 test IDs and
+their outcomes. The preceding B05 repair resolved 15 failures and added 595
+passing cases. B01–B05 are closed; B06–B12 remain open. Failing tests remain
 enabled and expect the mathematical answer; the full command exits with status 1.
 
 Execution coverage is **83.26% of lines** and **76.49% of branches**. These figures
@@ -65,7 +66,7 @@ Available categories: `Identity`, `Regression`, `Reference`, `Core`, `Matrix`,
 `Analysis`, `ColorSpace`, `Decomposition`, `Distance`, `Distribution`, `Window`,
 `WindowTransform`, `Transform`, `Wavelet`, `Response`, `Imaging`, `Geometry`,
 `Video`, and `Contract`. Category totals and test-family counts are available in
-[the run summary](../../docs/audit-approximation/summary.json).
+[the run summary](../../docs/audit-consolidation/summary.json).
 
 A numeric-only filter for environments without Windows bitmap support is:
 

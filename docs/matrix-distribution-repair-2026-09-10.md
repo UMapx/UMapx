@@ -21,8 +21,8 @@ continue to pass. The remaining decomposition failures are still in B06.
 
 ## Matrix changes
 
-Production changes are in [Matrice.cs](../sources/Core/Matrice.cs),
-[Matrice.Statistics.cs](../sources/Core/Matrice.Statistics.cs), and
+Production changes are in [Matrice.cs](../sources/Core/Matrice.cs), including its
+private statistics helpers, and
 [SokalSneath.cs](../sources/Distance/SokalSneath.cs).
 
 - All four left-diagonal products now implement `diag(v) * A`, scaling rows and
@@ -51,7 +51,7 @@ Production changes are in [Matrice.cs](../sources/Core/Matrice.cs),
 Seventeen distribution classes were corrected. The internal
 [DistributionNumerics.cs](../sources/Distribution/DistributionNumerics.cs) helpers
 provide stable logarithmic calculations and transformed quadrature.
-[Special.DistributionKernels.cs](../sources/Core/Special.DistributionKernels.cs)
+[Special.cs](../sources/Core/Special.cs)
 exposes the already audited double kernels internally, avoiding intermediate
 rounding through the public float APIs. The underlying special-function algorithms
 were not changed.

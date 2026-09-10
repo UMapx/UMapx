@@ -157,6 +157,11 @@ namespace UMapx.Distribution
         public float Entropy => float.NaN;
         #endregion
 
+        /// <summary>
+        /// Combines the moments of both power ramps and the linear middle region, relative to the support origin.
+        /// </summary>
+        /// <param name="mean">Receives the weighted mean in the original coordinates.</param>
+        /// <param name="variance">Receives the sum of within-component and between-component variances.</param>
         private void Moments(out double mean, out double variance)
         {
             // Mixture of the two power ramps and the linear middle region, measured relative to a.

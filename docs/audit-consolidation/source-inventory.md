@@ -1,9 +1,5 @@
 # Source coverage inventory
 
-Historical file names and coverage counts are retained. Links for consolidated
-helpers now point to their primary class files; see the
-[consolidation report](../helper-consolidation-2026-09-11.md).
-
 Each repository source file is listed. Execution coverage is not proof of mathematical correctness.
 Missing methods and exact uncovered lines are available in the adjacent JSON and CSV files.
 
@@ -16,13 +12,13 @@ Missing methods and exact uncovered lines are available in the adjacent JSON and
 | [sources/Analysis/Differentiation.cs](../../sources/Analysis/Differentiation.cs) | 52 / 61 | 85.25% | algorithm or executable support |
 | [sources/Analysis/Integration.cs](../../sources/Analysis/Integration.cs) | 207 / 224 | 92.41% | algorithm or executable support |
 | [sources/Analysis/IntegrationMethod.cs](../../sources/Analysis/IntegrationMethod.cs) | 0 / 0 | n/a | no instrumented sequence points (interface, enum, delegate, or conditional code) |
-| [sources/Analysis/Interpolation.cs](../../sources/Analysis/Interpolation.cs) | 99 / 115 | 86.09% | algorithm or executable support |
+| [sources/Analysis/Interpolation.cs](../../sources/Analysis/Interpolation.cs) | 111 / 115 | 96.52% | algorithm or executable support |
 | [sources/Analysis/InterpolationMethod.cs](../../sources/Analysis/InterpolationMethod.cs) | 0 / 0 | n/a | no instrumented sequence points (interface, enum, delegate, or conditional code) |
 | [sources/Analysis/LeastSquaresOptions.cs](../../sources/Analysis/LeastSquaresOptions.cs) | 88 / 88 | 100.0% | algorithm or executable support |
 | [sources/Analysis/Nonlinear.cs](../../sources/Analysis/Nonlinear.cs) | 88 / 95 | 92.63% | algorithm or executable support |
 | [sources/Analysis/NonlinearMethod.cs](../../sources/Analysis/NonlinearMethod.cs) | 0 / 0 | n/a | no instrumented sequence points (interface, enum, delegate, or conditional code) |
 | [sources/Analysis/Optimization.cs](../../sources/Analysis/Optimization.cs) | 23 / 23 | 100.0% | algorithm or executable support |
-| [sources/Analysis/Pade.cs](../../sources/Analysis/Pade.cs) | 143 / 177 | 80.79% | algorithm or executable support |
+| [sources/Analysis/Pade.cs](../../sources/Analysis/Pade.cs) | 145 / 179 | 81.01% | algorithm or executable support |
 | [sources/Analysis/Roots.cs](../../sources/Analysis/Roots.cs) | 30 / 32 | 93.75% | algorithm or executable support |
 | [sources/Colorspace/AHSL.cs](../../sources/Colorspace/AHSL.cs) | 69 / 75 | 92.0% | algorithm or executable support |
 | [sources/Colorspace/CMYK.cs](../../sources/Colorspace/CMYK.cs) | 44 / 44 | 100.0% | algorithm or executable support |
@@ -52,10 +48,9 @@ Missing methods and exact uncovered lines are available in the adjacent JSON and
 | [sources/Core/InterpolationMode.cs](../../sources/Core/InterpolationMode.cs) | 0 / 0 | n/a | no instrumented sequence points (interface, enum, delegate, or conditional code) |
 | [sources/Core/Jagged.cs](../../sources/Core/Jagged.cs) | 123 / 177 | 69.49% | algorithm or executable support |
 | [sources/Core/Kernel.cs](../../sources/Core/Kernel.cs) | 58 / 58 | 100.0% | algorithm or executable support |
-| [sources/Core/LinealgOptions.cs](../../sources/Core/LinealgOptions.cs) | 1805 / 2019 | 89.4% | algorithm or executable support |
-| [sources/Core/Maths.Arithmetic.cs](../../sources/Core/Maths.cs) | 111 / 118 | 94.07% | algorithm or executable support |
-| [sources/Core/Maths.cs](../../sources/Core/Maths.cs) | 374 / 450 | 83.11% | algorithm or executable support |
-| [sources/Core/Matrice.cs](../../sources/Core/Matrice.cs) | 2304 / 3542 | 65.05% | algorithm or executable support |
+| [sources/Core/LinealgOptions.cs](../../sources/Core/LinealgOptions.cs) | 1434 / 1642 | 87.33% | algorithm or executable support |
+| [sources/Core/Maths.cs](../../sources/Core/Maths.cs) | 485 / 568 | 85.39% | algorithm or executable support |
+| [sources/Core/Matrice.cs](../../sources/Core/Matrice.cs) | 2403 / 3549 | 67.71% | algorithm or executable support |
 | [sources/Core/MorphologyMode.cs](../../sources/Core/MorphologyMode.cs) | 0 / 0 | n/a | no instrumented sequence points (interface, enum, delegate, or conditional code) |
 | [sources/Core/Operator.cs](../../sources/Core/Operator.cs) | 14 / 123 | 11.38% | algorithm or executable support |
 | [sources/Core/PointFloat.cs](../../sources/Core/PointFloat.cs) | 9 / 16 | 56.25% | algorithm or executable support |
@@ -66,13 +61,7 @@ Missing methods and exact uncovered lines are available in the adjacent JSON and
 | [sources/Core/RotationMode.cs](../../sources/Core/RotationMode.cs) | 0 / 0 | n/a | no instrumented sequence points (interface, enum, delegate, or conditional code) |
 | [sources/Core/SizeFloat.cs](../../sources/Core/SizeFloat.cs) | 5 / 16 | 31.25% | algorithm or executable support |
 | [sources/Core/SizeInt.cs](../../sources/Core/SizeInt.cs) | 5 / 16 | 31.25% | algorithm or executable support |
-| [sources/Core/Special.Bessel.cs](../../sources/Core/Special.cs) | 129 / 132 | 97.73% | algorithm or executable support |
-| [sources/Core/Special.cs](../../sources/Core/Special.cs) | 593 / 624 | 95.03% | algorithm or executable support |
-| [sources/Core/Special.Elementary.cs](../../sources/Core/Special.cs) | 30 / 34 | 88.24% | algorithm or executable support |
-| [sources/Core/Special.ErrorFunctions.cs](../../sources/Core/Special.cs) | 131 / 144 | 90.97% | algorithm or executable support |
-| [sources/Core/Special.Integrals.cs](../../sources/Core/Special.cs) | 59 / 61 | 96.72% | algorithm or executable support |
-| [sources/Core/Special.Numerics.cs](../../sources/Core/Special.cs) | 186 / 197 | 94.42% | algorithm or executable support |
-| [sources/Core/Special.Series.cs](../../sources/Core/Special.cs) | 104 / 105 | 99.05% | algorithm or executable support |
+| [sources/Core/Special.cs](../../sources/Core/Special.cs) | 1239 / 1304 | 95.02% | algorithm or executable support |
 | [sources/Core/StringOptions.cs](../../sources/Core/StringOptions.cs) | 17 / 46 | 36.96% | algorithm or executable support |
 | [sources/Core/Xml.cs](../../sources/Core/Xml.cs) | 5 / 13 | 38.46% | serialization contract; no mathematical algorithm |
 | [sources/Decomposition/Arnoldi.cs](../../sources/Decomposition/Arnoldi.cs) | 30 / 31 | 96.77% | algorithm or executable support |
@@ -116,31 +105,32 @@ Missing methods and exact uncovered lines are available in the adjacent JSON and
 | [sources/Distance/Minkowski.cs](../../sources/Distance/Minkowski.cs) | 16 / 21 | 76.19% | algorithm or executable support |
 | [sources/Distance/RusselRao.cs](../../sources/Distance/RusselRao.cs) | 10 / 10 | 100.0% | algorithm or executable support |
 | [sources/Distance/SokalMichener.cs](../../sources/Distance/SokalMichener.cs) | 24 / 24 | 100.0% | algorithm or executable support |
-| [sources/Distance/SokalSneath.cs](../../sources/Distance/SokalSneath.cs) | 10 / 20 | 50.0% | algorithm or executable support |
+| [sources/Distance/SokalSneath.cs](../../sources/Distance/SokalSneath.cs) | 20 / 20 | 100.0% | algorithm or executable support |
 | [sources/Distance/SquareEuclidean.cs](../../sources/Distance/SquareEuclidean.cs) | 12 / 12 | 100.0% | algorithm or executable support |
 | [sources/Distance/Yule.cs](../../sources/Distance/Yule.cs) | 24 / 24 | 100.0% | algorithm or executable support |
 | [sources/Distribution/Arcsine.cs](../../sources/Distribution/Arcsine.cs) | 19 / 19 | 100.0% | algorithm or executable support |
 | [sources/Distribution/Bernoulli.cs](../../sources/Distribution/Bernoulli.cs) | 32 / 44 | 72.73% | algorithm or executable support |
 | [sources/Distribution/Beta.cs](../../sources/Distribution/Beta.cs) | 37 / 47 | 78.72% | algorithm or executable support |
-| [sources/Distribution/BetaPrime.cs](../../sources/Distribution/BetaPrime.cs) | 37 / 47 | 78.72% | algorithm or executable support |
-| [sources/Distribution/Binomial.cs](../../sources/Distribution/Binomial.cs) | 45 / 61 | 73.77% | algorithm or executable support |
-| [sources/Distribution/BirnbaumSaunders.cs](../../sources/Distribution/BirnbaumSaunders.cs) | 55 / 61 | 90.16% | algorithm or executable support |
+| [sources/Distribution/BetaPrime.cs](../../sources/Distribution/BetaPrime.cs) | 34 / 43 | 79.07% | algorithm or executable support |
+| [sources/Distribution/Binomial.cs](../../sources/Distribution/Binomial.cs) | 49 / 65 | 75.38% | algorithm or executable support |
+| [sources/Distribution/BirnbaumSaunders.cs](../../sources/Distribution/BirnbaumSaunders.cs) | 49 / 54 | 90.74% | algorithm or executable support |
 | [sources/Distribution/Burr.cs](../../sources/Distribution/Burr.cs) | 48 / 59 | 81.36% | algorithm or executable support |
 | [sources/Distribution/Cauchy.cs](../../sources/Distribution/Cauchy.cs) | 16 / 24 | 66.67% | algorithm or executable support |
-| [sources/Distribution/ChiSquare.cs](../../sources/Distribution/ChiSquare.cs) | 26 / 29 | 89.66% | algorithm or executable support |
+| [sources/Distribution/ChiSquare.cs](../../sources/Distribution/ChiSquare.cs) | 29 / 32 | 90.62% | algorithm or executable support |
 | [sources/Distribution/ChoiWilliams.cs](../../sources/Distribution/ChoiWilliams.cs) | 7 / 17 | 41.18% | algorithm or executable support |
 | [sources/Distribution/ConeShape.cs](../../sources/Distribution/ConeShape.cs) | 12 / 24 | 50.0% | algorithm or executable support |
 | [sources/Distribution/Degenerate.cs](../../sources/Distribution/Degenerate.cs) | 17 / 22 | 77.27% | algorithm or executable support |
+| [sources/Distribution/DistributionNumerics.cs](../../sources/Distribution/DistributionNumerics.cs) | 42 / 42 | 100.0% | algorithm or executable support |
 | [sources/Distribution/Erlang.cs](../../sources/Distribution/Erlang.cs) | 25 / 29 | 86.21% | algorithm or executable support |
 | [sources/Distribution/Exponential.cs](../../sources/Distribution/Exponential.cs) | 21 / 24 | 87.5% | algorithm or executable support |
-| [sources/Distribution/FisherSnedecor.cs](../../sources/Distribution/FisherSnedecor.cs) | 41 / 52 | 78.85% | algorithm or executable support |
-| [sources/Distribution/FisherZ.cs](../../sources/Distribution/FisherZ.cs) | 39 / 55 | 70.91% | algorithm or executable support |
-| [sources/Distribution/FoldedNormal.cs](../../sources/Distribution/FoldedNormal.cs) | 52 / 64 | 81.25% | algorithm or executable support |
+| [sources/Distribution/FisherSnedecor.cs](../../sources/Distribution/FisherSnedecor.cs) | 38 / 48 | 79.17% | algorithm or executable support |
+| [sources/Distribution/FisherZ.cs](../../sources/Distribution/FisherZ.cs) | 33 / 49 | 67.35% | algorithm or executable support |
+| [sources/Distribution/FoldedNormal.cs](../../sources/Distribution/FoldedNormal.cs) | 50 / 59 | 84.75% | algorithm or executable support |
 | [sources/Distribution/Gamma.cs](../../sources/Distribution/Gamma.cs) | 27 / 33 | 81.82% | algorithm or executable support |
 | [sources/Distribution/Gaussian.cs](../../sources/Distribution/Gaussian.cs) | 20 / 24 | 83.33% | algorithm or executable support |
 | [sources/Distribution/GeneralizedNormal.cs](../../sources/Distribution/GeneralizedNormal.cs) | 39 / 45 | 86.67% | algorithm or executable support |
 | [sources/Distribution/Geometric.cs](../../sources/Distribution/Geometric.cs) | 29 / 34 | 85.29% | algorithm or executable support |
-| [sources/Distribution/Gompertz.cs](../../sources/Distribution/Gompertz.cs) | 28 / 36 | 77.78% | algorithm or executable support |
+| [sources/Distribution/Gompertz.cs](../../sources/Distribution/Gompertz.cs) | 24 / 32 | 75.0% | algorithm or executable support |
 | [sources/Distribution/Gumbel.cs](../../sources/Distribution/Gumbel.cs) | 21 / 24 | 87.5% | algorithm or executable support |
 | [sources/Distribution/HyperbolicSecant.cs](../../sources/Distribution/HyperbolicSecant.cs) | 12 / 12 | 100.0% | algorithm or executable support |
 | [sources/Distribution/Hypergeometric.cs](../../sources/Distribution/Hypergeometric.cs) | 65 / 89 | 73.03% | algorithm or executable support |
@@ -148,7 +138,7 @@ Missing methods and exact uncovered lines are available in the adjacent JSON and
 | [sources/Distribution/InverseChiSquare.cs](../../sources/Distribution/InverseChiSquare.cs) | 25 / 38 | 65.79% | algorithm or executable support |
 | [sources/Distribution/InverseGamma.cs](../../sources/Distribution/InverseGamma.cs) | 32 / 54 | 59.26% | algorithm or executable support |
 | [sources/Distribution/InverseGaussian.cs](../../sources/Distribution/InverseGaussian.cs) | 45 / 53 | 84.91% | algorithm or executable support |
-| [sources/Distribution/Kumaraswamy.cs](../../sources/Distribution/Kumaraswamy.cs) | 42 / 53 | 79.25% | algorithm or executable support |
+| [sources/Distribution/Kumaraswamy.cs](../../sources/Distribution/Kumaraswamy.cs) | 41 / 52 | 78.85% | algorithm or executable support |
 | [sources/Distribution/Laplace.cs](../../sources/Distribution/Laplace.cs) | 22 / 26 | 84.62% | algorithm or executable support |
 | [sources/Distribution/Levy.cs](../../sources/Distribution/Levy.cs) | 23 / 30 | 76.67% | algorithm or executable support |
 | [sources/Distribution/Logarithmic.cs](../../sources/Distribution/Logarithmic.cs) | 27 / 33 | 81.82% | algorithm or executable support |
@@ -158,17 +148,17 @@ Missing methods and exact uncovered lines are available in the adjacent JSON and
 | [sources/Distribution/Nakagami.cs](../../sources/Distribution/Nakagami.cs) | 33 / 45 | 73.33% | algorithm or executable support |
 | [sources/Distribution/NegativeBinomial.cs](../../sources/Distribution/NegativeBinomial.cs) | 41 / 64 | 64.06% | algorithm or executable support |
 | [sources/Distribution/Pareto.cs](../../sources/Distribution/Pareto.cs) | 28 / 43 | 65.12% | algorithm or executable support |
-| [sources/Distribution/Poisson.cs](../../sources/Distribution/Poisson.cs) | 33 / 36 | 91.67% | algorithm or executable support |
-| [sources/Distribution/PowerLognormal.cs](../../sources/Distribution/PowerLognormal.cs) | 33 / 45 | 73.33% | algorithm or executable support |
-| [sources/Distribution/PowerNormal.cs](../../sources/Distribution/PowerNormal.cs) | 25 / 32 | 78.12% | algorithm or executable support |
+| [sources/Distribution/Poisson.cs](../../sources/Distribution/Poisson.cs) | 48 / 51 | 94.12% | algorithm or executable support |
+| [sources/Distribution/PowerLognormal.cs](../../sources/Distribution/PowerLognormal.cs) | 17 / 26 | 65.38% | algorithm or executable support |
+| [sources/Distribution/PowerNormal.cs](../../sources/Distribution/PowerNormal.cs) | 11 / 18 | 61.11% | algorithm or executable support |
 | [sources/Distribution/Rademacher.cs](../../sources/Distribution/Rademacher.cs) | 19 / 19 | 100.0% | algorithm or executable support |
 | [sources/Distribution/Rayleigh.cs](../../sources/Distribution/Rayleigh.cs) | 21 / 24 | 87.5% | algorithm or executable support |
 | [sources/Distribution/ShiftedLogLogistic.cs](../../sources/Distribution/ShiftedLogLogistic.cs) | 65 / 96 | 67.71% | algorithm or executable support |
 | [sources/Distribution/Student.cs](../../sources/Distribution/Student.cs) | 25 / 38 | 65.79% | algorithm or executable support |
 | [sources/Distribution/SymmetricGeometric.cs](../../sources/Distribution/SymmetricGeometric.cs) | 30 / 43 | 69.77% | algorithm or executable support |
-| [sources/Distribution/Trapezoidal.cs](../../sources/Distribution/Trapezoidal.cs) | 79 / 93 | 84.95% | algorithm or executable support |
+| [sources/Distribution/Trapezoidal.cs](../../sources/Distribution/Trapezoidal.cs) | 70 / 84 | 83.33% | algorithm or executable support |
 | [sources/Distribution/Triangular.cs](../../sources/Distribution/Triangular.cs) | 34 / 39 | 87.18% | algorithm or executable support |
-| [sources/Distribution/TukeyLambda.cs](../../sources/Distribution/TukeyLambda.cs) | 56 / 61 | 91.8% | algorithm or executable support |
+| [sources/Distribution/TukeyLambda.cs](../../sources/Distribution/TukeyLambda.cs) | 60 / 65 | 92.31% | algorithm or executable support |
 | [sources/Distribution/Uniform.cs](../../sources/Distribution/Uniform.cs) | 27 / 30 | 90.0% | algorithm or executable support |
 | [sources/Distribution/UniformDiscrete.cs](../../sources/Distribution/UniformDiscrete.cs) | 31 / 50 | 62.0% | algorithm or executable support |
 | [sources/Distribution/UQuadratic.cs](../../sources/Distribution/UQuadratic.cs) | 32 / 37 | 86.49% | algorithm or executable support |

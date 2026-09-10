@@ -50,7 +50,7 @@ distributions retain their passing results.
   zero-based rank directly. The median and dilation no longer select the element
   one position below their correct rank. Replicated boundary windows and the
   existing window-size interpretation are retained.
-- [Matrix rotation coefficients](../sources/Core/Matrice.Interpolation.cs):
+- [Matrix rotation coefficients](../sources/Core/Matrice.cs):
   reduce angles modulo 360 and return exact sine/cosine values at multiples of
   90 degrees. All three real/complex interpolation modes share the coefficients.
   Exact lattice coordinates no longer fall below an integer because of trig

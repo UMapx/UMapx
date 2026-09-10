@@ -2095,6 +2095,14 @@ namespace UMapx.Core
         {
             // Window length r: floor(r/2) samples to the left and floor((r-1)/2) to the right.
             // Clip at the boundary and normalize by the samples/weights actually present.
+            /// <summary>
+            /// Computes clipped local means with a rolling numerator and weight sum in double precision.
+            /// </summary>
+            /// <param name="length">Number of samples in the line.</param>
+            /// <param name="r">Window length; even windows include one extra sample on the left.</param>
+            /// <param name="sample">Reads a sample by its index.</param>
+            /// <param name="weight">Reads a weight by index, or null to use unit weights.</param>
+            /// <param name="write">Stores the mean at the given output index; a zero weight sum produces zero.</param>
             private static void FilterLine(int length, int r, Func<int, Complex> sample,
                 Func<int, Complex> weight, Action<int, Complex> write)
             {

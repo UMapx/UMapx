@@ -72,6 +72,10 @@ removed tests. The complete suite has **14,524 passing and 183 failing cases**.
 The [remaining repair blocks](docs/remaining-repair-blocks-2026-09-10.md) assign
 the remaining failures to seven open blocks; matrix decompositions (B06) are next.
 
+The subsequent [helper consolidation](docs/helper-consolidation-2026-09-11.md)
+moved ten partial files into their primary classes and documented the numerical
+helpers. All 14,707 test outcomes are unchanged.
+
 The [matrix and distribution repair report](docs/matrix-distribution-repair-2026-09-10.md)
 records the preceding 113 resolved failures and 1,982 added passing tests.
 The [arithmetic and number-theory repair report](docs/arithmetic-repair-2026-09-10.md)

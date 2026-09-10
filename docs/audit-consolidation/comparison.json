@@ -1,0 +1,26 @@
+{
+  "baseline_cases": 14707,
+  "current_cases": 14707,
+  "common_cases": 14707,
+  "baseline_totals": {
+    "Passed": 14524,
+    "Failed": 183
+  },
+  "current_totals": {
+    "Passed": 14524,
+    "Failed": 183
+  },
+  "added_totals": {},
+  "resolved_by_suite": {},
+  "resolved_count": 0,
+  "regression_count": 0,
+  "added_count": 0,
+  "removed_count": 0,
+  "resolved": [],
+  "regressions": [],
+  "removed": [],
+  "evidence_sha256": {
+    "baseline_trx": "8442a3ae3bde541e938e33605f61e45693a2152b87f7e094a34856c86e746bed",
+    "current_trx": "15972ac1e67fac1ccd0a248d1907101524163e9b4408e30f7ed3b362daa399a7"
+  }
+}

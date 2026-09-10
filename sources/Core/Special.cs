@@ -2160,5 +2160,1555 @@ namespace UMapx.Core
             -3.245547458389247260235183311044519483521857479024361599136e306
         };
         #endregion
+
+        #region Private gamma, beta, and recurrence kernels
+        // Keep intermediate arithmetic in double precision. Public single-precision
+        // overloads round only once, after the tail or logarithmic ratio is evaluated.
+        /// <summary>
+        /// Relative stopping threshold for double-precision series and continued fractions.
+        /// </summary>
+        private const double SpecialEpsilon = 2e-15;
+        /// <summary>
+        /// Square root of pi used by error-function and Bessel kernels.
+        /// </summary>
+        private const double SqrtPi = 1.7724538509055160273;
+        /// <summary>
+        /// Complex sentinel for undefined values or unsuccessful numerical convergence.
+        /// </summary>
+        private static readonly Complex ComplexNaN = new Complex(double.NaN, double.NaN);
+        /// <summary>
+        /// Lanczos coefficients for the gamma approximation with shift g = 7.
+        /// </summary>
+        private static readonly double[] GammaCoefficients =
+        {
+            0.99999999999980993, 676.5203681218851, -1259.1392167224028,
+            771.32342877765313, -176.61502916214059, 12.507343278686905,
+            -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7
+        };
+
+        /// <summary>
+        /// Tests whether the argument is a nonpositive integer pole of the gamma function.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>True exactly at a nonpositive real integer.</returns>
+        private static bool IsPole(double x) => x <= 0 && x == Math.Floor(x);
+        /// <summary>
+        /// Tests whether the argument is a nonpositive integer pole of the gamma function.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>True exactly at a nonpositive real integer.</returns>
+        private static bool IsPole(Complex x) => x.Imaginary == 0 && IsPole(x.Real);
+        /// <summary>
+        /// Tests whether both components of a complex argument are finite.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>True if neither component is NaN or infinite.</returns>
+        private static bool IsFinite(Complex x) => !double.IsNaN(x.Real) && !double.IsInfinity(x.Real)
+            && !double.IsNaN(x.Imaginary) && !double.IsInfinity(x.Imaginary);
+
+        /// <summary>
+        /// Evaluates log-gamma using Lanczos coefficients, recurrence, and reflection.
+        /// </summary>
+        /// <remarks>The real overload returns log(abs(Gamma(x))). The complex overload retains the analytic logarithm on the plane cut along the negative real axis.</remarks>
+        /// <param name="x">Function argument.</param>
+        /// <returns>The logarithm of the gamma magnitude for real inputs, or the analytic log-gamma for complex inputs.</returns>
+        private static double GammaLog(double x)
+        {
+            if (double.IsNaN(x) || IsPole(x)) return double.NaN;
+            if (double.IsPositiveInfinity(x)) return x;
+            if (x < 0.5)
+                return Math.Log(Math.PI / Math.Abs(Math.Sin(Math.PI * (x % 2)))) - GammaLog(1 - x);
+            double z = x - 1, sum = GammaCoefficients[0];
+            for (int k = 1; k < GammaCoefficients.Length; k++) sum += GammaCoefficients[k] / (z + k);
+            double t = z + 7.5;
+            return 0.91893853320467274178 + Math.Log(sum) + (z + 0.5) * Math.Log(t) - t;
+        }
+
+        /// <summary>
+        /// Returns the sign of gamma at a real argument away from its poles.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>One or minus one according to the sign of Gamma(x).</returns>
+        private static double GammaSign(double x) => x > 0 ? 1 : Math.Sign(Math.Sin(Math.PI * (x % 2)));
+
+        /// <summary>
+        /// Evaluates gamma from its logarithmic magnitude or analytic logarithm.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>Gamma at the argument, or NaN at a pole or an undefined input.</returns>
+        private static double GammaValue(double x)
+        {
+            double log = GammaLog(x);
+            return double.IsNaN(log) ? double.NaN : GammaSign(x) * Math.Exp(log);
+        }
+
+        // Analytic log-gamma on the plane cut along the negative real axis.
+        // Recurrence retains the winding of log Gamma instead of taking log(Gamma).
+        /// <summary>
+        /// Evaluates log-gamma using Lanczos coefficients, recurrence, and reflection.
+        /// </summary>
+        /// <remarks>The real overload returns log(abs(Gamma(x))). The complex overload retains the analytic logarithm on the plane cut along the negative real axis.</remarks>
+        /// <param name="x">Function argument.</param>
+        /// <returns>The logarithm of the gamma magnitude for real inputs, or the analytic log-gamma for complex inputs.</returns>
+        private static Complex GammaLog(Complex x)
+        {
+            if (!IsFinite(x) || IsPole(x)) return ComplexNaN;
+            if (x.Real < -128)
+            {
+                double sign = x.Imaginary < 0 ? -1 : 1;
+                Complex reflected = Math.Log(Math.PI) - LogSinPi(x) - GammaLog(1 - x);
+                double turns = Math.Floor((1 - x.Real) / 2);
+                return reflected - new Complex(0, sign * 2 * Math.PI * turns);
+            }
+            Complex correction = Complex.Zero;
+            while (x.Real < 0.5)
+            {
+                correction -= Complex.Log(x);
+                x += 1;
+            }
+            Complex z = x - 1, sum = GammaCoefficients[0];
+            for (int k = 1; k < GammaCoefficients.Length; k++) sum += GammaCoefficients[k] / (z + k);
+            Complex t = z + 7.5;
+            return correction + 0.91893853320467274178 + Complex.Log(sum) + (z + 0.5) * Complex.Log(t) - t;
+        }
+
+        /// <summary>
+        /// Evaluates gamma from its logarithmic magnitude or analytic logarithm.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>Gamma at the argument, or NaN at a pole or an undefined input.</returns>
+        private static Complex GammaValue(Complex x) => Complex.Exp(GammaLog(x));
+
+        /// <summary>
+        /// Evaluates the lower incomplete-gamma series before multiplication by x^s*exp(-x).
+        /// </summary>
+        /// <param name="s">Gamma shape parameter away from series denominator poles.</param>
+        /// <param name="x">Integration argument in the region selected for series evaluation.</param>
+        /// <returns>The lower-gamma series factor, or NaN if the iteration limit is reached.</returns>
+        private static double GammaSeries(double s, double x)
+        {
+            double term = 1 / s, sum = term;
+            for (int n = 1; n <= 100000; n++)
+            {
+                term *= x / (s + n);
+                sum += term;
+                if (Math.Abs(term) <= Math.Abs(sum) * SpecialEpsilon) return sum;
+            }
+            return double.NaN;
+        }
+
+        /// <summary>
+        /// Evaluates the lower incomplete-gamma series before multiplication by x^s*exp(-x).
+        /// </summary>
+        /// <param name="s">Gamma shape parameter away from series denominator poles.</param>
+        /// <param name="x">Integration argument in the region selected for series evaluation.</param>
+        /// <returns>The lower-gamma series factor, or NaN if the iteration limit is reached.</returns>
+        private static Complex GammaSeries(Complex s, Complex x)
+        {
+            Complex term = 1 / s, sum = term;
+            for (int n = 1; n <= 100000; n++)
+            {
+                term *= x / (s + n);
+                sum += term;
+                if (term.Magnitude <= sum.Magnitude * SpecialEpsilon) return sum;
+                if (!IsFinite(sum)) return ComplexNaN;
+            }
+            return ComplexNaN;
+        }
+
+        /// <summary>
+        /// Evaluates the upper incomplete-gamma continued-fraction factor before multiplication by x^s*exp(-x).
+        /// </summary>
+        /// <param name="s">Gamma shape parameter.</param>
+        /// <param name="x">Integration argument in the region selected for continued-fraction evaluation.</param>
+        /// <returns>The upper-gamma continued-fraction factor, or NaN if the iteration limit is reached.</returns>
+        private static double GammaFraction(double s, double x)
+        {
+            const double tiny = 1e-290;
+            double b = x + 1 - s, c = 1 / tiny, d = 1 / (Math.Abs(b) < tiny ? tiny : b), h = d;
+            for (int i = 1; i <= 100000; i++)
+            {
+                double a = i * (s - i);
+                b += 2;
+                d = b + a * d;
+                c = b + a / c;
+                if (Math.Abs(d) < tiny) d = tiny;
+                if (Math.Abs(c) < tiny) c = tiny;
+                d = 1 / d;
+                double delta = c * d;
+                h *= delta;
+                if (Math.Abs(delta - 1) <= SpecialEpsilon) return h;
+            }
+            return double.NaN;
+        }
+
+        /// <summary>
+        /// Evaluates the upper incomplete-gamma continued-fraction factor before multiplication by x^s*exp(-x).
+        /// </summary>
+        /// <param name="s">Gamma shape parameter.</param>
+        /// <param name="x">Integration argument in the region selected for continued-fraction evaluation.</param>
+        /// <returns>The upper-gamma continued-fraction factor, or NaN if the iteration limit is reached.</returns>
+        private static Complex GammaFraction(Complex s, Complex x)
+        {
+            const double tiny = 1e-290;
+            Complex b = x + 1 - s, c = 1 / tiny, d = 1 / (b.Magnitude < tiny ? tiny : b), h = d;
+            for (int i = 1; i <= 100000; i++)
+            {
+                Complex a = i * (s - i);
+                b += 2;
+                d = b + a * d;
+                c = b + a / c;
+                if (d.Magnitude < tiny) d = tiny;
+                if (c.Magnitude < tiny) c = tiny;
+                d = 1 / d;
+                Complex delta = c * d;
+                h *= delta;
+                if ((delta - 1).Magnitude <= SpecialEpsilon) return h;
+                if (!IsFinite(h)) return ComplexNaN;
+            }
+            return ComplexNaN;
+        }
+
+        /// <summary>
+        /// Evaluates a lower or upper incomplete gamma function, optionally divided by gamma(s).
+        /// </summary>
+        /// <param name="s">Shape parameter; real overloads require a positive finite value.</param>
+        /// <param name="x">Integration limit; real overloads require a nonnegative value.</param>
+        /// <param name="upper">True selects the upper tail; false selects the lower integral.</param>
+        /// <param name="regularized">True divides by Gamma(s).</param>
+        /// <returns>The requested incomplete gamma value or regularized ratio, or NaN for invalid inputs or nonconvergence.</returns>
+        private static double IncompleteGamma(double s, double x, bool upper, bool regularized)
+        {
+            if (double.IsNaN(s) || double.IsNaN(x) || double.IsInfinity(s) || IsPole(s) || x < 0) return double.NaN;
+            if (x == 0) return upper ? (regularized ? 1 : GammaValue(s)) : (s > 0 ? 0 : double.NaN);
+            if (double.IsPositiveInfinity(x)) return upper ? 0 : (regularized ? 1 : GammaValue(s));
+            if (s > 0 && s < 0.01 && x <= 1)
+            {
+                // Evaluate Q directly when P is almost one. The usual subtraction
+                // loses the entire tail for shapes close to zero.
+                double logGammaOnePlus = -EulerGamma * s;
+                double power = s * s;
+                for (int k = 2; k <= 10; k++)
+                {
+                    logGammaOnePlus += (k % 2 == 0 ? 1 : -1) * ZetaValue((Complex)k).Real * power / k;
+                    power *= s;
+                }
+                double log = s * Math.Log(x) - logGammaOnePlus;
+                double term = -x, sum = s * term / (s + 1);
+                for (int k = 2; k < 1000; k++)
+                {
+                    term *= -x / k;
+                    double add = s * term / (s + k);
+                    sum += add;
+                    if (Math.Abs(add) <= SpecialEpsilon * Math.Abs(sum)) break;
+                }
+                double q = -Expm1(log) - Math.Exp(log) * sum;
+                double value = upper ? q : 1 - q;
+                return regularized ? value : value * GammaValue(s);
+            }
+            double scale = s * Math.Log(x) - x;
+            double total = regularized ? 1 : GammaValue(s);
+            double sign = 1;
+            if (regularized) { scale -= GammaLog(s); sign = GammaSign(s); }
+            if (x < s + 1)
+            {
+                double series = GammaSeries(s, x);
+                if (double.IsNaN(series)) return double.NaN;
+                double lower = sign * Math.Sign(series) * Math.Exp(scale + Math.Log(Math.Abs(series)));
+                return upper ? total - lower : lower;
+            }
+            double tail = sign * Math.Exp(scale) * GammaFraction(s, x);
+            return upper ? tail : total - tail;
+        }
+
+        /// <summary>
+        /// Evaluates a lower or upper incomplete gamma function, optionally divided by gamma(s).
+        /// </summary>
+        /// <param name="s">Shape parameter; real overloads require a positive finite value.</param>
+        /// <param name="x">Integration limit; real overloads require a nonnegative value.</param>
+        /// <param name="upper">True selects the upper tail; false selects the lower integral.</param>
+        /// <param name="regularized">True divides by Gamma(s).</param>
+        /// <returns>The requested incomplete gamma value or regularized ratio, or NaN for invalid inputs or nonconvergence.</returns>
+        private static Complex IncompleteGamma(Complex s, Complex x, bool upper, bool regularized)
+        {
+            if (s.Imaginary == 0 && x.Imaginary == 0 && x.Real >= 0)
+                return new Complex(IncompleteGamma(s.Real, x.Real, upper, regularized), 0);
+            if (!IsFinite(s) || !IsFinite(x) || IsPole(s)) return ComplexNaN;
+            if (x == Complex.Zero) return upper ? (regularized ? Complex.One : GammaValue(s)) : (s.Real > 0 ? Complex.Zero : ComplexNaN);
+            Complex scale = s * Complex.Log(x) - x - (regularized ? GammaLog(s) : Complex.Zero);
+            Complex total = regularized ? Complex.One : GammaValue(s);
+            if (x.Real < 0 || x.Magnitude < s.Magnitude + 1)
+            {
+                Complex lower = Complex.Exp(scale) * GammaSeries(s, x);
+                return upper ? total - lower : lower;
+            }
+            Complex tail = Complex.Exp(scale) * GammaFraction(s, x);
+            return upper ? tail : total - tail;
+        }
+
+        /// <summary>
+        /// Evaluates the logarithmic beta ratio from three log-gamma values.
+        /// </summary>
+        /// <param name="a">First beta parameter.</param>
+        /// <param name="b">Second beta parameter.</param>
+        /// <returns>The log-gamma combination logGamma(a) + logGamma(b) - logGamma(a + b).</returns>
+        private static double BetaLog(double a, double b) => GammaLog(a) + GammaLog(b) - GammaLog(a + b);
+        /// <summary>
+        /// Evaluates the logarithmic beta ratio from three log-gamma values.
+        /// </summary>
+        /// <param name="a">First beta parameter.</param>
+        /// <param name="b">Second beta parameter.</param>
+        /// <returns>The log-gamma combination logGamma(a) + logGamma(b) - logGamma(a + b).</returns>
+        private static Complex BetaLog(Complex a, Complex b) => GammaLog(a) + GammaLog(b) - GammaLog(a + b);
+        /// <summary>
+        /// Evaluates real beta with gamma-sign tracking and a logarithmic magnitude.
+        /// </summary>
+        /// <param name="a">First real beta parameter.</param>
+        /// <param name="b">Second real beta parameter.</param>
+        /// <returns>The signed real beta value, or NaN where the gamma ratio is undefined.</returns>
+        private static double BetaValue(double a, double b)
+        {
+            double log = BetaLog(a, b);
+            return double.IsNaN(log) ? double.NaN : GammaSign(a) * GammaSign(b) * GammaSign(a + b) * Math.Exp(log);
+        }
+
+        /// <summary>
+        /// Evaluates the continued-fraction factor used by the incomplete beta function.
+        /// </summary>
+        /// <param name="a">Positive first beta shape parameter.</param>
+        /// <param name="b">Positive second beta shape parameter.</param>
+        /// <param name="x">Integration limit in (0, 1).</param>
+        /// <returns>The incomplete-beta continued-fraction factor, or NaN if the iteration limit is reached.</returns>
+        private static double BetaFraction(double a, double b, double x)
+        {
+            const double tiny = 1e-290;
+            double c = 1, d = 1 - (a + b) * x / (a + 1);
+            if (Math.Abs(d) < tiny) d = tiny;
+            d = 1 / d;
+            double h = d;
+            for (int m = 1; m <= 100000; m++)
+            {
+                double aa = m * (b - m) * x / ((a + 2 * m - 1) * (a + 2 * m));
+                d = 1 + aa * d; c = 1 + aa / c;
+                if (Math.Abs(d) < tiny) d = tiny;
+                if (Math.Abs(c) < tiny) c = tiny;
+                d = 1 / d; h *= d * c;
+                aa = -(a + m) * (a + b + m) * x / ((a + 2 * m) * (a + 2 * m + 1));
+                d = 1 + aa * d; c = 1 + aa / c;
+                if (Math.Abs(d) < tiny) d = tiny;
+                if (Math.Abs(c) < tiny) c = tiny;
+                d = 1 / d;
+                double delta = d * c;
+                h *= delta;
+                if (Math.Abs(delta - 1) <= SpecialEpsilon) return h;
+            }
+            return double.NaN;
+        }
+
+        /// <summary>
+        /// Evaluates the lower incomplete beta function, using a complementary tail when it improves conditioning.
+        /// </summary>
+        /// <param name="a">Positive finite first beta shape parameter.</param>
+        /// <param name="b">Positive finite second beta shape parameter.</param>
+        /// <param name="x">Integration limit in [0, 1].</param>
+        /// <param name="regularized">True divides by B(a, b).</param>
+        /// <returns>The lower incomplete beta value or regularized ratio, or NaN outside the supported domain.</returns>
+        private static double IncompleteBeta(double a, double b, double x, bool regularized)
+        {
+            if (!(a > 0) || !(b > 0) || double.IsInfinity(a + b) || double.IsNaN(x) || x < 0 || x > 1) return double.NaN;
+            if (x == 0) return 0;
+            double logBeta = BetaLog(a, b);
+            double total = regularized ? 1 : Math.Exp(logBeta);
+            if (x == 1) return total;
+            bool complement = x > (a + 1) / (a + b + 2);
+            if (complement) { double t = a; a = b; b = t; x = 1 - x; }
+            double value = Math.Exp(a * Math.Log(x) + b * Math.Log(1 - x) - (regularized ? logBeta : 0)) * BetaFraction(a, b, x) / a;
+            return complement ? total - value : value;
+        }
+
+        /// <summary>
+        /// Evaluates a first- or second-kind Chebyshev polynomial, including exact endpoint values and negative-order identities.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <param name="n">Integer order.</param>
+        /// <param name="secondKind">True selects the second kind; false selects the first kind.</param>
+        /// <returns>T_n(x) or U_n(x); Int32.MinValue returns NaN.</returns>
+        private static Complex ChebyshevValue(Complex x, int n, bool secondKind)
+        {
+            if (n == int.MinValue) return ComplexNaN;
+            if (n < 0) return secondKind ? (n == -1 ? Complex.Zero : -ChebyshevValue(x, -n - 2, true)) : ChebyshevValue(x, -n, false);
+            if (x == Complex.One) return secondKind ? (Complex)((double)n + 1) : Complex.One;
+            if (x == -Complex.One) return ((n & 1) == 0 ? 1 : -1) * (secondKind ? (Complex)((double)n + 1) : Complex.One);
+            if (n > 100000)
+            {
+                Complex angle = Complex.Acos(x);
+                return secondKind ? Complex.Sin(((double)n + 1) * angle) / Complex.Sin(angle) : Complex.Cos(n * angle);
+            }
+            Complex previous = 1, current = secondKind ? 2 * x : x;
+            if (n == 0) return previous;
+            for (int k = 1; k < n; k++) { Complex next = 2 * x * current - previous; previous = current; current = next; }
+            return current;
+        }
+
+        /// <summary>
+        /// Evaluates a rising or falling factorial using finite products or a continued gamma ratio.
+        /// </summary>
+        /// <param name="n">Complex initial factor.</param>
+        /// <param name="k">Complex product order; nonnegative integer orders use a finite product.</param>
+        /// <param name="rising">True selects the rising factorial; false selects the falling factorial.</param>
+        /// <returns>The rising or falling factorial, continued through the log-gamma ratio for noninteger orders.</returns>
+        private static Complex FactorialProduct(Complex n, Complex k, bool rising)
+        {
+            if (k == Complex.Zero) return Complex.One;
+            if (k.Imaginary == 0 && k.Real >= 0 && k.Real <= 10000 && k.Real == Math.Floor(k.Real))
+            {
+                Complex product = 1;
+                for (int j = 0; j < (int)k.Real; j++)
+                {
+                    Complex factor = rising ? n + j : n - j;
+                    if (factor == Complex.Zero) return Complex.Zero;
+                    product *= factor;
+                }
+                return product;
+            }
+            return rising ? Complex.Exp(GammaLog(n + k) - GammaLog(n)) : Complex.Exp(GammaLog(n + 1) - GammaLog(n - k + 1));
+        }
+
+        /// <summary>
+        /// Evaluates a generalized binomial coefficient using finite products or logarithmic gamma ratios.
+        /// </summary>
+        /// <param name="n">Complex upper index.</param>
+        /// <param name="k">Complex lower index.</param>
+        /// <returns>The generalized binomial coefficient; a negative real lower index returns zero.</returns>
+        private static Complex BinomialValue(Complex n, Complex k)
+        {
+            if (k.Imaginary == 0 && k.Real < 0) return Complex.Zero;
+            if (k == Complex.Zero) return Complex.One;
+            if (n.Imaginary == 0 && k.Imaginary == 0 && n.Real >= 0 && n.Real == Math.Floor(n.Real) && k.Real == Math.Floor(k.Real))
+            {
+                if (k.Real > n.Real) return Complex.Zero;
+                k = Math.Min(k.Real, n.Real - k.Real);
+            }
+            if (k.Imaginary == 0 && k.Real >= 0 && k.Real <= 10000 && k.Real == Math.Floor(k.Real))
+            {
+                Complex product = 1;
+                for (int j = 1; j <= (int)k.Real; j++) product *= (n - j + 1) / j;
+                return product;
+            }
+            return Complex.Exp(GammaLog(n + 1) - GammaLog(k + 1) - GammaLog(n - k + 1));
+        }
+
+        /// <summary>
+        /// Evaluates Gauss 2F1 using terminating series, transformations, or differential-equation continuation.
+        /// </summary>
+        /// <param name="a">First numerator parameter.</param>
+        /// <param name="b">Second numerator parameter.</param>
+        /// <param name="c">Denominator parameter; nonpositive real integers are rejected.</param>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The continued 2F1 value, or NaN at a rejected parameter pole or failed convergence.</returns>
+        private static Complex Hypergeometric2F1(Complex a, Complex b, Complex c, Complex z)
+        {
+            if (z == Complex.Zero || a == Complex.Zero || b == Complex.Zero) return Complex.One;
+            if (IsPole(c)) return ComplexNaN;
+            bool terminating = IsPole(a) || IsPole(b);
+            if (terminating && (1 - z).Magnitude < 0.5 && (c - a - b).Real > 0 && (IsPole(c - a) || IsPole(c - b)))
+                return Complex.Pow(1 - z, c - a - b) * Hypergeometric2F1(c - a, c - b, c, z);
+            if (!terminating && z.Real < 0)
+                return Complex.Pow(1 - z, -a) * Hypergeometric2F1(a, c - b, c, z / (z - 1));
+            if (!terminating && z == Complex.One)
+                return (c - a - b).Real > 0 ? Complex.Exp(GammaLog(c) + GammaLog(c - a - b) - GammaLog(c - a) - GammaLog(c - b)) : ComplexNaN;
+            if (!terminating && z.Magnitude > 0.8) return HypergeometricContinue(a, b, c, z, 2);
+            Complex term = 1, sum = 1;
+            for (int n = 0; n < 100000; n++)
+            {
+                term *= ((a + n) / (c + n)) * ((b + n) / (n + 1)) * z;
+                sum += term;
+                if (term.Magnitude <= SpecialEpsilon * sum.Magnitude || term == Complex.Zero) return sum;
+                if (!IsFinite(sum)) return ComplexNaN;
+            }
+            return ComplexNaN;
+        }
+        #endregion
+
+        #region Private elementary and number-polynomial kernels
+        /// <summary>
+        /// Evaluates exp(x) - 1 with a power series near zero to preserve small results.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>exp(x) - 1, retaining small differences near zero.</returns>
+        private static double Expm1(double x)
+        {
+            if (Math.Abs(x) > 0.5) return Math.Exp(x) - 1;
+            double term = x, sum = x;
+            for (int n = 2; n < 100; n++)
+            {
+                term *= x / n; sum += term;
+                if (Math.Abs(term) <= SpecialEpsilon * Math.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        /// <summary>
+        /// Evaluates 1 / (1 + exp(-z)), selecting the exponential with a nonpositive real part.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The complex logistic value 1 / (1 + exp(-z)).</returns>
+        private static Complex LogisticValue(Complex z)
+        {
+            if (z.Real >= 0) return 1 / (1 + Complex.Exp(-z));
+            Complex exponential = Complex.Exp(z);
+            return exponential / (1 + exponential);
+        }
+
+        /// <summary>
+        /// Evaluates the normalized sign of sin(2^n*pi*z), using zero at real integer nodes.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="n">Integer order.</param>
+        /// <returns>The normalized complex sine, with zero at real nodes and NaN for nonfinite inputs.</returns>
+        private static Complex RademacherValue(Complex z, int n)
+        {
+            if (!IsFinite(z)) return ComplexNaN;
+            if (n > 1023) return z.Imaginary == 0 ? Complex.Zero : new Complex(0, Math.Sign(z.Imaginary));
+            Complex scaled = Math.Pow(2, n) * z;
+            double real = scaled.Real % 2;
+            if (z.Imaginary == 0)
+                return real == Math.Truncate(real) ? Complex.Zero : (Complex)Math.Sign(Math.Sin(Math.PI * real));
+            Complex sine;
+            if (Math.Abs(scaled.Imaginary) > 20)
+                sine = new Complex(Math.Sin(Math.PI * real), Math.Sign(scaled.Imaginary) * Math.Cos(Math.PI * real));
+            else sine = Complex.Sin(Math.PI * new Complex(real, scaled.Imaginary));
+            return sine / sine.Magnitude;
+        }
+
+        /// <summary>
+        /// Computes a Fibonacci or Lucas number exactly over the supported signed Int32 result range.
+        /// </summary>
+        /// <param name="n">Signed sequence index: [-46, 46] for Fibonacci or [-44, 44] for Lucas.</param>
+        /// <param name="lucas">True selects Lucas numbers; false selects Fibonacci numbers.</param>
+        /// <returns>The exact signed sequence value; out-of-range requests throw ArgumentOutOfRangeException.</returns>
+        private static int FibonacciValue(int n, bool lucas)
+        {
+            int limit = lucas ? 44 : 46;
+            if (n < -limit || n > limit) throw new ArgumentOutOfRangeException(nameof(n), "The result does not fit in Int32.");
+            long previous = lucas ? 2 : 0, current = 1;
+            int order = Math.Abs(n);
+            for (int k = 0; k < order; k++) { long next = previous + current; previous = current; current = next; }
+            if (n < 0 && ((order & 1) == (lucas ? 1 : 0))) previous = -previous;
+            return (int)previous;
+        }
+
+        /// <summary>
+        /// Evaluates a Bernoulli or Euler polynomial by Horner accumulation of number-table coefficients.
+        /// </summary>
+        /// <param name="n">Polynomial degree: 0 through 186 for Euler or 258 for Bernoulli.</param>
+        /// <param name="x">Function argument.</param>
+        /// <param name="euler">True selects Euler polynomials; false selects Bernoulli polynomials.</param>
+        /// <returns>The selected polynomial value, or NaN for an unsupported order.</returns>
+        private static double NumberPolynomial(int n, double x, bool euler)
+        {
+            if (n < 0 || n > (euler ? 186 : 258)) return double.NaN;
+            double variable = euler ? x - 0.5 : x;
+            double sum = 0, binomial = 1, scale = 1;
+            for (int k = 0; k <= n; k++)
+            {
+                sum = sum * variable + binomial * (euler ? Euler(k) * scale : Bernoulli(k));
+                binomial *= (double)(n - k) / (k + 1);
+                scale *= 0.5;
+            }
+            return sum;
+        }
+        #endregion
+
+        #region Private series and analytic-continuation kernels
+        /// <summary>
+        /// Evaluates a classical orthogonal polynomial by its three-term recurrence.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <param name="a">Laguerre alpha or Gegenbauer lambda parameter; unused for Legendre and Hermite.</param>
+        /// <param name="n">Nonnegative polynomial degree.</param>
+        /// <param name="family">Polynomial family: 0 Laguerre, 1 Legendre, 2 Hermite, otherwise Gegenbauer.</param>
+        /// <returns>The selected degree-n polynomial at x, or NaN for negative degree.</returns>
+        private static Complex OrthogonalPolynomial(Complex x, Complex a, int n, int family)
+        {
+            if (n < 0) return ComplexNaN;
+            Complex previous = 1;
+            if (n == 0) return previous;
+            Complex current = family == 0 ? 1 + a - x : family == 1 ? x : family == 2 ? 2 * x : 2 * a * x;
+            for (int k = 2; k <= n; k++)
+            {
+                Complex next;
+                switch (family)
+                {
+                    case 0: next = ((2 * k - 1 + a - x) * current - (k - 1 + a) * previous) / k; break;
+                    case 1: next = ((2 * k - 1) * x * current - (k - 1) * previous) / k; break;
+                    case 2: next = 2 * (x * current - (k - 1) * previous); break;
+                    default: next = (2 * x * (k + a - 1) * current - (k + 2 * a - 2) * previous) / k; break;
+                }
+                previous = current; current = next;
+            }
+            return current;
+        }
+
+        /// <summary>
+        /// Evaluates Erlang B blocking probability by recurrence, avoiding direct powers and factorials.
+        /// </summary>
+        /// <param name="y">Offered traffic argument.</param>
+        /// <param name="n">Nonnegative number of servers.</param>
+        /// <returns>The Erlang B value, or NaN for negative server counts or nonfinite traffic.</returns>
+        private static Complex ErlangBlocking(Complex y, int n)
+        {
+            if (n < 0 || !IsFinite(y)) return ComplexNaN;
+            Complex blocking = 1;
+            for (int k = 1; k <= n; k++) blocking = y * blocking / (k + y * blocking);
+            return blocking;
+        }
+
+        /// <summary>
+        /// Evaluates the principal log(sin(pi*z)) without overflowing at large imaginary arguments.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The natural logarithm of the sine magnitude and its principal phase.</returns>
+        private static Complex LogSinPi(Complex z)
+        {
+            double real = z.Real % 2;
+            if (Math.Abs(z.Imaginary) < 20) return Complex.Log(Complex.Sin(Math.PI * new Complex(real, z.Imaginary)));
+            double phase = (z.Imaginary > 0 ? 1 : -1) * (Math.PI / 2 - Math.PI * real);
+            return new Complex(Math.PI * Math.Abs(z.Imaginary) - Math.Log(2), Math.Atan2(Math.Sin(phase), Math.Cos(phase)));
+        }
+
+        /// <summary>
+        /// Evaluates digamma or trigamma by reflection, recurrence, and a Bernoulli asymptotic expansion.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="derivative">True selects trigamma; false selects digamma.</param>
+        /// <returns>Digamma or trigamma at z, or NaN at poles or nonfinite arguments.</returns>
+        private static Complex Polygamma(Complex z, bool derivative)
+        {
+            if (!IsFinite(z) || IsPole(z)) return ComplexNaN;
+            if (z.Real < 0.5)
+            {
+                Complex reduced = new Complex(z.Real % 1, z.Imaginary);
+                if (derivative)
+                    return Math.PI * Math.PI * Complex.Exp(-2 * LogSinPi(z)) - Polygamma(1 - z, true);
+                Complex cotangent = Math.Abs(z.Imaginary) > 100 ? new Complex(0, z.Imaginary > 0 ? -1 : 1)
+                    : Complex.Cos(Math.PI * reduced) / Complex.Sin(Math.PI * reduced);
+                return Polygamma(1 - z, false) - Math.PI * cotangent;
+            }
+            Complex accumulated = 0;
+            while (z.Real < 12)
+            {
+                accumulated += derivative ? 1 / (z * z) : -1 / z;
+                z += 1;
+            }
+            Complex inverse = 1 / z, square = inverse * inverse;
+            Complex result = derivative ? inverse + square / 2 : Complex.Log(z) - inverse / 2;
+            double[] bernoulli = { 1.0 / 6, -1.0 / 30, 1.0 / 42, -1.0 / 30, 5.0 / 66, -691.0 / 2730, 7.0 / 6, -3617.0 / 510 };
+            Complex power = square;
+            for (int k = 0; k < bernoulli.Length; k++)
+            {
+                result += derivative ? bernoulli[k] * power * inverse : -bernoulli[k] * power / (2 * k + 2);
+                power *= square;
+            }
+            return accumulated + result;
+        }
+
+        /// <summary>
+        /// Evaluates the Riemann zeta function using reflection and Euler–Maclaurin summation.
+        /// </summary>
+        /// <param name="s">Complex zeta argument; s = 1 is a pole.</param>
+        /// <returns>Zeta(s), or NaN at the pole s = 1 or for nonfinite inputs.</returns>
+        private static Complex ZetaValue(Complex s)
+        {
+            if (!IsFinite(s) || s == Complex.One) return ComplexNaN;
+            if (s == Complex.Zero) return -0.5;
+            if (s.Real < 0)
+            {
+                if (s.Imaginary == 0 && s.Real % 2 == 0) return Complex.Zero;
+                return Complex.Exp(s * Math.Log(2) + (s - 1) * Math.Log(Math.PI) + LogSinPi(s / 2) + GammaLog(1 - s)) * ZetaValue(1 - s);
+            }
+            if (s.Real > 55) return Complex.One;
+            int count = (int)Math.Min(100000, 24 + Math.Ceiling(s.Imaginary == 0 ? 0 : Math.Abs(s.Imaginary)));
+            Complex sum = 0;
+            for (int k = 1; k < count; k++) sum += Complex.Exp(-s * Math.Log(k));
+            Complex power = Complex.Exp(-s * Math.Log(count));
+            sum += power * (count / (s - 1) + 0.5);
+            double[] coefficients = { 1.0 / 12, -1.0 / 720, 1.0 / 30240, -1.0 / 1209600,
+                1.0 / 47900160, -691.0 / 1307674368000, 1.0 / 74724249600, -3617.0 / 10670622842880000 };
+            Complex term = s * power / count;
+            for (int k = 0; k < coefficients.Length; k++)
+            {
+                sum += coefficients[k] * term;
+                term *= (s + 2 * k + 1) / count * ((s + 2 * k + 2) / count);
+            }
+            return sum;
+        }
+
+        // Continue a hypergeometric solution by Taylor steps inside disks that
+        // exclude the differential equation's singularities. Values and first
+        // derivatives are propagated together, without subtracting large gamma ratios.
+        /// <summary>
+        /// Advances a hypergeometric function and its first derivative by a Taylor step away from singularities.
+        /// </summary>
+        /// <param name="a">First numerator parameter; unused for 0F1.</param>
+        /// <param name="b">Second numerator parameter for 2F1, denominator parameter otherwise.</param>
+        /// <param name="c">Denominator parameter for 2F1; unused otherwise.</param>
+        /// <param name="center">Current center of the Taylor expansion.</param>
+        /// <param name="step">Nonzero complex step within the convergence disk.</param>
+        /// <param name="kind">Hypergeometric family: 0 for 0F1, 1 for 1F1, 2 for 2F1.</param>
+        /// <param name="value">On entry, the value at center; on return, the value at center + step.</param>
+        /// <param name="derivative">On entry, the first derivative at center; on return, the derivative at center + step.</param>
+        private static void HypergeometricStep(Complex a, Complex b, Complex c, Complex center,
+            Complex step, int kind, ref Complex value, ref Complex derivative)
+        {
+            Complex previous = value, current = step * derivative;
+            Complex sum = previous + current, slope = current;
+            for (int n = 0; n < 100; n++)
+            {
+                Complex next;
+                if (kind == 2)
+                    next = ((a + n) * (b + n) * step * step * previous - (n + 1) * (c - (a + b + 1) * center + n * (1 - 2 * center)) * step * current)
+                        / (center * (1 - center) * (n + 1) * (n + 2));
+                else
+                    next = ((kind == 1 ? a + n : Complex.One) * step * step * previous - (n + 1) * (b + n - (kind == 1 ? center : Complex.Zero)) * step * current)
+                        / (center * (n + 1) * (n + 2));
+                sum += next;
+                slope += (n + 2) * next;
+                previous = current; current = next;
+                if (n > 6 && next.Magnitude * (n + 2) <= SpecialEpsilon * (sum.Magnitude + slope.Magnitude)) break;
+            }
+            value = sum; derivative = slope / step;
+        }
+
+        /// <summary>
+        /// Continues a hypergeometric solution through overlapping Taylor disks that avoid the differential equation's singularities.
+        /// </summary>
+        /// <param name="a">First numerator parameter; unused for 0F1.</param>
+        /// <param name="b">Second numerator parameter for 2F1, denominator parameter otherwise.</param>
+        /// <param name="c">Denominator parameter for 2F1; unused otherwise.</param>
+        /// <param name="target">Target point for analytic continuation.</param>
+        /// <param name="kind">Hypergeometric family: 0 for 0F1, 1 for 1F1, 2 for 2F1.</param>
+        /// <returns>The solution at target, or NaN if the path cannot be completed within the iteration limit.</returns>
+        private static Complex HypergeometricContinue(Complex a, Complex b, Complex c, Complex target, int kind)
+        {
+            Complex waypoint = kind == 2 && target.Real > 1 && Math.Abs(target.Imaginary) < 0.5
+                ? new Complex(0.5, target.Imaginary > 0 ? 0.5 : -0.5) : target;
+            Complex center = waypoint / waypoint.Magnitude * 0.25;
+            Complex term = 1, value = 1, derivative = 0;
+            for (int n = 0; n < 1000; n++)
+            {
+                term *= kind == 2 ? (a + n) / (c + n) * ((b + n) / (n + 1)) * center
+                    : (kind == 1 ? a + n : Complex.One) / (b + n) * center / (n + 1);
+                value += term; derivative += (n + 1) * term / center;
+                if (term.Magnitude <= SpecialEpsilon * value.Magnitude) break;
+            }
+            for (int stage = 0; stage < 2; stage++)
+            {
+                Complex end = stage == 0 ? waypoint : target;
+                for (int iteration = 0; iteration < 10000 && center != end; iteration++)
+                {
+                    double radius = kind == 2 ? Math.Min(center.Magnitude, (1 - center).Magnitude) : center.Magnitude;
+                    double length = Math.Min(4, 0.4 * radius);
+                    Complex delta = end - center;
+                    Complex step = delta.Magnitude <= length ? delta : delta / delta.Magnitude * length;
+                    HypergeometricStep(a, b, c, center, step, kind, ref value, ref derivative);
+                    center = step == delta ? end : center + step;
+                    if (!IsFinite(value)) return value;
+                }
+                if (center != end) return ComplexNaN;
+            }
+            return value;
+        }
+
+        /// <summary>
+        /// Evaluates confluent hypergeometric functions, including reduced families selected by absent-parameter sentinels.
+        /// </summary>
+        /// <param name="a">Numerator parameter; NaN denotes an absent numerator parameter.</param>
+        /// <param name="b">Denominator parameter; NaN denotes an absent denominator parameter.</param>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The 1F1, 0F1, 1F0, or 0F0 value selected by the supplied parameters.</returns>
+        private static Complex Hypergeometric1F1(Complex a, Complex b, Complex z)
+        {
+            if (z == Complex.Zero) return Complex.One;
+            bool absentA = double.IsNaN(a.Real), absentB = double.IsNaN(b.Real);
+            if ((absentA && absentB) || a == b) return Complex.Exp(z);
+            if (absentB) return Complex.Pow(1 - z, -a);
+            if (IsPole(b)) return ComplexNaN;
+            if (!absentA && a == Complex.Zero) return Complex.One;
+            if (z.Magnitude > 8) return HypergeometricContinue(a, b, Complex.Zero, z, absentA ? 0 : 1);
+            Complex term = 1, sum = 1;
+            for (int n = 0; n < 10000; n++)
+            {
+                term *= (absentA ? Complex.One : a + n) / (b + n) * z / (n + 1);
+                sum += term;
+                if (term.Magnitude <= SpecialEpsilon * sum.Magnitude || term == Complex.Zero) return sum;
+            }
+            return ComplexNaN;
+        }
+        #endregion
+
+        #region Private error-function and quadrature kernels
+        /// <summary>
+        /// Positive nodes of the symmetric 16-point Gauss–Legendre rule on [-1, 1].
+        /// </summary>
+        private static readonly double[] GaussNodes =
+        {
+            0.0950125098376374402, 0.281603550779258913, 0.458016777657227386, 0.617876244402643748,
+            0.755404408355003034, 0.865631202387831744, 0.944575023073232576, 0.989400934991649933
+        };
+        /// <summary>
+        /// Weights paired with the positive and negative Gauss–Legendre nodes.
+        /// </summary>
+        private static readonly double[] GaussWeights =
+        {
+            0.189450610455068496, 0.182603415044923589, 0.169156519395002538, 0.149595988816576733,
+            0.124628971255533872, 0.0951585116824927848, 0.0622535239386478929, 0.0271524594117540949
+        };
+
+        /// <summary>
+        /// Integrates a complex-valued function over a real interval using composite 16-point Gauss–Legendre quadrature.
+        /// </summary>
+        /// <param name="f">Integrand evaluated at real quadrature nodes.</param>
+        /// <param name="end">Real upper integration limit; the lower limit is zero.</param>
+        /// <param name="panels">Positive number of equal quadrature panels.</param>
+        /// <returns>The quadrature estimate of the integral from zero to end.</returns>
+        private static Complex IntegrateGauss(Func<double, Complex> f, double end, int panels)
+        {
+            Complex sum = 0;
+            double half = end / (2 * panels);
+            for (int j = 0; j < panels; j++)
+            {
+                double mid = (2 * j + 1) * half;
+                for (int k = 0; k < GaussNodes.Length; k++)
+                    sum += GaussWeights[k] * (f(mid - half * GaussNodes[k]) + f(mid + half * GaussNodes[k]));
+            }
+            return sum * half;
+        }
+
+        // Fourier-Laplace representation in the upper half-plane. Reflection is
+        // performed before evaluation, so the integral always has a decaying kernel.
+        /// <summary>
+        /// Evaluates exp(-z^2)*erfc(-i*z) using reflection, decaying quadrature, and an asymptotic expansion.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The Faddeeva function w(z), or NaN for nonfinite inputs.</returns>
+        private static Complex FaddeevaValue(Complex z)
+        {
+            if (!IsFinite(z)) return ComplexNaN;
+            if (z.Imaginary < 0) return 2 * Complex.Exp(-z * z) - FaddeevaValue(-z);
+            if (z.Magnitude >= 12)
+            {
+                Complex term = 1, sum = 1;
+                double previous = double.PositiveInfinity;
+                for (int n = 1; n < 200; n++)
+                {
+                    term *= (n - 0.5) / (z * z);
+                    if (term.Magnitude > previous) break;
+                    sum += term;
+                    if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                    previous = term.Magnitude;
+                }
+                Complex result = Complex.ImaginaryOne * sum / (SqrtPi * z);
+                // The exponentially small real part on the real axis is not in
+                // the algebraic expansion, but is still representable near the switch.
+                return z.Imaginary == 0 ? new Complex(Math.Exp(-z.Real * z.Real), result.Imaginary) : result;
+            }
+            return IntegrateGauss(t => Complex.Exp(new Complex(-t * t / 4 - z.Imaginary * t, z.Real * t)),
+                12, Math.Max(12, (int)Math.Ceiling(2 * z.Magnitude))) / SqrtPi;
+        }
+
+        /// <summary>
+        /// Evaluates the complementary error function directly so small tails are not obtained by subtracting from one.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>The complementary error function at the argument.</returns>
+        private static double ErfcValue(double x)
+        {
+            if (double.IsNaN(x)) return double.NaN;
+            if (x < 0) return 2 - ErfcValue(-x);
+            if (double.IsPositiveInfinity(x)) return 0;
+            return IncompleteGamma(0.5, x * x, true, true);
+        }
+
+        /// <summary>
+        /// Evaluates the error function using its local power series and complementary-function relations.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>The error function at the argument.</returns>
+        private static double ErfValue(double x)
+        {
+            if (double.IsNaN(x)) return double.NaN;
+            if (double.IsInfinity(x)) return Math.Sign(x);
+            if (Math.Abs(x) > 0.5) return x < 0 ? ErfcValue(-x) - 1 : 1 - ErfcValue(x);
+            double term = x, sum = x;
+            for (int n = 1; n < 100; n++)
+            {
+                term *= -x * x / n;
+                double add = term / (2 * n + 1);
+                sum += add;
+                if (Math.Abs(add) <= SpecialEpsilon * Math.Abs(sum)) break;
+            }
+            return 2 * sum / SqrtPi;
+        }
+
+        /// <summary>
+        /// Evaluates the complementary error function directly so small tails are not obtained by subtracting from one.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The complementary error function at the argument.</returns>
+        private static Complex ErfcValue(Complex z)
+        {
+            if (z.Imaginary == 0) return new Complex(ErfcValue(z.Real), 0);
+            if (z.Real < 0) return 2 - ErfcValue(-z);
+            return Complex.Exp(-z * z) * FaddeevaValue(Complex.ImaginaryOne * z);
+        }
+
+        /// <summary>
+        /// Evaluates the error function using its local power series and complementary-function relations.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The error function at the argument.</returns>
+        private static Complex ErfValue(Complex z)
+        {
+            if (z.Imaginary == 0) return new Complex(ErfValue(z.Real), 0);
+            if (!IsFinite(z)) return ComplexNaN;
+            if (z.Real < 0) return -ErfValue(-z);
+            if (z.Magnitude > 0.5) return 1 - ErfcValue(z);
+            Complex term = z, sum = z;
+            for (int n = 1; n < 100; n++)
+            {
+                term *= -z * z / n;
+                Complex add = term / (2 * n + 1);
+                sum += add;
+                if (add.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+            }
+            return 2 * sum / SqrtPi;
+        }
+
+        /// <summary>
+        /// Inverts the real complementary error function by bracketing, including explicit endpoint limits.
+        /// </summary>
+        /// <param name="p">Complementary-error-function value in [0, 2].</param>
+        /// <returns>The inverse erfc, with +infinity at zero, -infinity at two, and NaN outside [0, 2].</returns>
+        private static double InverseErfc(double p)
+        {
+            if (double.IsNaN(p) || p < 0 || p > 2) return double.NaN;
+            if (p == 0) return double.PositiveInfinity;
+            if (p == 2) return double.NegativeInfinity;
+            if (p == 1) return 0;
+            if (p > 1) return -InverseErfc(2 - p);
+            double lower = 0, upper = 28;
+            // Bracketing also resolves very small probabilities without forming 1-p.
+            for (int j = 0; j < 60; j++)
+            {
+                double mid = (lower + upper) / 2;
+                if (ErfcValue(mid) > p) lower = mid; else upper = mid;
+            }
+            return (lower + upper) / 2;
+        }
+
+        /// <summary>
+        /// Inverts the error function, using real-domain limits or complex Halley refinement as appropriate.
+        /// </summary>
+        /// <param name="x">Real error-function value in [-1, 1].</param>
+        /// <returns>An inverse-error-function value; invalid real inputs or failed complex refinement return NaN.</returns>
+        private static double InverseErf(double x)
+        {
+            if (double.IsNaN(x) || Math.Abs(x) > 1) return double.NaN;
+            if (Math.Abs(x) < 1e-4) return SqrtPi / 2 * x * (1 + Math.PI * x * x / 12);
+            return x < 0 ? -InverseErfc(1 + x) : InverseErfc(1 - x);
+        }
+
+        /// <summary>
+        /// Inverts the error function, using real-domain limits or complex Halley refinement as appropriate.
+        /// </summary>
+        /// <param name="z">Complex error-function value to invert.</param>
+        /// <returns>An inverse-error-function value; invalid real inputs or failed complex refinement return NaN.</returns>
+        private static Complex InverseErf(Complex z)
+        {
+            if (z.Imaginary == 0 && Math.Abs(z.Real) <= 1) return new Complex(InverseErf(z.Real), 0);
+            if (!IsFinite(z)) return ComplexNaN;
+            if (z.Real < 0) return -InverseErf(-z);
+            Complex log = Complex.Log(1 - z * z);
+            Complex t = 2 / (Math.PI * 0.147) + log / 2;
+            Complex w = z.Magnitude < 0.5 ? SqrtPi * z / 2 : Complex.Sqrt(Complex.Sqrt(t * t - log / 0.147) - t);
+            for (int n = 0; n < 50; n++)
+            {
+                Complex correction = (ErfValue(w) - z) / (2 / SqrtPi * Complex.Exp(-w * w));
+                correction /= 1 + w * correction;
+                w -= correction;
+                if (correction.Magnitude <= SpecialEpsilon * (1 + w.Magnitude)) return w;
+            }
+            return ComplexNaN;
+        }
+
+        /// <summary>
+        /// Evaluates the entire continuation of Dawson's integral using a local series and the Faddeeva function.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>exp(-z^2) times the integral of exp(t^2) from zero to z.</returns>
+        private static Complex DawsonValue(Complex z)
+        {
+            if (!IsFinite(z)) return ComplexNaN;
+            if (z.Imaginary < 0) return -DawsonValue(-z);
+            if (z.Magnitude < 0.5)
+            {
+                Complex term = z, sum = z;
+                for (int n = 1; n < 100; n++)
+                {
+                    term *= -2 * z * z / (2 * n + 1);
+                    sum += term;
+                    if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                }
+                return sum;
+            }
+            return -Complex.ImaginaryOne * SqrtPi / 2 * (FaddeevaValue(z) - Complex.Exp(-z * z));
+        }
+
+        /// <summary>
+        /// Evaluates the library's unnormalized Fresnel integral of sin(t^2) or cos(t^2) from zero to z.
+        /// </summary>
+        /// <remarks>The integrand uses t^2, without the pi/2 factor of the normalized Fresnel convention.</remarks>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="sine">True selects the sine integral; false selects the cosine integral.</param>
+        /// <returns>The integral of the selected unnormalized Fresnel integrand from zero to z.</returns>
+        private static Complex FresnelValue(Complex z, bool sine)
+        {
+            if (z.Magnitude < 1)
+            {
+                Complex term = sine ? z * z * z / 3 : z, sum = term;
+                for (int k = 0; k < 100; k++)
+                {
+                    term *= sine ? -(4 * k + 3) * z * z * z * z / ((2.0 * k + 3) * (2 * k + 2) * (4 * k + 7))
+                        : -(4 * k + 1) * z * z * z * z / ((2.0 * k + 2) * (2 * k + 1) * (4 * k + 5));
+                    sum += term;
+                    if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                }
+                return sum;
+            }
+            Complex rotation = new Complex(Math.Sqrt(0.5), Math.Sqrt(0.5));
+            Complex positive = SqrtPi / 2 * rotation * ErfValue(Complex.Conjugate(rotation) * z);
+            if (z.Imaginary == 0) return sine ? positive.Imaginary : positive.Real;
+            Complex negative = SqrtPi / 2 * Complex.Conjugate(rotation) * ErfValue(rotation * z);
+            return sine ? (positive - negative) / (2 * Complex.ImaginaryOne) : (positive + negative) / 2;
+        }
+
+        /// <summary>
+        /// Evaluates the entire continuation of n!/sqrt(pi) times the integral of exp(-t^n) from zero to z.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="n">Nonnegative integer exponent in exp(-t^n).</param>
+        /// <returns>The generalized error integral, or NaN for negative order or nonfinite z.</returns>
+        private static Complex GeneralizedErf(Complex z, int n)
+        {
+            if (n < 0 || !IsFinite(z)) return ComplexNaN;
+            if (z == Complex.Zero) return Complex.Zero;
+            if (n == 0) return z / (Math.E * SqrtPi);
+            if (n == 2) return ErfValue(z);
+            Complex power = Complex.Pow(z, n);
+            if (power.Magnitude < 8)
+            {
+                Complex term = 1, sum = 1;
+                for (int k = 1; k < 1000; k++)
+                {
+                    term *= -power / k;
+                    Complex add = term / ((double)n * k + 1);
+                    sum += add;
+                    if (add.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                }
+                return GammaValue((double)n + 1) / SqrtPi * z * sum;
+            }
+            // The power correction preserves the entire continuation in z when
+            // z^n crosses the principal cut of the incomplete gamma function.
+            Complex correction = z / Complex.Pow(power, 1.0 / n);
+            return GammaValue((double)n) / SqrtPi * correction * IncompleteGamma((Complex)(1.0 / n), power, false, false);
+        }
+
+        /// <summary>
+        /// Solves w*exp(w) = z on the requested Lambert W branch using a branch-aware initial value and refinement.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="branch">Integer Lambert W branch index.</param>
+        /// <returns>W_branch(z), or NaN for rejected inputs or failed refinement.</returns>
+        private static Complex LambertValue(Complex z, int branch)
+        {
+            if (!IsFinite(z)) return ComplexNaN;
+            if (z == Complex.Zero) return branch == 0 ? Complex.Zero : ComplexNaN;
+            Complex w;
+            Complex p = Complex.Sqrt(2 * (Math.E * z + 1));
+            bool nearBranch = (Math.E * z + 1).Magnitude < 0.7;
+            if (nearBranch && (branch == 0 || (branch == -1 && z.Imaginary >= 0) || (branch == 1 && z.Imaginary < 0)))
+            {
+                if (branch != 0) p = -p;
+                w = -1 + p - p * p / 3 + 11 * p * p * p / 72;
+            }
+            else if (branch == 0 && z.Magnitude < 3) w = Complex.Log(1 + z);
+            else if (branch == -1 && z.Imaginary == 0 && z.Real > -1 / Math.E && z.Real < 0)
+            {
+                double log = Math.Log(-z.Real);
+                w = log - Math.Log(-log);
+            }
+            else
+            {
+                Complex log = Complex.Log(z) + new Complex(0, 2 * Math.PI * branch);
+                w = log - Complex.Log(log) + Complex.Log(log) / log;
+            }
+            for (int n = 0; n < 100; n++)
+            {
+                Complex f = w - z * Complex.Exp(-w);
+                if (f.Magnitude <= SpecialEpsilon * w.Magnitude) return w;
+                Complex step = f / (w + 1 - (w + 2) * f / (2 * w + 2));
+                w -= step;
+                if (step.Magnitude <= SpecialEpsilon * (1 + w.Magnitude)) return w;
+                if (!IsFinite(w)) return ComplexNaN;
+            }
+            return ComplexNaN;
+        }
+        #endregion
+
+        #region Private special-integral kernels
+        /// <summary>
+        /// Evaluates E1(z) on its logarithmic branch using a local series or an upper-gamma continued fraction.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The continued E1 value using the principal logarithm in its local series.</returns>
+        private static Complex ExponentialIntegralE1(Complex z)
+        {
+            if (z.Magnitude > 4) return Complex.Exp(-z) * GammaFraction(Complex.Zero, z);
+            Complex term = -z, sum = term;
+            for (int k = 2; k < 1000; k++)
+            {
+                term *= -z / k;
+                Complex add = term / k;
+                sum += add;
+                if (add.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+            }
+            return -EulerGamma - Complex.Log(z) - sum;
+        }
+
+        /// <summary>
+        /// Evaluates Ei(z) with explicit continuation terms around the negative real axis.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>Ei(z), real on the negative real axis and with signed imaginary continuation off that axis.</returns>
+        private static Complex ExponentialIntegral(Complex z)
+        {
+            if (z == Complex.Zero) return new Complex(double.NegativeInfinity, 0);
+            if (!IsFinite(z)) return ComplexNaN;
+            if (z.Real < 0)
+                return -ExponentialIntegralE1(-z) + new Complex(0, z.Imaginary > 0 ? Math.PI : z.Imaginary < 0 ? -Math.PI : 0);
+            if (z.Magnitude >= 20)
+            {
+                Complex term = 1, sum = 1;
+                double previous = double.PositiveInfinity;
+                for (int k = 1; k < 1000; k++)
+                {
+                    term *= k / z;
+                    if (term.Magnitude >= previous) break;
+                    sum += term;
+                    if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                    previous = term.Magnitude;
+                }
+                return Complex.Exp(z) / z * sum + new Complex(0, z.Imaginary > 0 ? Math.PI : z.Imaginary < 0 ? -Math.PI : 0);
+            }
+            Complex power = z, series = power;
+            for (int k = 2; k < 1000; k++)
+            {
+                power *= z / k;
+                Complex add = power / k;
+                series += add;
+                if (add.Magnitude <= SpecialEpsilon * series.Magnitude) break;
+            }
+            return EulerGamma + Complex.Log(z) + series;
+        }
+
+        /// <summary>
+        /// Evaluates Si(z) or Ci(z) using local series and exponential-integral relations.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="sine">True selects the sine integral; false selects the cosine integral.</param>
+        /// <returns>Si(z) or Ci(z); the cosine integral uses the upper value on the negative real axis.</returns>
+        private static Complex TrigonometricIntegral(Complex z, bool sine)
+        {
+            if (z == Complex.Zero) return sine ? Complex.Zero : new Complex(double.NegativeInfinity, 0);
+            if (!IsFinite(z)) return ComplexNaN;
+            if (z.Real < 0) return sine ? -TrigonometricIntegral(-z, true)
+                : TrigonometricIntegral(-z, false) + new Complex(0, z.Imaginary < 0 ? -Math.PI : Math.PI);
+            if (z.Magnitude < 1)
+            {
+                Complex term = sine ? z : -z * z / 4, sum = term;
+                for (int k = 1; k < 100; k++)
+                {
+                    term *= sine ? -z * z * (2 * k - 1) / ((2.0 * k + 1) * (2 * k + 1) * (2 * k))
+                        : -z * z * (2 * k) / ((2.0 * k + 2) * (2 * k + 2) * (2 * k + 1));
+                    sum += term;
+                    if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                }
+                return sine ? sum : EulerGamma + Complex.Log(z) + sum;
+            }
+            Complex positive = ExponentialIntegral(Complex.ImaginaryOne * z);
+            Complex negative = ExponentialIntegral(-Complex.ImaginaryOne * z);
+            if (z.Real == 0)
+            {
+                if (z.Imaginary > 0) positive += Complex.ImaginaryOne * Math.PI;
+                else negative -= Complex.ImaginaryOne * Math.PI;
+            }
+            return sine ? (positive - negative) / (2 * Complex.ImaginaryOne) - Math.PI / 2 : (positive + negative) / 2;
+        }
+
+        /// <summary>
+        /// Evaluates Owen's T function by quadrature after the substitution t = tan(theta).
+        /// </summary>
+        /// <param name="h">Gaussian threshold, continued to complex values.</param>
+        /// <param name="a">Integration limit, continued through the principal complex arctangent.</param>
+        /// <returns>The continued Owen T value from the transformed quadrature.</returns>
+        private static Complex OwenValue(Complex h, Complex a)
+        {
+            if (!IsFinite(h) || !IsFinite(a)) return ComplexNaN;
+            if (a == Complex.Zero) return Complex.Zero;
+            Complex angle = Complex.Atan(a);
+            if (h == Complex.Zero) return angle / (2 * Math.PI);
+            Complex previous = ComplexNaN;
+            for (int panels = 2; panels <= 1024; panels *= 2)
+            {
+                Complex value = angle / (2 * Math.PI) * IntegrateGauss(t =>
+                {
+                    Complex cosine = Complex.Cos(angle * t);
+                    return Complex.Exp(-h * h / (2 * cosine * cosine));
+                }, 1, panels);
+                if ((value - previous).Magnitude <= 1e-13 * value.Magnitude) return value;
+                previous = value;
+            }
+            return previous;
+        }
+        #endregion
+
+        #region Private Bessel and Struve kernels
+        /// <summary>
+        /// Euler–Mascheroni constant.
+        /// </summary>
+        private const double EulerGamma = 0.57721566490153286061;
+
+        /// <summary>
+        /// Returns i raised to an integer power by reducing the exponent modulo four.
+        /// </summary>
+        /// <param name="n">Signed integer exponent.</param>
+        /// <returns>One of 1, i, -1, or -i.</returns>
+        private static Complex ImaginaryPower(int n)
+        {
+            switch ((n % 4 + 4) % 4)
+            {
+                case 0: return Complex.One;
+                case 1: return Complex.ImaginaryOne;
+                case 2: return -Complex.One;
+                default: return -Complex.ImaginaryOne;
+            }
+        }
+
+        /// <summary>
+        /// Evaluates the power series for Bessel J or modified Bessel I at a nonnegative integer order.
+        /// </summary>
+        /// <param name="z">Nonzero complex argument in the series region.</param>
+        /// <param name="n">Nonnegative integer order.</param>
+        /// <param name="modified">True selects the modified function; false selects the ordinary function.</param>
+        /// <returns>J_n(z) or I_n(z), or NaN if the series iteration limit is reached.</returns>
+        private static Complex BesselSeries(Complex z, int n, bool modified)
+        {
+            Complex term = Complex.Exp(n * Complex.Log(z / 2) - GammaLog((double)n + 1));
+            Complex sum = term, factor = (modified ? 1 : -1) * z * z / 4;
+            for (int k = 1; k <= 10000; k++)
+            {
+                term *= factor / ((double)k * (n + k));
+                sum += term;
+                if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) return sum;
+                if (!IsFinite(sum)) return sum;
+            }
+            return ComplexNaN;
+        }
+
+        // Hankel expansion is evaluated only for orders zero and one. Higher
+        // orders use recurrence; their first asymptotic correction need not be small.
+        /// <summary>
+        /// Evaluates the Hankel asymptotic expansion for Bessel J or Y of order zero or one.
+        /// </summary>
+        /// <remarks>Used only for base orders zero and one; higher orders use recurrence.</remarks>
+        /// <param name="z">Nonzero argument in the asymptotic region.</param>
+        /// <param name="n">Base order, zero or one.</param>
+        /// <param name="secondKind">True selects the second kind; false selects the first kind.</param>
+        /// <returns>The asymptotic approximation to J_n(z) or Y_n(z).</returns>
+        private static Complex BesselAsymptotic(Complex z, int n, bool secondKind)
+        {
+            Complex term = 1, even = 1, odd = 0;
+            double previous = double.PositiveInfinity;
+            for (int k = 1; k < 200; k++)
+            {
+                term *= (4.0 * n * n - (2.0 * k - 1) * (2.0 * k - 1)) / (8 * k * z);
+                if (term.Magnitude > previous) break;
+                if ((k & 1) == 0) even += ((k / 2 & 1) == 0 ? 1 : -1) * term;
+                else odd += (((k - 1) / 2 & 1) == 0 ? 1 : -1) * term;
+                if (term.Magnitude <= SpecialEpsilon * (even.Magnitude + odd.Magnitude)) break;
+                previous = term.Magnitude;
+            }
+            // Separate the fixed phase shift from z to avoid losing it for large z.
+            double phase = n * Math.PI / 2 + Math.PI / 4;
+            Complex cosine = Complex.Cos(z) * Math.Cos(phase) + Complex.Sin(z) * Math.Sin(phase);
+            Complex sine = Complex.Sin(z) * Math.Cos(phase) - Complex.Cos(z) * Math.Sin(phase);
+            return Complex.Sqrt(2 / (Math.PI * z)) * (secondKind ? sine * even + cosine * odd : cosine * even - sine * odd);
+        }
+
+        /// <summary>
+        /// Evaluates integer-order Bessel J using a power series, asymptotics, and stable upward or Miller recurrence.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="order">Integer order in [-100000, 100000].</param>
+        /// <returns>J_order(z), or NaN for a rejected order or nonfinite input.</returns>
+        private static Complex BesselJ(Complex z, int order)
+        {
+            if (!IsFinite(z) || order == int.MinValue) return ComplexNaN;
+            int n = Math.Abs(order);
+            if (n > 100000) return ComplexNaN;
+            double sign = order < 0 && (n & 1) != 0 ? -1 : 1;
+            if (z == Complex.Zero) return n == 0 ? Complex.One : Complex.Zero;
+            if (z.Real < 0) return ((n & 1) == 0 ? sign : -sign) * BesselJ(-z, n);
+            if (z.Magnitude <= 12) return sign * BesselSeries(z, n, false);
+            Complex j0 = BesselAsymptotic(z, 0, false), j1 = BesselAsymptotic(z, 1, false);
+            if (n == 0) return j0;
+            if (n == 1) return sign * j1;
+            if (n <= (z.Imaginary == 0 ? z.Magnitude : z.Magnitude * 0.5))
+            {
+                for (int k = 1; k < n; k++) { Complex next = 2 * k / z * j1 - j0; j0 = j1; j1 = next; }
+                return sign * j1;
+            }
+            // Miller recurrence selects the minimal solution J_n when upward
+            // recurrence would amplify contamination by the dominant solution Y_n.
+            int start = n + (int)Math.Min(100000, Math.Ceiling(z.Magnitude)) + 40;
+            Complex current = 1, nextValue = 0, result = 0;
+            for (int k = start; k >= 1; k--)
+            {
+                Complex previousValue = 2 * k / z * current - nextValue;
+                nextValue = current;
+                current = previousValue;
+                if (k - 1 == n) result = current;
+                if (current.Magnitude > 1e150)
+                {
+                    current *= 1e-150; nextValue *= 1e-150; result *= 1e-150;
+                }
+            }
+            return sign * result * (j0.Magnitude >= j1.Magnitude ? j0 / current : j1 / nextValue);
+        }
+
+        /// <summary>
+        /// Evaluates Bessel Y of order zero or one from its logarithmic series or asymptotic expansion.
+        /// </summary>
+        /// <param name="z">Nonzero argument; the caller uses positive real inputs.</param>
+        /// <param name="n">Base order, zero or one.</param>
+        /// <returns>Y_n(z) for the selected base order.</returns>
+        private static Complex BesselYBase(Complex z, int n)
+        {
+            if (z.Magnitude > 12) return BesselAsymptotic(z, n, true);
+            Complex term = n == 0 ? Complex.One : z / 2;
+            double hk = 0, hnk = n;
+            Complex sum = (hk + hnk - 2 * EulerGamma) * term;
+            for (int k = 1; k < 10000; k++)
+            {
+                term *= -z * z / (4.0 * k * (n + k));
+                hk += 1.0 / k; hnk += 1.0 / (n + k);
+                Complex add = (hk + hnk - 2 * EulerGamma) * term;
+                sum += add;
+                if (add.Magnitude <= SpecialEpsilon * (1 + sum.Magnitude)) break;
+            }
+            return 2 / Math.PI * Complex.Log(z / 2) * BesselSeries(z, n, false) - sum / Math.PI - (n == 0 ? Complex.Zero : 2 / (Math.PI * z));
+        }
+
+        /// <summary>
+        /// Evaluates integer-order Bessel Y, retaining the upper/lower continuation across the negative real axis.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="order">Integer order in [-100000, 100000].</param>
+        /// <returns>Y_order(z), with the upper continuation on the negative real axis.</returns>
+        private static Complex BesselY(Complex z, int order)
+        {
+            if (!IsFinite(z) || order == int.MinValue) return ComplexNaN;
+            int n = Math.Abs(order);
+            if (n > 100000) return ComplexNaN;
+            double sign = order < 0 && (n & 1) != 0 ? -1 : 1;
+            if (z == Complex.Zero) return new Complex(sign * double.NegativeInfinity, 0);
+            if (z.Real < 0)
+                return sign * ((n & 1) == 0 ? 1 : -1) * (BesselY(-z, n) + (z.Imaginary < 0 ? -2 : 2) * Complex.ImaginaryOne * BesselJ(-z, n));
+            if (z.Imaginary < 0) return sign * Complex.Conjugate(BesselY(Complex.Conjugate(z), n));
+            if (z.Imaginary > 0)
+                return sign * (Complex.ImaginaryOne * BesselJ(z, n) - 2 / Math.PI * ImaginaryPower(-n) * BesselK(-Complex.ImaginaryOne * z, n));
+            Complex previous = BesselYBase(z, 0);
+            if (n == 0) return previous;
+            Complex current = BesselYBase(z, 1);
+            for (int k = 1; k < n; k++) { Complex next = 2 * k / z * current - previous; previous = current; current = next; }
+            return sign * current;
+        }
+
+        /// <summary>
+        /// Evaluates integer-order modified Bessel I by rotating the argument of Bessel J.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="n">Integer order in [-100000, 100000].</param>
+        /// <returns>I_n(z), using I_(-n)(z) = I_n(z).</returns>
+        private static Complex BesselI(Complex z, int n)
+        {
+            if (n == int.MinValue) return ComplexNaN;
+            n = Math.Abs(n);
+            return ImaginaryPower(-n) * BesselJ(Complex.ImaginaryOne * z, n);
+        }
+
+        /// <summary>
+        /// Evaluates modified Bessel K of order zero or one using a logarithmic series or a decaying asymptotic expansion.
+        /// </summary>
+        /// <param name="z">Nonzero complex argument in the closed right half-plane.</param>
+        /// <param name="n">Base order, zero or one.</param>
+        /// <returns>K_n(z) for the selected base order.</returns>
+        private static Complex BesselKBase(Complex z, int n)
+        {
+            if (z.Magnitude >= 9)
+            {
+                Complex term = 1, sum = 1;
+                double previous = double.PositiveInfinity;
+                for (int k = 1; k < 200; k++)
+                {
+                    term *= (4.0 * n * n - (2.0 * k - 1) * (2.0 * k - 1)) / (8 * k * z);
+                    if (term.Magnitude > previous) break;
+                    sum += term;
+                    if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                    previous = term.Magnitude;
+                }
+                return Complex.Sqrt(Math.PI / (2 * z)) * Complex.Exp(-z) * sum;
+            }
+            Complex t = n == 0 ? Complex.One : z / 2;
+            double hk = 0, hnk = n;
+            Complex series = (hk + hnk - 2 * EulerGamma) * t;
+            for (int k = 1; k < 10000; k++)
+            {
+                t *= z * z / (4.0 * k * (n + k));
+                hk += 1.0 / k; hnk += 1.0 / (n + k);
+                Complex add = (hk + hnk - 2 * EulerGamma) * t;
+                series += add;
+                if (add.Magnitude <= SpecialEpsilon * (1 + series.Magnitude)) break;
+            }
+            Complex logarithm = Complex.Log(z / 2) * BesselSeries(z, n, true);
+            return n == 0 ? -logarithm + series / 2 : 1 / z + logarithm - series / 2;
+        }
+
+        /// <summary>
+        /// Evaluates integer-order modified Bessel K using base orders, recurrence, and continuation across its cut.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="order">Integer order in [-100000, 100000].</param>
+        /// <returns>K_order(z), with the upper continuation on the negative real axis.</returns>
+        private static Complex BesselK(Complex z, int order)
+        {
+            if (!IsFinite(z) || order == int.MinValue) return ComplexNaN;
+            int n = Math.Abs(order);
+            if (n > 100000) return ComplexNaN;
+            if (z == Complex.Zero) return new Complex(double.PositiveInfinity, 0);
+            if (z.Real < 0)
+                return ((n & 1) == 0 ? 1 : -1) * BesselK(-z, n) - (z.Imaginary < 0 ? -1 : 1) * Complex.ImaginaryOne * Math.PI * BesselI(-z, n);
+            Complex previous = BesselKBase(z, 0);
+            if (n == 0) return previous;
+            Complex current = BesselKBase(z, 1);
+            for (int k = 1; k < n; k++) { Complex next = 2 * k / z * current + previous; previous = current; current = next; }
+            return current;
+        }
+
+        /// <summary>
+        /// Evaluates ordinary Struve H or modified Struve L using a series, recurrence, or transformed quadrature.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="n">Integer order in [-100000, 100000].</param>
+        /// <param name="modified">True selects the modified function; false selects the ordinary function.</param>
+        /// <returns>H_n(z) or L_n(z), or NaN for rejected inputs.</returns>
+        private static Complex StruveValue(Complex z, int n, bool modified)
+        {
+            if (!IsFinite(z) || n < -100000 || n > 100000) return ComplexNaN;
+            if (z == Complex.Zero) return n >= 0 ? Complex.Zero : n == -1 ? (Complex)(2 / Math.PI) : ComplexNaN;
+            if (n < 0)
+            {
+                Complex previous = StruveValue(z, 0, modified);
+                Complex current = 2 / Math.PI + (modified ? 1 : -1) * StruveValue(z, 1, modified);
+                for (int k = -1; k > n; k--)
+                {
+                    Complex source = Complex.Pow(z / 2, k) / (SqrtPi * GammaValue(k + 1.5));
+                    Complex next = 2 * k / z * current + (modified ? 1 : -1) * previous + source;
+                    previous = current; current = next;
+                }
+                return current;
+            }
+            if (z.Magnitude < 4)
+            {
+                Complex term = Complex.Exp((n + 1) * Complex.Log(z / 2) - GammaLog(1.5) - GammaLog(n + 1.5));
+                Complex sum = term;
+                for (int k = 0; k < 1000; k++)
+                {
+                    term *= (modified ? 1 : -1) * z * z / (4 * (k + 1.5) * (k + n + 1.5));
+                    sum += term;
+                    if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                }
+                return sum;
+            }
+            // The substitution t=cos(theta) removes the endpoint singularity in
+            // the integral representation, including order zero (DLMF 11.5.1-2).
+            int panels = Math.Max(4, (int)Math.Min(100000, Math.Ceiling(z.Magnitude / 4 + n / 4.0)));
+            Complex integral = IntegrateGauss(theta => Math.Pow(Math.Sin(theta), 2.0 * n) *
+                (modified ? Complex.Sinh(z * Math.Cos(theta)) : Complex.Sin(z * Math.Cos(theta))), Math.PI / 2, panels);
+            return 2 / SqrtPi * Complex.Exp(n * Complex.Log(z / 2) - GammaLog(n + 0.5)) * integral;
+        }
+        #endregion
+
+        #region Internal probability-distribution kernels
+        // Reuse the audited double kernels without rounding intermediate distribution values to float.
+        /// <summary>
+        /// Provides the double-precision log-gamma kernel for probability-distribution calculations.
+        /// </summary>
+        /// <param name="x">Positive real gamma argument.</param>
+        /// <returns>The natural logarithm of Gamma(x) for positive x.</returns>
+        internal static double DistributionLogGamma(double x) => GammaLog(x);
+        /// <summary>
+        /// Provides the double-precision log-beta kernel for positive distribution shape parameters.
+        /// </summary>
+        /// <param name="a">Positive first beta shape parameter.</param>
+        /// <param name="b">Positive second beta shape parameter.</param>
+        /// <returns>The natural logarithm of B(a, b).</returns>
+        internal static double DistributionLogBeta(double a, double b) => BetaLog(a, b);
+        /// <summary>
+        /// Evaluates the real digamma function for positive distribution shape parameters.
+        /// </summary>
+        /// <param name="x">Positive real gamma argument.</param>
+        /// <returns>The logarithmic derivative of Gamma(x).</returns>
+        internal static double DistributionDigamma(double x) => Polygamma(new Complex(x, 0), false).Real;
+        /// <summary>
+        /// Evaluates a regularized lower or upper incomplete gamma function without intermediate float rounding.
+        /// </summary>
+        /// <param name="a">Positive finite gamma shape parameter.</param>
+        /// <param name="x">Nonnegative integration limit.</param>
+        /// <param name="upper">True selects the upper tail; false selects the lower integral.</param>
+        /// <returns>P(a, x) or Q(a, x), according to upper.</returns>
+        internal static double DistributionGamma(double a, double x, bool upper) => IncompleteGamma(a, x, upper, true);
+        /// <summary>
+        /// Evaluates the regularized incomplete beta function without intermediate float rounding.
+        /// </summary>
+        /// <param name="a">Positive finite first beta shape parameter.</param>
+        /// <param name="b">Positive finite second beta shape parameter.</param>
+        /// <param name="x">Integration limit in [0, 1].</param>
+        /// <returns>The regularized lower ratio I_x(a, b).</returns>
+        internal static double DistributionBeta(double a, double b, double x) => IncompleteBeta(a, b, x, true);
+        /// <summary>
+        /// Evaluates the real complementary error function in double precision for probability tails.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>erfc(x), including the real infinite-argument limits.</returns>
+        internal static double DistributionErfc(double x) => ErfcValue(x);
+        /// <summary>
+        /// Evaluates exp(x) - 1 without cancellation near zero for distribution calculations.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>exp(x) - 1, retaining small differences near zero.</returns>
+        internal static double DistributionExpm1(double x) => Expm1(x);
+        #endregion
     }
 }

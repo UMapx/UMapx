@@ -19,9 +19,8 @@ special-function checks continue to pass.
 
 ## Arithmetic changes
 
-Production changes are in [Maths.cs](../sources/Core/Maths.cs),
-[Complex32.cs](../sources/Core/Complex32.cs), and the private helpers in
-[Maths.Arithmetic.cs](../sources/Core/Maths.Arithmetic.cs). Public declarations,
+Production changes are in [Maths.cs](../sources/Core/Maths.cs), including its
+private helpers, and [Complex32.cs](../sources/Core/Complex32.cs). Public declarations,
 parameter types/defaults, and result types are unchanged.
 
 - Complex division and multiplication use double-precision intermediate products.

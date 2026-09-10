@@ -1,5 +1,9 @@
 # Source coverage inventory
 
+Historical file names and coverage counts are retained. Links for consolidated
+helpers now point to their primary class files; see the
+[consolidation report](../helper-consolidation-2026-09-11.md).
+
 Each repository source file is listed. Execution coverage is not proof of mathematical correctness.
 Missing methods and exact uncovered lines are available in the adjacent JSON and CSV files.
 
@@ -61,13 +65,13 @@ Missing methods and exact uncovered lines are available in the adjacent JSON and
 | [sources/Core/RotationMode.cs](../../sources/Core/RotationMode.cs) | 0 / 0 | n/a | no instrumented sequence points (interface, enum, delegate, or conditional code) |
 | [sources/Core/SizeFloat.cs](../../sources/Core/SizeFloat.cs) | 5 / 16 | 31.25% | algorithm or executable support |
 | [sources/Core/SizeInt.cs](../../sources/Core/SizeInt.cs) | 5 / 16 | 31.25% | algorithm or executable support |
-| [sources/Core/Special.Bessel.cs](../../sources/Core/Special.Bessel.cs) | 129 / 132 | 97.73% | algorithm or executable support |
+| [sources/Core/Special.Bessel.cs](../../sources/Core/Special.cs) | 129 / 132 | 97.73% | algorithm or executable support |
 | [sources/Core/Special.cs](../../sources/Core/Special.cs) | 593 / 624 | 95.03% | algorithm or executable support |
-| [sources/Core/Special.Elementary.cs](../../sources/Core/Special.Elementary.cs) | 30 / 34 | 88.24% | algorithm or executable support |
-| [sources/Core/Special.ErrorFunctions.cs](../../sources/Core/Special.ErrorFunctions.cs) | 131 / 144 | 90.97% | algorithm or executable support |
-| [sources/Core/Special.Integrals.cs](../../sources/Core/Special.Integrals.cs) | 59 / 61 | 96.72% | algorithm or executable support |
-| [sources/Core/Special.Numerics.cs](../../sources/Core/Special.Numerics.cs) | 186 / 197 | 94.42% | algorithm or executable support |
-| [sources/Core/Special.Series.cs](../../sources/Core/Special.Series.cs) | 104 / 105 | 99.05% | algorithm or executable support |
+| [sources/Core/Special.Elementary.cs](../../sources/Core/Special.cs) | 30 / 34 | 88.24% | algorithm or executable support |
+| [sources/Core/Special.ErrorFunctions.cs](../../sources/Core/Special.cs) | 131 / 144 | 90.97% | algorithm or executable support |
+| [sources/Core/Special.Integrals.cs](../../sources/Core/Special.cs) | 59 / 61 | 96.72% | algorithm or executable support |
+| [sources/Core/Special.Numerics.cs](../../sources/Core/Special.cs) | 186 / 197 | 94.42% | algorithm or executable support |
+| [sources/Core/Special.Series.cs](../../sources/Core/Special.cs) | 104 / 105 | 99.05% | algorithm or executable support |
 | [sources/Core/StringOptions.cs](../../sources/Core/StringOptions.cs) | 17 / 46 | 36.96% | algorithm or executable support |
 | [sources/Core/Xml.cs](../../sources/Core/Xml.cs) | 5 / 13 | 38.46% | serialization contract; no mathematical algorithm |
 | [sources/Decomposition/Arnoldi.cs](../../sources/Decomposition/Arnoldi.cs) | 30 / 31 | 96.77% | algorithm or executable support |

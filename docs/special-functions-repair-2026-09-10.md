@@ -31,7 +31,9 @@ counterexamples in `MathematicalRegressionTests` also pass.
 ## What changed
 
 Production changes are confined to `sources/Core/Special.cs` and six new partial
-class files in the same directory. Public method signatures and return types
+class files in the same directory. Those helper files were subsequently
+[consolidated into Special.cs](helper-consolidation-2026-09-11.md).
+Public method signatures and return types
 are preserved. Intermediate calculations use `double` and `System.Numerics.Complex`;
 conversion to public single-precision types happens at the boundary.
 

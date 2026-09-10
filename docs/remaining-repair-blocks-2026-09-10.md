@@ -1,14 +1,15 @@
 # Remaining repair blocks — updated September 11, 2026
 
 After the [approximation and local-filter repairs](approximation-repair-2026-09-11.md),
-**183 failures remain in seven open blocks**. B01–B05 are closed. The latest step
+**183 failures remain in seven open blocks**. B01–B05 are closed. The latest mathematical repair
 resolved all 15 B05 failures and added 595 passing cases, with no regressions
 or removed tests. Every remaining failing test ID belongs to exactly one block.
 The complete verified run has 14,707 cases, with 14,524 passed and no skipped cases.
 
 **Recommended next: B06 — matrix decompositions (15 failures).**
 Start with the zero-matrix Schur termination defect, then SVD and GEVD.
-No failures outside B05 changed in the latest run.
+The subsequent [helper consolidation](helper-consolidation-2026-09-11.md)
+preserved every test outcome and all block assignments.
 
 The table is a suggested work order. Blocks without dependencies can be taken earlier.
 The IsPrime(1) termination defect is fixed. Zero-matrix Schur remains a termination
@@ -386,8 +387,9 @@ Sources: [Boundary.cs](../sources/Video/Internal/Boundary.cs), [MJPEGStreamParse
 
 ## Evidence and commands
 
-- [Current block metadata, focused filters, and all 183 unique test-ID assignments](audit-approximation/repair-blocks.json).
-- [Current individual failures](audit-approximation/failures.json) and [run summary](audit-approximation/summary.json).
+- [Current block metadata, focused filters, and all 183 unique test-ID assignments](audit-consolidation/repair-blocks.json).
+- [Current individual failures](audit-consolidation/failures.json) and [run summary](audit-consolidation/summary.json).
+- [Previous B05 snapshot](audit-approximation/repair-blocks.json).
 - [Approximation and local-filter repair results](approximation-repair-2026-09-11.md).
 - [Previous 198-case planning snapshot](audit-matrix-distribution/repair-blocks.json).
 - [Matrix and distribution repair results](matrix-distribution-repair-2026-09-10.md).
@@ -400,7 +402,7 @@ Sources: [Boundary.cs](../sources/Video/Internal/Boundary.cs), [MJPEGStreamParse
 Run a block's focused test families from the repository root:
 
 ```powershell
-$plan = Get-Content -Raw docs/audit-approximation/repair-blocks.json | ConvertFrom-Json
+$plan = Get-Content -Raw docs/audit-consolidation/repair-blocks.json | ConvertFrom-Json
 $block = $plan.blocks | Where-Object id -eq 'B06'
 dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter $block.focused_test_filter
 ```
@@ -417,4 +419,4 @@ dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filte
 ```
 
 The full suite currently exits with 1 because all 183 remaining expectations stay enabled.
-The historical snapshots are retained; the current JSON matches the verified approximation/filter repair run.
+The historical snapshots are retained; the current JSON matches the verified helper-consolidation run.
