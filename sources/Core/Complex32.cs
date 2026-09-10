@@ -38,7 +38,7 @@ namespace UMapx.Core
         {
             get
             {
-                return Maths.Sqrt(Real * Real + Imag * Imag);
+                return (float)Complex.Abs(this);
             }
         }
         /// <summary>
@@ -48,7 +48,7 @@ namespace UMapx.Core
         {
             get
             {
-                return Real * Real + Imag * Imag;
+                return (float)((double)Real * Real + (double)Imag * Imag);
             }
         }
         /// <summary>
@@ -214,10 +214,10 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 operator *(Complex32 a, Complex32 b)
         {
-            float aRe = a.Real, aIm = a.Imag;
-            float bRe = b.Real, bIm = b.Imag;
+            double aRe = a.Real, aIm = a.Imag;
+            double bRe = b.Real, bIm = b.Imag;
 
-            return new Complex32(aRe * bRe - aIm * bIm, aRe * bIm + aIm * bRe);
+            return new Complex32((float)(aRe * bRe - aIm * bIm), (float)(aRe * bIm + aIm * bRe));
         }
         /// <summary>
         /// Multiplies real number by complex number.
@@ -249,12 +249,13 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 operator /(Complex32 a, Complex32 b)
         {
-            float aRe = a.Real, aIm = a.Imag;
-            float bRe = b.Real, bIm = b.Imag;
-            float abs = bRe * bRe + bIm * bIm;
-            float inv = 1 / abs;
+            // Every product of finite float components fits in double, including subnormals.
+            double aRe = a.Real, aIm = a.Imag;
+            double bRe = b.Real, bIm = b.Imag;
+            double abs = bRe * bRe + bIm * bIm;
 
-            return new Complex32((aRe * bRe + aIm * bIm) * inv, (aIm * bRe - aRe * bIm) * inv);
+            return new Complex32((float)((aRe * bRe + aIm * bIm) / abs),
+                                 (float)((aIm * bRe - aRe * bIm) / abs));
         }
         /// <summary>
         /// Divides complex number by real number.
@@ -274,12 +275,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 operator /(float a, Complex32 b)
         {
-            // (a + 0i) / (bRe + i*bIm) = a*(bRe - i*bIm) / (bRe^2 + bIm^2)
-            float bRe = b.Real;
-            float bIm = b.Imag;
-            float abs = bRe * bRe + bIm * bIm;
-
-            return new Complex32(a * bRe / abs, -a * bIm / abs);
+            return new Complex32(a, 0) / b;
         }
         #endregion
 

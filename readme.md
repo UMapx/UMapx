@@ -66,10 +66,15 @@ using UMapx.Window;
 **MIT**  
 
 # Mathematical audit
-The [special-function repair report](docs/special-functions-repair-2026-09-10.md)
-records 423 resolved audit failures, no regressions on the original cases, and
-3,749 passing dedicated special-function checks. The complete suite currently
-has 10,054 passing and 450 failing cases; the remaining defects stay visible.
+The [arithmetic and number-theory repair report](docs/arithmetic-repair-2026-09-10.md)
+records 139 resolved failures and 1,626 added passing tests, with no regressions or
+removed tests. The complete suite has **11,819 passing and 311 failing cases**.
+The [remaining repair blocks](docs/remaining-repair-blocks-2026-09-10.md) assign
+the remaining failures to 10 open blocks; matrix operations and complex statistics
+are the recommended next step.
+
+The earlier [special-function repair report](docs/special-functions-repair-2026-09-10.md)
+records 423 resolved failures. All 3,749 dedicated special-function checks still pass.
 
 The [expanded audit report](docs/math-audit-expanded-2026-09-10.md) records known
 counterexamples, repair priorities, and coverage limits. See the

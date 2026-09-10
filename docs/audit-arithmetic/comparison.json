@@ -1,0 +1,867 @@
+{
+  "baseline_cases": 10504,
+  "current_cases": 12130,
+  "common_cases": 10504,
+  "baseline_totals": {
+    "Passed": 10054,
+    "Failed": 450
+  },
+  "current_totals": {
+    "Passed": 11819,
+    "Failed": 311
+  },
+  "added_totals": {
+    "Passed": 1626
+  },
+  "resolved_by_suite": {
+    "CoreScalarAuditTests": 19,
+    "MathematicalRegressionTests": 12,
+    "NumberTheoryAuditTests": 108
+  },
+  "resolved_count": 139,
+  "regression_count": 0,
+  "added_count": 1626,
+  "removed_count": 0,
+  "resolved": [
+    {
+      "id": "be5cd423-59fb-8bde-e5e0-4c37ec72a703",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.ComplexElementaryFunctionsRespectPrincipalValues(name: \"Acosh\", real: -1, imaginary: -20)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "83a61df7-db61-68ee-f670-9b0912b14304",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.ComplexElementaryFunctionsRespectPrincipalValues(name: \"Acosh\", real: -2, imaginary: -0.5)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "f1467377-a318-6eea-96d4-a9ad6d23deef",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.ComplexElementaryFunctionsRespectPrincipalValues(name: \"Acosh\", real: -2, imaginary: 0.5)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "442dbfd8-455c-17b5-8c1c-496353d6abb8",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.ComplexElementaryFunctionsRespectPrincipalValues(name: \"Actan\", real: -1, imaginary: -20)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "be2097db-bcb7-d03b-32e3-c0e07b148c35",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.ComplexElementaryFunctionsRespectPrincipalValues(name: \"Actan\", real: -2, imaginary: -0.5)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "c3ef3c17-5ce8-578b-4e4c-84cdc8150f59",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.ComplexElementaryFunctionsRespectPrincipalValues(name: \"Actan\", real: -2, imaginary: 0.5)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "51087eba-689c-03c2-311c-5c91be4060af",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.ComplexElementaryFunctionsRespectPrincipalValues(name: \"Actan\", real: 0.200000003, imaginary: 0.400000006)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ec91202c-2f7a-e8dd-7b8e-6632c2cf85f5",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.ComplexElementaryFunctionsRespectPrincipalValues(name: \"Actan\", real: 1, imaginary: 20)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "b782ecbd-15e5-16b8-2f8b-c049626212f0",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.ComplexElementaryFunctionsRespectPrincipalValues(name: \"Actan\", real: 4, imaginary: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "9eea3bd6-77c4-ede0-1932-4dd2bc8fd29e",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.RealElementaryFunctionsAgreeWithDoublePrecision(name: \"Asinh\", x: -100, expected: -5.2983423656105888)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "c1efc8fc-d0a8-6aa5-f2a5-9ea61c0271c7",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.RealElementaryFunctionsAgreeWithDoublePrecision(name: \"Asinh\", x: -10000, expected: -9.9034875550361274)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "37cce447-4f3f-6c6a-1e79-84c0695f9cfa",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.RealElementaryFunctionsAgreeWithDoublePrecision(name: \"Ctanh\", x: -100, expected: -1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "6b685591-c4c9-eec8-8668-f1d7e7e55d67",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.RealElementaryFunctionsAgreeWithDoublePrecision(name: \"Ctanh\", x: -10000, expected: -1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "169605cb-4de0-ccf8-0ac2-9bb2b978616d",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.RealElementaryFunctionsAgreeWithDoublePrecision(name: \"Ctanh\", x: 100, expected: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "7cba72d4-d3f2-7434-ef8b-430912559d57",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.RealElementaryFunctionsAgreeWithDoublePrecision(name: \"Ctanh\", x: 10000, expected: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "6fd45b05-7cec-e4d6-55fd-1b995d50ad95",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.RealElementaryFunctionsAgreeWithDoublePrecision(name: \"Tanh\", x: -100, expected: -1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "232a04fe-ce64-9d1f-0e75-f0c7c460303a",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.RealElementaryFunctionsAgreeWithDoublePrecision(name: \"Tanh\", x: -10000, expected: -1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "22cd2b84-f348-da30-b99a-4a99a265c60f",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.RealElementaryFunctionsAgreeWithDoublePrecision(name: \"Tanh\", x: 100, expected: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "45893a8c-32d5-7ef2-5f99-c787817744b2",
+      "suite": "CoreScalarAuditTests",
+      "case": "UMapx.Tests.CoreScalarAuditTests.RealElementaryFunctionsAgreeWithDoublePrecision(name: \"Tanh\", x: 10000, expected: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "578c4d96-1f74-1f0c-5d84-3906767f18e4",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.AsinhAvoidsCancellationOnNegativeArguments",
+      "outcome": "Passed"
+    },
+    {
+      "id": "411774b1-3e8c-844b-7753-82ef3c6c048d",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.ComplexAcoshUsesPrincipalBranchOnNegativeRealAxis",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ced3f2b0-20ad-81d4-e679-6f083383ca47",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.ComplexArccotangentAgreesWithPositiveRealBranch",
+      "outcome": "Passed"
+    },
+    {
+      "id": "de592900-eae4-4d65-34f9-2e738f88740f",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.ComplexDivisionIsInvariantToScaling(scale: 1.00000002E+20)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "9a2cbc67-3d48-628b-0ba6-a2fc40758790",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.ComplexDivisionIsInvariantToScaling(scale: 9.99999968E-21)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "8e4dc9c5-2833-165e-f6b4-020a9fd1fad1",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.CubicUsesRealCubeRootsForNegativeRadicands(a: 0, b: -3, c: -2)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ef44b23f-2e2d-98fc-2d69-b2c88b91fb40",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.CubicUsesRealCubeRootsForNegativeRadicands(a: 0, b: 0, c: -1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "c0cee58c-9ae1-aefb-b373-008077526ab4",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.NegativeRealBaseSupportsComplexExponent",
+      "outcome": "Passed"
+    },
+    {
+      "id": "074f73cb-9f1d-3a76-bc74-072975705b8a",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.QuadraticHandlesZeroLinearCoefficient(constant: -1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "5df513e5-6d83-63a1-9e31-5d0843915bf9",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.QuadraticHandlesZeroLinearCoefficient(constant: 0)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "f2a3fee8-8646-adb3-e1c5-8925d08cb5f1",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.QuadraticHandlesZeroLinearCoefficient(constant: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "46418f5a-d6f8-d699-5de3-9932593fb34a",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.TanhAvoidsInfinityDividedByInfinity",
+      "outcome": "Passed"
+    },
+    {
+      "id": "c41f8e3a-8c06-8ce5-5f52-05af9051eb09",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.BaseConversionsPreserveExactIntegerValues(value: 0)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "d025326e-76d1-4e63-a064-7f4a20a3cf3c",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.BaseConversionsPreserveExactIntegerValues(value: 123456789)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ef5f5f67-d2bb-2b6d-f213-d459d06bf910",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.BaseConversionsPreserveExactIntegerValues(value: 987654321012345)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "5720435b-d174-00ec-07ae-e2c8736f542d",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.CompositeNumbersAreNotDeclaredPrimeWhenPollardFailsToSplitThem(n: 169)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a9f3b894-61d6-9a97-dcd4-dad9f6dd2a16",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.CompositeNumbersAreNotDeclaredPrimeWhenPollardFailsToSplitThem(n: 25)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ddfb0f41-41d3-6c4d-2b9d-bc634e312c31",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.CoprimeSearchActuallyReturnsACoprime(n: 12)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "8be3a8a8-c88a-c9a9-6420-36927769a87d",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.CoprimeSearchActuallyReturnsACoprime(n: 6)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "5e4fd2d9-50f4-8eb7-2572-06e4bdf7d6d6",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.DecimalDigitVectorsRoundTripIndependentlyOfBaseConversion(value: 0)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "bb8027be-5cd0-c2d8-bf3b-ed16237e6494",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.DecimalDigitVectorsRoundTripIndependentlyOfBaseConversion(value: 123456789)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "8a2957b4-29ae-6ff4-68f7-8d987b3936b9",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.DecimalDigitVectorsRoundTripIndependentlyOfBaseConversion(value: 987654321012345)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ae22f1bf-7877-1a89-961b-57d164022d61",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerGcdLcmAndBezoutAgreeWithExactArithmetic(a: -12, b: 18)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "986e4914-0374-ff16-9c42-da15d037b6ea",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerGcdLcmAndBezoutAgreeWithExactArithmetic(a: 12, b: -18)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "58b6f5ba-a4ba-b509-5fcb-59fc4352399f",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerGcdLcmAndBezoutAgreeWithExactArithmetic(a: 12345, b: 54321)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "89320906-7eb1-7e4f-62bc-4966418f7b15",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerGcdLcmAndBezoutAgreeWithExactArithmetic(a: 18, b: -6)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "7a21366f-a796-5611-7477-67497e6df425",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerGcdLcmAndBezoutAgreeWithExactArithmetic(a: 50000, b: 50000)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "b2ee3a1b-9a42-4009-1385-c25b3d13f667",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Coprime\", n: 100, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e72685d6-fb24-7a35-d7fc-22ecde45937d",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Coprime\", n: 100, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "2c641057-ecda-2042-f9a1-bf57b8295252",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Coprime\", n: 12, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "635c9dfa-9930-fd95-a01c-c067622fd983",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Coprime\", n: 12, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "da993688-4b99-f436-60f9-6808b0d8f865",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Coprime\", n: 2, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a69bfbb9-477a-7052-acb4-2756b2153036",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Coprime\", n: 2, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "f5417767-a4b0-6e7d-de6c-ccb829f88ce3",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Coprime\", n: 3, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "fa703baa-b7c9-28ae-c47a-38234c98ba9c",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Coprime\", n: 3, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "acb60568-134d-7c2a-2ab8-a4f21b8a60ef",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Coprime\", n: 50000, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "9026ff0c-f093-3b2e-646f-1f7e6c161e58",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Coprime\", n: 50000, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a10711d8-fbb5-c84b-1674-1fc6d8d89742",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Coprime\", n: 6, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a5016d87-0dec-b54e-8b27-6bf26838f7b8",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Coprime\", n: 6, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "664dac4f-fb13-c94c-0945-9fbc5b3d4fa2",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Coprime\", n: 72, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "9023ab8a-df41-a4db-d80d-8f3229c6bb9f",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Coprime\", n: 72, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "d4a85ac2-aa46-f226-8ad1-cb009e33a7df",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Digits\", n: 100, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a4292bf2-6a20-f8c5-cb3a-1254d9633d75",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Digits\", n: 100, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "42f7c263-af31-b869-7294-fd95670c9551",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Digits\", n: 12, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e8006a41-5027-b53c-e546-b4e5b5ee660d",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Digits\", n: 12, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "84a0ef8f-1d13-2748-9fd6-2c9874d0d208",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Digits\", n: 35, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "5bbd38c8-11ac-919f-f3b1-4dc6b88202d5",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Digits\", n: 35, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "cb961168-df8e-97cd-2740-141094a7f521",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Digits\", n: 50000, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "90c90a46-59ed-faaa-9f7b-6629e43dcd8c",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Digits\", n: 50000, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "4cdd5f2a-47df-673c-2243-4ad7ce05779c",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Digits\", n: 72, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "0b7874d8-3a50-d5ee-3fea-691c2a687ddd",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Digits\", n: 72, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ee8b1235-5b99-4591-4483-01b459003c13",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Digits\", n: 97, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "f6cdd9b4-7a1d-129c-2d3c-dc57fd540090",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Digits\", n: 97, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "4262b74d-0a5a-90d4-2c17-8555e97c3371",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Etf\", n: 100, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "0b75d5f8-8438-68ab-48ea-febdbd804680",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Etf\", n: 100, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "7ebab7ea-36c6-c2dc-ce7c-ba702aa4b8cb",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Etf\", n: 12, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "09c2a155-438d-7dbf-4e78-c444cadc6d86",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Etf\", n: 12, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "d96141c6-92e2-9645-38b2-c110a2d1e0b0",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Etf\", n: 121, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "82f2e1d1-1bb6-0679-3ba3-6b85b5d9b75c",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Etf\", n: 121, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "cbc687a2-e814-74a7-1931-9e1ce0fc675c",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Etf\", n: 3, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "9fb90e1f-767b-0aa8-d462-559566f35980",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Etf\", n: 3, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "d2fed806-b382-8d48-06fc-bb28e4605f28",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Etf\", n: 50000, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e2a4161d-4f15-6f50-7fab-50f954acffd6",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Etf\", n: 50000, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "56e0c5a0-85cc-a639-56b2-b2dc97267fdf",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Etf\", n: 6, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ee1443ea-e1e6-ddf9-c09a-d1ba3d7c8736",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Etf\", n: 6, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "7e3fc55f-7d30-4dd8-e723-c52c013b59fd",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Etf\", n: 72, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "607f8a26-1413-408c-b12c-8876d3056676",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Etf\", n: 72, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ec36a14f-8054-2ad1-e02e-b646de63c446",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 100, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e5dc5102-b1ab-e4ee-e4b0-e61345d4b6e1",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 100, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "465b68d3-5d14-a67c-7388-ed1cf5addc27",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 12, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "50bf4751-4837-6eb5-5a91-8f536ad5640e",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 12, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "49e76f6e-a622-d325-50c2-51fbc3733842",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 121, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "1b82a8e4-5efc-cc76-dc93-9a4e857748e7",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 121, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a01424ee-03bc-f89d-d93d-910ef75fa5f4",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 2, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "3cd2930f-bd1c-04ed-4631-390a6f595be3",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 2, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e6029c25-a878-ea95-69fe-9ac3ac9b8fa9",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 3, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "022ac63b-db8c-03bf-543c-34847b2a7962",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 3, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "6d41956d-4858-4354-4989-59f73cf3e60a",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 35, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a17ed85c-6624-4579-b1be-864ef313bf8b",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 35, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "bad63a3f-c27a-1299-a75d-ac3c1fb74f10",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 50000, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "741b54a1-175d-db55-fac9-9d81788da5b7",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 50000, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "7fcf8b1b-2d3c-4e09-a46a-049497fbb327",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 6, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "6c41d547-611a-f7e2-0131-24a718c994b1",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 6, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "c5361041-a8f9-3e8b-9019-3f0c65e3c17e",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 72, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "c8931a4e-9b80-4b88-d4c5-7384e812e5f7",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 72, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "f08d3623-a5fe-86e4-e3a8-899363e5242f",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 97, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ca843d1c-0c7e-eccc-e404-4a5fc412dd1b",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Euclidean\", n: 97, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "c529e9a9-5180-ab5b-5d2d-dd725b68a417",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Itf\", n: 100, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "600a27ee-9253-f377-3836-f67d5ad1d5df",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Itf\", n: 100, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "1fbb7545-d960-b76f-85f4-83eb17e0e1ca",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Itf\", n: 50000, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "104a74aa-8e49-e7ed-d280-84d53b0918ef",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Itf\", n: 50000, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "47390bc9-69df-ffad-b826-9d73632f5f9e",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Lcm\", n: 50000, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "57e9c56a-1007-c194-b0ac-34d156e47752",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 100, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "496f4fda-e03a-6f45-6cb8-76034c5ecfd7",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 100, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a8ac0196-c2f0-02bc-3d52-baf2d3508565",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 12, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "46bb6e03-eb3f-9ebf-e1d3-6f19b80e48aa",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 12, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "0befe6c4-80ed-2b3f-95f5-97f446240f2b",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 121, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "b6611a61-5412-4f1f-383f-4bded7bdc88b",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 121, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "c37540c9-94aa-f2ea-f3fc-0ba37c16bb8f",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 2, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "0cf739af-0780-76dd-eda0-fb525bb12839",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 2, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "d5fb9599-e4a1-3b18-d314-847b2853cb05",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 3, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "12289fed-735f-f2c4-e529-6f6650ba5743",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 3, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "1bdaf516-0331-258d-86f0-a8c7860fda3a",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 35, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e0491790-294c-bcac-a5a2-ce80f90a86ea",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 35, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "6cf5bbb4-3c9b-1f59-51a9-3f28f6178745",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 50000, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "24a1d7cb-19fd-2051-4f2a-63723e9b3eee",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 50000, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "d1ade324-e961-742a-6e66-1172bea9f3d2",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 6, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ca5b7594-b000-20d8-50f8-81cc796aba9a",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 6, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "147a9286-b3d2-d02b-8d2d-00bc63263170",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 72, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "6ecf9956-b77d-e226-33fa-28815bd27f64",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 72, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e5ca037b-2fad-a47b-98cb-11d199758f57",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 97, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "7dcf4271-d937-6abc-b98b-32c536f30cdb",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"ModPow\", n: 97, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ed06c037-1c49-8aaf-6335-e10b3392ff6d",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Radical\", n: 100, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ed69a2da-edc2-a19b-502c-8065085b6a07",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Radical\", n: 100, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "8a999aef-3a2c-773e-c4f1-ca230f082528",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Radical\", n: 50000, wide: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "294f54ac-a061-a8fe-9286-36087fb76fe7",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic(operation: \"Radical\", n: 50000, wide: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "4adb2e77-c20d-f3b7-8b50-8b3fe294da88",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.ModularExponentiationMatchesBigInteger(a: 2, exponent: 0, modulus: 7)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "84d40f1a-8dfb-6f49-1b72-83c96ab53bbc",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.OneIsNotPrimeAndTheCheckTerminates(operation: \"IsPrimeInt\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "48aec962-5ca2-d486-32a1-51962815b1b9",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.OneIsNotPrimeAndTheCheckTerminates(operation: \"IsPrimeLong\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a61f9ea6-f8ef-2994-0142-2ae3a7a89f21",
+      "suite": "NumberTheoryAuditTests",
+      "case": "UMapx.Tests.NumberTheoryAuditTests.PrimeSieveFactorizationTotientAndRadicalAgreeWithIntegerDefinitions",
+      "outcome": "Passed"
+    }
+  ],
+  "regressions": [],
+  "removed": [],
+  "evidence_sha256": {
+    "baseline_trx": "f1ed253894bca5e7cb1345e06e0654e1a498a3b16eb953cbab799199b9f407bd",
+    "current_trx": "152c5a82c57a2dd644b701a8c2aa1c51e492f3b7ba1ae51c90680374fc5c6bed"
+  }
+}

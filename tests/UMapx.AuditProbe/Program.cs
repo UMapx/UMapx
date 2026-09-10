@@ -12,6 +12,7 @@ public static class Program
         {
             "IsPrimeInt" => Maths.IsPrime(int.Parse(args[1])),
             "IsPrimeLong" => Maths.IsPrime(long.Parse(args[1])),
+            "FactorLong" => string.Join(",", Maths.Itf(long.Parse(args[1]))),
             "SchurZero" => SchurZero(int.Parse(args[1])),
             _ => throw new ArgumentException("Unknown audit operation.")
         });

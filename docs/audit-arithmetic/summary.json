@@ -1,0 +1,239 @@
+{
+  "source_commit": "74f79bfa094115b3e2452cf328d5fca98faf9f7e",
+  "source_digest": "1e8cc12e66233a56db4235b25289a408cbec1e9c7ed31435392aef0683d9fb86",
+  "source_files": 433,
+  "totals": {
+    "Passed": 11819,
+    "Failed": 311
+  },
+  "suites": {
+    "AdditionalTransformAuditTests": {
+      "Passed": 22,
+      "Failed": 6
+    },
+    "AnalysisAuditTests": {
+      "Passed": 133,
+      "Failed": 1
+    },
+    "ArithmeticRepairTests": {
+      "Passed": 1486
+    },
+    "ColorSpaceAuditTests": {
+      "Passed": 909,
+      "Failed": 19
+    },
+    "CoreScalarAuditTests": {
+      "Passed": 564
+    },
+    "DecompositionAuditTests": {
+      "Passed": 203,
+      "Failed": 15
+    },
+    "DistanceAuditTests": {
+      "Passed": 99,
+      "Failed": 3
+    },
+    "DistributionReferenceTests": {
+      "Passed": 1941,
+      "Failed": 50
+    },
+    "DistributionShapeAuditTests": {
+      "Passed": 130,
+      "Failed": 11
+    },
+    "FramedTransformAuditTests": {
+      "Passed": 48
+    },
+    "GeometryAndRenderingAuditTests": {
+      "Failed": 17,
+      "Passed": 43
+    },
+    "ImagingAuditTests": {
+      "Passed": 85,
+      "Failed": 24
+    },
+    "ImagingCompositionAuditTests": {
+      "Passed": 33
+    },
+    "ImagingInvariantAuditTests": {
+      "Passed": 195
+    },
+    "KernelAndContainerAuditTests": {
+      "Passed": 188,
+      "Failed": 2
+    },
+    "MathematicalIdentityTests": {
+      "Passed": 48
+    },
+    "MathematicalRegressionTests": {
+      "Failed": 18,
+      "Passed": 25
+    },
+    "MatrixAuditTests": {
+      "Passed": 197,
+      "Failed": 27
+    },
+    "MatrixFilterAuditTests": {
+      "Passed": 62,
+      "Failed": 2
+    },
+    "MatrixStructureAuditTests": {
+      "Passed": 47,
+      "Failed": 20
+    },
+    "NumberTheoryAuditTests": {
+      "Passed": 230
+    },
+    "NumberTheoryRepairTests": {
+      "Passed": 140
+    },
+    "RemainingImagingAuditTests": {
+      "Passed": 39,
+      "Failed": 2
+    },
+    "ResponseAuditTests": {
+      "Passed": 43,
+      "Failed": 2
+    },
+    "SimdAuditTests": {
+      "Passed": 4
+    },
+    "SpecialFunctionBoundaryTests": {
+      "Passed": 22
+    },
+    "SpecialFunctionReferenceTests": {
+      "Passed": 1654
+    },
+    "SpecialFunctionRepairTests": {
+      "Passed": 2073
+    },
+    "TransformAuditTests": {
+      "Passed": 517,
+      "Failed": 14
+    },
+    "UtilityContractAuditTests": {
+      "Passed": 3,
+      "Failed": 2
+    },
+    "VideoAuditTests": {
+      "Failed": 5,
+      "Passed": 13
+    },
+    "WaveletAuditTests": {
+      "Passed": 354,
+      "Failed": 55
+    },
+    "WindowAuditTests": {
+      "Passed": 269,
+      "Failed": 16
+    }
+  },
+  "areas": {
+    "Analysis": {
+      "files": 15,
+      "instrumented_files": 10,
+      "executed_files": 10,
+      "covered_lines": 1021,
+      "executable_lines": 1116
+    },
+    "Colorspace": {
+      "files": 17,
+      "instrumented_files": 16,
+      "executed_files": 16,
+      "covered_lines": 773,
+      "executable_lines": 887
+    },
+    "Core": {
+      "files": 34,
+      "instrumented_files": 28,
+      "executed_files": 27,
+      "covered_lines": 6314,
+      "executable_lines": 8375
+    },
+    "Decomposition": {
+      "files": 25,
+      "instrumented_files": 25,
+      "executed_files": 25,
+      "covered_lines": 2044,
+      "executable_lines": 2224
+    },
+    "Distance": {
+      "files": 19,
+      "instrumented_files": 18,
+      "executed_files": 18,
+      "covered_lines": 312,
+      "executable_lines": 332
+    },
+    "Distribution": {
+      "files": 56,
+      "instrumented_files": 55,
+      "executed_files": 55,
+      "covered_lines": 1732,
+      "executable_lines": 2228
+    },
+    "Imaging": {
+      "files": 121,
+      "instrumented_files": 113,
+      "executed_files": 113,
+      "covered_lines": 6030,
+      "executable_lines": 7880
+    },
+    "Response": {
+      "files": 3,
+      "instrumented_files": 2,
+      "executed_files": 2,
+      "covered_lines": 230,
+      "executable_lines": 236
+    },
+    "Transform": {
+      "files": 42,
+      "instrumented_files": 37,
+      "executed_files": 37,
+      "covered_lines": 2842,
+      "executable_lines": 2970
+    },
+    "Video": {
+      "files": 19,
+      "instrumented_files": 14,
+      "executed_files": 14,
+      "covered_lines": 366,
+      "executable_lines": 757
+    },
+    "Visualization": {
+      "files": 12,
+      "instrumented_files": 8,
+      "executed_files": 8,
+      "covered_lines": 575,
+      "executable_lines": 787
+    },
+    "Wavelet": {
+      "files": 37,
+      "instrumented_files": 34,
+      "executed_files": 34,
+      "covered_lines": 3868,
+      "executable_lines": 3934
+    },
+    "Window": {
+      "files": 33,
+      "instrumented_files": 30,
+      "executed_files": 30,
+      "covered_lines": 1936,
+      "executable_lines": 2033
+    }
+  },
+  "coverage": {
+    "lines-covered": "28043",
+    "lines-valid": "33759",
+    "branches-covered": "10431",
+    "branches-valid": "13734",
+    "line-rate": "0.8306",
+    "branch-rate": "0.7595000000000001"
+  },
+  "uncovered_methods": 1295,
+  "failing_test_families": 59,
+  "evidence_sha256": {
+    "full-audit.trx": "152c5a82c57a2dd644b701a8c2aa1c51e492f3b7ba1ae51c90680374fc5c6bed",
+    "coverage.cobertura.xml": "8ee255ec603d0d5dafd3685b6a31254e8bb813d8cf45390cf8fa2c9654377046",
+    "coverage.json": "aa2ee7b48c231c2f79bade7c1cd28d816a57bf9b7a0c8f6f8c66bdd98753e38b"
+  }
+}

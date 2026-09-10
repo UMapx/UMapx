@@ -1,5 +1,9 @@
 # Special-function repairs — September 10, 2026
 
+This is the historical special-function snapshot. The subsequent
+[arithmetic and number-theory repair report](arithmetic-repair-2026-09-10.md)
+records 139 more resolved failures and the current 311 remaining failures.
+
 All failures in the dedicated special-function suites are resolved. The final
 Windows Release run has **10,504 cases: 10,054 passed, 450 failed, none skipped**.
 The remaining failures stay enabled, and the complete test command exits with 1.
@@ -113,7 +117,10 @@ accuracy and performance work. The uncovered lines are retained in the inventory
 
 ## Remaining failures
 
-The current [failure list](audit-special-functions/failures.md) and
+The [repair-block plan](remaining-repair-blocks-2026-09-10.md) tracks the original
+12 blocks; B01/B02 are now closed and ten blocks remain open.
+
+The historical [failure list](audit-special-functions/failures.md) and
 [individual records](audit-special-functions/failures.json) contain all 450
 remaining failures. These are failed test cases, not 450 independent causes.
 

@@ -1,17 +1,18 @@
 # UMapx mathematical audit tests
 
-The audit covers every source area. The current source inventory contains 432 C#
-files. See the [special-function repair report](../../docs/special-functions-repair-2026-09-10.md)
-for the changes and the [expanded baseline report](../../docs/math-audit-expanded-2026-09-10.md)
-for the original counterexamples and repair register.
+The audit covers every source area. The current source inventory contains 433 C#
+files. See the [arithmetic repair report](../../docs/arithmetic-repair-2026-09-10.md)
+and [remaining repair blocks](../../docs/remaining-repair-blocks-2026-09-10.md).
+The [special-function repair report](../../docs/special-functions-repair-2026-09-10.md)
+and [expanded baseline report](../../docs/math-audit-expanded-2026-09-10.md) remain historical records.
 
-The current complete run contains **10,504 cases: 10,054 passed, 450 failed, none
-skipped**. All 8,408 baseline cases remain: 423 previous failures pass now, with
-no passing cases regressed. All 2,096 new cases pass. Production changes are
-confined to the Special partial class. Failing tests remain enabled and expect
-the mathematical answer; the full command exits with status 1 while defects remain.
+The current complete run contains **12,130 cases: 11,819 passed, 311 failed, none
+skipped**. All 10,504 cases from the previous snapshot remain: 139 previous failures
+now pass, with no passing cases regressed. All 1,626 added cases pass. Production
+changes in this step are confined to Maths and Complex32. Failing tests remain
+enabled and expect the mathematical answer; the full command exits with status 1.
 
-Execution coverage is **83.01% of lines** and **75.67% of branches**. These figures
+Execution coverage is **83.06% of lines** and **75.95% of branches**. These figures
 include failing and contract tests. They are not a correctness percentage, and
 this suite does not establish absence of errors. The report explicitly lists
 unexecuted lines/methods, unsupported APIs, and incomplete parameter domains.
@@ -62,7 +63,7 @@ Available categories: `Identity`, `Regression`, `Reference`, `Core`, `Matrix`,
 `Analysis`, `ColorSpace`, `Decomposition`, `Distance`, `Distribution`, `Window`,
 `WindowTransform`, `Transform`, `Wavelet`, `Response`, `Imaging`, `Geometry`,
 `Video`, and `Contract`. Category totals and test-family counts are available in
-[the run summary](../../docs/audit-special-functions/summary.json).
+[the run summary](../../docs/audit-arithmetic/summary.json).
 
 A numeric-only filter for environments without Windows bitmap support is:
 
@@ -79,6 +80,9 @@ The complete reported result is from Windows with .NET SDK 10.0.401.
   reconstruction residuals, orthogonality, and all four Penrose equations.
 - BigInteger arithmetic, independent scalar and complex equations, exact index
   mappings, and component/stride tests with guarded memory.
+- 1,029 arithmetic references at 100 decimal digits, boundary cases spanning the
+  float range, cubic/quadratic residuals and Vieta identities, exact integer
+  arithmetic at signed limits, pseudoprimes, and large-semiprime factorization.
 - 3,727 special-function reference cases, 1,991 distribution reference cases,
   and 16 high-precision Hankel matrix fixtures. Fixtures use mpmath 1.3.0 at
   40, 60, or 80 decimal digits, with library inputs rounded to binary32 first.
@@ -94,7 +98,7 @@ The complete reported result is from Windows with .NET SDK 10.0.401.
 Random test inputs use fixed seeds. Several production algorithms have internal
 random initialization without a public seed, so their tests use stated residual
 budgets. A dedicated nonparallel collection protects the global SIMD flag.
-Known nonterminating prime/Schur cases run in `UMapx.AuditProbe` with a five-second
+Prime termination regressions, large factorization cases, and the known Schur hang run in `UMapx.AuditProbe` with a five-second
 process deadline and process-tree termination; they do not hang the test host.
 Subprocess execution is not added to the parent coverlet coverage totals.
 
@@ -137,6 +141,7 @@ python -m pip install mpmath==1.3.0
 python -X utf8 tests/UMapx.Tests/Data/generate_reference.py
 python -X utf8 tests/UMapx.Tests/Data/generate_extended_reference.py
 python -X utf8 tests/UMapx.Tests/Data/generate_special_repair_reference.py
+python -X utf8 tests/UMapx.Tests/Data/generate_arithmetic_reference.py
 python -X utf8 tests/UMapx.Tests/Data/generate_distributions.py
 ```
 
@@ -145,7 +150,9 @@ fixtures omit poles, non-real answers for real APIs, nonfinite values and finite
 magnitudes above `1e35`. The repair generator permits magnitudes through `3e38`
 for single-precision results and `1e300` for its selected double-returning APIs.
 Distribution fixtures include selected divergent moments
-as explicit Infinity/NaN expectations. See the [mpmath documentation](https://mpmath.org/doc/1.3.0/).
+as explicit Infinity/NaN expectations. Arithmetic fixtures omit the three singular
+reciprocal-atan inputs (0, +i, -i) and the two reciprocal-hyperbolic zero poles;
+zero conventions and real poles have separate tests. See the [mpmath documentation](https://mpmath.org/doc/1.3.0/).
 
 To refresh the checked-in report evidence after an intentional new audit, pass
 actual paths from that run:
