@@ -2,9 +2,10 @@
 
 The audit covers every source area. The current source inventory contains 427 C#
 files after [helper consolidation](../../docs/helper-consolidation-2026-09-11.md).
-See the [selected imaging repair report](../../docs/imaging-selected-repair-2026-09-11.md)
+See the [B11 completion report](../../docs/b11-repair-2026-09-11.md)
 and [remaining repair blocks](../../docs/remaining-repair-blocks-2026-09-10.md).
-The [B07–B10 repair report](../../docs/b07-b10-repair-2026-09-11.md),
+The [selected imaging repair report](../../docs/imaging-selected-repair-2026-09-11.md),
+[B07–B10 repair report](../../docs/b07-b10-repair-2026-09-11.md),
 [decomposition repair report](../../docs/decomposition-repair-2026-09-11.md),
 [approximation repair report](../../docs/approximation-repair-2026-09-11.md),
 [matrix and distribution repair report](../../docs/matrix-distribution-repair-2026-09-10.md),
@@ -12,13 +13,14 @@ The [B07–B10 repair report](../../docs/b07-b10-repair-2026-09-11.md),
 [special-function repair report](../../docs/special-functions-repair-2026-09-10.md),
 and [expanded baseline report](../../docs/math-audit-expanded-2026-09-10.md) remain historical records.
 
-The current complete run contains **16,099 cases: 16,071 passed, 28 failed, none
-skipped**. All 15,622 previous cases remain: 21 selected B11 failures now pass and no
-passing cases regressed. All 477 added cases pass. B01–B10 are closed; B11 (23)
-and B12 (5) remain open. Failing tests remain enabled and expect the mathematical
-answer; the full command exits with status 1.
+The current complete run contains **16,291 cases: 16,286 passed, 5 failed, none
+skipped**. All 16,099 cases from the selected imaging snapshot remain: its last
+23 B11 failures now pass and no passing cases regressed. All 192 added cases pass
+(187 from B11 completion and five from the preceding IoU repair). B01–B11 are
+closed; only B12 (5) remains open. Failing tests remain enabled and expect the
+correct result; the full command exits with status 1.
 
-Execution coverage is **83.75% of lines** and **77.45% of branches**. These figures
+Execution coverage is **83.82% of lines** and **77.62% of branches**. These figures
 include failing and contract tests. They are not a correctness percentage, and
 this suite does not establish absence of errors. The report explicitly lists
 unexecuted lines/methods, unsupported APIs, and incomplete parameter domains.
@@ -69,7 +71,7 @@ Available categories: `Identity`, `Regression`, `Reference`, `Core`, `Matrix`,
 `Analysis`, `ColorSpace`, `Decomposition`, `Distance`, `Distribution`, `Window`,
 `WindowTransform`, `Transform`, `Wavelet`, `Response`, `Imaging`, `Geometry`,
 `Video`, and `Contract`. Category totals and test-family counts are available in
-[the run summary](../../docs/audit-imaging-selected/summary.json).
+[the run summary](../../docs/audit-b11/summary.json).
 
 A numeric-only filter for environments without Windows bitmap support is:
 
@@ -115,6 +117,10 @@ The complete reported result is from Windows with .NET SDK 10.0.401.
   byte value, scalar pixel equations, signed stride and guarded padding, all 11
   diffusion kernels, histogram ranks, and color transfer checked against
   independent pairwise population variance and distribution invariance.
+- 187 B11 completion cases cover opaque tensor reconstruction, exact inclusive
+  depth CDF ranks from sorted samples, all depth codes, clipped and overlapping
+  placement, and constant-series rendering with finite ranges and visible pixels.
+  Five preceding IoU additions cover large areas and nonidentical rectangles.
 - Window formulas, wavelet analysis/synthesis coefficients, impulses, filter
   transfer polynomials, image pixel equations and neutral/constant invariants.
 - Real/complex vectors, rectangular matrices, even/odd sizes, singular inputs,
@@ -181,6 +187,12 @@ with shared weights for both components. Complex Under/Over thresholding is
 componentwise; Abs compares magnitude. Local-Laplacian processing preserves its
 base level, interpolates lookup tables, and remains unsupported for complex data.
 XYZ retains nonnegative relative tristimulus values above one.
+
+Depth equalization uses the inclusive empirical CDF without subtracting its
+first occupied value. Constant maps become 65535; equal-size depth placements
+copy samples exactly. Figure automatic constant axes use a five-percent margin
+with minimum half-width 0.5, clipped to finite float bounds. Manual ranges are
+unchanged. Three-plane tensor reconstruction sets alpha to 255.
 
 ## Reference generation
 

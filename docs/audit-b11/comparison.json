@@ -1,0 +1,171 @@
+{
+  "baseline_cases": 16099,
+  "current_cases": 16291,
+  "common_cases": 16099,
+  "baseline_totals": {
+    "Passed": 16071,
+    "Failed": 28
+  },
+  "current_totals": {
+    "Passed": 16286,
+    "Failed": 5
+  },
+  "added_totals": {
+    "Passed": 192
+  },
+  "resolved_by_suite": {
+    "GeometryAndRenderingAuditTests": 17,
+    "ImagingAuditTests": 4,
+    "UtilityContractAuditTests": 2
+  },
+  "resolved_count": 23,
+  "regression_count": 0,
+  "added_count": 192,
+  "removed_count": 0,
+  "resolved": [
+    {
+      "id": "50418088-38ab-8c95-6736-908f5f84a9dd",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Ball, kind: \"constant\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "f15eb5ef-d42d-a76f-8850-4d88e0cd482c",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Circle, kind: \"constant\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "8c144e97-1c68-6717-768c-426071160824",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: None, kind: \"constant\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "721dec24-8907-b8af-773f-c300ba4f52a6",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Polygon, kind: \"constant\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "46800dfa-c24f-5fe3-d8e9-d1d1bb4f69bc",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Rectangle, kind: \"constant\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a96fdd57-be22-ea5e-37c9-3e70f79055af",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Ball, kind: \"constant\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "0e9d26c1-9e4d-38c7-124d-0cce90aae190",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Circle, kind: \"constant\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "05caf80f-9241-76f6-ad4f-5bba08b45296",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: None, kind: \"constant\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "97760d80-9a51-040a-d0db-1050ece8bfe3",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Polygon, kind: \"constant\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a65d23ec-e7f4-3262-3847-e28c192709fb",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Rectangle, kind: \"constant\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "fc067e99-c9f7-417c-a3a0-a78f5f40a4fa",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Ball, kind: \"constant\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "68b76e5e-fed2-b312-1a6e-207c6584fc20",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Circle, kind: \"constant\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "468479bc-145c-0d92-2891-88faa9e3a7ba",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: None, kind: \"constant\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "63d9ef81-5914-5aef-e7f8-f9434446e1b6",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Polygon, kind: \"constant\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "f9e1b906-6621-79a2-d3ed-34b46ea3854b",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Rectangle, kind: \"constant\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "d9656156-25ea-e0a4-d890-c7408f3813a2",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.RectangleOverlapUsesGeometricAreaWithoutIntegerOverflow(ax: 0, ay: 0, aw: 50000, ah: 50000, bx: 0, by: 0, bw: 50000, bh: 50000)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e96e39ac-5cf1-df3d-2b6c-1382809ed92c",
+      "suite": "GeometryAndRenderingAuditTests",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.RectangularDepthTransformsPreserveCoordinateMeaning(operation: \"Merge\")",
+      "outcome": "Passed"
+    },
+    {
+      "id": "27b7e64e-1ef4-6f78-bf1c-e47bb94eb4ae",
+      "suite": "ImagingAuditTests",
+      "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: False, floating: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "2abd9d1d-daa7-535f-0376-6efc746f2c9f",
+      "suite": "ImagingAuditTests",
+      "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: False, floating: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "cda779f6-b6de-1728-3d78-80dd7690e6fb",
+      "suite": "ImagingAuditTests",
+      "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: True, floating: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "f86b9f0d-28d2-a3ff-8a3b-430b9f58fc49",
+      "suite": "ImagingAuditTests",
+      "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: True, floating: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a3e0ae1d-1130-cbcd-7dcf-bea0da0640a9",
+      "suite": "UtilityContractAuditTests",
+      "case": "UMapx.Tests.UtilityContractAuditTests.DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow(side: 256)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "6939c7db-31d4-8dea-85fc-4484e9b7b91a",
+      "suite": "UtilityContractAuditTests",
+      "case": "UMapx.Tests.UtilityContractAuditTests.DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow(side: 300)",
+      "outcome": "Passed"
+    }
+  ],
+  "regressions": [],
+  "removed": [],
+  "evidence_sha256": {
+    "baseline_trx": "2bfc60eef2e3ea898af2e290b677178a09c9dbbb916c674f8bb1ebacc6d324ad",
+    "current_trx": "798006668a8290c390e5632e7164fcd2a6cea26f181b31f973594eb7fe30e510"
+  }
+}
