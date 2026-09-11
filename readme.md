@@ -65,43 +65,5 @@ using UMapx.Window;
 # License
 **MIT**  
 
-# Mathematical audit
-The [B12 completion report](docs/b12-repair-2026-09-11.md) records the final
-five video-parser failures repaired and 69 added passing cases. The complete
-suite has **16,360 passing cases, zero failures, and zero skipped cases**, with
-no regressions or removed tests. All registered blocks B01–B12 are closed in the
-[repair register](docs/remaining-repair-blocks-2026-09-10.md).
-
-The [B11 completion report](docs/b11-repair-2026-09-11.md) records its final
-22 failures repaired and 187 added passing cases.
-
-The preceding [selected imaging repair report](docs/imaging-selected-repair-2026-09-11.md)
-records 21 resolved failures and 477 added passing cases. The subsequent IoU
-repair and its five added cases also pass in the current complete run.
-
-The preceding [B07–B10 repair report](docs/b07-b10-repair-2026-09-11.md) records
-119 resolved failures and 419 added passing cases.
-
-The earlier [matrix decomposition repair report](docs/decomposition-repair-2026-09-11.md)
-records 15 resolved failures and 496 added passing tests.
-
-The preceding [approximation and local-filter repair report](docs/approximation-repair-2026-09-11.md)
-records 15 resolved failures and 595 added passing tests. The subsequent
-[helper consolidation](docs/helper-consolidation-2026-09-11.md) moved ten partial
-files into their primary classes and documented the numerical helpers.
-
-The [matrix and distribution repair report](docs/matrix-distribution-repair-2026-09-10.md)
-records the preceding 113 resolved failures and 1,982 added passing tests.
-The [arithmetic and number-theory repair report](docs/arithmetic-repair-2026-09-10.md)
-records the preceding 139 resolved failures and 1,626 added passing tests.
-The earlier [special-function repair report](docs/special-functions-repair-2026-09-10.md)
-records 423 resolved failures. All 3,749 dedicated special-function checks still pass.
-
-The [expanded audit report](docs/math-audit-expanded-2026-09-10.md) records known
-counterexamples, repair priorities, and coverage limits. See the
-[test project README](tests/UMapx.Tests/README.md) to run the enabled regression,
-reference, and invariant tests. The current audit contains failing tests that
-reproduce known defects; it does not certify the library as mathematically correct.
-
 # References
 A full list of references is given in a separate [file](docs/references.md).  
