@@ -82,16 +82,17 @@ The complete reported result is from Windows with .NET SDK 10.0.401.
 - 496 decomposition repair cases cover matrix rank and scaling, all four Penrose
   equations, Schur deflation and complex blocks, generalized eigen-equations,
   homogeneous eigenvalues, QZ structure, and explicit convergence/input contracts.
-- 419 B07–B10 repair cases cover biorthogonal impulses and vanishing moments,
-  independent Meyer quadrature, narrow windows, high-order Bessel zeros, known
+- 419 wavelet, window, transform, and color repair cases cover biorthogonal
+  impulses and vanishing moments, independent Meyer quadrature, narrow windows,
+  high-order Bessel zeros, known
   IIR poles, complex grid sample influences, direct local-Laplacian remapping,
   threshold components, cone kernel mass, and neutral/chromatic color round trips.
 - 477 selected imaging repair cases cover lookup-table endpoints, every neutral
   byte value, scalar pixel equations, signed stride and guarded padding, all 11
   diffusion kernels, histogram ranks, and color transfer checked against
   independent pairwise population variance and distribution invariance.
-- 187 B11 completion cases cover opaque tensor reconstruction, exact inclusive
-  depth CDF ranks from sorted samples, all depth codes, clipped and overlapping
+- 187 depth, tensor, and rendering repair cases cover opaque tensor reconstruction,
+  exact inclusive depth CDF ranks from sorted samples, all depth codes, clipped and overlapping
   placement, and constant-series rendering with finite ranges and visible pixels.
   Five preceding IoU additions cover large areas and nonidentical rectangles.
 - 69 video repair cases cover HTTP parameter parsing, boundary case and quoting,
@@ -158,7 +159,8 @@ SVD pseudoinversion discards singular values at or below
 floor to the requested relative tolerance. Their work buffers use scaled double
 arithmetic; public outputs remain float. Iteration failure is explicit.
 
-B07–B10 preserve existing public signatures. Biorthogonal convolution accumulates
+The wavelet, window, transform, and color repairs preserve existing public
+signatures. Biorthogonal convolution accumulates
 in double; bands remain float. Complex bilateral grids use magnitude guidance
 with shared weights for both components. Complex Under/Over thresholding is
 componentwise; Abs compares magnitude. Local-Laplacian processing preserves its
@@ -189,7 +191,7 @@ python -X utf8 tests/UMapx.Tests/Data/generate_special_repair_reference.py
 python -X utf8 tests/UMapx.Tests/Data/generate_arithmetic_reference.py
 python -X utf8 tests/UMapx.Tests/Data/generate_distributions.py
 python -X utf8 tests/UMapx.Tests/Data/generate_distribution_repair_reference.py
-python -X utf8 tests/UMapx.Tests/Data/generate_b07_b10_references.py
+python -X utf8 tests/UMapx.Tests/Data/generate_meyer_hankel_references.py
 ```
 
 The generators retain their explicit domains and exclusion rules. Original special-function
@@ -201,10 +203,10 @@ as explicit Infinity/NaN expectations. Arithmetic fixtures omit the three singul
 reciprocal-atan inputs (0, +i, -i) and the two reciprocal-hyperbolic zero poles;
 zero conventions and real poles have separate tests. See the [mpmath documentation](https://mpmath.org/doc/1.3.0/).
 
-The [B07–B10 reference generator](Data/generate_b07_b10_references.py)
+The [Meyer and Hankel reference generator](Data/generate_meyer_hankel_references.py)
 requires mpmath 1.3.0 and evaluates at 70 decimal digits. Run it from the repository
 root with mpmath on Python's import path. It generates the committed
-`Data/b07-b10-repair.json`: 38 Meyer values from independent spectral quadrature
+`Data/meyer-hankel.json`: 38 Meyer values from independent spectral quadrature
 and 24 Hankel matrices from ordered positive Bessel zeros. Tests need no Python
 or network access. New Meyer bounds are `2e-7 + 2e-7*abs(x)`; new Hankel bounds
 are `3e-5 + 3e-5*abs(x)`. Direct local-Laplacian references use an absolute 3e-4

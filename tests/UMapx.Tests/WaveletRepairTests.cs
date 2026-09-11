@@ -75,7 +75,7 @@ public class WaveletRepairTests
 
     public static IEnumerable<object[]> MeyerCases()
     {
-        using var stream = typeof(WaveletRepairTests).Assembly.GetManifestResourceStream("UMapx.Tests.Data.b07-b10-repair.json");
+        using var stream = typeof(WaveletRepairTests).Assembly.GetManifestResourceStream("UMapx.Tests.Data.meyer-hankel.json");
         using var data = JsonDocument.Parse(stream!);
         foreach (var row in data.RootElement.GetProperty("meyer").EnumerateArray())
             yield return new object[] { row.GetProperty("wavelet").GetBoolean(), row.GetProperty("x").GetSingle(), row.GetProperty("expected").GetDouble() };

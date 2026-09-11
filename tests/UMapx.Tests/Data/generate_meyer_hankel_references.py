@@ -1,4 +1,4 @@
-"""Generate independent B07/B09 fixtures with mpmath 1.3.0 at 70 decimal digits.
+"""Generate independent Meyer and Hankel fixtures with mpmath 1.3.0 at 70 decimal digits.
 
 Run from the repository root with mpmath on PYTHONPATH. Production code is not
 loaded: Meyer is integrated in the frequency domain, and Hankel uses mpmath's
@@ -50,5 +50,5 @@ for order in [0, 1, 5, 10, 20, 50]:
                    for j in range(size)] for i in range(size)]
         hankel.append(dict(order=order, size=size, values=values))
 
-Path('tests/UMapx.Tests/Data/b07-b10-repair.json').write_text(
+Path('tests/UMapx.Tests/Data/meyer-hankel.json').write_text(
     json.dumps(dict(meyer=meyer, hankel=hankel), indent=2) + '\n', encoding='utf-8')

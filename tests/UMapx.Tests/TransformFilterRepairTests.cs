@@ -14,7 +14,7 @@ public class TransformFilterRepairTests
 {
     public static IEnumerable<object[]> HankelCases()
     {
-        using var stream = typeof(TransformFilterRepairTests).Assembly.GetManifestResourceStream("UMapx.Tests.Data.b07-b10-repair.json");
+        using var stream = typeof(TransformFilterRepairTests).Assembly.GetManifestResourceStream("UMapx.Tests.Data.meyer-hankel.json");
         using var data = JsonDocument.Parse(stream!);
         foreach (var row in data.RootElement.GetProperty("hankel").EnumerateArray())
             yield return new object[] { row.GetProperty("order").GetInt32(), row.GetProperty("size").GetInt32(), row.GetProperty("values").GetRawText() };

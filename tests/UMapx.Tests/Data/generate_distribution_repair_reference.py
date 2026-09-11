@@ -1,4 +1,4 @@
-"""Independent probability references for the B04 repair, at exact binary32 inputs."""
+"""Independent probability references at exact binary32 inputs."""
 import json
 import math
 from pathlib import Path
