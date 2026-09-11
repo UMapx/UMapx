@@ -31,7 +31,8 @@ namespace UMapx.Imaging
             Inverted = inverted;
         }
         /// <summary>
-        /// Gets or sets factor.
+        /// Gets or sets the contrast factor in [0, 10].
+        /// The direct gain is multiplied by 1 + Factor; the inverted gain is divided by it.
         /// </summary>
         public float Factor
         {
@@ -45,7 +46,10 @@ namespace UMapx.Imaging
             }
         }
         /// <summary>
-        /// Inverted or not.
+        /// Gets or sets whether to use the reciprocal contrast gain.
+        /// When false, the gain is target deviation divided by source deviation.
+        /// When true, it is source deviation divided by target deviation.
+        /// Both modes shift the target channel mean to the source channel mean.
         /// </summary>
         public bool Inverted
         {
@@ -169,33 +173,56 @@ namespace UMapx.Imaging
 
         #region Specials
         /// <summary>
-        /// Applies Reinhard's color transfer between two image representations.
+        /// Transfers channel means using the existing direct or reciprocal contrast gain.
         /// </summary>
-        /// <param name="target">Target image channels</param>
-        /// <param name="source">Source image channels</param>
-        /// <param name="factor">Blending factor</param>
-        /// <param name="inverted">If true, inverts the transfer effect</param>
+        /// <param name="target">Destination color planes, modified in place.</param>
+        /// <param name="source">Reference color planes, which may have a different size.</param>
+        /// <param name="factor">Contrast factor in [0, 10].</param>
+        /// <param name="inverted">Whether to use the reciprocal deviation ratio and factor.</param>
+        /// <remarks>Statistics use every pixel with equal weight and population variance.
+        /// If either channel is constant, the destination becomes the source mean:
+        /// this defines the gain even when a deviation ratio is undefined. Alpha is not processed.</remarks>
         private static void Reinhard(float[][,] target, float[][,] source, float factor = 1.0f, bool inverted = false)
         {
-            // do not use for alpha channel
-            var channels = 3;
-
-            // do job
-            for (int i = 0; i < channels; i++)
+            for (int i = 0; i < 3; i++)
             {
-                // stats
-                var sourceMean = source[i].Mean().Mean();
-                var sourceStd = source[i].StnDev().StnDev();
-                var targetMean = target[i].Mean().Mean();
-                var targetStd = target[i].StnDev().StnDev();
+                ChannelStatistics(source[i], out double sourceMean, out double sourceStd);
+                ChannelStatistics(target[i], out double targetMean, out double targetStd);
 
-                // process
-                var temp = target[i].Sub(targetMean);
-                temp = inverted ? temp.Mul(sourceStd / targetStd * 1.0f / (1 + factor)) 
-                    : temp.Mul(targetStd / sourceStd * (1 + factor));
-                temp = temp.Add(sourceMean);
-                target[i] = temp;
+                // A constant channel must never enter a 0/0 or infinite-gain calculation.
+                double gain = 0;
+                if (sourceStd > 0 && targetStd > 0)
+                    gain = inverted ? sourceStd / targetStd / (1.0 + factor)
+                        : targetStd / sourceStd * (1.0 + factor);
+
+                var channel = target[i];
+                for (int y = 0; y < channel.GetLength(0); y++)
+                    for (int x = 0; x < channel.GetLength(1); x++)
+                        channel[y, x] = (float)(sourceMean + (channel[y, x] - targetMean) * gain);
             }
+        }
+
+        /// <summary>
+        /// Computes the mean and population standard deviation over an entire color plane.
+        /// </summary>
+        /// <param name="channel">Finite channel samples, each representing one equally weighted pixel.</param>
+        /// <param name="mean">The arithmetic mean, or zero for an empty plane.</param>
+        /// <param name="standardDeviation">The nonnegative population deviation, or zero for an empty plane.</param>
+        /// <remarks>Welford's centered update in double precision avoids cancellation
+        /// in nearly constant channels. Taking a deviation of per-column deviations
+        /// would instead measure the variation of column contrasts, not pixel contrast.</remarks>
+        private static void ChannelStatistics(float[,] channel, out double mean, out double standardDeviation)
+        {
+            mean = 0;
+            double squaredDeviations = 0;
+            long count = 0;
+            foreach (float value in channel)
+            {
+                double delta = value - mean;
+                mean += delta / ++count;
+                squaredDeviations += delta * (value - mean);
+            }
+            standardDeviation = count == 0 ? 0 : Math.Sqrt(Math.Max(0, squaredDeviations / count));
         }
         #endregion
     }

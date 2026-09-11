@@ -102,13 +102,15 @@ namespace UMapx.Imaging
             this.height = bmData.Height;
             this.stride = bmData.Stride;
             int length = table.Length;
-            byte* p = (byte*)bmData.Scan0.ToPointer();
+            byte* scan0 = (byte*)bmData.Scan0.ToPointer();
             int r, g, b;
             Color color;
 
             // for each line
             for (y = 0; y < height; y++)
             {
+                // Diffuse uses this same signed stride for neighboring logical rows.
+                byte* p = scan0 + (long)y * stride;
                 // for each pixels
                 for (x = 0; x < width; x++, p += 4)
                 {

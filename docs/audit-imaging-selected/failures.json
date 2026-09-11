@@ -1,0 +1,282 @@
+[
+  {
+    "id": "50418088-38ab-8c95-6736-908f5f84a9dd",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Ball, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "f15eb5ef-d42d-a76f-8850-4d88e0cd482c",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Circle, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "8c144e97-1c68-6717-768c-426071160824",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: None, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "721dec24-8907-b8af-773f-c300ba4f52a6",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Polygon, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "46800dfa-c24f-5fe3-d8e9-d1d1bb4f69bc",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Rectangle, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "a96fdd57-be22-ea5e-37c9-3e70f79055af",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Ball, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "0e9d26c1-9e4d-38c7-124d-0cce90aae190",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Circle, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "05caf80f-9241-76f6-ad4f-5bba08b45296",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: None, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "97760d80-9a51-040a-d0db-1050ece8bfe3",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Polygon, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "a65d23ec-e7f4-3262-3847-e28c192709fb",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Rectangle, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "fc067e99-c9f7-417c-a3a0-a78f5f40a4fa",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Ball, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "68b76e5e-fed2-b312-1a6e-207c6584fc20",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Circle, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "468479bc-145c-0d92-2891-88faa9e3a7ba",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: None, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "63d9ef81-5914-5aef-e7f8-f9434446e1b6",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Polygon, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "f9e1b906-6621-79a2-d3ed-34b46ea3854b",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Rectangle, kind: \"constant\")",
+    "outcome": "Failed",
+    "message": "System.OverflowException : Overflow error.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 69
+  },
+  {
+    "id": "d9656156-25ea-e0a4-d890-c7408f3813a2",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "RectangleOverlapUsesGeometricAreaWithoutIntegerOverflow",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.RectangleOverlapUsesGeometricAreaWithoutIntegerOverflow(ax: 0, ay: 0, aw: 50000, ah: 50000, bx: 0, by: 0, bw: 50000, bh: 50000)",
+    "outcome": "Failed",
+    "message": "Expected 1; actual 0.5600464940071106; tolerance 2.2E-05.",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 21
+  },
+  {
+    "id": "e96e39ac-5cf1-df3d-2b6c-1382809ed92c",
+    "suite": "GeometryAndRenderingAuditTests",
+    "method": "RectangularDepthTransformsPreserveCoordinateMeaning",
+    "case": "UMapx.Tests.GeometryAndRenderingAuditTests.RectangularDepthTransformsPreserveCoordinateMeaning(operation: \"Merge\")",
+    "outcome": "Failed",
+    "message": "Assert.Equal() Failure: Values differ\nExpected: 1000\nActual:   214",
+    "test_file": "tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs",
+    "test_line": 52
+  },
+  {
+    "id": "27b7e64e-1ef4-6f78-bf1c-e47bb94eb4ae",
+    "suite": "ImagingAuditTests",
+    "method": "TensorConversionsMatchPixelChannelOrder",
+    "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: False, floating: False)",
+    "outcome": "Failed",
+    "message": "Assert.InRange() Failure: Value not in range\nRange:  (0 - 0)\nActual: 255",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 25
+  },
+  {
+    "id": "2abd9d1d-daa7-535f-0376-6efc746f2c9f",
+    "suite": "ImagingAuditTests",
+    "method": "TensorConversionsMatchPixelChannelOrder",
+    "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: False, floating: True)",
+    "outcome": "Failed",
+    "message": "Assert.InRange() Failure: Value not in range\nRange:  (0 - 1)\nActual: 255",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 25
+  },
+  {
+    "id": "cda779f6-b6de-1728-3d78-80dd7690e6fb",
+    "suite": "ImagingAuditTests",
+    "method": "TensorConversionsMatchPixelChannelOrder",
+    "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: True, floating: False)",
+    "outcome": "Failed",
+    "message": "Assert.InRange() Failure: Value not in range\nRange:  (0 - 0)\nActual: 255",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 25
+  },
+  {
+    "id": "f86b9f0d-28d2-a3ff-8a3b-430b9f58fc49",
+    "suite": "ImagingAuditTests",
+    "method": "TensorConversionsMatchPixelChannelOrder",
+    "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: True, floating: True)",
+    "outcome": "Failed",
+    "message": "Assert.InRange() Failure: Value not in range\nRange:  (0 - 1)\nActual: 255",
+    "test_file": "tests/UMapx.Tests/ImagingAuditTests.cs",
+    "test_line": 25
+  },
+  {
+    "id": "a3e0ae1d-1130-cbcd-7dcf-bea0da0640a9",
+    "suite": "UtilityContractAuditTests",
+    "method": "DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow",
+    "case": "UMapx.Tests.UtilityContractAuditTests.DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow(side: 256)",
+    "outcome": "Failed",
+    "message": "Assert.Equal() Failure: Values differ\nExpected: 65535\nActual:   0",
+    "test_file": "tests/UMapx.Tests/UtilityContractAuditTests.cs",
+    "test_line": 33
+  },
+  {
+    "id": "6939c7db-31d4-8dea-85fc-4484e9b7b91a",
+    "suite": "UtilityContractAuditTests",
+    "method": "DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow",
+    "case": "UMapx.Tests.UtilityContractAuditTests.DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow(side: 300)",
+    "outcome": "Failed",
+    "message": "Assert.Equal() Failure: Values differ\nExpected: 65535\nActual:   17813",
+    "test_file": "tests/UMapx.Tests/UtilityContractAuditTests.cs",
+    "test_line": 33
+  },
+  {
+    "id": "7dd250a4-8c91-02f7-f9f2-3f7587f1d77c",
+    "suite": "VideoAuditTests",
+    "method": "MjpegFramesSurviveArbitraryTransportChunkBoundaries",
+    "case": "UMapx.Tests.VideoAuditTests.MjpegFramesSurviveArbitraryTransportChunkBoundaries(chunk: 1)",
+    "outcome": "Failed",
+    "message": "System.ArgumentOutOfRangeException : Index was out of range. Must be non-negative and less than or equal to the size of the collection. (Parameter 'startIndex')",
+    "test_file": "tests/UMapx.Tests/VideoAuditTests.cs",
+    "test_line": 49
+  },
+  {
+    "id": "27a731e9-5daa-18fc-d2d9-ae615797d6b7",
+    "suite": "VideoAuditTests",
+    "method": "MjpegFramesSurviveArbitraryTransportChunkBoundaries",
+    "case": "UMapx.Tests.VideoAuditTests.MjpegFramesSurviveArbitraryTransportChunkBoundaries(chunk: 2)",
+    "outcome": "Failed",
+    "message": "System.ArgumentOutOfRangeException : Index was out of range. Must be non-negative and less than or equal to the size of the collection. (Parameter 'startIndex')",
+    "test_file": "tests/UMapx.Tests/VideoAuditTests.cs",
+    "test_line": 49
+  },
+  {
+    "id": "26d14848-7429-546b-b343-610e437d9cd6",
+    "suite": "VideoAuditTests",
+    "method": "MjpegFramesSurviveArbitraryTransportChunkBoundaries",
+    "case": "UMapx.Tests.VideoAuditTests.MjpegFramesSurviveArbitraryTransportChunkBoundaries(chunk: 3)",
+    "outcome": "Failed",
+    "message": "System.ArgumentOutOfRangeException : Index was out of range. Must be non-negative and less than or equal to the size of the collection. (Parameter 'startIndex')",
+    "test_file": "tests/UMapx.Tests/VideoAuditTests.cs",
+    "test_line": 49
+  },
+  {
+    "id": "32bbe7f8-e173-1aff-da30-bf0224c110c1",
+    "suite": "VideoAuditTests",
+    "method": "MultipartBoundaryParsingHonorsMimeParameters",
+    "case": "UMapx.Tests.VideoAuditTests.MultipartBoundaryParsingHonorsMimeParameters(contentType: \"Multipart/X-Mixed-Replace; Boundary=frame\", expected: \"frame\")",
+    "outcome": "Failed",
+    "message": "System.ArgumentException : Invalid content type",
+    "test_file": "tests/UMapx.Tests/VideoAuditTests.cs",
+    "test_line": 25
+  },
+  {
+    "id": "ef749fd8-1bd6-e673-485b-7a98715e1cdb",
+    "suite": "VideoAuditTests",
+    "method": "MultipartBoundaryParsingHonorsMimeParameters",
+    "case": "UMapx.Tests.VideoAuditTests.MultipartBoundaryParsingHonorsMimeParameters(contentType: \"multipart/x-mixed-replace; boundary=frame; charset\"···, expected: \"frame\")",
+    "outcome": "Failed",
+    "message": "Assert.Equal() Failure: Strings differ\nExpected: \"frame\"\nActual:   \"frame; charset=utf-8\"\n                ↑ (pos 5)",
+    "test_file": "tests/UMapx.Tests/VideoAuditTests.cs",
+    "test_line": 25
+  }
+]

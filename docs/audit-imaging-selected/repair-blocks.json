@@ -1,0 +1,617 @@
+{
+  "date": "2026-09-11",
+  "status": "verified after selected B11 repairs (items 1, 2, 3, and 5)",
+  "source_digest": "3a2632a1b735366944052fcde291d7f9b528a7c3fe3a7cd692e0ae6b90b93ab9",
+  "source_files_match_audit": true,
+  "input_failures_sha256": "c313278413481a5b6dd8a6c21b1d1c3a4ee26236c0e8ae02f20ee566eed8ff8c",
+  "total_failures": 28,
+  "assigned_once": 28,
+  "recommended_next": "B11",
+  "blocks": [
+    {
+      "id": "B01",
+      "title": "Real and complex arithmetic",
+      "direct_failures": 0,
+      "sources": [
+        "sources/Core/Maths.cs",
+        "sources/Core/Complex32.cs"
+      ],
+      "recommended_after": [],
+      "work": [
+        "Complex division under extreme scaling: 2 failing cases.",
+        "Real Tanh, Ctanh, and Asinh: 12 cases including the original regressions.",
+        "Complex Actan/Acosh branches and a negative real base with a complex exponent: 12 cases.",
+        "Quadratic equations with a zero linear coefficient and real cube roots in the cubic solver: 5 cases."
+      ],
+      "validation": "Check principal branches, scaling invariance, finite limiting values, polynomial residuals, and Vieta identities; retain all passing elementary-function and special-function checks.",
+      "caveat": "",
+      "failed_test_families": {},
+      "focused_test_filter": "FullyQualifiedName~UMapx.Tests.CoreScalarAuditTests.ComplexElementaryFunctionsRespectPrincipalValues|FullyQualifiedName~UMapx.Tests.CoreScalarAuditTests.RealElementaryFunctionsAgreeWithDoublePrecision|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.AsinhAvoidsCancellationOnNegativeArguments|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.ComplexAcoshUsesPrincipalBranchOnNegativeRealAxis|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.ComplexArccotangentAgreesWithPositiveRealBranch|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.ComplexDivisionIsInvariantToScaling|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.CubicUsesRealCubeRootsForNegativeRadicands|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.NegativeRealBaseSupportsComplexExponent|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.QuadraticHandlesZeroLinearCoefficient|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.TanhAvoidsInfinityDividedByInfinity",
+      "previous_failures": 31,
+      "resolved_failures": 31,
+      "status": "closed",
+      "previous_failed_test_families": {
+        "CoreScalarAuditTests.ComplexElementaryFunctionsRespectPrincipalValues": 9,
+        "CoreScalarAuditTests.RealElementaryFunctionsAgreeWithDoublePrecision": 10,
+        "MathematicalRegressionTests.AsinhAvoidsCancellationOnNegativeArguments": 1,
+        "MathematicalRegressionTests.ComplexAcoshUsesPrincipalBranchOnNegativeRealAxis": 1,
+        "MathematicalRegressionTests.ComplexArccotangentAgreesWithPositiveRealBranch": 1,
+        "MathematicalRegressionTests.ComplexDivisionIsInvariantToScaling": 2,
+        "MathematicalRegressionTests.CubicUsesRealCubeRootsForNegativeRadicands": 2,
+        "MathematicalRegressionTests.NegativeRealBaseSupportsComplexExponent": 1,
+        "MathematicalRegressionTests.QuadraticHandlesZeroLinearCoefficient": 3,
+        "MathematicalRegressionTests.TanhAvoidsInfinityDividedByInfinity": 1
+      }
+    },
+    {
+      "id": "B02",
+      "title": "Exact integer arithmetic and number theory",
+      "direct_failures": 0,
+      "sources": [
+        "sources/Core/Maths.cs"
+      ],
+      "recommended_after": [],
+      "work": [
+        "First fix termination of IsPrime(1) for both integer widths (2 cases); keep the process timeouts enabled.",
+        "Then repair primality/factorization and the dependent radical/totient calculations.",
+        "Normalize GCD/Bezout signs; remove premature overflow and float arithmetic from LCM and modular powers.",
+        "Repair coprime search, digit order, integer base conversion, and zero/exponent-zero handling."
+      ],
+      "validation": "Use BigInteger references, factor-product and primality checks, Bezout identities, and both integer widths. The 89 parameterized IntegerOperations cases cover several operations, not 89 separate defects.",
+      "caveat": "",
+      "failed_test_families": {},
+      "focused_test_filter": "FullyQualifiedName~UMapx.Tests.NumberTheoryAuditTests.BaseConversionsPreserveExactIntegerValues|FullyQualifiedName~UMapx.Tests.NumberTheoryAuditTests.CompositeNumbersAreNotDeclaredPrimeWhenPollardFailsToSplitThem|FullyQualifiedName~UMapx.Tests.NumberTheoryAuditTests.CoprimeSearchActuallyReturnsACoprime|FullyQualifiedName~UMapx.Tests.NumberTheoryAuditTests.DecimalDigitVectorsRoundTripIndependentlyOfBaseConversion|FullyQualifiedName~UMapx.Tests.NumberTheoryAuditTests.IntegerGcdLcmAndBezoutAgreeWithExactArithmetic|FullyQualifiedName~UMapx.Tests.NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic|FullyQualifiedName~UMapx.Tests.NumberTheoryAuditTests.ModularExponentiationMatchesBigInteger|FullyQualifiedName~UMapx.Tests.NumberTheoryAuditTests.OneIsNotPrimeAndTheCheckTerminates|FullyQualifiedName~UMapx.Tests.NumberTheoryAuditTests.PrimeSieveFactorizationTotientAndRadicalAgreeWithIntegerDefinitions",
+      "previous_failures": 108,
+      "resolved_failures": 108,
+      "status": "closed",
+      "previous_failed_test_families": {
+        "NumberTheoryAuditTests.BaseConversionsPreserveExactIntegerValues": 3,
+        "NumberTheoryAuditTests.CompositeNumbersAreNotDeclaredPrimeWhenPollardFailsToSplitThem": 2,
+        "NumberTheoryAuditTests.CoprimeSearchActuallyReturnsACoprime": 2,
+        "NumberTheoryAuditTests.DecimalDigitVectorsRoundTripIndependentlyOfBaseConversion": 3,
+        "NumberTheoryAuditTests.IntegerGcdLcmAndBezoutAgreeWithExactArithmetic": 5,
+        "NumberTheoryAuditTests.IntegerOperationsIndependentlyMatchExactArithmetic": 89,
+        "NumberTheoryAuditTests.ModularExponentiationMatchesBigInteger": 1,
+        "NumberTheoryAuditTests.OneIsNotPrimeAndTheCheckTerminates": 2,
+        "NumberTheoryAuditTests.PrimeSieveFactorizationTotientAndRadicalAgreeWithIntegerDefinitions": 1
+      }
+    },
+    {
+      "id": "B03",
+      "title": "Matrix indexing, complex statistics, and distances",
+      "direct_failures": 0,
+      "sources": [
+        "sources/Core/Matrice.cs",
+        "sources/Core/LinealgOptions.cs",
+        "sources/Distance/SokalSneath.cs"
+      ],
+      "recommended_after": [
+        "B01"
+      ],
+      "work": [
+        "Rectangular indexing and placement: diagonal multiplication 8, Shift 4, Merge 6, mesh evaluation 8, Swap 12; total 38 cases.",
+        "Hermitian variance, covariance, and norms: 5 cases including the two original regressions.",
+        "Sokal-Sneath denominator: 3 independent contingency-table checks."
+      ],
+      "validation": "Use non-square arrays in both orientations, all real/complex overloads, independent index maps, and conjugate inner products. Verify covariance symmetry and nonnegative norms.",
+      "caveat": "Hermitian sample statistics; Swap axis meanings and diagonal pseudoinverse zero convention retained. Resize interpolation remains in B05.",
+      "failed_test_families": {},
+      "focused_test_filter": "FullyQualifiedName~UMapx.Tests.DistanceAuditTests.BooleanDistancesUseContingencyCounts|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.ComplexVarianceUsesSquaredMagnitudes|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.ComplexVectorModulusCannotCancelNonzeroComponents|FullyQualifiedName~UMapx.Tests.MatrixAuditTests.ComplexStatisticsRespectHermitianInnerProducts|FullyQualifiedName~UMapx.Tests.MatrixAuditTests.DiagonalMultiplicationScalesTheDocumentedRowsOrColumns|FullyQualifiedName~UMapx.Tests.MatrixAuditTests.RectangularArrayOperationsMatchIndexDefinitions|FullyQualifiedName~UMapx.Tests.MatrixStructureAuditTests.MeshEvaluationUsesBothIndependentCoordinates|FullyQualifiedName~UMapx.Tests.MatrixStructureAuditTests.SwappingRowsAndColumnsPermutesEveryEntry|FullyQualifiedName~UMapx.Tests.MatrixRepairTests",
+      "previous_failures": 46,
+      "resolved_failures": 46,
+      "status": "closed",
+      "previous_failed_test_families": {
+        "DistanceAuditTests.BooleanDistancesUseContingencyCounts": 3,
+        "MathematicalRegressionTests.ComplexVarianceUsesSquaredMagnitudes": 1,
+        "MathematicalRegressionTests.ComplexVectorModulusCannotCancelNonzeroComponents": 1,
+        "MatrixAuditTests.ComplexStatisticsRespectHermitianInnerProducts": 3,
+        "MatrixAuditTests.DiagonalMultiplicationScalesTheDocumentedRowsOrColumns": 8,
+        "MatrixAuditTests.RectangularArrayOperationsMatchIndexDefinitions": 10,
+        "MatrixStructureAuditTests.MeshEvaluationUsesBothIndependentCoordinates": 8,
+        "MatrixStructureAuditTests.SwappingRowsAndColumnsPermutesEveryEntry": 12
+      }
+    },
+    {
+      "id": "B04",
+      "title": "Probability distributions",
+      "direct_failures": 0,
+      "sources": [
+        "sources/Distribution",
+        "sources/Distribution/DistributionNumerics.cs",
+        "sources/Core/Special.cs"
+      ],
+      "recommended_after": [
+        "B01"
+      ],
+      "work": [
+        "PowerNormal and PowerLognormal: 29 reference failures; align the documented law, PDF, and CDF.",
+        "Binomial and Poisson: 9 failures across boundaries, mass, entropy, modes, and medians.",
+        "Birnbaum-Saunders: 10 failures across median, mode, and entropy.",
+        "Other moments/entropy: 16; FoldedNormal mode and ChiSquare median checks: 3."
+      ],
+      "validation": "Use independent PDF integrals, CDF/PDF differentiation, normalization, parameter-dependent existence of moments, and both median inequalities. Recheck each distribution after shared scalar fixes.",
+      "caveat": "Power laws follow the NIST survival-power definition. Discrete medians use the lower median; ChiSquare uses CDF inversion. Unsupported getters remain explicit.",
+      "failed_test_families": {},
+      "focused_test_filter": "FullyQualifiedName~UMapx.Tests.DistributionReferenceTests.MatchesIndependentProbabilityReference|FullyQualifiedName~UMapx.Tests.DistributionShapeAuditTests.BirnbaumSaundersModeIsThePositiveStationaryPoint|FullyQualifiedName~UMapx.Tests.DistributionShapeAuditTests.FoldedNormalWithLocationSmallerThanScaleHasModeZero|FullyQualifiedName~UMapx.Tests.DistributionShapeAuditTests.ModesAndMediansSatisfyTheirProbabilityDefinitions|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.BinomialCertainSuccessHasUnitMass|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.BinomialMedianSatisfiesBothHalfProbabilityInequalities|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.InverseChiSquareEntropyAgreesWithInverseGamma|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.PoissonMassIsFiniteAtItsModeForLambda100|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.PoissonMedianCanBeOneBelowLambdaOne|FullyQualifiedName~UMapx.Tests.DistributionRepairTests",
+      "previous_failures": 67,
+      "resolved_failures": 67,
+      "status": "closed",
+      "previous_failed_test_families": {
+        "DistributionReferenceTests.MatchesIndependentProbabilityReference": 50,
+        "DistributionShapeAuditTests.BirnbaumSaundersModeIsThePositiveStationaryPoint": 2,
+        "DistributionShapeAuditTests.FoldedNormalWithLocationSmallerThanScaleHasModeZero": 1,
+        "DistributionShapeAuditTests.ModesAndMediansSatisfyTheirProbabilityDefinitions": 8,
+        "MathematicalRegressionTests.BinomialCertainSuccessHasUnitMass": 2,
+        "MathematicalRegressionTests.BinomialMedianSatisfiesBothHalfProbabilityInequalities": 1,
+        "MathematicalRegressionTests.InverseChiSquareEntropyAgreesWithInverseGamma": 1,
+        "MathematicalRegressionTests.PoissonMassIsFiniteAtItsModeForLambda100": 1,
+        "MathematicalRegressionTests.PoissonMedianCanBeOneBelowLambdaOne": 1
+      }
+    },
+    {
+      "id": "B05",
+      "title": "Approximation, interpolation, and local array filters",
+      "direct_failures": 0,
+      "sources": [
+        "sources/Analysis/Pade.cs",
+        "sources/Analysis/Interpolation.cs",
+        "sources/Core/LinealgOptions.cs",
+        "sources/Imaging/Resize.cs",
+        "sources/Core/Matrice.cs"
+      ],
+      "recommended_after": [
+        "B03"
+      ],
+      "work": [
+        "Pade denominator degree greater than numerator degree: 2 cases.",
+        "Bilinear grid-edge interpolation: 2 cases.",
+        "Bicubic resizing at scale one: 3 cases (real array, complex array, bitmap).",
+        "Local mean: 2; morphology ranks: 4; exact half-turn rotation: 2."
+      ],
+      "validation": "Compare Taylor coefficients, exact affine interpolation, impulse responses, sorted edge neighborhoods, and pixel/sample identities. Check endpoints and rectangular shapes.",
+      "caveat": "Mean windows use clipped normalization and retain separable weighted passes. Bicubic resizing aligns sample centers. General-angle sampling and Pad\u00e9 conditioning are not exhaustive guarantees.",
+      "failed_test_families": {},
+      "focused_test_filter": "FullyQualifiedName~UMapx.Tests.AnalysisAuditTests.PadeCoefficientsMatchTheTaylorSeriesThroughTheRequestedOrder|FullyQualifiedName~UMapx.Tests.ImagingAuditTests.BitmapResizingToTheSameDimensionsIsAnIdentity|FullyQualifiedName~UMapx.Tests.KernelAndContainerAuditTests.ResizingAnArrayToItsCurrentSizePreservesSamples|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.BilinearInterpolationIsLinearAlongGridEdges|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.PadeSupportsDenominatorDegreeLargerThanNumeratorDegree|FullyQualifiedName~UMapx.Tests.MatrixAuditTests.LocalMeanHasTheCorrectInteriorImpulseResponse|FullyQualifiedName~UMapx.Tests.MatrixAuditTests.MorphologyMatchesSortingOfReplicatedEdgeNeighborhoods|FullyQualifiedName~UMapx.Tests.MatrixAuditTests.MorphologyUsesZeroBasedRanksInAThreeSampleWindow|FullyQualifiedName~UMapx.Tests.MatrixFilterAuditTests.MatrixRotationsAtExactHalfTurnsMatchIndexReversal|FullyQualifiedName~UMapx.Tests.ApproximationRepairTests",
+      "previous_failures": 15,
+      "resolved_failures": 15,
+      "status": "closed",
+      "previous_failed_test_families": {
+        "AnalysisAuditTests.PadeCoefficientsMatchTheTaylorSeriesThroughTheRequestedOrder": 1,
+        "ImagingAuditTests.BitmapResizingToTheSameDimensionsIsAnIdentity": 1,
+        "KernelAndContainerAuditTests.ResizingAnArrayToItsCurrentSizePreservesSamples": 2,
+        "MathematicalRegressionTests.BilinearInterpolationIsLinearAlongGridEdges": 2,
+        "MathematicalRegressionTests.PadeSupportsDenominatorDegreeLargerThanNumeratorDegree": 1,
+        "MatrixAuditTests.LocalMeanHasTheCorrectInteriorImpulseResponse": 2,
+        "MatrixAuditTests.MorphologyMatchesSortingOfReplicatedEdgeNeighborhoods": 2,
+        "MatrixAuditTests.MorphologyUsesZeroBasedRanksInAThreeSampleWindow": 2,
+        "MatrixFilterAuditTests.MatrixRotationsAtExactHalfTurnsMatchIndexReversal": 2
+      }
+    },
+    {
+      "id": "B06",
+      "title": "Matrix decompositions",
+      "direct_failures": 0,
+      "sources": [
+        "sources/Decomposition/Schur.cs",
+        "sources/Decomposition/SVD.cs",
+        "sources/Decomposition/GEVD.cs"
+      ],
+      "recommended_after": [
+        "B01",
+        "B03"
+      ],
+      "work": [
+        "Handle Schur zero-matrix deflation and termination first: 3 cases.",
+        "Separate SVD reconstruction from pseudoinverse singular-value thresholding: 9 cases.",
+        "Repair GEVD eigenvector accumulation/normalization: 3 cases."
+      ],
+      "validation": "Check reconstruction, orthogonality/unitarity, all four Penrose equations, generalized eigen-equations, and bounded termination on zero/rank-deficient inputs.",
+      "caveat": "Public outputs remain single precision. Pseudoinverse rank truncation uses max(rows, columns)*2^-23*max(S); nonconvergence is explicit.",
+      "failed_test_families": {},
+      "focused_test_filter": "FullyQualifiedName~UMapx.Tests.DecompositionAuditTests.GeneralizedFactorizationsSatisfyBothMatrixEquations|FullyQualifiedName~UMapx.Tests.DecompositionAuditTests.RectangularAndRankDeficientMatricesRetainTheirInformation|FullyQualifiedName~UMapx.Tests.DecompositionAuditTests.SchurDecompositionOfTheZeroMatrixTerminates|FullyQualifiedName~UMapx.Tests.DecompositionRepairTests",
+      "previous_failures": 15,
+      "resolved_failures": 15,
+      "status": "closed",
+      "previous_failed_test_families": {
+        "DecompositionAuditTests.GeneralizedFactorizationsSatisfyBothMatrixEquations": 3,
+        "DecompositionAuditTests.RectangularAndRankDeficientMatricesRetainTheirInformation": 9,
+        "DecompositionAuditTests.SchurDecompositionOfTheZeroMatrixTerminates": 3
+      }
+    },
+    {
+      "id": "B07",
+      "title": "Wavelets",
+      "direct_failures": 0,
+      "sources": [
+        "sources/Wavelet"
+      ],
+      "recommended_after": [
+        "B01"
+      ],
+      "work": [
+        "Bior/CDF reconstruction banks: 54 cases including 2 original Bior13 regressions.",
+        "Meyer removable singularities: 3 cases."
+      ],
+      "validation": "Check synthesis/analysis coefficient pairing, normalization, phase/alignment, impulses, deterministic signals, and analytical limits. Retain the distinction between reconstruction banks and prototype wavelets that do not promise perfect reconstruction.",
+      "caveat": "Public bands remain float; biorthogonal sums use double. Nonorthogonal prototypes and finite BL/Meyer approximation budgets are unchanged. Matrix sizes must stay even at every active level.",
+      "failed_test_families": {},
+      "focused_test_filter": "FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.BiorthogonalWaveletReconstructsImpulse|FullyQualifiedName~UMapx.Tests.WaveletAuditTests.MeyerWaveletAndScalingHaveFiniteRemovableSingularities|FullyQualifiedName~UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals|FullyQualifiedName~UMapx.Tests.WaveletRepairTests",
+      "previous_failures": 57,
+      "resolved_failures": 57,
+      "status": "closed",
+      "previous_failed_test_families": {
+        "MathematicalRegressionTests.BiorthogonalWaveletReconstructsImpulse": 2,
+        "WaveletAuditTests.MeyerWaveletAndScalingHaveFiniteRemovableSingularities": 3,
+        "WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals": 52
+      }
+    },
+    {
+      "id": "B08",
+      "title": "Window functions",
+      "direct_failures": 0,
+      "sources": [
+        "sources/Window/BartlettHann.cs",
+        "sources/Window/Normal.cs",
+        "sources/Window/Confined.cs"
+      ],
+      "recommended_after": [
+        "B01"
+      ],
+      "work": [
+        "Independent window formulas: 11 cases, including the Bartlett-Hann sign and Gaussian centering.",
+        "Explicit frame size versus stored frame size: 5 cases.",
+        "Original even Normal/Confined symmetry regressions: 2 cases."
+      ],
+      "validation": "Check odd/even lengths, endpoint values, symmetry, independent sample formulas, and independence from stored size when an explicit size is supplied.",
+      "caveat": "Singleton windows equal one. Confined Gaussian ratios avoid boundary underflow; the requested frame size defines the center.",
+      "failed_test_families": {},
+      "focused_test_filter": "FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.EvenConfinedWindowIsSymmetric|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.EvenNormalWindowIsSymmetric|FullyQualifiedName~UMapx.Tests.WindowAuditTests.ExplicitFrameSizeDoesNotDependOnStoredFrameSize|FullyQualifiedName~UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas|FullyQualifiedName~UMapx.Tests.WindowRepairTests",
+      "previous_failures": 18,
+      "resolved_failures": 18,
+      "status": "closed",
+      "previous_failed_test_families": {
+        "MathematicalRegressionTests.EvenConfinedWindowIsSymmetric": 1,
+        "MathematicalRegressionTests.EvenNormalWindowIsSymmetric": 1,
+        "WindowAuditTests.ExplicitFrameSizeDoesNotDependOnStoredFrameSize": 5,
+        "WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas": 11
+      }
+    },
+    {
+      "id": "B09",
+      "title": "Transforms and response filters",
+      "direct_failures": 0,
+      "sources": [
+        "sources/Transform",
+        "sources/Response/IIR.cs",
+        "sources/Distribution/ConeShape.cs"
+      ],
+      "recommended_after": [
+        "B01",
+        "B05"
+      ],
+      "work": [
+        "Hankel positive-zero bracketing and normalization: 4 cases.",
+        "Laplacian pyramid/vector filter reconstruction and constant preservation: 8 cases.",
+        "BilateralGrid and LocalLaplacian constant/phase behavior: 4 cases.",
+        "Complex threshold overload consistency: 2 cases.",
+        "IIR characteristic polynomial/stability: 3 cases; ConeShape sign for negative tau: 2 cases."
+      ],
+      "validation": "Check ordered positive Bessel zeros, independent transform matrices, reconstruction, DC/phase preservation, threshold equality, and poles of the actual difference equation.",
+      "caveat": "Complex bilateral grids use magnitude guidance and full complex values. Under/Over threshold components separately, Abs uses magnitude. Local-Laplacian filtering preserves the base level and interpolates its lookup tables. Complex LocalLaplacian remains unsupported.",
+      "failed_test_families": {},
+      "focused_test_filter": "FullyQualifiedName~UMapx.Tests.AdditionalTransformAuditTests.HankelMatrixMatchesHighPrecisionBesselZeros|FullyQualifiedName~UMapx.Tests.AdditionalTransformAuditTests.TimeFrequencyKernelsMatchTheirFourierPair|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.IirStabilityUsesTheSamePolynomialAsReaction|FullyQualifiedName~UMapx.Tests.ResponseAuditTests.StabilityMatchesThePoleOfTheActualDifferenceEquation|FullyQualifiedName~UMapx.Tests.TransformAuditTests.LaplacianPyramidsReconstructVectors|FullyQualifiedName~UMapx.Tests.TransformAuditTests.SmoothingAndDetailFiltersPreserveConstants|FullyQualifiedName~UMapx.Tests.TransformAuditTests.ThresholdFiltersRespectEqualityAndSignedComponents|FullyQualifiedName~UMapx.Tests.TransformFilterRepairTests",
+      "previous_failures": 23,
+      "resolved_failures": 23,
+      "status": "closed",
+      "previous_failed_test_families": {
+        "AdditionalTransformAuditTests.HankelMatrixMatchesHighPrecisionBesselZeros": 4,
+        "AdditionalTransformAuditTests.TimeFrequencyKernelsMatchTheirFourierPair": 2,
+        "MathematicalRegressionTests.IirStabilityUsesTheSamePolynomialAsReaction": 1,
+        "ResponseAuditTests.StabilityMatchesThePoleOfTheActualDifferenceEquation": 2,
+        "TransformAuditTests.LaplacianPyramidsReconstructVectors": 6,
+        "TransformAuditTests.SmoothingAndDetailFiltersPreserveConstants": 6,
+        "TransformAuditTests.ThresholdFiltersRespectEqualityAndSignedComponents": 2
+      }
+    },
+    {
+      "id": "B10",
+      "title": "Color spaces",
+      "direct_failures": 0,
+      "sources": [
+        "sources/Colorspace/XYZ.cs",
+        "sources/Colorspace/LAB.cs",
+        "sources/Colorspace/RYB.cs",
+        "sources/Colorspace/AHSL.cs"
+      ],
+      "recommended_after": [],
+      "work": [
+        "XYZ/LAB white point, range, and round trips: 15 cases including the original XYZ regression.",
+        "RYB chroma/white preservation: 4 cases; AHSL chroma: 2 cases."
+      ],
+      "validation": "Use D65 reference coordinates, primary/neutral colors, gamut boundaries, and round trips with the existing quantization budgets. Repair XYZ before judging downstream LAB differences.",
+      "caveat": "XYZ stores nonnegative relative tristimulus values above one. Existing four-decimal sRGB/D65 constants remain. RYB byte conversion rounds to nearest.",
+      "failed_test_families": {},
+      "focused_test_filter": "FullyQualifiedName~UMapx.Tests.ColorSpaceAuditTests.CieXyzAndLabMatchTheD65ReferenceWhite|FullyQualifiedName~UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.RybConversionPreservesWhite|FullyQualifiedName~UMapx.Tests.MathematicalRegressionTests.XyzCanRepresentItsD65WhitePoint|FullyQualifiedName~UMapx.Tests.ColorSpaceRepairTests",
+      "previous_failures": 21,
+      "resolved_failures": 21,
+      "status": "closed",
+      "previous_failed_test_families": {
+        "ColorSpaceAuditTests.CieXyzAndLabMatchTheD65ReferenceWhite": 6,
+        "ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget": 13,
+        "MathematicalRegressionTests.RybConversionPreservesWhite": 1,
+        "MathematicalRegressionTests.XyzCanRepresentItsD65WhitePoint": 1
+      }
+    },
+    {
+      "id": "B11",
+      "title": "Images, geometry, and rendering",
+      "direct_failures": 23,
+      "sources": [
+        "sources/Imaging",
+        "sources/Visualization/Figure.cs"
+      ],
+      "recommended_after": [
+        "B03",
+        "B05",
+        "B10"
+      ],
+      "work": [
+        "Tensor reconstruction alpha: 4 cases.",
+        "Depth histogram counter overflow: 2 cases.",
+        "Figure rendering of constant series: 15 cases.",
+        "Rectangle area overflow: 1 case; depth Merge coordinates: 1 case."
+      ],
+      "validation": "Verify opaque alpha for RGB tensors, wide depth counts and rectangle areas, finite constant-series rendering, and depth placement coordinates.",
+      "caveat": "Selected items 1, 2, 3, and 5 are repaired: correction tables (8), bitmap stride (8), histogram median (3), and ColorTransfer (2). The other B11 items remain open.",
+      "failed_test_families": {
+        "GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries": 15,
+        "GeometryAndRenderingAuditTests.RectangleOverlapUsesGeometricAreaWithoutIntegerOverflow": 1,
+        "GeometryAndRenderingAuditTests.RectangularDepthTransformsPreserveCoordinateMeaning": 1,
+        "ImagingAuditTests.TensorConversionsMatchPixelChannelOrder": 4,
+        "UtilityContractAuditTests.DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow": 2
+      },
+      "focused_test_filter": "FullyQualifiedName~UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries|FullyQualifiedName~UMapx.Tests.GeometryAndRenderingAuditTests.RectangleOverlapUsesGeometricAreaWithoutIntegerOverflow|FullyQualifiedName~UMapx.Tests.GeometryAndRenderingAuditTests.RectangularDepthTransformsPreserveCoordinateMeaning|FullyQualifiedName~UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder|FullyQualifiedName~UMapx.Tests.UtilityContractAuditTests.DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow",
+      "previous_failures": 44,
+      "resolved_failures": 21,
+      "status": "partially repaired",
+      "previous_failed_test_families": {
+        "GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries": 15,
+        "GeometryAndRenderingAuditTests.RectangleOverlapUsesGeometricAreaWithoutIntegerOverflow": 1,
+        "GeometryAndRenderingAuditTests.RectangularDepthTransformsPreserveCoordinateMeaning": 1,
+        "ImagingAuditTests.HistogramMedianSelectsTheMiddleObservationForOddCounts": 3,
+        "ImagingAuditTests.NeutralFilterSettingsPreservePixels": 7,
+        "ImagingAuditTests.PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched": 8,
+        "ImagingAuditTests.PixelwiseFiltersMatchIndependentChannelEquations": 1,
+        "ImagingAuditTests.TensorConversionsMatchPixelChannelOrder": 4,
+        "RemainingImagingAuditTests.ConstantColorTransferPreservesIdenticalImages": 2,
+        "UtilityContractAuditTests.DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow": 2
+      }
+    },
+    {
+      "id": "B12",
+      "title": "Video stream parsing",
+      "direct_failures": 5,
+      "sources": [
+        "sources/Video/Internal/Boundary.cs",
+        "sources/Video/Internal/MJPEGStreamParser.cs"
+      ],
+      "recommended_after": [],
+      "work": [
+        "MIME boundary parameters/case handling: 2 cases.",
+        "MJPEG headers split across one-, two-, and three-byte transport chunks: 3 cases."
+      ],
+      "validation": "Use in-memory streams with arbitrary split points, bounded buffer indices, quoted/trailing parameters, and case variants. No live camera or network is needed.",
+      "caveat": "This is a parsing/contract block, not a numerical mathematics defect.",
+      "failed_test_families": {
+        "VideoAuditTests.MjpegFramesSurviveArbitraryTransportChunkBoundaries": 3,
+        "VideoAuditTests.MultipartBoundaryParsingHonorsMimeParameters": 2
+      },
+      "focused_test_filter": "FullyQualifiedName~UMapx.Tests.VideoAuditTests.MjpegFramesSurviveArbitraryTransportChunkBoundaries|FullyQualifiedName~UMapx.Tests.VideoAuditTests.MultipartBoundaryParsingHonorsMimeParameters",
+      "previous_failures": 5,
+      "resolved_failures": 0,
+      "status": "open"
+    }
+  ],
+  "assignments": [
+    {
+      "test_id": "50418088-38ab-8c95-6736-908f5f84a9dd",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Ball, kind: \"constant\")"
+    },
+    {
+      "test_id": "f15eb5ef-d42d-a76f-8850-4d88e0cd482c",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Circle, kind: \"constant\")"
+    },
+    {
+      "test_id": "8c144e97-1c68-6717-768c-426071160824",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: None, kind: \"constant\")"
+    },
+    {
+      "test_id": "721dec24-8907-b8af-773f-c300ba4f52a6",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Polygon, kind: \"constant\")"
+    },
+    {
+      "test_id": "46800dfa-c24f-5fe3-d8e9-d1d1bb4f69bc",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Plot, shape: Rectangle, kind: \"constant\")"
+    },
+    {
+      "test_id": "a96fdd57-be22-ea5e-37c9-3e70f79055af",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Ball, kind: \"constant\")"
+    },
+    {
+      "test_id": "0e9d26c1-9e4d-38c7-124d-0cce90aae190",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Circle, kind: \"constant\")"
+    },
+    {
+      "test_id": "05caf80f-9241-76f6-ad4f-5bba08b45296",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: None, kind: \"constant\")"
+    },
+    {
+      "test_id": "97760d80-9a51-040a-d0db-1050ece8bfe3",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Polygon, kind: \"constant\")"
+    },
+    {
+      "test_id": "a65d23ec-e7f4-3262-3847-e28c192709fb",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Scatter, shape: Rectangle, kind: \"constant\")"
+    },
+    {
+      "test_id": "fc067e99-c9f7-417c-a3a0-a78f5f40a4fa",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Ball, kind: \"constant\")"
+    },
+    {
+      "test_id": "68b76e5e-fed2-b312-1a6e-207c6584fc20",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Circle, kind: \"constant\")"
+    },
+    {
+      "test_id": "468479bc-145c-0d92-2891-88faa9e3a7ba",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: None, kind: \"constant\")"
+    },
+    {
+      "test_id": "63d9ef81-5914-5aef-e7f8-f9434446e1b6",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Polygon, kind: \"constant\")"
+    },
+    {
+      "test_id": "f9e1b906-6621-79a2-d3ed-34b46ea3854b",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "FiguresRenderFiniteConstantAndDiscontinuousSeries",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries(series: Stem, shape: Rectangle, kind: \"constant\")"
+    },
+    {
+      "test_id": "d9656156-25ea-e0a4-d890-c7408f3813a2",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "RectangleOverlapUsesGeometricAreaWithoutIntegerOverflow",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.RectangleOverlapUsesGeometricAreaWithoutIntegerOverflow(ax: 0, ay: 0, aw: 50000, ah: 50000, bx: 0, by: 0, bw: 50000, bh: 50000)"
+    },
+    {
+      "test_id": "e96e39ac-5cf1-df3d-2b6c-1382809ed92c",
+      "block_id": "B11",
+      "suite": "GeometryAndRenderingAuditTests",
+      "method": "RectangularDepthTransformsPreserveCoordinateMeaning",
+      "case": "UMapx.Tests.GeometryAndRenderingAuditTests.RectangularDepthTransformsPreserveCoordinateMeaning(operation: \"Merge\")"
+    },
+    {
+      "test_id": "27b7e64e-1ef4-6f78-bf1c-e47bb94eb4ae",
+      "block_id": "B11",
+      "suite": "ImagingAuditTests",
+      "method": "TensorConversionsMatchPixelChannelOrder",
+      "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: False, floating: False)"
+    },
+    {
+      "test_id": "2abd9d1d-daa7-535f-0376-6efc746f2c9f",
+      "block_id": "B11",
+      "suite": "ImagingAuditTests",
+      "method": "TensorConversionsMatchPixelChannelOrder",
+      "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: False, floating: True)"
+    },
+    {
+      "test_id": "cda779f6-b6de-1728-3d78-80dd7690e6fb",
+      "block_id": "B11",
+      "suite": "ImagingAuditTests",
+      "method": "TensorConversionsMatchPixelChannelOrder",
+      "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: True, floating: False)"
+    },
+    {
+      "test_id": "f86b9f0d-28d2-a3ff-8a3b-430b9f58fc49",
+      "block_id": "B11",
+      "suite": "ImagingAuditTests",
+      "method": "TensorConversionsMatchPixelChannelOrder",
+      "case": "UMapx.Tests.ImagingAuditTests.TensorConversionsMatchPixelChannelOrder(rgb: True, floating: True)"
+    },
+    {
+      "test_id": "a3e0ae1d-1130-cbcd-7dcf-bea0da0640a9",
+      "block_id": "B11",
+      "suite": "UtilityContractAuditTests",
+      "method": "DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow",
+      "case": "UMapx.Tests.UtilityContractAuditTests.DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow(side: 256)"
+    },
+    {
+      "test_id": "6939c7db-31d4-8dea-85fc-4484e9b7b91a",
+      "block_id": "B11",
+      "suite": "UtilityContractAuditTests",
+      "method": "DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow",
+      "case": "UMapx.Tests.UtilityContractAuditTests.DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow(side: 300)"
+    },
+    {
+      "test_id": "7dd250a4-8c91-02f7-f9f2-3f7587f1d77c",
+      "block_id": "B12",
+      "suite": "VideoAuditTests",
+      "method": "MjpegFramesSurviveArbitraryTransportChunkBoundaries",
+      "case": "UMapx.Tests.VideoAuditTests.MjpegFramesSurviveArbitraryTransportChunkBoundaries(chunk: 1)"
+    },
+    {
+      "test_id": "27a731e9-5daa-18fc-d2d9-ae615797d6b7",
+      "block_id": "B12",
+      "suite": "VideoAuditTests",
+      "method": "MjpegFramesSurviveArbitraryTransportChunkBoundaries",
+      "case": "UMapx.Tests.VideoAuditTests.MjpegFramesSurviveArbitraryTransportChunkBoundaries(chunk: 2)"
+    },
+    {
+      "test_id": "26d14848-7429-546b-b343-610e437d9cd6",
+      "block_id": "B12",
+      "suite": "VideoAuditTests",
+      "method": "MjpegFramesSurviveArbitraryTransportChunkBoundaries",
+      "case": "UMapx.Tests.VideoAuditTests.MjpegFramesSurviveArbitraryTransportChunkBoundaries(chunk: 3)"
+    },
+    {
+      "test_id": "32bbe7f8-e173-1aff-da30-bf0224c110c1",
+      "block_id": "B12",
+      "suite": "VideoAuditTests",
+      "method": "MultipartBoundaryParsingHonorsMimeParameters",
+      "case": "UMapx.Tests.VideoAuditTests.MultipartBoundaryParsingHonorsMimeParameters(contentType: \"Multipart/X-Mixed-Replace; Boundary=frame\", expected: \"frame\")"
+    },
+    {
+      "test_id": "ef749fd8-1bd6-e673-485b-7a98715e1cdb",
+      "block_id": "B12",
+      "suite": "VideoAuditTests",
+      "method": "MultipartBoundaryParsingHonorsMimeParameters",
+      "case": "UMapx.Tests.VideoAuditTests.MultipartBoundaryParsingHonorsMimeParameters(contentType: \"multipart/x-mixed-replace; boundary=frame; charset\"\u00b7\u00b7\u00b7, expected: \"frame\")"
+    }
+  ],
+  "previous_snapshot": "../audit-b07-b10/repair-blocks.json",
+  "resolved_this_step": {
+    "B11": 21
+  }
+}

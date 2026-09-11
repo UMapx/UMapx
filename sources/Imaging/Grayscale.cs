@@ -90,11 +90,13 @@ namespace UMapx.Imaging
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
                 throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
 
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-            int y, x, width = bmData.Width, height = bmData.Height;
+            byte* scan0 = (byte*)bmData.Scan0.ToPointer();
+            int y, x, width = bmData.Width, height = bmData.Height, stride = bmData.Stride;
 
             for (y = 0; y < height; y++)
             {
+                // Each logical row starts at its signed stride, including any padding.
+                byte* p = scan0 + (long)y * stride;
                 for (x = 0; x < width; x++, p += 4)
                 {
                     p[0] = p[1] = p[2] = Maths.Byte(cr * p[2] + cg * p[1] + cb * p[0]);

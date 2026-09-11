@@ -2,22 +2,23 @@
 
 The audit covers every source area. The current source inventory contains 427 C#
 files after [helper consolidation](../../docs/helper-consolidation-2026-09-11.md).
-See the [B07–B10 repair report](../../docs/b07-b10-repair-2026-09-11.md)
+See the [selected imaging repair report](../../docs/imaging-selected-repair-2026-09-11.md)
 and [remaining repair blocks](../../docs/remaining-repair-blocks-2026-09-10.md).
-The [decomposition repair report](../../docs/decomposition-repair-2026-09-11.md),
+The [B07–B10 repair report](../../docs/b07-b10-repair-2026-09-11.md),
+[decomposition repair report](../../docs/decomposition-repair-2026-09-11.md),
 [approximation repair report](../../docs/approximation-repair-2026-09-11.md),
 [matrix and distribution repair report](../../docs/matrix-distribution-repair-2026-09-10.md),
 [arithmetic repair report](../../docs/arithmetic-repair-2026-09-10.md),
 [special-function repair report](../../docs/special-functions-repair-2026-09-10.md),
 and [expanded baseline report](../../docs/math-audit-expanded-2026-09-10.md) remain historical records.
 
-The current complete run contains **15,622 cases: 15,573 passed, 49 failed, none
-skipped**. All 15,203 previous cases remain: 119 B07–B10 failures now pass and no
-passing cases regressed. All 419 added cases pass. B01–B10 are closed; B11 (44)
+The current complete run contains **16,099 cases: 16,071 passed, 28 failed, none
+skipped**. All 15,622 previous cases remain: 21 selected B11 failures now pass and no
+passing cases regressed. All 477 added cases pass. B01–B10 are closed; B11 (23)
 and B12 (5) remain open. Failing tests remain enabled and expect the mathematical
 answer; the full command exits with status 1.
 
-Execution coverage is **83.69% of lines** and **77.40% of branches**. These figures
+Execution coverage is **83.75% of lines** and **77.45% of branches**. These figures
 include failing and contract tests. They are not a correctness percentage, and
 this suite does not establish absence of errors. The report explicitly lists
 unexecuted lines/methods, unsupported APIs, and incomplete parameter domains.
@@ -68,7 +69,7 @@ Available categories: `Identity`, `Regression`, `Reference`, `Core`, `Matrix`,
 `Analysis`, `ColorSpace`, `Decomposition`, `Distance`, `Distribution`, `Window`,
 `WindowTransform`, `Transform`, `Wavelet`, `Response`, `Imaging`, `Geometry`,
 `Video`, and `Contract`. Category totals and test-family counts are available in
-[the run summary](../../docs/audit-b07-b10/summary.json).
+[the run summary](../../docs/audit-imaging-selected/summary.json).
 
 A numeric-only filter for environments without Windows bitmap support is:
 
@@ -110,6 +111,10 @@ The complete reported result is from Windows with .NET SDK 10.0.401.
   independent Meyer quadrature, narrow windows, high-order Bessel zeros, known
   IIR poles, complex grid sample influences, direct local-Laplacian remapping,
   threshold components, cone kernel mass, and neutral/chromatic color round trips.
+- 477 selected imaging repair cases cover lookup-table endpoints, every neutral
+  byte value, scalar pixel equations, signed stride and guarded padding, all 11
+  diffusion kernels, histogram ranks, and color transfer checked against
+  independent pairwise population variance and distribution invariance.
 - Window formulas, wavelet analysis/synthesis coefficients, impulses, filter
   transfer polynomials, image pixel equations and neutral/constant invariants.
 - Real/complex vectors, rectangular matrices, even/odd sizes, singular inputs,

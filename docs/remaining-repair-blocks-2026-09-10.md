@@ -1,13 +1,14 @@
 # Remaining repair blocks — updated September 11, 2026
 
-After the [B07–B10 repairs](b07-b10-repair-2026-09-11.md), **49 failures remain in
-two open blocks**. B01–B10 are closed. The latest repair resolved all 119 assigned
-failures and added 419 passing cases, with no regressions or removed tests.
+After the [selected imaging repairs](imaging-selected-repair-2026-09-11.md),
+**28 failures remain in two open blocks**. B01–B10 are closed. The latest repair
+resolved 21 selected B11 failures and added 477 passing cases, with no regressions
+or removed tests.
 Every remaining failing test ID belongs to exactly one block. The complete
-verified run has 15,622 cases, with 15,573 passed and no skipped cases.
+verified run has 16,099 cases, with 16,071 passed and no skipped cases.
 
-**Recommended next: B11 — images, geometry, and rendering (44 failures).**
-The five B12 video-parser failures also remain. No failure outside B07–B10 changed.
+**Recommended next: the remaining B11 work — images, geometry, and rendering (23 failures).**
+The five B12 video-parser failures also remain. All unselected failing cases are unchanged.
 Keep the repaired prime and zero-matrix Schur termination regressions enabled.
 
 | Block | Scope | Assigned failing cases | Recommended after |
@@ -22,9 +23,9 @@ Keep the repaired prime and zero-matrix Schur termination regressions enabled.
 | [B08](#b08) | Window functions | 0 (18 resolved) | Closed |
 | [B09](#b09) | Transforms and response filters | 0 (23 resolved) | Closed |
 | [B10](#b10) | Color spaces | 0 (21 resolved) | Closed |
-| [B11](#b11) | Images, geometry, and rendering | 44 | B03, B05, B10 |
+| [B11](#b11) | Images, geometry, and rendering | 23 (21 resolved) | B03, B05, B10 |
 | [B12](#b12) | Video stream parsing | 5 | Independent |
-| **Remaining** | | **49** | |
+| **Remaining** | | **28** | |
 
 Counts represent failed test cases, not independent bugs. Several parameter sets and original
 regressions can expose the same cause. Fixing one block may also change another block's count.
@@ -348,18 +349,21 @@ Sources: [XYZ.cs](../sources/Colorspace/XYZ.cs), [LAB.cs](../sources/Colorspace/
 </details>
 
 <a id="b11"></a>
-## B11. Images, geometry, and rendering — 44 cases
+## B11. Images, geometry, and rendering — 23 cases remain; 21 resolved
 
 Sources: [Imaging](../sources/Imaging), [Figure.cs](../sources/Visualization/Figure.cs).
 
-- Lookup-table normalization and pixel equations: 8 cases.
-- Padded/negative bitmap stride: 8; histogram median: 3; tensor alpha/channel reconstruction: 4.
-- Constant-image ColorTransfer: 2; depth histogram counter overflow: 2.
+- Tensor reconstruction alpha: 4 cases.
+- Depth histogram counter overflow: 2 cases.
 - Figure rendering of constant series: 15; rectangle area overflow: 1; depth Merge coordinates: 1.
 
-**Validation:** Use guarded buffers for stride/padding, exact neutral pixels, independent histogram ranks, opaque alpha for RGB inputs, zero-variance limits, wide area/count arithmetic, and finite rendering ranges.
+**Validation:** Check opaque alpha for RGB tensors, wide area/count arithmetic, finite constant-series rendering ranges, and exact depth placement coordinates.
 
-**Follow-up:** B05 bicubic resizing is already repaired. ColorTransfer was rechecked after B10; its two constant-image failures remain assigned here.
+**Resolved in the selected repair:** lookup-table normalization and pixel equations (8),
+padded/negative bitmap stride (8), histogram median (3), and constant-image
+ColorTransfer (2). The [repair report](imaging-selected-repair-2026-09-11.md)
+documents the numerical conventions and 477 added passing tests. Other B11 items
+remain open. B05 bicubic resizing was already repaired.
 
 <details>
 <summary>Assigned failing test families</summary>
@@ -369,12 +373,7 @@ Sources: [Imaging](../sources/Imaging), [Figure.cs](../sources/Visualization/Fig
 | [GeometryAndRenderingAuditTests.FiguresRenderFiniteConstantAndDiscontinuousSeries](../tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs) | 15 |
 | [GeometryAndRenderingAuditTests.RectangleOverlapUsesGeometricAreaWithoutIntegerOverflow](../tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs) | 1 |
 | [GeometryAndRenderingAuditTests.RectangularDepthTransformsPreserveCoordinateMeaning](../tests/UMapx.Tests/GeometryAndRenderingAuditTests.cs) | 1 |
-| [ImagingAuditTests.HistogramMedianSelectsTheMiddleObservationForOddCounts](../tests/UMapx.Tests/ImagingAuditTests.cs) | 3 |
-| [ImagingAuditTests.NeutralFilterSettingsPreservePixels](../tests/UMapx.Tests/ImagingAuditTests.cs) | 7 |
-| [ImagingAuditTests.PixelFiltersHonorBitmapDataStrideAndLeavePaddingUntouched](../tests/UMapx.Tests/ImagingAuditTests.cs) | 8 |
-| [ImagingAuditTests.PixelwiseFiltersMatchIndependentChannelEquations](../tests/UMapx.Tests/ImagingAuditTests.cs) | 1 |
 | [ImagingAuditTests.TensorConversionsMatchPixelChannelOrder](../tests/UMapx.Tests/ImagingAuditTests.cs) | 4 |
-| [RemainingImagingAuditTests.ConstantColorTransferPreservesIdenticalImages](../tests/UMapx.Tests/RemainingImagingAuditTests.cs) | 2 |
 | [UtilityContractAuditTests.DepthHistogramEqualizationCountsMoreThan65535PixelsWithoutOverflow](../tests/UMapx.Tests/UtilityContractAuditTests.cs) | 2 |
 
 </details>
@@ -403,8 +402,10 @@ Sources: [Boundary.cs](../sources/Video/Internal/Boundary.cs), [MJPEGStreamParse
 
 ## Evidence and commands
 
-- [Current block metadata, focused filters, and all 49 unique test-ID assignments](audit-b07-b10/repair-blocks.json).
-- [Current individual failures](audit-b07-b10/failures.json) and [run summary](audit-b07-b10/summary.json).
+- [Current block metadata, focused filters, and all 28 unique test-ID assignments](audit-imaging-selected/repair-blocks.json).
+- [Current individual failures](audit-imaging-selected/failures.json) and [run summary](audit-imaging-selected/summary.json).
+- [Selected imaging repair results](imaging-selected-repair-2026-09-11.md).
+- [Previous 49-case snapshot](audit-b07-b10/repair-blocks.json).
 - [Previous 168-case snapshot](audit-decomposition/repair-blocks.json).
 - [B07–B10 repair results](b07-b10-repair-2026-09-11.md).
 - [Previous 183-case snapshot](audit-consolidation/repair-blocks.json).
@@ -422,7 +423,7 @@ Sources: [Boundary.cs](../sources/Video/Internal/Boundary.cs), [MJPEGStreamParse
 Run a block's focused test families from the repository root:
 
 ```powershell
-$plan = Get-Content -Raw docs/audit-b07-b10/repair-blocks.json | ConvertFrom-Json
+$plan = Get-Content -Raw docs/audit-imaging-selected/repair-blocks.json | ConvertFrom-Json
 $block = $plan.blocks | Where-Object id -eq 'B11'
 dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter $block.focused_test_filter
 ```
@@ -438,5 +439,5 @@ dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filte
 ./tools/Run-MathAudit.ps1 -NoRestore -ResultsDirectory artifacts/math-audit/next-block
 ```
 
-The full suite currently exits with 1 because all 49 remaining expectations stay enabled.
-The historical snapshots are retained; the current JSON matches the verified B07–B10 repair run.
+The full suite currently exits with 1 because all 28 remaining expectations stay enabled.
+The historical snapshots are retained; the current JSON matches the verified selected imaging repair run.
