@@ -66,11 +66,14 @@ using UMapx.Window;
 **MIT**  
 
 # Mathematical audit
-The [B11 completion report](docs/b11-repair-2026-09-11.md) records the final
-22 B11 failures repaired and 187 added passing cases. The complete suite has
-**16,286 passing and 5 failing cases**, with no regressions or removed tests.
-The [remaining repair blocks](docs/remaining-repair-blocks-2026-09-10.md) assign
-all remaining failures to B12 (video parsing). B01–B11 are closed.
+The [B12 completion report](docs/b12-repair-2026-09-11.md) records the final
+five video-parser failures repaired and 69 added passing cases. The complete
+suite has **16,360 passing cases, zero failures, and zero skipped cases**, with
+no regressions or removed tests. All registered blocks B01–B12 are closed in the
+[repair register](docs/remaining-repair-blocks-2026-09-10.md).
+
+The [B11 completion report](docs/b11-repair-2026-09-11.md) records its final
+22 failures repaired and 187 added passing cases.
 
 The preceding [selected imaging repair report](docs/imaging-selected-repair-2026-09-11.md)
 records 21 resolved failures and 477 added passing cases. The subsequent IoU

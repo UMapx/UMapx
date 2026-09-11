@@ -1,15 +1,12 @@
 # Remaining repair blocks — updated September 11, 2026
 
-After [B11 completion](b11-repair-2026-09-11.md), **five failures remain in one
-open block**. B01–B11 are closed. The latest repair resolved the final 22 B11
-failures and added 187 passing cases. The full comparison also verifies the
-preceding IoU fix: 23 resolved failures and 192 added cases since the selected
-imaging snapshot, with no regressions or removed tests.
-Every remaining failing test ID belongs to exactly one block. The complete
-verified run has 16,291 cases, with 16,286 passed and no skipped cases.
+After [B12 completion](b12-repair-2026-09-11.md), **no assigned failures remain**.
+All registered blocks B01–B12 are closed. The latest repair resolved the five B12
+failures and added 69 passing cases, with no regressions or removed test IDs.
+The complete verified run has **16,360 passed, zero failed, and zero skipped cases**.
+The lists below retain the original failures and repair history.
 
-**Recommended next: B12 — video stream parsing (five failures).**
-All five B12 failing case IDs are unchanged.
+**No next repair block is assigned.**
 Keep the repaired prime and zero-matrix Schur termination regressions enabled.
 
 | Block | Scope | Assigned failing cases | Recommended after |
@@ -25,8 +22,8 @@ Keep the repaired prime and zero-matrix Schur termination regressions enabled.
 | [B09](#b09) | Transforms and response filters | 0 (23 resolved) | Closed |
 | [B10](#b10) | Color spaces | 0 (21 resolved) | Closed |
 | [B11](#b11) | Images, geometry, and rendering | 0 (44 resolved) | Closed |
-| [B12](#b12) | Video stream parsing | 5 | Independent |
-| **Remaining** | | **5** | |
+| [B12](#b12) | Video stream parsing | 0 (5 resolved) | Closed |
+| **Remaining** | | **0** | |
 
 Counts represent failed test cases, not independent bugs. Several parameter sets and original
 regressions can expose the same cause. Fixing one block may also change another block's count.
@@ -389,21 +386,26 @@ IoU repair and five additional cases. B05 bicubic resizing was already repaired.
 </details>
 
 <a id="b12"></a>
-## B12. Video stream parsing — 5 cases
+## B12. Video stream parsing — closed (5 cases resolved)
 
 Sources: [Boundary.cs](../sources/Video/Internal/Boundary.cs), [MJPEGStreamParser.cs](../sources/Video/Internal/MJPEGStreamParser.cs).
 
 - MIME boundary parameters/case handling: 2 cases.
 - MJPEG headers split across one-, two-, and three-byte transport chunks: 3 cases.
 
-**Validation:** Use in-memory streams with arbitrary split points, bounded buffer indices, quoted/trailing parameters, and case variants. No live camera or network is needed.
+**Validation:** All five original failures and 69 added cases pass. In-memory
+streams cover every split position in synthetic marker sequences, short and
+absent delimiters, exact unread bytes after frame removal, decoded JPEG colors,
+quoted/trailing parameters, whitespace, case variants, and invalid headers.
+No live camera or network is needed. See the [repair report](b12-repair-2026-09-11.md).
 
-**Open point:** This is a parsing/contract block, not a numerical mathematics defect.
+**Conventions:** Raw streams still delimit frames with the next JPEG header.
+MIME names ignore case; boundary values retain case. This was a parsing/contract block.
 
 <details>
-<summary>Assigned failing test families</summary>
+<summary>Resolved failing test families</summary>
 
-| Test family | Cases |
+| Test family | Resolved cases |
 | --- | ---: |
 | [VideoAuditTests.MjpegFramesSurviveArbitraryTransportChunkBoundaries](../tests/UMapx.Tests/VideoAuditTests.cs) | 3 |
 | [VideoAuditTests.MultipartBoundaryParsingHonorsMimeParameters](../tests/UMapx.Tests/VideoAuditTests.cs) | 2 |
@@ -412,8 +414,10 @@ Sources: [Boundary.cs](../sources/Video/Internal/Boundary.cs), [MJPEGStreamParse
 
 ## Evidence and commands
 
-- [Current block metadata, focused filters, and all five unique test-ID assignments](audit-b11/repair-blocks.json).
-- [Current individual failures](audit-b11/failures.json) and [run summary](audit-b11/summary.json).
+- [Current closed-block metadata and regression filters; no pending test-ID assignments](audit-b12/repair-blocks.json).
+- [Current empty failure list](audit-b12/failures.json) and [run summary](audit-b12/summary.json).
+- [B12 completion results](b12-repair-2026-09-11.md).
+- [Previous five-case snapshot](audit-b11/repair-blocks.json).
 - [B11 completion results](b11-repair-2026-09-11.md).
 - [Previous 28-case snapshot](audit-imaging-selected/repair-blocks.json).
 - [Selected imaging repair results](imaging-selected-repair-2026-09-11.md).
@@ -432,15 +436,15 @@ Sources: [Boundary.cs](../sources/Video/Internal/Boundary.cs), [MJPEGStreamParse
 - [Special-function repair results](special-functions-repair-2026-09-10.md).
 - [Historical repair register](math-audit-expanded-2026-09-10.md); its superseded special-function findings are not pending blocks.
 
-Run a block's focused test families from the repository root:
+Run a repaired block's original regression families from the repository root:
 
 ```powershell
-$plan = Get-Content -Raw docs/audit-b11/repair-blocks.json | ConvertFrom-Json
+$plan = Get-Content -Raw docs/audit-b12/repair-blocks.json | ConvertFrom-Json
 $block = $plan.blocks | Where-Object id -eq 'B12'
 dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter $block.focused_test_filter
 ```
 
-The focused filter includes all parameters of the assigned test methods, not just failing rows.
+The focused filter includes all parameters of the originally assigned test methods.
 It is a starting point, not a substitute for related passing tests and the complete audit.
 
 For B01 also run the complete CoreScalarAuditTests, MathematicalIdentityTests, and SpecialFunction suites
@@ -451,5 +455,5 @@ dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filte
 ./tools/Run-MathAudit.ps1 -NoRestore -ResultsDirectory artifacts/math-audit/next-block
 ```
 
-The full suite currently exits with 1 because all five remaining expectations stay enabled.
-The historical snapshots are retained; the current JSON matches the verified B11 completion run.
+The full suite now exits with 0, with every original expectation still enabled.
+The historical snapshots are retained; the current JSON matches the verified B12 completion run.

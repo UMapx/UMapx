@@ -133,7 +133,7 @@
                 }
             }
 
-            while (HasStart && !HasEnd && CanRead(_boundary))
+            while (HasStart && !HasEnd && CanRead(_boundary.HasValue ? (byte[])_boundary : _header))
             {
                 _imageBoundaryIndex = FindBoundary();
 
@@ -187,19 +187,13 @@
         }
 
         /// <summary>
-        /// Advances the current position to the end of the buffer content.
+        /// Retains a possible partial marker at the end of the buffer for the next read.
         /// </summary>
         private void PositionAtEnd()
         {
-            if (_boundary.HasValue)
-            {
-                int boundaryPosition = _boundary.Length - 1;
-                _position = _totalReadBytes - boundaryPosition;
-            }
-            else
-            {
-                _position = _totalReadBytes;
-            }
+            int markerLength = HasStart && _boundary.HasValue ? _boundary.Length : _header.Length;
+            // A partial match can occupy at most markerLength - 1 trailing bytes.
+            _position = Math.Max(0, _totalReadBytes - markerLength + 1);
         }
 
         /// <summary>
