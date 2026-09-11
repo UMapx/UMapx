@@ -7,7 +7,7 @@ $ErrorActionPreference = 'Stop'
 $workspace = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
 Push-Location $workspace
 try {
-    $arguments = @('test', 'sources/UMapx.sln', '-c', 'Release', '--nologo',
+    $arguments = @('test', 'UMapx.sln', '-c', 'Release', '--nologo',
         '-p:GeneratePackageOnBuild=false', '-p:DebugType=portable', '-p:DebugSymbols=true',
         '--collect', 'XPlat Code Coverage', '--settings', 'tests/UMapx.Tests/coverage.runsettings',
         '--logger', 'trx;LogFileName=full-audit.trx', '--results-directory', $ResultsDirectory)

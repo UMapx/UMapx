@@ -6,7 +6,7 @@
 The library working copy was audited against commit
 `9d623dcdede20411f220dee976e62cf4c8cf5728`, project version 7.5.1.5.
 The algorithms were not modified. The `UMapx.Tests` project was added to the
-existing `sources/UMapx.sln`, together with reproducible reference data.
+existing solution (now at `UMapx.sln`), together with reproducible reference data.
 
 **The absence of mathematical errors cannot be confirmed: concrete
 counterexamples were found. This report describes 31 issue groups covered by
@@ -17,7 +17,7 @@ the number of failing tests must not be treated as the number of independent def
 ## Reproducible Test Results
 
 ```powershell
-dotnet test sources/UMapx.sln -c Release -p:GeneratePackageOnBuild=false
+dotnet test UMapx.sln -c Release -p:GeneratePackageOnBuild=false
 ```
 
 | Suite | Total | Passed | Failed |

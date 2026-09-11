@@ -33,7 +33,7 @@ screen capture is used.
 From the repository root:
 
 ```powershell
-dotnet test sources/UMapx.sln -c Release -p:GeneratePackageOnBuild=false
+dotnet test UMapx.sln -c Release -p:GeneratePackageOnBuild=false
 ```
 
 For coverage and a compact evidence export, also install Python 3 (standard
@@ -54,7 +54,7 @@ normal Release configuration disables debug symbols.
 Equivalent coverage command without Python:
 
 ```powershell
-dotnet test sources/UMapx.sln -c Release -p:GeneratePackageOnBuild=false -p:DebugType=portable -p:DebugSymbols=true --collect "XPlat Code Coverage" --settings tests/UMapx.Tests/coverage.runsettings --logger "trx;LogFileName=full-audit.trx" --results-directory artifacts/math-audit/run
+dotnet test UMapx.sln -c Release -p:GeneratePackageOnBuild=false -p:DebugType=portable -p:DebugSymbols=true --collect "XPlat Code Coverage" --settings tests/UMapx.Tests/coverage.runsettings --logger "trx;LogFileName=full-audit.trx" --results-directory artifacts/math-audit/run
 ```
 
 For a particular mathematical area or counterexample:
