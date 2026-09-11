@@ -133,11 +133,12 @@ namespace UMapx.Wavelet
             return new WaveletPacket(lp, hp, ilp, ihp);
         }
         /// <summary>
-        /// Creates the discrete wavelet.
+        /// Creates an orthogonal bank by reversing its analysis filters for synthesis.
         /// </summary>
         /// <param name="scaling">Scaling function</param>
         /// <param name="wavelet">Wavelet function</param>
         /// <returns>Discrete wavelet</returns>
+        /// <remarks>For a general biorthogonal bank, supply all four filters to the constructor.</remarks>
         public static WaveletPacket Create(float[] scaling, float[] wavelet)
         {
             float[] lp = scaling;
@@ -146,6 +147,45 @@ namespace UMapx.Wavelet
             float[] ihp = Matrice.Flip(hp);
 
             return new WaveletPacket(lp, hp, ilp, ihp);
+        }
+
+        /// <summary>
+        /// Builds the dual synthesis filters of a real biorthogonal analysis pair.
+        /// </summary>
+        /// <param name="scaling">Analysis low-pass coefficients with nonzero DC gain.</param>
+        /// <param name="wavelet">Analysis high-pass coefficients of a perfect-reconstruction pair.</param>
+        /// <returns>A bank with equal, even filter lengths and unit reconstruction gain.</returns>
+        /// <remarks>
+        /// Padding preserves the analysis origin Length / 2 - 1. Alternating the
+        /// signs of the opposite analysis filter cancels aliasing; reversing each
+        /// filter independently is valid only for orthogonal banks.
+        /// </remarks>
+        private static WaveletPacket CreateBiorthogonal(float[] scaling, float[] wavelet)
+        {
+            int length = Math.Max(scaling.Length, wavelet.Length);
+            length += length & 1;
+            float[] low = new float[length], high = new float[length];
+            Array.Copy(scaling, 0, low, length / 2 - scaling.Length / 2, scaling.Length);
+            Array.Copy(wavelet, 0, high, length / 2 - wavelet.Length / 2, wavelet.Length);
+            float[] inverseLow = new float[length], inverseHigh = new float[length];
+            double lowSum = 0, inverseSum = 0;
+            for (int i = 0; i < length; i++)
+            {
+                float sign = (i & 1) == 0 ? 1 : -1;
+                inverseLow[i] = -sign * high[i];
+                inverseHigh[i] = sign * low[i];
+                lowSum += low[i];
+                inverseSum += inverseLow[i];
+            }
+            // Downsampling halves the DC gain. The sign also depends on the
+            // high-pass phase convention used by each coefficient table.
+            double gain = lowSum * inverseSum / 2;
+            for (int i = 0; i < length; i++)
+            {
+                inverseLow[i] = (float)(inverseLow[i] / gain);
+                inverseHigh[i] = (float)(inverseHigh[i] / gain);
+            }
+            return new WaveletPacket(low, high, inverseLow, inverseHigh);
         }
         #endregion
 

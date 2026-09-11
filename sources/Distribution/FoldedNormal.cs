@@ -176,28 +176,16 @@ namespace UMapx.Distribution
 
         private float ComputeMode()
         {
-            if (sigma == 0)
+            double location = Math.Abs(mu), scale = sigma;
+            if (location <= scale) return 0;
+            double low = 0, high = location;
+            for (int i = 0; i < 80; i++)
             {
-                return 0f;
+                double mid = (low + high) / 2;
+                double value = location * Math.Tanh(location * mid / (scale * scale)) - mid;
+                if (value > 0) low = mid; else high = mid;
             }
-
-            double absMu = Math.Abs(mu);
-            if (absMu == 0)
-            {
-                return 0f;
-            }
-
-            double ratio = absMu / sigma;
-            double exponent = -absMu * absMu / (2.0 * sigma * sigma);
-            double arg = ratio * ratio * Math.Exp(exponent);
-            if (arg <= 0)
-            {
-                return 0f;
-            }
-
-            double w = Special.LambertW((float)arg);
-            double value = sigma / Math.Sqrt(2.0) * Math.Sqrt(w + ratio * ratio);
-            return (float)value;
+            return (float)((low + high) / 2);
         }
 
         private float FindQuantile(float p)

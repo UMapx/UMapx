@@ -200,11 +200,11 @@ namespace UMapx.Colorspace
             else if (gray > gray0) { l = 100 * (gray - gray0) / (255.0f - gray0); }
             else if (gray < gray0) { l = 100 * (gray - gray0) / gray0; }
 
-            if (l > 0) { r0 = r0 + l * (255 - r0) / 100.0f; }
-            else if (l < 0) { r0 = r0 + l * r0 / 100.0f; }
-
-            if (red == gray) { s = 0; }
-            else { s = 255 * Math.Abs(red - gray) / (Math.Abs(r0 - gray)); }
+            // Lightness scales every channel difference by the same factor.
+            // Recover saturation from chroma: a single channel may equal gray
+            // even when the other two channels have nonzero chroma.
+            float chromaScale = 1 - Math.Abs(l) / 100.0f;
+            s = chromaScale > 0 ? (max - min) / chromaScale : 0;
 
             return new AHSL(h, s, l);
         }

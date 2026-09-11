@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 
 namespace UMapx.Core
 {
@@ -544,7 +545,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Log(Complex32 a)
         {
-            return new Complex32(Maths.Log(a.Abs), a.Angle);
+            return Complex.Log(a);
         }
         /// <summary>
         /// Returns the decimal logarithm of a number.
@@ -593,11 +594,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Pow(float a, Complex32 b)
         {
-            float lnA = Maths.Log(a);
-            float r = Maths.Exp(b.Real * lnA);
-            float ang = b.Imag * lnA;
-            return new Complex32(r * Maths.Cos(ang),
-                                 r * Maths.Sin(ang));
+            return Complex.Pow(new Complex(a, 0), b);
         }
         /// <summary>
         /// Returns the number raised to the power.
@@ -905,10 +902,14 @@ namespace UMapx.Core
         /// Returns the arccotangent of a number.
         /// </summary>
         /// <param name="a">Complex number</param>
+        /// <remarks>Uses principal atan(1/a), with value pi/2 at zero. On the imaginary cuts,
+        /// the real part has the sign of Im(1/a). The real overload uses the interval (0, pi).</remarks>
         /// <returns>Complex number</returns>
         public static Complex32 Actan(Complex32 a)
         {
-            return (I / 2.0f) * (Maths.Log((a + I) / (a - I)));
+            // Principal atan(1/z); use the continuous real-axis value at zero.
+            if (a.Real == 0 && a.Imag == 0) return new Complex32((float)(Math.PI / 2), 0);
+            return PrincipalAtan(Complex.One / (Complex)a);
         }
         /// <summary>
         /// Returns the arcsecant of a number.
@@ -958,7 +959,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Tanh(float a)
         {
-            return Maths.Sinh(a) / Maths.Cosh(a);
+            return (float)Math.Tanh(a);
         }
         /// <summary>
         /// Returns the hyperbolic cotangent of an angle.
@@ -967,7 +968,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Ctanh(float a)
         {
-            return Maths.Cosh(a) / Maths.Sinh(a);
+            return (float)(1.0 / Math.Tanh(a));
         }
         /// <summary>
         /// Returns the hyperbolic secant of an angle.
@@ -976,7 +977,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Sech(float a)
         {
-            return 1.0f / Maths.Cosh(a);
+            return (float)(1.0 / Math.Cosh(a));
         }
         /// <summary>
         /// Returns the hyperbolic cosecant of an angle.
@@ -985,7 +986,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Cosch(float a)
         {
-            return 1.0f / Maths.Sinh(a);
+            return (float)(1.0 / Math.Sinh(a));
         }
         /// <summary>
         /// Returns the hyperbolic arcsine of a number.
@@ -994,7 +995,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Asinh(float a)
         {
-            return Maths.Log(a + Maths.Sqrt(a * a + 1));
+            return (float)RealAsinh(a);
         }
         /// <summary>
         /// Returns the hyperbolic arccosine of a number.
@@ -1003,8 +1004,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Acosh(float a)
         {
-            if (a < 1.0f) return float.NaN;
-            return Maths.Log(a + Maths.Sqrt((a - 1.0f) * (a + 1.0f)));
+            return (float)RealAcosh(a);
         }
         /// <summary>
         /// Returns the hyperbolic arctangent of a number.
@@ -1013,7 +1013,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Atanh(float a)
         {
-            return 1.0f / 2.0f * Maths.Log((1 + a) / (1 - a));
+            return (float)RealAtanh(a);
         }
         /// <summary>
         /// Returns the hyperbolic arccotangent of a number.
@@ -1022,7 +1022,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Actanh(float a)
         {
-            return 1.0f / 2.0f * Maths.Log((a + 1) / (a - 1));
+            return (float)RealAtanh(1.0 / a);
         }
         /// <summary>
         /// Returns the hyperbolic arcsecant of a number.
@@ -1031,7 +1031,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Asech(float a)
         {
-            return Maths.Log((1 + Maths.Sqrt(1 - a * a)) / a);
+            return (float)RealAcosh(1.0 / a);
         }
         /// <summary>
         /// Returns the hyperbolic arccosecant of a number.
@@ -1040,15 +1040,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Acosch(float a)
         {
-            if (a < 0)
-            {
-                return Maths.Log((1 - Maths.Sqrt(1 + a * a)) / a);
-            }
-            if (a > 0)
-            {
-                return Maths.Log((1 + Maths.Sqrt(1 + a * a)) / a);
-            }
-            return 0;
+            return (float)RealAsinh(1.0 / a);
         }
         #endregion
 
@@ -1078,7 +1070,9 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Tanh(Complex32 a)
         {
-            return Maths.Sinh(a) / Maths.Cosh(a);
+            if (Math.Abs(a.Real) > 100 && !float.IsNaN(a.Imag) && !float.IsInfinity(a.Imag))
+                return new Complex32(a.Real < 0 ? -1 : 1, 0);
+            return ComplexSinh(a) / ComplexCosh(a);
         }
         /// <summary>
         /// Returns the hyperbolic cotangent of an angle.
@@ -1087,7 +1081,9 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Ctanh(Complex32 a)
         {
-            return Maths.Cosh(a) / Maths.Sinh(a);
+            if (Math.Abs(a.Real) > 100 && !float.IsNaN(a.Imag) && !float.IsInfinity(a.Imag))
+                return new Complex32(a.Real < 0 ? -1 : 1, 0);
+            return ComplexCosh(a) / ComplexSinh(a);
         }
         /// <summary>
         /// Returns the hyperbolic secant of an angle.
@@ -1096,7 +1092,8 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Sech(Complex32 a)
         {
-            return 1.0 / Maths.Cosh(a);
+            if (Math.Abs(a.Real) > 105 && !float.IsNaN(a.Imag) && !float.IsInfinity(a.Imag)) return new Complex32(0, 0);
+            return Complex.One / ComplexCosh(a);
         }
         /// <summary>
         /// Returns the hyperbolic cosecant of an angle.
@@ -1105,7 +1102,8 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Cosch(Complex32 a)
         {
-            return 1.0 / Maths.Sinh(a);
+            if (Math.Abs(a.Real) > 105 && !float.IsNaN(a.Imag) && !float.IsInfinity(a.Imag)) return new Complex32(0, 0);
+            return Complex.One / ComplexSinh(a);
         }
         /// <summary>
         /// Returns the hyperbolic arcsine of a number.
@@ -1114,7 +1112,10 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Asinh(Complex32 a)
         {
-            return Maths.Log(a + Maths.Sqrt(a * a + 1.0));
+            if (a.Real < 0 || (a.Real == 0 && a.Imag < 0)) return -Asinh(-a);
+            Complex z = a;
+            if (z.Magnitude < 1e-4) return a;
+            return Complex.Log(z + Complex.Sqrt(z * z + 1));
         }
         /// <summary>
         /// Returns the hyperbolic arccosine of a number.
@@ -1123,7 +1124,11 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Acosh(Complex32 a)
         {
-            return Maths.Log(a + Maths.Sqrt(a * a - 1.0));
+            Complex z = a;
+            // The product of principal square roots selects the right branch in both half-planes.
+            if ((z - 1).Magnitude < 0.5)
+                return ComplexLogOnePlus(z - 1 + Complex.Sqrt(z - 1) * Complex.Sqrt(z + 1));
+            return Complex.Log(z + Complex.Sqrt(z - 1) * Complex.Sqrt(z + 1));
         }
         /// <summary>
         /// Returns the hyperbolic arctangent of a number.
@@ -1171,94 +1176,62 @@ namespace UMapx.Core
         /// Checks if number is prime.
         /// </summary>
         /// <remarks>
-        /// This method is based on enumerating all the divisors.
+        /// Uses deterministic Miller-Rabin tests over the full signed integer range.
         /// </remarks>
         /// <param name="p">Value</param>
         /// <returns>Boolean</returns>
         public static bool IsPrime(int p)
         {
-            // if number is 2:
-            if (p == 2)
-            {
-                return true;
-            }
-            // if number is even?
-            else if ((p % 2) == 0)
-            {
-                return false;
-            }
-            else
-            {
-                // prime or not?
-                int x = Maths.Pollard(p);
-                return x == p;
-            }
+            return p >= 2 && IsPrimeUnsigned((ulong)p);
         }
         /// <summary>
         /// Checks if number is prime.
         /// </summary>
         /// <remarks>
-        /// This method is based on enumerating all the divisors.
+        /// Uses deterministic Miller-Rabin tests over the full signed integer range.
         /// </remarks>
         /// <param name="p">Value</param>
         /// <returns>Boolean</returns>
         public static bool IsPrime(long p)
         {
-            // if number is 2:
-            if (p == 2)
-            {
-                return true;
-            }
-            // if number is even?
-            else if ((p % 2) == 0)
-            {
-                return false;
-            }
-            else
-            {
-                // prime or not?
-                long x = Maths.Pollard(p);
-                return x == p;
-            }
+            return p >= 2 && IsPrimeUnsigned((ulong)p);
         }
 
         /// <summary>
         /// Returns coprime number.
         /// </summary>
         /// <param name="a">Integer number</param>
-        /// <param name="increment">Increment</param>
+        /// <param name="increment">Inclusive starting value for the coprime search</param>
         /// <returns>Integer number</returns>
         public static int Coprime(int a, int increment = 1)
         {
-            int x = 2;
-            int p = increment;
-
-            while (x != 1)
+            if (a == 0)
             {
-                x = Maths.Gcd(a, p);
-                p++;
+                if (increment <= -1) return -1;
+                if (increment <= 1) return 1;
+                throw new OverflowException("No coprime exists at or above the starting value.");
             }
-
-            return p;
+            while (UnsignedGcd(UnsignedMagnitude(a), UnsignedMagnitude(increment)) != 1)
+                increment = checked(increment + 1);
+            return increment;
         }
         /// <summary>
         /// Returns coprime number.
         /// </summary>
         /// <param name="a">Integer number</param>
-        /// <param name="increment">Increment</param>
+        /// <param name="increment">Inclusive starting value for the coprime search</param>
         /// <returns>Integer number</returns>
         public static long Coprime(long a, long increment = 1)
         {
-            long x = 2;
-            long p = increment;
-
-            while (x != 1)
+            if (a == 0)
             {
-                x = Maths.Gcd(a, p);
-                p++;
+                if (increment <= -1) return -1;
+                if (increment <= 1) return 1;
+                throw new OverflowException("No coprime exists at or above the starting value.");
             }
-
-            return p;
+            while (UnsignedGcd(UnsignedMagnitude(a), UnsignedMagnitude(increment)) != 1)
+                increment = checked(increment + 1);
+            return increment;
         }
 
         /// <summary>
@@ -1269,11 +1242,7 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static int Mod(int a, int n)
         {
-            if (n < 0)
-                n = -n;
-
-            int r = a % n;
-            return r < 0 ? r + n : r;
+            return (int)Mod((long)a, n);
         }
         /// <summary>
         /// Returns the remainder of dividing one number by another.
@@ -1283,11 +1252,9 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static long Mod(long a, long n)
         {
-            if (n < 0)
-                n = -n;
-
-            long r = a % n;
-            return r < 0 ? r + n : r;
+            if (n == -1) return 0; // Includes long.MinValue without signed division overflow.
+            long remainder = a % n;
+            return remainder < 0 ? (n > 0 ? remainder + n : remainder - n) : remainder;
         }
         /// <summary>
         /// Returns the remainder of dividing one number by another.
@@ -1314,11 +1281,7 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static int ModPow(int a, int x, int p, bool modified = true)
         {
-            if (modified == true)
-            {
-                return (int)Leftmodexp(a, x, p);
-            }
-            return (int)Rightmodexp(a, x, p);
+            return (int)ModPow((long)a, x, p, modified);
         }
         /// <summary>
         /// Returns the result of raising the number "a" to the power of "x" modulo p.
@@ -1330,11 +1293,9 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static long ModPow(long a, long x, long p, bool modified = true)
         {
-            if (modified == true)
-            {
-                return Leftmodexp(a, x, p);
-            }
-            return Rightmodexp(a, x, p);
+            if (x < 0) throw new ArgumentOutOfRangeException(nameof(x), "The exponent must be nonnegative.");
+            if (p == 0) throw new DivideByZeroException();
+            return modified ? Leftmodexp(a, x, p) : Rightmodexp(a, x, p);
         }
         /// <summary>
         /// Computes modular exponentiation using the left-to-right binary method.
@@ -1345,19 +1306,14 @@ namespace UMapx.Core
         /// <returns>Result of a^x mod p</returns>
         private static long Leftmodexp(long a, long x, long p)
         {
-            int[] X = Maths.Decimal2Base(x, 2);
-            int t = X.Length, i;
-            long y = 1;
-
-            for (i = t - 1; i >= 0; i--)
+            ulong modulus = UnsignedMagnitude(p);
+            ulong value = (ulong)Mod(a, p), result = 1 % modulus;
+            for (int bit = 62; bit >= 0; bit--)
             {
-                y = Maths.Mod(y * y, p);
-                if (X[i] == 1)
-                {
-                    y = Maths.Mod(y * a, p);
-                }
+                result = MultiplyModulo(result, result, modulus);
+                if (((x >> bit) & 1) != 0) result = MultiplyModulo(result, value, modulus);
             }
-            return y;
+            return (long)result;
         }
         /// <summary>
         /// Computes modular exponentiation using the right-to-left binary method.
@@ -1368,19 +1324,15 @@ namespace UMapx.Core
         /// <returns>Result of a^x mod p</returns>
         private static long Rightmodexp(long a, long x, long p)
         {
-            int[] X = Maths.Decimal2Base(x, 2);
-            int t = X.Length, i;
-            long y = 1, s = a;
-
-            for (i = 0; i < t; i++)
+            ulong modulus = UnsignedMagnitude(p);
+            ulong value = (ulong)Mod(a, p), result = 1 % modulus;
+            while (x != 0)
             {
-                if (X[i] == 1)
-                {
-                    y = Maths.Mod(y * s, p);
-                }
-                s = Maths.Mod(s * s, p);
+                if ((x & 1) != 0) result = MultiplyModulo(result, value, modulus);
+                x >>= 1;
+                if (x != 0) value = MultiplyModulo(value, value, modulus);
             }
-            return y;
+            return (long)result;
         }
 
         /// <summary>
@@ -1391,14 +1343,11 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static int ModInv(int a, int n)
         {
-            int[] U = Euclidean(a, n);
-            int gcd = U[0], x = U[1], y = U[2];
-
-            if (gcd == 1)
-            {
-                return (x < 0) ? Maths.Mod(x, n) : x;
-            }
-            return 0;
+            if (n == 0) throw new DivideByZeroException();
+            BigInteger[] result = ExtendedGcd(a, n);
+            if (result[0] != 1) return 0;
+            BigInteger modulus = BigInteger.Abs(n);
+            return (int)((result[1] % modulus + modulus) % modulus);
         }
         /// <summary>
         /// Returns the inverse number modulo.
@@ -1408,14 +1357,11 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static long ModInv(long a, long n)
         {
-            long[] U = Euclidean(a, n);
-            long gcd = U[0], x = U[1], y = U[2];
-
-            if (gcd == 1)
-            {
-                return (x < 0) ? Maths.Mod(x, n) : x;
-            }
-            return 0;
+            if (n == 0) throw new DivideByZeroException();
+            BigInteger[] result = ExtendedGcd(a, n);
+            if (result[0] != 1) return 0;
+            BigInteger modulus = BigInteger.Abs(n);
+            return (long)((result[1] % modulus + modulus) % modulus);
         }
 
         /// <summary>
@@ -1426,20 +1372,8 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static int[] Euclidean(int a, int n)
         {
-            int[] U = new int[3] { a, 1, 0 };
-            int[] V = new int[3] { n, 0, 1 };
-            int[] T;
-            int q;
-
-            while (V[0] != 0)
-            {
-                q = (int)Maths.Floor(U[0] / V[0]);
-                T = new int[3] { Maths.Mod(U[0], V[0]), U[1] - q * V[1], U[2] - q * V[2] };
-                U = V;
-                V = T;
-            }
-
-            return U;
+            BigInteger[] result = ExtendedGcd(a, n);
+            return new[] { (int)result[0], (int)result[1], (int)result[2] };
         }
         /// <summary>
         /// Implements a generalized Euclidean algorithm.
@@ -1449,20 +1383,8 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static long[] Euclidean(long a, long n)
         {
-            long[] U = new long[3] { a, 1, 0 };
-            long[] V = new long[3] { n, 0, 1 };
-            long[] T;
-            long q;
-
-            while (V[0] != 0)
-            {
-                q = (long)Maths.Floor(U[0] / V[0]);
-                T = new long[3] { Maths.Mod(U[0], V[0]), U[1] - q * V[1], U[2] - q * V[2] };
-                U = V;
-                V = T;
-            }
-
-            return U;
+            BigInteger[] result = ExtendedGcd(a, n);
+            return new[] { (long)result[0], (long)result[1], (long)result[2] };
         }
 
         /// <summary>
@@ -1470,38 +1392,22 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Integer number</param>
         /// <param name="b">Integer number</param>
+        /// <exception cref="OverflowException">The nonnegative GCD does not fit in Int32.</exception>
         /// <returns>Integer number</returns>
         public static int Gcd(int a, int b)
         {
-            if (b == 0) return Math.Abs(a);
-
-            int q = Maths.Mod(a, b);
-            while (q != 0)
-            {
-                a = b;
-                b = q;
-                q = Maths.Mod(a, b);
-            }
-            return b;
+            return checked((int)UnsignedGcd(UnsignedMagnitude(a), UnsignedMagnitude(b)));
         }
         /// <summary>
         /// Returns the value of the greatest common divisor of two numbers.
         /// </summary>
         /// <param name="a">Integer number</param>
         /// <param name="b">Integer number</param>
+        /// <exception cref="OverflowException">The nonnegative GCD does not fit in Int64.</exception>
         /// <returns>Integer number</returns>
         public static long Gcd(long a, long b)
         {
-            if (b == 0) return Math.Abs(a);
-
-            long q = Maths.Mod(a, b);
-            while (q != 0)
-            {
-                a = b;
-                b = q;
-                q = Maths.Mod(a, b);
-            }
-            return b;
+            return checked((long)UnsignedGcd(UnsignedMagnitude(a), UnsignedMagnitude(b)));
         }
 
         /// <summary>
@@ -1509,160 +1415,80 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="a">Integer number</param>
         /// <param name="b">Integer number</param>
+        /// <remarks>Returns zero if either input is zero.</remarks>
+        /// <exception cref="OverflowException">The nonnegative LCM does not fit in Int32.</exception>
         /// <returns>Integer number</returns>
         public static int Lcm(int a, int b)
         {
-            return (int)Maths.Abs(a * b) / Gcd(a, b);
+            if (a == 0 || b == 0) return 0;
+            BigInteger gcd = BigInteger.GreatestCommonDivisor(a, b);
+            return (int)BigInteger.Abs((BigInteger)a / gcd * b);
         }
         /// <summary>
         /// Returns the value of the least common multiple of two numbers.
         /// </summary>
         /// <param name="a">Integer number</param>
         /// <param name="b">Integer number</param>
+        /// <remarks>Returns zero if either input is zero.</remarks>
+        /// <exception cref="OverflowException">The nonnegative LCM does not fit in Int64.</exception>
         /// <returns>Integer number</returns>
         public static long Lcm(long a, long b)
         {
-            return (long)Maths.Abs(a * b) / Gcd(a, b);
+            if (a == 0 || b == 0) return 0;
+            BigInteger gcd = BigInteger.GreatestCommonDivisor(a, b);
+            return (long)BigInteger.Abs((BigInteger)a / gcd * b);
         }
 
         /// <summary>
         /// Returns an array of factors that number consists of.
         /// </summary>
         /// <param name="n">Integer number</param>
-        /// <param name="onlyPrimes">Only prime factors or not</param>
+        /// <param name="onlyPrimes">Return distinct prime factors when true; include multiplicities otherwise</param>
         /// <returns>Array</returns>
         public static int[] Itf(int n, bool onlyPrimes = false)
         {
-            int p = n;
-
-            // if collect only prime numbers
-            // and "N" includes powers of 2
-            if (onlyPrimes)
-            {
-                int k = 0;
-
-                while (p % 2 == 0)
-                {
-                    p /= 2;
-                    k++;
-                }
-
-                if (k > 0)
-                    p *= 2;
-            }
-
-            // factorization
-            var a = new List<int>();
-            int div;
-
-            while (p > 1)
-            {
-                div = Maths.Pollard(p);
-                a.Add(div);
-                p /= div;
-            }
-
-            // distinct or not
-            if (onlyPrimes)
-            {
-                return a.Distinct().ToArray();
-            }
-
-            return a.ToArray();
+            if (n < 1) throw new ArgumentOutOfRangeException(nameof(n), "Factorization requires a positive integer.");
+            var factors = new List<ulong>();
+            FactorInteger((ulong)n, factors);
+            factors.Sort();
+            return (onlyPrimes ? factors.Distinct() : factors).Select(x => (int)x).ToArray();
         }
         /// <summary>
         /// Returns an array of factors that number consists of.
         /// </summary>
         /// <param name="n">Integer number</param>
-        /// <param name="onlyPrimes">Only prime factors or not</param>
+        /// <param name="onlyPrimes">Return distinct prime factors when true; include multiplicities otherwise</param>
         /// <returns>Array</returns>
         public static long[] Itf(long n, bool onlyPrimes = false)
         {
-            long p = n;
-
-            // if collect only prime numbers
-            // and "N" includes powers of 2
-            if (onlyPrimes)
-            {
-                int k = 0;
-
-                while (p % 2 == 0)
-                {
-                    p /= 2;
-                    k++;
-                }
-
-                if (k > 0)
-                    p *= 2;
-            }
-
-            // factorization
-            var a = new List<long>();
-            long div;
-
-            while (p > 1)
-            {
-                div = Maths.Pollard(p);
-                a.Add(div);
-                p /= div;
-            }
-
-            // distinct or not
-            if (onlyPrimes)
-            {
-                return a.Distinct().ToArray();
-            }
-
-            return a.ToArray();
+            if (n < 1) throw new ArgumentOutOfRangeException(nameof(n), "Factorization requires a positive integer.");
+            var factors = new List<ulong>();
+            FactorInteger((ulong)n, factors);
+            factors.Sort();
+            return (onlyPrimes ? factors.Distinct() : factors).Select(x => (long)x).ToArray();
         }
 
         /// <summary>
-        /// Returns the P0-divider.
+        /// Returns a proper divisor of a composite positive integer, or the input for a prime or one.
         /// </summary>
         /// <param name="n">Integer number</param>
         /// <returns>Integer number</returns>
         public static int Pollard(int n)
         {
-            int y = 2, c = 2, x = 2, factor = 1;
-            int count;
-
-            while (factor == 1)
-            {
-                for (count = 1; count <= c && factor <= 1; count++)
-                {
-                    x = (x * x + 1) % n;
-                    factor = Maths.Gcd(x - y, n);
-                }
-
-                c *= 2;
-                y = x;
-            }
-
-            return factor;
+            if (n < 1) throw new ArgumentOutOfRangeException(nameof(n), "Factorization requires a positive integer.");
+            if (n == 1 || IsPrime(n)) return n;
+            return (int)FindDivisor((ulong)n);
         }
         /// <summary>
-        /// Returns the P0-divider.
+        /// Returns a proper divisor of a composite positive integer, or the input for a prime or one.
         /// </summary>
         /// <param name="n">Integer number</param>
         /// <returns>Integer number</returns>
         public static long Pollard(long n)
         {
-            long y = 2, c = 2, x = 2, factor = 1;
-            long count;
-
-            while (factor == 1)
-            {
-                for (count = 1; count <= c && factor <= 1; count++)
-                {
-                    x = (x * x + 1) % n;
-                    factor = Maths.Gcd(x - y, n);
-                }
-
-                c *= 2;
-                y = x;
-            }
-
-            return factor;
+            if (n < 1) throw new ArgumentOutOfRangeException(nameof(n), "Factorization requires a positive integer.");
+            if (n == 1 || IsPrime(n)) return n;
+            return (long)FindDivisor((ulong)n);
         }
 
         /// <summary>
@@ -1672,17 +1498,9 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static int Etf(int n)
         {
-            // factorization with only primes
-            int[] itf = Maths.Itf(n, true);
-            float radical = 1;
-            int length = itf.Length;
-
-            // calculation radical
-            for (int i = 0; i < length; i++)
-            {
-                radical *= 1.0f - 1.0f / itf[i];
-            }
-            return (int)(n * radical);
+            int result = n;
+            foreach (int prime in Itf(n, true)) result = result / prime * (prime - 1);
+            return result;
         }
         /// <summary>
         /// Returns the value of the Euler function.
@@ -1691,17 +1509,9 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static long Etf(long n)
         {
-            // factorization with only primes
-            long[] itf = Maths.Itf(n, true);
-            float radical = 1;
-            int length = itf.Length;
-
-            // calculation radical
-            for (int i = 0; i < length; i++)
-            {
-                radical *= 1.0f - 1.0f / itf[i];
-            }
-            return (long)(n * radical);
+            long result = n;
+            foreach (long prime in Itf(n, true)) result = result / prime * (prime - 1);
+            return result;
         }
 
         /// <summary>
@@ -1740,18 +1550,16 @@ namespace UMapx.Core
             long limitPlus1 = (long)limit + 1;
 
             // Iterate segments, [low, high), low/high are integers; we mark only odds inside
-            for (int low = 3; low <= limit;)
+            for (long low = 3; low <= limit;)
             {
-                long highL = low + ((long)segmentOddCount << 1); // convert odd-count→integers
-                if (highL > limitPlus1) highL = limitPlus1;
-                int high = (int)highL; // exclusive
+                long high = Math.Min(low + ((long)segmentOddCount << 1), limitPlus1);
 
                 // First odd ≥ low
-                int firstOdd = (low | 1);
+                long firstOdd = (low | 1);
 
                 // Number of odd integers in [firstOdd, high):
                 // count = ceil((high - firstOdd)/2) = (high - firstOdd + 1) >> 1, clamped to ≥0
-                int oddCount = high > firstOdd ? ((high - firstOdd + 1) >> 1) : 0;
+                int oddCount = high > firstOdd ? (int)((high - firstOdd + 1) >> 1) : 0;
 
                 // Clear only the slice we use
                 int words = (oddCount + 63) >> 6;
@@ -1783,7 +1591,7 @@ namespace UMapx.Core
                 {
                     if ((bits[i >> 6] & (1UL << (i & 63))) == 0)
                     {
-                        int n = firstOdd + (i << 1);
+                        int n = (int)(firstOdd + (i << 1));
                         if (n <= limit) primes.Add(n);
                     }
                 }
@@ -1883,87 +1691,75 @@ namespace UMapx.Core
         /// Returns a vector representing the decimal number in the given number system.
         /// </summary>
         /// <remarks>
-        /// Example: 10[10] = {1,0,1,0}[2].
+        /// Least-significant digit first: 10 in base 2 is {0,1,0,1}. Negative values are not supported.
         /// </remarks>
         /// <param name="x">Byte</param>
         /// <param name="newbase">Base</param>
         /// <returns>Array</returns>
         public static int[] Decimal2Base(long x, int newbase)
         {
-            long xc = x;
-            int n = NumLength(Math.Abs(xc), newbase);
-            int[] X = new int[n];
-            int i;
-
-            for (i = 0; i < n; i++)
+            if (x < 0) throw new ArgumentOutOfRangeException(nameof(x), "Digit arrays represent nonnegative integers.");
+            if (newbase < 2) throw new ArgumentOutOfRangeException(nameof(newbase));
+            var digits = new List<int>();
+            do
             {
-                X[i] = (int)(Maths.Mod(xc, newbase));
-                xc = xc / newbase;
-            }
-
-            return X;
+                digits.Add((int)(x % newbase));
+                x /= newbase;
+            } while (x != 0);
+            return digits.ToArray();
         }
         /// <summary>
         /// Returns the decimal Number represented in decimal notation.
         /// </summary>
         /// <remarks>
-        /// Example: {1,0,1,0}[2] = 10[10].
+        /// Least-significant digit first: {0,1,0,1} in base 2 represents 10. Overflow throws OverflowException.
         /// </remarks>
         /// <param name="x">Array</param>
         /// <param name="thisbase">Base</param>
         /// <returns>Integer number</returns>
         public static long Base2Decimal(int[] x, int thisbase)
         {
-            int n = x.Length, i;
-            long a = 0;
-
-            for (i = 0; i < n; i++)
-            {
-                a += (long)(x[i] * Maths.Pow(thisbase, i));
-            }
-
-            return a;
+            return AccumulateDigits(x, thisbase, true);
         }
         /// <summary>
         /// Returns a number that interprets the specified vector in decimal.
         /// </summary>
         /// <remarks>
-        /// Example: {1,0,1,0}[2] = 1010[10].
+        /// Most-significant digit first: {1,0,1,0} represents 1010. Overflow throws OverflowException.
         /// </remarks>
         /// <param name="x">Array</param>
         /// <returns>Integer number</returns>
         public static long Vector2Numeral(int[] x)
         {
-            int i, n = x.Length;
-            long a = 0;
-
-            for (i = 0; i < n; i++)
-            {
-                a += (long)(x[i] * Maths.Pow(base10, n - i - 1));
-            }
-            return a;
+            return AccumulateDigits(x, base10, false);
         }
         /// <summary>
         /// Returns a vector representing the decomposition of a decimal number into components.
         /// </summary>
         /// <remarks>
-        /// Example: 1010[10] = {1,0,1,0}[2]
+        /// Most-significant digit first: 1010 becomes {1,0,1,0}. Negative values are not supported.
         /// </remarks>
         /// <param name="x">Value</param>
         /// <returns>Array</returns>
         public static int[] Numeral2Vector(long x)
         {
-            return Decimal2Base(x, base10);
+            int[] digits = Decimal2Base(x, base10);
+            Array.Reverse(digits);
+            return digits;
         }
         /// <summary>
-        /// Returns the value of the digit capacity of a number in the given number system.
+        /// Returns the digit count of the magnitude of an integer; zero has one digit.
         /// </summary>
         /// <param name="x">Byte</param>
         /// <param name="numbase">Base</param>
         /// <returns>Integer number</returns>
         public static int NumLength(long x, int numbase)
         {
-            return (int)Maths.Floor(Maths.Log(x, numbase)) + 1;
+            if (numbase < 2) throw new ArgumentOutOfRangeException(nameof(numbase));
+            ulong value = UnsignedMagnitude(x);
+            int length = 1;
+            while (value >= (ulong)numbase) { value /= (ulong)numbase; length++; }
+            return length;
         }
         #endregion
 
@@ -2010,60 +1806,46 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[] Cubic(float a, float b, float c)
         {
-            Complex32 x1 = 0, x2 = 0, x3 = 0;
-            float Q = (a * a - 3.0f * b) / 9.0f;
-            float R = (2.0f * a * a * a - 9.0f * a * b + 27.0f * c) / 54.0f;
-            float S = Q * Q * Q - R * R;
-            float a3 = a / 3.0f;
-            float fi, v0, v1;
-
-            if (S > 0)
+            if (c == 0)
             {
-                fi = Maths.Acos(R / Maths.Pow(Q, 3.0f / 2.0f)) / 3.0f;
-                v0 = -2 * Maths.Sqrt(Q);
-                v1 = 2.0f / 3 * Maths.Pi;
-
-                x1 = v0 * Math.Cos(fi) - a3;
-                x2 = v0 * Math.Cos(fi + v1) - a3;
-                x3 = v0 * Math.Cos(fi - v1) - a3;
+                Complex32[] pair = Quadratic(1, a, b);
+                return new[] { new Complex32(0, 0), pair[0], pair[1] };
             }
-            else if (S < 0)
+            if ((double)a * a > 1e8 * Math.Abs(b) && Math.Abs((double)a * a * a) > 1e8 * Math.Abs(c))
+                return CubicWithSeparatedRoot(a, b, c);
+            double shift = a / 3.0;
+            double p = b - (double)a * a / 3.0;
+            double q = 2.0 * a * a * a / 27.0 - (double)a * b / 3.0 + c;
+            double halfQ = q / 2.0;
+            double thirdP = p / 3.0;
+            double discriminant = halfQ * halfQ + thirdP * thirdP * thirdP;
+            if (discriminant < 0)
             {
-                if (Q > 0)
-                {
-                    fi = Maths.Acosh(Math.Abs(R) / Maths.Pow(Math.Abs(Q), 3.0f / 2.0f)) / 3.0f;
-                    v0 = Math.Sign(R) * Maths.Sqrt(Q) * Maths.Cosh(fi);
-                    v1 = Maths.Sqrt(3) * Maths.Sqrt(Q) * Maths.Sinh(fi);
-
-                    x1 = -2 * v0 - a3;
-                    x2 = v0 - a3 + Maths.I * v1;
-                    x3 = x2.Conjugate;
-                }
-                else if (Q < 0)
-                {
-                    fi = Maths.Asinh(Math.Abs(R) / Maths.Pow(Math.Abs(Q), 3.0f / 2.0f)) / 3.0f;
-                    v0 = Math.Sign(R) * Maths.Sqrt(Math.Abs(Q)) * Maths.Sinh(fi);
-                    v1 = Maths.Sqrt(3) * Maths.Sqrt(Math.Abs(Q)) * Maths.Cosh(fi);
-
-                    x1 = -2 * v0 - a3;
-                    x2 = v0 - a3 + Maths.I * v1;
-                    x3 = x2.Conjugate;
-                }
-                else if (Q == 0)
-                {
-                    x1 = -Maths.Sqrt(c - a * a * a / 27.0f, 3.0f) - a3;
-                    v0 = Maths.Abs((a - 3 * x1) * (a + x1) - 4 * b);
-                    x2 = Maths.I / 2.0 * Math.Sqrt(v0) - (a + x1) / 2.0;
-                    x3 = x2.Conjugate;
-                }
+                double radius = 2 * Math.Sqrt(-thirdP);
+                double cosine = -halfQ / Math.Sqrt(-thirdP * thirdP * thirdP);
+                double angle = Math.Acos(Math.Max(-1, Math.Min(1, cosine))) / 3.0;
+                return new[] {
+                    new Complex32((float)(radius * Math.Cos(angle) - shift), 0),
+                    new Complex32((float)(radius * Math.Cos(angle + 2 * Math.PI / 3) - shift), 0),
+                    new Complex32((float)(radius * Math.Cos(angle - 2 * Math.PI / 3) - shift), 0) };
             }
-            else if (S == 0)
+            // Choose the larger Cardano radicand and obtain the other term from u*v=-p/3.
+            double u = RealCubeRoot(-halfQ - (halfQ < 0 ? -1 : 1) * Math.Sqrt(discriminant));
+            double v = u == 0 ? 0 : -thirdP / u;
+            double sum = u + v;
+            double realRoot = sum - shift;
+            // Recover a small real root lost by cancellation in Cardano's sum.
+            for (int i = 0; i < 3; i++)
             {
-                v0 = Maths.Pow(R, 1.0f / 3.0f);
-                x1 = -2 * v0 - a3;
-                x2 = x3 = v0 - a3;
+                double derivative = (3 * realRoot + 2 * a) * realRoot + b;
+                if (derivative == 0) break;
+                realRoot -= (((realRoot + a) * realRoot + b) * realRoot + c) / derivative;
             }
-            return new Complex32[] { x1, x2, x3 };
+            double imaginary = Math.Sqrt(3) * (u - v) / 2;
+            return new[] {
+                new Complex32((float)realRoot, 0),
+                new Complex32((float)(-(a + realRoot) / 2), (float)imaginary),
+                new Complex32((float)(-(a + realRoot) / 2), (float)-imaginary) };
         }
         /// <summary>
         /// Implements a solution to a quadratic equation of the form: 
@@ -2075,11 +1857,17 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[] Quadratic(float a, float b, float c)
         {
-            float dis = b * b - 4 * a * c;
-            float abs = Maths.Sqrt(Math.Abs(dis));
-            Complex32 root = dis < 0 ? new Complex32(0, abs) : new Complex32(abs, 0);
-            Complex32 q = -0.5 * (b + Math.Sign(b) * root);
-            return new Complex32[] { q / a, c / q };
+            if (a == 0) throw new ArgumentOutOfRangeException(nameof(a), "The quadratic coefficient must be nonzero.");
+            double discriminant = (double)b * b - 4.0 * a * c;
+            if (discriminant < 0)
+            {
+                double re = -(double)b / (2.0 * a);
+                double im = Math.Sqrt(-discriminant) / (2.0 * a);
+                return new[] { (Complex32)new Complex(re, im), (Complex32)new Complex(re, -im) };
+            }
+            double q = -0.5 * (b + (b < 0 ? -1 : 1) * Math.Sqrt(discriminant));
+            if (q == 0) return new[] { new Complex32(0, 0), new Complex32(0, 0) };
+            return new[] { new Complex32((float)(q / a), 0), new Complex32((float)(c / q), 0) };
         }
         /// <summary>
         /// Implements the solution of a biquadratic equation of the form:
@@ -2269,6 +2057,351 @@ namespace UMapx.Core
             float b = x - min;
             float c = (a != 0) ? b / a : x;
             return c;
+        }
+        #endregion
+
+        #region Private arithmetic and number-theory helpers
+        /// <summary>
+        /// Evaluates complex sinh using double-precision real trigonometric factors.
+        /// </summary>
+        /// <param name="value">Input value.</param>
+        /// <returns>The hyperbolic sine in double-precision complex arithmetic.</returns>
+        private static Complex ComplexSinh(Complex32 value)
+        {
+            return new Complex(Math.Sinh(value.Real) * Math.Cos(value.Imag), Math.Cosh(value.Real) * Math.Sin(value.Imag));
+        }
+
+        /// <summary>
+        /// Evaluates complex cosh using double-precision real trigonometric factors.
+        /// </summary>
+        /// <param name="value">Input value.</param>
+        /// <returns>The hyperbolic cosine in double-precision complex arithmetic.</returns>
+        private static Complex ComplexCosh(Complex32 value)
+        {
+            return new Complex(Math.Cosh(value.Real) * Math.Cos(value.Imag), Math.Sinh(value.Real) * Math.Sin(value.Imag));
+        }
+
+        /// <summary>
+        /// Evaluates real asinh through a positive magnitude to avoid cancellation for negative arguments.
+        /// </summary>
+        /// <param name="value">Input value.</param>
+        /// <returns>The real inverse hyperbolic sine, preserving the sign of the input.</returns>
+        private static double RealAsinh(double value)
+        {
+            double magnitude = Math.Abs(value);
+            if (magnitude < 1e-4 || double.IsInfinity(value)) return value;
+            double result = Math.Log(magnitude + Math.Sqrt(magnitude * magnitude + 1));
+            return value < 0 ? -result : result;
+        }
+
+        /// <summary>
+        /// Evaluates real acosh for arguments at least one; smaller arguments return NaN.
+        /// </summary>
+        /// <param name="value">Real argument, at least one.</param>
+        /// <returns>The nonnegative inverse hyperbolic cosine, or NaN below one.</returns>
+        private static double RealAcosh(double value)
+        {
+            if (value < 1) return double.NaN;
+            return Math.Log(value + Math.Sqrt((value - 1) * (value + 1)));
+        }
+
+        /// <summary>
+        /// Evaluates log(1 + value) with a correction for rounding in the addition near zero.
+        /// </summary>
+        /// <param name="value">Finite real argument greater than -1; -1 gives the logarithmic pole.</param>
+        /// <returns>The natural logarithm of 1 + value.</returns>
+        private static double LogOnePlus(double value)
+        {
+            double sum = 1 + value;
+            if (sum == 1) return value;
+            return Math.Log(sum) * value / (sum - 1);
+        }
+
+        /// <summary>
+        /// Evaluates the principal log(1 + value) using a corrected modulus and atan2 phase.
+        /// </summary>
+        /// <param name="value">Input value.</param>
+        /// <returns>The principal complex logarithm of 1 + value.</returns>
+        private static Complex ComplexLogOnePlus(Complex value)
+        {
+            double x = value.Real, y = value.Imaginary;
+            return new Complex(0.5 * LogOnePlus(2 * x + x * x + y * y), Math.Atan2(y, 1 + x));
+        }
+
+        /// <summary>
+        /// Evaluates complex atan with the branch convention used by the reciprocal arccotangent implementation.
+        /// </summary>
+        /// <remarks>On imaginary cuts with absolute imaginary part greater than one, the real part has the sign of the input imaginary component.</remarks>
+        /// <param name="value">Input value.</param>
+        /// <returns>The complex inverse tangent with the stated cut convention.</returns>
+        private static Complex PrincipalAtan(Complex value)
+        {
+            double x = value.Real, y = value.Imaginary;
+            double denominator = x * x + (y - 1) * (y - 1);
+            double ratio = 4 * y / denominator;
+            double imaginary = Math.Abs(ratio) < 0.5 ? LogOnePlus(ratio) :
+                Math.Log(x * x + (y + 1) * (y + 1)) - Math.Log(denominator);
+            double real = x == 0 && Math.Abs(y) > 1 ? Math.Sign(y) * Math.PI / 2 :
+                0.5 * Math.Atan2(2 * x, 1 - x * x - y * y);
+            return new Complex(real, 0.25 * imaginary);
+        }
+
+        /// <summary>
+        /// Solves x^3 + a*x^2 + b*x + c = 0 when one root is isolated by a dominant quadratic coefficient.
+        /// </summary>
+        /// <remarks>Refines the isolated root and recovers the smaller roots from their sum and product, avoiding cancellation in the depressed cubic.</remarks>
+        /// <param name="a">Coefficient of x^2 in the monic cubic.</param>
+        /// <param name="b">Coefficient of x.</param>
+        /// <param name="c">Constant coefficient.</param>
+        /// <returns>The isolated real root and the two roots recovered from its residual quadratic.</returns>
+        private static Complex32[] CubicWithSeparatedRoot(double a, double b, double c)
+        {
+            // When |a| dominates, depressing the cubic loses the two smaller roots.
+            // Refine the isolated root and recover the remaining sum/product without cancellation.
+            double root = -a;
+            for (int i = 0; i < 4; i++)
+                root -= (((root + a) * root + b) * root + c) / ((3 * root + 2 * a) * root + b);
+            double product = -c / root;
+            double sum = (b - product) / root;
+            double discriminant = sum * sum - 4 * product;
+            Complex first, second;
+            if (discriminant < 0)
+            {
+                first = new Complex(sum / 2, Math.Sqrt(-discriminant) / 2);
+                second = Complex.Conjugate(first);
+            }
+            else
+            {
+                double q = 0.5 * (sum + (sum < 0 ? -1 : 1) * Math.Sqrt(discriminant));
+                first = q;
+                second = q == 0 ? 0 : product / q;
+            }
+            return new[] { new Complex32((float)root, 0), (Complex32)first, (Complex32)second };
+        }
+
+        /// <summary>
+        /// Evaluates real atanh using its small-argument limit and a logarithmic ratio.
+        /// </summary>
+        /// <param name="value">Real argument in [-1, 1].</param>
+        /// <returns>The real inverse hyperbolic tangent, with infinite endpoint limits and NaN outside [-1, 1].</returns>
+        private static double RealAtanh(double value)
+        {
+            if (Math.Abs(value) < 1e-4) return value;
+            return 0.5 * Math.Log((1 + value) / (1 - value));
+        }
+
+        /// <summary>
+        /// Returns the real cube root, preserving the sign of a negative argument.
+        /// </summary>
+        /// <param name="value">Input value.</param>
+        /// <returns>The real cube root of value.</returns>
+        private static double RealCubeRoot(double value)
+        {
+            double root = Math.Pow(Math.Abs(value), 1.0 / 3);
+            return value < 0 ? -root : root;
+        }
+
+        /// <summary>
+        /// Returns the unsigned magnitude of a signed integer, including Int64.MinValue.
+        /// </summary>
+        /// <param name="value">Input value.</param>
+        /// <returns>The exact magnitude as an unsigned integer.</returns>
+        private static ulong UnsignedMagnitude(long value)
+        {
+            return value < 0 ? (ulong)(-(value + 1)) + 1 : (ulong)value;
+        }
+
+        /// <summary>
+        /// Computes a nonnegative greatest common divisor with the Euclidean remainder algorithm.
+        /// </summary>
+        /// <param name="a">First nonnegative integer.</param>
+        /// <param name="b">Second nonnegative integer.</param>
+        /// <returns>The nonnegative GCD; zero when both inputs are zero.</returns>
+        private static ulong UnsignedGcd(ulong a, ulong b)
+        {
+            while (b != 0)
+            {
+                ulong remainder = a % b;
+                a = b;
+                b = remainder;
+            }
+            return a;
+        }
+
+        /// <summary>
+        /// Computes a nonnegative GCD and Bezout coefficients using exact BigInteger arithmetic.
+        /// </summary>
+        /// <param name="a">First signed integer.</param>
+        /// <param name="b">Second signed integer.</param>
+        /// <returns>An array [gcd, x, y] satisfying a*x + b*y = gcd.</returns>
+        private static BigInteger[] ExtendedGcd(BigInteger a, BigInteger b)
+        {
+            BigInteger oldR = a, r = b, oldS = 1, s = 0, oldT = 0, t = 1;
+            while (r != 0)
+            {
+                BigInteger quotient = oldR / r;
+                BigInteger nextR = oldR - quotient * r;
+                BigInteger nextS = oldS - quotient * s;
+                BigInteger nextT = oldT - quotient * t;
+                oldR = r; r = nextR;
+                oldS = s; s = nextS;
+                oldT = t; t = nextT;
+            }
+            if (oldR < 0) { oldR = -oldR; oldS = -oldS; oldT = -oldT; }
+            return new[] { oldR, oldS, oldT };
+        }
+
+        /// <summary>
+        /// Multiplies two unsigned integers modulo a positive modulus without overflowing the product.
+        /// </summary>
+        /// <param name="a">First unsigned factor.</param>
+        /// <param name="b">Second unsigned factor.</param>
+        /// <param name="modulus">Positive modulus.</param>
+        /// <returns>The remainder of the exact product a*b modulo modulus.</returns>
+        private static ulong MultiplyModulo(ulong a, ulong b, ulong modulus)
+        {
+            if (a <= uint.MaxValue && b <= uint.MaxValue) return a * b % modulus;
+            return (ulong)((BigInteger)a * b % modulus);
+        }
+
+        /// <summary>
+        /// Evaluates an unsigned modular power by repeated squaring with exact intermediate products.
+        /// </summary>
+        /// <param name="value">Unsigned base.</param>
+        /// <param name="exponent">Nonnegative integer exponent.</param>
+        /// <param name="modulus">Modulus, greater than one at the call sites.</param>
+        /// <returns>The modular power; exponent zero returns one.</returns>
+        private static ulong PowerModulo(ulong value, ulong exponent, ulong modulus)
+        {
+            ulong result = 1;
+            while (exponent != 0)
+            {
+                if ((exponent & 1) != 0) result = MultiplyModulo(result, value, modulus);
+                exponent >>= 1;
+                if (exponent != 0) value = MultiplyModulo(value, value, modulus);
+            }
+            return result;
+        }
+
+        // Sorenson and Webster, https://arxiv.org/abs/1509.00864:
+        // the first composite passing all twelve bases exceeds the entire Int64 range.
+        /// <summary>
+        /// Miller–Rabin witnesses sufficient for primality decisions over the signed 64-bit domain.
+        /// </summary>
+        private static readonly uint[] PrimalityBases = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37 };
+
+        /// <summary>
+        /// Tests primality with Miller–Rabin bases sufficient throughout the signed 64-bit input domain.
+        /// </summary>
+        /// <param name="value">Nonnegative integer from the signed 64-bit input domain.</param>
+        /// <returns>True for a prime; false for a composite integer, zero, or one.</returns>
+        private static bool IsPrimeUnsigned(ulong value)
+        {
+            if (value < 2) return false;
+            foreach (uint prime in PrimalityBases)
+            {
+                if (value % prime == 0) return value == prime;
+            }
+            ulong oddPart = value - 1;
+            int powersOfTwo = 0;
+            while ((oddPart & 1) == 0) { oddPart >>= 1; powersOfTwo++; }
+            foreach (uint witness in PrimalityBases)
+            {
+                ulong residue = PowerModulo(witness, oddPart, value);
+                if (residue == 1 || residue == value - 1) continue;
+                bool passed = false;
+                for (int i = 1; i < powersOfTwo; i++)
+                {
+                    residue = MultiplyModulo(residue, residue, value);
+                    if (residue == value - 1) { passed = true; break; }
+                }
+                if (!passed) return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Appends the prime factors of a positive integer, retaining their multiplicities.
+        /// </summary>
+        /// <param name="value">Positive integer to factor.</param>
+        /// <param name="factors">Destination list for prime factors, including repetitions.</param>
+        private static void FactorInteger(ulong value, List<ulong> factors)
+        {
+            if (value == 1) return;
+            if (IsPrimeUnsigned(value)) { factors.Add(value); return; }
+            ulong divisor = FindDivisor(value);
+            FactorInteger(divisor, factors);
+            FactorInteger(value / divisor, factors);
+        }
+
+        /// <summary>
+        /// Finds a proper divisor of a composite integer using Pollard–Brent retries and a trial-division fallback.
+        /// </summary>
+        /// <param name="value">Composite integer in the signed 64-bit input domain.</param>
+        /// <returns>A divisor strictly between one and the composite input.</returns>
+        private static ulong FindDivisor(ulong value)
+        {
+            foreach (uint prime in PrimalityBases)
+                if (value % prime == 0) return prime;
+
+            // Brent's batched Pollard rho. Restart failed cycles; a failed split is not primality evidence.
+            // Bounded attempts plus exact trial division guarantee a finite fallback.
+            for (ulong constant = 1; constant <= 32; constant++)
+            {
+                ulong y = 2, x = 0, saved = 0, divisor = 1;
+                for (int length = 1; length <= 131072 && divisor == 1; length *= 2)
+                {
+                    x = y;
+                    for (int i = 0; i < length; i++) y = (MultiplyModulo(y, y, value) + constant) % value;
+                    for (int start = 0; start < length && divisor == 1; start += 64)
+                    {
+                        saved = y;
+                        ulong product = 1;
+                        int count = Math.Min(64, length - start);
+                        for (int i = 0; i < count; i++)
+                        {
+                            y = (MultiplyModulo(y, y, value) + constant) % value;
+                            ulong difference = x > y ? x - y : y - x;
+                            product = MultiplyModulo(product, difference, value);
+                        }
+                        divisor = UnsignedGcd(product, value);
+                    }
+                }
+                if (divisor == value)
+                {
+                    for (int i = 0; i < 64; i++)
+                    {
+                        saved = (MultiplyModulo(saved, saved, value) + constant) % value;
+                        divisor = UnsignedGcd(x > saved ? x - saved : saved - x, value);
+                        if (divisor != 1) break;
+                    }
+                }
+                if (divisor > 1 && divisor < value) return divisor;
+            }
+            for (ulong divisor = 41; divisor <= value / divisor; divisor += 2)
+                if (value % divisor == 0) return divisor;
+            return value;
+        }
+
+        /// <summary>
+        /// Decodes positional digits with checked accumulation and explicit digit-order selection.
+        /// </summary>
+        /// <param name="digits">Positional digits; each must be nonnegative and less than the radix.</param>
+        /// <param name="radix">Integer radix, at least two.</param>
+        /// <param name="leastSignificantFirst">True for least-significant-first digit order; false for most-significant-first order.</param>
+        /// <returns>The decoded nonnegative Int64 value.</returns>
+        private static long AccumulateDigits(int[] digits, int radix, bool leastSignificantFirst)
+        {
+            if (digits == null) throw new ArgumentNullException(nameof(digits));
+            if (radix < 2) throw new ArgumentOutOfRangeException(nameof(radix));
+            long result = 0;
+            for (int i = 0; i < digits.Length; i++)
+            {
+                int digit = digits[leastSignificantFirst ? digits.Length - i - 1 : i];
+                if (digit < 0 || digit >= radix) throw new ArgumentOutOfRangeException(nameof(digits), "Digits must be in the range [0, radix).");
+                result = checked(result * radix + digit);
+            }
+            return result;
         }
         #endregion
     }

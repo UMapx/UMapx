@@ -47,7 +47,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mean value.
         /// </summary>
-        public float Mean => 0f;
+        public float Mean => lambda > -1 ? 0f : float.NaN;
         /// <summary>
         /// Gets the variance value.
         /// </summary>
@@ -55,18 +55,21 @@ namespace UMapx.Distribution
         {
             get
             {
-                if (Maths.Abs(lambda) < 1e-6f)
-                {
-                    return (float)((Math.PI * Math.PI) / 3.0);
-                }
-
                 double l = lambda;
-                double a = 2.0 / (l * l);
-                double b = 1.0 / (1.0 + 2.0 * l);
-                double c = Special.Gamma((float)(l + 1.0));
-                double d = Special.Gamma((float)(2.0 * l + 2.0));
-                double variance = a * (b - (c * c) / d);
-                return (float)variance;
+                if (l <= -0.5) return float.PositiveInfinity;
+                if (l == 0) return (float)(Math.PI * Math.PI / 3);
+                if (Math.Abs(l) < 0.01)
+                {
+                    return (float)(2 * DistributionNumerics.Integrate(t =>
+                    {
+                        double logP = -DistributionNumerics.Softplus(-t), logQ = -DistributionNumerics.Softplus(t);
+                        double quantile = (Special.DistributionExpm1(l * logP) - Special.DistributionExpm1(l * logQ)) / l;
+                        return quantile * quantile * Math.Exp(logP + logQ);
+                    }, 0, 50));
+                }
+                double first = -DistributionNumerics.Log1p(2 * l);
+                double second = Special.DistributionLogBeta(l + 1, l + 1);
+                return (float)(-2 * Math.Exp(first) * Special.DistributionExpm1(second - first) / (l * l));
             }
         }
         /// <summary>

@@ -28,7 +28,7 @@
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                    0.707106781186548f,
                    0.707106781186548f }, new float[] {
                    0.088388347648318f,
@@ -48,7 +48,7 @@
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                    0.707106781186548f,
                    0.707106781186548f }, new float[] {
                   -0.016572815184060f,
@@ -72,7 +72,7 @@
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                    0.176776695296637f,
                    0.530330085889911f,
                    0.530330085889911f,
@@ -92,7 +92,7 @@
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                    0.044194173824159f,
                    0.220970869120796f,
                    0.441941738241592f,
@@ -115,24 +115,26 @@
         {
             get
             {
-                // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                // Dual to the order-five B-spline. The antisymmetric high-pass
+                // has three vanishing moments; reconstruction alone cannot
+                // detect an unwanted low-pass component added to this filter.
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                    0.044194173824159f,
                    0.220970869120796f,
                    0.441941738241592f,
                    0.441941738241592f,
                    0.220970869120796f,
                    0.044194173824159f }, new float[] {
-                  -0.055242717280199f,
-                  -0.276213586400995f,
-                  -0.817592215746946f,
-                  -1.878252387526767f,
-                  -2.099223256647564f,
-                   1.436310649285175f,
-                   0.773398041922786f,
-                  -0.287262129857035f,
-                  -0.276213586400995f,
-                  -0.055242717280199f
+                   -0.0552427172801990f,
+                   -0.2762135864009951f,
+                   -0.2872621298570350f,
+                   0.7733980419227864f,
+                   1.5467960838455728f,
+                   -1.5467960838455728f,
+                   -0.7733980419227864f,
+                   0.2872621298570350f,
+                   0.2762135864009951f,
+                   0.0552427172801990f,
                 });
             }
         }
@@ -144,7 +146,7 @@
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                    0.044194173824159f,
                    0.220970869120796f,
                    0.441941738241592f,
@@ -176,7 +178,7 @@
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                    0.353553390593274f,
                    0.707106781186548f,
                    0.353553390593274f,
@@ -198,7 +200,7 @@
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                    0.353553390593274f,
                    0.707106781186548f,
                    0.353553390593274f,
@@ -224,7 +226,7 @@
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                    0.353553390593274f,
                    0.707106781186548f,
                    0.353553390593274f,
@@ -254,7 +256,7 @@
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                    0.088388347648318f,
                    0.353553390593274f,
                    0.530330085889911f,
@@ -280,7 +282,7 @@
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                    0.088388347648318f,
                    0.353553390593274f,
                    0.530330085889911f,
@@ -310,7 +312,7 @@
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                    0.088388347648318f,
                    0.353553390593274f,
                    0.530330085889911f,
@@ -344,7 +346,7 @@
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                    0.022097086912080f,
                    0.132582521472478f,
                    0.331456303681194f,
@@ -373,7 +375,7 @@
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                    0.022097086912080f,
                    0.132582521472478f,
                    0.331456303681194f,
@@ -406,7 +408,7 @@
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                    0.022097086912080f,
                    0.132582521472478f,
                    0.331456303681194f,
@@ -443,7 +445,7 @@
             get
             {
                 // Cohen–Daubechies–Feauveau wavelet:
-                return WaveletPacket.Create(new float[] {
+                return WaveletPacket.CreateBiorthogonal(new float[] {
                  3.782845550750114e-02f,
                 -2.384946501955685e-02f,
                 -1.106244044092826e-01f,

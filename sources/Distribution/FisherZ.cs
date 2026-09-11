@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 
 namespace UMapx.Distribution
@@ -182,10 +182,10 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            float y = d1 * Maths.Exp(2f * x);
-            if (float.IsPositiveInfinity(y)) return 1f;
-            float u = y / (y + d2);
-            return Special.BetaIncompleteRegularized(d1 * 0.5f, d2 * 0.5f, u);
+            double z = Math.Log(d1 / (double)d2) + 2.0 * x;
+            double small = Math.Exp(-Math.Abs(z));
+            return (float)(z <= 0 ? Special.DistributionBeta(d1 / 2.0, d2 / 2.0, small / (1 + small)) :
+                1 - Special.DistributionBeta(d2 / 2.0, d1 / 2.0, small / (1 + small)));
         }
         /// <summary>
         /// Returns the value of the probability density function.
@@ -198,28 +198,12 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Function(float x)
         {
-            // helpers:
-
-            float d12 = d1 / 2.0f;
-            float d22 = d2 / 2.0f;
-            float h = d12 + d22;
-
-            // first equation:
-
-            float a = Maths.Pow(d1, d12);
-            float b = Maths.Pow(d2, d22);
-            float c = 2f * a * b;
-            float d = Special.Beta(d12, d22);
-            float e = c / d;
-
-            // second equation:
-
-            float f = Maths.Exp(d1 * x);
-            float g = d1 * Maths.Exp(2f * x) + d2;
-            float j = f / Maths.Pow(g, h);
-
-            // result of F(x, d1, d2):
-            return e * j;
+            if (float.IsInfinity(x)) return 0;
+            double a = d1 / 2.0, b = d2 / 2.0;
+            double z = Math.Log(d1 / (double)d2) + 2.0 * x;
+            double exponent = z > 0 ? -b * z - (a + b) * DistributionNumerics.Log1p(Math.Exp(-z)) :
+                a * z - (a + b) * DistributionNumerics.Log1p(Math.Exp(z));
+            return (float)Math.Exp(Math.Log(2) - Special.DistributionLogBeta(a, b) + exponent);
         }
         #endregion
     }

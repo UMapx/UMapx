@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 
 namespace UMapx.Distribution
@@ -154,8 +154,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                // Standard differential entropy: H = 1/2 + ln(π r / 2)
-                return Maths.Log(Maths.Pi * r / 2) + 0.5f;
+                return (float)(Math.Log(Math.PI * r) - 0.5);
             }
         }
         #endregion

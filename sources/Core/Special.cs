@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Numerics;
 
 namespace UMapx.Core
@@ -12,17 +12,6 @@ namespace UMapx.Core
     /// </remarks>
     public static partial class Special
     {
-        #region Private data
-        /// <summary>
-        /// 1 / ( 2 * PI ).
-        /// </summary>
-        private const float INV_2PI = 0.15915494309189533576888376337251f;
-        /// <summary>
-        /// Sqrt( PI ).
-        /// </summary>
-        private const float SQRT_PI = 1.7724538509055160272981674833411f;
-        #endregion
-
         #region Chebyshev polynomial
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the first kind.
@@ -32,7 +21,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float ChebyshevT(float x, int n)
         {
-            return Maths.Cos(n * Maths.Acos(x));
+            return (float)ChebyshevValue((Complex)x, n, false).Real;
         }
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the first kind.
@@ -42,7 +31,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 ChebyshevT(Complex32 x, int n)
         {
-            return Maths.Cos(n * Maths.Acos(x));
+            return (Complex32)ChebyshevValue((Complex)x, n, false);
         }
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the second kind.
@@ -52,8 +41,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float ChebyshevU(float x, int n)
         {
-            float z = Maths.Acos(x);
-            return Maths.Sin((n + 1) * z) / Maths.Sin(z);
+            return (float)ChebyshevValue((Complex)x, n, true).Real;
         }
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the second kind.
@@ -63,8 +51,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 ChebyshevU(Complex32 x, int n)
         {
-            Complex32 z = Maths.Acos(x);
-            return Maths.Sin((n + 1) * z) / Maths.Sin(z);
+            return (Complex32)ChebyshevValue((Complex)x, n, true);
         }
         #endregion
 
@@ -80,11 +67,7 @@ namespace UMapx.Core
         {
             if (n < 0) return float.NaN;
             if (n == 0) return 1;
-            if (n == 1) return x;
-
-            // Generalized formula
-            // Abel polynomials recurrence relation for any n ≥ 1:
-            return x * Maths.Pow(x - a * n, n - 1);
+            return (float)((Complex)x * Complex.Pow((Complex)x - n * (Complex)a, n - 1)).Real;
         }
         /// <summary>
         /// Returns the value of the Abel polynomial.
@@ -97,11 +80,7 @@ namespace UMapx.Core
         {
             if (n < 0) return Complex32.NaN;
             if (n == 0) return 1;
-            if (n == 1) return x;
-
-            // Generalized formula
-            // Abel polynomials recurrence relation for any n ≥ 1:
-            return x * Maths.Pow(x - a * n, n - 1);
+            return (Complex32)((Complex)x * Complex.Pow((Complex)x - n * (Complex)a, n - 1));
         }
         #endregion
 
@@ -115,12 +94,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Laguerre(float x, float a, int k)
         {
-            if (k < 0) return float.NaN;
-            if (k == 0) return 1f;
-            if (k == 1) return 1f + a - x;
-
-            float num = (2f * k - 1f + a - x) * Laguerre(x, a, k - 1) - (k - 1f + a) * Laguerre(x, a, k - 2);
-            return num / k;
+            return (float)OrthogonalPolynomial((Complex)x, (Complex)a, k, 0).Real;
         }
         /// <summary>
         /// Returns the value of the Laguerre polynomial.
@@ -131,12 +105,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Laguerre(Complex32 x, Complex32 a, int k)
         {
-            if (k < 0) return Complex32.NaN;
-            if (k == 0) return 1f;
-            if (k == 1) return 1f + a - x;
-
-            Complex32 num = (2f * k - 1f + a - x) * Laguerre(x, a, k - 1) - (k - 1f + a) * Laguerre(x, a, k - 2);
-            return num / k;
+            return (Complex32)OrthogonalPolynomial((Complex)x, (Complex)a, k, 0);
         }
         #endregion
 
@@ -149,12 +118,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Legendre(float x, int m)
         {
-            if (m < 0) return float.NaN;
-            if (m == 0) return 1f;
-            if (m == 1) return x;
-
-            float num = (2f * m - 1f) * x * Legendre(x, m - 1) - (m - 1f) * Legendre(x, m - 2);
-            return num / m;
+            return (float)OrthogonalPolynomial((Complex)x, Complex.Zero, m, 1).Real;
         }
         /// <summary>
         /// Returns the value of the Legendre polynomial of the first kind.
@@ -164,12 +128,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Legendre(Complex32 x, int m)
         {
-            if (m < 0) return Complex32.NaN;
-            if (m == 0) return 1f;
-            if (m == 1) return x;
-
-            Complex32 num = (2f * m - 1f) * x * Legendre(x, m - 1) - (m - 1f) * Legendre(x, m - 2);
-            return num / m;
+            return (Complex32)OrthogonalPolynomial((Complex)x, Complex.Zero, m, 1);
         }
         #endregion
 
@@ -182,12 +141,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Hermite(float x, int m)
         {
-            if (m < 0) return float.NaN;
-            if (m == 0) return 1f;
-            if (m == 1) return 2f * x;
-
-            float ksi = x * Hermite(x, m - 1) - (m - 1) * Hermite(x, m - 2);
-            return 2f * ksi;
+            return (float)OrthogonalPolynomial((Complex)x, Complex.Zero, m, 2).Real;
         }
         /// <summary>
         /// Returns the value of the Hermite polynomial.
@@ -197,12 +151,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Hermite(Complex32 x, int m)
         {
-            if (m < 0) return Complex32.NaN;
-            if (m == 0) return Complex32.One;
-            if (m == 1) return 2f * x;
-
-            Complex32 ksi = x * Hermite(x, m - 1) - (m - 1) * Hermite(x, m - 2);
-            return 2f * ksi;
+            return (Complex32)OrthogonalPolynomial((Complex)x, Complex.Zero, m, 2);
         }
         #endregion
 
@@ -216,14 +165,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Gegenbauer(float x, float a, int n)
         {
-            if (n < 0) return float.NaN;
-            if (n == 0) return 1;
-            if (n == 1) return 2 * a * x;
-
-            // Generalized formula
-            // Laguerre polynomials recurrence relation for any k ≥ 1:
-            float psi = 2.0f * x * (n + a - 1) * Gegenbauer(x, a, n - 1) - (n + 2 * a - 2) * Gegenbauer(x, a, n - 2);
-            return psi / n;
+            return (float)OrthogonalPolynomial((Complex)x, (Complex)a, n, 3).Real;
         }
         /// <summary>
         /// Returns the value of the Gegenbauer polynomial.
@@ -234,14 +176,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Gegenbauer(Complex32 x, Complex32 a, int n)
         {
-            if (n < 0) return Complex32.NaN;
-            if (n == 0) return 1;
-            if (n == 1) return 2 * a * x;
-
-            // Generalized formula
-            // Laguerre polynomials recurrence relation for any k ≥ 1:
-            Complex32 psi = 2.0f * x * (n + a - 1) * Gegenbauer(x, a, n - 1) - (n + 2 * a - 2) * Gegenbauer(x, a, n - 2);
-            return psi / n;
+            return (Complex32)OrthogonalPolynomial((Complex)x, (Complex)a, n, 3);
         }
         #endregion
 
@@ -324,7 +259,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Gd(float x)
         {
-            return Maths.Asin(Maths.Tanh(x));
+            return (float)(2 * Math.Atan(Math.Tanh((double)x / 2)));
         }
         /// <summary>
         /// Returns the value of the Guderman function.
@@ -333,7 +268,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Gd(Complex32 x)
         {
-            return Maths.Asin(Maths.Tanh(x));
+            return (Complex32)(2 * Complex.Atan(2 * LogisticValue((Complex)x) - 1));
         }
         /// <summary>
         /// Returns the value of the function Cas(x).
@@ -364,9 +299,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Rademacher(float t, int n)
         {
-            float p = Maths.Pow(2, n);
-            float v = p * Maths.Pi * t;
-            return Math.Sign(Math.Sin(v));
+            return (float)RademacherValue((Complex)t, n).Real;
         }
         /// <summary>
         /// Returns the value of the Radamecher function.
@@ -376,14 +309,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Rademacher(Complex32 z, int n)
         {
-            float p = Maths.Pow(2.0f, n);
-            Complex32 v = new Complex32(p * Maths.Pi, 0f) * z;
-            Complex32 s = Maths.Sin(v);
-
-            float mag = Maths.Abs(s);
-            if (mag == 0f) return Complex32.Zero;  // zeros at z = k / 2^n for real z
-
-            return s / mag; // complex signum
+            return (Complex32)RademacherValue((Complex)z, n);
         }
         #endregion
 
@@ -396,7 +322,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Heaviside(float x, float k)
         {
-            return 0.5f + 0.5f * Maths.Tanh(k * x);
+            return (float)LogisticValue(2 * (Complex)k * (Complex)x).Real;
         }
         /// <summary>
         /// Returns the value of the Heaviside delta function.
@@ -406,7 +332,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Heaviside(Complex32 x, Complex32 k)
         {
-            return 0.5f + 0.5f * Maths.Tanh(k * x);
+            return (Complex32)LogisticValue(2 * (Complex)k * (Complex)x);
         }
         #endregion
 
@@ -532,7 +458,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Logistic(float x, float a, float k, float b)
         {
-            return Special.Logistic(x, a, k, b, 1.0f, 1.0f, 1.0f);
+            return (float)((Complex)a + ((Complex)k - (Complex)a) * LogisticValue((Complex)b * (Complex)x)).Real;
         }
         /// <summary>
         /// Returns the value of a logistic function.
@@ -544,7 +470,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Logistic(Complex32 x, Complex32 a, Complex32 k, Complex32 b)
         {
-            return Special.Logistic(x, a, k, b, 1.0f, 1.0f, 1.0f);
+            return (Complex32)((Complex)a + ((Complex)k - (Complex)a) * LogisticValue((Complex)b * (Complex)x));
         }
         /// <summary>
         /// Returns the value of a logistic function.
@@ -553,7 +479,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Logistic(float x)
         {
-            return Special.Logistic(x, 0, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+            return (float)LogisticValue((Complex)x).Real;
         }
         /// <summary>
         /// Returns the value of a logistic function.
@@ -562,7 +488,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Logistic(Complex32 x)
         {
-            return Special.Logistic(x, 0, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+            return (Complex32)LogisticValue((Complex)x);
         }
         #endregion
 
@@ -576,11 +502,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Erlang(float y, int v, float t)
         {
-            float e = Special.Erlang(y, v);
-            float a = v * e;
-            float b = v - y + y * e;
-            float c = (v - y) * t;
-            return a / b * Maths.Exp(-c);
+            Complex traffic = (Complex)y, blocking = ErlangBlocking(traffic, v);
+            return (float)(v * blocking / (v - traffic + traffic * blocking) * Complex.Exp(-(v - traffic) * (Complex)t)).Real;
         }
         /// <summary>
         /// Returns the value of the Erlang C-function.
@@ -591,11 +514,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Erlang(Complex32 y, int v, Complex32 t)
         {
-            Complex32 e = Special.Erlang(y, v);             // Erlang-B (blocking)
-            Complex32 a = v * e;                    // v * B
-            Complex32 b = v - y + y * e;            // v - y + y B = v(1-ρ) + ρ v B
-            Complex32 c = (v - y) * t;              // (v - y) t
-            return a / b * Maths.Exp(-c);           // C * exp( - (v - y) t )
+            Complex traffic = (Complex)y, blocking = ErlangBlocking(traffic, v);
+            return (Complex32)(v * blocking / (v - traffic + traffic * blocking) * Complex.Exp(-(v - traffic) * (Complex)t));
         }
         /// <summary>
         /// Returns the value of the Erlang B-function.
@@ -605,25 +525,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Erlang(float y, int v)
         {
-            // special cases:
-            if (v == 0)
-                return 1;
-            if (v < 0)
-                return float.NaN;
-
-            // set:
-            float t = 1, b = 1; int i;
-
-            //series:
-            for (i = 1; i < v; i++)
-            {
-                t *= y / i;
-                b += t;
-            }
-
-            // last step and result:
-            float a = t * y / i;
-            return a / (a + b);
+            return (float)ErlangBlocking((Complex)y, v).Real;
         }
         /// <summary>
         /// Returns the value of the Erlang B-function.
@@ -633,24 +535,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Erlang(Complex32 y, int v)
         {
-            // Special cases match your real version
-            if (v == 0) return Complex32.One;
-            if (v < 0) return Complex32.NaN;
-
-            Complex32 t = Complex32.One;  // term for k=0
-            Complex32 b = Complex32.One;  // partial sum Σ_{k=0}^{v-1}
-            int i;
-
-            // Build sum up to k = v-1:  t = y^k / k!,  b += t
-            for (i = 1; i < v; i++)
-            {
-                t *= y / i;               // next term
-                b += t;
-            }
-
-            // Last term k = v:  a = y^v / v!
-            Complex32 a = t * y / i;      // here i == v
-            return a / (a + b);
+            return (Complex32)ErlangBlocking((Complex)y, v);
         }
         #endregion
 
@@ -663,82 +548,10 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float LambertW(float x, int k = 0)
         {
-            // Only real branches supported here
-            if (k != 0 && k != -1)
-                return float.NaN;
-
-            const float xm = -0.36787944117144233f; // -1/e
-
-            // Domain checks on R
-            if (k == 0)
-            {
-                if (x < xm) return float.NaN;   // W0 real only for x ≥ -1/e
-                if (x == 0f) return 0f;
-                if (x == xm) return -1f;
-
-                // ---- ASYMPTOTIC for large x on principal branch ----
-                if (x > 1000f)
-                {
-                    // Corless et al. expansion
-                    double L1 = Math.Log(x);
-                    double L2 = Math.Log(L1);
-                    double invL1 = 1.0 / L1;
-                    double invL1_2 = invL1 * invL1;
-                    double invL1_3 = invL1_2 * invL1;
-
-                    double v = L1 - L2
-                             + L2 * invL1
-                             + (L2 * (-2.0 + L2)) * 0.5 * invL1_2
-                             + (L2 * (6.0 - 9.0 * L2 + 2.0 * L2 * L2)) * (1.0 / 6.0) * invL1_3;
-
-                    return (float)v;
-                }
-            }
-            else // k == -1
-            {
-                if (x < xm || x >= 0f) return float.NaN; // W_{-1} real only for -1/e ≤ x < 0
-                if (x == xm) return -1f;
-            }
-
-            // Halley's method
-            const float eps = 1e-8f;
-            const int maxIter = 240;
-
-            // Initial guess (simple and robust for real case)
-            double w = (k == 0) ? 1f : -2f;
-            // Better near the branch point x ≈ -1/e:
-            if (x < -0.2f)
-            {
-                // w ≈ -1 ± sqrt(2 (e x + 1))
-                float q = Maths.E * x + 1f;
-                if (q >= 0f)
-                {
-                    float s = Maths.Sqrt(2f * q);
-                    w = (k == 0) ? (-1f + s) : (-1f - s);
-                }
-            }
-
-            for (int it = 0; it < maxIter; it++)
-            {
-                double e = Math.Exp(w);
-                double f = w * e - x;                  // f(w) = w e^w - x
-                double wp1 = w + 1f;
-
-                // Halley denominator: e*(w+1) - (w+2)*f/(2*(w+1))
-                double denom = e * wp1 - (w + 2f) * f / (2f * wp1);
-
-                // Newton fallback if denom is unusable
-                if (double.IsInfinity(denom) || denom == 0.0)
-                    denom = e * wp1;
-
-                var v = w;
-                w = w - f / denom;
-
-                if (Maths.Abs(w - v) <= eps * Maths.Abs(w))
-                    break;
-            }
-
-            return (float)w;
+            if ((k != 0 && k != -1) || x < -0.36787944117144233f || (k == -1 && x >= 0)) return float.NaN;
+            if (x == -0.36787944117144233f) return -1;
+            if (float.IsPositiveInfinity(x)) return float.PositiveInfinity;
+            return (float)LambertValue((Complex)(double)x, k).Real;
         }
         /// <summary>
         /// Returns the value of the Lambert W-function.
@@ -748,66 +561,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 LambertW(Complex32 z, int k = 0)
         {
-            // Special cases
-            if (z.Real == 0f && z.Imag == 0f)
-            {
-                if (k == 0) return Complex32.Zero;           // W_0(0)=0
-                return Complex32.NaN;                        // other branches not defined at 0
-            }
-
-            // ---- ASYMPTOTIC for large |z| on branch k ----
-            // W_k(z) ≈ L1 − L2 + L2/L1 + L2(−2+L2)/(2 L1^2) + L2(6−9L2+2L2^2)/(6 L1^3)
-            if (Maths.Abs(z) > 1000f)
-            {
-                Complex I2Pi = new Complex(0f, 2f * Maths.Pi);
-                Complex L1 = Complex.Log(z) + k * I2Pi;
-                Complex L2 = Complex.Log(L1);
-
-                Complex invL1 = Complex.One / L1;
-                Complex invL1_2 = invL1 * invL1;
-                Complex invL1_3 = invL1_2 * invL1;
-
-                Complex v = L1 - L2
-                          + L2 * invL1
-                          + (L2 * (-2f + L2)) * 0.5f * invL1_2
-                          + (L2 * (6f - 9f * L2 + 2f * L2 * L2)) * (1f / 6f) * invL1_3;
-
-                return (Complex32)v;
-            }
-
-            // Initial guess:
-            // w0 ≈ L - Log(L), where L = Log(z) + i*2πk (multi-valued log).
-            Complex I2Pi0 = new Complex(0f, 2f * Maths.Pi);
-            Complex L = Complex.Log(z) + k * I2Pi0;
-            Complex w0 = (Complex.Abs(L) < 1e-3f) ? Complex.Log(z) : (L - Complex.Log(L));
-            Complex w = w0;
-
-            float tol = 1e-8f;
-            int maxIter = 240;
-
-            // Halley's iteration for f(w)=w e^w - z
-            for (int i = 0; i < maxIter; i++)
-            {
-                Complex ew = Complex.Exp(w);
-                Complex f = w * ew - (Complex)z;
-                Complex wp1 = w + Complex.One;
-
-                // Halley denominator
-                Complex denom = ew * wp1 - (w + 2f) * f / (2f * wp1);
-
-                // Newton fallback if denom ~ 0
-                if (Maths.Abs(denom) == 0f)
-                    denom = ew * wp1;
-
-                Complex wNext = w - f / denom;
-
-                if (Maths.Abs(wNext - w) <= tol * (1f + Maths.Abs(wNext)))
-                    return (Complex32)wNext;
-
-                w = wNext;
-            }
-
-            return (Complex32)w; // last iterate
+            return (Complex32)LambertValue((Complex)z, k);
         }
         /// <summary>
         /// Returns the value of the square super-root.
@@ -817,10 +571,10 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Ssqrt(float x, int k = 0)
         {
-            // The 2nd-order super-root, square super-root, or super square root has notation ssqrt(x).
-            // It can be represented with the Lambert W-function: ssqrt(x) = log(x) / W{ log(x) }.
-            float log = Maths.Log(x);
-            return log / LambertW(log, k);
+            if (x <= 0 || (k != 0 && k != -1)) return float.NaN;
+            if (x == 1 && k == 0) return 1;
+            Complex value = LambertValue((Complex)Math.Log(x), k);
+            return Math.Abs(value.Imaginary) <= 1e-12 ? (float)Math.Exp(value.Real) : float.NaN;
         }
         /// <summary>
         /// Returns the value of the square super-root.
@@ -830,19 +584,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Ssqrt(Complex32 z, int k = 0)
         {
-            // The 2nd-order super-root, square super-root, or super square root has notation ssqrt(x).
-            // It can be represented with the Lambert W-function: ssqrt(x) = log(x) / W{ log(x) }.
-
-            // z = 1 → Log(z)=0 → W_0(0)=0 → y=exp(0)=1 on principal branch
-            if (z.Real == 0f && z.Imag == 0f)
-                return Complex32.Zero; // y^y = 0 has solution y=0 (principal choice)
-
-            Complex32 Lz = Maths.Log(z);  // principal log
-            if (Lz.Real == 0f && Lz.Imag == 0f && k == 0)
-                return Complex32.One;
-
-            Complex32 W = LambertW(Lz, k);
-            return Maths.Exp(W);
+            if (z == 1 && k == 0) return 1;
+            return (Complex32)Complex.Exp(LambertValue(Complex.Log((Complex)z), k));
         }
         #endregion
 
@@ -854,44 +597,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Fresnelc(float x)
         {
-            if (x == 0f) return 0f;
-
-            if (Math.Abs(x) > 6f)
-            {
-                double xd = x;
-                double invx = 1.0 / xd;
-                double x2 = xd * xd;
-                double sinx2 = Math.Sin(x2);
-                double cosx2 = Math.Cos(x2);
-
-                double approx = Math.Sqrt(Math.PI / 8.0) * Math.Sign(xd)
-                              + 0.5 * sinx2 * invx
-                              - 0.25 * cosx2 * invx * invx * invx
-                              + (3.0 / 8.0) * sinx2 * Math.Pow(invx, 5)
-                              - (15.0 / 16.0) * cosx2 * Math.Pow(invx, 7);
-
-                return (float)approx;
-            }
-
-            // term_0 = z / ((2*0)! * (4*0+1)) = z
-            float eps = 1e-16f;
-            int maxIter = 120;
-            double s = x;
-            double term = x;
-            double z4 = (double)x * x; z4 *= z4; // x^4 в double
-
-            // term_{n+1} = term_n * [ -(4n+1) z^4 / ((2n+2)(2n+1)(4n+5)) ]
-            for (int n = 0; n < maxIter; n++)
-            {
-                double a = -(4.0 * n + 1.0);
-                double b = (2.0 * n + 2.0) * (2.0 * n + 1.0) * (4.0 * n + 5.0);
-                term *= a / b * z4;
-
-                if (Math.Abs(term) < eps) break;
-                s += term;
-            }
-
-            return (float)s;
+            return (float)FresnelValue((Complex)x, false).Real;
         }
         /// <summary>
         /// Returns the value of the Fresnel integral C(x).
@@ -900,49 +606,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Fresnelc(Complex32 z)
         {
-            if (z.Real == 0f && z.Imag == 0f) return Complex32.Zero;
-            if (z.Imag == 0f) return new Complex32(Fresnelc(z.Real), 0f);
-
-            double az = Math.Sqrt((double)z.Real * z.Real + (double)z.Imag * z.Imag);
-
-            if (az > 6.0)
-            {
-                double sgnInf = Math.Sign((double)z.Real + (double)z.Imag);
-
-                var Z = new Complex(z.Real, z.Imag);
-                var invZ = Complex.One / Z;
-                var Z2 = Z * Z;
-                var sinZ2 = Complex.Sin(Z2);
-                var cosZ2 = Complex.Cos(Z2);
-
-                var approx = Math.Sqrt(Math.PI / 8.0) * sgnInf
-                           + 0.5 * sinZ2 * invZ
-                           - 0.25 * cosZ2 * invZ * invZ * invZ
-                           + (3.0 / 8.0) * sinZ2 * invZ * invZ * invZ * invZ * invZ
-                           - (15.0 / 16.0) * cosZ2 * invZ * invZ * invZ * invZ * invZ * invZ * invZ;
-
-                return new Complex32((float)approx.Real, (float)approx.Imaginary);
-            }
-
-            // term_0 = z / ((2*0)! * (4*0+1)) = z
-            float eps = 1e-16f;
-            int maxIter = 120;
-            var s = new Complex(z.Real, z.Imag);
-            var term = s;
-            var z4 = s * s * s * s;
-
-            // term_{n+1} = term_n * [ -(4n+1) z^4 / ((2n+2)(2n+1)(4n+5)) ]
-            for (int n = 0; n < maxIter; n++)
-            {
-                double a = -(4.0 * n + 1.0);
-                double b = (2.0 * n + 2.0) * (2.0 * n + 1.0) * (4.0 * n + 5.0);
-                term *= a / b * z4;
-
-                if (Complex.Abs(term) < eps) break;
-                s += term;
-            }
-
-            return new Complex32((float)s.Real, (float)s.Imaginary);
+            return (Complex32)FresnelValue((Complex)z, false);
         }
         /// <summary>
         /// Returns the value of the Fresnel integral S(x).
@@ -951,45 +615,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Fresnels(float x)
         {
-            if (x == 0f) return 0f;
-
-            if (Math.Abs(x) > 6f)
-            {
-                double xd = x;
-                double invx = 1.0 / xd;
-                double x2 = xd * xd;
-                double sinx2 = Math.Sin(x2);
-                double cosx2 = Math.Cos(x2);
-
-                double approx = Math.Sqrt(Math.PI / 8.0) * Math.Sign(xd)
-                              - 0.5 * cosx2 * invx
-                              - 0.25 * sinx2 * invx * invx * invx
-                              - (3.0 / 8.0) * cosx2 * Math.Pow(invx, 5)
-                              - (15.0 / 16.0) * sinx2 * Math.Pow(invx, 7);
-
-                return (float)approx;
-            }
-
-            // term_0 = z^3 / 3 = z^{4*0+3} / ((2*0+1)! (4*0+3))
-            float eps = 1e-16f;
-            int maxIter = 120;
-            double z2 = (double)x * x;
-            double s = z2 * x / 3.0;
-            double term = s;
-            double z4 = z2 * z2;
-
-            // term_{n+1} = term_n * [ -(4n+3) z^4 / ((2n+3)(2n+2)(4n+7)) ]
-            for (int n = 0; n < maxIter; n++)
-            {
-                double a = -(4.0 * n + 3.0);
-                double b = (2.0 * n + 3.0) * (2.0 * n + 2.0) * (4.0 * n + 7.0);
-                term *= (a / b) * z4;
-
-                if (Math.Abs(term) < eps) break;
-                s += term;
-            }
-
-            return (float)s;
+            return (float)FresnelValue((Complex)x, true).Real;
         }
         /// <summary>
         /// Returns the value of the Fresnel integral S(x).
@@ -998,51 +624,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Fresnels(Complex32 z)
         {
-            if (z.Real == 0f && z.Imag == 0f) return Complex32.Zero;
-            if (z.Imag == 0f) return new Complex32(Fresnels(z.Real), 0f);
-
-            double az = Math.Sqrt((double)z.Real * z.Real + (double)z.Imag * z.Imag);
-
-            if (az > 6.0)
-            {
-                double sgnInf = Math.Sign((double)z.Real + (double)z.Imag);
-
-                var Z = new Complex(z.Real, z.Imag);
-                var invZ = Complex.One / Z;
-                var Z2 = Z * Z;
-                var sinZ2 = Complex.Sin(Z2);
-                var cosZ2 = Complex.Cos(Z2);
-
-                var approx = Math.Sqrt(Math.PI / 8.0) * sgnInf
-                           - 0.5 * cosZ2 * invZ
-                           - 0.25 * sinZ2 * invZ * invZ * invZ
-                           - (3.0 / 8.0) * cosZ2 * invZ * invZ * invZ * invZ * invZ
-                           - (15.0 / 16.0) * sinZ2 * invZ * invZ * invZ * invZ * invZ * invZ * invZ;
-
-                return new Complex32((float)approx.Real, (float)approx.Imaginary);
-            }
-
-            // term_0 = z^3 / 3 = z^{4*0+3} / ((2*0+1)! (4*0+3))
-            float eps = 1e-16f;
-            int maxIter = 120;
-            var Zc = new Complex(z.Real, z.Imag);
-            var z2 = Zc * Zc;
-            var s = z2 * Zc / 3.0;
-            var term = s;
-            var z4 = z2 * z2;
-
-            // term_{n+1} = term_n * [ -(4n+3) z^4 / ((2n+3)(2n+2)(4n+7)) ]
-            for (int n = 0; n < maxIter; n++)
-            {
-                double a = -(4.0 * n + 3.0);
-                double b = (2.0 * n + 3.0) * (2.0 * n + 2.0) * (4.0 * n + 7.0);
-                term *= a / b * z4;
-
-                if (Complex.Abs(term) < eps) break;
-                s += term;
-            }
-
-            return new Complex32((float)s.Real, (float)s.Imaginary);
+            return (Complex32)FresnelValue((Complex)z, true);
         }
         #endregion
 
@@ -1055,31 +637,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Owen(float h, float a)
         {
-            if (float.IsNaN(h) || float.IsNaN(a)) return float.NaN;
-            if (a == 0f) return 0f;
-            if (h == 0f) return INV_2PI * Maths.Atan(a);
-
-            float sign = a >= 0f ? 1f : -1f;
-            float L = Math.Abs(a);
-
-            int n = 1024;
-            float hstep = L / n;
-
-            float f(float t)
-            {
-                float t2 = t * t;
-                return Maths.Exp(-0.5f * h * h * (1f + t2)) / (1f + t2);
-            }
-
-            float sum = f(0f) + f(L);
-            float s4 = 0f, s2 = 0f;
-            for (int i = 1; i < n; i++)
-            {
-                float ti = i * hstep;
-                if ((i & 1) == 1) s4 += f(ti); else s2 += f(ti);
-            }
-            float integral = hstep / 3f * (sum + 4f * s4 + 2f * s2);
-            return sign * INV_2PI * integral;
+            return (float)OwenValue((Complex)h, (Complex)a).Real;
         }
         /// <summary>
         /// Returns the value of the Owen T function.
@@ -1089,37 +647,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Owen(Complex32 h, Complex32 a)
         {
-            if (float.IsNaN(h.Real) || float.IsNaN(h.Imag) ||
-                float.IsNaN(a.Real) || float.IsNaN(a.Imag))
-                return Complex32.NaN;
-
-            if (a.Real == 0f && a.Imag == 0f) return Complex32.Zero;
-            if (h.Real == 0f && h.Imag == 0f)
-            {
-                return INV_2PI * Maths.Atan(a);
-            }
-
-            int n = 1024;
-            float ds = 1f / n;
-
-            Complex32 F(float s)
-            {
-                Complex32 sa = s * a;
-                Complex32 denom = Complex32.One + sa * sa;
-                Complex32 expo = Maths.Exp(-0.5f * h * h * denom);
-                return a * (expo / denom); // dt = a ds
-            }
-
-            Complex32 sum = F(0f) + F(1f);
-            Complex32 s4 = Complex32.Zero;
-            Complex32 s2 = Complex32.Zero;
-            for (int i = 1; i < n; i++)
-            {
-                float si = i * ds;
-                if ((i & 1) == 1) s4 += F(si); else s2 += F(si);
-            }
-            Complex32 integral = ds / 3f * (sum + 4f * s4 + 2f * s2);
-            return INV_2PI * integral;
+            return (Complex32)OwenValue((Complex)h, (Complex)a);
         }
 
         #endregion
@@ -1132,21 +660,9 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Zeta(float s)
         {
-            if (float.IsNaN(s)) return float.NaN;
-            if (s == 1f) return float.PositiveInfinity;     // simple pole
-
-            // Re(s) > 0: use eta(s)/(1-2^{1-s})
-            if (s > 0f)
-                return ZetaHasse(s);
-
-            // Functional equation for s ≤ 0
-            float twoPowS = Maths.Exp(s * Maths.Log(2f));
-            float piPow = Maths.Exp((s - 1f) * Maths.Log(Maths.Pi));
-            float sinTerm = Maths.Sin(0.5f * Maths.Pi * s);
-            float gamma = Special.Gamma(1f - s);
-
-            float zeta1ms = ZetaHasse(1f - s);          // now 1-s ≥ 1
-            return twoPowS * piPow * sinTerm * gamma * zeta1ms;
+            if (s == 1) return float.PositiveInfinity;
+            if (float.IsPositiveInfinity(s)) return 1;
+            return (float)ZetaValue((Complex)s).Real;
         }
         /// <summary>
         /// Returns the value of the Riemann zeta ζ(s) on the principal branch (complex s).
@@ -1155,260 +671,54 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Zeta(Complex32 s)
         {
-            // explicit pole at s = 1 + 0i
-            if (s.Imag == 0f && s.Real == 1f)
-                return Complex32.NaN;
-
-            if (s.Real > 0f && !(s.Imag == 0f && s.Real == 1f))
-                return ZetaHasse(s);
-
-            // Functional equation
-            Complex32 two = new Complex32(2f, 0f);
-            Complex32 pi = new Complex32(Maths.Pi, 0f);
-
-            Complex32 twoPowS = Maths.Exp(s * Maths.Log(two));
-            Complex32 piPow = Maths.Exp((s - Complex32.One) * Maths.Log(pi));
-            Complex32 sinTerm = Maths.Sin(0.5f * pi * s);
-            Complex32 gamma = Special.Gamma(Complex32.One - s);
-
-            Complex32 zeta1ms = ZetaHasse(Complex32.One - s);
-            return twoPowS * piPow * sinTerm * gamma * zeta1ms;
+            return (Complex32)ZetaValue((Complex)s);
         }
 
-        #region Private methods (helpers)
 
-        // ---------- helpers (Dirichlet eta series, principal branch) ----------
-
-        /// <summary>
-        /// Evaluates the Dirichlet eta function for real inputs via an alternating series.
-        /// </summary>
-        /// <param name="s">Function argument</param>
-        [Obsolete]
-        private static float ZetaEta(float s)
-        {
-            // ζ(s) = η(s) / (1 - 2^{1-s}), valid for s>0, s≠1
-            float denom = 1f - Maths.Exp((1f - s) * Maths.Log(2f));
-            // Handle s≈1 numerically? Here API has exact s; s==1 already excluded.
-
-            const float eps = 1e-16f;
-            const int maxIter = 100000;
-
-            double sum = 0.0; // accumulate in double for a bit more headroom
-            for (int n = 1; n <= maxIter; n++)
-            {
-                double term = 1.0 / Math.Pow(n, s);
-                if ((n & 1) == 0) term = -term; // alternating
-                sum += term;
-                if (Math.Abs(term) < eps) break;
-            }
-            return (float)(sum / denom);
-        }
-
-        /// <summary>
-        /// Evaluates the Dirichlet eta function for complex inputs using an alternating series.
-        /// </summary>
-        /// <param name="s">Function argument</param>
-        [Obsolete]
-        private static Complex32 ZetaEta(Complex32 s)
-        {
-            // ζ(s) = η(s) / (1 - 2^{1-s}), valid for Re(s)>0, s≠1
-            Complex32 two = new Complex32(2f, 0f);
-            Complex32 denom = Complex32.One - Maths.Exp((Complex32.One - s) * Maths.Log(two));
-
-            const float eps = 1e-16f;
-            const int maxIter = 10000000;
-
-            Complex32 sum = Complex32.Zero;
-            for (int n = 1; n <= maxIter; n++)
-            {
-                // term = (-1)^{n-1} / n^s  = (-1)^{n-1} * exp( -s * log n )
-                Complex32 term = Maths.Exp(-s * new Complex32(Maths.Log(n), 0f));
-                if ((n & 1) == 0) term = -term;
-                sum += term;
-                if (Maths.Abs(term) < eps) break;
-            }
-            return sum / denom;
-        }
-
-        /// <summary>
-        /// Computes the Riemann zeta function for real inputs using Hasse's series.
-        /// </summary>
-        /// <param name="s">Function argument</param>
-        private static float ZetaHasse(float s)
-        {
-            // ζ(s) = S(s) / (1 - 2^{1-s}), with S(s) the Hasse inner sum
-            float denom = 1f - Maths.Exp((1f - s) * Maths.Log(2f));
-            // handle near-pole numerically? caller excludes s=1 exactly.
-
-            double S = 0.0;
-            float eps = 1e-16f;
-            int maxK = 512;
-
-            for (int k = 0; k < maxK; k++)
-            {
-                // inner sum: A_k(s) = Σ_{q=0..k} (-1)^q C(k,q) (q+1)^{-s}
-                double Ak = 0.0;
-                double C = 1.0; // C(k,0)
-
-                for (int q = 0; q <= k; q++)
-                {
-                    double term = C * Math.Pow(q + 1.0, -s);
-                    if ((q & 1) == 1) term = -term;
-                    Ak += term;
-
-                    // next binomial C(k,q+1)
-                    C *= (k - q) / (q + 1.0);
-                }
-
-                double Tk = Ak / Math.Pow(2.0, k + 1.0);
-                S += Tk;
-
-                if (Math.Abs(Tk) < eps * (1.0 + Math.Abs(S))) break;
-            }
-            return (float)(S / denom);
-        }
-
-        /// <summary>
-        /// Computes the Riemann zeta function for complex inputs using Hasse's series.
-        /// </summary>
-        /// <param name="s">Function argument</param>
-        private static Complex32 ZetaHasse(Complex32 s)
-        {
-            Complex32 two = new Complex32(2f, 0f);
-            Complex32 denom = Complex32.One - Maths.Exp((Complex32.One - s) * Maths.Log(two));
-
-            Complex32 S = Complex32.Zero;
-            float eps = 1e-16f;
-            int maxK = 512;
-
-            for (int k = 0; k < maxK; k++)
-            {
-                Complex32 Ak = Complex32.Zero;
-                // binomial C(k,q) iteratively
-                Complex32 C = Complex32.One; // real-positive actually, but keep as complex-friendly
-                for (int q = 0; q <= k; q++)
-                {
-                    // (q+1)^{-s} = exp( -s * log(q+1) )
-                    Complex32 pow = Maths.Exp(-s * new Complex32(Maths.Log(q + 1), 0f));
-                    Complex32 term = C * pow;
-                    if ((q & 1) == 1) term = -term;
-                    Ak += term;
-
-                    // C(k,q+1) = C(k,q) * (k - q)/(q + 1)
-                    float ratio = (q < k) ? (float)(k - q) / (q + 1f) : 0f;
-                    C *= new Complex32(ratio, 0f);
-                }
-
-                Complex32 Tk = Ak / Maths.Exp(new Complex32((k + 1f) * Maths.Log(2f), 0f));
-                S += Tk;
-
-                if (Maths.Abs(Tk) < eps * (1f + Maths.Abs(S))) break;
-            }
-            return S / denom;
-        }
 
         #endregion
 
-        #endregion
+
 
         #region Gamma functions
 
         /// <summary>
-        /// Returns the value of the Euler Gamma function: Г(z).
+        /// Returns the value of the Euler Gamma function: Gamma(z).
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static float Gamma(float x)
         {
-            if (float.IsNaN(x)) return float.NaN;
-
-            // Poles on the real axis
-            if (x <= 0f && x == Maths.Round(x)) // integer check
-            {
-                int xi = (int)Maths.Round(x);
-                if (xi <= 0) return float.NaN;
-            }
-
-            // Reflection for better accuracy and negative non-integers
-            if (x < 0.5f)
-            {
-                float sinpix = Maths.Sin(Maths.Pi * x);
-                if (sinpix == 0f) return float.NaN; // pole
-                return Maths.Pi / (sinpix * Gamma(1f - x));
-            }
-
-            return (float)GammaLanczos((double)x);
+            return (float)GammaValue((double)x);
         }
         /// <summary>
-        /// Returns the value of the Euler Gamma function: Г(z).
+        /// Returns the value of the Euler Gamma function: Gamma(z).
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static Complex32 Gamma(Complex32 x)
         {
-            // Detect real negative integer poles exactly
-            if (x.Imag == 0f)
-            {
-                float xr = x.Real;
-                if (xr <= 0f && xr == Maths.Round(xr)) return Complex32.NaN;
-            }
-
-            if (x.Real < 0.5f)
-            {
-                Complex32 sinpiz = Maths.Sin(new Complex32(Maths.Pi, 0f) * x);
-                if (Maths.Abs(sinpiz) == 0f) return Complex32.NaN;
-                return new Complex32(Maths.Pi, 0f) / (sinpiz * Gamma(Complex32.One - x));
-            }
-
-            return GammaLanczos(x);
+            return (Complex32)GammaValue((Complex)x);
         }
 
         /// <summary>
-        /// Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
+        /// Returns log(abs(Gamma(x))) for real arguments. Gamma poles return NaN.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public static float LogGamma(float x)
         {
-            if (float.IsNaN(x)) return float.NaN;
-
-            // Poles on the real axis
-            if (x <= 0f && x == Maths.Round(x)) return float.NaN;
-
-            if (x < 0.5f)
-            {
-                // log|Γ(x)| = log(π) - log|sin(πx)| - log|Γ(1-x)|
-                float sinpix = Maths.Sin(Maths.Pi * x);
-                if (sinpix == 0f) return float.NaN;
-                return Maths.Log(Maths.Pi) - Maths.Log(Maths.Abs(sinpix)) - LogGamma(1f - x);
-            }
-
-            return (float)LogGammaLanczos((double)x);
+            return (float)GammaLog((double)x);
         }
         /// <summary>
-        /// Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
+        /// Returns analytic log-gamma with its cut on the negative real axis.
+        /// Its imaginary part is not reduced modulo 2*pi; the upper side is used on the cut.
         /// </summary>
         /// <param name="z">Value</param>
         /// <returns>Value</returns>
         public static Complex32 LogGamma(Complex32 z)
         {
-            // Real negative integers: simple poles
-            if (z.Imag == 0f)
-            {
-                float xr = z.Real;
-                if (xr <= 0f && xr == Maths.Round(xr))
-                    return Complex32.NaN;
-            }
-
-            if (z.Real < 0.5f)
-            {
-                // log Γ(z) = log π − log sin(πz) − log Γ(1−z)  (principal branches)
-                Complex32 sinpiz = Maths.Sin(new Complex32(Maths.Pi, 0f) * z);
-                if (Maths.Abs(sinpiz) == 0f) return Complex32.NaN;
-                return Maths.Log(new Complex32(Maths.Pi, 0f)) - Maths.Log(sinpiz) - LogGamma(Complex32.One - z);
-            }
-
-            return LogGammaLanczos(z);
+            return (Complex32)GammaLog((Complex)z);
         }
 
         /// <summary>
@@ -1418,41 +728,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float DiGamma(float x)
         {
-            if (float.IsNaN(x)) return float.NaN;
-
-            // Real poles at non-positive integers
-            if (x <= 0f && x == Maths.Round(x)) return float.NaN;
-
-            // Reflection to avoid small/negative arguments
-            if (x < 0.5f)
-            {
-                float pix = Maths.Pi * x;
-                float sin = Maths.Sin(pix);
-                if (sin == 0f) return float.NaN;             // pole
-                                                             // ψ(x) = ψ(1-x) - π cot(πx)
-                return DiGamma(1f - x) - Maths.Pi * (Maths.Cos(pix) / sin);
-            }
-
-            // Shift up to a safe region for the asymptotic
-            float acc = 0f;
-            float z = x;
-            while (z < 8f)
-            {
-                acc -= 1f / z;
-                z += 1f;
-            }
-
-            // Bernoulli asymptotic: ψ(z) ~ ln z - 1/(2z) - 1/(12 z^2) + 1/(120 z^4) - 1/(252 z^6) + 1/(240 z^8) - 1/(132 z^10)
-            float inv = 1f / z;
-            float inv2 = inv * inv;
-            float res = Maths.Log(z) - 0.5f * inv
-                        - (1f / 12f) * inv2
-                        + (1f / 120f) * (inv2 * inv2)
-                        - (1f / 252f) * (inv2 * inv2 * inv2)
-                        + (1f / 240f) * (inv2 * inv2 * inv2 * inv2)
-                        - (1f / 132f) * (inv2 * inv2 * inv2 * inv2 * inv2);
-
-            return res + acc;
+            if (float.IsPositiveInfinity(x)) return float.PositiveInfinity;
+            return (float)Polygamma((Complex)x, false).Real;
         }
         /// <summary>
         /// Returns the value of the Digamma function: ψ(z).
@@ -1461,47 +738,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 DiGamma(Complex32 x)
         {
-            // Real negative integers: poles
-            if (x.Imag == 0f)
-            {
-                float xr = x.Real;
-                if (xr <= 0f && xr == Maths.Round(xr))
-                    return Complex32.NaN;
-            }
-
-            Complex32 z = x;
-
-            // Reflection for better behavior near the poles/left half-plane
-            if (z.Real < 0.5f)
-            {
-                Complex32 piz = new Complex32(Maths.Pi, 0f) * z;
-                Complex32 sin = Maths.Sin(piz);
-                if (Maths.Abs(sin) == 0f) return Complex32.NaN;
-                // ψ(z) = ψ(1 - z) - π cot(π z) = ψ(1 - z) - π * cos(π z)/sin(π z)
-                Complex32 cot = Maths.Cos(piz) / sin;
-                return DiGamma(Complex32.One - z) - new Complex32(Maths.Pi, 0f) * cot;
-            }
-
-            // Shift up to Re(z) ≥ 8
-            Complex32 acc = Complex32.Zero;
-            while (z.Real < 8f)
-            {
-                acc -= Complex32.One / z;
-                z += Complex32.One;
-            }
-
-            // Bernoulli asymptotic in the complex plane
-            Complex32 inv = Complex32.One / z;
-            Complex32 inv2 = inv * inv;
-
-            Complex32 res = Maths.Log(z) - 0.5f * inv
-                            - (1f / 12f) * inv2
-                            + (1f / 120f) * (inv2 * inv2)
-                            - (1f / 252f) * (inv2 * inv2 * inv2)
-                            + (1f / 240f) * (inv2 * inv2 * inv2 * inv2)
-                            - (1f / 132f) * (inv2 * inv2 * inv2 * inv2 * inv2);
-
-            return res + acc;
+            return (Complex32)Polygamma((Complex)x, false);
         }
 
         /// <summary>
@@ -1511,48 +748,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float TriGamma(float x)
         {
-            if (float.IsNaN(x)) return float.NaN;
-
-            // Real poles at non-positive integers
-            if (x <= 0f && x == Maths.Round(x)) return float.NaN;
-
-            // Reflection for better behavior in left half-plane
-            if (x < 0.5f)
-            {
-                float pix = Maths.Pi * x;
-                float sin = Maths.Sin(pix);
-                if (sin == 0f) return float.NaN;
-                float csc2 = 1f / (sin * sin);
-                return (Maths.Pi * Maths.Pi) * csc2 - TriGamma(1f - x);
-            }
-
-            // Shift up to a safe region for asymptotics
-            float z = x;
-            float acc = 0f;
-            while (z < 8f)
-            {
-                acc += 1f / (z * z);
-                z += 1f;
-            }
-
-            // Bernoulli asymptotic
-            float inv = 1f / z;
-            float inv2 = inv * inv;
-            float inv3 = inv2 * inv;
-            float inv5 = inv3 * inv2;
-            float inv7 = inv5 * inv2;
-            float inv9 = inv7 * inv2;
-            float inv11 = inv9 * inv2;
-
-            float res = inv
-                       + 0.5f * inv2
-                       + (1f / 6f) * inv3
-                       - (1f / 30f) * inv5
-                       + (1f / 42f) * inv7
-                       - (1f / 30f) * inv9
-                       + (5f / 66f) * inv11;
-
-            return res + acc;
+            if (float.IsPositiveInfinity(x)) return 0;
+            return (float)Polygamma((Complex)x, true).Real;
         }
         /// <summary>
         /// Returns the value of the Trigamma function: ψ1(z).
@@ -1561,53 +758,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 TriGamma(Complex32 x)
         {
-            // Detect real negative integer poles exactly
-            if (x.Imag == 0f)
-            {
-                float xr = x.Real;
-                if (xr <= 0f && xr == Maths.Round(xr))
-                    return Complex32.NaN;
-            }
-
-            Complex32 z = x;
-
-            // Reflection
-            if (z.Real < 0.5f)
-            {
-                Complex32 piz = new Complex32(Maths.Pi, 0f) * z;
-                Complex32 sin = Maths.Sin(piz);
-                if (Maths.Abs(sin) == 0f) return Complex32.NaN;
-
-                Complex32 csc2 = Complex32.One / (sin * sin);
-                return new Complex32(Maths.Pi * Maths.Pi, 0f) * csc2 - TriGamma(Complex32.One - z);
-            }
-
-            // Shift up to Re(z) ≥ 8
-            Complex32 acc = Complex32.Zero;
-            while (z.Real < 8f)
-            {
-                acc += Complex32.One / (z * z);
-                z += Complex32.One;
-            }
-
-            // Bernoulli asymptotic
-            Complex32 inv = Complex32.One / z;
-            Complex32 inv2 = inv * inv;
-            Complex32 inv3 = inv2 * inv;
-            Complex32 inv5 = inv3 * inv2;
-            Complex32 inv7 = inv5 * inv2;
-            Complex32 inv9 = inv7 * inv2;
-            Complex32 inv11 = inv9 * inv2;
-
-            Complex32 res = inv
-                           + 0.5f * inv2
-                           + (1f / 6f) * inv3
-                           - (1f / 30f) * inv5
-                           + (1f / 42f) * inv7
-                           - (1f / 30f) * inv9
-                           + (5f / 66f) * inv11;
-
-            return res + acc;
+            return (Complex32)Polygamma((Complex)x, true);
         }
 
         /// <summary>
@@ -1618,27 +769,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float GammaQ(float s, float x)
         {
-            if (float.IsNaN(s) || float.IsNaN(x)) return float.NaN;
-            if (s <= 0f && s == Maths.Round(s)) return float.NaN;    // poles of Γ(s)
-            if (x < 0f) return float.NaN;
-
-            if (x == 0f) return 1f;          // Q(s,0)=1 (for s>0)
-            if (float.IsPositiveInfinity(x)) return 0f;
-
-            // choose method
-            if (x < s + 1f)
-            {
-                // series for P(s,x), then Q = 1 - P
-                float P = LowerRegGammaSeries(s, x);
-                return 1f - P;
-            }
-            else
-            {
-                // continued fraction for Q(s,x)
-                float logPref = s * Maths.Log(x) - x - Special.LogGamma(s); // log( e^{-x} x^s / Γ(s) )
-                float h = UpperGammaCF(s, x);                 // CF value
-                return Maths.Exp(logPref) * h;
-            }
+            return (float)IncompleteGamma((double)s, (double)x, true, true);
         }
         /// <summary>
         /// Returns the value of the incomplete upper Gamma function: Q(s, x) = Γ(s, x) / Γ(s).
@@ -1648,24 +779,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 GammaQ(Complex32 s, Complex32 x)
         {
-            // Poles at real non-positive integers s
-            if (x.Real == 0f && x.Imag == 0f) return Complex32.One; // Q(s,0)=1 (analytic continuation)
-            if (float.IsNaN(s.Real) || float.IsNaN(s.Imag) ||
-                float.IsNaN(x.Real) || float.IsNaN(x.Imag))
-                return Complex32.NaN;
-
-            // heuristic split like real case
-            if (Maths.Abs(x) < Maths.Abs(s) + 1f)
-            {
-                Complex32 P = LowerRegGammaSeries(s, x);
-                return Complex32.One - P;
-            }
-            else
-            {
-                Complex32 logPref = s * Maths.Log(x) - x - Special.LogGamma(s);
-                Complex32 h = UpperGammaCF(s, x);
-                return Maths.Exp(logPref) * h;
-            }
+            return (Complex32)IncompleteGamma((Complex)s, (Complex)x, true, true);
         }
 
         /// <summary>
@@ -1676,28 +790,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float GammaP(float s, float x)
         {
-            if (float.IsNaN(s) || float.IsNaN(x)) return float.NaN;
-            if (x < 0f) return float.NaN;
-            // Poles of Γ(s) on the real line:
-            if (s <= 0f && s == Maths.Round(s)) return float.NaN;
-
-            if (x == 0f) return 0f;                        // P(s,0) = 0  (s>0)
-            if (float.IsPositiveInfinity(x)) return 1f;    // P(s,∞) = 1
-
-            // Choose method:
-            if (x < s + 1f)
-            {
-                // Direct series for P(s,x)
-                return LowerRegGammaSeries(s, x);
-            }
-            else
-            {
-                // Continued fraction for Q(s,x), then P = 1 - Q
-                float logPref = s * Maths.Log(x) - x - Special.LogGamma(s); // log(e^{-x} x^s / Γ(s))
-                float cf = UpperGammaCF(s, x);                // CF approximates Γ(s,x)/(e^{-x} x^s)
-                float Q = Maths.Exp(logPref) * cf;
-                return 1f - Q;
-            }
+            return (float)IncompleteGamma((double)s, (double)x, false, true);
         }
         /// <summary>
         /// Returns the value of an incomplete lower Gamma function: P(s, x) = γ(s, x) / Γ(s).
@@ -1707,23 +800,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 GammaP(Complex32 s, Complex32 x)
         {
-            // Poles of Γ(s) at real non-positive integers:
-            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero; // P(s,0)=0 (analytic continuation)
-            if ((s.Imag == 0f) && s.Real <= 0f && s.Real == Maths.Round(s.Real))
-                return Complex32.NaN;
-
-            // Heuristic split mirroring the real case
-            if (Maths.Abs(x) < Maths.Abs(s) + 1f)
-            {
-                return LowerRegGammaSeries(s, x);
-            }
-            else
-            {
-                Complex32 logPref = s * Maths.Log(x) - x - Special.LogGamma(s);
-                Complex32 cf = UpperGammaCF(s, x);
-                Complex32 Q = Maths.Exp(logPref) * cf;
-                return Complex32.One - Q;
-            }
+            return (Complex32)IncompleteGamma((Complex)s, (Complex)x, false, true);
         }
 
         /// <summary>
@@ -1734,29 +811,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float GammaIncomplete(float s, float x)
         {
-            if (float.IsNaN(s) || float.IsNaN(x)) return float.NaN;
-            if (x < 0f) return float.NaN;
-
-            // Poles of Γ(s) on the real axis (we restrict to s > 0 in this real overload)
-            if (s <= 0f && s == Maths.Round(s)) return float.NaN;
-
-            if (x == 0f) return 0f;                       // γ(s,0) = 0  (s>0)
-            if (float.IsPositiveInfinity(x)) return Special.Gamma(s); // γ(s,∞) = Γ(s)
-
-            if (x < s + 1f)
-            {
-                // Series for γ(s,x) via P(s,x) series, then multiply by Γ(s)
-                float P = LowerRegGammaSeries(s, x);    // P(s,x)
-                return Special.Gamma(s) * P;                          // γ = Γ * P
-            }
-            else
-            {
-                // γ(s,x) = Γ(s) − Γ(s,x),  Γ(s,x) ≈ e^{−x} x^s * CF
-                float logPref = s * Maths.Log(x) - x;                  // log(e^{−x} x^s)
-                float cf = UpperGammaCF(s, x);           // CF ≈ Γ(s,x)/(e^{−x} x^s)
-                float upper = Maths.Exp(logPref) * cf;
-                return Special.Gamma(s) - upper;
-            }
+            return (float)IncompleteGamma((double)s, (double)x, false, false);
         }
         /// <summary>
         /// Returns the value of an incomplete Gamma function: γ(s, x).
@@ -1766,35 +821,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 GammaIncomplete(Complex32 s, Complex32 x)
         {
-            if ((float.IsNaN(s.Real) || float.IsNaN(s.Imag)) ||
-                (float.IsNaN(x.Real) || float.IsNaN(x.Imag)))
-                return Complex32.NaN;
-
-            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero; // γ(s,0) = 0
-
-            // Poles of Γ(s) on the principal branch (real negative integers)
-            if (s.Imag == 0f)
-            {
-                float sr = s.Real;
-                if (sr <= 0f && sr == Maths.Round(sr))
-                    return Complex32.NaN;
-            }
-
-            // Heuristic split mirroring the real case
-            if (Maths.Abs(x) < Maths.Abs(s) + 1f)
-            {
-                // γ = Γ * P, with P via series
-                Complex32 P = LowerRegGammaSeries(s, x);
-                return Special.Gamma(s) * P;
-            }
-            else
-            {
-                // γ = Γ − Γ(s,x), with Γ(s,x) ≈ e^{−x} x^s * CF
-                Complex32 logPref = s * Maths.Log(x) - x;         // log(e^{−x} x^s)
-                Complex32 cf = UpperGammaCF(s, x);
-                Complex32 upper = Maths.Exp(logPref) * cf;
-                return Special.Gamma(s) - upper;
-            }
+            return (Complex32)IncompleteGamma((Complex)s, (Complex)x, false, false);
         }
 
         /// <summary>
@@ -1805,8 +832,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float GammaIncompleteComplemented(float s, float x)
         {
-            // Γ(s,x) = Γ(s) - γ(s,x)
-            return Special.Gamma(s) - Special.GammaIncomplete(s, x);
+            return (float)IncompleteGamma((double)s, (double)x, true, false);
         }
         /// <summary>
         /// Returns the value of an incomplete Gamma function: γ(s, x) (complemented).
@@ -1816,276 +842,33 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 GammaIncompleteComplemented(Complex32 s, Complex32 x)
         {
-            return Special.Gamma(s) - Special.GammaIncomplete(s, x);
+            return (Complex32)IncompleteGamma((Complex)s, (Complex)x, true, false);
         }
 
-        #region Private methods (helpers)
 
-        // ---------------------- helpers ----------------------
-
-        private const float G = 7f;
-        private const float SQRT_TWO_PI = 2.5066282746310005024f; // √(2π)
-
-        // Wikipedia/Numerical Recipes coefficients (cast to float)
-        private static readonly float[] LANCZOS = new float[]
-        {
-            0.99999999999980993f,
-            676.5203681218851f,
-            -1259.1392167224028f,
-            771.32342877765313f,
-            -176.61502916214059f,
-            12.507343278686905f,
-            -0.13857109526572012f,
-            0.0000099843695780195716f,
-            0.00000015056327351493116f
-        };
-
-        /// <summary>
-        /// Lanczos approximation (real) valid for Re(z) > 0.5. Computes principal branch.
-        /// </summary>
-        private static double GammaLanczos(double x)
-        {
-            // Γ(x) ≈ √(2π) * (t)^{x-0.5} * e^{-t} * A(x), where t = x + g - 0.5, A(x)=a0 + Σ a_k/(x-1+k)
-            double z = x - 1.0;
-            double sum = LANCZOS[0];
-            for (int k = 1; k < LANCZOS.Length; k++)
-                sum += LANCZOS[k] / (z + k);
-
-            double t = z + G + 0.5;
-            // Use log form to reduce overflow/underflow
-            double logGamma = Math.Log(SQRT_TWO_PI * sum) + (z + 0.5) * Math.Log(t) - t;
-            return Math.Exp(logGamma);
-        }
-
-        /// <summary>
-        /// Lanczos approximation (complex) valid for Re(z) > 0.5. Computes principal branch.
-        /// </summary>
-        private static Complex32 GammaLanczos(Complex32 x)
-        {
-            Complex32 z = x - Complex32.One;
-            Complex32 sum = new Complex32(LANCZOS[0], 0f);
-            for (int k = 1; k < LANCZOS.Length; k++)
-                sum += LANCZOS[k] / (z + new Complex32(k, 0f));
-
-            Complex32 t = z + new Complex32(G + 0.5f, 0f);
-            Complex32 logPart = Maths.Log(new Complex32(SQRT_TWO_PI, 0f) * sum)
-                              + (z + new Complex32(0.5f, 0f)) * Maths.Log(t)
-                              - t;
-            return Maths.Exp(logPart);
-        }
-
-        /// <summary>
-        /// Lanczos log-gamma for real x with Re(x) ≥ 0.5 (principal branch).
-        /// </summary>
-        private static double LogGammaLanczos(double x)
-        {
-            double z = x - 1.0;
-            double sum = LANCZOS[0];
-            for (int k = 1; k < LANCZOS.Length; k++)
-                sum += LANCZOS[k] / (z + k);
-
-            double t = z + G + 0.5;
-            // log Γ(x) ≈ log(√(2π)*sum) + (z+0.5) log t − t
-            return Math.Log(SQRT_TWO_PI * sum) + (z + 0.5) * Math.Log(t) - t;
-        }
-
-        /// <summary>
-        /// Lanczos log-gamma for complex z with Re(z) ≥ 0.5 (principal branch).
-        /// </summary>
-        private static Complex32 LogGammaLanczos(Complex32 x)
-        {
-            Complex32 z = x - Complex32.One;
-            Complex32 sum = new Complex32(LANCZOS[0], 0f);
-            for (int k = 1; k < LANCZOS.Length; k++)
-                sum += LANCZOS[k] / (z + new Complex32(k, 0f));
-
-            Complex32 t = z + new Complex32(G + 0.5f, 0f);
-            // log Γ(x) ≈ log(√(2π)*sum) + (z+0.5) log t − t
-            return Maths.Log(new Complex32(SQRT_TWO_PI, 0f) * sum)
-                 + (z + new Complex32(0.5f, 0f)) * Maths.Log(t)
-                 - t;
-        }
-
-        // ---------------- helpers: series for P(s,x) ----------------
-        // P(s,x) = e^{-x} x^{s} * Σ_{n>=0} [ x^n / (s(s+1)...(s+n)) ],
-        // with t0 = 1/s and t_{n+1} = t_n * x/(s+n+1).
-        /// <summary>
-        /// Series expansion for the lower regularized incomplete gamma function.
-        /// </summary>
-        /// <param name="s">Shape parameter</param>
-        /// <param name="x">Upper limit of integration</param>
-        private static float LowerRegGammaSeries(float s, float x)
-        {
-            float term = 1f / s;    // n=0
-            float sum = term;
-            float eps = 1e-16f;
-            int maxIter = 200;
-
-            for (int n = 0; n < maxIter; n++)
-            {
-                term *= x / (s + n + 1f);
-                sum += term;
-                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
-            }
-            // e^{-x} x^{s}
-            float pref = Maths.Exp(-x + s * Maths.Log(x));
-            return pref * sum;
-        }
-
-        /// <summary>
-        /// Series expansion for the lower regularized incomplete gamma function with complex parameters.
-        /// </summary>
-        /// <param name="s">Shape parameter</param>
-        /// <param name="x">Upper limit of integration</param>
-        private static Complex32 LowerRegGammaSeries(Complex32 s, Complex32 x)
-        {
-            Complex32 term = Complex32.One / s; // n=0
-            Complex32 sum = term;
-            float eps = 1e-16f;
-            int maxIter = 200;
-
-            for (int n = 0; n < maxIter; n++)
-            {
-                term *= x / (s + (n + 1f));
-                sum += term;
-                if (Maths.Abs(term) < eps * (1f + Maths.Abs(sum))) break;
-            }
-            Complex32 pref = Maths.Exp(-x + s * Maths.Log(x));
-            return pref * sum;
-        }
-
-        // --------------- helpers: continued fraction for Q(s,x) ---------------
-        // Lentz’s algorithm for the continued fraction representation of Γ(s,x):
-        // Q(s,x) = e^{-x} x^{s} / Γ(s) * h, where
-        //   b0 = x + 1 - s,  h = 1/b0,
-        //   for i=1..: a_i = i*(s - i),  b_i = b_{i-1} + 2,
-        //   update via Lentz with c,d and delta = c*d.
-        /// <summary>
-        /// Continued fraction evaluation for the upper incomplete gamma function.
-        /// </summary>
-        /// <param name="s">Shape parameter</param>
-        /// <param name="x">Lower limit of integration</param>
-        private static float UpperGammaCF(float s, float x)
-        {
-            const float tiny = 1e-30f;
-
-            float b = x + 1f - s;
-            float c = 1f / tiny;
-            float d = 1f / b;
-            float h = d;
-
-            float eps = 1e-16f;
-            int maxIter = 200;
-
-            for (int i = 1; i <= maxIter; i++)
-            {
-                float a = i * (s - i);      // a_i
-                                            // d = 1 / (b + a*d),  c = b + a/c
-                d = 1f / (b + a * d);
-                c = b + a / c;
-                float delta = c * d;
-                h *= delta;
-
-                b += 2f;
-                if (Maths.Abs(delta - 1f) < eps) break;
-            }
-            return h;
-        }
-
-        /// <summary>
-        /// Continued fraction evaluation for the upper incomplete gamma function with complex parameters.
-        /// </summary>
-        /// <param name="s">Shape parameter</param>
-        /// <param name="x">Lower limit of integration</param>
-        private static Complex32 UpperGammaCF(Complex32 s, Complex32 x)
-        {
-            const float tiny = 1e-30f;
-
-            Complex32 b = x + Complex32.One - s;
-            Complex32 c = new Complex32(1f / tiny, 0f);
-            Complex32 d = Complex32.One / b;
-            Complex32 h = d;
-
-            float eps = 1e-16f;
-            int maxIter = 200;
-
-            for (int i = 1; i <= maxIter; i++)
-            {
-                Complex32 ii = new Complex32(i, 0f);
-                Complex32 a = ii * (s - ii); // a_i
-
-                d = Complex32.One / (b + a * d);
-                c = b + a / c;
-                Complex32 delta = c * d;
-                h *= delta;
-
-                b += 2f; // b increases by 2 each step
-                if (Maths.Abs(delta - Complex32.One) < eps) break;
-            }
-            return h;
-        }
-
-        #endregion
 
         #endregion
 
         #region Generalized error function
         /// <summary>
-        /// Returns the value of the generalized error function.
+        /// Returns n!/sqrt(pi) times the integral of exp(-t^n) from zero to x.
         /// </summary>
-        /// <param name="x">Value (0, +inf)</param>
+        /// <param name="x">Real integration endpoint</param>
         /// <param name="n">Order [0, +inf)</param>
         /// <returns>Value</returns>
         public static float Gerf(float x, int n)
         {
-            // Generalized error functions:
-            if (n < 0)
-                return float.NaN; // singular values
-
-            else if (n == 0)
-                return x / Maths.E / SQRT_PI; // E0(x)
-
-            else if (n == 1)
-                return (1 - Maths.Exp(-x)) / SQRT_PI; // E1(x)
-
-            else if (n == 2)
-                return Erf(x); // E2(x) = erf(x)
-
-            // En(x) for all x > 0
-            if (x > 0)
-            {
-                float p = 1.0f / n;
-                float w = 1.0f / SQRT_PI;
-                float v = Gamma(p) - GammaIncompleteComplemented(p, Maths.Pow(x, n));
-                return w * Gamma(n) * v;
-            }
-            return float.NaN;
+            return (float)GeneralizedErf((Complex)x, n).Real;
         }
         /// <summary>
-        /// Returns the value of the generalized error function.
+        /// Returns the entire continuation of n!/sqrt(pi) times the integral of exp(-t^n).
         /// </summary>
-        /// <param name="x">Value (0, +inf)</param>
+        /// <param name="x">Complex integration endpoint</param>
         /// <param name="n">Order [0, +inf)</param>
         /// <returns>Value</returns>
         public static Complex32 Gerf(Complex32 x, int n)
         {
-            if (n < 0)
-                return Complex32.NaN; // singular by your convention
-
-            // E0, E1, E2
-            if (n == 0)
-                return x / (Maths.E * SQRT_PI);
-            if (n == 1)
-                return (Complex32.One - Maths.Exp(-x)) / SQRT_PI;
-            if (n == 2)
-                return Erf(x); // your complex erf
-
-            // General case: En(x) = Γ(n)/√π * γ(1/n, x^n)
-            Complex32 xn = Maths.Pow(x, n);                       // x^n, integer power
-            Complex32 p = new Complex32(1f / n, 0f);          // 1/n
-            Complex32 lower = GammaIncomplete(p, xn);          // γ(1/n, x^n)
-            Complex32 gammaN = Gamma(new Complex32(n, 0f));    // Γ(n) = (n-1)!
-            return gammaN * lower / SQRT_PI;
+            return (Complex32)GeneralizedErf((Complex)x, n);
         }
         /// <summary>
         /// Returns the value of the generalized error function.
@@ -2112,7 +895,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float LogFactorial(float n)
         {
-            return Special.LogGamma(n + 1.0f);
+            return (float)GammaLog((double)n + 1);
         }
         /// <summary>
         /// Returns the natural logarithm of the factorial of a number log(n!).
@@ -2121,7 +904,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 LogFactorial(Complex32 z)
         {
-            return Special.LogGamma(z + Complex32.One);
+            return (Complex32)GammaLog((Complex)z + 1);
         }
         /// <summary>
         /// Returns the factorial of a number.
@@ -2130,17 +913,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static double Factorial(float n)
         {
-            // check it:
-            if (n >= 0 && n == Maths.Round(n))
-            {
-                // get it from memory
-                if (n <= 170)
-                {
-                    return Special.A000142[(int)n];
-                }
-                return float.NaN;
-            }
-            return Special.Gamma(n + 1);
+            if (n >= 0 && n <= 170 && n == Math.Floor(n)) return A000142[(int)n];
+            return GammaValue((double)n + 1);
         }
         /// <summary>
         /// Returns the factorial of a number.
@@ -2149,7 +923,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Factorial(Complex32 z)
         {
-            return Special.Gamma(z + Complex32.One);
+            return (Complex32)GammaValue((Complex)z + 1);
         }
         /// <summary>
         /// Returns the decreasing factorial of a number.
@@ -2159,7 +933,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static double FactorialDown(float n, float k)
         {
-            return Special.Factorial(n) / Special.Factorial(n - k);
+            return FactorialProduct((Complex)n, (Complex)k, false).Real;
         }
         /// <summary>
         /// Returns the decreasing factorial of a number.
@@ -2169,58 +943,50 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 FactorialDown(Complex32 z, Complex32 k)
         {
-            return Special.Gamma(z + Complex32.One) / Special.Gamma(z + Complex32.One - k);
+            return (Complex32)FactorialProduct((Complex)z, (Complex)k, false);
         }
         /// <summary>
-        /// Returns the increasing factorial of a number (Pohhammer symbol).
+        /// Returns the increasing factorial of a number (Pochhammer symbol).
         /// </summary>
         /// <param name="n">Value</param>
         /// <param name="k">Value</param>
         /// <returns>Value</returns>
         public static float FactorialUp(float n, float k)
         {
-            if (n == 0)
-            {
-                return 1.0f;
-            }
-            return Special.Gamma(n + k) / Special.Gamma(n);
+            return (float)FactorialProduct((Complex)n, (Complex)k, true).Real;
         }
         /// <summary>
-        /// Returns the increasing factorial of a number (Pohhammer symbol).
+        /// Returns the increasing factorial of a number (Pochhammer symbol).
         /// </summary>
         /// <param name="z">Value</param>
         /// <param name="k">Value</param>
         /// <returns>Value</returns>
         public static Complex32 FactorialUp(Complex32 z, Complex32 k)
         {
-            return Special.Gamma(z + k) / Special.Gamma(z);
+            return (Complex32)FactorialProduct((Complex)z, (Complex)k, true);
         }
         #endregion
 
         #region Binomial function
         /// <summary>
-        /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
+        /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! for k > 0.
         /// </summary>
         /// <param name="n">Value</param>
         /// <param name="k">Value</param>
         /// <returns>Value</returns>
         public static double Binomial(float n, float k)
         {
-            if (k < 0)
-            {
-                return 0;
-            }
-            return Special.Factorial(n) / Special.Factorial(k) / Special.Factorial(n - k);
+            return BinomialValue((Complex)n, (Complex)k).Real;
         }
         /// <summary>
-        /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
+        /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! for k > 0.
         /// </summary>
         /// <param name="n">Value</param>
         /// <param name="k">Value</param>
         /// <returns>Value</returns>
         public static Complex32 Binomial(Complex32 n, Complex32 k)
         {
-            return Special.Factorial(n) / Special.Factorial(k) / Special.Factorial(n - k);
+            return (Complex32)BinomialValue((Complex)n, (Complex)k);
         }
         /// <summary>
         /// Returns the natural logarithm of binomial coefficients: log(C(n, k)) = log(n!) - log(k!) - log(n-k!).
@@ -2230,7 +996,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float LogBinomial(float n, float k)
         {
-            return Special.LogFactorial(n) - Special.LogFactorial(k) - Special.LogFactorial(n - k);
+            if (k < 0 || (n >= 0 && n == Math.Floor(n) && k > n)) return float.NegativeInfinity;
+            return (float)(GammaLog((double)n + 1) - GammaLog((double)k + 1) - GammaLog((double)n - k + 1));
         }
         /// <summary>
         /// Returns the natural logarithm of binomial coefficients: log(C(n, k)) = log(n!) - log(k!) - log(n-k!).
@@ -2240,7 +1007,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 LogBinomial(Complex32 n, Complex32 k)
         {
-            return Special.LogFactorial(n) - Special.LogFactorial(k) - Special.LogFactorial(n - k);
+            return (Complex32)(GammaLog((Complex)n + 1) - GammaLog((Complex)k + 1) - GammaLog((Complex)n - (Complex)k + 1));
         }
         #endregion
 
@@ -2253,40 +1020,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Erf(float x, bool inverse)
         {
-            if (x == 0f) return 0f;
-
-            if (!inverse)
-            {
-                // erf(x)
-                return (float)ErfApprox(x);
-            }
-            else
-            {
-                // inverse error function: y = erf^{-1}(x)
-                double y = x;
-
-                if (double.IsNaN(y)) return float.NaN;
-                if (y >= 1.0) return float.PositiveInfinity;
-                if (y <= -1.0) return float.NegativeInfinity;
-                if (y == 0.0) return 0f;
-
-                const double a = 0.147;
-                double ya = Math.Abs(y);
-                double u = Math.Log(1.0 - ya * ya);
-                double s = 2.0 / (Math.PI * a) + 0.5 * u;
-                double w = Maths.CopySign((float)Math.Sqrt(Math.Max(0.0f, Math.Sqrt(s * s - u / a) - s)), (float)y);
-
-                for (int it = 0; it < 2; it++)
-                {
-                    double f = ErfApprox(w) - y;
-                    double fp = 2.0 / Math.Sqrt(Math.PI) * Math.Exp(-w * w);
-                    double fpp = -2.0 * w * fp;
-                    double denom = 2.0 * fp * fp - f * fpp;
-                    w -= (denom == 0.0) ? (f / fp) : (2.0 * f * fp / denom);
-                }
-
-                return (float)w;
-            }
+            return (float)(inverse ? InverseErf((double)x) : ErfValue((double)x));
         }
         /// <summary>
         /// Returns the value of the Laplace integral (error function).
@@ -2296,52 +1030,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Erf(Complex32 x, bool inverse)
         {
-            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
-
-            Complex z = new Complex(x.Real, x.Imag);
-
-            if (!inverse)
-            {
-                // erf(z)
-                return ErfApprox(z);
-            }
-            else
-            {
-                // inverse error function: y = erf^{-1}(x)
-                if (x.Imag == 0f) return new Complex32(Erf(x.Real, true), 0f);
-
-                const double a = 0.147;
-                Complex u = Complex.Log(Complex.One - z * z);
-                Complex s = 2.0 / (Math.PI * a) + 0.5 * u;
-                Complex rad = Complex.Sqrt(s * s - u / a) - s;
-                Complex W = Complex.Sqrt(rad);
-
-                if (W == Complex.Zero)
-                {
-                    W = z * (Math.Sqrt(Math.PI) / 2.0);
-                }
-                else
-                {
-                    if (z.Real < 0) W = -W;
-                }
-
-                // f(W)=erf(W)-Z
-                for (int it = 0; it < 3; it++)
-                {
-                    Complex f = ErfApprox(W) - z;
-                    Complex fp = 2.0 / Math.Sqrt(Math.PI) * Complex.Exp(-(W * W));      // f'
-                    Complex fpp = -2.0 * W * fp;                                        // f''
-
-                    Complex denom = 2.0 * fp * fp - f * fpp;
-                    double den2 = denom.Real * denom.Real + denom.Imaginary * denom.Imaginary;
-                    Complex step = (den2 < 1e-30) ? (f / fp) : (2.0 * f * fp / denom);
-                    W -= step;
-
-                    if (Complex.Abs(step) <= 1e-16 * (1.0 + Complex.Abs(W))) break;
-                }
-
-                return new Complex32((float)W.Real, (float)W.Imaginary);
-            }
+            return (Complex32)(inverse ? InverseErf((Complex)x) : ErfValue((Complex)x));
         }
         /// <summary>
         /// Returns the value of the imaginary error function.
@@ -2350,38 +1039,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Erfi(float x)
         {
-            if (x == 0f) return 0f;
-
-            const double DBL_OVER_X = 26.658987628;
-            double ax = Math.Abs((double)x);
-
-            if (ax <= 6.0)
-            {
-                var iz = new Complex(0.0, x);
-                var w = ErfApprox(iz);                // erf(i x)
-                double val = w.Imaginary;             // -i*(a+ib) = b - ia → Re = b
-                if (Math.Abs(val) > float.MaxValue) return Math.Sign(x) * float.PositiveInfinity;
-                return (float)val;
-            }
-
-            if (ax > DBL_OVER_X) return x > 0 ? float.PositiveInfinity : float.NegativeInfinity;
-
-            // erfi(x) ≈ e^{x^2} / (√π x) * ( 1 + 1/(2x^2) + 3/(4x^4) + 15/(8x^6) + 105/(16x^8) )
-            double invx = 1.0 / ax;
-            double invx2 = invx * invx;
-            double S = 1.0, c = 1.0;
-
-            for (int n = 0; n < 6; n++)
-            {
-                c *= (2.0 * n + 1.0) * 0.5 * invx2;
-                S += c;
-                if (Math.Abs(c) < 1e-18 * Math.Abs(S)) break;
-            }
-
-            double valp = Math.Exp(ax * ax) * (S / (Math.Sqrt(Math.PI) * ax));
-            double valr = x > 0 ? valp : -valp;
-
-            return (float)valr;
+            if (Math.Abs(x) > 27) return x < 0 ? float.NegativeInfinity : float.PositiveInfinity;
+            return (float)(-Complex.ImaginaryOne * ErfValue(Complex.ImaginaryOne * (double)x)).Real;
         }
         /// <summary>
         /// Returns the value of the imaginary error function.
@@ -2390,16 +1049,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Erfi(Complex32 x)
         {
-            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
-
-            // erfi(z) = -i * erf(i z)
-            var Z = new Complex(x.Real, x.Imag);
-            var iZ = new Complex(-Z.Imaginary, Z.Real);  // i*z
-            var w = ErfApprox(iZ);                       // erf(i z)
-
-            // -i * (a + i b) = b - i a
-            var erfi = new Complex(w.Imaginary, -w.Real);
-            return new Complex32((float)erfi.Real, (float)erfi.Imaginary);
+            return (Complex32)(-Complex.ImaginaryOne * ErfValue(Complex.ImaginaryOne * (Complex)x));
         }
         /// <summary>
         /// Returns the value of the Laplace integral (error function).
@@ -2428,7 +1078,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Erf(float x, float a, float b)
         {
-            return Erf((x - a) / b);
+            return (float)ErfValue(((double)x - (double)a) / (double)b);
         }
         /// <summary>
         /// Returns the value of the Laplace integral (error function).
@@ -2439,7 +1089,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Erf(Complex32 x, Complex32 a, Complex32 b)
         {
-            return Erf((x - a) / b);
+            return (Complex32)ErfValue(((Complex)x - (Complex)a) / (Complex)b);
         }
         /// <summary>
         /// Returns the value of the Laplace integral (an additional error function).
@@ -2448,7 +1098,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Erfc(float x)
         {
-            return 1.0f - Erf(x);
+            return (float)ErfcValue((double)x);
         }
         /// <summary>
         /// Returns the value of the Laplace integral (an additional error function).
@@ -2457,7 +1107,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Erfc(Complex32 x)
         {
-            return 1.0f - Erf(x);
+            return (Complex32)ErfcValue((Complex)x);
         }
         /// <summary>
         /// Returns the value of the Laplace integral (an additional error function).
@@ -2468,7 +1118,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Erfc(float x, float a, float b)
         {
-            return 1.0f - Erf(x, a, b);
+            return (float)ErfcValue(((double)x - (double)a) / (double)b);
         }
         /// <summary>
         /// Returns the value of the Laplace integral (an additional error function).
@@ -2479,54 +1129,10 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Erfc(Complex32 x, Complex32 a, Complex32 b)
         {
-            return 1.0f - Erf(x, a, b);
+            return (Complex32)ErfcValue(((Complex)x - (Complex)a) / (Complex)b);
         }
 
-        #region Private methods (helpers)
 
-        /// <summary>
-        /// Approximates the error function for complex arguments.
-        /// </summary>
-        /// <param name="z">Complex value</param>
-        private static Complex ErfApprox(Complex z)
-        {
-            double az = Complex.Abs(z);
-
-            // |z|: Abramowitz–Stegun 7.1.26
-            if (az <= 6.0)
-            {
-                const double p = 0.3275911;
-                const double a1 = 0.254829592, a2 = -0.284496736, a3 = 1.421413741, a4 = -1.453152027, a5 = 1.061405429;
-                Complex t = Complex.One / (Complex.One + p * z);
-                Complex poly = ((((a5 * t + a4) * t) + a3) * t + a2) * t + a1;
-                return Complex.One - poly * t * Complex.Exp(-(z * z));
-            }
-            else
-            {
-                // erf(z) ≈ 1 − e^{−z²}/(√π z) * (1 − 1/(2 z²) + 3/(4 z⁴) − 15/(8 z⁶))
-                Complex invz = Complex.One / z;
-                Complex invz2 = invz * invz;
-                Complex S = Complex.One
-                          - 0.5 * invz2
-                          + 0.75 * (invz2 * invz2)
-                          - 1.875 * (invz2 * invz2 * invz2); // 15/8 = 1.875
-                return Complex.One - Complex.Exp(-(z * z)) * (invz / Math.Sqrt(Math.PI)) * S;
-            }
-        }
-
-        static double ErfApprox(double x)
-        {
-            // |z|: Abramowitz–Stegun 7.1.26
-            double ax = Math.Abs(x);
-            const double p = 0.3275911;
-            const double a1 = 0.254829592, a2 = -0.284496736, a3 = 1.421413741, a4 = -1.453152027, a5 = 1.061405429;
-            double t = 1.0 / (1.0 + p * ax);
-            double poly = ((((a5 * t + a4) * t) + a3) * t + a2) * t + a1;
-            double erfp = 1.0 - poly * t * Math.Exp(-ax * ax);
-            return Maths.CopySign((float)erfp, (float)x);
-        }
-
-        #endregion
 
         #endregion
 
@@ -2539,20 +1145,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Dawson(float x, bool positive)
         {
-            if (positive)
-            {
-                // D+ function:
-                float p = Special.SQRT_PI / 2.0f;
-                float v = Maths.Exp(-x * x);
-                float erfi = Special.Erfi(x);
-                return p * v * erfi;
-            }
-            // D- function:
-            float y = x * x;
-            float g = SQRT_PI / 2.0f;
-            float e = Special.Erf(x);
-            float d = Maths.Exp(y);
-            return g * d * e;
+            if (!positive && Math.Abs(x) > 27) return x < 0 ? float.NegativeInfinity : float.PositiveInfinity;
+            return (float)(positive ? DawsonValue((Complex)x) : -Complex.ImaginaryOne * DawsonValue(Complex.ImaginaryOne * (double)x)).Real;
         }
         /// <summary>
         /// Returns the value of the D- / D + Dawson function.
@@ -2562,20 +1156,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Dawson(Complex32 x, bool positive)
         {
-            if (positive)
-            {
-                // D+ function:
-                Complex32 p = Special.SQRT_PI / 2.0f;
-                Complex32 v = Maths.Exp(-x * x);
-                Complex32 erfi = Special.Erfi(x);
-                return p * v * erfi;
-            }
-            // D- function:
-            Complex32 y = x * x;
-            Complex32 g = SQRT_PI / 2.0f;
-            Complex32 e = Special.Erf(x);
-            Complex32 d = Maths.Exp(y);
-            return g * d * e;
+            return (Complex32)(positive ? DawsonValue((Complex)x) : -Complex.ImaginaryOne * DawsonValue(Complex.ImaginaryOne * (Complex)x));
         }
         #endregion
 
@@ -2587,9 +1168,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Faddeeva(float x)
         {
-            float re = Maths.Exp(-x * x);
-            float im = (float)(2.0 / Math.Sqrt(Math.PI)) * Special.Dawson(x, true);
-            return new Complex32(re, im);
+            return (Complex32)FaddeevaValue((Complex)x);
         }
         /// <summary>
         /// Returns the value of the Faddeeva function.
@@ -2598,7 +1177,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Faddeeva(Complex32 x)
         {
-            return Maths.Exp(-x * x) * Special.Erfc(-x * Complex32.I);
+            return (Complex32)FaddeevaValue((Complex)x);
         }
         #endregion
 
@@ -2611,11 +1190,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Q(float x, bool inverse = false)
         {
-            if (inverse)
-            {
-                return Maths.Sqrt2 * Special.Erf(1 - 2 * x, true);
-            }
-            return 0.5f * Special.Erfc(x / Maths.Sqrt2);
+            return (float)(inverse ? Math.Sqrt(2) * InverseErfc(2.0 * x) : 0.5 * ErfcValue((double)x / Math.Sqrt(2)));
         }
         /// <summary>
         /// Returns the value of a Q function.
@@ -2625,11 +1200,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Q(Complex32 x, bool inverse = false)
         {
-            if (inverse)
-            {
-                return Maths.Sqrt2 * Special.Erf(1 - 2 * x, true);
-            }
-            return 0.5f * Special.Erfc(x / Maths.Sqrt2);
+            if (inverse && x.Imag == 0 && x.Real >= 0 && x.Real <= 1) return new Complex32((float)(Math.Sqrt(2) * InverseErfc(2.0 * x.Real)), 0);
+            return (Complex32)(inverse ? Math.Sqrt(2) * InverseErf(1 - 2 * (Complex)x) : 0.5 * ErfcValue((Complex)x / Math.Sqrt(2)));
         }
         #endregion
 
@@ -2649,39 +1221,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Hypergeom(float a, float b, float c, float z)
         {
-            // for all z = 0:
-            if (z == 0)
-                return 1;
-
-            // Properties:
-            double s = 1.0f;
-            double m = 1.0f;
-            double pa = 1, pb = 1, pc = 1;
-            double t;
-            float eps = 1e-16f;
-            int i, j, iterations = 240;
-
-            // Taylor series:
-            for (i = 1; i < iterations; i++)
-            {
-                // Pochhammer symbols:
-                j = i - 1;
-                pa *= a + j;
-                pb *= b + j;
-                pc *= c + j;
-
-                // value:
-                m *= z / i;
-                t = pa * pb * m / pc;
-
-                // stop point:
-                if (Math.Abs(t) < eps)
-                { break; }
-                else { s += t; }
-            }
-
-            // result:
-            return (float)s;
+            Complex value = Hypergeometric2F1((Complex)a, (Complex)b, (Complex)c, (Complex)z);
+            return Math.Abs(value.Imaginary) <= 1e-12 * (1 + Math.Abs(value.Real)) ? (float)value.Real : float.NaN;
         }
         /// <summary>
         /// Returns the value of a hypergeometric function.
@@ -2698,34 +1239,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 c, Complex32 z)
         {
-            // z = 0 => 1
-            if (z.Real == 0f && z.Imag == 0f) return Complex32.One;
-
-            Complex s = Complex.One;     // partial sum
-            Complex m = Complex.One;     // z^n / n!
-            Complex pa = Complex.One;    // (a)_n
-            Complex pb = Complex.One;    // (b)_n
-            Complex pc = Complex.One;    // (c)_n
-
-            float eps = 1e-16f;
-            int maxIter = 240;
-
-            for (int i = 1; i < maxIter; i++)
-            {
-                double jf = i - 1;
-                var j = new Complex(jf, 0f);
-
-                pa *= (Complex)a + j;
-                pb *= (Complex)b + j;
-                pc *= (Complex)c + j;
-
-                m *= (Complex)z / i; // z^i / i!
-                Complex t = pa * pb * m / pc;
-
-                if (Maths.Abs(t) < eps) break;
-                s += t;
-            }
-            return s;
+            return (Complex32)Hypergeometric2F1((Complex)a, (Complex)b, (Complex)c, (Complex)z);
         }
         /// <summary>
         /// Returns the value of a hypergeometric function.
@@ -2743,71 +1257,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Hypergeom(float a, float b, float z)
         {
-            // z = 0 => 1
-            if (z == 0f) return 1f;
-
-            bool aNaN = float.IsNaN(a);
-            bool bNaN = float.IsNaN(b);
-
-            // 0F0(;;z) = exp(z)  and  1F1(a;a;z) = exp(z)
-            if ((aNaN && bNaN) || a == b)
-                return Maths.Exp(z);
-
-            // 1F0(a;;z) = (1 - z)^(-a)  (principal branch)
-            if (bNaN)
-                return Maths.Exp(-a * Maths.Log(1f - z));
-
-            // pole guard: b ∈ {0, -1, -2, ...} (real axis)
-            {
-                float k = Maths.Round(b);
-                if (b <= 0f && Maths.Abs(b - k) < 1e-6f)
-                    return float.NaN;
-            }
-
-            const float eps = 1e-16f;     // relative stop; adjust to 1e-8..1e-12
-            const int iterations = 240;
-            const float tiny = 1e-30f;    // protect from near-zero denominator
-
-            double s = 1f;  // partial sum
-            double t = 1f;  // current term
-
-            // 0F1(;b;z): t_{n+1} = t_n * z / ((b+n)(n+1))
-            if (aNaN)
-            {
-                for (int n = 0; n < iterations; n++)
-                {
-                    double bn = b + n;
-                    double denom = bn * (n + 1f);
-
-                    if (Maths.Abs(denom) < tiny) return float.NaN; // pole/underflow
-
-                    t *= z / denom;
-                    s += t;
-
-                    if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
-                }
-                return (float)s;
-            }
-
-            // 1F1(a;b;z): t_{n+1} = t_n * (a+n)/(b+n) * z/(n+1)
-            // Kummer transform helps convergence if z < 0
-            if (z < 0f)
-                return Maths.Exp(z) * Hypergeom(b - a, b, -z);
-
-            for (int n = 0; n < iterations; n++)
-            {
-                double an = a + n;
-                double bn = b + n;
-                double denom = (n + 1f) * bn;
-
-                if (Maths.Abs(denom) < tiny) return float.NaN; // pole/underflow
-
-                t *= an * z / denom;
-                s += t;
-
-                if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
-            }
-            return (float)s;
+            return (float)Hypergeometric1F1((Complex)a, (Complex)b, (Complex)z).Real;
         }
         /// <summary>
         /// Returns the value of a hypergeometric function.
@@ -2825,95 +1275,30 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 z)
         {
-            // z = 0 => 1
-            if (z.Real == 0f && z.Imag == 0f) return Complex32.One;
-
-            bool aNaN = Complex32.IsNaN(a);
-            bool bNaN = Complex32.IsNaN(b);
-
-            // 0F0(;;z) = exp(z)
-            if (aNaN && bNaN || (a.Real == b.Real && a.Imag == b.Imag))
-                return Maths.Exp(z);
-
-            // 1F0(a;;z) = (1 - z)^(-a)  (principal branch)
-            if (bNaN)
-                return Maths.Exp(-a * Maths.Log(Complex32.One - z));
-
-            // pole guard: b ∈ {0, -1, -2, ...} (real axis)
-            if (b.Imag == 0f)
-            {
-                float br = b.Real, k = Maths.Round(br);
-                if (br <= 0f && Maths.Abs(br - k) < 1e-6f)
-                    return Complex32.NaN;
-            }
-
-            const float eps = 1e-16f;
-            const int iterations = 240;
-            const float tiny = 1e-30f;
-
-            Complex s = Complex.One;   // partial sum
-            Complex t = Complex.One;   // current term
-
-            // 0F1(;b;z): t_{n+1} = t_n * z / ((b+n)(n+1))
-            if (aNaN)
-            {
-                for (int n = 0; n < iterations; n++)
-                {
-                    Complex bn = (Complex)b + new Complex(n, 0f);
-                    Complex denom = bn * new Complex(n + 1f, 0f);
-
-                    if (Maths.Abs(denom) < tiny) return Complex32.NaN; // pole/underflow
-
-                    t *= (Complex)z / denom;
-                    s += t;
-
-                    if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
-                }
-                return s;
-            }
-
-            // 1F1(a;b;z): t_{n+1} = t_n * (a+n)/(b+n) * z/(n+1)
-            // Kummer transform helps convergence if Re(z) < 0
-            if (z.Real < 0f)
-                return Maths.Exp(z) * Hypergeom(b - a, b, -z);
-
-            for (int n = 0; n < iterations; n++)
-            {
-                Complex an = (Complex)a + new Complex(n, 0f);
-                Complex bn = (Complex)b + new Complex(n, 0f);
-                Complex denom = new Complex(n + 1f, 0f) * bn;
-
-                if (Maths.Abs(denom) < tiny) return Complex32.NaN; // pole/underflow
-
-                t *= an * (Complex)z / denom;
-                s += t;
-
-                if (Maths.Abs(t) < eps * (1f + Maths.Abs(s))) break;
-            }
-            return s;
+            return (Complex32)Hypergeometric1F1((Complex)a, (Complex)b, (Complex)z);
         }
         #endregion
 
         #region Beta functions
         /// <summary>
-        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(a + b).
+        /// Returns the value of the beta function: B(a, b) = Gamma(a) * Gamma(b) / Gamma(a + b).
         /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
         /// <returns>Value</returns>
         public static float Beta(float a, float b)
         {
-            return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+            return (float)BetaValue((double)a, (double)b);
         }
         /// <summary>
-        /// Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(a + b).
+        /// Returns the value of the beta function: B(a, b) = Gamma(a) * Gamma(b) / Gamma(a + b).
         /// </summary>
         /// <param name="a">Value</param>
         /// <param name="b">Value</param>
         /// <returns>Value</returns>
         public static Complex32 Beta(Complex32 a, Complex32 b)
         {
-            return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
+            return (Complex32)Complex.Exp(BetaLog((Complex)a, (Complex)b));
         }
         /// <summary>
         /// Returns the value of the beta function: B(m, n) = (m - 1)! * (n - 1)! / (m + n - 1)!.
@@ -2923,7 +1308,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static double Beta(int m, int n)
         {
-            return Special.Factorial(m - 1) * Special.Factorial(n - 1) / Special.Factorial(m + n - 1);
+            return BetaValue((double)m, (double)n);
         }
         /// <summary>
         /// Returns the value of a derivative beta function: B'(a, b).
@@ -2933,7 +1318,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float BetaDerivative(float a, float b)
         {
-            return Special.Beta(a, b) * (Special.DiGamma(a) - Special.DiGamma(a + b));
+            return (float)(Complex.Exp(BetaLog((Complex)a, (Complex)b)) * (Polygamma((Complex)a, false) - Polygamma((Complex)a + (Complex)b, false))).Real;
         }
         /// <summary>
         /// Returns the value of a derivative beta function: B'(a, b).
@@ -2943,7 +1328,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 BetaDerivative(Complex32 a, Complex32 b)
         {
-            return Special.Beta(a, b) * (Special.DiGamma(a) - Special.DiGamma(a + b));
+            return (Complex32)(Complex.Exp(BetaLog((Complex)a, (Complex)b)) * (Polygamma((Complex)a, false) - Polygamma((Complex)a + (Complex)b, false)));
         }
         /// <summary>
         /// Returns the value of an incomplete beta function: Bx(a, b).
@@ -2954,32 +1339,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float BetaIncomplete(float a, float b, float x)
         {
-            if (float.IsNaN(a) || float.IsNaN(b) || float.IsNaN(x)) return float.NaN;
-
-            // Domain commonly assumed for the real-valued branch:
-            if (x <= 0f) return 0f;
-            if (x >= 1f)
-            {
-                // Complete beta B(a,b)
-                return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
-            }
-
-            // Poles of Beta when a or b is a non-positive integer
-            if ((a <= 0f && a == Maths.Round(a)) || (b <= 0f && b == Maths.Round(b)))
-                return float.NaN;
-
-            // Optional symmetry to improve conditioning near x≈1:
-            // B_x(a,b) = B(a,b) - B_{1-x}(b,a)
-            if (x > 0.5f)
-            {
-                float B = Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
-                return B - BetaIncomplete(b, a, 1f - x);
-            }
-
-            // Hypergeometric representation
-            float pref = Maths.Exp(a * Maths.Log(x)) / a;          // x^a / a
-            float hyp = Special.Hypergeom(a, 1f - b, a + 1f, x);  // 2F1(a,1-b; a+1; x)
-            return pref * hyp;
+            return (float)IncompleteBeta(a, b, x, false);
         }
         /// <summary>
         /// Returns the value of an incomplete beta function: Bx(a, b).
@@ -2990,17 +1350,10 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 BetaIncomplete(Complex32 a, Complex32 b, Complex32 x)
         {
-            // B_0(a,b) = 0
-            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
-
-            // B_1(a,b) = B(a,b) = Γ(a)Γ(b)/Γ(a+b)
-            if (x.Imag == 0f && x.Real == 1f)
-                return Special.Gamma(a) * Special.Gamma(b) / Special.Gamma(a + b);
-
-            // Principal-branch power and Gauss 2F1
-            Complex32 pref = Maths.Exp(a * Maths.Log(x)) / a;                   // x^a / a
-            Complex32 hyp = Special.Hypergeom(a, Complex32.One - b, a + Complex32.One, x); // 2F1(a,1-b; a+1; x)
-            return pref * hyp;
+            Complex aa = (Complex)a, bb = (Complex)b, z = (Complex)x;
+            if (z == Complex.Zero) return Complex32.Zero;
+            if (z == Complex.One) return (Complex32)Complex.Exp(BetaLog(aa, bb));
+            return (Complex32)(Complex.Pow(z, aa) / aa * Hypergeometric2F1(aa, 1 - bb, aa + 1, z));
         }
         /// <summary>
         /// Returns the value of a regularized incomplete beta function: Ix(a, b).
@@ -3011,7 +1364,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float BetaIncompleteRegularized(float a, float b, float x)
         {
-            return Special.BetaIncomplete(a, b, x) / Special.Beta(a, b);
+            return (float)IncompleteBeta(a, b, x, true);
         }
         /// <summary>
         /// Returns the value of a log-beta function.
@@ -3021,7 +1374,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float LogBeta(float a, float b)
         {
-            return Special.LogGamma(a) + Special.LogGamma(b) - Special.LogGamma(a + b);
+            return (float)BetaLog((double)a, (double)b);
         }
         /// <summary>
         /// Returns the value of a log-beta function.
@@ -3031,7 +1384,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 LogBeta(Complex32 a, Complex32 b)
         {
-            return Special.LogGamma(a) + Special.LogGamma(b) - Special.LogGamma(a + b);
+            return (Complex32)BetaLog((Complex)a, (Complex)b);
         }
         #endregion
 
@@ -3043,59 +1396,9 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Ci(float x)
         {
-            if (x == 0f) return float.NegativeInfinity;
-            if (x < 0f) return float.NaN;
-
-            double xd = x;
-            const double XSW = 16.0;
-
-            if (xd <= XSW)
-            {
-                // Ci(x) = γ + ln x + ∫_0^1 (cos(x t) - 1)/t dt
-                double integral = GaussLegendre01(t => (Math.Cos(xd * t) - 1.0) / t);
-                return (float)(Maths.Gamma + Math.Log(xd) + integral);
-            }
-            else
-            {
-                // S0 = Σ (-1)^n (2n)! / x^{2n+1}, S1 = Σ (-1)^n (2n+1)! / x^{2n+2}
-                double inv = 1.0 / xd, inv2 = inv * inv;
-                double s0 = inv * (1.0 - 2.0 * inv2 + 24.0 * inv2 * inv2 - 720.0 * inv2 * inv2 * inv2);
-                double s1 = inv * inv * (1.0 - 6.0 * inv2 + 120.0 * inv2 * inv2 - 5040.0 * inv2 * inv2 * inv2);
-                double sinx = Math.Sin(xd), cosx = Math.Cos(xd);
-                return (float)(sinx * s0 - cosx * s1);
-            }
-
-            static double GaussLegendre01(Func<double, double> f, int panels = 1)
-            {
-                double[] u = new double[] {
-                    -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
-                    -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
-                     0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
-                     0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
-                };
-
-                double[] w = new double[] {
-                    0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
-                    0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
-                    0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
-                    0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
-                };
-
-                double sum = 0.0, h = 1.0 / panels;
-                for (int p = 0; p < panels; p++)
-                {
-                    double a = p * h, b = (p + 1) * h;
-                    double half = 0.5 * (b - a), mid = 0.5 * (a + b);
-                    double loc = 0.0;
-                    for (int i = 0; i < 16; i++)
-                    {
-                        double t = mid + half * u[i];
-                        loc += w[i] * f(t);
-                    }
-                    sum += half * loc;
-                }
-                return sum;
-            }
+            if (x < 0) return float.NaN;
+            if (float.IsPositiveInfinity(x)) return 0;
+            return (float)TrigonometricIntegral((Complex)x, false).Real;
         }
         /// <summary>
         /// Returns the value of the integral cosine.
@@ -3104,62 +1407,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Ci(Complex32 z)
         {
-            if (z.Real == 0f && z.Imag == 0f)
-                return new Complex32(float.NegativeInfinity, 0f);
-
-            var Z = new Complex(z.Real, z.Imag);
-            double r = Complex.Abs(Z);
-            const double XSW = 16.0;
-
-            if (r <= XSW)
-            {
-                // Ci(z) = γ + Log(z) + ∫_0^1 (cos(z t) - 1)/t dt  (principal log)
-                var integral = GaussLegendre01C(t => Complex.Cos(Z * t) - Complex.One);
-                var val = (Maths.Gamma + Complex.Log(Z)) + integral;
-                return new Complex32((float)val.Real, (float)val.Imaginary);
-            }
-            else
-            {
-                var inv = Complex.One / Z;
-                var inv2 = inv * inv;
-                var s0 = inv * (1.0 - 2.0 * inv2 + 24.0 * inv2 * inv2 - 720.0 * inv2 * inv2 * inv2);
-                var s1 = inv2 * (1.0 - 6.0 * inv2 + 120.0 * inv2 * inv2 - 5040.0 * inv2 * inv2 * inv2);
-                var sinz = Complex.Sin(Z);
-                var cosz = Complex.Cos(Z);
-                var val = sinz * s0 - cosz * s1;
-                return new Complex32((float)val.Real, (float)val.Imaginary);
-            }
-
-            static Complex GaussLegendre01C(Func<double, Complex> f, int panels = 1)
-            {
-                double[] u = new double[] {
-                    -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
-                    -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
-                     0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
-                     0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
-                };
-                double[] w = new double[] {
-                    0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
-                    0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
-                    0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
-                    0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
-                };
-                Complex sum = Complex.Zero;
-                double h = 1.0 / panels;
-                for (int p = 0; p < panels; p++)
-                {
-                    double a = p * h, b = (p + 1) * h;
-                    double half = 0.5 * (b - a), mid = 0.5 * (a + b);
-                    Complex loc = Complex.Zero;
-                    for (int i = 0; i < 16; i++)
-                    {
-                        double t = mid + half * u[i];
-                        loc += w[i] * (f(t) / t);
-                    }
-                    sum += half * loc;
-                }
-                return sum;
-            }
+            return (Complex32)TrigonometricIntegral((Complex)z, false);
         }
         /// <summary>
         /// Returns the value of the integral sine.
@@ -3168,57 +1416,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Si(float x)
         {
-            if (x < 0f) return -Special.Si(-x);
-
-            double xd = x;
-            const double XSW = 16.0;
-
-            if (xd <= XSW)
-            {
-                // Si(x) = ∫_0^1 sin(x t)/t dt
-                double integral = Ci_GaussLegendre01(t => Math.Sin(xd * t) / t);
-                return (float)integral;
-            }
-            else
-            {
-                // Si ≈ π/2 − cos x * S0 − sin x * S1
-                double inv = 1.0 / xd, inv2 = inv * inv;
-                double s0 = inv * (1.0 - 2.0 * inv2 + 24.0 * inv2 * inv2 - 720.0 * inv2 * inv2 * inv2);
-                double s1 = inv * inv * (1.0 - 6.0 * inv2 + 120.0 * inv2 * inv2 - 5040.0 * inv2 * inv2 * inv2);
-                return (float)(Math.PI * 0.5 - Math.Cos(xd) * s0 - Math.Sin(xd) * s1);
-            }
-
-            static double Ci_GaussLegendre01(Func<double, double> f, int panels = 1)
-            {
-                double[] u = new double[] {
-                    -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
-                    -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
-                     0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
-                     0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
-                };
-
-                double[] w = new double[] {
-                    0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
-                    0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
-                    0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
-                    0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
-                };
-
-                double sum = 0.0, h = 1.0 / panels;
-                for (int p = 0; p < panels; p++)
-                {
-                    double a = p * h, b = (p + 1) * h;
-                    double half = 0.5 * (b - a), mid = 0.5 * (a + b);
-                    double loc = 0.0;
-                    for (int i = 0; i < 16; i++)
-                    {
-                        double t = mid + half * u[i];
-                        loc += w[i] * f(t);
-                    }
-                    sum += half * loc;
-                }
-                return sum;
-            }
+            if (float.IsInfinity(x)) return (float)(Math.Sign(x) * Math.PI / 2);
+            return (float)TrigonometricIntegral((Complex)x, true).Real;
         }
         /// <summary>
         /// Returns the value of the integral sine.
@@ -3227,58 +1426,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Si(Complex32 z)
         {
-            var Z = new Complex(z.Real, z.Imag);
-            double r = Complex.Abs(Z);
-            const double XSW = 16.0;
-
-            if (r <= XSW)
-            {
-                // Si(z) = ∫_0^1 sin(z t)/t dt
-                var integral = GL01C(t => Complex.Sin(Z * t) / t);
-                return new Complex32((float)integral.Real, (float)integral.Imaginary);
-            }
-            else
-            {
-                var inv = Complex.One / Z;
-                var inv2 = inv * inv;
-                var s0 = inv * (1.0 - 2.0 * inv2 + 24.0 * inv2 * inv2 - 720.0 * inv2 * inv2 * inv2);
-                var s1 = inv2 * (1.0 - 6.0 * inv2 + 120.0 * inv2 * inv2 - 5040.0 * inv2 * inv2 * inv2);
-                var val = Math.PI * 0.5 - Complex.Cos(Z) * s0 - Complex.Sin(Z) * s1;
-                return new Complex32((float)val.Real, (float)val.Imaginary);
-            }
-
-            static Complex GL01C(Func<double, Complex> f, int panels = 1)
-            {
-                double[] u = new double[] {
-                    -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
-                    -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
-                     0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
-                     0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
-                };
-
-                double[] w = new double[] {
-                    0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
-                    0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
-                    0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
-                    0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
-                };
-
-                Complex sum = Complex.Zero;
-                double h = 1.0 / panels;
-                for (int p = 0; p < panels; p++)
-                {
-                    double a = p * h, b = (p + 1) * h;
-                    double half = 0.5 * (b - a), mid = 0.5 * (a + b);
-                    Complex loc = Complex.Zero;
-                    for (int i = 0; i < 16; i++)
-                    {
-                        double t = mid + half * u[i];
-                        loc += w[i] * f(t);
-                    }
-                    sum += half * loc;
-                }
-                return sum;
-            }
+            return (Complex32)TrigonometricIntegral((Complex)z, true);
         }
         /// <summary>
         /// Returns the value of an integral exponential function.
@@ -3287,47 +1435,9 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Ei(float x)
         {
-            if (x == 0f) return float.NegativeInfinity;
-
-            double xd = x;
-            const double XASY = 25.0;
-
-            if (Math.Abs(xd) >= XASY)
-            {
-                double inv = 1.0 / xd, inv2 = inv * inv;
-                double poly = 1.0 + inv + 2.0 * inv2 + 6.0 * inv2 * inv + 24.0 * inv2 * inv2;
-                double val = Math.Exp(xd) * inv * poly;
-
-                return (float)val;
-            }
-
-            // Ei(x) = γ + ln|x| + ∫_0^1 (e^{x t} - 1)/t dt  (|arg x|<π)
-            double integral = GL01(t => (Math.Exp(xd * t) - 1.0) / t);
-            return (float)(Maths.Gamma + Math.Log(Math.Abs(xd)) + integral);
-
-            static double GL01(Func<double, double> f, int panels = 1)
-            {
-                double[] u = new double[] {
-                    -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
-                    -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
-                     0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
-                     0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
-                };
-                double[] w = new double[] {
-                    0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
-                    0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
-                    0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
-                    0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
-                };
-
-                double sum = 0.0;
-                for (int i = 0; i < 16; i++)
-                {
-                    double t = 0.5 * (u[i] + 1.0);     // [0,1]
-                    sum += w[i] * f(t);
-                }
-                return 0.5 * sum;
-            }
+            if (float.IsNegativeInfinity(x)) return 0;
+            if (float.IsPositiveInfinity(x)) return float.PositiveInfinity;
+            return (float)ExponentialIntegral((Complex)x).Real;
         }
         /// <summary>
         /// Returns the value of an integral exponential function.
@@ -3336,53 +1446,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Ei(Complex32 z)
         {
-            if (z.Real == 0f && z.Imag == 0f)
-                return new Complex32(float.NegativeInfinity, 0f);
-
-            var Z = new Complex(z.Real, z.Imag);
-            double r = Complex.Abs(Z);
-            const double XASY = 25.0;
-
-            if (r >= XASY)
-            {
-                //  Ei(z) ~ e^z / z * (1 + 1/z + 2!/z^2 + 3!/z^3 + 4!/z^4), |arg z|<π
-                var inv = Complex.One / Z;
-                var inv2 = inv * inv;
-                var poly = Complex.One + inv + 2.0 * inv2 + 6.0 * inv2 * inv + 24.0 * inv2 * inv2;
-                var val = Complex.Exp(Z) * inv * poly;
-                return new Complex32((float)val.Real, (float)val.Imaginary);
-            }
-            else
-            {
-                // Ei(z) = γ + Log(z) + ∫_0^1 (e^{z t} - 1)/t dt
-                var integral = GL01C(t => (Complex.Exp(Z * t) - Complex.One) / t);
-                var val = (Maths.Gamma + Complex.Log(Z)) + integral;
-                return new Complex32((float)val.Real, (float)val.Imaginary);
-            }
-
-            static Complex GL01C(Func<double, Complex> f)
-            {
-                double[] u = new double[] {
-                    -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
-                    -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
-                     0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
-                     0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
-                };
-                double[] w = new double[] {
-                    0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
-                    0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
-                    0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
-                    0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
-                };
-
-                Complex sum = Complex.Zero;
-                for (int i = 0; i < 16; i++)
-                {
-                    double t = 0.5 * (u[i] + 1.0); // [0,1]
-                    sum += w[i] * f(t);
-                }
-                return 0.5 * sum;
-            }
+            return (Complex32)ExponentialIntegral((Complex)z);
         }
         /// <summary>
         /// Returns the value of the integral logarithm.
@@ -3391,8 +1455,9 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Li(float x)
         {
-            if (x < 0f) return float.NaN;
-            return Ei(Maths.Log(x));
+            if (x < 0) return float.NaN;
+            if (x == 0) return 0;
+            return (float)ExponentialIntegral(Complex.Log((Complex)x)).Real;
         }
         /// <summary>
         /// Returns the value of the integral logarithm.
@@ -3401,7 +1466,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Li(Complex32 z)
         {
-            return Ei(Maths.Log(z));
+            if (z == 0) return Complex32.Zero;
+            return (Complex32)ExponentialIntegral(Complex.Log((Complex)z));
         }
         #endregion
 
@@ -3415,37 +1481,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float J(float x, int a)
         {
-            // J_n(0) = δ_{n0}
-            if (x == 0f) return (a == 0) ? 1f : 0f;
-
-            int n = a < 0 ? -a : a;
-            double signOrder = (a < 0 && ((n & 1) == 1)) ? -1.0 : 1.0;
-            const double XSW = 20.0;
-
-            // J_n(-x) = (-1)^n J_n(x)
-            double xabs = x;
-            double signArg = 1.0;
-
-            if (x < 0.0) { xabs = -x; signArg = ((n & 1) == 1) ? -1.0 : 1.0; }
-
-            if (xabs < XSW)
-            {
-                double val = GL0Pi(theta => Math.Cos(n * theta - xabs * Math.Sin(theta)));
-                return (float)(signOrder * signArg * (val / Math.PI));
-            }
-            else
-            {
-                double mu = 4.0 * n * n;
-                double phi = xabs - 0.5 * n * Math.PI - Math.PI / 4.0;
-                double inv = 1.0 / xabs;
-
-                double c0 = Math.Sqrt(2.0 / (Math.PI * xabs));
-                double A1 = (mu - 1.0) * 0.125 * inv;                       // (μ-1)/(8x)
-                double A2 = (mu - 1.0) * (mu - 9.0) * (inv * inv) / 128.0;  // ((μ-1)(μ-9))/(128 x^2)
-
-                double val = c0 * (Math.Cos(phi) - A1 * Math.Sin(phi) - A2 * Math.Cos(phi));
-                return (float)(signOrder * signArg * val);
-            }
+            return (float)BesselJ((Complex)x, a).Real;
         }
         /// <summary>
         /// Returns the value of a Bessel function of the first kind.
@@ -3455,41 +1491,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 J(Complex32 x, int a)
         {
-            if (x.Real == 0f && x.Imag == 0f)
-                return (a == 0) ? Complex32.One : Complex32.Zero;
-
-            int n = a < 0 ? -a : a;
-            double signOrder = (a < 0 && ((n & 1) == 1)) ? -1.0 : 1.0;
-            const double XSW = 20.0;
-
-            // J_n(-x)=(-1)^n J_n(x)
-            if (x.Imag == 0f)
-            {
-                return J(x.Real, a);
-            }
-
-            Complex Z = new Complex(x.Real, x.Imag);
-            double r = Complex.Abs(Z);
-
-            if (r < XSW)
-            {
-                // J_n(z) = (1/π) ∫_0^π cos(n t − z sin t) dt
-                Complex sum = GL0PiC(theta => Complex.Cos(n * theta - Z * Math.Sin(theta)));
-                Complex val = sum / Math.PI * signOrder;
-                return new Complex32((float)val.Real, (float)val.Imaginary);
-            }
-            else
-            {
-                double mu = 4.0 * n * n;
-                double c0 = Math.Sqrt(2.0 / (Math.PI * r));
-                double A1 = (mu - 1.0) * 0.125 / r;
-                double A2 = (mu - 1.0) * (mu - 9.0) / 128.0 / (r * r);
-
-                Complex phi = Z - (n * Math.PI * 0.5 + Math.PI * 0.25);
-                Complex val = c0 * (Complex.Cos(phi) - A1 * Complex.Sin(phi) - A2 * Complex.Cos(phi));
-                val *= signOrder;
-                return new Complex32((float)val.Real, (float)val.Imaginary);
-            }
+            return (Complex32)BesselJ((Complex)x, a);
         }
 
         /// <summary>
@@ -3500,35 +1502,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Y(float x, int a)
         {
-            if (x <= 0f) return float.NaN;
-
-            int n = a < 0 ? -a : a;
-            double sgn = (a < 0 && ((n & 1) == 1)) ? -1.0 : 1.0;
-
-            double ax = x;
-            const double XSW = 16.0;
-
-            if (ax <= XSW)
-            {
-                // Y_n(x) = (1/π) ∫_0^π sin(x sin t - n t) dt - (1/π) ∫_0^∞ e^{-x sinh u - n u} du
-                double Iosc = GL0Pi(t => Math.Sin(x * Math.Sin(t) - n * t)) / Math.PI;
-                double T = Math.Max(8.0, Math.Log(40.0 / x + 1.0) + 2.0);
-                double Idc = GL0T(u => Math.Exp(-x * Math.Sinh(u) - n * u), T) / Math.PI;
-                double val = Iosc - Idc;
-                return (float)(sgn * val);
-            }
-            else
-            {
-                double mu = 4.0 * n * n;
-                double phi = ax - 0.5 * n * Math.PI - Math.PI / 4.0;
-                double inv = 1.0 / ax;
-                double c0 = Math.Sqrt(2.0 / (Math.PI * ax));
-                double A1 = (mu - 1.0) * 0.125 * inv;
-                double A2 = (mu - 1.0) * (mu - 9.0) / 256.0 * inv * inv;
-
-                double val = c0 * (Math.Sin(phi) + A1 * Math.Cos(phi) - A2 * Math.Sin(phi));
-                return (float)(val * sgn);
-            }
+            if (x < 0) return float.NaN;
+            return (float)BesselY((Complex)x, a).Real;
         }
         /// <summary>
         /// Returns the value of a Bessel function of the second kind.
@@ -3538,38 +1513,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Y(Complex32 x, int a)
         {
-            if (x.Real == 0f && x.Imag == 0f) return Complex32.NaN;
-
-            int n = a < 0 ? -a : a;
-            double sgn = (a < 0 && ((n & 1) == 1)) ? -1.0 : 1.0;
-
-            Complex Z = new Complex(x.Real, x.Imag);
-            double r = Complex.Abs(Z);
-            const double XSW = 16.0;
-
-            if (r <= XSW && x.Real > 0f)
-            {
-                // Y_n(z) = (1/π)[ ∫_0^π sin(z sin t - n t) dt - ∫_0^∞ e^{-z sinh u - n u} du ]
-                Complex Iosc = GL0PiC(t => Complex.Sin(Z * Math.Sin(t) - n * t)) / Math.PI;
-                double T = Math.Max(8.0, Math.Log(40.0 / (r + 1e-12) + 1.0) + 2.0);
-                Complex Idc = GL0TC(u => Complex.Exp(-Z * Math.Sinh(u) - n * u), T) / Math.PI;
-                Complex val = Iosc - Idc;
-                val *= sgn;
-                return new Complex32((float)val.Real, (float)val.Imaginary);
-            }
-            else
-            {
-                double mu = 4.0 * n * n;
-                double ax = r;
-                double c0 = Math.Sqrt(2.0 / (Math.PI * ax));
-                double A1 = (mu - 1.0) * 0.125 / ax;
-                double A2 = (mu - 1.0) * (mu - 9.0) / 256.0 / (ax * ax);
-                Complex cosφ = Complex.Cos(Z - (n * Math.PI * 0.5 + Math.PI * 0.25));
-                Complex sinφ = Complex.Sin(Z - (n * Math.PI * 0.5 + Math.PI * 0.25));
-                Complex val = c0 * (sinφ + A1 * cosφ - A2 * sinφ);
-                val *= sgn;
-                return new Complex32((float)val.Real, (float)val.Imaginary);
-            }
+            return (Complex32)BesselY((Complex)x, a);
         }
 
         /// <summary>
@@ -3580,30 +1524,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float I(float x, int a)
         {
-            if (x == 0f) return (a == 0) ? 1f : 0f;
-
-            int n = a < 0 ? -a : a; // I_{-n} = I_n
-
-            double ax = Math.Abs((double)x);
-            const double XSW = 20.0;
-
-            if (ax <= XSW)
-            {
-                // I_n(x) = (1/π) ∫_0^π e^{x cos t} cos(n t) dt
-                double val = GL0Pi(t => Math.Exp(x * Math.Cos(t)) * Math.Cos(n * t)) / Math.PI;
-                return (float)val;
-            }
-            else
-            {
-                // I_n(x) ~ e^x / √(2πx) [1 - (μ-1)/(8x) + ((μ-1)(μ-9))/(2!·128 x^2)]
-                double mu = 4.0 * n * n;
-                double inv = 1.0 / ax;
-                double c0 = Math.Exp(ax) / Math.Sqrt(2.0 * Math.PI * ax);
-                double P1 = -(mu - 1.0) * 0.125 * inv;
-                double P2 = ((mu - 1.0) * (mu - 9.0)) / 256.0 * inv * inv;
-                double val = c0 * (1.0 + P1 + P2);
-                return (float)val;
-            }
+            return (float)BesselI((Complex)x, a).Real;
         }
         /// <summary>
         /// Returns the value of the modified Bessel function of the first kind.
@@ -3613,31 +1534,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 I(Complex32 x, int a)
         {
-            if (x.Real == 0f && x.Imag == 0f)
-                return (a == 0) ? Complex32.One : Complex32.Zero;
-
-            int n = a < 0 ? -a : a; // I_{-n} = I_n
-            Complex Z = new Complex(x.Real, x.Imag);
-            double r = Complex.Abs(Z);
-            const double XSW = 20.0;
-
-            if (r <= XSW)
-            {
-                // I_n(z) = (1/π) ∫_0^π e^{z cos t} cos(n t) dt
-                Complex val = GL0PiC(t => Complex.Exp(Z * Math.Cos(t)) * Math.Cos(n * t)) / Math.PI;
-                return new Complex32((float)val.Real, (float)val.Imaginary);
-            }
-            else
-            {
-                double mu = 4.0 * n * n;
-                double ax = r;
-                double c0 = Math.Exp(ax) / Math.Sqrt(2.0 * Math.PI * ax);
-                double P1 = -(mu - 1.0) * 0.125 / ax;
-                double P2 = (mu - 1.0) * (mu - 9.0) / 256.0 / (ax * ax);
-                Complex scale = Complex.Exp(Z - ax);
-                Complex val = scale * (c0 * (1.0 + P1 + P2));
-                return new Complex32((float)val.Real, (float)val.Imaginary);
-            }
+            return (Complex32)BesselI((Complex)x, a);
         }
 
         /// <summary>
@@ -3648,30 +1545,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float K(float x, int a)
         {
-            if (x <= 0f) return float.NaN;
-
-            int n = a < 0 ? -a : a; // K_{-n} = K_n
-
-            const double XSW = 20.0;
-
-            if (x <= XSW)
-            {
-                // K_n(x) = ∫_0^∞ e^{-x cosh t} cosh(n t) dt
-                double T = Math.Max(8.0, Math.Log(40.0 / x + 1.0) + 2.0);
-                double val = GL0T(t => Math.Exp(-x * Math.Cosh(t)) * Math.Cosh(n * t), T);
-                return (float)val;
-            }
-            else
-            {
-                // K_n(x) ~ √(π/(2x)) e^{-x} [1 + (μ-1)/(8x) + ((μ-1)(μ-9))/(2!·128 x^2)]
-                double mu = 4.0 * n * n;
-                double inv = 1.0 / x;
-                double c0 = Math.Sqrt(Math.PI / (2.0 * x)) * Math.Exp(-x);
-                double P1 = (mu - 1.0) * 0.125 * inv;
-                double P2 = ((mu - 1.0) * (mu - 9.0)) / 256.0 * inv * inv;
-                double val = c0 * (1.0 + P1 + P2);
-                return (float)val;
-            }
+            if (x < 0) return float.NaN;
+            return (float)BesselK((Complex)x, a).Real;
         }
         /// <summary>
         /// Returns the value of the modified Bessel function of the second kind.
@@ -3681,144 +1556,10 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 K(Complex32 x, int a)
         {
-            if (x.Real == 0f && x.Imag == 0f) return Complex32.NaN;
-
-            int n = a < 0 ? -a : a; // K_{-n} = K_n
-            Complex Z = new Complex(x.Real, x.Imag);
-            double r = Complex.Abs(Z);
-            const double XSW = 20.0;
-
-            if (x.Real > 0f && r <= XSW)
-            {
-                double T = Math.Max(8.0, Math.Log(40.0 / (r + 1e-12) + 1.0) + 2.0);
-                Complex val = GL0TC(t => Complex.Exp(-Z * Math.Cosh(t)) * Math.Cosh(n * t), T);
-                return new Complex32((float)val.Real, (float)val.Imaginary);
-            }
-            else
-            {
-                double mu = 4.0 * n * n;
-                double inv = 1.0 / r;
-                double c0 = Math.Sqrt(Math.PI / (2.0 * r));
-
-                // K_n(z) ~ √(π/(2z)) e^{-z}(1 + …)
-                Complex scale = Complex.Exp(-Z);
-                double P1 = (mu - 1.0) * 0.125 * inv;
-                double P2 = ((mu - 1.0) * (mu - 9.0)) / 256.0 * inv * inv;
-                Complex val = scale * (c0 * (1.0 + P1 + P2));
-                return new Complex32((float)val.Real, (float)val.Imaginary);
-            }
+            return (Complex32)BesselK((Complex)x, a);
         }
 
-        #region Private methods (helpers)
 
-        /// <summary>
-        /// Integrates a real function over [0, π] using 16-point Gauss–Legendre quadrature.
-        /// </summary>
-        /// <param name="f">Function to integrate</param>
-        private static double GL0Pi(Func<double, double> f)
-        {
-            double[] u = new double[] {
-                -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
-                -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
-                 0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
-                 0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
-            };
-            double[] w = new double[] {
-                0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
-                0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
-                0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
-                0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
-            };
-            double half = Math.PI * 0.5, sum = 0.0;
-            for (int i = 0; i < 16; i++)
-            {
-                double t = half * (u[i] + 1.0);
-                sum += w[i] * f(t);
-            }
-            return half * sum;
-        }
-
-        /// <summary>
-        /// Integrates a complex function over [0, π] using 16-point Gauss–Legendre quadrature.
-        /// </summary>
-        /// <param name="f">Function to integrate</param>
-        private static Complex GL0PiC(Func<double, Complex> f)
-        {
-            double[] u = new double[] {
-                -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
-                -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
-                 0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
-                 0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
-            };
-            double[] w = new double[] {
-                0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
-                0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
-                0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
-                0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
-            };
-            double half = Math.PI * 0.5;
-            Complex sum = Complex.Zero;
-            for (int i = 0; i < 16; i++)
-            {
-                double t = half * (u[i] + 1.0);
-                sum += w[i] * f(t);
-            }
-            return half * sum;
-        }
-
-        /// <summary>
-        /// Integrates a real function over [0, T] using 16-point Gauss–Legendre quadrature.
-        /// </summary>
-        /// <param name="f">Function to integrate</param>
-        /// <param name="T">Upper integration limit</param>
-        private static double GL0T(Func<double, double> f, double T)
-        {
-            double[] u = new double[] {
-                -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
-                -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
-                 0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
-                 0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
-            };
-            double[] w = new double[] {
-                0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
-                0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
-                0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
-                0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
-            };
-            double half = 0.5 * T, mid = half;
-            double sum = 0.0;
-            for (int i = 0; i < 16; i++)
-            {
-                double t = mid + half * u[i];
-                sum += w[i] * f(t);
-            }
-            return half * sum;
-        }
-
-        static Complex GL0TC(Func<double, Complex> f, double T)
-        {
-            double[] u = new double[] {
-                -0.9894009349916499, -0.9445750230732326, -0.8656312023878318, -0.7554044083550030,
-                -0.6178762444026438, -0.4580167776572274, -0.2816035507792589, -0.09501250983763744,
-                 0.09501250983763744,  0.2816035507792589,  0.4580167776572274,  0.6178762444026438,
-                 0.7554044083550030,   0.8656312023878318,  0.9445750230732326,  0.9894009349916499
-            };
-            double[] w = new double[] {
-                0.027152459411754095, 0.06225352393864789, 0.09515851168249278, 0.12462897125553387,
-                0.14959598881657673,  0.16915651939500254, 0.18260341504492359, 0.18945061045506850,
-                0.18945061045506850,  0.18260341504492359, 0.16915651939500254, 0.14959598881657673,
-                0.12462897125553387,  0.09515851168249278, 0.06225352393864789, 0.027152459411754095
-            };
-            double half = 0.5 * T, mid = half;
-            Complex sum = Complex.Zero;
-            for (int i = 0; i < 16; i++)
-            {
-                double t = mid + half * u[i];
-                sum += w[i] * f(t);
-            }
-            return half * sum;
-        }
-        #endregion
 
         #endregion
 
@@ -3831,74 +1572,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float H(float x, int a)
         {
-            if (a < 0) return 0f;
-            if (x == 0f) return 0f;
-
-            double ax = Math.Abs((double)x);
-            double signArg = (x < 0) ? ((a & 1) == 0) ? -1.0 : 1.0 : 1.0;
-
-            const double XSW = 25.0;
-            const double BW = 1.0;
-
-            double invNorm0 = 1.0 / (Math.Sqrt(Math.PI) * Special.Gamma(a + 0.5f)); // 1/(√π Γ(a+1/2))
-            double invNorm1 = 1.0 / (Math.Sqrt(Math.PI) * Special.Gamma(a - 0.5f)); // 1/(√π Γ(a-1/2))
-
-            double smallVal()
-            {
-                double pref = 2.0 * Math.Pow(0.5 * ax, a) * invNorm0;
-                int panels = Math.Max(2, (int)Math.Ceiling(ax / 4.0));
-
-                double[] u = {
-                    -0.9602898564975363, -0.7966664774136267, -0.5255324099163290, -0.1834346424956498,
-                     0.1834346424956498,  0.5255324099163290,  0.7966664774136267,  0.9602898564975363
-                };
-                double[] w = {
-                    0.1012285362903763, 0.2223810344533745, 0.3137066458778873, 0.3626837833783620,
-                    0.3626837833783620, 0.3137066458778873, 0.2223810344533745, 0.1012285362903763
-                };
-
-                double sum = 0.0;
-                for (int p = 0; p < panels; p++)
-                {
-                    double aτ = p * (Math.PI * 0.5) / panels;
-                    double bτ = (p + 1) * (Math.PI * 0.5) / panels;
-                    double half = 0.5 * (bτ - aτ);
-                    double mid = 0.5 * (aτ + bτ);
-
-                    for (int i = 0; i < 8; i++)
-                    {
-                        double tau = mid + half * u[i];
-                        double wt = half * w[i];
-                        double s2a = Math.Pow(Math.Sin(tau), 2 * a);
-                        double f = Math.Sin(ax * Math.Cos(tau));
-                        sum += wt * s2a * f;
-                    }
-                }
-                return pref * sum;
-            }
-
-            double largeVal()
-            {
-                double ya = Special.Y((float)ax, a); // Y_a(|x|)
-                double lead0 = Math.Pow(0.5 * ax, a - 1) * invNorm0;
-                double lead1 = 4.0 / 3.0 * Math.Pow(0.5 * ax, a - 3) * invNorm1;
-                return ya + (lead0 - lead1);
-            }
-
-            double valSmall = smallVal();
-            double valLarge = largeVal();
-            double val;
-
-            if (ax <= XSW - BW) val = valSmall;
-            else if (ax >= XSW + BW) val = valLarge;
-            else
-            {
-                double t = (ax - (XSW - BW)) / (2.0 * BW);
-                double wBlend = 0.5 * (1.0 - Math.Cos(Math.PI * t));
-                val = (1.0 - wBlend) * valSmall + wBlend * valLarge;
-            }
-
-            return (float)(signArg * val);
+            return (float)StruveValue((Complex)x, a, false).Real;
         }
         /// <summary>
         /// Returns the value of the Struve function.
@@ -3908,79 +1582,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 H(Complex32 x, int a)
         {
-            if (a < 0) return Complex32.Zero;
-            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
-            if (x.Imag == 0f) return new Complex32(H(x.Real, a), 0f);
-
-            var Z = new Complex(x.Real, x.Imag);
-            double r = Maths.Abs(x);
-
-            const double XSW = 25.0;
-            const double BW = 1.0;
-
-            double invNorm0 = 1.0 / (Math.Sqrt(Math.PI) * Special.Gamma(a + 0.5f)); // 1/(√π Γ(a+1/2))
-            double invNorm1 = 1.0 / (Math.Sqrt(Math.PI) * Special.Gamma(a - 0.5f)); // 1/(√π Γ(a-1/2))
-
-            Complex smallVal()
-            {
-                // pref = 2/(√π Γ) * (Z/2)^a
-                var pref = 2.0 * invNorm0 * Complex.Pow(Z * 0.5, a);
-
-                int panels = Math.Max(2, (int)Math.Ceiling(r / 4.0));
-                double[] u = {
-                    -0.9602898564975363, -0.7966664774136267, -0.5255324099163290, -0.1834346424956498,
-                     0.1834346424956498,  0.5255324099163290,  0.7966664774136267,  0.9602898564975363
-                };
-                double[] w = {
-                    0.1012285362903763, 0.2223810344533745, 0.3137066458778873, 0.3626837833783620,
-                    0.3626837833783620, 0.3137066458778873, 0.2223810344533745, 0.1012285362903763
-                };
-
-                var sum = Complex.Zero;
-                for (int p = 0; p < panels; p++)
-                {
-                    double aτ = (p) * (Math.PI * 0.5) / panels;
-                    double bτ = (p + 1) * (Math.PI * 0.5) / panels;
-                    double half = 0.5 * (bτ - aτ);
-                    double mid = 0.5 * (aτ + bτ);
-
-                    for (int i = 0; i < 8; i++)
-                    {
-                        double tau = mid + half * u[i];
-                        double wt = half * w[i];
-                        double s2a = Math.Pow(Math.Sin(tau), 2 * a);
-                        var f = Complex.Sin(Z * Math.Cos(tau));
-                        sum += wt * s2a * f;
-                    }
-                }
-                return pref * sum;
-            }
-
-            Complex largeVal()
-            {
-                Complex32 ya32 = Special.Y(x, a);
-                var ya = new Complex(ya32.Real, ya32.Imag);
-
-                var lead0 = Complex.Pow(Z * 0.5, a - 1) * invNorm0;
-                var lead1 = (4.0 / 3.0) * Complex.Pow(Z * 0.5, a - 3) * invNorm1;
-
-                return ya + (lead0 - lead1);
-            }
-
-            var valSmall = smallVal();
-            var valLarge = largeVal();
-            Complex val;
-
-            if (r <= XSW - BW) val = valSmall;
-            else if (r >= XSW + BW) val = valLarge;
-            else
-            {
-                double t = (r - (XSW - BW)) / (2.0 * BW);
-                double wBlend = 0.5 * (1.0 - Math.Cos(Math.PI * t));
-                val = (1.0 - wBlend) * valSmall + wBlend * valLarge;
-            }
-
-            return new Complex32((float)val.Real, (float)val.Imaginary);
+            return (Complex32)StruveValue((Complex)x, a, false);
         }
         /// <summary>
         /// Returns the value of the modified Struve function.
@@ -3990,45 +1592,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float L(float x, int v)
         {
-            if (v < 0) return 0f;
-            if (x == 0f) return 0f;
-
-            double ax = Math.Abs((double)x);
-            double signArg = (x < 0) ? (((v & 1) == 0) ? -1.0 : 1.0) : 1.0; // (-1)^{v+1}
-
-            const double XSW = 12.0;
-            double gv = Special.Gamma(v + 0.5f);
-            double invNorm = 1.0 / (Math.Sqrt(Math.PI) * gv);
-
-            if (ax <= XSW)
-            {
-                double pref = 2.0 * Math.Pow(0.5 * ax, v) * invNorm;
-
-                double sum = 0.0, half = Math.PI * 0.25;
-                double[] u = { -0.9602898564975363, -0.7966664774136267, -0.5255324099163290, -0.1834346424956498,
-                        0.1834346424956498,  0.5255324099163290,  0.7966664774136267,  0.9602898564975363 };
-                double[] w = { 0.1012285362903763, 0.2223810344533745, 0.3137066458778873, 0.3626837833783620,
-                       0.3626837833783620, 0.3137066458778873, 0.2223810344533745, 0.1012285362903763 };
-
-                for (int i = 0; i < 8; i++)
-                {
-                    double tau = half * (u[i] + 1.0);
-                    double wt = half * w[i];
-                    double s2v = Math.Pow(Math.Sin(tau), 2 * v);
-                    double f = Math.Sinh(ax * Math.Cos(tau));   // <--- ax
-                    sum += wt * s2v * f;
-                }
-
-                double val = pref * sum;
-                return (float)(signArg * val);
-            }
-            else
-            {
-                double lead = Math.Pow(0.5 * ax, v - 1) * invNorm;
-                double iv = Special.I((float)ax, v);   // I(|x|,v); I_n(-x) = (-1)^n I_n(x)
-                double val = iv + lead;
-                return (float)(signArg * val);
-            }
+            return (float)StruveValue((Complex)x, v, true).Real;
         }
         /// <summary>
         /// Returns the value of the modified Struve function.
@@ -4038,47 +1602,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 L(Complex32 x, int v)
         {
-            if (v < 0) return Complex32.Zero;
-            if (x.Real == 0f && x.Imag == 0f) return Complex32.Zero;
-
-            if (x.Imag == 0f)
-                return new Complex32(L(x.Real, v), 0f);
-
-            var Z = new Complex(x.Real, x.Imag);
-            double r = Maths.Abs(x);
-            const double XSW = 12.0;
-
-            double gv = Special.Gamma(v + 0.5f);
-            double invNorm = 1.0 / (Math.Sqrt(Math.PI) * gv);
-
-            if (r <= XSW)
-            {
-                var sum = Complex.Zero;
-                double half = Math.PI * 0.25;
-                double[] u = { -0.9602898564975363, -0.7966664774136267, -0.5255324099163290, -0.1834346424956498,
-                        0.1834346424956498,  0.5255324099163290,  0.7966664774136267,  0.9602898564975363 };
-                double[] w = { 0.1012285362903763, 0.2223810344533745, 0.3137066458778873, 0.3626837833783620,
-                       0.3626837833783620, 0.3137066458778873, 0.2223810344533745, 0.1012285362903763 };
-                for (int i = 0; i < 8; i++)
-                {
-                    double tau = half * (u[i] + 1.0);
-                    double wt = half * w[i];
-                    double s2v = Math.Pow(Math.Sin(tau), 2 * v);
-                    var f = Complex.Sinh(Z * Math.Cos(tau));
-                    sum += wt * s2v * f;
-                }
-
-                var pref = 2.0 * invNorm * Complex.Exp(v * Complex.Log(Z * 0.5));
-                var val = pref * sum;
-                return new Complex32((float)val.Real, (float)val.Imaginary);
-            }
-            else
-            {
-                var lead = Complex.Exp((v - 1) * Complex.Log(Z * 0.5)) * invNorm;
-                var iv = Special.I(x, v);
-                var val = new Complex(iv.Real, iv.Imag) + lead;
-                return new Complex32((float)val.Real, (float)val.Imaginary);
-            }
+            return (Complex32)StruveValue((Complex)x, v, true);
         }
         #endregion
 
@@ -4090,11 +1614,7 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static int Fibonacci(int n)
         {
-            float r = 2.2360679774997896964f;
-            float phi = (1.0f + r) / 2.0f;
-            float psi = (1.0f - r) / 2.0f;
-            float num = Maths.Pow(phi, n) - Maths.Pow(psi, n);
-            return (int)(num / r);
+            return FibonacciValue(n, false);
         }
         /// <summary>
         /// Returns the value of the Luca number.
@@ -4103,11 +1623,7 @@ namespace UMapx.Core
         /// <returns>Integer number</returns>
         public static int Lucas(int n)
         {
-            float r = 2.2360679774997896964f;
-            float phi = (1.0f + r) / 2.0f;
-            float psi = (1.0f - r) / 2.0f;
-            float num = Maths.Pow(phi, n) + Maths.Pow(psi, n);
-            return (int)(num);
+            return FibonacciValue(n, true);
         }
         #endregion
 
@@ -4119,7 +1635,9 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Harm(int n)
         {
-            return Special.DiGamma(n) + 1.0f / n + Maths.Gamma;
+            if (n < 0) return float.NaN;
+            if (n == 0) return 0;
+            return (float)(Polygamma((Complex)((double)n + 1), false).Real + EulerGamma);
         }
         /// <summary>
         /// Returns the harmonic number.
@@ -4129,13 +1647,10 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Harm(int n, float m)
         {
-            float sum = 0;
-            for (int i = 0; i < n; i++)
-            {
-                sum += Maths.Pow(i + 1, -m);
-            }
-
-            return sum;
+            if (n < 0) return float.NaN;
+            double sum = 0;
+            for (int i = 1; i <= n; i++) sum += Math.Pow(i, -(double)m);
+            return (float)sum;
         }
         #endregion
 
@@ -4174,19 +1689,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static double Euler(int n, float x)
         {
-            // properties:
-            double p = 1, s = 0;
-            double v = x - 0.5f;
-            double u = Math.Pow(v, n);
-
-            // series:
-            for (int k = 0; k <= n; k++)
-            {
-                s += Special.Binomial(n, k) * Special.Euler(k) / p * u; p *= 2; u /= v;
-            }
-
-            // result:
-            return s;
+            return NumberPolynomial(n, x, true);
         }
         #endregion
 
@@ -4227,17 +1730,7 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static double Bernoulli(int n, float x)
         {
-            // properties:
-            double p = 1, s = 0;
-
-            // series:
-            for (int k = 0; k <= n; k++)
-            {
-                s += Special.Binomial(n, k) * Special.Bernoulli(n - k) * p; p *= x;
-            }
-
-            // result:
-            return s;
+            return NumberPolynomial(n, x, false);
         }
         #endregion
 
@@ -4249,32 +1742,8 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static float Minkowski(long x)
         {
-            // Minkowski function:
-            long p = x, q = 1, r = p + 1, s = 1, m, n;
-            float d = 1, y = p;
-
-            if (x < p || (p < 0) ^ (r <= 0))
-            {
-                return x;
-            }
-
-            // calculating:
-            for (; ; )
-            {
-                d /= 2; if (y + d == y) break;
-                m = p + r; if ((m < 0) ^ (p < 0)) break;
-                n = q + s; if (n < 0) break;
-
-                if (x < (float)m / n)
-                {
-                    r = m; s = n;
-                }
-                else
-                {
-                    y += d; p = m; q = n;
-                }
-            }
-            return y + d;
+            // The question-mark function fixes every integer.
+            return x;
         }
         #endregion
 
@@ -4690,6 +2159,1556 @@ namespace UMapx.Core
              2.32725003482002998572779903012518091723702509768829825693762e302,
             -3.245547458389247260235183311044519483521857479024361599136e306
         };
+        #endregion
+
+        #region Private gamma, beta, and recurrence kernels
+        // Keep intermediate arithmetic in double precision. Public single-precision
+        // overloads round only once, after the tail or logarithmic ratio is evaluated.
+        /// <summary>
+        /// Relative stopping threshold for double-precision series and continued fractions.
+        /// </summary>
+        private const double SpecialEpsilon = 2e-15;
+        /// <summary>
+        /// Square root of pi used by error-function and Bessel kernels.
+        /// </summary>
+        private const double SqrtPi = 1.7724538509055160273;
+        /// <summary>
+        /// Complex sentinel for undefined values or unsuccessful numerical convergence.
+        /// </summary>
+        private static readonly Complex ComplexNaN = new Complex(double.NaN, double.NaN);
+        /// <summary>
+        /// Lanczos coefficients for the gamma approximation with shift g = 7.
+        /// </summary>
+        private static readonly double[] GammaCoefficients =
+        {
+            0.99999999999980993, 676.5203681218851, -1259.1392167224028,
+            771.32342877765313, -176.61502916214059, 12.507343278686905,
+            -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7
+        };
+
+        /// <summary>
+        /// Tests whether the argument is a nonpositive integer pole of the gamma function.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>True exactly at a nonpositive real integer.</returns>
+        private static bool IsPole(double x) => x <= 0 && x == Math.Floor(x);
+        /// <summary>
+        /// Tests whether the argument is a nonpositive integer pole of the gamma function.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>True exactly at a nonpositive real integer.</returns>
+        private static bool IsPole(Complex x) => x.Imaginary == 0 && IsPole(x.Real);
+        /// <summary>
+        /// Tests whether both components of a complex argument are finite.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>True if neither component is NaN or infinite.</returns>
+        private static bool IsFinite(Complex x) => !double.IsNaN(x.Real) && !double.IsInfinity(x.Real)
+            && !double.IsNaN(x.Imaginary) && !double.IsInfinity(x.Imaginary);
+
+        /// <summary>
+        /// Evaluates log-gamma using Lanczos coefficients, recurrence, and reflection.
+        /// </summary>
+        /// <remarks>The real overload returns log(abs(Gamma(x))). The complex overload retains the analytic logarithm on the plane cut along the negative real axis.</remarks>
+        /// <param name="x">Function argument.</param>
+        /// <returns>The logarithm of the gamma magnitude for real inputs, or the analytic log-gamma for complex inputs.</returns>
+        private static double GammaLog(double x)
+        {
+            if (double.IsNaN(x) || IsPole(x)) return double.NaN;
+            if (double.IsPositiveInfinity(x)) return x;
+            if (x < 0.5)
+                return Math.Log(Math.PI / Math.Abs(Math.Sin(Math.PI * (x % 2)))) - GammaLog(1 - x);
+            double z = x - 1, sum = GammaCoefficients[0];
+            for (int k = 1; k < GammaCoefficients.Length; k++) sum += GammaCoefficients[k] / (z + k);
+            double t = z + 7.5;
+            return 0.91893853320467274178 + Math.Log(sum) + (z + 0.5) * Math.Log(t) - t;
+        }
+
+        /// <summary>
+        /// Returns the sign of gamma at a real argument away from its poles.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>One or minus one according to the sign of Gamma(x).</returns>
+        private static double GammaSign(double x) => x > 0 ? 1 : Math.Sign(Math.Sin(Math.PI * (x % 2)));
+
+        /// <summary>
+        /// Evaluates gamma from its logarithmic magnitude or analytic logarithm.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>Gamma at the argument, or NaN at a pole or an undefined input.</returns>
+        private static double GammaValue(double x)
+        {
+            double log = GammaLog(x);
+            return double.IsNaN(log) ? double.NaN : GammaSign(x) * Math.Exp(log);
+        }
+
+        // Analytic log-gamma on the plane cut along the negative real axis.
+        // Recurrence retains the winding of log Gamma instead of taking log(Gamma).
+        /// <summary>
+        /// Evaluates log-gamma using Lanczos coefficients, recurrence, and reflection.
+        /// </summary>
+        /// <remarks>The real overload returns log(abs(Gamma(x))). The complex overload retains the analytic logarithm on the plane cut along the negative real axis.</remarks>
+        /// <param name="x">Function argument.</param>
+        /// <returns>The logarithm of the gamma magnitude for real inputs, or the analytic log-gamma for complex inputs.</returns>
+        private static Complex GammaLog(Complex x)
+        {
+            if (!IsFinite(x) || IsPole(x)) return ComplexNaN;
+            if (x.Real < -128)
+            {
+                double sign = x.Imaginary < 0 ? -1 : 1;
+                Complex reflected = Math.Log(Math.PI) - LogSinPi(x) - GammaLog(1 - x);
+                double turns = Math.Floor((1 - x.Real) / 2);
+                return reflected - new Complex(0, sign * 2 * Math.PI * turns);
+            }
+            Complex correction = Complex.Zero;
+            while (x.Real < 0.5)
+            {
+                correction -= Complex.Log(x);
+                x += 1;
+            }
+            Complex z = x - 1, sum = GammaCoefficients[0];
+            for (int k = 1; k < GammaCoefficients.Length; k++) sum += GammaCoefficients[k] / (z + k);
+            Complex t = z + 7.5;
+            return correction + 0.91893853320467274178 + Complex.Log(sum) + (z + 0.5) * Complex.Log(t) - t;
+        }
+
+        /// <summary>
+        /// Evaluates gamma from its logarithmic magnitude or analytic logarithm.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>Gamma at the argument, or NaN at a pole or an undefined input.</returns>
+        private static Complex GammaValue(Complex x) => Complex.Exp(GammaLog(x));
+
+        /// <summary>
+        /// Evaluates the lower incomplete-gamma series before multiplication by x^s*exp(-x).
+        /// </summary>
+        /// <param name="s">Gamma shape parameter away from series denominator poles.</param>
+        /// <param name="x">Integration argument in the region selected for series evaluation.</param>
+        /// <returns>The lower-gamma series factor, or NaN if the iteration limit is reached.</returns>
+        private static double GammaSeries(double s, double x)
+        {
+            double term = 1 / s, sum = term;
+            for (int n = 1; n <= 100000; n++)
+            {
+                term *= x / (s + n);
+                sum += term;
+                if (Math.Abs(term) <= Math.Abs(sum) * SpecialEpsilon) return sum;
+            }
+            return double.NaN;
+        }
+
+        /// <summary>
+        /// Evaluates the lower incomplete-gamma series before multiplication by x^s*exp(-x).
+        /// </summary>
+        /// <param name="s">Gamma shape parameter away from series denominator poles.</param>
+        /// <param name="x">Integration argument in the region selected for series evaluation.</param>
+        /// <returns>The lower-gamma series factor, or NaN if the iteration limit is reached.</returns>
+        private static Complex GammaSeries(Complex s, Complex x)
+        {
+            Complex term = 1 / s, sum = term;
+            for (int n = 1; n <= 100000; n++)
+            {
+                term *= x / (s + n);
+                sum += term;
+                if (term.Magnitude <= sum.Magnitude * SpecialEpsilon) return sum;
+                if (!IsFinite(sum)) return ComplexNaN;
+            }
+            return ComplexNaN;
+        }
+
+        /// <summary>
+        /// Evaluates the upper incomplete-gamma continued-fraction factor before multiplication by x^s*exp(-x).
+        /// </summary>
+        /// <param name="s">Gamma shape parameter.</param>
+        /// <param name="x">Integration argument in the region selected for continued-fraction evaluation.</param>
+        /// <returns>The upper-gamma continued-fraction factor, or NaN if the iteration limit is reached.</returns>
+        private static double GammaFraction(double s, double x)
+        {
+            const double tiny = 1e-290;
+            double b = x + 1 - s, c = 1 / tiny, d = 1 / (Math.Abs(b) < tiny ? tiny : b), h = d;
+            for (int i = 1; i <= 100000; i++)
+            {
+                double a = i * (s - i);
+                b += 2;
+                d = b + a * d;
+                c = b + a / c;
+                if (Math.Abs(d) < tiny) d = tiny;
+                if (Math.Abs(c) < tiny) c = tiny;
+                d = 1 / d;
+                double delta = c * d;
+                h *= delta;
+                if (Math.Abs(delta - 1) <= SpecialEpsilon) return h;
+            }
+            return double.NaN;
+        }
+
+        /// <summary>
+        /// Evaluates the upper incomplete-gamma continued-fraction factor before multiplication by x^s*exp(-x).
+        /// </summary>
+        /// <param name="s">Gamma shape parameter.</param>
+        /// <param name="x">Integration argument in the region selected for continued-fraction evaluation.</param>
+        /// <returns>The upper-gamma continued-fraction factor, or NaN if the iteration limit is reached.</returns>
+        private static Complex GammaFraction(Complex s, Complex x)
+        {
+            const double tiny = 1e-290;
+            Complex b = x + 1 - s, c = 1 / tiny, d = 1 / (b.Magnitude < tiny ? tiny : b), h = d;
+            for (int i = 1; i <= 100000; i++)
+            {
+                Complex a = i * (s - i);
+                b += 2;
+                d = b + a * d;
+                c = b + a / c;
+                if (d.Magnitude < tiny) d = tiny;
+                if (c.Magnitude < tiny) c = tiny;
+                d = 1 / d;
+                Complex delta = c * d;
+                h *= delta;
+                if ((delta - 1).Magnitude <= SpecialEpsilon) return h;
+                if (!IsFinite(h)) return ComplexNaN;
+            }
+            return ComplexNaN;
+        }
+
+        /// <summary>
+        /// Evaluates a lower or upper incomplete gamma function, optionally divided by gamma(s).
+        /// </summary>
+        /// <param name="s">Shape parameter; real overloads require a positive finite value.</param>
+        /// <param name="x">Integration limit; real overloads require a nonnegative value.</param>
+        /// <param name="upper">True selects the upper tail; false selects the lower integral.</param>
+        /// <param name="regularized">True divides by Gamma(s).</param>
+        /// <returns>The requested incomplete gamma value or regularized ratio, or NaN for invalid inputs or nonconvergence.</returns>
+        private static double IncompleteGamma(double s, double x, bool upper, bool regularized)
+        {
+            if (double.IsNaN(s) || double.IsNaN(x) || double.IsInfinity(s) || IsPole(s) || x < 0) return double.NaN;
+            if (x == 0) return upper ? (regularized ? 1 : GammaValue(s)) : (s > 0 ? 0 : double.NaN);
+            if (double.IsPositiveInfinity(x)) return upper ? 0 : (regularized ? 1 : GammaValue(s));
+            if (s > 0 && s < 0.01 && x <= 1)
+            {
+                // Evaluate Q directly when P is almost one. The usual subtraction
+                // loses the entire tail for shapes close to zero.
+                double logGammaOnePlus = -EulerGamma * s;
+                double power = s * s;
+                for (int k = 2; k <= 10; k++)
+                {
+                    logGammaOnePlus += (k % 2 == 0 ? 1 : -1) * ZetaValue((Complex)k).Real * power / k;
+                    power *= s;
+                }
+                double log = s * Math.Log(x) - logGammaOnePlus;
+                double term = -x, sum = s * term / (s + 1);
+                for (int k = 2; k < 1000; k++)
+                {
+                    term *= -x / k;
+                    double add = s * term / (s + k);
+                    sum += add;
+                    if (Math.Abs(add) <= SpecialEpsilon * Math.Abs(sum)) break;
+                }
+                double q = -Expm1(log) - Math.Exp(log) * sum;
+                double value = upper ? q : 1 - q;
+                return regularized ? value : value * GammaValue(s);
+            }
+            double scale = s * Math.Log(x) - x;
+            double total = regularized ? 1 : GammaValue(s);
+            double sign = 1;
+            if (regularized) { scale -= GammaLog(s); sign = GammaSign(s); }
+            if (x < s + 1)
+            {
+                double series = GammaSeries(s, x);
+                if (double.IsNaN(series)) return double.NaN;
+                double lower = sign * Math.Sign(series) * Math.Exp(scale + Math.Log(Math.Abs(series)));
+                return upper ? total - lower : lower;
+            }
+            double tail = sign * Math.Exp(scale) * GammaFraction(s, x);
+            return upper ? tail : total - tail;
+        }
+
+        /// <summary>
+        /// Evaluates a lower or upper incomplete gamma function, optionally divided by gamma(s).
+        /// </summary>
+        /// <param name="s">Shape parameter; real overloads require a positive finite value.</param>
+        /// <param name="x">Integration limit; real overloads require a nonnegative value.</param>
+        /// <param name="upper">True selects the upper tail; false selects the lower integral.</param>
+        /// <param name="regularized">True divides by Gamma(s).</param>
+        /// <returns>The requested incomplete gamma value or regularized ratio, or NaN for invalid inputs or nonconvergence.</returns>
+        private static Complex IncompleteGamma(Complex s, Complex x, bool upper, bool regularized)
+        {
+            if (s.Imaginary == 0 && x.Imaginary == 0 && x.Real >= 0)
+                return new Complex(IncompleteGamma(s.Real, x.Real, upper, regularized), 0);
+            if (!IsFinite(s) || !IsFinite(x) || IsPole(s)) return ComplexNaN;
+            if (x == Complex.Zero) return upper ? (regularized ? Complex.One : GammaValue(s)) : (s.Real > 0 ? Complex.Zero : ComplexNaN);
+            Complex scale = s * Complex.Log(x) - x - (regularized ? GammaLog(s) : Complex.Zero);
+            Complex total = regularized ? Complex.One : GammaValue(s);
+            if (x.Real < 0 || x.Magnitude < s.Magnitude + 1)
+            {
+                Complex lower = Complex.Exp(scale) * GammaSeries(s, x);
+                return upper ? total - lower : lower;
+            }
+            Complex tail = Complex.Exp(scale) * GammaFraction(s, x);
+            return upper ? tail : total - tail;
+        }
+
+        /// <summary>
+        /// Evaluates the logarithmic beta ratio from three log-gamma values.
+        /// </summary>
+        /// <param name="a">First beta parameter.</param>
+        /// <param name="b">Second beta parameter.</param>
+        /// <returns>The log-gamma combination logGamma(a) + logGamma(b) - logGamma(a + b).</returns>
+        private static double BetaLog(double a, double b) => GammaLog(a) + GammaLog(b) - GammaLog(a + b);
+        /// <summary>
+        /// Evaluates the logarithmic beta ratio from three log-gamma values.
+        /// </summary>
+        /// <param name="a">First beta parameter.</param>
+        /// <param name="b">Second beta parameter.</param>
+        /// <returns>The log-gamma combination logGamma(a) + logGamma(b) - logGamma(a + b).</returns>
+        private static Complex BetaLog(Complex a, Complex b) => GammaLog(a) + GammaLog(b) - GammaLog(a + b);
+        /// <summary>
+        /// Evaluates real beta with gamma-sign tracking and a logarithmic magnitude.
+        /// </summary>
+        /// <param name="a">First real beta parameter.</param>
+        /// <param name="b">Second real beta parameter.</param>
+        /// <returns>The signed real beta value, or NaN where the gamma ratio is undefined.</returns>
+        private static double BetaValue(double a, double b)
+        {
+            double log = BetaLog(a, b);
+            return double.IsNaN(log) ? double.NaN : GammaSign(a) * GammaSign(b) * GammaSign(a + b) * Math.Exp(log);
+        }
+
+        /// <summary>
+        /// Evaluates the continued-fraction factor used by the incomplete beta function.
+        /// </summary>
+        /// <param name="a">Positive first beta shape parameter.</param>
+        /// <param name="b">Positive second beta shape parameter.</param>
+        /// <param name="x">Integration limit in (0, 1).</param>
+        /// <returns>The incomplete-beta continued-fraction factor, or NaN if the iteration limit is reached.</returns>
+        private static double BetaFraction(double a, double b, double x)
+        {
+            const double tiny = 1e-290;
+            double c = 1, d = 1 - (a + b) * x / (a + 1);
+            if (Math.Abs(d) < tiny) d = tiny;
+            d = 1 / d;
+            double h = d;
+            for (int m = 1; m <= 100000; m++)
+            {
+                double aa = m * (b - m) * x / ((a + 2 * m - 1) * (a + 2 * m));
+                d = 1 + aa * d; c = 1 + aa / c;
+                if (Math.Abs(d) < tiny) d = tiny;
+                if (Math.Abs(c) < tiny) c = tiny;
+                d = 1 / d; h *= d * c;
+                aa = -(a + m) * (a + b + m) * x / ((a + 2 * m) * (a + 2 * m + 1));
+                d = 1 + aa * d; c = 1 + aa / c;
+                if (Math.Abs(d) < tiny) d = tiny;
+                if (Math.Abs(c) < tiny) c = tiny;
+                d = 1 / d;
+                double delta = d * c;
+                h *= delta;
+                if (Math.Abs(delta - 1) <= SpecialEpsilon) return h;
+            }
+            return double.NaN;
+        }
+
+        /// <summary>
+        /// Evaluates the lower incomplete beta function, using a complementary tail when it improves conditioning.
+        /// </summary>
+        /// <param name="a">Positive finite first beta shape parameter.</param>
+        /// <param name="b">Positive finite second beta shape parameter.</param>
+        /// <param name="x">Integration limit in [0, 1].</param>
+        /// <param name="regularized">True divides by B(a, b).</param>
+        /// <returns>The lower incomplete beta value or regularized ratio, or NaN outside the supported domain.</returns>
+        private static double IncompleteBeta(double a, double b, double x, bool regularized)
+        {
+            if (!(a > 0) || !(b > 0) || double.IsInfinity(a + b) || double.IsNaN(x) || x < 0 || x > 1) return double.NaN;
+            if (x == 0) return 0;
+            double logBeta = BetaLog(a, b);
+            double total = regularized ? 1 : Math.Exp(logBeta);
+            if (x == 1) return total;
+            bool complement = x > (a + 1) / (a + b + 2);
+            if (complement) { double t = a; a = b; b = t; x = 1 - x; }
+            double value = Math.Exp(a * Math.Log(x) + b * Math.Log(1 - x) - (regularized ? logBeta : 0)) * BetaFraction(a, b, x) / a;
+            return complement ? total - value : value;
+        }
+
+        /// <summary>
+        /// Evaluates a first- or second-kind Chebyshev polynomial, including exact endpoint values and negative-order identities.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <param name="n">Integer order.</param>
+        /// <param name="secondKind">True selects the second kind; false selects the first kind.</param>
+        /// <returns>T_n(x) or U_n(x); Int32.MinValue returns NaN.</returns>
+        private static Complex ChebyshevValue(Complex x, int n, bool secondKind)
+        {
+            if (n == int.MinValue) return ComplexNaN;
+            if (n < 0) return secondKind ? (n == -1 ? Complex.Zero : -ChebyshevValue(x, -n - 2, true)) : ChebyshevValue(x, -n, false);
+            if (x == Complex.One) return secondKind ? (Complex)((double)n + 1) : Complex.One;
+            if (x == -Complex.One) return ((n & 1) == 0 ? 1 : -1) * (secondKind ? (Complex)((double)n + 1) : Complex.One);
+            if (n > 100000)
+            {
+                Complex angle = Complex.Acos(x);
+                return secondKind ? Complex.Sin(((double)n + 1) * angle) / Complex.Sin(angle) : Complex.Cos(n * angle);
+            }
+            Complex previous = 1, current = secondKind ? 2 * x : x;
+            if (n == 0) return previous;
+            for (int k = 1; k < n; k++) { Complex next = 2 * x * current - previous; previous = current; current = next; }
+            return current;
+        }
+
+        /// <summary>
+        /// Evaluates a rising or falling factorial using finite products or a continued gamma ratio.
+        /// </summary>
+        /// <param name="n">Complex initial factor.</param>
+        /// <param name="k">Complex product order; nonnegative integer orders use a finite product.</param>
+        /// <param name="rising">True selects the rising factorial; false selects the falling factorial.</param>
+        /// <returns>The rising or falling factorial, continued through the log-gamma ratio for noninteger orders.</returns>
+        private static Complex FactorialProduct(Complex n, Complex k, bool rising)
+        {
+            if (k == Complex.Zero) return Complex.One;
+            if (k.Imaginary == 0 && k.Real >= 0 && k.Real <= 10000 && k.Real == Math.Floor(k.Real))
+            {
+                Complex product = 1;
+                for (int j = 0; j < (int)k.Real; j++)
+                {
+                    Complex factor = rising ? n + j : n - j;
+                    if (factor == Complex.Zero) return Complex.Zero;
+                    product *= factor;
+                }
+                return product;
+            }
+            return rising ? Complex.Exp(GammaLog(n + k) - GammaLog(n)) : Complex.Exp(GammaLog(n + 1) - GammaLog(n - k + 1));
+        }
+
+        /// <summary>
+        /// Evaluates a generalized binomial coefficient using finite products or logarithmic gamma ratios.
+        /// </summary>
+        /// <param name="n">Complex upper index.</param>
+        /// <param name="k">Complex lower index.</param>
+        /// <returns>The generalized binomial coefficient; a negative real lower index returns zero.</returns>
+        private static Complex BinomialValue(Complex n, Complex k)
+        {
+            if (k.Imaginary == 0 && k.Real < 0) return Complex.Zero;
+            if (k == Complex.Zero) return Complex.One;
+            if (n.Imaginary == 0 && k.Imaginary == 0 && n.Real >= 0 && n.Real == Math.Floor(n.Real) && k.Real == Math.Floor(k.Real))
+            {
+                if (k.Real > n.Real) return Complex.Zero;
+                k = Math.Min(k.Real, n.Real - k.Real);
+            }
+            if (k.Imaginary == 0 && k.Real >= 0 && k.Real <= 10000 && k.Real == Math.Floor(k.Real))
+            {
+                Complex product = 1;
+                for (int j = 1; j <= (int)k.Real; j++) product *= (n - j + 1) / j;
+                return product;
+            }
+            return Complex.Exp(GammaLog(n + 1) - GammaLog(k + 1) - GammaLog(n - k + 1));
+        }
+
+        /// <summary>
+        /// Evaluates Gauss 2F1 using terminating series, transformations, or differential-equation continuation.
+        /// </summary>
+        /// <param name="a">First numerator parameter.</param>
+        /// <param name="b">Second numerator parameter.</param>
+        /// <param name="c">Denominator parameter; nonpositive real integers are rejected.</param>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The continued 2F1 value, or NaN at a rejected parameter pole or failed convergence.</returns>
+        private static Complex Hypergeometric2F1(Complex a, Complex b, Complex c, Complex z)
+        {
+            if (z == Complex.Zero || a == Complex.Zero || b == Complex.Zero) return Complex.One;
+            if (IsPole(c)) return ComplexNaN;
+            bool terminating = IsPole(a) || IsPole(b);
+            if (terminating && (1 - z).Magnitude < 0.5 && (c - a - b).Real > 0 && (IsPole(c - a) || IsPole(c - b)))
+                return Complex.Pow(1 - z, c - a - b) * Hypergeometric2F1(c - a, c - b, c, z);
+            if (!terminating && z.Real < 0)
+                return Complex.Pow(1 - z, -a) * Hypergeometric2F1(a, c - b, c, z / (z - 1));
+            if (!terminating && z == Complex.One)
+                return (c - a - b).Real > 0 ? Complex.Exp(GammaLog(c) + GammaLog(c - a - b) - GammaLog(c - a) - GammaLog(c - b)) : ComplexNaN;
+            if (!terminating && z.Magnitude > 0.8) return HypergeometricContinue(a, b, c, z, 2);
+            Complex term = 1, sum = 1;
+            for (int n = 0; n < 100000; n++)
+            {
+                term *= ((a + n) / (c + n)) * ((b + n) / (n + 1)) * z;
+                sum += term;
+                if (term.Magnitude <= SpecialEpsilon * sum.Magnitude || term == Complex.Zero) return sum;
+                if (!IsFinite(sum)) return ComplexNaN;
+            }
+            return ComplexNaN;
+        }
+        #endregion
+
+        #region Private elementary and number-polynomial kernels
+        /// <summary>
+        /// Evaluates exp(x) - 1 with a power series near zero to preserve small results.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>exp(x) - 1, retaining small differences near zero.</returns>
+        private static double Expm1(double x)
+        {
+            if (Math.Abs(x) > 0.5) return Math.Exp(x) - 1;
+            double term = x, sum = x;
+            for (int n = 2; n < 100; n++)
+            {
+                term *= x / n; sum += term;
+                if (Math.Abs(term) <= SpecialEpsilon * Math.Abs(sum)) break;
+            }
+            return sum;
+        }
+
+        /// <summary>
+        /// Evaluates 1 / (1 + exp(-z)), selecting the exponential with a nonpositive real part.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The complex logistic value 1 / (1 + exp(-z)).</returns>
+        private static Complex LogisticValue(Complex z)
+        {
+            if (z.Real >= 0) return 1 / (1 + Complex.Exp(-z));
+            Complex exponential = Complex.Exp(z);
+            return exponential / (1 + exponential);
+        }
+
+        /// <summary>
+        /// Evaluates the normalized sign of sin(2^n*pi*z), using zero at real integer nodes.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="n">Integer order.</param>
+        /// <returns>The normalized complex sine, with zero at real nodes and NaN for nonfinite inputs.</returns>
+        private static Complex RademacherValue(Complex z, int n)
+        {
+            if (!IsFinite(z)) return ComplexNaN;
+            if (n > 1023) return z.Imaginary == 0 ? Complex.Zero : new Complex(0, Math.Sign(z.Imaginary));
+            Complex scaled = Math.Pow(2, n) * z;
+            double real = scaled.Real % 2;
+            if (z.Imaginary == 0)
+                return real == Math.Truncate(real) ? Complex.Zero : (Complex)Math.Sign(Math.Sin(Math.PI * real));
+            Complex sine;
+            if (Math.Abs(scaled.Imaginary) > 20)
+                sine = new Complex(Math.Sin(Math.PI * real), Math.Sign(scaled.Imaginary) * Math.Cos(Math.PI * real));
+            else sine = Complex.Sin(Math.PI * new Complex(real, scaled.Imaginary));
+            return sine / sine.Magnitude;
+        }
+
+        /// <summary>
+        /// Computes a Fibonacci or Lucas number exactly over the supported signed Int32 result range.
+        /// </summary>
+        /// <param name="n">Signed sequence index: [-46, 46] for Fibonacci or [-44, 44] for Lucas.</param>
+        /// <param name="lucas">True selects Lucas numbers; false selects Fibonacci numbers.</param>
+        /// <returns>The exact signed sequence value; out-of-range requests throw ArgumentOutOfRangeException.</returns>
+        private static int FibonacciValue(int n, bool lucas)
+        {
+            int limit = lucas ? 44 : 46;
+            if (n < -limit || n > limit) throw new ArgumentOutOfRangeException(nameof(n), "The result does not fit in Int32.");
+            long previous = lucas ? 2 : 0, current = 1;
+            int order = Math.Abs(n);
+            for (int k = 0; k < order; k++) { long next = previous + current; previous = current; current = next; }
+            if (n < 0 && ((order & 1) == (lucas ? 1 : 0))) previous = -previous;
+            return (int)previous;
+        }
+
+        /// <summary>
+        /// Evaluates a Bernoulli or Euler polynomial by Horner accumulation of number-table coefficients.
+        /// </summary>
+        /// <param name="n">Polynomial degree: 0 through 186 for Euler or 258 for Bernoulli.</param>
+        /// <param name="x">Function argument.</param>
+        /// <param name="euler">True selects Euler polynomials; false selects Bernoulli polynomials.</param>
+        /// <returns>The selected polynomial value, or NaN for an unsupported order.</returns>
+        private static double NumberPolynomial(int n, double x, bool euler)
+        {
+            if (n < 0 || n > (euler ? 186 : 258)) return double.NaN;
+            double variable = euler ? x - 0.5 : x;
+            double sum = 0, binomial = 1, scale = 1;
+            for (int k = 0; k <= n; k++)
+            {
+                sum = sum * variable + binomial * (euler ? Euler(k) * scale : Bernoulli(k));
+                binomial *= (double)(n - k) / (k + 1);
+                scale *= 0.5;
+            }
+            return sum;
+        }
+        #endregion
+
+        #region Private series and analytic-continuation kernels
+        /// <summary>
+        /// Evaluates a classical orthogonal polynomial by its three-term recurrence.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <param name="a">Laguerre alpha or Gegenbauer lambda parameter; unused for Legendre and Hermite.</param>
+        /// <param name="n">Nonnegative polynomial degree.</param>
+        /// <param name="family">Polynomial family: 0 Laguerre, 1 Legendre, 2 Hermite, otherwise Gegenbauer.</param>
+        /// <returns>The selected degree-n polynomial at x, or NaN for negative degree.</returns>
+        private static Complex OrthogonalPolynomial(Complex x, Complex a, int n, int family)
+        {
+            if (n < 0) return ComplexNaN;
+            Complex previous = 1;
+            if (n == 0) return previous;
+            Complex current = family == 0 ? 1 + a - x : family == 1 ? x : family == 2 ? 2 * x : 2 * a * x;
+            for (int k = 2; k <= n; k++)
+            {
+                Complex next;
+                switch (family)
+                {
+                    case 0: next = ((2 * k - 1 + a - x) * current - (k - 1 + a) * previous) / k; break;
+                    case 1: next = ((2 * k - 1) * x * current - (k - 1) * previous) / k; break;
+                    case 2: next = 2 * (x * current - (k - 1) * previous); break;
+                    default: next = (2 * x * (k + a - 1) * current - (k + 2 * a - 2) * previous) / k; break;
+                }
+                previous = current; current = next;
+            }
+            return current;
+        }
+
+        /// <summary>
+        /// Evaluates Erlang B blocking probability by recurrence, avoiding direct powers and factorials.
+        /// </summary>
+        /// <param name="y">Offered traffic argument.</param>
+        /// <param name="n">Nonnegative number of servers.</param>
+        /// <returns>The Erlang B value, or NaN for negative server counts or nonfinite traffic.</returns>
+        private static Complex ErlangBlocking(Complex y, int n)
+        {
+            if (n < 0 || !IsFinite(y)) return ComplexNaN;
+            Complex blocking = 1;
+            for (int k = 1; k <= n; k++) blocking = y * blocking / (k + y * blocking);
+            return blocking;
+        }
+
+        /// <summary>
+        /// Evaluates the principal log(sin(pi*z)) without overflowing at large imaginary arguments.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The natural logarithm of the sine magnitude and its principal phase.</returns>
+        private static Complex LogSinPi(Complex z)
+        {
+            double real = z.Real % 2;
+            if (Math.Abs(z.Imaginary) < 20) return Complex.Log(Complex.Sin(Math.PI * new Complex(real, z.Imaginary)));
+            double phase = (z.Imaginary > 0 ? 1 : -1) * (Math.PI / 2 - Math.PI * real);
+            return new Complex(Math.PI * Math.Abs(z.Imaginary) - Math.Log(2), Math.Atan2(Math.Sin(phase), Math.Cos(phase)));
+        }
+
+        /// <summary>
+        /// Evaluates digamma or trigamma by reflection, recurrence, and a Bernoulli asymptotic expansion.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="derivative">True selects trigamma; false selects digamma.</param>
+        /// <returns>Digamma or trigamma at z, or NaN at poles or nonfinite arguments.</returns>
+        private static Complex Polygamma(Complex z, bool derivative)
+        {
+            if (!IsFinite(z) || IsPole(z)) return ComplexNaN;
+            if (z.Real < 0.5)
+            {
+                Complex reduced = new Complex(z.Real % 1, z.Imaginary);
+                if (derivative)
+                    return Math.PI * Math.PI * Complex.Exp(-2 * LogSinPi(z)) - Polygamma(1 - z, true);
+                Complex cotangent = Math.Abs(z.Imaginary) > 100 ? new Complex(0, z.Imaginary > 0 ? -1 : 1)
+                    : Complex.Cos(Math.PI * reduced) / Complex.Sin(Math.PI * reduced);
+                return Polygamma(1 - z, false) - Math.PI * cotangent;
+            }
+            Complex accumulated = 0;
+            while (z.Real < 12)
+            {
+                accumulated += derivative ? 1 / (z * z) : -1 / z;
+                z += 1;
+            }
+            Complex inverse = 1 / z, square = inverse * inverse;
+            Complex result = derivative ? inverse + square / 2 : Complex.Log(z) - inverse / 2;
+            double[] bernoulli = { 1.0 / 6, -1.0 / 30, 1.0 / 42, -1.0 / 30, 5.0 / 66, -691.0 / 2730, 7.0 / 6, -3617.0 / 510 };
+            Complex power = square;
+            for (int k = 0; k < bernoulli.Length; k++)
+            {
+                result += derivative ? bernoulli[k] * power * inverse : -bernoulli[k] * power / (2 * k + 2);
+                power *= square;
+            }
+            return accumulated + result;
+        }
+
+        /// <summary>
+        /// Evaluates the Riemann zeta function using reflection and Euler–Maclaurin summation.
+        /// </summary>
+        /// <param name="s">Complex zeta argument; s = 1 is a pole.</param>
+        /// <returns>Zeta(s), or NaN at the pole s = 1 or for nonfinite inputs.</returns>
+        private static Complex ZetaValue(Complex s)
+        {
+            if (!IsFinite(s) || s == Complex.One) return ComplexNaN;
+            if (s == Complex.Zero) return -0.5;
+            if (s.Real < 0)
+            {
+                if (s.Imaginary == 0 && s.Real % 2 == 0) return Complex.Zero;
+                return Complex.Exp(s * Math.Log(2) + (s - 1) * Math.Log(Math.PI) + LogSinPi(s / 2) + GammaLog(1 - s)) * ZetaValue(1 - s);
+            }
+            if (s.Real > 55) return Complex.One;
+            int count = (int)Math.Min(100000, 24 + Math.Ceiling(s.Imaginary == 0 ? 0 : Math.Abs(s.Imaginary)));
+            Complex sum = 0;
+            for (int k = 1; k < count; k++) sum += Complex.Exp(-s * Math.Log(k));
+            Complex power = Complex.Exp(-s * Math.Log(count));
+            sum += power * (count / (s - 1) + 0.5);
+            double[] coefficients = { 1.0 / 12, -1.0 / 720, 1.0 / 30240, -1.0 / 1209600,
+                1.0 / 47900160, -691.0 / 1307674368000, 1.0 / 74724249600, -3617.0 / 10670622842880000 };
+            Complex term = s * power / count;
+            for (int k = 0; k < coefficients.Length; k++)
+            {
+                sum += coefficients[k] * term;
+                term *= (s + 2 * k + 1) / count * ((s + 2 * k + 2) / count);
+            }
+            return sum;
+        }
+
+        // Continue a hypergeometric solution by Taylor steps inside disks that
+        // exclude the differential equation's singularities. Values and first
+        // derivatives are propagated together, without subtracting large gamma ratios.
+        /// <summary>
+        /// Advances a hypergeometric function and its first derivative by a Taylor step away from singularities.
+        /// </summary>
+        /// <param name="a">First numerator parameter; unused for 0F1.</param>
+        /// <param name="b">Second numerator parameter for 2F1, denominator parameter otherwise.</param>
+        /// <param name="c">Denominator parameter for 2F1; unused otherwise.</param>
+        /// <param name="center">Current center of the Taylor expansion.</param>
+        /// <param name="step">Nonzero complex step within the convergence disk.</param>
+        /// <param name="kind">Hypergeometric family: 0 for 0F1, 1 for 1F1, 2 for 2F1.</param>
+        /// <param name="value">On entry, the value at center; on return, the value at center + step.</param>
+        /// <param name="derivative">On entry, the first derivative at center; on return, the derivative at center + step.</param>
+        private static void HypergeometricStep(Complex a, Complex b, Complex c, Complex center,
+            Complex step, int kind, ref Complex value, ref Complex derivative)
+        {
+            Complex previous = value, current = step * derivative;
+            Complex sum = previous + current, slope = current;
+            for (int n = 0; n < 100; n++)
+            {
+                Complex next;
+                if (kind == 2)
+                    next = ((a + n) * (b + n) * step * step * previous - (n + 1) * (c - (a + b + 1) * center + n * (1 - 2 * center)) * step * current)
+                        / (center * (1 - center) * (n + 1) * (n + 2));
+                else
+                    next = ((kind == 1 ? a + n : Complex.One) * step * step * previous - (n + 1) * (b + n - (kind == 1 ? center : Complex.Zero)) * step * current)
+                        / (center * (n + 1) * (n + 2));
+                sum += next;
+                slope += (n + 2) * next;
+                previous = current; current = next;
+                if (n > 6 && next.Magnitude * (n + 2) <= SpecialEpsilon * (sum.Magnitude + slope.Magnitude)) break;
+            }
+            value = sum; derivative = slope / step;
+        }
+
+        /// <summary>
+        /// Continues a hypergeometric solution through overlapping Taylor disks that avoid the differential equation's singularities.
+        /// </summary>
+        /// <param name="a">First numerator parameter; unused for 0F1.</param>
+        /// <param name="b">Second numerator parameter for 2F1, denominator parameter otherwise.</param>
+        /// <param name="c">Denominator parameter for 2F1; unused otherwise.</param>
+        /// <param name="target">Target point for analytic continuation.</param>
+        /// <param name="kind">Hypergeometric family: 0 for 0F1, 1 for 1F1, 2 for 2F1.</param>
+        /// <returns>The solution at target, or NaN if the path cannot be completed within the iteration limit.</returns>
+        private static Complex HypergeometricContinue(Complex a, Complex b, Complex c, Complex target, int kind)
+        {
+            Complex waypoint = kind == 2 && target.Real > 1 && Math.Abs(target.Imaginary) < 0.5
+                ? new Complex(0.5, target.Imaginary > 0 ? 0.5 : -0.5) : target;
+            Complex center = waypoint / waypoint.Magnitude * 0.25;
+            Complex term = 1, value = 1, derivative = 0;
+            for (int n = 0; n < 1000; n++)
+            {
+                term *= kind == 2 ? (a + n) / (c + n) * ((b + n) / (n + 1)) * center
+                    : (kind == 1 ? a + n : Complex.One) / (b + n) * center / (n + 1);
+                value += term; derivative += (n + 1) * term / center;
+                if (term.Magnitude <= SpecialEpsilon * value.Magnitude) break;
+            }
+            for (int stage = 0; stage < 2; stage++)
+            {
+                Complex end = stage == 0 ? waypoint : target;
+                for (int iteration = 0; iteration < 10000 && center != end; iteration++)
+                {
+                    double radius = kind == 2 ? Math.Min(center.Magnitude, (1 - center).Magnitude) : center.Magnitude;
+                    double length = Math.Min(4, 0.4 * radius);
+                    Complex delta = end - center;
+                    Complex step = delta.Magnitude <= length ? delta : delta / delta.Magnitude * length;
+                    HypergeometricStep(a, b, c, center, step, kind, ref value, ref derivative);
+                    center = step == delta ? end : center + step;
+                    if (!IsFinite(value)) return value;
+                }
+                if (center != end) return ComplexNaN;
+            }
+            return value;
+        }
+
+        /// <summary>
+        /// Evaluates confluent hypergeometric functions, including reduced families selected by absent-parameter sentinels.
+        /// </summary>
+        /// <param name="a">Numerator parameter; NaN denotes an absent numerator parameter.</param>
+        /// <param name="b">Denominator parameter; NaN denotes an absent denominator parameter.</param>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The 1F1, 0F1, 1F0, or 0F0 value selected by the supplied parameters.</returns>
+        private static Complex Hypergeometric1F1(Complex a, Complex b, Complex z)
+        {
+            if (z == Complex.Zero) return Complex.One;
+            bool absentA = double.IsNaN(a.Real), absentB = double.IsNaN(b.Real);
+            if ((absentA && absentB) || a == b) return Complex.Exp(z);
+            if (absentB) return Complex.Pow(1 - z, -a);
+            if (IsPole(b)) return ComplexNaN;
+            if (!absentA && a == Complex.Zero) return Complex.One;
+            if (z.Magnitude > 8) return HypergeometricContinue(a, b, Complex.Zero, z, absentA ? 0 : 1);
+            Complex term = 1, sum = 1;
+            for (int n = 0; n < 10000; n++)
+            {
+                term *= (absentA ? Complex.One : a + n) / (b + n) * z / (n + 1);
+                sum += term;
+                if (term.Magnitude <= SpecialEpsilon * sum.Magnitude || term == Complex.Zero) return sum;
+            }
+            return ComplexNaN;
+        }
+        #endregion
+
+        #region Private error-function and quadrature kernels
+        /// <summary>
+        /// Positive nodes of the symmetric 16-point Gauss–Legendre rule on [-1, 1].
+        /// </summary>
+        private static readonly double[] GaussNodes =
+        {
+            0.0950125098376374402, 0.281603550779258913, 0.458016777657227386, 0.617876244402643748,
+            0.755404408355003034, 0.865631202387831744, 0.944575023073232576, 0.989400934991649933
+        };
+        /// <summary>
+        /// Weights paired with the positive and negative Gauss–Legendre nodes.
+        /// </summary>
+        private static readonly double[] GaussWeights =
+        {
+            0.189450610455068496, 0.182603415044923589, 0.169156519395002538, 0.149595988816576733,
+            0.124628971255533872, 0.0951585116824927848, 0.0622535239386478929, 0.0271524594117540949
+        };
+
+        /// <summary>
+        /// Integrates a complex-valued function over a real interval using composite 16-point Gauss–Legendre quadrature.
+        /// </summary>
+        /// <param name="f">Integrand evaluated at real quadrature nodes.</param>
+        /// <param name="end">Real upper integration limit; the lower limit is zero.</param>
+        /// <param name="panels">Positive number of equal quadrature panels.</param>
+        /// <returns>The quadrature estimate of the integral from zero to end.</returns>
+        private static Complex IntegrateGauss(Func<double, Complex> f, double end, int panels)
+        {
+            Complex sum = 0;
+            double half = end / (2 * panels);
+            for (int j = 0; j < panels; j++)
+            {
+                double mid = (2 * j + 1) * half;
+                for (int k = 0; k < GaussNodes.Length; k++)
+                    sum += GaussWeights[k] * (f(mid - half * GaussNodes[k]) + f(mid + half * GaussNodes[k]));
+            }
+            return sum * half;
+        }
+
+        // Fourier-Laplace representation in the upper half-plane. Reflection is
+        // performed before evaluation, so the integral always has a decaying kernel.
+        /// <summary>
+        /// Evaluates exp(-z^2)*erfc(-i*z) using reflection, decaying quadrature, and an asymptotic expansion.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The Faddeeva function w(z), or NaN for nonfinite inputs.</returns>
+        private static Complex FaddeevaValue(Complex z)
+        {
+            if (!IsFinite(z)) return ComplexNaN;
+            if (z.Imaginary < 0) return 2 * Complex.Exp(-z * z) - FaddeevaValue(-z);
+            if (z.Magnitude >= 12)
+            {
+                Complex term = 1, sum = 1;
+                double previous = double.PositiveInfinity;
+                for (int n = 1; n < 200; n++)
+                {
+                    term *= (n - 0.5) / (z * z);
+                    if (term.Magnitude > previous) break;
+                    sum += term;
+                    if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                    previous = term.Magnitude;
+                }
+                Complex result = Complex.ImaginaryOne * sum / (SqrtPi * z);
+                // The exponentially small real part on the real axis is not in
+                // the algebraic expansion, but is still representable near the switch.
+                return z.Imaginary == 0 ? new Complex(Math.Exp(-z.Real * z.Real), result.Imaginary) : result;
+            }
+            return IntegrateGauss(t => Complex.Exp(new Complex(-t * t / 4 - z.Imaginary * t, z.Real * t)),
+                12, Math.Max(12, (int)Math.Ceiling(2 * z.Magnitude))) / SqrtPi;
+        }
+
+        /// <summary>
+        /// Evaluates the complementary error function directly so small tails are not obtained by subtracting from one.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>The complementary error function at the argument.</returns>
+        private static double ErfcValue(double x)
+        {
+            if (double.IsNaN(x)) return double.NaN;
+            if (x < 0) return 2 - ErfcValue(-x);
+            if (double.IsPositiveInfinity(x)) return 0;
+            return IncompleteGamma(0.5, x * x, true, true);
+        }
+
+        /// <summary>
+        /// Evaluates the error function using its local power series and complementary-function relations.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>The error function at the argument.</returns>
+        private static double ErfValue(double x)
+        {
+            if (double.IsNaN(x)) return double.NaN;
+            if (double.IsInfinity(x)) return Math.Sign(x);
+            if (Math.Abs(x) > 0.5) return x < 0 ? ErfcValue(-x) - 1 : 1 - ErfcValue(x);
+            double term = x, sum = x;
+            for (int n = 1; n < 100; n++)
+            {
+                term *= -x * x / n;
+                double add = term / (2 * n + 1);
+                sum += add;
+                if (Math.Abs(add) <= SpecialEpsilon * Math.Abs(sum)) break;
+            }
+            return 2 * sum / SqrtPi;
+        }
+
+        /// <summary>
+        /// Evaluates the complementary error function directly so small tails are not obtained by subtracting from one.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The complementary error function at the argument.</returns>
+        private static Complex ErfcValue(Complex z)
+        {
+            if (z.Imaginary == 0) return new Complex(ErfcValue(z.Real), 0);
+            if (z.Real < 0) return 2 - ErfcValue(-z);
+            return Complex.Exp(-z * z) * FaddeevaValue(Complex.ImaginaryOne * z);
+        }
+
+        /// <summary>
+        /// Evaluates the error function using its local power series and complementary-function relations.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The error function at the argument.</returns>
+        private static Complex ErfValue(Complex z)
+        {
+            if (z.Imaginary == 0) return new Complex(ErfValue(z.Real), 0);
+            if (!IsFinite(z)) return ComplexNaN;
+            if (z.Real < 0) return -ErfValue(-z);
+            if (z.Magnitude > 0.5) return 1 - ErfcValue(z);
+            Complex term = z, sum = z;
+            for (int n = 1; n < 100; n++)
+            {
+                term *= -z * z / n;
+                Complex add = term / (2 * n + 1);
+                sum += add;
+                if (add.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+            }
+            return 2 * sum / SqrtPi;
+        }
+
+        /// <summary>
+        /// Inverts the real complementary error function by bracketing, including explicit endpoint limits.
+        /// </summary>
+        /// <param name="p">Complementary-error-function value in [0, 2].</param>
+        /// <returns>The inverse erfc, with +infinity at zero, -infinity at two, and NaN outside [0, 2].</returns>
+        private static double InverseErfc(double p)
+        {
+            if (double.IsNaN(p) || p < 0 || p > 2) return double.NaN;
+            if (p == 0) return double.PositiveInfinity;
+            if (p == 2) return double.NegativeInfinity;
+            if (p == 1) return 0;
+            if (p > 1) return -InverseErfc(2 - p);
+            double lower = 0, upper = 28;
+            // Bracketing also resolves very small probabilities without forming 1-p.
+            for (int j = 0; j < 60; j++)
+            {
+                double mid = (lower + upper) / 2;
+                if (ErfcValue(mid) > p) lower = mid; else upper = mid;
+            }
+            return (lower + upper) / 2;
+        }
+
+        /// <summary>
+        /// Inverts the error function, using real-domain limits or complex Halley refinement as appropriate.
+        /// </summary>
+        /// <param name="x">Real error-function value in [-1, 1].</param>
+        /// <returns>An inverse-error-function value; invalid real inputs or failed complex refinement return NaN.</returns>
+        private static double InverseErf(double x)
+        {
+            if (double.IsNaN(x) || Math.Abs(x) > 1) return double.NaN;
+            if (Math.Abs(x) < 1e-4) return SqrtPi / 2 * x * (1 + Math.PI * x * x / 12);
+            return x < 0 ? -InverseErfc(1 + x) : InverseErfc(1 - x);
+        }
+
+        /// <summary>
+        /// Inverts the error function, using real-domain limits or complex Halley refinement as appropriate.
+        /// </summary>
+        /// <param name="z">Complex error-function value to invert.</param>
+        /// <returns>An inverse-error-function value; invalid real inputs or failed complex refinement return NaN.</returns>
+        private static Complex InverseErf(Complex z)
+        {
+            if (z.Imaginary == 0 && Math.Abs(z.Real) <= 1) return new Complex(InverseErf(z.Real), 0);
+            if (!IsFinite(z)) return ComplexNaN;
+            if (z.Real < 0) return -InverseErf(-z);
+            Complex log = Complex.Log(1 - z * z);
+            Complex t = 2 / (Math.PI * 0.147) + log / 2;
+            Complex w = z.Magnitude < 0.5 ? SqrtPi * z / 2 : Complex.Sqrt(Complex.Sqrt(t * t - log / 0.147) - t);
+            for (int n = 0; n < 50; n++)
+            {
+                Complex correction = (ErfValue(w) - z) / (2 / SqrtPi * Complex.Exp(-w * w));
+                correction /= 1 + w * correction;
+                w -= correction;
+                if (correction.Magnitude <= SpecialEpsilon * (1 + w.Magnitude)) return w;
+            }
+            return ComplexNaN;
+        }
+
+        /// <summary>
+        /// Evaluates the entire continuation of Dawson's integral using a local series and the Faddeeva function.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>exp(-z^2) times the integral of exp(t^2) from zero to z.</returns>
+        private static Complex DawsonValue(Complex z)
+        {
+            if (!IsFinite(z)) return ComplexNaN;
+            if (z.Imaginary < 0) return -DawsonValue(-z);
+            if (z.Magnitude < 0.5)
+            {
+                Complex term = z, sum = z;
+                for (int n = 1; n < 100; n++)
+                {
+                    term *= -2 * z * z / (2 * n + 1);
+                    sum += term;
+                    if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                }
+                return sum;
+            }
+            return -Complex.ImaginaryOne * SqrtPi / 2 * (FaddeevaValue(z) - Complex.Exp(-z * z));
+        }
+
+        /// <summary>
+        /// Evaluates the library's unnormalized Fresnel integral of sin(t^2) or cos(t^2) from zero to z.
+        /// </summary>
+        /// <remarks>The integrand uses t^2, without the pi/2 factor of the normalized Fresnel convention.</remarks>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="sine">True selects the sine integral; false selects the cosine integral.</param>
+        /// <returns>The integral of the selected unnormalized Fresnel integrand from zero to z.</returns>
+        private static Complex FresnelValue(Complex z, bool sine)
+        {
+            if (z.Magnitude < 1)
+            {
+                Complex term = sine ? z * z * z / 3 : z, sum = term;
+                for (int k = 0; k < 100; k++)
+                {
+                    term *= sine ? -(4 * k + 3) * z * z * z * z / ((2.0 * k + 3) * (2 * k + 2) * (4 * k + 7))
+                        : -(4 * k + 1) * z * z * z * z / ((2.0 * k + 2) * (2 * k + 1) * (4 * k + 5));
+                    sum += term;
+                    if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                }
+                return sum;
+            }
+            Complex rotation = new Complex(Math.Sqrt(0.5), Math.Sqrt(0.5));
+            Complex positive = SqrtPi / 2 * rotation * ErfValue(Complex.Conjugate(rotation) * z);
+            if (z.Imaginary == 0) return sine ? positive.Imaginary : positive.Real;
+            Complex negative = SqrtPi / 2 * Complex.Conjugate(rotation) * ErfValue(rotation * z);
+            return sine ? (positive - negative) / (2 * Complex.ImaginaryOne) : (positive + negative) / 2;
+        }
+
+        /// <summary>
+        /// Evaluates the entire continuation of n!/sqrt(pi) times the integral of exp(-t^n) from zero to z.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="n">Nonnegative integer exponent in exp(-t^n).</param>
+        /// <returns>The generalized error integral, or NaN for negative order or nonfinite z.</returns>
+        private static Complex GeneralizedErf(Complex z, int n)
+        {
+            if (n < 0 || !IsFinite(z)) return ComplexNaN;
+            if (z == Complex.Zero) return Complex.Zero;
+            if (n == 0) return z / (Math.E * SqrtPi);
+            if (n == 2) return ErfValue(z);
+            Complex power = Complex.Pow(z, n);
+            if (power.Magnitude < 8)
+            {
+                Complex term = 1, sum = 1;
+                for (int k = 1; k < 1000; k++)
+                {
+                    term *= -power / k;
+                    Complex add = term / ((double)n * k + 1);
+                    sum += add;
+                    if (add.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                }
+                return GammaValue((double)n + 1) / SqrtPi * z * sum;
+            }
+            // The power correction preserves the entire continuation in z when
+            // z^n crosses the principal cut of the incomplete gamma function.
+            Complex correction = z / Complex.Pow(power, 1.0 / n);
+            return GammaValue((double)n) / SqrtPi * correction * IncompleteGamma((Complex)(1.0 / n), power, false, false);
+        }
+
+        /// <summary>
+        /// Solves w*exp(w) = z on the requested Lambert W branch using a branch-aware initial value and refinement.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="branch">Integer Lambert W branch index.</param>
+        /// <returns>W_branch(z), or NaN for rejected inputs or failed refinement.</returns>
+        private static Complex LambertValue(Complex z, int branch)
+        {
+            if (!IsFinite(z)) return ComplexNaN;
+            if (z == Complex.Zero) return branch == 0 ? Complex.Zero : ComplexNaN;
+            Complex w;
+            Complex p = Complex.Sqrt(2 * (Math.E * z + 1));
+            bool nearBranch = (Math.E * z + 1).Magnitude < 0.7;
+            if (nearBranch && (branch == 0 || (branch == -1 && z.Imaginary >= 0) || (branch == 1 && z.Imaginary < 0)))
+            {
+                if (branch != 0) p = -p;
+                w = -1 + p - p * p / 3 + 11 * p * p * p / 72;
+            }
+            else if (branch == 0 && z.Magnitude < 3) w = Complex.Log(1 + z);
+            else if (branch == -1 && z.Imaginary == 0 && z.Real > -1 / Math.E && z.Real < 0)
+            {
+                double log = Math.Log(-z.Real);
+                w = log - Math.Log(-log);
+            }
+            else
+            {
+                Complex log = Complex.Log(z) + new Complex(0, 2 * Math.PI * branch);
+                w = log - Complex.Log(log) + Complex.Log(log) / log;
+            }
+            for (int n = 0; n < 100; n++)
+            {
+                Complex f = w - z * Complex.Exp(-w);
+                if (f.Magnitude <= SpecialEpsilon * w.Magnitude) return w;
+                Complex step = f / (w + 1 - (w + 2) * f / (2 * w + 2));
+                w -= step;
+                if (step.Magnitude <= SpecialEpsilon * (1 + w.Magnitude)) return w;
+                if (!IsFinite(w)) return ComplexNaN;
+            }
+            return ComplexNaN;
+        }
+        #endregion
+
+        #region Private special-integral kernels
+        /// <summary>
+        /// Evaluates E1(z) on its logarithmic branch using a local series or an upper-gamma continued fraction.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>The continued E1 value using the principal logarithm in its local series.</returns>
+        private static Complex ExponentialIntegralE1(Complex z)
+        {
+            if (z.Magnitude > 4) return Complex.Exp(-z) * GammaFraction(Complex.Zero, z);
+            Complex term = -z, sum = term;
+            for (int k = 2; k < 1000; k++)
+            {
+                term *= -z / k;
+                Complex add = term / k;
+                sum += add;
+                if (add.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+            }
+            return -EulerGamma - Complex.Log(z) - sum;
+        }
+
+        /// <summary>
+        /// Evaluates Ei(z) with explicit continuation terms around the negative real axis.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <returns>Ei(z), real on the negative real axis and with signed imaginary continuation off that axis.</returns>
+        private static Complex ExponentialIntegral(Complex z)
+        {
+            if (z == Complex.Zero) return new Complex(double.NegativeInfinity, 0);
+            if (!IsFinite(z)) return ComplexNaN;
+            if (z.Real < 0)
+                return -ExponentialIntegralE1(-z) + new Complex(0, z.Imaginary > 0 ? Math.PI : z.Imaginary < 0 ? -Math.PI : 0);
+            if (z.Magnitude >= 20)
+            {
+                Complex term = 1, sum = 1;
+                double previous = double.PositiveInfinity;
+                for (int k = 1; k < 1000; k++)
+                {
+                    term *= k / z;
+                    if (term.Magnitude >= previous) break;
+                    sum += term;
+                    if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                    previous = term.Magnitude;
+                }
+                return Complex.Exp(z) / z * sum + new Complex(0, z.Imaginary > 0 ? Math.PI : z.Imaginary < 0 ? -Math.PI : 0);
+            }
+            Complex power = z, series = power;
+            for (int k = 2; k < 1000; k++)
+            {
+                power *= z / k;
+                Complex add = power / k;
+                series += add;
+                if (add.Magnitude <= SpecialEpsilon * series.Magnitude) break;
+            }
+            return EulerGamma + Complex.Log(z) + series;
+        }
+
+        /// <summary>
+        /// Evaluates Si(z) or Ci(z) using local series and exponential-integral relations.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="sine">True selects the sine integral; false selects the cosine integral.</param>
+        /// <returns>Si(z) or Ci(z); the cosine integral uses the upper value on the negative real axis.</returns>
+        private static Complex TrigonometricIntegral(Complex z, bool sine)
+        {
+            if (z == Complex.Zero) return sine ? Complex.Zero : new Complex(double.NegativeInfinity, 0);
+            if (!IsFinite(z)) return ComplexNaN;
+            if (z.Real < 0) return sine ? -TrigonometricIntegral(-z, true)
+                : TrigonometricIntegral(-z, false) + new Complex(0, z.Imaginary < 0 ? -Math.PI : Math.PI);
+            if (z.Magnitude < 1)
+            {
+                Complex term = sine ? z : -z * z / 4, sum = term;
+                for (int k = 1; k < 100; k++)
+                {
+                    term *= sine ? -z * z * (2 * k - 1) / ((2.0 * k + 1) * (2 * k + 1) * (2 * k))
+                        : -z * z * (2 * k) / ((2.0 * k + 2) * (2 * k + 2) * (2 * k + 1));
+                    sum += term;
+                    if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                }
+                return sine ? sum : EulerGamma + Complex.Log(z) + sum;
+            }
+            Complex positive = ExponentialIntegral(Complex.ImaginaryOne * z);
+            Complex negative = ExponentialIntegral(-Complex.ImaginaryOne * z);
+            if (z.Real == 0)
+            {
+                if (z.Imaginary > 0) positive += Complex.ImaginaryOne * Math.PI;
+                else negative -= Complex.ImaginaryOne * Math.PI;
+            }
+            return sine ? (positive - negative) / (2 * Complex.ImaginaryOne) - Math.PI / 2 : (positive + negative) / 2;
+        }
+
+        /// <summary>
+        /// Evaluates Owen's T function by quadrature after the substitution t = tan(theta).
+        /// </summary>
+        /// <param name="h">Gaussian threshold, continued to complex values.</param>
+        /// <param name="a">Integration limit, continued through the principal complex arctangent.</param>
+        /// <returns>The continued Owen T value from the transformed quadrature.</returns>
+        private static Complex OwenValue(Complex h, Complex a)
+        {
+            if (!IsFinite(h) || !IsFinite(a)) return ComplexNaN;
+            if (a == Complex.Zero) return Complex.Zero;
+            Complex angle = Complex.Atan(a);
+            if (h == Complex.Zero) return angle / (2 * Math.PI);
+            Complex previous = ComplexNaN;
+            for (int panels = 2; panels <= 1024; panels *= 2)
+            {
+                Complex value = angle / (2 * Math.PI) * IntegrateGauss(t =>
+                {
+                    Complex cosine = Complex.Cos(angle * t);
+                    return Complex.Exp(-h * h / (2 * cosine * cosine));
+                }, 1, panels);
+                if ((value - previous).Magnitude <= 1e-13 * value.Magnitude) return value;
+                previous = value;
+            }
+            return previous;
+        }
+        #endregion
+
+        #region Private Bessel and Struve kernels
+        /// <summary>
+        /// Euler–Mascheroni constant.
+        /// </summary>
+        private const double EulerGamma = 0.57721566490153286061;
+
+        /// <summary>
+        /// Returns i raised to an integer power by reducing the exponent modulo four.
+        /// </summary>
+        /// <param name="n">Signed integer exponent.</param>
+        /// <returns>One of 1, i, -1, or -i.</returns>
+        private static Complex ImaginaryPower(int n)
+        {
+            switch ((n % 4 + 4) % 4)
+            {
+                case 0: return Complex.One;
+                case 1: return Complex.ImaginaryOne;
+                case 2: return -Complex.One;
+                default: return -Complex.ImaginaryOne;
+            }
+        }
+
+        /// <summary>
+        /// Evaluates the power series for Bessel J or modified Bessel I at a nonnegative integer order.
+        /// </summary>
+        /// <param name="z">Nonzero complex argument in the series region.</param>
+        /// <param name="n">Nonnegative integer order.</param>
+        /// <param name="modified">True selects the modified function; false selects the ordinary function.</param>
+        /// <returns>J_n(z) or I_n(z), or NaN if the series iteration limit is reached.</returns>
+        private static Complex BesselSeries(Complex z, int n, bool modified)
+        {
+            Complex term = Complex.Exp(n * Complex.Log(z / 2) - GammaLog((double)n + 1));
+            Complex sum = term, factor = (modified ? 1 : -1) * z * z / 4;
+            for (int k = 1; k <= 10000; k++)
+            {
+                term *= factor / ((double)k * (n + k));
+                sum += term;
+                if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) return sum;
+                if (!IsFinite(sum)) return sum;
+            }
+            return ComplexNaN;
+        }
+
+        // Hankel expansion is evaluated only for orders zero and one. Higher
+        // orders use recurrence; their first asymptotic correction need not be small.
+        /// <summary>
+        /// Evaluates the Hankel asymptotic expansion for Bessel J or Y of order zero or one.
+        /// </summary>
+        /// <remarks>Used only for base orders zero and one; higher orders use recurrence.</remarks>
+        /// <param name="z">Nonzero argument in the asymptotic region.</param>
+        /// <param name="n">Base order, zero or one.</param>
+        /// <param name="secondKind">True selects the second kind; false selects the first kind.</param>
+        /// <returns>The asymptotic approximation to J_n(z) or Y_n(z).</returns>
+        private static Complex BesselAsymptotic(Complex z, int n, bool secondKind)
+        {
+            Complex term = 1, even = 1, odd = 0;
+            double previous = double.PositiveInfinity;
+            for (int k = 1; k < 200; k++)
+            {
+                term *= (4.0 * n * n - (2.0 * k - 1) * (2.0 * k - 1)) / (8 * k * z);
+                if (term.Magnitude > previous) break;
+                if ((k & 1) == 0) even += ((k / 2 & 1) == 0 ? 1 : -1) * term;
+                else odd += (((k - 1) / 2 & 1) == 0 ? 1 : -1) * term;
+                if (term.Magnitude <= SpecialEpsilon * (even.Magnitude + odd.Magnitude)) break;
+                previous = term.Magnitude;
+            }
+            // Separate the fixed phase shift from z to avoid losing it for large z.
+            double phase = n * Math.PI / 2 + Math.PI / 4;
+            Complex cosine = Complex.Cos(z) * Math.Cos(phase) + Complex.Sin(z) * Math.Sin(phase);
+            Complex sine = Complex.Sin(z) * Math.Cos(phase) - Complex.Cos(z) * Math.Sin(phase);
+            return Complex.Sqrt(2 / (Math.PI * z)) * (secondKind ? sine * even + cosine * odd : cosine * even - sine * odd);
+        }
+
+        /// <summary>
+        /// Evaluates integer-order Bessel J using a power series, asymptotics, and stable upward or Miller recurrence.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="order">Integer order in [-100000, 100000].</param>
+        /// <returns>J_order(z), or NaN for a rejected order or nonfinite input.</returns>
+        private static Complex BesselJ(Complex z, int order)
+        {
+            if (!IsFinite(z) || order == int.MinValue) return ComplexNaN;
+            int n = Math.Abs(order);
+            if (n > 100000) return ComplexNaN;
+            double sign = order < 0 && (n & 1) != 0 ? -1 : 1;
+            if (z == Complex.Zero) return n == 0 ? Complex.One : Complex.Zero;
+            if (z.Real < 0) return ((n & 1) == 0 ? sign : -sign) * BesselJ(-z, n);
+            if (z.Magnitude <= 12) return sign * BesselSeries(z, n, false);
+            Complex j0 = BesselAsymptotic(z, 0, false), j1 = BesselAsymptotic(z, 1, false);
+            if (n == 0) return j0;
+            if (n == 1) return sign * j1;
+            if (n <= (z.Imaginary == 0 ? z.Magnitude : z.Magnitude * 0.5))
+            {
+                for (int k = 1; k < n; k++) { Complex next = 2 * k / z * j1 - j0; j0 = j1; j1 = next; }
+                return sign * j1;
+            }
+            // Miller recurrence selects the minimal solution J_n when upward
+            // recurrence would amplify contamination by the dominant solution Y_n.
+            int start = n + (int)Math.Min(100000, Math.Ceiling(z.Magnitude)) + 40;
+            Complex current = 1, nextValue = 0, result = 0;
+            for (int k = start; k >= 1; k--)
+            {
+                Complex previousValue = 2 * k / z * current - nextValue;
+                nextValue = current;
+                current = previousValue;
+                if (k - 1 == n) result = current;
+                if (current.Magnitude > 1e150)
+                {
+                    current *= 1e-150; nextValue *= 1e-150; result *= 1e-150;
+                }
+            }
+            return sign * result * (j0.Magnitude >= j1.Magnitude ? j0 / current : j1 / nextValue);
+        }
+
+        /// <summary>
+        /// Evaluates Bessel Y of order zero or one from its logarithmic series or asymptotic expansion.
+        /// </summary>
+        /// <param name="z">Nonzero argument; the caller uses positive real inputs.</param>
+        /// <param name="n">Base order, zero or one.</param>
+        /// <returns>Y_n(z) for the selected base order.</returns>
+        private static Complex BesselYBase(Complex z, int n)
+        {
+            if (z.Magnitude > 12) return BesselAsymptotic(z, n, true);
+            Complex term = n == 0 ? Complex.One : z / 2;
+            double hk = 0, hnk = n;
+            Complex sum = (hk + hnk - 2 * EulerGamma) * term;
+            for (int k = 1; k < 10000; k++)
+            {
+                term *= -z * z / (4.0 * k * (n + k));
+                hk += 1.0 / k; hnk += 1.0 / (n + k);
+                Complex add = (hk + hnk - 2 * EulerGamma) * term;
+                sum += add;
+                if (add.Magnitude <= SpecialEpsilon * (1 + sum.Magnitude)) break;
+            }
+            return 2 / Math.PI * Complex.Log(z / 2) * BesselSeries(z, n, false) - sum / Math.PI - (n == 0 ? Complex.Zero : 2 / (Math.PI * z));
+        }
+
+        /// <summary>
+        /// Evaluates integer-order Bessel Y, retaining the upper/lower continuation across the negative real axis.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="order">Integer order in [-100000, 100000].</param>
+        /// <returns>Y_order(z), with the upper continuation on the negative real axis.</returns>
+        private static Complex BesselY(Complex z, int order)
+        {
+            if (!IsFinite(z) || order == int.MinValue) return ComplexNaN;
+            int n = Math.Abs(order);
+            if (n > 100000) return ComplexNaN;
+            double sign = order < 0 && (n & 1) != 0 ? -1 : 1;
+            if (z == Complex.Zero) return new Complex(sign * double.NegativeInfinity, 0);
+            if (z.Real < 0)
+                return sign * ((n & 1) == 0 ? 1 : -1) * (BesselY(-z, n) + (z.Imaginary < 0 ? -2 : 2) * Complex.ImaginaryOne * BesselJ(-z, n));
+            if (z.Imaginary < 0) return sign * Complex.Conjugate(BesselY(Complex.Conjugate(z), n));
+            if (z.Imaginary > 0)
+                return sign * (Complex.ImaginaryOne * BesselJ(z, n) - 2 / Math.PI * ImaginaryPower(-n) * BesselK(-Complex.ImaginaryOne * z, n));
+            Complex previous = BesselYBase(z, 0);
+            if (n == 0) return previous;
+            Complex current = BesselYBase(z, 1);
+            for (int k = 1; k < n; k++) { Complex next = 2 * k / z * current - previous; previous = current; current = next; }
+            return sign * current;
+        }
+
+        /// <summary>
+        /// Evaluates integer-order modified Bessel I by rotating the argument of Bessel J.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="n">Integer order in [-100000, 100000].</param>
+        /// <returns>I_n(z), using I_(-n)(z) = I_n(z).</returns>
+        private static Complex BesselI(Complex z, int n)
+        {
+            if (n == int.MinValue) return ComplexNaN;
+            n = Math.Abs(n);
+            return ImaginaryPower(-n) * BesselJ(Complex.ImaginaryOne * z, n);
+        }
+
+        /// <summary>
+        /// Evaluates modified Bessel K of order zero or one using a logarithmic series or a decaying asymptotic expansion.
+        /// </summary>
+        /// <param name="z">Nonzero complex argument in the closed right half-plane.</param>
+        /// <param name="n">Base order, zero or one.</param>
+        /// <returns>K_n(z) for the selected base order.</returns>
+        private static Complex BesselKBase(Complex z, int n)
+        {
+            if (z.Magnitude >= 9)
+            {
+                Complex term = 1, sum = 1;
+                double previous = double.PositiveInfinity;
+                for (int k = 1; k < 200; k++)
+                {
+                    term *= (4.0 * n * n - (2.0 * k - 1) * (2.0 * k - 1)) / (8 * k * z);
+                    if (term.Magnitude > previous) break;
+                    sum += term;
+                    if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                    previous = term.Magnitude;
+                }
+                return Complex.Sqrt(Math.PI / (2 * z)) * Complex.Exp(-z) * sum;
+            }
+            Complex t = n == 0 ? Complex.One : z / 2;
+            double hk = 0, hnk = n;
+            Complex series = (hk + hnk - 2 * EulerGamma) * t;
+            for (int k = 1; k < 10000; k++)
+            {
+                t *= z * z / (4.0 * k * (n + k));
+                hk += 1.0 / k; hnk += 1.0 / (n + k);
+                Complex add = (hk + hnk - 2 * EulerGamma) * t;
+                series += add;
+                if (add.Magnitude <= SpecialEpsilon * (1 + series.Magnitude)) break;
+            }
+            Complex logarithm = Complex.Log(z / 2) * BesselSeries(z, n, true);
+            return n == 0 ? -logarithm + series / 2 : 1 / z + logarithm - series / 2;
+        }
+
+        /// <summary>
+        /// Evaluates integer-order modified Bessel K using base orders, recurrence, and continuation across its cut.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="order">Integer order in [-100000, 100000].</param>
+        /// <returns>K_order(z), with the upper continuation on the negative real axis.</returns>
+        private static Complex BesselK(Complex z, int order)
+        {
+            if (!IsFinite(z) || order == int.MinValue) return ComplexNaN;
+            int n = Math.Abs(order);
+            if (n > 100000) return ComplexNaN;
+            if (z == Complex.Zero) return new Complex(double.PositiveInfinity, 0);
+            if (z.Real < 0)
+                return ((n & 1) == 0 ? 1 : -1) * BesselK(-z, n) - (z.Imaginary < 0 ? -1 : 1) * Complex.ImaginaryOne * Math.PI * BesselI(-z, n);
+            Complex previous = BesselKBase(z, 0);
+            if (n == 0) return previous;
+            Complex current = BesselKBase(z, 1);
+            for (int k = 1; k < n; k++) { Complex next = 2 * k / z * current + previous; previous = current; current = next; }
+            return current;
+        }
+
+        /// <summary>
+        /// Evaluates ordinary Struve H or modified Struve L using a series, recurrence, or transformed quadrature.
+        /// </summary>
+        /// <param name="z">Complex function argument.</param>
+        /// <param name="n">Integer order in [-100000, 100000].</param>
+        /// <param name="modified">True selects the modified function; false selects the ordinary function.</param>
+        /// <returns>H_n(z) or L_n(z), or NaN for rejected inputs.</returns>
+        private static Complex StruveValue(Complex z, int n, bool modified)
+        {
+            if (!IsFinite(z) || n < -100000 || n > 100000) return ComplexNaN;
+            if (z == Complex.Zero) return n >= 0 ? Complex.Zero : n == -1 ? (Complex)(2 / Math.PI) : ComplexNaN;
+            if (n < 0)
+            {
+                Complex previous = StruveValue(z, 0, modified);
+                Complex current = 2 / Math.PI + (modified ? 1 : -1) * StruveValue(z, 1, modified);
+                for (int k = -1; k > n; k--)
+                {
+                    Complex source = Complex.Pow(z / 2, k) / (SqrtPi * GammaValue(k + 1.5));
+                    Complex next = 2 * k / z * current + (modified ? 1 : -1) * previous + source;
+                    previous = current; current = next;
+                }
+                return current;
+            }
+            if (z.Magnitude < 4)
+            {
+                Complex term = Complex.Exp((n + 1) * Complex.Log(z / 2) - GammaLog(1.5) - GammaLog(n + 1.5));
+                Complex sum = term;
+                for (int k = 0; k < 1000; k++)
+                {
+                    term *= (modified ? 1 : -1) * z * z / (4 * (k + 1.5) * (k + n + 1.5));
+                    sum += term;
+                    if (term.Magnitude <= SpecialEpsilon * sum.Magnitude) break;
+                }
+                return sum;
+            }
+            // The substitution t=cos(theta) removes the endpoint singularity in
+            // the integral representation, including order zero (DLMF 11.5.1-2).
+            int panels = Math.Max(4, (int)Math.Min(100000, Math.Ceiling(z.Magnitude / 4 + n / 4.0)));
+            Complex integral = IntegrateGauss(theta => Math.Pow(Math.Sin(theta), 2.0 * n) *
+                (modified ? Complex.Sinh(z * Math.Cos(theta)) : Complex.Sin(z * Math.Cos(theta))), Math.PI / 2, panels);
+            return 2 / SqrtPi * Complex.Exp(n * Complex.Log(z / 2) - GammaLog(n + 0.5)) * integral;
+        }
+        #endregion
+
+        #region Internal probability-distribution kernels
+        // Reuse the audited double kernels without rounding intermediate distribution values to float.
+        /// <summary>
+        /// Provides the double-precision log-gamma kernel for probability-distribution calculations.
+        /// </summary>
+        /// <param name="x">Positive real gamma argument.</param>
+        /// <returns>The natural logarithm of Gamma(x) for positive x.</returns>
+        internal static double DistributionLogGamma(double x) => GammaLog(x);
+        /// <summary>
+        /// Provides the double-precision log-beta kernel for positive distribution shape parameters.
+        /// </summary>
+        /// <param name="a">Positive first beta shape parameter.</param>
+        /// <param name="b">Positive second beta shape parameter.</param>
+        /// <returns>The natural logarithm of B(a, b).</returns>
+        internal static double DistributionLogBeta(double a, double b) => BetaLog(a, b);
+        /// <summary>
+        /// Evaluates the real digamma function for positive distribution shape parameters.
+        /// </summary>
+        /// <param name="x">Positive real gamma argument.</param>
+        /// <returns>The logarithmic derivative of Gamma(x).</returns>
+        internal static double DistributionDigamma(double x) => Polygamma(new Complex(x, 0), false).Real;
+        /// <summary>
+        /// Evaluates a regularized lower or upper incomplete gamma function without intermediate float rounding.
+        /// </summary>
+        /// <param name="a">Positive finite gamma shape parameter.</param>
+        /// <param name="x">Nonnegative integration limit.</param>
+        /// <param name="upper">True selects the upper tail; false selects the lower integral.</param>
+        /// <returns>P(a, x) or Q(a, x), according to upper.</returns>
+        internal static double DistributionGamma(double a, double x, bool upper) => IncompleteGamma(a, x, upper, true);
+        /// <summary>
+        /// Evaluates the regularized incomplete beta function without intermediate float rounding.
+        /// </summary>
+        /// <param name="a">Positive finite first beta shape parameter.</param>
+        /// <param name="b">Positive finite second beta shape parameter.</param>
+        /// <param name="x">Integration limit in [0, 1].</param>
+        /// <returns>The regularized lower ratio I_x(a, b).</returns>
+        internal static double DistributionBeta(double a, double b, double x) => IncompleteBeta(a, b, x, true);
+        /// <summary>
+        /// Evaluates the real complementary error function in double precision for probability tails.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>erfc(x), including the real infinite-argument limits.</returns>
+        internal static double DistributionErfc(double x) => ErfcValue(x);
+        /// <summary>
+        /// Evaluates exp(x) - 1 without cancellation near zero for distribution calculations.
+        /// </summary>
+        /// <param name="x">Function argument.</param>
+        /// <returns>exp(x) - 1, retaining small differences near zero.</returns>
+        internal static double DistributionExpm1(double x) => Expm1(x);
         #endregion
     }
 }

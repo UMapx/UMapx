@@ -88,7 +88,7 @@ namespace UMapx.Transform
         public float[][,] Forward(float[,] data)
         {
             int r = data.GetLength(0), c = data.GetLength(1);
-            int nlev = (int)Math.Min((Math.Log(Math.Min(r, c)) / Math.Log(2)), levels);
+            int nlev = Math.Max(1, (int)Math.Min((Math.Log(Math.Min(r, c)) / Math.Log(2)), levels));
             float[][,] lapl = new float[nlev][,];
             float[,] I, J = data;
 
@@ -110,7 +110,7 @@ namespace UMapx.Transform
         public float[][] Forward(float[] data)
         {
             int r = data.Length;
-            int nlev = (int)Math.Min((Math.Log(r) / Math.Log(2)), levels);
+            int nlev = Math.Max(1, (int)Math.Min((Math.Log(r) / Math.Log(2)), levels));
 
             float[][] lapl = new float[nlev][];
             float[] I, J = data;
@@ -149,7 +149,7 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public float[] Backward(float[][] pyramid)
         {
-            int nlev = pyramid.Length;
+            int nlev = pyramid.Length - 1;
             float[] I = pyramid[nlev];
 
             for (int i = nlev - 1; i >= 0; i--)
@@ -167,7 +167,7 @@ namespace UMapx.Transform
         public Complex32[][,] Forward(Complex32[,] data)
         {
             int r = data.GetLength(0), c = data.GetLength(1);
-            int nlev = (int)Math.Min((Math.Log(Math.Min(r, c)) / Math.Log(2)), levels);
+            int nlev = Math.Max(1, (int)Math.Min((Math.Log(Math.Min(r, c)) / Math.Log(2)), levels));
             Complex32[][,] lapl = new Complex32[nlev][,];
             Complex32[,] I, J = data;
 
@@ -189,7 +189,7 @@ namespace UMapx.Transform
         public Complex32[][] Forward(Complex32[] data)
         {
             int r = data.Length;
-            int nlev = (int)Math.Min((Math.Log(r) / Math.Log(2)), levels);
+            int nlev = Math.Max(1, (int)Math.Min((Math.Log(r) / Math.Log(2)), levels));
 
             Complex32[][] lapl = new Complex32[nlev][];
             Complex32[] I, J = data;
@@ -228,7 +228,7 @@ namespace UMapx.Transform
         /// <returns>Array</returns>
         public Complex32[] Backward(Complex32[][] pyramid)
         {
-            int nlev = pyramid.Length;
+            int nlev = pyramid.Length - 1;
             Complex32[] I = pyramid[nlev];
 
             for (int i = nlev - 1; i >= 0; i--)

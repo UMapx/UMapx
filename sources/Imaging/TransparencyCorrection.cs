@@ -69,12 +69,14 @@ namespace UMapx.Imaging
                 this.Rebuild(); this.rebuild = false;
             }
 
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-            int y, x, height = bmData.Height, width = bmData.Width;
+            byte* scan0 = (byte*)bmData.Scan0.ToPointer();
+            int y, x, height = bmData.Height, width = bmData.Width, stride = bmData.Stride;
             float length = values.Length - 1;
 
             for (y = 0; y < height; y++)
             {
+                // Restart at the logical row so alpha updates cannot enter padding.
+                byte* p = scan0 + (long)y * stride;
                 for (x = 0; x < width; x++, p += 4)
                 {
                     p[3] = Maths.Byte(values[p[3]] * length);

@@ -149,8 +149,8 @@ namespace UMapx.Distribution
         {
             get
             {
-                float vf = v;
-                return vf / 2f + Maths.Log(0.5f) + Special.LogGamma(vf / 2f) - (1f - vf / 2f) * Special.DiGamma(vf / 2f);
+                double a = v / 2.0;
+                return (float)(a + Math.Log(0.5) + Special.DistributionLogGamma(a) - (1 + a) * Special.DistributionDigamma(a));
             }
         }
         #endregion

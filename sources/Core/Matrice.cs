@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 
@@ -2620,19 +2620,13 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[] Var(this Complex32[,] m)
         {
-            int mr = m.GetLength(1), ml = m.GetLength(0);
-            Complex32[] u = Matrice.Mean(m);
-            Complex32[] v = new Complex32[mr];
-            int i, j;
-
-            for (i = 0; i < mr; i++)
+            var result = new Complex32[m.GetLength(1)];
+            for (int j = 0; j < result.Length; j++)
             {
-                for (j = 0; j < ml; j++)
-                {
-                    v[i] += Maths.Pow(m[j, i] - u[i], 2);
-                }
+                var column = m.GetCol(j);
+                result[j] = new Complex32((float)HermitianVariance(column), 0);
             }
-            return Matrice.Div(v, ml - 1);
+            return result;
         }
         /// <summary>
         /// Returns the vector of variances of matrices.
@@ -2663,18 +2657,11 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[] Var(this Complex32[,] m, Complex32[,] n)
         {
-            int mr = m.GetLength(1), ml = m.GetLength(0);
-            Complex32[] v = new Complex32[mr];
-            int i, j;
-
-            for (i = 0; i < mr; i++)
-            {
-                for (j = 0; j < ml; j++)
-                {
-                    v[i] += Maths.Pow(m[j, i] - n[j, i], 2);
-                }
-            }
-            return Matrice.Div(v, ml - 1);
+            if (m.GetLength(0) != n.GetLength(0) || m.GetLength(1) != n.GetLength(1))
+                throw new ArgumentException("Matrix dimensions must match.", nameof(n));
+            var result = new Complex32[m.GetLength(1)];
+            for (int j = 0; j < result.Length; j++) result[j] = Var(m.GetCol(j), n.GetCol(j));
+            return result;
         }
         /// <summary>
         /// Returns the standard deviation vector of the matrix.
@@ -2692,7 +2679,13 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[] StnDev(this Complex32[,] m)
         {
-            return Matrice.Pow(Matrice.Var(m), 0.5f);
+            var result = new Complex32[m.GetLength(1)];
+            for (int j = 0; j < result.Length; j++)
+            {
+                var column = m.GetCol(j);
+                result[j] = new Complex32((float)Math.Sqrt(HermitianVariance(column)), 0);
+            }
+            return result;
         }
         /// <summary>
         /// Returns the standard deviation vector of the matrices.
@@ -2712,7 +2705,11 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[] StnDev(this Complex32[,] m, Complex32[,] n)
         {
-            return Matrice.Pow(Matrice.Var(m, n), 0.5f);
+            if (m.GetLength(0) != n.GetLength(0) || m.GetLength(1) != n.GetLength(1))
+                throw new ArgumentException("Matrix dimensions must match.", nameof(n));
+            var result = new Complex32[m.GetLength(1)];
+            for (int j = 0; j < result.Length; j++) result[j] = StnDev(m.GetCol(j), n.GetCol(j));
+            return result;
         }
         /// <summary>
         /// Returns the covariance matrix.
@@ -2743,20 +2740,36 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Cov(this Complex32[,] m)
         {
-            Complex32[] v = Matrice.Mean(m);
             int width = m.GetLength(1), height = m.GetLength(0);
-            Complex32[,] H = (Complex32[,])m.Clone();
-            int i, j;
-
-            for (i = 0; i < height; i++)
+            var result = new Complex32[width, width];
+            var meanReal = new double[width];
+            var meanImag = new double[width];
+            for (int j = 0; j < width; j++)
             {
-                for (j = 0; j < width; j++)
+                for (int i = 0; i < height; i++)
                 {
-                    H[i, j] -= v[j];
+                    meanReal[j] += m[i, j].Real;
+                    meanImag[j] += m[i, j].Imag;
                 }
+                meanReal[j] /= height; meanImag[j] /= height;
             }
-
-            return H.Hermitian().Dot(H).Div(height - 1);
+            // Conjugate the first column; compute each Hermitian pair together.
+            for (int j = 0; j < width; j++) for (int k = j; k < width; k++)
+            {
+                double real = 0, imag = 0;
+                for (int i = 0; i < height; i++)
+                {
+                    double ar = m[i, j].Real - meanReal[j], ai = m[i, j].Imag - meanImag[j];
+                    double br = m[i, k].Real - meanReal[k], bi = m[i, k].Imag - meanImag[k];
+                    real += ar * br + ai * bi;
+                    imag += ar * bi - ai * br;
+                }
+                float re = height < 2 ? float.NaN : (float)(real / (height - 1));
+                float im = j == k ? 0 : height < 2 ? float.NaN : (float)(imag / (height - 1));
+                result[j, k] = new Complex32(re, im);
+                result[k, j] = new Complex32(re, -im);
+            }
+            return result;
         }
         /// <summary>
         /// Returns the entropy vector of the matrix.
@@ -3199,8 +3212,8 @@ namespace UMapx.Core
         /// Returns the result matrix of local averaging.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="r0">Height radius</param>
-        /// <param name="r1">Width radius</param>
+        /// <param name="r0">Height window length</param>
+        /// <param name="r1">Width window length</param>
         public static float[,] Mean(this float[,] m, int r0, int r1)
         {
             return LinealgOptions.MeanFilter.MeanVertical(LinealgOptions.MeanFilter.MeanHorizontal(m, r1), r0);
@@ -3209,8 +3222,8 @@ namespace UMapx.Core
         /// Returns the result matrix of local averaging.
         /// </summary>
         /// <param name="m">Matrix</param>
-        /// <param name="r0">Height radius</param>
-        /// <param name="r1">Width radius</param>
+        /// <param name="r0">Height window length</param>
+        /// <param name="r1">Width window length</param>
         public static Complex32[,] Mean(this Complex32[,] m, int r0, int r1)
         {
             return LinealgOptions.MeanFilter.MeanVertical(LinealgOptions.MeanFilter.MeanHorizontal(m, r1), r0);
@@ -3221,8 +3234,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <param name="w">Matrix</param>
-        /// <param name="r0">Height radius</param>
-        /// <param name="r1">Width radius</param>
+        /// <param name="r0">Height window length</param>
+        /// <param name="r1">Width window length</param>
         public static float[,] Mean(this float[,] m, float[,] w, int r0, int r1)
         {
             return LinealgOptions.MeanFilter.MeanVerticalWeighted(LinealgOptions.MeanFilter.MeanHorizontalWeighted(m, w, r1), w, r0);
@@ -3232,8 +3245,8 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="m">Matrix</param>
         /// <param name="w">Matrix</param>
-        /// <param name="r0">Height radius</param>
-        /// <param name="r1">Width radius</param>
+        /// <param name="r0">Height window length</param>
+        /// <param name="r1">Width window length</param>
         public static Complex32[,] Mean(this Complex32[,] m, Complex32[,] w, int r0, int r1)
         {
             return LinealgOptions.MeanFilter.MeanVerticalWeighted(LinealgOptions.MeanFilter.MeanHorizontalWeighted(m, w, r1), w, r0);
@@ -5048,16 +5061,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Var(this Complex32[] v)
         {
-            int length = v.Length;
-            Complex32 mean = Matrice.Mean(v);
-            Complex32 sum = 0;
-
-            for (int i = 0; i < length; i++)
-            {
-                sum += Maths.Pow(v[i] - mean, 2);
-            }
-
-            return sum / (length - 1);
+            return new Complex32((float)HermitianVariance(v), 0);
         }
         /// <summary>
         /// Returns the variance value.
@@ -5085,15 +5089,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Var(this Complex32[] x, Complex32[] y)
         {
-            int length = x.Length;
-            Complex32 sum = 0;
-
-            for (int i = 0; i < length; i++)
-            {
-                sum += Maths.Pow(x[i] - y[i], 2);
-            }
-
-            return sum / (length - 1);
+            return new Complex32((float)HermitianSquaredDifference(x, y), 0);
         }
         /// <summary>
         /// Returns the standard deviation.
@@ -5111,7 +5107,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 StnDev(this Complex32[] v)
         {
-            return Maths.Sqrt(Matrice.Var(v));
+            return new Complex32((float)Math.Sqrt(HermitianVariance(v)), 0);
         }
         /// <summary>
         /// Returns the standard deviation.
@@ -5131,7 +5127,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 StnDev(this Complex32[] x, Complex32[] y)
         {
-            return Maths.Sqrt(Matrice.Var(x, y));
+            return new Complex32((float)Math.Sqrt(HermitianSquaredDifference(x, y)), 0);
         }
         /// <summary>
         /// Returns the value of the vector mode.
@@ -5303,16 +5299,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Cov(this Complex32[] v)
         {
-            int xlength = v.Length;
-            Complex32 xv = Matrice.Mean(v);
-            Complex32 total = 0;
-            int i;
-
-            for (i = 0; i < xlength; i++)
-            {
-                total += v[i] * v[i] - xv * xv;
-            }
-            return total / (xlength - 1);
+            return Var(v);
         }
         /// <summary>
         /// Returns the entropy of a vector.
@@ -5617,39 +5604,15 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[,] Dot(this float[] v, float[,] m, bool inverse = false)
         {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            float[,] temp = new float[r0, r1];
-            float alpha;
-            int i, j;
-
-            if (!inverse)
+            int rows = m.GetLength(0), cols = m.GetLength(1);
+            if (v.Length != rows) throw new ArgumentException("The diagonal length must equal the number of rows.", nameof(v));
+            var result = new float[rows, cols];
+            for (int i = 0; i < rows; i++)
             {
-                for (j = 0; j < r1; j++)
-                {
-                    alpha = v[j];
-                    for (i = 0; i < r0; i++)
-                    {
-                        temp[i, j] = m[i, j] * alpha;
-                    }
-                }
+                if (inverse && v[i] == 0) continue; // Preserve the diagonal pseudoinverse convention.
+                for (int j = 0; j < cols; j++) result[i, j] = inverse ? m[i, j] / v[i] : m[i, j] * v[i];
             }
-            else
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    alpha = v[j];
-
-                    if (alpha != 0)
-                    {
-                        for (i = 0; i < r0; i++)
-                        {
-                            temp[i, j] = m[i, j] / alpha;
-                        }
-                    }
-                }
-            }
-
-            return temp;
+            return result;
         }
         /// <summary>
         /// Implements the scalar product of a matrix by a vector of the form: diag(v) * A.
@@ -5660,39 +5623,15 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[,] Dot(this Complex32[] v, Complex32[,] m, bool inverse = false)
         {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex32[,] temp = new Complex32[r0, r1];
-            Complex32 alpha;
-            int i, j;
-
-            if (!inverse)
+            int rows = m.GetLength(0), cols = m.GetLength(1);
+            if (v.Length != rows) throw new ArgumentException("The diagonal length must equal the number of rows.", nameof(v));
+            var result = new Complex32[rows, cols];
+            for (int i = 0; i < rows; i++)
             {
-                for (j = 0; j < r1; j++)
-                {
-                    alpha = v[j];
-                    for (i = 0; i < r0; i++)
-                    {
-                        temp[i, j] = m[i, j] * alpha;
-                    }
-                }
+                if (inverse && v[i] == 0) continue; // Preserve the diagonal pseudoinverse convention.
+                for (int j = 0; j < cols; j++) result[i, j] = inverse ? m[i, j] / v[i] : m[i, j] * v[i];
             }
-            else
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    alpha = v[j];
-
-                    if (alpha != 0)
-                    {
-                        for (i = 0; i < r0; i++)
-                        {
-                            temp[i, j] = m[i, j] / alpha;
-                        }
-                    }
-                }
-            }
-
-            return temp;
+            return result;
         }
         /// <summary>
         /// Implements the scalar product of a matrix by a vector of the form: diag(v) * A.
@@ -5703,39 +5642,15 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[,] Dot(this Complex32[] v, float[,] m, bool inverse = false)
         {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex32[,] temp = new Complex32[r0, r1];
-            Complex32 alpha;
-            int i, j;
-
-            if (!inverse)
+            int rows = m.GetLength(0), cols = m.GetLength(1);
+            if (v.Length != rows) throw new ArgumentException("The diagonal length must equal the number of rows.", nameof(v));
+            var result = new Complex32[rows, cols];
+            for (int i = 0; i < rows; i++)
             {
-                for (j = 0; j < r1; j++)
-                {
-                    alpha = v[j];
-                    for (i = 0; i < r0; i++)
-                    {
-                        temp[i, j] = m[i, j] * alpha;
-                    }
-                }
+                if (inverse && v[i] == 0) continue; // Preserve the diagonal pseudoinverse convention.
+                for (int j = 0; j < cols; j++) result[i, j] = inverse ? m[i, j] / v[i] : m[i, j] * v[i];
             }
-            else
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    alpha = v[j];
-
-                    if (alpha != 0)
-                    {
-                        for (i = 0; i < r0; i++)
-                        {
-                            temp[i, j] = m[i, j] / alpha;
-                        }
-                    }
-                }
-            }
-
-            return temp;
+            return result;
         }
         /// <summary>
         /// Implements the scalar product of a matrix by a vector of the form: diag(v) * A.
@@ -5746,39 +5661,15 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static Complex32[,] Dot(this float[] v, Complex32[,] m, bool inverse = false)
         {
-            int r0 = m.GetLength(0), r1 = m.GetLength(1);
-            Complex32[,] temp = new Complex32[r0, r1];
-            Complex32 alpha;
-            int i, j;
-
-            if (!inverse)
+            int rows = m.GetLength(0), cols = m.GetLength(1);
+            if (v.Length != rows) throw new ArgumentException("The diagonal length must equal the number of rows.", nameof(v));
+            var result = new Complex32[rows, cols];
+            for (int i = 0; i < rows; i++)
             {
-                for (j = 0; j < r1; j++)
-                {
-                    alpha = v[j];
-                    for (i = 0; i < r0; i++)
-                    {
-                        temp[i, j] = m[i, j] * alpha;
-                    }
-                }
+                if (inverse && v[i] == 0) continue; // Preserve the diagonal pseudoinverse convention.
+                for (int j = 0; j < cols; j++) result[i, j] = inverse ? m[i, j] / v[i] : m[i, j] * v[i];
             }
-            else
-            {
-                for (j = 0; j < r1; j++)
-                {
-                    alpha = v[j];
-
-                    if (alpha != 0)
-                    {
-                        for (i = 0; i < r0; i++)
-                        {
-                            temp[i, j] = m[i, j] / alpha;
-                        }
-                    }
-                }
-            }
-
-            return temp;
+            return result;
         }
         #endregion
 
@@ -6331,7 +6222,7 @@ namespace UMapx.Core
         /// Returns the result vector of local averaging.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="r">Radius</param>
+        /// <param name="r">Window length</param>
         public static float[] Mean(this float[] v, int r)
         {
             return LinealgOptions.MeanFilter.Mean(v, r);
@@ -6340,7 +6231,7 @@ namespace UMapx.Core
         /// Returns the result vector of local averaging.
         /// </summary>
         /// <param name="v">Array</param>
-        /// <param name="r">Radius</param>
+        /// <param name="r">Window length</param>
         public static Complex32[] Mean(this Complex32[] v, int r)
         {
             return LinealgOptions.MeanFilter.Mean(v, r);
@@ -6350,7 +6241,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="w">Array</param>
-        /// <param name="r">Radius</param>
+        /// <param name="r">Window length</param>
         public static float[] Mean(this float[] v, float[] w, int r)
         {
             return LinealgOptions.MeanFilter.MeanWeighted(v, w, r);
@@ -6360,7 +6251,7 @@ namespace UMapx.Core
         /// </summary>
         /// <param name="v">Array</param>
         /// <param name="w">Array</param>
-        /// <param name="r">Radius</param>
+        /// <param name="r">Window length</param>
         public static Complex32[] Mean(this Complex32[] v, Complex32[] w, int r)
         {
             return LinealgOptions.MeanFilter.MeanWeighted(v, w, r);
@@ -6520,9 +6411,7 @@ namespace UMapx.Core
             double newYradius = (double)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            double angleRad = -angle * Math.PI / 180;
-            double angleCos = Math.Cos(angleRad);
-            double angleSin = Math.Sin(angleRad);
+            RotationCoefficients(angle, out double angleCos, out double angleSin);
 
             // destination pixel's coordinate relative to image center
             double cx, cy;
@@ -6584,9 +6473,7 @@ namespace UMapx.Core
             double newYradius = (double)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            double angleRad = -angle * Math.PI / 180;
-            double angleCos = Math.Cos(angleRad);
-            double angleSin = Math.Sin(angleRad);
+            RotationCoefficients(angle, out double angleCos, out double angleSin);
 
             // destination pixel's coordinate relative to image center
             double cx, cy;
@@ -6681,9 +6568,8 @@ namespace UMapx.Core
             float newYradius = (float)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            float angleRad = -angle * Maths.Pi / 180.0f;
-            float angleCos = Maths.Cos(angleRad);
-            float angleSin = Maths.Sin(angleRad);
+            RotationCoefficients(angle, out double cosine, out double sine);
+            float angleCos = (float)cosine, angleSin = (float)sine;
 
             // destination pixel's coordinate relative to image center
             float cx, cy;
@@ -6914,9 +6800,7 @@ namespace UMapx.Core
             double newYradius = (double)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            double angleRad = -angle * Math.PI / 180;
-            double angleCos = Math.Cos(angleRad);
-            double angleSin = Math.Sin(angleRad);
+            RotationCoefficients(angle, out double angleCos, out double angleSin);
 
             // destination pixel's coordinate relative to image center
             double cx, cy;
@@ -6978,9 +6862,7 @@ namespace UMapx.Core
             double newYradius = (double)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            double angleRad = -angle * Math.PI / 180;
-            double angleCos = Math.Cos(angleRad);
-            double angleSin = Math.Sin(angleRad);
+            RotationCoefficients(angle, out double angleCos, out double angleSin);
 
             // destination pixel's coordinate relative to image center
             double cx, cy;
@@ -7075,9 +6957,8 @@ namespace UMapx.Core
             float newYradius = (float)(newHeight - 1) / 2;
 
             // angle's sine and cosine
-            float angleRad = -angle * Maths.Pi / 180.0f;
-            float angleCos = Maths.Cos(angleRad);
-            float angleSin = Maths.Sin(angleRad);
+            RotationCoefficients(angle, out double cosine, out double sine);
+            float angleCos = (float)cosine, angleSin = (float)sine;
 
             // destination pixel's coordinate relative to image center
             float cx, cy;
@@ -7222,15 +7103,15 @@ namespace UMapx.Core
             for (int y = 0; y < h; y++)
             {
                 // Y coordinates
-                oy = y * yFactor - 0.5f;
-                oy1 = (int)oy;
+                oy = (y + 0.5f) * yFactor - 0.5f;
+                oy1 = (int)Math.Floor(oy);
                 dy = oy - oy1;
 
                 for (int x = 0; x < w; x++)
                 {
                     // X coordinates
-                    ox = x * xFactor - 0.5f;
-                    ox1 = (int)ox;
+                    ox = (x + 0.5f) * xFactor - 0.5f;
+                    ox1 = (int)Math.Floor(ox);
                     dx = ox - ox1;
 
                     // initial pixel value
@@ -7428,15 +7309,15 @@ namespace UMapx.Core
             for (int y = 0; y < h; y++)
             {
                 // Y coordinates
-                oy = y * yFactor - 0.5f;
-                oy1 = (int)oy;
+                oy = (y + 0.5f) * yFactor - 0.5f;
+                oy1 = (int)Math.Floor(oy);
                 dy = oy - oy1;
 
                 for (int x = 0; x < w; x++)
                 {
                     // X coordinates
-                    ox = x * xFactor - 0.5f;
-                    ox1 = (int)ox;
+                    ox = (x + 0.5f) * xFactor - 0.5f;
+                    ox1 = (int)Math.Floor(ox);
                     dx = ox - ox1;
 
                     // initial pixel value
@@ -7629,8 +7510,8 @@ namespace UMapx.Core
             for (int y = 0; y < h; y++)
             {
                 // Y coordinates
-                oy = y * yFactor - 0.5f;
-                oy1 = (int)oy;
+                oy = (y + 0.5f) * yFactor - 0.5f;
+                oy1 = (int)Math.Floor(oy);
                 dy = oy - oy1;
 
                 // initial pixel value
@@ -7785,8 +7666,8 @@ namespace UMapx.Core
             for (int y = 0; y < h; y++)
             {
                 // Y coordinates
-                oy = y * yFactor - 0.5f;
-                oy1 = (int)oy;
+                oy = (y + 0.5f) * yFactor - 0.5f;
+                oy1 = (int)Math.Floor(oy);
                 dy = oy - oy1;
 
                 // initial pixel value
@@ -8018,7 +7899,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < l1; j++)
                 {
-                    temp[i, j] = a[Maths.Mod(i - m, l1), Maths.Mod(j - l, l0)];
+                    temp[i, j] = a[(int)Maths.Mod((long)i - m, l0), (int)Maths.Mod((long)j - l, l1)];
                 }
             }
             return temp;
@@ -8040,7 +7921,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < l1; j++)
                 {
-                    temp[i, j] = a[Maths.Mod(i - m, l1), Maths.Mod(j - l, l0)];
+                    temp[i, j] = a[(int)Maths.Mod((long)i - m, l0), (int)Maths.Mod((long)j - l, l1)];
                 }
             }
             return temp;
@@ -8058,7 +7939,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < N; i++)
             {
-                temp[i] = v[Maths.Mod(i - l, N)];
+                temp[i] = v[(int)Maths.Mod((long)i - l, N)];
             }
 
             return temp;
@@ -8076,7 +7957,7 @@ namespace UMapx.Core
 
             for (int i = 0; i < N; i++)
             {
-                temp[i] = v[Maths.Mod(i - l, N)];
+                temp[i] = v[(int)Maths.Mod((long)i - l, N)];
             }
 
             return temp;
@@ -8384,16 +8265,14 @@ namespace UMapx.Core
         /// <returns>Vector</returns>
         public static float[] Merge(this float[] a, float[] b, int start, int length)
         {
-            float[] c = Resize(b, length);
-            float[] d = (float[])a.Clone();
-            int h = Math.Min(length, a.GetLength(0) - start);
-
-            for (int i = start; i < h; i++)
-            {
-                d[i] = c[i - start];
-            }
-
-            return d;
+            if (length < 0) throw new ArgumentOutOfRangeException(nameof(length));
+            var result = (float[])a.Clone();
+            int first = Math.Max(0, start);
+            long end = Math.Min(a.Length, (long)start + length);
+            if (first >= end) return result;
+            var resized = b.Length == length ? b : Resize(b, length);
+            for (int i = first; i < end; i++) result[i] = resized[i - start];
+            return result;
         }
         /// <summary>
         /// Merges two vectors.
@@ -8415,16 +8294,14 @@ namespace UMapx.Core
         /// <returns>Vector</returns>
         public static Complex32[] Merge(this Complex32[] a, float[] b, int start, int length)
         {
-            float[] c = Resize(b, length);
-            Complex32[] d = (Complex32[])a.Clone();
-            int h = Math.Min(length, a.GetLength(0) - start);
-
-            for (int i = start; i < h; i++)
-            {
-                d[i] = c[i - start];
-            }
-
-            return d;
+            if (length < 0) throw new ArgumentOutOfRangeException(nameof(length));
+            var result = (Complex32[])a.Clone();
+            int first = Math.Max(0, start);
+            long end = Math.Min(a.Length, (long)start + length);
+            if (first >= end) return result;
+            var resized = b.Length == length ? b : Resize(b, length);
+            for (int i = first; i < end; i++) result[i] = resized[i - start];
+            return result;
         }
         /// <summary>
         /// Merges two vectors.
@@ -8446,16 +8323,14 @@ namespace UMapx.Core
         /// <returns>Vector</returns>
         public static Complex32[] Merge(this Complex32[] a, Complex32[] b, int start, int length)
         {
-            Complex32[] c = Resize(b, length);
-            Complex32[] d = (Complex32[])a.Clone();
-            int h = Math.Min(length, a.GetLength(0) - start);
-
-            for (int i = start; i < h; i++)
-            {
-                d[i] = c[i - start];
-            }
-
-            return d;
+            if (length < 0) throw new ArgumentOutOfRangeException(nameof(length));
+            var result = (Complex32[])a.Clone();
+            int first = Math.Max(0, start);
+            long end = Math.Min(a.Length, (long)start + length);
+            if (first >= end) return result;
+            var resized = b.Length == length ? b : Resize(b, length);
+            for (int i = first; i < end; i++) result[i] = resized[i - start];
+            return result;
         }
 
         /// <summary>
@@ -8479,20 +8354,17 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float[,] Merge(this float[,] a, float[,] b, int y, int x, int height, int width)
         {
-            float[,] c = Resize(b, height, width);
-            float[,] d = (float[,])a.Clone();
-            int h = Math.Min(height, a.GetLength(0) - y);
-            int w = Math.Min(width, a.GetLength(1) - x);
-
-            for (int i = y; i < h; i++)
-            {
-                for (int j = x; j < w; j++)
-                {
-                    d[i, j] = c[i - y, j - x];
-                }
-            }
-
-            return d;
+            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height));
+            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width));
+            var result = (float[,])a.Clone();
+            int top = Math.Max(0, y), left = Math.Max(0, x);
+            long bottom = Math.Min(a.GetLength(0), (long)y + height);
+            long right = Math.Min(a.GetLength(1), (long)x + width);
+            if (top >= bottom || left >= right) return result;
+            var resized = b.GetLength(0) == height && b.GetLength(1) == width ? b : Resize(b, height, width);
+            for (int i = top; i < bottom; i++)
+                for (int j = left; j < right; j++) result[i, j] = resized[i - y, j - x];
+            return result;
         }
         /// <summary>
         /// Merges two matrices.
@@ -8515,20 +8387,17 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Merge(this Complex32[,] a, float[,] b, int y, int x, int height, int width)
         {
-            float[,] c = Resize(b, height, width);
-            Complex32[,] d = (Complex32[,])a.Clone();
-            int h = Math.Min(height, a.GetLength(0) - y);
-            int w = Math.Min(width, a.GetLength(1) - x);
-
-            for (int i = y; i < h; i++)
-            {
-                for (int j = x; j < w; j++)
-                {
-                    d[i, j] = c[i - y, j - x];
-                }
-            }
-
-            return d;
+            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height));
+            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width));
+            var result = (Complex32[,])a.Clone();
+            int top = Math.Max(0, y), left = Math.Max(0, x);
+            long bottom = Math.Min(a.GetLength(0), (long)y + height);
+            long right = Math.Min(a.GetLength(1), (long)x + width);
+            if (top >= bottom || left >= right) return result;
+            var resized = b.GetLength(0) == height && b.GetLength(1) == width ? b : Resize(b, height, width);
+            for (int i = top; i < bottom; i++)
+                for (int j = left; j < right; j++) result[i, j] = resized[i - y, j - x];
+            return result;
         }
         /// <summary>
         /// Merges two matrices.
@@ -8551,20 +8420,17 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Merge(this Complex32[,] a, Complex32[,] b, int y, int x, int height, int width)
         {
-            Complex32[,] c = Resize(b, height, width);
-            Complex32[,] d = (Complex32[,])a.Clone();
-            int h = Math.Min(height, a.GetLength(0) - y);
-            int w = Math.Min(width, a.GetLength(1) - x);
-
-            for (int i = y; i < h; i++)
-            {
-                for (int j = x; j < w; j++)
-                {
-                    d[i, j] = c[i - y, j - x];
-                }
-            }
-
-            return d;
+            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height));
+            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width));
+            var result = (Complex32[,])a.Clone();
+            int top = Math.Max(0, y), left = Math.Max(0, x);
+            long bottom = Math.Min(a.GetLength(0), (long)y + height);
+            long right = Math.Min(a.GetLength(1), (long)x + width);
+            if (top >= bottom || left >= right) return result;
+            var resized = b.GetLength(0) == height && b.GetLength(1) == width ? b : Resize(b, height, width);
+            for (int i = top; i < bottom; i++)
+                for (int j = left; j < right; j++) result[i, j] = resized[i - y, j - x];
+            return result;
         }
         #endregion
 
@@ -8626,18 +8492,9 @@ namespace UMapx.Core
         /// <returns>Value</returns>
         public static Complex32 Abs(this Complex32[] vector, bool squared = false)
         {
-            int length = vector.Length;
-            Complex32 v = 0;
-
-            for (int i = 0; i < length; i++)
-            {
-                v += vector[i] * vector[i];
-            }
-
-            if (squared)
-                return v;
-
-            return Maths.Sqrt(v);
+            double sum = 0;
+            foreach (var value in vector) sum += (double)value.Real * value.Real + (double)value.Imag * value.Imag;
+            return new Complex32((float)(squared ? sum : Math.Sqrt(sum)), 0);
         }
         /// <summary>
         /// Returns matrix modulus.
@@ -9423,8 +9280,8 @@ namespace UMapx.Core
         {
             // properties:
             float temp;
-            int col = a.GetLength(0);
-            int row = a.GetLength(1);
+            int col = a.GetLength(1);
+            int row = a.GetLength(0);
             int z;
 
             // by rows:
@@ -9477,8 +9334,8 @@ namespace UMapx.Core
         {
             // properties:
             Complex32 temp;
-            int col = a.GetLength(0);
-            int row = a.GetLength(1);
+            int col = a.GetLength(1);
+            int row = a.GetLength(0);
             int z;
 
             // by rows:
@@ -10071,7 +9928,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < ylength; j++)
                 {
-                    z[i, j] = function(x[i], y[i]);
+                    z[i, j] = function(x[i], y[j]);
                 }
             }
             return z;
@@ -10093,7 +9950,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < ylength; j++)
                 {
-                    z[i, j] = function(x[i], y[i]);
+                    z[i, j] = function(x[i], y[j]);
                 }
             }
             return z;
@@ -10115,7 +9972,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < ylength; j++)
                 {
-                    z[i, j] = function(x[i], y[i]);
+                    z[i, j] = function(x[i], y[j]);
                 }
             }
             return z;
@@ -10137,7 +9994,7 @@ namespace UMapx.Core
             {
                 for (j = 0; j < ylength; j++)
                 {
-                    z[i, j] = function(x[i], y[i]);
+                    z[i, j] = function(x[i], y[j]);
                 }
             }
             return z;
@@ -11638,6 +11495,71 @@ namespace UMapx.Core
                 x[i] = (q[i] - sum) / a[i][i];
             }
             return x;
+        }
+        #endregion
+
+        #region Private Hermitian statistics helpers
+        /// <summary>
+        /// Returns sum(abs(x[i] - y[i])^2) / (n - 1), accumulating squared magnitudes in double precision.
+        /// </summary>
+        /// <remarks>This is a difference statistic, not a cross-covariance.</remarks>
+        /// <param name="x">First vector; must have the same length as y.</param>
+        /// <param name="y">Second vector.</param>
+        /// <returns>The normalized squared difference, or NaN for fewer than two observations.</returns>
+        private static double HermitianSquaredDifference(Complex32[] x, Complex32[] y)
+        {
+            if (x.Length != y.Length) throw new ArgumentException("Vector lengths must match.", nameof(y));
+            if (x.Length < 2) return double.NaN;
+            double sum = 0;
+            for (int i = 0; i < x.Length; i++)
+            {
+                double re = (double)x[i].Real - y[i].Real, im = (double)x[i].Imag - y[i].Imag;
+                sum += re * re + im * im;
+            }
+            return sum / (x.Length - 1);
+        }
+
+        /// <summary>
+        /// Computes the Hermitian sample variance with a double-precision mean and centered squared magnitudes.
+        /// </summary>
+        /// <param name="values">Complex observations.</param>
+        /// <returns>A nonnegative sample variance, or NaN for fewer than two observations.</returns>
+        private static double HermitianVariance(Complex32[] values)
+        {
+            if (values.Length < 2) return double.NaN;
+            double meanReal = 0, meanImag = 0;
+            foreach (var value in values) { meanReal += value.Real; meanImag += value.Imag; }
+            meanReal /= values.Length; meanImag /= values.Length;
+            double sum = 0;
+            foreach (var value in values)
+            {
+                double re = value.Real - meanReal, im = value.Imag - meanImag;
+                sum += re * re + im * im;
+            }
+            return sum / (values.Length - 1);
+        }
+        #endregion
+
+        #region Private rotation helpers
+        /// <summary>
+        /// Computes cosine and sine for the inverse rotation in degrees, exactly at multiples of 90 degrees.
+        /// </summary>
+        /// <param name="angle">Forward rotation angle in degrees.</param>
+        /// <param name="cosine">Receives the cosine of the inverse rotation.</param>
+        /// <param name="sine">Receives the sine of the inverse rotation.</param>
+        private static void RotationCoefficients(float angle, out double cosine, out double sine)
+        {
+            double reduced = angle % 360.0;
+            if (reduced < 0) reduced += 360;
+            if (reduced == 0) { cosine = 1; sine = 0; }
+            else if (reduced == 90) { cosine = 0; sine = -1; }
+            else if (reduced == 180) { cosine = -1; sine = 0; }
+            else if (reduced == 270) { cosine = 0; sine = 1; }
+            else
+            {
+                double radians = -reduced * Math.PI / 180;
+                cosine = Math.Cos(radians); sine = Math.Sin(radians);
+            }
         }
         #endregion
     }

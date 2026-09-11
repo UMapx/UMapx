@@ -310,7 +310,8 @@ namespace UMapx.Imaging
             var xB = Math.Min(a.Right, b.Right);
             var yB = Math.Min(a.Bottom, b.Bottom);
 
-            var interArea = Math.Abs(Math.Max(xB - xA, 0) * Math.Max(yB - yA, 0));
+            // Convert before multiplying so the intersection area cannot overflow Int32.
+            var interArea = Math.Abs(Math.Max(xB - xA, 0) * (float)Math.Max(yB - yA, 0));
 
             if (interArea == 0)
                 return 0;

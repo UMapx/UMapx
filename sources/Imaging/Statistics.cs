@@ -464,29 +464,38 @@ namespace UMapx.Imaging
             return (total == 0) ? 0 : Maths.Sqrt(stddev / total);
         }
         /// <summary>
-        /// Returns the median of a histogram.
+        /// Returns the lower median of a histogram with nonnegative counts.
         /// </summary>
-        /// <param name="values">Histogram</param>
-        /// <returns>Value</returns>
+        /// <param name="values">Counts indexed by the observed integer value.</param>
+        /// <returns>The middle observation, or the lower middle observation for an
+        /// even population. An empty population returns zero.</returns>
+        /// <exception cref="ArgumentException">A histogram count is negative.</exception>
         public static int Median(int[] values)
         {
-            int total = 0, n = values.Length;
+            long total = 0;
+            int n = values.Length;
 
             // for all values
             for (int i = 0; i < n; i++)
             {
+                if (values[i] < 0)
+                    throw new ArgumentException("Histogram counts must be nonnegative.", nameof(values));
                 // accumulate total
                 total += values[i];
             }
 
-            int halfTotal = total / 2;
-            int median = 0, v = 0;
+            if (total == 0) return 0;
+
+            // One-based rank: 1, 1, 2, 2, 3, ... for populations 1, 2, 3, 4, 5, ...
+            // Widen counts before accumulation; a histogram can exceed Int32.MaxValue.
+            long rank = (total + 1) / 2, v = 0;
+            int median = 0;
 
             // find median value
             for (; median < n; median++)
             {
                 v += values[median];
-                if (v >= halfTotal)
+                if (v >= rank)
                     break;
             }
 

@@ -376,6 +376,21 @@ namespace UMapx.Imaging
 
         #region Linear methods components
         /// <summary>
+        /// Maps a one-dimensional correction-table index to the closed unit interval.
+        /// </summary>
+        /// <param name="index">Sample index from zero through length minus one.</param>
+        /// <param name="length">Positive sample count. A singleton samples zero.</param>
+        /// <returns>The normalized coordinate, including both zero and one when
+        /// the table has at least two entries.</returns>
+        /// <remarks>Correction maps byte 255 through entry 255 and multiplies the
+        /// result by 255. Using the sample count as the divisor would omit white
+        /// and darken even an identity lookup table. Empty tables never call this helper.</remarks>
+        private static float CorrectionCoordinate(int index, int length)
+        {
+            return length > 1 ? index / (float)(length - 1) : 0;
+        }
+
+        /// <summary>
         /// Returns the correction mask.
         /// </summary>
         /// <param name="g">Gamma</param>
@@ -387,7 +402,7 @@ namespace UMapx.Imaging
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Gamma(x / (float)length, g);
+                table[x] = Gamma(CorrectionCoordinate(x, length), g);
             }
             return table;
         }
@@ -413,7 +428,7 @@ namespace UMapx.Imaging
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Shift(x / (float)length, b);
+                table[x] = Shift(CorrectionCoordinate(x, length), b);
             }
             return table;
         }
@@ -425,6 +440,8 @@ namespace UMapx.Imaging
         /// <returns>Value</returns>
         public static float Shift(float x, float b)
         {
+            // Preserve the identity exactly instead of taking an unnecessary log/exp round trip.
+            if (b == 0) return x;
             float v = log05 / Maths.Log(0.5f - b);
             return LogPow(x, v);
         }
@@ -440,7 +457,7 @@ namespace UMapx.Imaging
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Bin(x / (float)length, threshold);
+                table[x] = Bin(CorrectionCoordinate(x, length), threshold);
             }
             return table;
         }
@@ -466,7 +483,7 @@ namespace UMapx.Imaging
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Exposure(x / (float)length, average);
+                table[x] = Exposure(CorrectionCoordinate(x, length), average);
             }
             return table;
         }
@@ -493,7 +510,7 @@ namespace UMapx.Imaging
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Sin(x / (float)length, delta);
+                table[x] = Sin(CorrectionCoordinate(x, length), delta);
             }
             return table;
         }
@@ -519,7 +536,7 @@ namespace UMapx.Imaging
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Cos(x / (float)length, delta);
+                table[x] = Cos(CorrectionCoordinate(x, length), delta);
             }
             return table;
         }
@@ -546,7 +563,7 @@ namespace UMapx.Imaging
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Log(x / (float)length, a, delta);
+                table[x] = Log(CorrectionCoordinate(x, length), a, delta);
             }
             return table;
         }
@@ -572,7 +589,7 @@ namespace UMapx.Imaging
             float[] table = new float[length];
             for (int x = 0; x < length; x++)
             {
-                table[x] = x / (float)length + value;
+                table[x] = CorrectionCoordinate(x, length) + value;
             }
             return table;
         }
@@ -588,7 +605,7 @@ namespace UMapx.Imaging
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Contrast(x / (float)length, value);
+                table[x] = Contrast(CorrectionCoordinate(x, length), value);
             }
             return table;
         }
@@ -600,12 +617,8 @@ namespace UMapx.Imaging
         /// <returns>Value</returns>
         public static float Contrast(float x, float value)
         {
-            value = (1 + value);
-            float xc = x;
-            xc -= 0.5f;
-            xc *= value;
-            xc += 0.5f;
-            return xc;
+            // This equivalent form preserves x exactly at neutral contrast.
+            return x + value * (x - 0.5f);
         }
         /// <summary>
         /// Returns the correction mask.
@@ -619,7 +632,7 @@ namespace UMapx.Imaging
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = LogContrast(x / (float)length, power);
+                table[x] = LogContrast(CorrectionCoordinate(x, length), power);
             }
             return table;
         }
@@ -648,7 +661,9 @@ namespace UMapx.Imaging
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Invert(x / (float)length);
+                // Sample the complementary index directly: subtracting two rounded
+                // floats can otherwise lose a byte when the result is truncated.
+                table[x] = length == 1 ? 1 : CorrectionCoordinate(length - 1 - x, length);
             }
             return table;
         }
@@ -688,7 +703,7 @@ namespace UMapx.Imaging
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Intensity.Equalize(x / (float)length, min, max);
+                table[x] = Intensity.Equalize(CorrectionCoordinate(x, length), min, max);
             }
             return table;
         }
@@ -717,7 +732,7 @@ namespace UMapx.Imaging
 
             for (int x = 0; x < length; x++)
             {
-                table[x] = Intensity.Linear(x / (float)length, xmax, xmin, delta);
+                table[x] = Intensity.Linear(CorrectionCoordinate(x, length), xmax, xmin, delta);
             }
             return table;
         }
@@ -756,7 +771,7 @@ namespace UMapx.Imaging
 
             for (int i = 0; i < length; i++)
             {
-                v = i / (float)length;
+                v = CorrectionCoordinate(i, length);
 
                 if (v >= xmax)
                 { v = ymax; }

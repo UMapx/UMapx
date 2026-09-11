@@ -90,7 +90,8 @@ namespace UMapx.Analysis
 
                 for (int j = 0; j < n; j++)
                 {
-                    A[i, j] = taylorCoeffs[m + i - j];
+                    int index = m + i - j;
+                    A[i, j] = index < 0 ? 0 : taylorCoeffs[index];
                 }
             }
 
@@ -139,7 +140,8 @@ namespace UMapx.Analysis
 
                 for (int j = 0; j < n; j++)
                 {
-                    A[i, j] = taylorCoeffs[m + i - j];
+                    int index = m + i - j;
+                    A[i, j] = index < 0 ? 0 : taylorCoeffs[index];
                 }
             }
 

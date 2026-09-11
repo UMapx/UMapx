@@ -124,73 +124,28 @@ namespace UMapx.Distribution
 
         #region Methods
         /// <summary>
-        /// Returns the value of the probability density function f(x) = power · φ(z) · Φ(z)^(power - 1) / (x · sigma).
+        /// Returns the value of the probability density function f(x) = power · φ(z) · Φ(-z)^(power - 1) / (x · sigma).
         /// Here z = ln(x) / sigma.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public float Function(float x)
         {
-            if (x <= 0f)
-            {
-                return 0f;
-            }
-
-            double z = Math.Log(x) / sigma;
-            double pdf = StandardNormalPdf(z);
-            double cdf = StandardNormalCdf(z);
-
-            if (cdf <= double.Epsilon)
-            {
-                return 0f;
-            }
-
-            cdf = Math.Min(cdf, 1.0);
-            double factor = power / (x * sigma);
-            double value = factor * pdf * Math.Pow(cdf, power - 1.0);
-            return (float)value;
+            if (x <= 0) return 0;
+            return (float)(DistributionNumerics.PowerNormalDensity(Math.Log(x) / sigma, power) / ((double)x * sigma));
         }
         /// <summary>
-        /// Returns the value of the cumulative distribution function F(x) = Φ(z)^power, where z = ln(x) / sigma.
+        /// Returns the value of the cumulative distribution function F(x) = 1 - Φ(-z)^power, where z = ln(x) / sigma.
         /// </summary>
         /// <param name="x">Value</param>
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            if (x <= 0f)
-            {
-                return 0f;
-            }
-
-            double z = Math.Log(x) / sigma;
-            double cdf = StandardNormalCdf(z);
-
-            if (cdf <= 0.0)
-            {
-                return 0f;
-            }
-
-            if (cdf >= 1.0)
-            {
-                return 1f;
-            }
-
-            double result = Math.Pow(cdf, power);
-            return (float)result;
+            if (x <= 0) return 0;
+            return (float)-Special.DistributionExpm1(power * DistributionNumerics.LogNormalSurvival(Math.Log(x) / sigma));
         }
         #endregion
 
-        #region Private helpers
-        private static double StandardNormalPdf(double x)
-        {
-            const double invSqrt2Pi = 0.39894228040143267794;
-            return invSqrt2Pi * Math.Exp(-0.5 * x * x);
-        }
 
-        private static double StandardNormalCdf(double x)
-        {
-            return 0.5 * (1.0 + Special.Erf((float)(x / Math.Sqrt(2.0))));
-        }
-        #endregion
     }
 }

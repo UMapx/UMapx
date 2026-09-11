@@ -246,7 +246,7 @@ namespace UMapx.Imaging
             return new float[][] { _ix0, _ix1, _ix2 };
         }
         /// <summary>
-        /// Converts a BGR tensor arrays to Bitmap.
+        /// Converts three BGR or RGB byte planes to an opaque bitmap.
         /// </summary>
         /// <param name="tensor">Tensor arrays</param>
         /// <param name="width">Width</param>
@@ -277,6 +277,7 @@ namespace UMapx.Imaging
                         p[k + 2] = tensor[0][z];
                         p[k + 1] = tensor[1][z];
                         p[k + 0] = tensor[2][z];
+                        p[k + 3] = 255;
                     }
                 }
             }
@@ -293,6 +294,7 @@ namespace UMapx.Imaging
                         p[k + 0] = tensor[0][z];
                         p[k + 1] = tensor[1][z];
                         p[k + 2] = tensor[2][z];
+                        p[k + 3] = 255;
                     }
                 }
             }
@@ -302,7 +304,7 @@ namespace UMapx.Imaging
             return Data;
         }
         /// <summary>
-        /// Converts a BGR tensor arrays to Bitmap.
+        /// Converts three BGR or RGB float planes to an opaque bitmap.
         /// </summary>
         /// <param name="tensor">Tensor arrays</param>
         /// <param name="width">Width</param>
@@ -333,6 +335,7 @@ namespace UMapx.Imaging
                         p[k + 2] = (byte)tensor[0][z];
                         p[k + 1] = (byte)tensor[1][z];
                         p[k + 0] = (byte)tensor[2][z];
+                        p[k + 3] = 255;
                     }
                 }
             }
@@ -349,6 +352,7 @@ namespace UMapx.Imaging
                         p[k + 0] = (byte)tensor[0][z];
                         p[k + 1] = (byte)tensor[1][z];
                         p[k + 2] = (byte)tensor[2][z];
+                        p[k + 3] = 255;
                     }
                 }
             }

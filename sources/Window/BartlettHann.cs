@@ -26,8 +26,9 @@ namespace UMapx.Window
         /// <returns>Value</returns>
         public override float Function(float x, int frameSize)
         {
-            float a = Math.Abs(Math.Abs(x / (frameSize - 1)) - 0.5f);
-            return 0.62f - 0.48f * a + 0.38f * Cosine.Cosinefunc(2 * x, frameSize);
+            if (frameSize == 1) return 1;
+            float a = Math.Abs(x / (frameSize - 1) - 0.5f);
+            return 0.62f - 0.48f * a - 0.38f * Cosine.Cosinefunc(2 * x, frameSize);
         }
         /// <summary>
         /// Returns the window function.

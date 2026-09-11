@@ -6,6 +6,11 @@ namespace UMapx.Transform
     /// <summary>
     /// Defines the threshold filter.
     /// </summary>
+    /// <remarks>
+    /// For complex data, Abs compares magnitude and removes the whole sample.
+    /// Under and Over compare and remove real and imaginary components separately.
+    /// Samples or components equal to the threshold are retained in every shape.
+    /// </remarks>
     [Serializable]
     public class ThresholdFilter : IFilter
     {
@@ -232,11 +237,11 @@ namespace UMapx.Transform
                     {
                         if (data[i, j].Real > threshold)
                         {
-                            data[i, j] = 0;
+                            data[i, j].Real = 0;
                         }
                         if (data[i, j].Imag > threshold)
                         {
-                            data[i, j] = 0;
+                            data[i, j].Imag = 0;
                         }
                     }
                 }
@@ -249,11 +254,11 @@ namespace UMapx.Transform
                     {
                         if (data[i, j].Real < threshold)
                         {
-                            data[i, j] = 0;
+                            data[i, j].Real = 0;
                         }
                         if (data[i, j].Imag < threshold)
                         {
-                            data[i, j] = 0;
+                            data[i, j].Imag = 0;
                         }
                     }
                 }

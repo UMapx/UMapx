@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 
 namespace UMapx.Distribution
@@ -64,18 +64,22 @@ namespace UMapx.Distribution
             }
         }
         /// <summary>
-        /// Gets the median value using the Wilson–Hilferty approximation.
+        /// Gets the median value by inverting the cumulative distribution.
         /// </summary>
         /// <remarks>
-        /// The approximation is truncated to zero for very small degrees of freedom.
+        /// Uses a bracketed search on [0, k] for the probability one half.
         /// </remarks>
         public float Median
         {
             get
             {
-                // Wilson–Hilferty approximation
-                float median = k * Maths.Pow(1 - 2f / (9f * k), 3f);
-                return median < 0f ? 0f : median;
+                double low = 0, high = k;
+                for (int i = 0; i < 64; i++)
+                {
+                    double mid = (low + high) / 2;
+                    if (Special.DistributionGamma(k / 2.0, mid / 2, false) < 0.5) low = mid; else high = mid;
+                }
+                return (float)((low + high) / 2);
             }
         }
         /// <summary>

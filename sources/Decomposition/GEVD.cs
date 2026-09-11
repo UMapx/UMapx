@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 
 namespace UMapx.Decomposition
@@ -26,11 +26,17 @@ namespace UMapx.Decomposition
         /// <summary>
         /// Initializes generalized eigenvalue decomposition.
         /// </summary>
-        /// <param name="a">Matrix A</param>
-        /// <param name="b">Matrix B</param>
-        /// <param name="eps">Epsilon [0, 1]</param>
+        /// <param name="a">Nonempty finite square matrix A.</param>
+        /// <param name="b">Finite square matrix B of the same order.</param>
+        /// <param name="eps">Relative deflation tolerance, clamped to [0, 1] with a double-roundoff floor.</param>
+        /// <exception cref="ArgumentException">The matrices are empty, nonfinite, nonsquare, or have different orders.</exception>
+        /// <exception cref="InvalidOperationException">QZ iteration fails to converge.</exception>
         public GEVD(float[,] a, float[,] b, float eps = 1e-16f)
         {
+            if (a == null) throw new ArgumentNullException(nameof(a));
+            if (b == null) throw new ArgumentNullException(nameof(b));
+            if (a.GetLength(0) == 0) throw new ArgumentException("The matrices must be nonempty.", nameof(a));
+            if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
             if (a.GetLength(0) != a.GetLength(1))
                 throw new ArgumentException("The matrix must be square");
 
@@ -46,30 +52,49 @@ namespace UMapx.Decomposition
             this.ai = new float[n];
             this.beta = new float[n];
             this.Z = Jagged.Zero(n, n);
-            var A = Jagged.ToJagged(a);
-            var B = Jagged.ToJagged(b);
+            // Right transformations must start from the identity: multiplying a zero
+            // accumulator loses every eigenvector before back-substitution begins.
+            var vectors = new double[n][];
+            for (int i = 0; i < n; i++) { vectors[i] = new double[n]; vectors[i][i] = 1; }
+            var real = new double[n];
+            var imaginary = new double[n];
+            var denominator = new double[n];
+            var A = CopyMatrix(a);
+            var B = CopyMatrix(b);
+            double inputScale = ScalePair(A, B);
             bool matz = true;
             int ierr = 0;
 
 
             // reduces A to upper Hessenberg form and B to upper
             // triangular form using orthogonal transformations
-            qzhes(n, A, B, matz, Z);
+            qzhes(n, A, B, matz, vectors);
 
             // reduces the Hessenberg matrix A to quasi-triangular form
             // using orthogonal transformations while maintaining the
             // triangular form of the B matrix.
-            qzit(n, A, B, Maths.Float(eps), matz, Z, ref ierr);
+            qzit(n, A, B, Maths.Float(eps), matz, vectors, ref ierr);
+
+            if (ierr != 0)
+                throw new InvalidOperationException("Generalized eigenvalue decomposition failed to converge.");
 
             // reduces the quasi-triangular matrix further, so that any
             // remaining 2-by-2 blocks correspond to pairs of complex
             // eigenvalues, and returns quantities whose ratios give the
             // generalized eigenvalues.
-            qzval(n, A, B, ar, ai, beta, matz, Z);
+            qzval(n, A, B, real, imaginary, denominator, matz, vectors);
 
             // computes the eigenvectors of the triangular problem and
             // transforms the results back to the original coordinate system.
-            qzvec(n, A, B, ar, ai, beta, Z);
+            qzvec(n, A, B, real, imaginary, denominator, vectors);
+            // Alpha and beta share the input scale; their ratios and eigenvectors are unchanged.
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++) Z[i][j] = (float)vectors[i][j];
+                ar[i] = (float)(real[i] * inputScale);
+                ai[i] = (float)(imaginary[i] * inputScale);
+                beta[i] = (float)(denominator[i] * inputScale);
+            }
         }
         #endregion
 
@@ -146,8 +171,12 @@ namespace UMapx.Decomposition
             }
         }
         /// <summary>
-        /// Checks whether one of the matrices is singular or not.
+        /// Checks whether any generalized eigenvalue has a zero beta denominator.
         /// </summary>
+        /// <remarks>
+        /// A zero beta denotes an infinite eigenvalue, or an indeterminate alpha = beta = 0 pair.
+        /// A singular A with nonsingular B can have zero eigenvalues without setting this property.
+        /// </remarks>
         public bool IsSingular
         {
             get
@@ -162,6 +191,46 @@ namespace UMapx.Decomposition
 
         #region Private voids
         /// <summary>
+        /// Copies a real square input to double work buffers without losing small representable entries.
+        /// </summary>
+        /// <param name="matrix">Single-precision square input matrix.</param>
+        /// <returns>A jagged double-precision copy for in-place QZ reduction.</returns>
+        private static double[][] CopyMatrix(float[,] matrix)
+        {
+            var result = new double[matrix.GetLength(0)][];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = new double[matrix.GetLength(1)];
+                for (int j = 0; j < result[i].Length; j++) result[i][j] = matrix[i, j];
+            }
+            return result;
+        }
+        /// <summary>
+        /// Applies one common positive scale to a finite matrix pencil before QZ reduction.
+        /// </summary>
+        /// <param name="a">Square copy of A; overwritten by its scaled values.</param>
+        /// <param name="b">Square copy of B of the same order; overwritten by its scaled values.</param>
+        /// <returns>The common scale to restore to alpha and beta after eigenvector calculation.</returns>
+        private static double ScalePair(double[][] a, double[][] b)
+        {
+            double scale = 0;
+            for (int i = 0; i < a.Length; i++)
+                for (int j = 0; j < a.Length; j++)
+                {
+                    if (double.IsNaN(a[i][j]) || double.IsInfinity(a[i][j]) || double.IsNaN(b[i][j]) || double.IsInfinity(b[i][j]))
+                        throw new ArgumentException("The matrices must contain only finite values.");
+                    scale = Math.Max(scale, Math.Max(Math.Abs(a[i][j]), Math.Abs(b[i][j])));
+                }
+            if (scale == 0) return 1;
+            for (int i = 0; i < a.Length; i++)
+                for (int j = 0; j < a.Length; j++)
+                {
+                    a[i][j] /= scale;
+                    b[i][j] /= scale;
+                }
+            return scale;
+        }
+        /// <summary>
         /// Performs the QZ reduction of matrices A and B.
         /// </summary>
         /// <param name="a">Matrix A (will be overwritten by the quasi-triangular form S)</param>
@@ -172,9 +241,26 @@ namespace UMapx.Decomposition
         internal static void qzdecomp(float[][] a, float[][] b, float eps, float[][] z, ref int ierr)
         {
             int n = a.Length;
-            bool matz = true;
-            qzhes(n, a, b, matz, z);
-            qzit(n, a, b, eps, matz, z, ref ierr);
+            var first = new double[n][];
+            var second = new double[n][];
+            var vectors = new double[n][];
+            for (int i = 0; i < n; i++)
+            {
+                first[i] = new double[n]; second[i] = new double[n]; vectors[i] = new double[n];
+                for (int j = 0; j < n; j++) { first[i][j] = a[i][j]; second[i][j] = b[i][j]; vectors[i][j] = z[i][j]; }
+            }
+            double scale = ScalePair(first, second);
+            qzhes(n, first, second, true, vectors);
+            qzit(n, first, second, eps, true, vectors, ref ierr);
+            // The bottom-left entry is scratch storage for epsb, not part of T.
+            if (n > 1) second[n - 1][0] = 0;
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
+                {
+                    a[i][j] = (float)(first[i][j] * scale);
+                    b[i][j] = (float)(second[i][j] * scale);
+                    z[i][j] = (float)vectors[i][j];
+                }
         }
         /// <summary>
         /// First QZ stage: reduce B to upper triangular form and A to upper Hessenberg form using orthogonal transformations.
@@ -182,7 +268,8 @@ namespace UMapx.Decomposition
         /// <remarks>
         /// Port of EISPACK <c>QZHES</c> (Moler–Stewart, SIAM J. Numer. Anal., 1973).
         /// <para>On exit: B is upper triangular; A is upper Hessenberg. If <paramref name="matz"/> is true, Z accumulates the
-        /// right transformations such that the similarity actions A ← GᵀAG, B ← GᵀBG are recorded in Z ← ZG.</para>
+        /// right transformations in Z. The same left and right orthogonal factors are applied to both matrices;
+        /// the left factor need not equal the transpose of the right factor.</para>
         /// <para>All operations are in place; input matrices are overwritten.</para>
         /// </remarks>
         /// <param name="n">Matrix order (rows = cols = n)</param>
@@ -194,14 +281,14 @@ namespace UMapx.Decomposition
         /// <param name="z">
         /// Right transformation accumulator Z (n×n). If <paramref name="matz"/> is true, updated as Z ← ZG; otherwise unused
         /// </param>
-        private static void qzhes(int n, float[][] a, float[][] b, bool matz, float[][] z)
+        private static void qzhes(int n, double[][] a, double[][] b, bool matz, double[][] z)
         {
             int i, j, k, l;
-            float r, s, t;
+            double r, s, t;
             int l1;
-            float u1, u2, v1, v2;
+            double u1, u2, v1, v2;
             int lb, nk1;
-            float rho;
+            double rho;
 
             // Reduce b to upper triangular form
             if (n <= 1) return;
@@ -224,7 +311,7 @@ namespace UMapx.Decomposition
                     r += b[i][l] * b[i][l];
                 }
 
-                r = Sign(Maths.Sqrt(r), b[l][l]);
+                r = Sign(Math.Sqrt(r), b[l][l]);
                 b[l][l] += r;
                 rho = r * b[l][l];
 
@@ -271,7 +358,7 @@ namespace UMapx.Decomposition
                     if (s == 0.0) continue;
                     u1 = a[l][k] / s;
                     u2 = a[l1][k] / s;
-                    r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2), u1);
+                    r = Sign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                     v1 = -(u1 + r) / r;
                     v2 = -u2 / r;
                     u2 = v2 / v1;
@@ -298,7 +385,7 @@ namespace UMapx.Decomposition
                     if (s == 0.0) continue;
                     u1 = b[l1][l1] / s;
                     u2 = b[l1][l] / s;
-                    r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2), u1);
+                    r = Sign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                     v1 = -(u1 + r) / r;
                     v2 = -u2 / r;
                     u2 = v2 / v1;
@@ -345,30 +432,30 @@ namespace UMapx.Decomposition
         /// <param name="a">On entry: upper-Hessenberg from <see cref="qzhes"/>; on exit: quasi-triangular S. Modified in place</param>
         /// <param name="b">On entry: upper-triangular from <see cref="qzhes"/>; on exit: upper-triangular T. Modified in place</param>
         /// <param name="eps1">
-        /// Relative convergence tolerance. If zero, machine roundoff is used (via <see cref="Epsilon(float)"/>)
+        /// Relative convergence tolerance. If zero, machine roundoff is used (via <see cref="Epsilon(double)"/>)
         /// </param>
         /// <param name="matz">If true, accumulate right transformations into <paramref name="z"/></param>
         /// <param name="z">Right orthogonal accumulator Z (updated if <paramref name="matz"/> is true)</param>
         /// <param name="ierr">
         /// Output status: 0 if all subdiagonals converged; otherwise set to <c>en+1</c> at failure as in EISPACK
         /// </param>
-        private static void qzit(int n, float[][] a, float[][] b, float eps1, bool matz, float[][] z, ref int ierr)
+        private static void qzit(int n, double[][] a, double[][] b, double eps1, bool matz, double[][] z, ref int ierr)
         {
 
             int i, j, k, l = 0;
-            float r, s, t, a1, a2, a3 = 0;
+            double r, s, t, a1, a2, a3 = 0;
             int k1, k2, l1, ll;
-            float u1, u2, u3;
-            float v1, v2, v3;
-            float a11, a12, a21, a22, a33, a34, a43, a44;
-            float b11, b12, b22, b33, b34, b44;
+            double u1, u2, u3;
+            double v1, v2, v3;
+            double a11, a12, a21, a22, a33, a34, a43, a44;
+            double b11, b12, b22, b33, b34, b44;
             int na, en, ld;
-            float ep;
-            float sh = 0;
+            double ep;
+            double sh = 0;
             int km1, lm1 = 0;
-            float ani, bni;
+            double ani, bni;
             int ish, itn, its, enm2, lor1;
-            float epsa, epsb, anorm = 0, bnorm = 0;
+            double epsa, epsb, anorm = 0, bnorm = 0;
             int enorn;
             bool notlas;
 
@@ -397,12 +484,9 @@ namespace UMapx.Decomposition
             if (anorm == 0.0) anorm = 1.0f;
             if (bnorm == 0.0) bnorm = 1.0f;
 
-            ep = eps1;
-            if (ep == 0.0)
-            {
-                // Use round-off level if eps1 is zero
-                ep = Epsilon(1.0f);
-            }
+            // Deflation cannot resolve changes below the precision of the work buffers.
+            // Enforce this floor even when the requested tolerance is zero.
+            ep = Math.Max(eps1, Epsilon(1.0f));
 
             epsa = ep * anorm;
             epsb = ep * bnorm;
@@ -461,7 +545,7 @@ namespace UMapx.Decomposition
             s = (Math.Abs(a[l][l]) + Math.Abs(a[l1][l]));
             u1 = a[l][l] / s;
             u2 = a[l1][l] / s;
-            r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2), u1);
+            r = Sign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
             v1 = -(u1 + r) / r;
             v2 = -u2 / r;
             u2 = v2 / v1;
@@ -511,7 +595,7 @@ namespace UMapx.Decomposition
 
             // Determine single shift zero-th column of a
             ish = 1;
-            r = Maths.Sqrt(r);
+            r = Math.Sqrt(r);
             sh = -t + r;
             s = -t - r;
             if (Math.Abs(s - a44) < Math.Abs(sh - a44))
@@ -543,7 +627,7 @@ namespace UMapx.Decomposition
                 a[l][lm1] = -a[l][lm1];
             goto L160;
 
-        // Determine float shift zero-th column of a
+        // Determine double shift zero-th column of a
         L150:
             a12 = a[l][l1] / b22;
             a22 = a[l1][l1] / b22;
@@ -587,7 +671,7 @@ namespace UMapx.Decomposition
                 if (s == 0.0) goto L70;
                 u1 = a1 / s;
                 u2 = a2 / s;
-                r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2), u1);
+                r = Sign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                 v1 = -(u1 + r) / r;
                 v2 = -u2 / r;
                 u2 = v2 / v1;
@@ -620,7 +704,7 @@ namespace UMapx.Decomposition
                 u1 = a1 / s;
                 u2 = a2 / s;
                 u3 = a3 / s;
-                r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2 + u3 * u3), u1);
+                r = Sign(Math.Sqrt(u1 * u1 + u2 * u2 + u3 * u3), u1);
                 v1 = -(u1 + r) / r;
                 v2 = -u2 / r;
                 v3 = -u3 / r;
@@ -651,7 +735,7 @@ namespace UMapx.Decomposition
                 u1 = b[k2][k2] / s;
                 u2 = b[k2][k1] / s;
                 u3 = b[k2][k] / s;
-                r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2 + u3 * u3), u1);
+                r = Sign(Math.Sqrt(u1 * u1 + u2 * u2 + u3 * u3), u1);
                 v1 = -(u1 + r) / r;
                 v2 = -u2 / r;
                 v3 = -u3 / r;
@@ -691,7 +775,7 @@ namespace UMapx.Decomposition
                 if (s == 0.0) goto L260;
                 u1 = b[k1][k1] / s;
                 u2 = b[k1][k] / s;
-                r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2), u1);
+                r = Sign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                 v1 = -(u1 + r) / r;
                 v2 = -u2 / r;
                 u2 = v2 / v1;
@@ -754,23 +838,23 @@ namespace UMapx.Decomposition
         /// <param name="beta">Denominators β_j (nonnegative). Length n. Written by the routine</param>
         /// <param name="matz">If true, accumulate right transformations into <paramref name="z"/></param>
         /// <param name="z">Right transformation accumulator Z (updated if <paramref name="matz"/> is true)</param>
-        private static void qzval(int n, float[][] a, float[][] b, float[] alfr, float[] alfi, float[] beta, bool matz, float[][] z)
+        private static void qzval(int n, double[][] a, double[][] b, double[] alfr, double[] alfi, double[] beta, bool matz, double[][] z)
         {
             int i, j;
             int na, en, nn;
-            float c, d, e = 0;
-            float r, s, t;
-            float a1, a2, u1, u2, v1, v2;
-            float a11, a12, a21, a22;
-            float b11, b12, b22;
-            float di, ei;
-            float an = 0, bn;
-            float cq, dr;
-            float cz, ti, tr;
-            float a1i, a2i, a11i, a12i, a22i, a11r, a12r, a22r;
-            float sqi, ssi, sqr, szi, ssr, szr;
+            double c, d, e = 0;
+            double r, s, t;
+            double a1, a2, u1, u2, v1, v2;
+            double a11, a12, a21, a22;
+            double b11, b12, b22;
+            double di, ei;
+            double an = 0, bn;
+            double cq, dr;
+            double cz, ti, tr;
+            double a1i, a2i, a11i, a12i, a22i, a11r, a12r, a22r;
+            double sqi, ssi, sqr, szi, ssr, szr;
 
-            float epsb = b[n - 1][0];
+            double epsb = b[n - 1][0];
             int isw = 1;
 
 
@@ -831,7 +915,7 @@ namespace UMapx.Decomposition
                 if (d < 0.0) goto L480;
 
                 // Two real roots. Zero both a(en,na) and b(en,na)
-                e += c + Sign(Maths.Sqrt(d), c);
+                e += c + Sign(Math.Sqrt(d), c);
                 a11 -= e * b11;
                 a12 -= e * b12;
                 a22 -= e * b22;
@@ -852,7 +936,7 @@ namespace UMapx.Decomposition
                 s = Math.Abs(a1) + Math.Abs(a2);
                 u1 = a1 / s;
                 u2 = a2 / s;
-                r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2), u1);
+                r = Sign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                 v1 = -(u1 + r) / r;
                 v2 = -u2 / r;
                 u2 = v2 / v1;
@@ -894,7 +978,7 @@ namespace UMapx.Decomposition
                 if (s == 0.0) goto L475;
                 u1 = a1 / s;
                 u2 = a2 / s;
-                r = Sign(Maths.Sqrt(u1 * u1 + u2 * u2), u1);
+                r = Sign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                 v1 = -(u1 + r) / r;
                 v2 = -u2 / r;
                 u2 = v2 / v1;
@@ -931,7 +1015,7 @@ namespace UMapx.Decomposition
             // Two complex roots
             L480:
                 e += c;
-                ei = Maths.Sqrt(-d);
+                ei = Math.Sqrt(-d);
                 a11r = a11 - e * b11;
                 a11i = ei * b11;
                 a12r = a12 - e * b12;
@@ -959,11 +1043,11 @@ namespace UMapx.Decomposition
 
             // Choose complex z
             L485:
-                cz = Maths.Sqrt(a1 * a1 + a1i * a1i);
+                cz = Math.Sqrt(a1 * a1 + a1i * a1i);
                 if (cz == 0.0) goto L487;
                 szr = (a1 * a2 + a1i * a2i) / cz;
                 szi = (a1 * a2i - a1i * a2) / cz;
-                r = Maths.Sqrt(cz * cz + szr * szr + szi * szi);
+                r = Math.Sqrt(cz * cz + szr * szr + szi * szi);
                 cz /= r;
                 szr /= r;
                 szi /= r;
@@ -989,11 +1073,11 @@ namespace UMapx.Decomposition
 
             // Choose complex q
             L495:
-                cq = Maths.Sqrt(a1 * a1 + a1i * a1i);
+                cq = Math.Sqrt(a1 * a1 + a1i * a1i);
                 if (cq == 0.0) goto L497;
                 sqr = (a1 * a2 + a1i * a2i) / cq;
                 sqi = (a1 * a2i - a1i * a2) / cq;
-                r = Maths.Sqrt(cq * cq + sqr * sqr + sqi * sqi);
+                r = Math.Sqrt(cq * cq + sqr * sqr + sqi * sqi);
                 cq /= r;
                 sqr /= r;
                 sqi /= r;
@@ -1028,7 +1112,7 @@ namespace UMapx.Decomposition
                 if (t < 0.0)
                     j = en;
 
-                r = Maths.Sqrt(dr * dr + di * di);
+                r = Math.Sqrt(dr * dr + di * di);
                 beta[j] = bn * r;
                 alfr[j] = an * (tr * dr + ti * di) / r;
                 alfi[j] = an * t / r;
@@ -1059,7 +1143,7 @@ namespace UMapx.Decomposition
         /// </remarks>
         /// <param name="n">Matrix order</param>
         /// <param name="a">Quasi-triangular S (read-only here). Notation follows EISPACK; may be referenced</param>
-        /// <param name="b">Upper triangular T (read-only here). Notation follows EISPACK; may be referenced</param>
+        /// <param name="b">Upper triangular T, overwritten by triangular eigenvector workspace during back-substitution.</param>
         /// <param name="alfr">Real parts of α_j from <see cref="qzval"/></param>
         /// <param name="alfi">Imag parts of α_j from <see cref="qzval"/></param>
         /// <param name="beta">β_j from <see cref="qzval"/></param>
@@ -1067,17 +1151,17 @@ namespace UMapx.Decomposition
         /// On entry: right transformation accumulator from prior stages. On exit: columns replaced by the (right)
         /// generalized eigenvectors in the original coordinate system. Modified in place
         /// </param>
-        private static void qzvec(int n, float[][] a, float[][] b, float[] alfr, float[] alfi, float[] beta, float[][] z)
+        private static void qzvec(int n, double[][] a, double[][] b, double[] alfr, double[] alfi, double[] beta, double[][] z)
         {
             int i, j, k, m;
             int na, ii, en, jj, nn, enm2;
-            float d, q;
-            float r = 0, s = 0, t, w, x = 0, y, t1, t2, w1, x1 = 0, z1 = 0, di;
-            float ra, dr, sa;
-            float ti, rr, tr, zz = 0;
-            float alfm, almi, betm, almr;
+            double d, q;
+            double r = 0, s = 0, t, w, x = 0, y, t1, t2, w1, x1 = 0, z1 = 0, di;
+            double ra, dr, sa;
+            double ti, rr, tr, zz = 0;
+            double alfm, almi, betm, almr;
 
-            float epsb = b[n - 1][0];
+            double epsb = b[n - 1][0];
             int isw = 1;
 
 
@@ -1313,9 +1397,9 @@ namespace UMapx.Decomposition
                     if (r != 0.0)
                     {
                         // Computing 2nd power
-                        float u1 = z[i][j - 1] / r;
-                        float u2 = z[i][j] / r;
-                        r *= Maths.Sqrt(u1 * u1 + u2 * u2);
+                        double u1 = z[i][j - 1] / r;
+                        double u2 = z[i][j] / r;
+                        r *= Math.Sqrt(u1 * u1 + u2 * u2);
                     }
                     if (r > d)
                         d = r;
@@ -1337,30 +1421,16 @@ namespace UMapx.Decomposition
             return;
         }
         /// <summary>
-        /// Estimates unit round-off (machine epsilon scaled by |x|) using the classic EISPACK strategy.
+        /// Returns binary64 machine epsilon scaled by the magnitude of the argument.
         /// </summary>
         /// <remarks>
-        /// Port of EISPACK <c>EPSLON</c>. It returns an estimate of the smallest ε such that 1+ε ≠ 1,
-        /// multiplied by <paramref name="x"/> in magnitude. Used when a caller passes 0 to request
-        /// “use machine precision” as the iteration tolerance.
+        /// Uses the exact spacing 2^-52 at one as the lower bound for double-precision QZ deflation.
         /// </remarks>
-        /// <param name="x">Reference magnitude. The result is approximately eps_machine * |x|</param>
-        /// <returns>Estimated round-off scaled to |x|</returns>
-        private static float Epsilon(float x)
+        /// <param name="x">Reference magnitude.</param>
+        /// <returns>2^-52 times the absolute value of x.</returns>
+        private static double Epsilon(double x)
         {
-            float a, b, c, eps;
-
-            a = 1.3333333333333333f;
-
-        L10:
-            b = a - 1.0f;
-            c = b + b + b;
-            eps = Math.Abs(c - 1.0f);
-
-            if (eps == 0.0)
-                goto L10;
-
-            return eps * System.Math.Abs(x);
+            return 2.2204460492503131e-16 * Math.Abs(x);
         }
         /// <summary>
         /// Returns <paramref name="a"/> with the sign of <paramref name="b"/> (sign transfer / copysign).
@@ -1372,9 +1442,9 @@ namespace UMapx.Decomposition
         /// <param name="a">Magnitude donor</param>
         /// <param name="b">Sign donor</param>
         /// <returns>|a| with the sign of b</returns>
-        private static float Sign(float a, float b)
+        private static double Sign(double a, double b)
         {
-            float x = a >= 0 ? a : -a;
+            double x = a >= 0 ? a : -a;
             return b >= 0 ? x : -x;
         }
         #endregion

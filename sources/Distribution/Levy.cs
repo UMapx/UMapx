@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 
 namespace UMapx.Distribution
@@ -130,7 +130,7 @@ namespace UMapx.Distribution
         {
             get
             {
-                return 1f + 0.5f * Maths.Log(2f * Maths.Pi * scale);
+                return (float)(0.5 + Math.Log(4 * Math.Sqrt(Math.PI) * scale) + 1.5 * DistributionNumerics.EulerGamma);
             }
         }
         /// <summary>

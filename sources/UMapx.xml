@@ -3041,23 +3041,23 @@
             <summary>
             Creates an instance of the structure CIE XYZ.
             </summary>
-            <param name="x">Component X [0, 1]</param>
-            <param name="y">Component Y [0, 1]</param>
-            <param name="z">Component Z [0, 1]</param>
+            <param name="x">Component X [0, +infinity), relative to a reference white with Y = 1</param>
+            <param name="y">Component Y [0, +infinity), relative to a reference white with Y = 1</param>
+            <param name="z">Component Z [0, +infinity), relative to a reference white with Y = 1</param>
         </member>
         <member name="P:UMapx.Colorspace.XYZ.X">
             <summary>
-            Defines a component of the model [0, 1].
+            Defines a component of the model [0, +infinity), relative to a reference white with Y = 1.
             </summary>
         </member>
         <member name="P:UMapx.Colorspace.XYZ.Y">
             <summary>
-            Defines a component of the model [0, 1].
+            Defines a component of the model [0, +infinity), relative to a reference white with Y = 1.
             </summary>
         </member>
         <member name="P:UMapx.Colorspace.XYZ.Z">
             <summary>
-            Defines a component of the model [0, 1].
+            Defines a component of the model [0, +infinity), relative to a reference white with Y = 1.
             </summary>
         </member>
         <member name="M:UMapx.Colorspace.XYZ.op_Equality(UMapx.Colorspace.XYZ,UMapx.Colorspace.XYZ)">
@@ -3143,8 +3143,8 @@
             <summary>
             Computes the nonlinear helper function used in CIE XYZ to LAB conversion.
             </summary>
-            <param name="t">Input value</param>
-            <returns>Transformed value</returns>
+            <param name="t">Nonnegative tristimulus component divided by its D65 white component.</param>
+            <returns>The cube root above (6/29)^3, and its continuous linear extension below.</returns>
         </member>
         <member name="P:UMapx.Colorspace.XYZ.ToRGB">
             <summary>
@@ -5031,19 +5031,29 @@
             Defines a fast mean filter class.
             </summary>
         </member>
+        <member name="M:UMapx.Core.LinealgOptions.MeanFilter.FilterLine(System.Int32,System.Int32,System.Func{System.Int32,System.Numerics.Complex},System.Func{System.Int32,System.Numerics.Complex},System.Action{System.Int32,System.Numerics.Complex})">
+            <summary>
+            Computes clipped local means with a rolling numerator and weight sum in double precision.
+            </summary>
+            <param name="length">Number of samples in the line.</param>
+            <param name="r">Window length; even windows include one extra sample on the left.</param>
+            <param name="sample">Reads a sample by its index.</param>
+            <param name="weight">Reads a weight by index, or null to use unit weights.</param>
+            <param name="write">Stores the mean at the given output index; a zero weight sum produces zero.</param>
+        </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanFilter.Mean(System.Single[],System.Int32)">
             <summary>
              Implements local average of vector.
             </summary>
             <param name="v">Array</param>
-            <param name="r">Radius</param>
+            <param name="r">Window length; clipped and renormalized at the boundaries</param>
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanFilter.Mean(UMapx.Core.Complex32[],System.Int32)">
             <summary>
              Implements local average of vector.
             </summary>
             <param name="v">Array</param>
-            <param name="r">Radius</param>
+            <param name="r">Window length; clipped and renormalized at the boundaries</param>
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanFilter.MeanHorizontal(System.Single[0:,0:],System.Int32)">
             <summary>
@@ -5083,7 +5093,7 @@
             </summary>
             <param name="values">Array of values</param>
             <param name="weights">Array of weights (same length as values)</param>
-            <param name="r">Radius</param>
+            <param name="r">Window length; clipped and renormalized at the boundaries</param>
             <returns>Weighted blurred array</returns>
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanFilter.MeanWeighted(UMapx.Core.Complex32[],UMapx.Core.Complex32[],System.Int32)">
@@ -5092,7 +5102,7 @@
             </summary>
             <param name="values">Array of values</param>
             <param name="weights">Array of weights (same length as values)</param>
-            <param name="r">Radius</param>
+            <param name="r">Window length; clipped and renormalized at the boundaries</param>
             <returns>Weighted blurred array</returns>
         </member>
         <member name="M:UMapx.Core.LinealgOptions.MeanFilter.MeanHorizontalWeighted(System.Single[0:,0:],System.Single[0:,0:],System.Int32)">
@@ -5905,6 +5915,8 @@
             Returns the arccotangent of a number.
             </summary>
             <param name="a">Complex number</param>
+            <remarks>Uses principal atan(1/a), with value pi/2 at zero. On the imaginary cuts,
+            the real part has the sign of Im(1/a). The real overload uses the interval (0, pi).</remarks>
             <returns>Complex number</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Asec(UMapx.Core.Complex32)">
@@ -6094,7 +6106,7 @@
             Checks if number is prime.
             </summary>
             <remarks>
-            This method is based on enumerating all the divisors.
+            Uses deterministic Miller-Rabin tests over the full signed integer range.
             </remarks>
             <param name="p">Value</param>
             <returns>Boolean</returns>
@@ -6104,7 +6116,7 @@
             Checks if number is prime.
             </summary>
             <remarks>
-            This method is based on enumerating all the divisors.
+            Uses deterministic Miller-Rabin tests over the full signed integer range.
             </remarks>
             <param name="p">Value</param>
             <returns>Boolean</returns>
@@ -6114,7 +6126,7 @@
             Returns coprime number.
             </summary>
             <param name="a">Integer number</param>
-            <param name="increment">Increment</param>
+            <param name="increment">Inclusive starting value for the coprime search</param>
             <returns>Integer number</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Coprime(System.Int64,System.Int64)">
@@ -6122,7 +6134,7 @@
             Returns coprime number.
             </summary>
             <param name="a">Integer number</param>
-            <param name="increment">Increment</param>
+            <param name="increment">Inclusive starting value for the coprime search</param>
             <returns>Integer number</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Mod(System.Int32,System.Int32)">
@@ -6225,6 +6237,7 @@
             </summary>
             <param name="a">Integer number</param>
             <param name="b">Integer number</param>
+            <exception cref="T:System.OverflowException">The nonnegative GCD does not fit in Int32.</exception>
             <returns>Integer number</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Gcd(System.Int64,System.Int64)">
@@ -6233,6 +6246,7 @@
             </summary>
             <param name="a">Integer number</param>
             <param name="b">Integer number</param>
+            <exception cref="T:System.OverflowException">The nonnegative GCD does not fit in Int64.</exception>
             <returns>Integer number</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Lcm(System.Int32,System.Int32)">
@@ -6241,6 +6255,8 @@
             </summary>
             <param name="a">Integer number</param>
             <param name="b">Integer number</param>
+            <remarks>Returns zero if either input is zero.</remarks>
+            <exception cref="T:System.OverflowException">The nonnegative LCM does not fit in Int32.</exception>
             <returns>Integer number</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Lcm(System.Int64,System.Int64)">
@@ -6249,6 +6265,8 @@
             </summary>
             <param name="a">Integer number</param>
             <param name="b">Integer number</param>
+            <remarks>Returns zero if either input is zero.</remarks>
+            <exception cref="T:System.OverflowException">The nonnegative LCM does not fit in Int64.</exception>
             <returns>Integer number</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Itf(System.Int32,System.Boolean)">
@@ -6256,7 +6274,7 @@
             Returns an array of factors that number consists of.
             </summary>
             <param name="n">Integer number</param>
-            <param name="onlyPrimes">Only prime factors or not</param>
+            <param name="onlyPrimes">Return distinct prime factors when true; include multiplicities otherwise</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Itf(System.Int64,System.Boolean)">
@@ -6264,19 +6282,19 @@
             Returns an array of factors that number consists of.
             </summary>
             <param name="n">Integer number</param>
-            <param name="onlyPrimes">Only prime factors or not</param>
+            <param name="onlyPrimes">Return distinct prime factors when true; include multiplicities otherwise</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Pollard(System.Int32)">
             <summary>
-            Returns the P0-divider.
+            Returns a proper divisor of a composite positive integer, or the input for a prime or one.
             </summary>
             <param name="n">Integer number</param>
             <returns>Integer number</returns>
         </member>
         <member name="M:UMapx.Core.Maths.Pollard(System.Int64)">
             <summary>
-            Returns the P0-divider.
+            Returns a proper divisor of a composite positive integer, or the input for a prime or one.
             </summary>
             <param name="n">Integer number</param>
             <returns>Integer number</returns>
@@ -6332,7 +6350,7 @@
             Returns a vector representing the decimal number in the given number system.
             </summary>
             <remarks>
-            Example: 10[10] = {1,0,1,0}[2].
+            Least-significant digit first: 10 in base 2 is {0,1,0,1}. Negative values are not supported.
             </remarks>
             <param name="x">Byte</param>
             <param name="newbase">Base</param>
@@ -6343,7 +6361,7 @@
             Returns the decimal Number represented in decimal notation.
             </summary>
             <remarks>
-            Example: {1,0,1,0}[2] = 10[10].
+            Least-significant digit first: {0,1,0,1} in base 2 represents 10. Overflow throws OverflowException.
             </remarks>
             <param name="x">Array</param>
             <param name="thisbase">Base</param>
@@ -6354,7 +6372,7 @@
             Returns a number that interprets the specified vector in decimal.
             </summary>
             <remarks>
-            Example: {1,0,1,0}[2] = 1010[10].
+            Most-significant digit first: {1,0,1,0} represents 1010. Overflow throws OverflowException.
             </remarks>
             <param name="x">Array</param>
             <returns>Integer number</returns>
@@ -6364,14 +6382,14 @@
             Returns a vector representing the decomposition of a decimal number into components.
             </summary>
             <remarks>
-            Example: 1010[10] = {1,0,1,0}[2]
+            Most-significant digit first: 1010 becomes {1,0,1,0}. Negative values are not supported.
             </remarks>
             <param name="x">Value</param>
             <returns>Array</returns>
         </member>
         <member name="M:UMapx.Core.Maths.NumLength(System.Int64,System.Int32)">
             <summary>
-            Returns the value of the digit capacity of a number in the given number system.
+            Returns the digit count of the magnitude of an integer; zero has one digit.
             </summary>
             <param name="x">Byte</param>
             <param name="numbase">Base</param>
@@ -6505,6 +6523,156 @@
             <param name="min">Minimum value</param>
             <param name="max">Maximum value</param>
             <returns>Value</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.ComplexSinh(UMapx.Core.Complex32)">
+            <summary>
+            Evaluates complex sinh using double-precision real trigonometric factors.
+            </summary>
+            <param name="value">Input value.</param>
+            <returns>The hyperbolic sine in double-precision complex arithmetic.</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.ComplexCosh(UMapx.Core.Complex32)">
+            <summary>
+            Evaluates complex cosh using double-precision real trigonometric factors.
+            </summary>
+            <param name="value">Input value.</param>
+            <returns>The hyperbolic cosine in double-precision complex arithmetic.</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.RealAsinh(System.Double)">
+            <summary>
+            Evaluates real asinh through a positive magnitude to avoid cancellation for negative arguments.
+            </summary>
+            <param name="value">Input value.</param>
+            <returns>The real inverse hyperbolic sine, preserving the sign of the input.</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.RealAcosh(System.Double)">
+            <summary>
+            Evaluates real acosh for arguments at least one; smaller arguments return NaN.
+            </summary>
+            <param name="value">Real argument, at least one.</param>
+            <returns>The nonnegative inverse hyperbolic cosine, or NaN below one.</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.LogOnePlus(System.Double)">
+            <summary>
+            Evaluates log(1 + value) with a correction for rounding in the addition near zero.
+            </summary>
+            <param name="value">Finite real argument greater than -1; -1 gives the logarithmic pole.</param>
+            <returns>The natural logarithm of 1 + value.</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.ComplexLogOnePlus(System.Numerics.Complex)">
+            <summary>
+            Evaluates the principal log(1 + value) using a corrected modulus and atan2 phase.
+            </summary>
+            <param name="value">Input value.</param>
+            <returns>The principal complex logarithm of 1 + value.</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.PrincipalAtan(System.Numerics.Complex)">
+            <summary>
+            Evaluates complex atan with the branch convention used by the reciprocal arccotangent implementation.
+            </summary>
+            <remarks>On imaginary cuts with absolute imaginary part greater than one, the real part has the sign of the input imaginary component.</remarks>
+            <param name="value">Input value.</param>
+            <returns>The complex inverse tangent with the stated cut convention.</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.CubicWithSeparatedRoot(System.Double,System.Double,System.Double)">
+            <summary>
+            Solves x^3 + a*x^2 + b*x + c = 0 when one root is isolated by a dominant quadratic coefficient.
+            </summary>
+            <remarks>Refines the isolated root and recovers the smaller roots from their sum and product, avoiding cancellation in the depressed cubic.</remarks>
+            <param name="a">Coefficient of x^2 in the monic cubic.</param>
+            <param name="b">Coefficient of x.</param>
+            <param name="c">Constant coefficient.</param>
+            <returns>The isolated real root and the two roots recovered from its residual quadratic.</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.RealAtanh(System.Double)">
+            <summary>
+            Evaluates real atanh using its small-argument limit and a logarithmic ratio.
+            </summary>
+            <param name="value">Real argument in [-1, 1].</param>
+            <returns>The real inverse hyperbolic tangent, with infinite endpoint limits and NaN outside [-1, 1].</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.RealCubeRoot(System.Double)">
+            <summary>
+            Returns the real cube root, preserving the sign of a negative argument.
+            </summary>
+            <param name="value">Input value.</param>
+            <returns>The real cube root of value.</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.UnsignedMagnitude(System.Int64)">
+            <summary>
+            Returns the unsigned magnitude of a signed integer, including Int64.MinValue.
+            </summary>
+            <param name="value">Input value.</param>
+            <returns>The exact magnitude as an unsigned integer.</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.UnsignedGcd(System.UInt64,System.UInt64)">
+            <summary>
+            Computes a nonnegative greatest common divisor with the Euclidean remainder algorithm.
+            </summary>
+            <param name="a">First nonnegative integer.</param>
+            <param name="b">Second nonnegative integer.</param>
+            <returns>The nonnegative GCD; zero when both inputs are zero.</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.ExtendedGcd(System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+            Computes a nonnegative GCD and Bezout coefficients using exact BigInteger arithmetic.
+            </summary>
+            <param name="a">First signed integer.</param>
+            <param name="b">Second signed integer.</param>
+            <returns>An array [gcd, x, y] satisfying a*x + b*y = gcd.</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.MultiplyModulo(System.UInt64,System.UInt64,System.UInt64)">
+            <summary>
+            Multiplies two unsigned integers modulo a positive modulus without overflowing the product.
+            </summary>
+            <param name="a">First unsigned factor.</param>
+            <param name="b">Second unsigned factor.</param>
+            <param name="modulus">Positive modulus.</param>
+            <returns>The remainder of the exact product a*b modulo modulus.</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.PowerModulo(System.UInt64,System.UInt64,System.UInt64)">
+            <summary>
+            Evaluates an unsigned modular power by repeated squaring with exact intermediate products.
+            </summary>
+            <param name="value">Unsigned base.</param>
+            <param name="exponent">Nonnegative integer exponent.</param>
+            <param name="modulus">Modulus, greater than one at the call sites.</param>
+            <returns>The modular power; exponent zero returns one.</returns>
+        </member>
+        <member name="F:UMapx.Core.Maths.PrimalityBases">
+            <summary>
+            Miller–Rabin witnesses sufficient for primality decisions over the signed 64-bit domain.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Maths.IsPrimeUnsigned(System.UInt64)">
+            <summary>
+            Tests primality with Miller–Rabin bases sufficient throughout the signed 64-bit input domain.
+            </summary>
+            <param name="value">Nonnegative integer from the signed 64-bit input domain.</param>
+            <returns>True for a prime; false for a composite integer, zero, or one.</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.FactorInteger(System.UInt64,System.Collections.Generic.List{System.UInt64})">
+            <summary>
+            Appends the prime factors of a positive integer, retaining their multiplicities.
+            </summary>
+            <param name="value">Positive integer to factor.</param>
+            <param name="factors">Destination list for prime factors, including repetitions.</param>
+        </member>
+        <member name="M:UMapx.Core.Maths.FindDivisor(System.UInt64)">
+            <summary>
+            Finds a proper divisor of a composite integer using Pollard–Brent retries and a trial-division fallback.
+            </summary>
+            <param name="value">Composite integer in the signed 64-bit input domain.</param>
+            <returns>A divisor strictly between one and the composite input.</returns>
+        </member>
+        <member name="M:UMapx.Core.Maths.AccumulateDigits(System.Int32[],System.Int32,System.Boolean)">
+            <summary>
+            Decodes positional digits with checked accumulation and explicit digit-order selection.
+            </summary>
+            <param name="digits">Positional digits; each must be nonnegative and less than the radix.</param>
+            <param name="radix">Integer radix, at least two.</param>
+            <param name="leastSignificantFirst">True for least-significant-first digit order; false for most-significant-first order.</param>
+            <returns>The decoded nonnegative Int64 value.</returns>
         </member>
         <member name="T:UMapx.Core.Matrice">
             <summary>
@@ -7688,16 +7856,16 @@
             Returns the result matrix of local averaging.
             </summary>
             <param name="m">Matrix</param>
-            <param name="r0">Height radius</param>
-            <param name="r1">Width radius</param>
+            <param name="r0">Height window length</param>
+            <param name="r1">Width window length</param>
         </member>
         <member name="M:UMapx.Core.Matrice.Mean(UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
             <summary>
             Returns the result matrix of local averaging.
             </summary>
             <param name="m">Matrix</param>
-            <param name="r0">Height radius</param>
-            <param name="r1">Width radius</param>
+            <param name="r0">Height window length</param>
+            <param name="r1">Width window length</param>
         </member>
         <member name="M:UMapx.Core.Matrice.Mean(System.Single[0:,0:],System.Single[0:,0:],System.Int32,System.Int32)">
             <summary>
@@ -7705,8 +7873,8 @@
             </summary>
             <param name="m">Matrix</param>
             <param name="w">Matrix</param>
-            <param name="r0">Height radius</param>
-            <param name="r1">Width radius</param>
+            <param name="r0">Height window length</param>
+            <param name="r1">Width window length</param>
         </member>
         <member name="M:UMapx.Core.Matrice.Mean(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32,System.Int32)">
             <summary>
@@ -7714,8 +7882,8 @@
             </summary>
             <param name="m">Matrix</param>
             <param name="w">Matrix</param>
-            <param name="r0">Height radius</param>
-            <param name="r1">Width radius</param>
+            <param name="r0">Height window length</param>
+            <param name="r1">Width window length</param>
         </member>
         <member name="M:UMapx.Core.Matrice.Invert(System.Single[])">
             <summary>
@@ -8927,14 +9095,14 @@
             Returns the result vector of local averaging.
             </summary>
             <param name="v">Array</param>
-            <param name="r">Radius</param>
+            <param name="r">Window length</param>
         </member>
         <member name="M:UMapx.Core.Matrice.Mean(UMapx.Core.Complex32[],System.Int32)">
             <summary>
             Returns the result vector of local averaging.
             </summary>
             <param name="v">Array</param>
-            <param name="r">Radius</param>
+            <param name="r">Window length</param>
         </member>
         <member name="M:UMapx.Core.Matrice.Mean(System.Single[],System.Single[],System.Int32)">
             <summary>
@@ -8942,7 +9110,7 @@
             </summary>
             <param name="v">Array</param>
             <param name="w">Array</param>
-            <param name="r">Radius</param>
+            <param name="r">Window length</param>
         </member>
         <member name="M:UMapx.Core.Matrice.Mean(UMapx.Core.Complex32[],UMapx.Core.Complex32[],System.Int32)">
             <summary>
@@ -8950,7 +9118,7 @@
             </summary>
             <param name="v">Array</param>
             <param name="w">Array</param>
-            <param name="r">Radius</param>
+            <param name="r">Window length</param>
         </member>
         <member name="M:UMapx.Core.Matrice.Rotate(System.Single[0:,0:],UMapx.Core.RotationMode)">
             <summary>
@@ -10475,6 +10643,30 @@
             <param name="b">Array</param>
             <returns>Array</returns>
         </member>
+        <member name="M:UMapx.Core.Matrice.HermitianSquaredDifference(UMapx.Core.Complex32[],UMapx.Core.Complex32[])">
+            <summary>
+            Returns sum(abs(x[i] - y[i])^2) / (n - 1), accumulating squared magnitudes in double precision.
+            </summary>
+            <remarks>This is a difference statistic, not a cross-covariance.</remarks>
+            <param name="x">First vector; must have the same length as y.</param>
+            <param name="y">Second vector.</param>
+            <returns>The normalized squared difference, or NaN for fewer than two observations.</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.HermitianVariance(UMapx.Core.Complex32[])">
+            <summary>
+            Computes the Hermitian sample variance with a double-precision mean and centered squared magnitudes.
+            </summary>
+            <param name="values">Complex observations.</param>
+            <returns>A nonnegative sample variance, or NaN for fewer than two observations.</returns>
+        </member>
+        <member name="M:UMapx.Core.Matrice.RotationCoefficients(System.Single,System.Double@,System.Double@)">
+            <summary>
+            Computes cosine and sine for the inverse rotation in degrees, exactly at multiples of 90 degrees.
+            </summary>
+            <param name="angle">Forward rotation angle in degrees.</param>
+            <param name="cosine">Receives the cosine of the inverse rotation.</param>
+            <param name="sine">Receives the sine of the inverse rotation.</param>
+        </member>
         <member name="T:UMapx.Core.MorphologyMode">
             <summary>
             Defines a morphology mode.
@@ -11314,16 +11506,6 @@
             https://en.wikipedia.org/wiki/Special_functions
             </remarks>
         </member>
-        <member name="F:UMapx.Core.Special.INV_2PI">
-            <summary>
-            1 / ( 2 * PI ).
-            </summary>
-        </member>
-        <member name="F:UMapx.Core.Special.SQRT_PI">
-            <summary>
-            Sqrt( PI ).
-            </summary>
-        </member>
         <member name="M:UMapx.Core.Special.ChebyshevT(System.Single,System.Int32)">
             <summary>
             Returns the value of the Chebyshev polynomial of the first kind.
@@ -11782,54 +11964,31 @@
             <param name="s">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.ZetaEta(System.Single)">
-            <summary>
-            Evaluates the Dirichlet eta function for real inputs via an alternating series.
-            </summary>
-            <param name="s">Function argument</param>
-        </member>
-        <member name="M:UMapx.Core.Special.ZetaEta(UMapx.Core.Complex32)">
-            <summary>
-            Evaluates the Dirichlet eta function for complex inputs using an alternating series.
-            </summary>
-            <param name="s">Function argument</param>
-        </member>
-        <member name="M:UMapx.Core.Special.ZetaHasse(System.Single)">
-            <summary>
-            Computes the Riemann zeta function for real inputs using Hasse's series.
-            </summary>
-            <param name="s">Function argument</param>
-        </member>
-        <member name="M:UMapx.Core.Special.ZetaHasse(UMapx.Core.Complex32)">
-            <summary>
-            Computes the Riemann zeta function for complex inputs using Hasse's series.
-            </summary>
-            <param name="s">Function argument</param>
-        </member>
         <member name="M:UMapx.Core.Special.Gamma(System.Single)">
             <summary>
-            Returns the value of the Euler Gamma function: Г(z).
+            Returns the value of the Euler Gamma function: Gamma(z).
             </summary>
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Gamma(UMapx.Core.Complex32)">
             <summary>
-            Returns the value of the Euler Gamma function: Г(z).
+            Returns the value of the Euler Gamma function: Gamma(z).
             </summary>
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.LogGamma(System.Single)">
             <summary>
-            Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
+            Returns log(abs(Gamma(x))) for real arguments. Gamma poles return NaN.
             </summary>
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.LogGamma(UMapx.Core.Complex32)">
             <summary>
-            Returns the value of the natural logarithm of the Euler Gamma function: ln[Г(z)].
+            Returns analytic log-gamma with its cut on the negative real axis.
+            Its imaginary part is not reduced modulo 2*pi; the upper side is used on the cut.
             </summary>
             <param name="z">Value</param>
             <returns>Value</returns>
@@ -11926,67 +12085,19 @@
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.GammaLanczos(System.Double)">
-            <summary>
-            Lanczos approximation (real) valid for Re(z) > 0.5. Computes principal branch.
-            </summary>
-        </member>
-        <member name="M:UMapx.Core.Special.GammaLanczos(UMapx.Core.Complex32)">
-            <summary>
-            Lanczos approximation (complex) valid for Re(z) > 0.5. Computes principal branch.
-            </summary>
-        </member>
-        <member name="M:UMapx.Core.Special.LogGammaLanczos(System.Double)">
-            <summary>
-            Lanczos log-gamma for real x with Re(x) ≥ 0.5 (principal branch).
-            </summary>
-        </member>
-        <member name="M:UMapx.Core.Special.LogGammaLanczos(UMapx.Core.Complex32)">
-            <summary>
-            Lanczos log-gamma for complex z with Re(z) ≥ 0.5 (principal branch).
-            </summary>
-        </member>
-        <member name="M:UMapx.Core.Special.LowerRegGammaSeries(System.Single,System.Single)">
-            <summary>
-            Series expansion for the lower regularized incomplete gamma function.
-            </summary>
-            <param name="s">Shape parameter</param>
-            <param name="x">Upper limit of integration</param>
-        </member>
-        <member name="M:UMapx.Core.Special.LowerRegGammaSeries(UMapx.Core.Complex32,UMapx.Core.Complex32)">
-            <summary>
-            Series expansion for the lower regularized incomplete gamma function with complex parameters.
-            </summary>
-            <param name="s">Shape parameter</param>
-            <param name="x">Upper limit of integration</param>
-        </member>
-        <member name="M:UMapx.Core.Special.UpperGammaCF(System.Single,System.Single)">
-            <summary>
-            Continued fraction evaluation for the upper incomplete gamma function.
-            </summary>
-            <param name="s">Shape parameter</param>
-            <param name="x">Lower limit of integration</param>
-        </member>
-        <member name="M:UMapx.Core.Special.UpperGammaCF(UMapx.Core.Complex32,UMapx.Core.Complex32)">
-            <summary>
-            Continued fraction evaluation for the upper incomplete gamma function with complex parameters.
-            </summary>
-            <param name="s">Shape parameter</param>
-            <param name="x">Lower limit of integration</param>
-        </member>
         <member name="M:UMapx.Core.Special.Gerf(System.Single,System.Int32)">
             <summary>
-            Returns the value of the generalized error function.
+            Returns n!/sqrt(pi) times the integral of exp(-t^n) from zero to x.
             </summary>
-            <param name="x">Value (0, +inf)</param>
+            <param name="x">Real integration endpoint</param>
             <param name="n">Order [0, +inf)</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Core.Special.Gerf(UMapx.Core.Complex32,System.Int32)">
             <summary>
-            Returns the value of the generalized error function.
+            Returns the entire continuation of n!/sqrt(pi) times the integral of exp(-t^n).
             </summary>
-            <param name="x">Value (0, +inf)</param>
+            <param name="x">Complex integration endpoint</param>
             <param name="n">Order [0, +inf)</param>
             <returns>Value</returns>
         </member>
@@ -12050,7 +12161,7 @@
         </member>
         <member name="M:UMapx.Core.Special.FactorialUp(System.Single,System.Single)">
             <summary>
-            Returns the increasing factorial of a number (Pohhammer symbol).
+            Returns the increasing factorial of a number (Pochhammer symbol).
             </summary>
             <param name="n">Value</param>
             <param name="k">Value</param>
@@ -12058,7 +12169,7 @@
         </member>
         <member name="M:UMapx.Core.Special.FactorialUp(UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
-            Returns the increasing factorial of a number (Pohhammer symbol).
+            Returns the increasing factorial of a number (Pochhammer symbol).
             </summary>
             <param name="z">Value</param>
             <param name="k">Value</param>
@@ -12066,7 +12177,7 @@
         </member>
         <member name="M:UMapx.Core.Special.Binomial(System.Single,System.Single)">
             <summary>
-            Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
+            Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! for k > 0.
             </summary>
             <param name="n">Value</param>
             <param name="k">Value</param>
@@ -12074,7 +12185,7 @@
         </member>
         <member name="M:UMapx.Core.Special.Binomial(UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
-            Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! для k > 0.
+            Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! for k > 0.
             </summary>
             <param name="n">Value</param>
             <param name="k">Value</param>
@@ -12190,12 +12301,6 @@
             <param name="b">The upper limit of the normalization</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.ErfApprox(System.Numerics.Complex)">
-            <summary>
-            Approximates the error function for complex arguments.
-            </summary>
-            <param name="z">Complex value</param>
-        </member>
         <member name="M:UMapx.Core.Special.Dawson(System.Single,System.Boolean)">
             <summary>
             Returns the value of the D- / D + Dawson function.
@@ -12306,7 +12411,7 @@
         </member>
         <member name="M:UMapx.Core.Special.Beta(System.Single,System.Single)">
             <summary>
-            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(a + b).
+            Returns the value of the beta function: B(a, b) = Gamma(a) * Gamma(b) / Gamma(a + b).
             </summary>
             <param name="a">Value</param>
             <param name="b">Value</param>
@@ -12314,7 +12419,7 @@
         </member>
         <member name="M:UMapx.Core.Special.Beta(UMapx.Core.Complex32,UMapx.Core.Complex32)">
             <summary>
-            Returns the value of the beta function: B(a, b) = Г(a) * Г(b) / Г(a + b).
+            Returns the value of the beta function: B(a, b) = Gamma(a) * Gamma(b) / Gamma(a + b).
             </summary>
             <param name="a">Value</param>
             <param name="b">Value</param>
@@ -12507,25 +12612,6 @@
             <param name="a">Value</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Core.Special.GL0Pi(System.Func{System.Double,System.Double})">
-            <summary>
-            Integrates a real function over [0, π] using 16-point Gauss–Legendre quadrature.
-            </summary>
-            <param name="f">Function to integrate</param>
-        </member>
-        <member name="M:UMapx.Core.Special.GL0PiC(System.Func{System.Double,System.Numerics.Complex})">
-            <summary>
-            Integrates a complex function over [0, π] using 16-point Gauss–Legendre quadrature.
-            </summary>
-            <param name="f">Function to integrate</param>
-        </member>
-        <member name="M:UMapx.Core.Special.GL0T(System.Func{System.Double,System.Double},System.Double)">
-            <summary>
-            Integrates a real function over [0, T] using 16-point Gauss–Legendre quadrature.
-            </summary>
-            <param name="f">Function to integrate</param>
-            <param name="T">Upper integration limit</param>
-        </member>
         <member name="M:UMapx.Core.Special.H(System.Single,System.Int32)">
             <summary>
             Returns the value of the Struve function.
@@ -12638,6 +12724,606 @@
             <summary>
             Sequence A122045.
             </summary>
+        </member>
+        <member name="F:UMapx.Core.Special.SpecialEpsilon">
+            <summary>
+            Relative stopping threshold for double-precision series and continued fractions.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Special.SqrtPi">
+            <summary>
+            Square root of pi used by error-function and Bessel kernels.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Special.ComplexNaN">
+            <summary>
+            Complex sentinel for undefined values or unsuccessful numerical convergence.
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Special.GammaCoefficients">
+            <summary>
+            Lanczos coefficients for the gamma approximation with shift g = 7.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Special.IsPole(System.Double)">
+            <summary>
+            Tests whether the argument is a nonpositive integer pole of the gamma function.
+            </summary>
+            <param name="x">Function argument.</param>
+            <returns>True exactly at a nonpositive real integer.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.IsPole(System.Numerics.Complex)">
+            <summary>
+            Tests whether the argument is a nonpositive integer pole of the gamma function.
+            </summary>
+            <param name="x">Function argument.</param>
+            <returns>True exactly at a nonpositive real integer.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.IsFinite(System.Numerics.Complex)">
+            <summary>
+            Tests whether both components of a complex argument are finite.
+            </summary>
+            <param name="x">Function argument.</param>
+            <returns>True if neither component is NaN or infinite.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaLog(System.Double)">
+            <summary>
+            Evaluates log-gamma using Lanczos coefficients, recurrence, and reflection.
+            </summary>
+            <remarks>The real overload returns log(abs(Gamma(x))). The complex overload retains the analytic logarithm on the plane cut along the negative real axis.</remarks>
+            <param name="x">Function argument.</param>
+            <returns>The logarithm of the gamma magnitude for real inputs, or the analytic log-gamma for complex inputs.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaSign(System.Double)">
+            <summary>
+            Returns the sign of gamma at a real argument away from its poles.
+            </summary>
+            <param name="x">Function argument.</param>
+            <returns>One or minus one according to the sign of Gamma(x).</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaValue(System.Double)">
+            <summary>
+            Evaluates gamma from its logarithmic magnitude or analytic logarithm.
+            </summary>
+            <param name="x">Function argument.</param>
+            <returns>Gamma at the argument, or NaN at a pole or an undefined input.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaLog(System.Numerics.Complex)">
+            <summary>
+            Evaluates log-gamma using Lanczos coefficients, recurrence, and reflection.
+            </summary>
+            <remarks>The real overload returns log(abs(Gamma(x))). The complex overload retains the analytic logarithm on the plane cut along the negative real axis.</remarks>
+            <param name="x">Function argument.</param>
+            <returns>The logarithm of the gamma magnitude for real inputs, or the analytic log-gamma for complex inputs.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaValue(System.Numerics.Complex)">
+            <summary>
+            Evaluates gamma from its logarithmic magnitude or analytic logarithm.
+            </summary>
+            <param name="x">Function argument.</param>
+            <returns>Gamma at the argument, or NaN at a pole or an undefined input.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaSeries(System.Double,System.Double)">
+            <summary>
+            Evaluates the lower incomplete-gamma series before multiplication by x^s*exp(-x).
+            </summary>
+            <param name="s">Gamma shape parameter away from series denominator poles.</param>
+            <param name="x">Integration argument in the region selected for series evaluation.</param>
+            <returns>The lower-gamma series factor, or NaN if the iteration limit is reached.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaSeries(System.Numerics.Complex,System.Numerics.Complex)">
+            <summary>
+            Evaluates the lower incomplete-gamma series before multiplication by x^s*exp(-x).
+            </summary>
+            <param name="s">Gamma shape parameter away from series denominator poles.</param>
+            <param name="x">Integration argument in the region selected for series evaluation.</param>
+            <returns>The lower-gamma series factor, or NaN if the iteration limit is reached.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaFraction(System.Double,System.Double)">
+            <summary>
+            Evaluates the upper incomplete-gamma continued-fraction factor before multiplication by x^s*exp(-x).
+            </summary>
+            <param name="s">Gamma shape parameter.</param>
+            <param name="x">Integration argument in the region selected for continued-fraction evaluation.</param>
+            <returns>The upper-gamma continued-fraction factor, or NaN if the iteration limit is reached.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GammaFraction(System.Numerics.Complex,System.Numerics.Complex)">
+            <summary>
+            Evaluates the upper incomplete-gamma continued-fraction factor before multiplication by x^s*exp(-x).
+            </summary>
+            <param name="s">Gamma shape parameter.</param>
+            <param name="x">Integration argument in the region selected for continued-fraction evaluation.</param>
+            <returns>The upper-gamma continued-fraction factor, or NaN if the iteration limit is reached.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.IncompleteGamma(System.Double,System.Double,System.Boolean,System.Boolean)">
+            <summary>
+            Evaluates a lower or upper incomplete gamma function, optionally divided by gamma(s).
+            </summary>
+            <param name="s">Shape parameter; real overloads require a positive finite value.</param>
+            <param name="x">Integration limit; real overloads require a nonnegative value.</param>
+            <param name="upper">True selects the upper tail; false selects the lower integral.</param>
+            <param name="regularized">True divides by Gamma(s).</param>
+            <returns>The requested incomplete gamma value or regularized ratio, or NaN for invalid inputs or nonconvergence.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.IncompleteGamma(System.Numerics.Complex,System.Numerics.Complex,System.Boolean,System.Boolean)">
+            <summary>
+            Evaluates a lower or upper incomplete gamma function, optionally divided by gamma(s).
+            </summary>
+            <param name="s">Shape parameter; real overloads require a positive finite value.</param>
+            <param name="x">Integration limit; real overloads require a nonnegative value.</param>
+            <param name="upper">True selects the upper tail; false selects the lower integral.</param>
+            <param name="regularized">True divides by Gamma(s).</param>
+            <returns>The requested incomplete gamma value or regularized ratio, or NaN for invalid inputs or nonconvergence.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaLog(System.Double,System.Double)">
+            <summary>
+            Evaluates the logarithmic beta ratio from three log-gamma values.
+            </summary>
+            <param name="a">First beta parameter.</param>
+            <param name="b">Second beta parameter.</param>
+            <returns>The log-gamma combination logGamma(a) + logGamma(b) - logGamma(a + b).</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaLog(System.Numerics.Complex,System.Numerics.Complex)">
+            <summary>
+            Evaluates the logarithmic beta ratio from three log-gamma values.
+            </summary>
+            <param name="a">First beta parameter.</param>
+            <param name="b">Second beta parameter.</param>
+            <returns>The log-gamma combination logGamma(a) + logGamma(b) - logGamma(a + b).</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaValue(System.Double,System.Double)">
+            <summary>
+            Evaluates real beta with gamma-sign tracking and a logarithmic magnitude.
+            </summary>
+            <param name="a">First real beta parameter.</param>
+            <param name="b">Second real beta parameter.</param>
+            <returns>The signed real beta value, or NaN where the gamma ratio is undefined.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BetaFraction(System.Double,System.Double,System.Double)">
+            <summary>
+            Evaluates the continued-fraction factor used by the incomplete beta function.
+            </summary>
+            <param name="a">Positive first beta shape parameter.</param>
+            <param name="b">Positive second beta shape parameter.</param>
+            <param name="x">Integration limit in (0, 1).</param>
+            <returns>The incomplete-beta continued-fraction factor, or NaN if the iteration limit is reached.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.IncompleteBeta(System.Double,System.Double,System.Double,System.Boolean)">
+            <summary>
+            Evaluates the lower incomplete beta function, using a complementary tail when it improves conditioning.
+            </summary>
+            <param name="a">Positive finite first beta shape parameter.</param>
+            <param name="b">Positive finite second beta shape parameter.</param>
+            <param name="x">Integration limit in [0, 1].</param>
+            <param name="regularized">True divides by B(a, b).</param>
+            <returns>The lower incomplete beta value or regularized ratio, or NaN outside the supported domain.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.ChebyshevValue(System.Numerics.Complex,System.Int32,System.Boolean)">
+            <summary>
+            Evaluates a first- or second-kind Chebyshev polynomial, including exact endpoint values and negative-order identities.
+            </summary>
+            <param name="x">Function argument.</param>
+            <param name="n">Integer order.</param>
+            <param name="secondKind">True selects the second kind; false selects the first kind.</param>
+            <returns>T_n(x) or U_n(x); Int32.MinValue returns NaN.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.FactorialProduct(System.Numerics.Complex,System.Numerics.Complex,System.Boolean)">
+            <summary>
+            Evaluates a rising or falling factorial using finite products or a continued gamma ratio.
+            </summary>
+            <param name="n">Complex initial factor.</param>
+            <param name="k">Complex product order; nonnegative integer orders use a finite product.</param>
+            <param name="rising">True selects the rising factorial; false selects the falling factorial.</param>
+            <returns>The rising or falling factorial, continued through the log-gamma ratio for noninteger orders.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BinomialValue(System.Numerics.Complex,System.Numerics.Complex)">
+            <summary>
+            Evaluates a generalized binomial coefficient using finite products or logarithmic gamma ratios.
+            </summary>
+            <param name="n">Complex upper index.</param>
+            <param name="k">Complex lower index.</param>
+            <returns>The generalized binomial coefficient; a negative real lower index returns zero.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Hypergeometric2F1(System.Numerics.Complex,System.Numerics.Complex,System.Numerics.Complex,System.Numerics.Complex)">
+            <summary>
+            Evaluates Gauss 2F1 using terminating series, transformations, or differential-equation continuation.
+            </summary>
+            <param name="a">First numerator parameter.</param>
+            <param name="b">Second numerator parameter.</param>
+            <param name="c">Denominator parameter; nonpositive real integers are rejected.</param>
+            <param name="z">Complex function argument.</param>
+            <returns>The continued 2F1 value, or NaN at a rejected parameter pole or failed convergence.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Expm1(System.Double)">
+            <summary>
+            Evaluates exp(x) - 1 with a power series near zero to preserve small results.
+            </summary>
+            <param name="x">Function argument.</param>
+            <returns>exp(x) - 1, retaining small differences near zero.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LogisticValue(System.Numerics.Complex)">
+            <summary>
+            Evaluates 1 / (1 + exp(-z)), selecting the exponential with a nonpositive real part.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <returns>The complex logistic value 1 / (1 + exp(-z)).</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.RademacherValue(System.Numerics.Complex,System.Int32)">
+            <summary>
+            Evaluates the normalized sign of sin(2^n*pi*z), using zero at real integer nodes.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <param name="n">Integer order.</param>
+            <returns>The normalized complex sine, with zero at real nodes and NaN for nonfinite inputs.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.FibonacciValue(System.Int32,System.Boolean)">
+            <summary>
+            Computes a Fibonacci or Lucas number exactly over the supported signed Int32 result range.
+            </summary>
+            <param name="n">Signed sequence index: [-46, 46] for Fibonacci or [-44, 44] for Lucas.</param>
+            <param name="lucas">True selects Lucas numbers; false selects Fibonacci numbers.</param>
+            <returns>The exact signed sequence value; out-of-range requests throw ArgumentOutOfRangeException.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.NumberPolynomial(System.Int32,System.Double,System.Boolean)">
+            <summary>
+            Evaluates a Bernoulli or Euler polynomial by Horner accumulation of number-table coefficients.
+            </summary>
+            <param name="n">Polynomial degree: 0 through 186 for Euler or 258 for Bernoulli.</param>
+            <param name="x">Function argument.</param>
+            <param name="euler">True selects Euler polynomials; false selects Bernoulli polynomials.</param>
+            <returns>The selected polynomial value, or NaN for an unsupported order.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.OrthogonalPolynomial(System.Numerics.Complex,System.Numerics.Complex,System.Int32,System.Int32)">
+            <summary>
+            Evaluates a classical orthogonal polynomial by its three-term recurrence.
+            </summary>
+            <param name="x">Function argument.</param>
+            <param name="a">Laguerre alpha or Gegenbauer lambda parameter; unused for Legendre and Hermite.</param>
+            <param name="n">Nonnegative polynomial degree.</param>
+            <param name="family">Polynomial family: 0 Laguerre, 1 Legendre, 2 Hermite, otherwise Gegenbauer.</param>
+            <returns>The selected degree-n polynomial at x, or NaN for negative degree.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.ErlangBlocking(System.Numerics.Complex,System.Int32)">
+            <summary>
+            Evaluates Erlang B blocking probability by recurrence, avoiding direct powers and factorials.
+            </summary>
+            <param name="y">Offered traffic argument.</param>
+            <param name="n">Nonnegative number of servers.</param>
+            <returns>The Erlang B value, or NaN for negative server counts or nonfinite traffic.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LogSinPi(System.Numerics.Complex)">
+            <summary>
+            Evaluates the principal log(sin(pi*z)) without overflowing at large imaginary arguments.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <returns>The natural logarithm of the sine magnitude and its principal phase.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Polygamma(System.Numerics.Complex,System.Boolean)">
+            <summary>
+            Evaluates digamma or trigamma by reflection, recurrence, and a Bernoulli asymptotic expansion.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <param name="derivative">True selects trigamma; false selects digamma.</param>
+            <returns>Digamma or trigamma at z, or NaN at poles or nonfinite arguments.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.ZetaValue(System.Numerics.Complex)">
+            <summary>
+            Evaluates the Riemann zeta function using reflection and Euler–Maclaurin summation.
+            </summary>
+            <param name="s">Complex zeta argument; s = 1 is a pole.</param>
+            <returns>Zeta(s), or NaN at the pole s = 1 or for nonfinite inputs.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.HypergeometricStep(System.Numerics.Complex,System.Numerics.Complex,System.Numerics.Complex,System.Numerics.Complex,System.Numerics.Complex,System.Int32,System.Numerics.Complex@,System.Numerics.Complex@)">
+            <summary>
+            Advances a hypergeometric function and its first derivative by a Taylor step away from singularities.
+            </summary>
+            <param name="a">First numerator parameter; unused for 0F1.</param>
+            <param name="b">Second numerator parameter for 2F1, denominator parameter otherwise.</param>
+            <param name="c">Denominator parameter for 2F1; unused otherwise.</param>
+            <param name="center">Current center of the Taylor expansion.</param>
+            <param name="step">Nonzero complex step within the convergence disk.</param>
+            <param name="kind">Hypergeometric family: 0 for 0F1, 1 for 1F1, 2 for 2F1.</param>
+            <param name="value">On entry, the value at center; on return, the value at center + step.</param>
+            <param name="derivative">On entry, the first derivative at center; on return, the derivative at center + step.</param>
+        </member>
+        <member name="M:UMapx.Core.Special.HypergeometricContinue(System.Numerics.Complex,System.Numerics.Complex,System.Numerics.Complex,System.Numerics.Complex,System.Int32)">
+            <summary>
+            Continues a hypergeometric solution through overlapping Taylor disks that avoid the differential equation's singularities.
+            </summary>
+            <param name="a">First numerator parameter; unused for 0F1.</param>
+            <param name="b">Second numerator parameter for 2F1, denominator parameter otherwise.</param>
+            <param name="c">Denominator parameter for 2F1; unused otherwise.</param>
+            <param name="target">Target point for analytic continuation.</param>
+            <param name="kind">Hypergeometric family: 0 for 0F1, 1 for 1F1, 2 for 2F1.</param>
+            <returns>The solution at target, or NaN if the path cannot be completed within the iteration limit.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.Hypergeometric1F1(System.Numerics.Complex,System.Numerics.Complex,System.Numerics.Complex)">
+            <summary>
+            Evaluates confluent hypergeometric functions, including reduced families selected by absent-parameter sentinels.
+            </summary>
+            <param name="a">Numerator parameter; NaN denotes an absent numerator parameter.</param>
+            <param name="b">Denominator parameter; NaN denotes an absent denominator parameter.</param>
+            <param name="z">Complex function argument.</param>
+            <returns>The 1F1, 0F1, 1F0, or 0F0 value selected by the supplied parameters.</returns>
+        </member>
+        <member name="F:UMapx.Core.Special.GaussNodes">
+            <summary>
+            Positive nodes of the symmetric 16-point Gauss–Legendre rule on [-1, 1].
+            </summary>
+        </member>
+        <member name="F:UMapx.Core.Special.GaussWeights">
+            <summary>
+            Weights paired with the positive and negative Gauss–Legendre nodes.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Special.IntegrateGauss(System.Func{System.Double,System.Numerics.Complex},System.Double,System.Int32)">
+            <summary>
+            Integrates a complex-valued function over a real interval using composite 16-point Gauss–Legendre quadrature.
+            </summary>
+            <param name="f">Integrand evaluated at real quadrature nodes.</param>
+            <param name="end">Real upper integration limit; the lower limit is zero.</param>
+            <param name="panels">Positive number of equal quadrature panels.</param>
+            <returns>The quadrature estimate of the integral from zero to end.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.FaddeevaValue(System.Numerics.Complex)">
+            <summary>
+            Evaluates exp(-z^2)*erfc(-i*z) using reflection, decaying quadrature, and an asymptotic expansion.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <returns>The Faddeeva function w(z), or NaN for nonfinite inputs.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.ErfcValue(System.Double)">
+            <summary>
+            Evaluates the complementary error function directly so small tails are not obtained by subtracting from one.
+            </summary>
+            <param name="x">Function argument.</param>
+            <returns>The complementary error function at the argument.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.ErfValue(System.Double)">
+            <summary>
+            Evaluates the error function using its local power series and complementary-function relations.
+            </summary>
+            <param name="x">Function argument.</param>
+            <returns>The error function at the argument.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.ErfcValue(System.Numerics.Complex)">
+            <summary>
+            Evaluates the complementary error function directly so small tails are not obtained by subtracting from one.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <returns>The complementary error function at the argument.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.ErfValue(System.Numerics.Complex)">
+            <summary>
+            Evaluates the error function using its local power series and complementary-function relations.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <returns>The error function at the argument.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.InverseErfc(System.Double)">
+            <summary>
+            Inverts the real complementary error function by bracketing, including explicit endpoint limits.
+            </summary>
+            <param name="p">Complementary-error-function value in [0, 2].</param>
+            <returns>The inverse erfc, with +infinity at zero, -infinity at two, and NaN outside [0, 2].</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.InverseErf(System.Double)">
+            <summary>
+            Inverts the error function, using real-domain limits or complex Halley refinement as appropriate.
+            </summary>
+            <param name="x">Real error-function value in [-1, 1].</param>
+            <returns>An inverse-error-function value; invalid real inputs or failed complex refinement return NaN.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.InverseErf(System.Numerics.Complex)">
+            <summary>
+            Inverts the error function, using real-domain limits or complex Halley refinement as appropriate.
+            </summary>
+            <param name="z">Complex error-function value to invert.</param>
+            <returns>An inverse-error-function value; invalid real inputs or failed complex refinement return NaN.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.DawsonValue(System.Numerics.Complex)">
+            <summary>
+            Evaluates the entire continuation of Dawson's integral using a local series and the Faddeeva function.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <returns>exp(-z^2) times the integral of exp(t^2) from zero to z.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.FresnelValue(System.Numerics.Complex,System.Boolean)">
+            <summary>
+            Evaluates the library's unnormalized Fresnel integral of sin(t^2) or cos(t^2) from zero to z.
+            </summary>
+            <remarks>The integrand uses t^2, without the pi/2 factor of the normalized Fresnel convention.</remarks>
+            <param name="z">Complex function argument.</param>
+            <param name="sine">True selects the sine integral; false selects the cosine integral.</param>
+            <returns>The integral of the selected unnormalized Fresnel integrand from zero to z.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.GeneralizedErf(System.Numerics.Complex,System.Int32)">
+            <summary>
+            Evaluates the entire continuation of n!/sqrt(pi) times the integral of exp(-t^n) from zero to z.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <param name="n">Nonnegative integer exponent in exp(-t^n).</param>
+            <returns>The generalized error integral, or NaN for negative order or nonfinite z.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.LambertValue(System.Numerics.Complex,System.Int32)">
+            <summary>
+            Solves w*exp(w) = z on the requested Lambert W branch using a branch-aware initial value and refinement.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <param name="branch">Integer Lambert W branch index.</param>
+            <returns>W_branch(z), or NaN for rejected inputs or failed refinement.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.ExponentialIntegralE1(System.Numerics.Complex)">
+            <summary>
+            Evaluates E1(z) on its logarithmic branch using a local series or an upper-gamma continued fraction.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <returns>The continued E1 value using the principal logarithm in its local series.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.ExponentialIntegral(System.Numerics.Complex)">
+            <summary>
+            Evaluates Ei(z) with explicit continuation terms around the negative real axis.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <returns>Ei(z), real on the negative real axis and with signed imaginary continuation off that axis.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.TrigonometricIntegral(System.Numerics.Complex,System.Boolean)">
+            <summary>
+            Evaluates Si(z) or Ci(z) using local series and exponential-integral relations.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <param name="sine">True selects the sine integral; false selects the cosine integral.</param>
+            <returns>Si(z) or Ci(z); the cosine integral uses the upper value on the negative real axis.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.OwenValue(System.Numerics.Complex,System.Numerics.Complex)">
+            <summary>
+            Evaluates Owen's T function by quadrature after the substitution t = tan(theta).
+            </summary>
+            <param name="h">Gaussian threshold, continued to complex values.</param>
+            <param name="a">Integration limit, continued through the principal complex arctangent.</param>
+            <returns>The continued Owen T value from the transformed quadrature.</returns>
+        </member>
+        <member name="F:UMapx.Core.Special.EulerGamma">
+            <summary>
+            Euler–Mascheroni constant.
+            </summary>
+        </member>
+        <member name="M:UMapx.Core.Special.ImaginaryPower(System.Int32)">
+            <summary>
+            Returns i raised to an integer power by reducing the exponent modulo four.
+            </summary>
+            <param name="n">Signed integer exponent.</param>
+            <returns>One of 1, i, -1, or -i.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BesselSeries(System.Numerics.Complex,System.Int32,System.Boolean)">
+            <summary>
+            Evaluates the power series for Bessel J or modified Bessel I at a nonnegative integer order.
+            </summary>
+            <param name="z">Nonzero complex argument in the series region.</param>
+            <param name="n">Nonnegative integer order.</param>
+            <param name="modified">True selects the modified function; false selects the ordinary function.</param>
+            <returns>J_n(z) or I_n(z), or NaN if the series iteration limit is reached.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BesselAsymptotic(System.Numerics.Complex,System.Int32,System.Boolean)">
+            <summary>
+            Evaluates the Hankel asymptotic expansion for Bessel J or Y of order zero or one.
+            </summary>
+            <remarks>Used only for base orders zero and one; higher orders use recurrence.</remarks>
+            <param name="z">Nonzero argument in the asymptotic region.</param>
+            <param name="n">Base order, zero or one.</param>
+            <param name="secondKind">True selects the second kind; false selects the first kind.</param>
+            <returns>The asymptotic approximation to J_n(z) or Y_n(z).</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BesselJ(System.Numerics.Complex,System.Int32)">
+            <summary>
+            Evaluates integer-order Bessel J using a power series, asymptotics, and stable upward or Miller recurrence.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <param name="order">Integer order in [-100000, 100000].</param>
+            <returns>J_order(z), or NaN for a rejected order or nonfinite input.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BesselYBase(System.Numerics.Complex,System.Int32)">
+            <summary>
+            Evaluates Bessel Y of order zero or one from its logarithmic series or asymptotic expansion.
+            </summary>
+            <param name="z">Nonzero argument; the caller uses positive real inputs.</param>
+            <param name="n">Base order, zero or one.</param>
+            <returns>Y_n(z) for the selected base order.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BesselY(System.Numerics.Complex,System.Int32)">
+            <summary>
+            Evaluates integer-order Bessel Y, retaining the upper/lower continuation across the negative real axis.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <param name="order">Integer order in [-100000, 100000].</param>
+            <returns>Y_order(z), with the upper continuation on the negative real axis.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BesselI(System.Numerics.Complex,System.Int32)">
+            <summary>
+            Evaluates integer-order modified Bessel I by rotating the argument of Bessel J.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <param name="n">Integer order in [-100000, 100000].</param>
+            <returns>I_n(z), using I_(-n)(z) = I_n(z).</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BesselKBase(System.Numerics.Complex,System.Int32)">
+            <summary>
+            Evaluates modified Bessel K of order zero or one using a logarithmic series or a decaying asymptotic expansion.
+            </summary>
+            <param name="z">Nonzero complex argument in the closed right half-plane.</param>
+            <param name="n">Base order, zero or one.</param>
+            <returns>K_n(z) for the selected base order.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.BesselK(System.Numerics.Complex,System.Int32)">
+            <summary>
+            Evaluates integer-order modified Bessel K using base orders, recurrence, and continuation across its cut.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <param name="order">Integer order in [-100000, 100000].</param>
+            <returns>K_order(z), with the upper continuation on the negative real axis.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.StruveValue(System.Numerics.Complex,System.Int32,System.Boolean)">
+            <summary>
+            Evaluates ordinary Struve H or modified Struve L using a series, recurrence, or transformed quadrature.
+            </summary>
+            <param name="z">Complex function argument.</param>
+            <param name="n">Integer order in [-100000, 100000].</param>
+            <param name="modified">True selects the modified function; false selects the ordinary function.</param>
+            <returns>H_n(z) or L_n(z), or NaN for rejected inputs.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.DistributionLogGamma(System.Double)">
+            <summary>
+            Provides the double-precision log-gamma kernel for probability-distribution calculations.
+            </summary>
+            <param name="x">Positive real gamma argument.</param>
+            <returns>The natural logarithm of Gamma(x) for positive x.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.DistributionLogBeta(System.Double,System.Double)">
+            <summary>
+            Provides the double-precision log-beta kernel for positive distribution shape parameters.
+            </summary>
+            <param name="a">Positive first beta shape parameter.</param>
+            <param name="b">Positive second beta shape parameter.</param>
+            <returns>The natural logarithm of B(a, b).</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.DistributionDigamma(System.Double)">
+            <summary>
+            Evaluates the real digamma function for positive distribution shape parameters.
+            </summary>
+            <param name="x">Positive real gamma argument.</param>
+            <returns>The logarithmic derivative of Gamma(x).</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.DistributionGamma(System.Double,System.Double,System.Boolean)">
+            <summary>
+            Evaluates a regularized lower or upper incomplete gamma function without intermediate float rounding.
+            </summary>
+            <param name="a">Positive finite gamma shape parameter.</param>
+            <param name="x">Nonnegative integration limit.</param>
+            <param name="upper">True selects the upper tail; false selects the lower integral.</param>
+            <returns>P(a, x) or Q(a, x), according to upper.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.DistributionBeta(System.Double,System.Double,System.Double)">
+            <summary>
+            Evaluates the regularized incomplete beta function without intermediate float rounding.
+            </summary>
+            <param name="a">Positive finite first beta shape parameter.</param>
+            <param name="b">Positive finite second beta shape parameter.</param>
+            <param name="x">Integration limit in [0, 1].</param>
+            <returns>The regularized lower ratio I_x(a, b).</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.DistributionErfc(System.Double)">
+            <summary>
+            Evaluates the real complementary error function in double precision for probability tails.
+            </summary>
+            <param name="x">Function argument.</param>
+            <returns>erfc(x), including the real infinite-argument limits.</returns>
+        </member>
+        <member name="M:UMapx.Core.Special.DistributionExpm1(System.Double)">
+            <summary>
+            Evaluates exp(x) - 1 without cancellation near zero for distribution calculations.
+            </summary>
+            <param name="x">Function argument.</param>
+            <returns>exp(x) - 1, retaining small differences near zero.</returns>
         </member>
         <member name="T:UMapx.Core.StringOptions">
             <summary>
@@ -12954,9 +13640,11 @@
             <summary>
             Initializes generalized eigenvalue decomposition.
             </summary>
-            <param name="a">Matrix A</param>
-            <param name="b">Matrix B</param>
-            <param name="eps">Epsilon [0, 1]</param>
+            <param name="a">Nonempty finite square matrix A.</param>
+            <param name="b">Finite square matrix B of the same order.</param>
+            <param name="eps">Relative deflation tolerance, clamped to [0, 1] with a double-roundoff floor.</param>
+            <exception cref="T:System.ArgumentException">The matrices are empty, nonfinite, nonsquare, or have different orders.</exception>
+            <exception cref="T:System.InvalidOperationException">QZ iteration fails to converge.</exception>
         </member>
         <member name="P:UMapx.Decomposition.GEVD.Alpha">
             <summary>
@@ -12985,8 +13673,27 @@
         </member>
         <member name="P:UMapx.Decomposition.GEVD.IsSingular">
             <summary>
-            Checks whether one of the matrices is singular or not.
+            Checks whether any generalized eigenvalue has a zero beta denominator.
             </summary>
+            <remarks>
+            A zero beta denotes an infinite eigenvalue, or an indeterminate alpha = beta = 0 pair.
+            A singular A with nonsingular B can have zero eigenvalues without setting this property.
+            </remarks>
+        </member>
+        <member name="M:UMapx.Decomposition.GEVD.CopyMatrix(System.Single[0:,0:])">
+            <summary>
+            Copies a real square input to double work buffers without losing small representable entries.
+            </summary>
+            <param name="matrix">Single-precision square input matrix.</param>
+            <returns>A jagged double-precision copy for in-place QZ reduction.</returns>
+        </member>
+        <member name="M:UMapx.Decomposition.GEVD.ScalePair(System.Double[][],System.Double[][])">
+            <summary>
+            Applies one common positive scale to a finite matrix pencil before QZ reduction.
+            </summary>
+            <param name="a">Square copy of A; overwritten by its scaled values.</param>
+            <param name="b">Square copy of B of the same order; overwritten by its scaled values.</param>
+            <returns>The common scale to restore to alpha and beta after eigenvector calculation.</returns>
         </member>
         <member name="M:UMapx.Decomposition.GEVD.qzdecomp(System.Single[][],System.Single[][],System.Single,System.Single[][],System.Int32@)">
             <summary>
@@ -12998,14 +13705,15 @@
             <param name="z">Matrix that accumulates the right orthogonal transformations</param>
             <param name="ierr">Convergence flag</param>
         </member>
-        <member name="M:UMapx.Decomposition.GEVD.qzhes(System.Int32,System.Single[][],System.Single[][],System.Boolean,System.Single[][])">
+        <member name="M:UMapx.Decomposition.GEVD.qzhes(System.Int32,System.Double[][],System.Double[][],System.Boolean,System.Double[][])">
             <summary>
             First QZ stage: reduce B to upper triangular form and A to upper Hessenberg form using orthogonal transformations.
             </summary>
             <remarks>
             Port of EISPACK <c>QZHES</c> (Moler–Stewart, SIAM J. Numer. Anal., 1973).
             <para>On exit: B is upper triangular; A is upper Hessenberg. If <paramref name="matz"/> is true, Z accumulates the
-            right transformations such that the similarity actions A ← GᵀAG, B ← GᵀBG are recorded in Z ← ZG.</para>
+            right transformations in Z. The same left and right orthogonal factors are applied to both matrices;
+            the left factor need not equal the transpose of the right factor.</para>
             <para>All operations are in place; input matrices are overwritten.</para>
             </remarks>
             <param name="n">Matrix order (rows = cols = n)</param>
@@ -13018,7 +13726,7 @@
             Right transformation accumulator Z (n×n). If <paramref name="matz"/> is true, updated as Z ← ZG; otherwise unused
             </param>
         </member>
-        <member name="M:UMapx.Decomposition.GEVD.qzit(System.Int32,System.Single[][],System.Single[][],System.Single,System.Boolean,System.Single[][],System.Int32@)">
+        <member name="M:UMapx.Decomposition.GEVD.qzit(System.Int32,System.Double[][],System.Double[][],System.Double,System.Boolean,System.Double[][],System.Int32@)">
             <summary>
             Second QZ stage: iterative QZ step (bulge chasing) to drive A to quasi-triangular form while keeping B triangular.
             </summary>
@@ -13030,10 +13738,10 @@
             is exceeded.</para>
             </remarks>
             <param name="n">Matrix order</param>
-            <param name="a">On entry: upper-Hessenberg from <see cref="M:UMapx.Decomposition.GEVD.qzhes(System.Int32,System.Single[][],System.Single[][],System.Boolean,System.Single[][])"/>; on exit: quasi-triangular S. Modified in place</param>
-            <param name="b">On entry: upper-triangular from <see cref="M:UMapx.Decomposition.GEVD.qzhes(System.Int32,System.Single[][],System.Single[][],System.Boolean,System.Single[][])"/>; on exit: upper-triangular T. Modified in place</param>
+            <param name="a">On entry: upper-Hessenberg from <see cref="M:UMapx.Decomposition.GEVD.qzhes(System.Int32,System.Double[][],System.Double[][],System.Boolean,System.Double[][])"/>; on exit: quasi-triangular S. Modified in place</param>
+            <param name="b">On entry: upper-triangular from <see cref="M:UMapx.Decomposition.GEVD.qzhes(System.Int32,System.Double[][],System.Double[][],System.Boolean,System.Double[][])"/>; on exit: upper-triangular T. Modified in place</param>
             <param name="eps1">
-            Relative convergence tolerance. If zero, machine roundoff is used (via <see cref="M:UMapx.Decomposition.GEVD.Epsilon(System.Single)"/>)
+            Relative convergence tolerance. If zero, machine roundoff is used (via <see cref="M:UMapx.Decomposition.GEVD.Epsilon(System.Double)"/>)
             </param>
             <param name="matz">If true, accumulate right transformations into <paramref name="z"/></param>
             <param name="z">Right orthogonal accumulator Z (updated if <paramref name="matz"/> is true)</param>
@@ -13041,7 +13749,7 @@
             Output status: 0 if all subdiagonals converged; otherwise set to <c>en+1</c> at failure as in EISPACK
             </param>
         </member>
-        <member name="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Single[][],System.Single[][],System.Single[],System.Single[],System.Single[],System.Boolean,System.Single[][])">
+        <member name="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])">
             <summary>
             Third QZ stage: extract generalized eigenvalue numerators/denominators from (S,T) after convergence.
             </summary>
@@ -13050,19 +13758,19 @@
             reduces any remaining 2×2 blocks in S consistently with T, and fills arrays such that
             λ_j = (alfr[j] + i·alfi[j]) / beta[j].
             <para>
-            If <paramref name="matz"/> is true, right transformations are accumulated into Z for later use by <see cref="M:UMapx.Decomposition.GEVD.qzvec(System.Int32,System.Single[][],System.Single[][],System.Single[],System.Single[],System.Single[],System.Single[][])"/>.
+            If <paramref name="matz"/> is true, right transformations are accumulated into Z for later use by <see cref="M:UMapx.Decomposition.GEVD.qzvec(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Double[][])"/>.
             </para>
             </remarks>
             <param name="n">Matrix order</param>
-            <param name="a">On entry: S from <see cref="M:UMapx.Decomposition.GEVD.qzit(System.Int32,System.Single[][],System.Single[][],System.Single,System.Boolean,System.Single[][],System.Int32@)"/>; may be locally modified. On exit: still quasi-triangular</param>
-            <param name="b">On entry: T from <see cref="M:UMapx.Decomposition.GEVD.qzit(System.Int32,System.Single[][],System.Single[][],System.Single,System.Boolean,System.Single[][],System.Int32@)"/>; may be locally modified. On exit: still upper triangular</param>
+            <param name="a">On entry: S from <see cref="M:UMapx.Decomposition.GEVD.qzit(System.Int32,System.Double[][],System.Double[][],System.Double,System.Boolean,System.Double[][],System.Int32@)"/>; may be locally modified. On exit: still quasi-triangular</param>
+            <param name="b">On entry: T from <see cref="M:UMapx.Decomposition.GEVD.qzit(System.Int32,System.Double[][],System.Double[][],System.Double,System.Boolean,System.Double[][],System.Int32@)"/>; may be locally modified. On exit: still upper triangular</param>
             <param name="alfr">Real parts of α_j (numerators) for generalized λ_j = α_j / β_j. Length n. Written by the routine</param>
             <param name="alfi">Imag parts of α_j. Length n. Written by the routine (zero for real eigenvalues)</param>
             <param name="beta">Denominators β_j (nonnegative). Length n. Written by the routine</param>
             <param name="matz">If true, accumulate right transformations into <paramref name="z"/></param>
             <param name="z">Right transformation accumulator Z (updated if <paramref name="matz"/> is true)</param>
         </member>
-        <member name="M:UMapx.Decomposition.GEVD.qzvec(System.Int32,System.Single[][],System.Single[][],System.Single[],System.Single[],System.Single[],System.Single[][])">
+        <member name="M:UMapx.Decomposition.GEVD.qzvec(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Double[][])">
             <summary>
             Optional fourth QZ stage: compute (right) generalized eigenvectors and map them back via Z.
             </summary>
@@ -13071,34 +13779,32 @@
             performing back-substitution to obtain eigenvectors in the deflated coordinate system and then
             transforms them to the original coordinates via Z.
             <para>
-            On entry, (alfr, alfi, beta) must come from <see cref="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Single[][],System.Single[][],System.Single[],System.Single[],System.Single[],System.Boolean,System.Single[][])"/>. On exit, Z contains eigenvectors
+            On entry, (alfr, alfi, beta) must come from <see cref="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])"/>. On exit, Z contains eigenvectors
             (real columns for real λ; 2 columns for each complex-conjugate pair).
             </para>
             </remarks>
             <param name="n">Matrix order</param>
             <param name="a">Quasi-triangular S (read-only here). Notation follows EISPACK; may be referenced</param>
-            <param name="b">Upper triangular T (read-only here). Notation follows EISPACK; may be referenced</param>
-            <param name="alfr">Real parts of α_j from <see cref="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Single[][],System.Single[][],System.Single[],System.Single[],System.Single[],System.Boolean,System.Single[][])"/></param>
-            <param name="alfi">Imag parts of α_j from <see cref="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Single[][],System.Single[][],System.Single[],System.Single[],System.Single[],System.Boolean,System.Single[][])"/></param>
-            <param name="beta">β_j from <see cref="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Single[][],System.Single[][],System.Single[],System.Single[],System.Single[],System.Boolean,System.Single[][])"/></param>
+            <param name="b">Upper triangular T, overwritten by triangular eigenvector workspace during back-substitution.</param>
+            <param name="alfr">Real parts of α_j from <see cref="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])"/></param>
+            <param name="alfi">Imag parts of α_j from <see cref="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])"/></param>
+            <param name="beta">β_j from <see cref="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])"/></param>
             <param name="z">
             On entry: right transformation accumulator from prior stages. On exit: columns replaced by the (right)
             generalized eigenvectors in the original coordinate system. Modified in place
             </param>
         </member>
-        <member name="M:UMapx.Decomposition.GEVD.Epsilon(System.Single)">
+        <member name="M:UMapx.Decomposition.GEVD.Epsilon(System.Double)">
             <summary>
-            Estimates unit round-off (machine epsilon scaled by |x|) using the classic EISPACK strategy.
+            Returns binary64 machine epsilon scaled by the magnitude of the argument.
             </summary>
             <remarks>
-            Port of EISPACK <c>EPSLON</c>. It returns an estimate of the smallest ε such that 1+ε ≠ 1,
-            multiplied by <paramref name="x"/> in magnitude. Used when a caller passes 0 to request
-            “use machine precision” as the iteration tolerance.
+            Uses the exact spacing 2^-52 at one as the lower bound for double-precision QZ deflation.
             </remarks>
-            <param name="x">Reference magnitude. The result is approximately eps_machine * |x|</param>
-            <returns>Estimated round-off scaled to |x|</returns>
+            <param name="x">Reference magnitude.</param>
+            <returns>2^-52 times the absolute value of x.</returns>
         </member>
-        <member name="M:UMapx.Decomposition.GEVD.Sign(System.Single,System.Single)">
+        <member name="M:UMapx.Decomposition.GEVD.Sign(System.Double,System.Double)">
             <summary>
             Returns <paramref name="a"/> with the sign of <paramref name="b"/> (sign transfer / copysign).
             </summary>
@@ -13696,8 +14402,10 @@
             <summary>
             Initializes Schur decomposition.
             </summary>
-            <param name="A">Square matrix</param>
-            <param name="eps">Epsilon [0, 1]</param>
+            <param name="A">Nonempty square matrix with finite real entries.</param>
+            <param name="eps">Relative deflation tolerance, clamped to [0, 1] with a double-roundoff floor.</param>
+            <exception cref="T:System.ArgumentException">The input is empty, nonsquare, or contains nonfinite entries.</exception>
+            <exception cref="T:System.InvalidOperationException">The QR iteration limit is reached before convergence.</exception>
         </member>
         <member name="P:UMapx.Decomposition.Schur.Q">
             <summary>
@@ -13709,10 +14417,28 @@
             Gets the quasi upper triangular matrix T.
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.Schur.hqr2">
+        <member name="M:UMapx.Decomposition.Schur.ScaleInput(System.Single[0:,0:],System.Double@)">
             <summary>
-            Reduces Hessenberg form to real Schur form.
+            Scales a finite square matrix before Hessenberg reduction to protect products in the QR shifts.
             </summary>
+            <param name="matrix">Original real square matrix.</param>
+            <param name="scale">Receives the maximum magnitude, or one for a zero matrix.</param>
+            <returns>A scaled copy; the Schur form must subsequently be multiplied by scale.</returns>
+        </member>
+        <member name="M:UMapx.Decomposition.Schur.ReduceToHessenberg(System.Double[][])">
+            <summary>
+            Reduces a scaled square matrix to Hessenberg form by Householder similarities in double precision.
+            </summary>
+            <param name="hessenberg">Matrix overwritten by its upper Hessenberg form H.</param>
+            <returns>The orthogonal accumulator Q satisfying A = Q*H*Q^T before QR iteration.</returns>
+        </member>
+        <member name="M:UMapx.Decomposition.Schur.hqr2(System.Double[][],System.Double[][],System.Double)">
+            <summary>
+            Reduces Hessenberg form to real Schur form using bounded double-shift QR iteration.
+            </summary>
+            <param name="hessenberg">Scaled Hessenberg matrix, overwritten by its Schur form.</param>
+            <param name="matrices">Orthogonal reduction accumulator, overwritten by the Schur vectors.</param>
+            <param name="inputScale">Positive input scale restored when storing the single-precision Schur form.</param>
         </member>
         <member name="T:UMapx.Decomposition.SVD">
             <summary>
@@ -13729,8 +14455,10 @@
             <summary>
             Initializes singular value decomposition.
             </summary>
-            <param name="A">Matrix</param>
-            <param name="iterations">Number of iterations</param>
+            <param name="A">Nonempty rectangular matrix with finite real entries.</param>
+            <param name="iterations">Positive maximum number of QR sweeps per singular value.</param>
+            <exception cref="T:System.ArgumentException">The matrix is empty or contains nonfinite entries.</exception>
+            <exception cref="T:System.InvalidOperationException">The QR iteration limit is reached before convergence.</exception>
         </member>
         <member name="P:UMapx.Decomposition.SVD.U">
             <summary>
@@ -13752,12 +14480,14 @@
             Gets the pseudoinverse matrix.
             </summary>
             <remarks>
-            NOT RECOMMENDED.
+            Singular values at or below max(rows, columns) * 2^-23 * max(S) are
+            treated as numerically zero. This rank threshold uses single-precision
+            input resolution; retained singular values are inverted in double precision.
             </remarks>
         </member>
         <member name="M:UMapx.Decomposition.SVD.svdcmp(System.Single[0:,0:])">
             <summary>
-            Core SVD routine for real single-precision matrices.
+            Core SVD routine with double-precision work buffers for real single-precision inputs.
             Performs Householder bidiagonalization followed by Golub–Kahan QR iterations
             to compute singular values and left/right singular vectors.
             Populates the private fields: <c>Ur</c> (left vectors), <c>Vr</c> (right vectors),
@@ -13772,14 +14502,38 @@
             of QR sweeps is limited by the instance field <see cref="F:UMapx.Decomposition.SVD.iterations"/>.
             </remarks>
         </member>
-        <member name="M:UMapx.Decomposition.SVD.SwapColumns(System.Single[][],System.Int32,System.Int32)">
+        <member name="M:UMapx.Decomposition.SVD.ScaleInput(System.Single[0:,0:],System.Double@)">
             <summary>
-            Swaps two columns in a jagged matrix <paramref name="M"/> (float[rows][cols]).
+            Copies a finite matrix and scales its largest magnitude to one before bidiagonalization.
+            </summary>
+            <param name="matrix">Real input matrix, with at least as many rows as columns.</param>
+            <param name="scale">Receives the original maximum magnitude, or one for a zero matrix.</param>
+            <returns>A scaled jagged copy; the caller must multiply the resulting singular values by scale.</returns>
+        </member>
+        <member name="M:UMapx.Decomposition.SVD.SwapColumns(System.Double[][],System.Int32,System.Int32)">
+            <summary>
+            Swaps two columns in a jagged matrix <paramref name="M"/> (double[rows][cols]).
             No operation is performed if <paramref name="c1"/> equals <paramref name="c2"/>.
             </summary>
-            <param name="M">Matrix represented as an array of row arrays (float[rows][cols])</param>
+            <param name="M">Matrix represented as an array of row arrays (double[rows][cols])</param>
             <param name="c1">Index of the first column</param>
             <param name="c2">Index of the second column</param>
+        </member>
+        <member name="M:UMapx.Decomposition.SVD.Hypotenuse(System.Double,System.Double)">
+            <summary>
+            Computes sqrt(a*a + b*b) by a ratio to avoid squaring the larger magnitude.
+            </summary>
+            <param name="a">First finite real component.</param>
+            <param name="b">Second finite real component.</param>
+            <returns>The nonnegative Euclidean length, including zero for two zero components.</returns>
+        </member>
+        <member name="M:UMapx.Decomposition.SVD.CopySign(System.Double,System.Double)">
+            <summary>
+            Transfers an algebraic sign to a magnitude for stable Householder and QR shifts.
+            </summary>
+            <param name="magnitude">Real magnitude donor.</param>
+            <param name="sign">Sign donor; zero selects the nonnegative sign.</param>
+            <returns>The absolute magnitude with the selected sign.</returns>
         </member>
         <member name="T:UMapx.Decomposition.UDL">
             <summary>
@@ -14633,7 +15387,7 @@
             <summary>
             Initializes the binomial distribution.
             </summary>
-            <param name="n">Number of experiments (>0)</param>
+            <param name="n">Number of experiments (nonnegative)</param>
             <param name="p">Probability of success [0, 1]</param>
         </member>
         <member name="P:UMapx.Distribution.Binomial.N">
@@ -14670,6 +15424,7 @@
             <summary>
             Gets the median value.
             </summary>
+            <remarks>Returns the lower median, rounded to binary32.</remarks>
         </member>
         <member name="P:UMapx.Distribution.Binomial.Skewness">
             <summary>
@@ -14715,11 +15470,6 @@
             More information can be found on the website:
             https://en.wikipedia.org/wiki/Birnbaum–Saunders_distribution
             </remarks>
-        </member>
-        <member name="M:UMapx.Distribution.BirnbaumSaunders.Cbrt(System.Single)">
-            <summary>
-            Returns the real cube root of the given value.
-            </summary>
         </member>
         <member name="M:UMapx.Distribution.BirnbaumSaunders.#ctor(System.Single,System.Single,System.Single)">
             <summary>
@@ -14802,7 +15552,7 @@
             Gets the value of entropy.
             </summary>
             <remarks>
-            Closed-form expression for γ &gt; 0.
+            Computed from the normal-variable transformation for gamma &gt; 0.
             </remarks>
         </member>
         <member name="M:UMapx.Distribution.BirnbaumSaunders.Distribution(System.Single)">
@@ -15039,10 +15789,10 @@
         </member>
         <member name="P:UMapx.Distribution.ChiSquare.Median">
             <summary>
-            Gets the median value using the Wilson–Hilferty approximation.
+            Gets the median value by inverting the cumulative distribution.
             </summary>
             <remarks>
-            The approximation is truncated to zero for very small degrees of freedom.
+            Uses a bracketed search on [0, k] for the probability one half.
             </remarks>
         </member>
         <member name="P:UMapx.Distribution.ChiSquare.Mode">
@@ -15327,6 +16077,104 @@
             <summary>
             Gets the entropy value.
             </summary>
+        </member>
+        <member name="T:UMapx.Distribution.DistributionNumerics">
+            <summary>
+            Provides shared double-precision probability kernels and transformed quadrature.
+            </summary>
+        </member>
+        <member name="F:UMapx.Distribution.DistributionNumerics.EulerGamma">
+            <summary>Euler–Mascheroni constant used by entropy formulas.</summary>
+        </member>
+        <member name="F:UMapx.Distribution.DistributionNumerics.LogSqrtTwoPi">
+            <summary>Natural logarithm of sqrt(2*pi), used in Gaussian normalizations.</summary>
+        </member>
+        <member name="M:UMapx.Distribution.DistributionNumerics.Log1p(System.Double)">
+            <summary>
+            Evaluates log(1 + x) with compensated addition near zero.
+            </summary>
+            <param name="x">Real argument greater than -1; -1 gives the logarithmic pole.</param>
+            <returns>The natural logarithm of 1 + x.</returns>
+        </member>
+        <member name="M:UMapx.Distribution.DistributionNumerics.Softplus(System.Double)">
+            <summary>
+            Evaluates log(1 + exp(x)) without overflowing the positive exponential.
+            </summary>
+            <param name="x">Function argument.</param>
+            <returns>The nonnegative value log(1 + exp(x)).</returns>
+        </member>
+        <member name="M:UMapx.Distribution.DistributionNumerics.LogNormalSurvival(System.Double)">
+            <summary>
+            Returns log(Phi(-x)), using a Mills-ratio expansion before the Gaussian tail underflows.
+            </summary>
+            <param name="x">Standard-normal threshold.</param>
+            <returns>The logarithm of the standard-normal upper-tail probability.</returns>
+        </member>
+        <member name="M:UMapx.Distribution.DistributionNumerics.LogNormalMillsRatio(System.Double)">
+            <summary>
+            Evaluates the logarithm of the scaled normal tail exp(x^2/2)*Phi(-x) by its decreasing asymptotic terms.
+            </summary>
+            <param name="x">Positive threshold, at least 26 at the call sites.</param>
+            <returns>log(Phi(-x)) + x^2/2, retaining the Gaussian normalization constant.</returns>
+        </member>
+        <member name="M:UMapx.Distribution.DistributionNumerics.PowerNormalDensity(System.Double,System.Double)">
+            <summary>
+            Evaluates power*phi(x)*Phi(-x)^(power-1), combining Gaussian exponents to preserve extreme tails.
+            </summary>
+            <param name="x">Standardized real observation.</param>
+            <param name="power">Positive power-normal shape parameter.</param>
+            <returns>The power-normal probability density at x.</returns>
+        </member>
+        <member name="M:UMapx.Distribution.DistributionNumerics.BetaPrimeExcess(System.Double,System.Double)">
+            <summary>
+            Returns beta-prime excess kurtosis, with positive infinity when the fourth moment diverges.
+            </summary>
+            <param name="a">Positive first shape parameter.</param>
+            <param name="b">Positive second shape parameter.</param>
+            <returns>Excess kurtosis, or positive infinity when b is at most four.</returns>
+        </member>
+        <member name="M:UMapx.Distribution.DistributionNumerics.PoissonLogMass(System.Double,System.Double)">
+            <summary>
+            Returns the logarithm of the Poisson probability at a nonnegative integer count.
+            </summary>
+            <param name="lambda">Positive Poisson rate.</param>
+            <param name="k">Nonnegative integer count.</param>
+            <returns>log(P(X = k)) for a Poisson variable with mean lambda.</returns>
+        </member>
+        <member name="M:UMapx.Distribution.DistributionNumerics.Integrate(System.Func{System.Double,System.Double},System.Double,System.Double,System.Double)">
+            <summary>
+            Integrates a real function on a finite interval with adaptive Simpson refinement.
+            </summary>
+            <param name="f">Integrand evaluated at real quadrature nodes.</param>
+            <param name="a">Left integration endpoint.</param>
+            <param name="b">Right integration endpoint.</param>
+            <param name="tolerance">Absolute quadrature error budget.</param>
+            <returns>The estimated integral over [a, b].</returns>
+        </member>
+        <member name="M:UMapx.Distribution.DistributionNumerics.Refine(System.Func{System.Double,System.Double},System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Refines a Simpson panel, reusing sampled values and splitting the absolute error budget between subintervals.
+            </summary>
+            <param name="f">Integrand evaluated at real quadrature nodes.</param>
+            <param name="a">Left endpoint of the current panel.</param>
+            <param name="b">Right endpoint of the current panel.</param>
+            <param name="fa">Integrand value at the left endpoint.</param>
+            <param name="fm">Integrand value at the midpoint.</param>
+            <param name="fb">Integrand value at the right endpoint.</param>
+            <param name="whole">Simpson estimate for the unsplit interval.</param>
+            <param name="tolerance">Absolute quadrature error budget.</param>
+            <param name="depth">Remaining subdivision depth.</param>
+            <returns>The corrected integral estimate for the current panel.</returns>
+        </member>
+        <member name="M:UMapx.Distribution.DistributionNumerics.GompertzMoment(System.Double,System.Double,System.Boolean)">
+            <summary>
+            Computes the Gompertz mean or variance through log(Exp(1)) quadrature, centering the variance integrand.
+            </summary>
+            <remarks>Uses X = log(1 + E/eta)/rate for E distributed exponentially with unit rate. The transformed variable log(E) is integrated over [-100, 4], split at zero to resolve the central mass.</remarks>
+            <param name="eta">Positive Gompertz shape parameter.</param>
+            <param name="rate">Positive Gompertz rate parameter.</param>
+            <param name="variance">True selects variance; false selects the mean.</param>
+            <returns>The requested moment in the original rate scale.</returns>
         </member>
         <member name="T:UMapx.Distribution.Erlang">
             <summary>
@@ -16172,7 +17020,7 @@
             Gets the variance value.
             </summary>
             <remarks>
-            Variance equals (2·e^{η}·E₁(η) − e^{η}·E₁(2η) − e^{2η}·E₁(η)²) / b².
+            Computed from the centered second moment of log(1 + E/eta)/b, where E is exponential with mean one.
             </remarks>
         </member>
         <member name="P:UMapx.Distribution.Gompertz.Mode">
@@ -17742,7 +18590,7 @@
             Gets the median value.
             </summary>
             <remarks>
-            Uses an approximation valid for λ ≥ 1.
+            Returns the lower median by cumulative-probability search, rounded to binary32.
             </remarks>
         </member>
         <member name="P:UMapx.Distribution.Poisson.Skewness">
@@ -17776,13 +18624,6 @@
             <summary>
             Returns the value of differential entropy.
             </summary>
-            <returns>Value</returns>
-        </member>
-        <member name="M:UMapx.Distribution.Poisson.Row(System.Single)">
-            <summary>
-            Calculate row.
-            </summary>
-            <param name="l">Value</param>
             <returns>Value</returns>
         </member>
         <member name="T:UMapx.Distribution.PowerLognormal">
@@ -17853,7 +18694,7 @@
         </member>
         <member name="M:UMapx.Distribution.PowerLognormal.Function(System.Single)">
             <summary>
-            Returns the value of the probability density function f(x) = power · φ(z) · Φ(z)^(power - 1) / (x · sigma).
+            Returns the value of the probability density function f(x) = power · φ(z) · Φ(-z)^(power - 1) / (x · sigma).
             Here z = ln(x) / sigma.
             </summary>
             <param name="x">Value</param>
@@ -17861,7 +18702,7 @@
         </member>
         <member name="M:UMapx.Distribution.PowerLognormal.Distribution(System.Single)">
             <summary>
-            Returns the value of the cumulative distribution function F(x) = Φ(z)^power, where z = ln(x) / sigma.
+            Returns the value of the cumulative distribution function F(x) = 1 - Φ(-z)^power, where z = ln(x) / sigma.
             </summary>
             <param name="x">Value</param>
             <returns>Value</returns>
@@ -17928,14 +18769,14 @@
         </member>
         <member name="M:UMapx.Distribution.PowerNormal.Function(System.Single)">
             <summary>
-            Returns the value of the probability density function f(x) = power · φ(x) · Φ(x)^(power - 1).
+            Returns the value of the probability density function f(x) = power · φ(x) · Φ(-x)^(power - 1).
             </summary>
             <param name="x">Value</param>
             <returns>Value</returns>
         </member>
         <member name="M:UMapx.Distribution.PowerNormal.Distribution(System.Single)">
             <summary>
-            Returns the value of the cumulative distribution function F(x) = Φ(x)^power.
+            Returns the value of the cumulative distribution function F(x) = 1 - Φ(-x)^power.
             </summary>
             <param name="x">Value</param>
             <returns>Value</returns>
@@ -18445,6 +19286,13 @@
             <summary>
             Gets the value of differential entropy.
             </summary>
+        </member>
+        <member name="M:UMapx.Distribution.Trapezoidal.Moments(System.Double@,System.Double@)">
+            <summary>
+            Combines the moments of both power ramps and the linear middle region, relative to the support origin.
+            </summary>
+            <param name="mean">Receives the weighted mean in the original coordinates.</param>
+            <param name="variance">Receives the sum of within-component and between-component variances.</param>
         </member>
         <member name="M:UMapx.Distribution.Trapezoidal.Function(System.Single)">
             <summary>
@@ -27113,6 +27961,9 @@
             </summary>
             <remarks>
             Fast implementation of the bilateral filter (real-time).
+            Real intensities and complex magnitudes must lie in [0, 1]. Complex
+            magnitudes select range bins; real and imaginary components are averaged
+            with the same weights, preserving constant phase rotations.
             More information can be found on the website:
             https://www.researchgate.net/publication/220184523_Real-time_edge-aware_image_processing_with_the_bilateral_grid
             </remarks>
@@ -28382,15 +29233,14 @@
             <returns>Matrix</returns>
             <exception cref="T:System.ArgumentException">Exception</exception>
         </member>
-        <member name="M:UMapx.Transform.HankelTransform.BesselZeroJ(System.Int32,System.Int32)">
+        <member name="M:UMapx.Transform.HankelTransform.BesselZerosJ(System.Int32,System.Int32)">
             <summary>
-            K-th positive zero of J_a (ν = a):
-            Start from McMahon’s asymptotic and refine with Newton’s method.
-            Do all computations in double for ~1e-12 relative accuracy of zeros.
+            Finds consecutive positive zeros of the integer-order Bessel function J.
             </summary>
-            <param name="a">Value</param>
-            <param name="k">Value</param>
-            <returns>Value</returns>
+            <param name="a">Nonnegative integer order.</param>
+            <param name="count">Number of positive zeros required.</param>
+            <returns>Increasing roots in entries 1 through count; entry 0 is unused.</returns>
+            <exception cref="T:System.ArithmeticException">The roots cannot be separated at single precision.</exception>
         </member>
         <member name="M:UMapx.Transform.HankelTransform.TransformationMatrix(System.Int32)">
             <inheritdoc/>
@@ -28871,6 +29721,10 @@
             Defines the local Laplace pyramid filter.
             </summary>
             <remarks>
+            Intensity remapping is sampled on [0, 1] and interpolated from 256-entry
+            tables. Only detail levels are modified; the coarsest Gaussian level is
+            preserved. Zero width, zero sampling intervals, or no detail levels leave
+            the input unchanged. Complex filtering is not supported.
             More information can be found on the website:
             https://people.csail.mit.edu/sparis/publi/2011/siggraph/
             </remarks>
@@ -28906,7 +29760,7 @@
             </summary>
             <param name="radius">Radius</param>
             <param name="sigma">σ-parameter</param>
-            <param name="n">Number of samples</param>
+            <param name="n">Number of intensity sampling intervals; zero disables filtering</param>
             <param name="levels">Number of levels</param>
             <param name="factor">Factor [-1, 1]</param>
         </member>
@@ -28927,7 +29781,7 @@
         </member>
         <member name="P:UMapx.Transform.LocalLaplacianFilter.N">
             <summary>
-            Gets or sets the number of samples.
+            Gets or sets the number of sampling intervals; zero disables the filter.
             </summary>
         </member>
         <member name="P:UMapx.Transform.LocalLaplacianFilter.Levels">
@@ -28980,6 +29834,14 @@
             <param name="factor">Factor</param>
             <param name="n">Number of steps</param>
             <param name="levels">Levels</param>
+        </member>
+        <member name="M:UMapx.Transform.LocalLaplacianFilter.SampleTable(System.Single[],System.Single)">
+            <summary>
+            Interpolates a lookup table sampled uniformly over the unit interval.
+            </summary>
+            <param name="table">At least two samples, including both interval endpoints.</param>
+            <param name="value">Intensity, clamped to [0, 1] before lookup.</param>
+            <returns>The linear interpolation of adjacent table samples.</returns>
         </member>
         <member name="M:UMapx.Transform.LocalLaplacianFilter.Rec(System.Single,System.Single,System.Single)">
             <summary>
@@ -29247,6 +30109,11 @@
             <summary>
             Defines the threshold filter.
             </summary>
+            <remarks>
+            For complex data, Abs compares magnitude and removes the whole sample.
+            Under and Over compare and remove real and imaginary components separately.
+            Samples or components equal to the threshold are retained in every shape.
+            </remarks>
         </member>
         <member name="F:UMapx.Transform.ThresholdFilter.threshold">
             <summary>
@@ -33330,11 +34197,25 @@
         </member>
         <member name="M:UMapx.Wavelet.WaveletPacket.Create(System.Single[],System.Single[])">
             <summary>
-            Creates the discrete wavelet.
+            Creates an orthogonal bank by reversing its analysis filters for synthesis.
             </summary>
             <param name="scaling">Scaling function</param>
             <param name="wavelet">Wavelet function</param>
             <returns>Discrete wavelet</returns>
+            <remarks>For a general biorthogonal bank, supply all four filters to the constructor.</remarks>
+        </member>
+        <member name="M:UMapx.Wavelet.WaveletPacket.CreateBiorthogonal(System.Single[],System.Single[])">
+            <summary>
+            Builds the dual synthesis filters of a real biorthogonal analysis pair.
+            </summary>
+            <param name="scaling">Analysis low-pass coefficients with nonzero DC gain.</param>
+            <param name="wavelet">Analysis high-pass coefficients of a perfect-reconstruction pair.</param>
+            <returns>A bank with equal, even filter lengths and unit reconstruction gain.</returns>
+            <remarks>
+            Padding preserves the analysis origin Length / 2 - 1. Alternating the
+            signs of the opposite analysis filter cancels aliasing; reversing each
+            filter independently is valid only for orthogonal banks.
+            </remarks>
         </member>
         <member name="M:UMapx.Wavelet.WaveletPacket.System#ICloneable#Clone">
             <summary>
@@ -33974,6 +34855,7 @@
             <remarks>
             Uses circular (periodic) extension by advancing rotating indices instead of using modulo per tap.
             If <see cref="P:UMapx.Wavelet.WaveletDecomposition.Normalized"/> is true, the output bands are scaled by <c>1/√2</c> to match orthonormal energy.
+            Products and sums use double precision to reduce cancellation in dual banks.
             Complexity: O(bound · (|lp| + |hp|)).
             </remarks>
         </member>
@@ -33989,6 +34871,7 @@
             Uses odd-phase upsampling (values placed at indices <c>i+1</c>) for both A and D branches to reproduce legacy phasing.
             Circular (periodic) extension is applied during convolution; indices advance by one per output sample.
             If <see cref="P:UMapx.Wavelet.WaveletDecomposition.Normalized"/> is true, the result is scaled by <c>√2</c> (inverse of analysis scaling).
+            Products and sums use double precision to reduce cancellation in dual banks.
             Complexity: O(bound · (|ilp| + |ihp|)).
             </remarks>
         </member>
@@ -34004,6 +34887,7 @@
             <remarks>
             Uses circular (periodic) extension by advancing rotating indices instead of using modulo per tap.
             If <see cref="P:UMapx.Wavelet.WaveletDecomposition.Normalized"/> is true, the output bands are scaled by <c>1/√2</c> to match orthonormal energy.
+            Products and sums use double precision to reduce cancellation in dual banks.
             Complexity: O(bound · (|lp| + |hp|)).
             </remarks>
         </member>
@@ -34019,6 +34903,7 @@
             Uses odd-phase upsampling (values placed at indices <c>i+1</c>) for both A and D branches to reproduce legacy phasing.
             Circular (periodic) extension is applied during convolution; indices advance by one per output sample.
             If <see cref="P:UMapx.Wavelet.WaveletDecomposition.Normalized"/> is true, the result is scaled by <c>√2</c> (inverse of analysis scaling).
+            Products and sums use double precision to reduce cancellation in dual banks.
             Complexity: O(bound · (|ilp| + |ihp|)).
             </remarks>
         </member>
@@ -34292,12 +35177,13 @@
             <param name="frameSize">Window size</param>
             <returns>Value</returns>
         </member>
-        <member name="M:UMapx.Window.Confined.G(System.Single)">
+        <member name="M:UMapx.Window.Confined.G(System.Single,System.Int32)">
             <summary>
-            Function G(x).
+            Evaluates the Gaussian centered on the supplied window.
             </summary>
-            <param name="x">Value</param>
-            <returns>Value</returns>
+            <param name="x">Sample coordinate, including points outside the window.</param>
+            <param name="frameSize">Number of samples defining the center.</param>
+            <returns>The Gaussian value with scale twice the positive standard deviation.</returns>
         </member>
         <member name="M:UMapx.Window.Confined.GetWindow(System.Int32)">
             <summary>

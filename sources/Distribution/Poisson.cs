@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 
 namespace UMapx.Distribution
@@ -86,7 +86,7 @@ namespace UMapx.Distribution
             {
                 float mode = Maths.Floor(l);
 
-                if (mode > 0f && Maths.Abs(l - mode) < 1e-6f)
+                if (mode > 0f && l == mode)
                 {
                     return new float[] { mode - 1f, mode };
                 }
@@ -98,11 +98,23 @@ namespace UMapx.Distribution
         /// Gets the median value.
         /// </summary>
         /// <remarks>
-        /// Uses an approximation valid for λ ≥ 1.
+        /// Returns the lower median by cumulative-probability search, rounded to binary32.
         /// </remarks>
         public float Median
         {
-            get => l < 1f ? 0f : Maths.Floor(l + 1f / 3f - 0.02f / l);
+            get
+            {
+                // Beyond this limit binary32 cannot resolve the sub-unit median correction.
+                if (l >= 16777216) return l;
+                int low = 0, high = (int)Math.Ceiling((double)l + 1);
+                while (low < high)
+                {
+                    int mid = low + (high - low) / 2;
+                    if (Special.DistributionGamma(mid + 1.0, l, true) >= 0.5) high = mid;
+                    else low = mid + 1;
+                }
+                return low;
+            }
         }
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
@@ -134,14 +146,9 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Function(float x)
         {
-            if (x < 0) return 0;
-            int k = (int)x;
-
-            if (x != Maths.Floor(x))
-            {
-                return 0;
-            }
-            return Maths.Exp(-l) * Maths.Pow(l, k) / (float)Special.Factorial(k);
+            if (float.IsNaN(x)) return float.NaN;
+            if (x < 0 || float.IsPositiveInfinity(x) || x != Math.Floor(x)) return 0;
+            return (float)Math.Exp(DistributionNumerics.PoissonLogMass(l, x));
         }
         /// <summary>
         /// Returns the value of the probability mass cumulative function.
@@ -150,12 +157,10 @@ namespace UMapx.Distribution
         /// <returns>Value</returns>
         public float Distribution(float x)
         {
-            if (x < 0)
-            {
-                return 0;
-            }
-            x = Maths.Floor(x);
-            return Special.GammaQ(x + 1, l);
+            if (float.IsNaN(x)) return float.NaN;
+            if (x < 0) return 0;
+            if (float.IsPositiveInfinity(x)) return 1;
+            return (float)Special.DistributionGamma(Math.Floor(x) + 1, l, true);
         }
         /// <summary>
         /// Returns the value of differential entropy.
@@ -165,27 +170,31 @@ namespace UMapx.Distribution
         {
             get
             {
-                return l * (1 - Maths.Log(l)) + Maths.Exp(-l) * Row(l);
+                double lambda = l;
+                if (lambda > 1000)
+                {
+                    double inverse = 1 / lambda;
+                    return (float)(0.5 + DistributionNumerics.LogSqrtTwoPi + 0.5 * Math.Log(lambda)
+                        - inverse / 12 - inverse * inverse / 24 - 19 * inverse * inverse * inverse / 360);
+                }
+                int mode = (int)Math.Floor(lambda);
+                double logMass = DistributionNumerics.PoissonLogMass(lambda, mode);
+                double atMode = Math.Exp(logMass), sum = -atMode * logMass;
+                double mass = atMode;
+                for (int k = mode; k > 0; k--)
+                {
+                    mass *= k / lambda;
+                    if (mass > 0) sum -= mass * Math.Log(mass);
+                }
+                mass = atMode;
+                int limit = mode + (int)Math.Ceiling(14 * Math.Sqrt(lambda)) + 50;
+                for (int k = mode + 1; k <= limit; k++)
+                {
+                    mass *= lambda / k;
+                    if (mass > 0) sum -= mass * Math.Log(mass);
+                }
+                return (float)sum;
             }
-        }
-        /// <summary>
-        /// Calculate row.
-        /// </summary>
-        /// <param name="l">Value</param>
-        /// <returns>Value</returns>
-        private float Row(float l)
-        {
-            float sum = 0;
-            int k, n = 20;
-            float fac;
-
-            for (k = 0; k < n; k++)
-            {
-                fac = (float)Special.Factorial(k);
-                sum += Maths.Pow(l, k) * Maths.Log(fac) / fac;
-            }
-
-            return sum;
         }
         #endregion
     }

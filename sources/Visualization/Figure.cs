@@ -130,7 +130,8 @@ namespace UMapx.Visualization
             }
         }
         /// <summary>
-        /// Gets or sets property of auto range axes.
+        /// Gets or sets whether axes follow the finite data bounds.
+        /// Constant axes receive a finite margin so coordinate mapping remains defined.
         /// </summary>
         public bool AutoRange { get; set; } = true;
         #endregion
@@ -210,6 +211,9 @@ namespace UMapx.Visualization
                 _xmax = Maths.IsSingular(xmax) ? _xmax : xmax;
                 _ymin = Maths.IsSingular(ymin) ? _ymin : ymin;
                 _ymax = Maths.IsSingular(ymax) ? _ymax : ymax;
+
+                ExpandConstantRange(ref _xmin, ref _xmax);
+                ExpandConstantRange(ref _ymin, ref _ymax);
             }
             else
             {
@@ -1039,6 +1043,23 @@ namespace UMapx.Visualization
         #endregion
 
         #region Helper voids
+        /// <summary>
+        /// Expands a constant automatic axis into a finite, nonzero interval.
+        /// </summary>
+        /// <param name="min">Finite lower data bound, updated when both bounds coincide.</param>
+        /// <param name="max">Finite upper data bound, updated when both bounds coincide.</param>
+        /// <remarks>The margin is five percent of the magnitude, with a minimum
+        /// half-width of 0.5. Double intermediates and clipping to the finite float
+        /// range keep even extreme constants representable. Nonconstant axes are unchanged.</remarks>
+        private static void ExpandConstantRange(ref float min, ref float max)
+        {
+            if (min != max) return;
+            double center = min;
+            double margin = Math.Max(0.5, Math.Abs(center) * 0.05);
+            min = (float)Math.Max(-float.MaxValue, center - margin);
+            max = (float)Math.Min(float.MaxValue, center + margin);
+        }
+
         /// <summary>
         /// Formats a numeric tick/label value with sane defaults for scientific vs fixed notation.
         /// </summary>

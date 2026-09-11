@@ -3,6 +3,7 @@
     using System;
     using System.Text;
     using System.Net;
+    using System.Net.Http.Headers;
 
     /// <summary>
     /// Container for MJPEG stream boundaries
@@ -118,76 +119,47 @@
         /// <returns>Boundary with string content</returns>
         public static Boundary FromResponse(WebResponse response)
         {
-            string contentType = response.ContentType;
+            if (response == null) throw new ArgumentNullException(nameof(response));
+            // Unfold legacy response headers; other line breaks remain invalid HTTP syntax.
+            string header = response.ContentType?.Replace("\r\n ", " ").Replace("\r\n\t", " ");
+            if (!MediaTypeHeaderValue.TryParse(header, out MediaTypeHeaderValue contentType))
+                throw new ArgumentException("Invalid content type", nameof(response));
 
-            Boundary boundary = new Boundary();
-
-            if (IsMultipartContent(contentType))
+            if (contentType.MediaType.Equals("multipart/x-mixed-replace", StringComparison.OrdinalIgnoreCase) ||
+                contentType.MediaType.Equals("multipart/mixed", StringComparison.OrdinalIgnoreCase))
             {
-                int boundaryIndex = GetBoundaryIndex(contentType);
-
-                if (boundaryIndex != -1)
+                string boundary = null;
+                foreach (var parameter in contentType.Parameters)
                 {
-                    boundary = TrimBoundary(contentType, boundaryIndex);
-                    boundary.IsChecked = false;
+                    if (!parameter.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)) continue;
+                    if (boundary != null || parameter.Value == null)
+                        throw new ArgumentException("Invalid boundary parameter", nameof(response));
+                    boundary = UnquoteBoundary(parameter.Value);
                 }
+                return new Boundary(boundary ?? string.Empty);
             }
-            else if (!IsOctetStream(contentType))
+
+            if (contentType.MediaType.Equals("application/octet-stream", StringComparison.OrdinalIgnoreCase))
+                return new Boundary();
+
+            throw new ArgumentException("Invalid content type", nameof(response));
+        }
+
+        /// <summary>
+        /// Removes HTTP quoting and quoted-pair escapes from a parsed boundary value.
+        /// </summary>
+        /// <param name="value">Token or quoted string validated by the header parser</param>
+        /// <returns>Boundary string with its original case preserved</returns>
+        private static string UnquoteBoundary(string value)
+        {
+            if (value.Length == 0 || value[0] != '"') return value;
+            var boundary = new StringBuilder(value.Length - 2);
+            for (int i = 1; i < value.Length - 1; i++)
             {
-                throw new ArgumentException("Invalid content type");
+                if (value[i] == '\\') i++;
+                boundary.Append(value[i]);
             }
-
-            return boundary;
-        }
-
-        /// <summary>
-        /// Locates the boundary parameter position in a content type string.
-        /// </summary>
-        /// <param name="contentType">Content type header</param>
-        /// <returns>Index of boundary parameter or -1</returns>
-        private static int GetBoundaryIndex(string contentType)
-        {
-            int boundaryIndex = contentType.IndexOf("boundary", 0);
-            if (boundaryIndex != -1)
-            {
-                boundaryIndex = contentType.IndexOf("=", boundaryIndex + 8);
-            }
-
-            return boundaryIndex;
-        }
-
-        /// <summary>
-        /// Extracts and trims the boundary value from a content type string.
-        /// </summary>
-        /// <param name="contentType">Content type header</param>
-        /// <param name="boundaryIndex">Index of the boundary token</param>
-        /// <returns>Parsed boundary instance</returns>
-        private static Boundary TrimBoundary(string contentType, int boundaryIndex)
-        {
-            string boundary = contentType.Substring(boundaryIndex + 1);
-            string trimmedBoundary = boundary.Trim(' ', '"');
-
-            return new Boundary(trimmedBoundary);
-        }
-
-        /// <summary>
-        /// Determines whether the content type is multipart/mixed.
-        /// </summary>
-        /// <param name="contentType">Content type header</param>
-        /// <returns><c>true</c> if multipart/mixed; otherwise, false</returns>
-        private static bool IsMultipartContent(string contentType)
-        {
-            return contentType.StartsWith("multipart") && contentType.Contains("mixed");
-        }
-
-        /// <summary>
-        /// Determines whether the content type is an octet-stream.
-        /// </summary>
-        /// <param name="contentType">Content type header</param>
-        /// <returns><c>true</c> if octet-stream; otherwise, false</returns>
-        private static bool IsOctetStream(string contentType)
-        {
-            return contentType.StartsWith("application/octet-stream");
+            return boundary.ToString();
         }
 
         /// <summary>

@@ -458,7 +458,7 @@ namespace UMapx.Imaging
 
         #region Merge
         /// <summary>
-        /// Merges two depths.
+        /// Copies a depth map into the top-left corner of another depth map, clipping at its edges.
         /// </summary>
         /// <param name="a">Matrix</param>
         /// <param name="b">Matrix</param>
@@ -468,22 +468,35 @@ namespace UMapx.Imaging
             Merge(a, b, rectangle);
         }
         /// <summary>
-        /// Merges two depths.
+        /// Resizes a depth map to a placement rectangle and copies its visible part into another map.
         /// </summary>
-        /// <param name="a">Matrix</param>
-        /// <param name="b">Matrix</param>
-        /// <param name="rectangle">Rectangle</param>
+        /// <param name="a">Destination map, modified in place.</param>
+        /// <param name="b">Source map. Equal source and placement sizes preserve samples exactly.</param>
+        /// <param name="rectangle">Placement in column/row coordinates, with nonnegative dimensions.</param>
+        /// <remarks>Clipping retains the source coordinates relative to the full placement.
+        /// Empty or nonintersecting placements are no-ops. Self-merges read the original samples.</remarks>
+        /// <exception cref="ArgumentOutOfRangeException">A placement dimension is negative.</exception>
+        /// <exception cref="ArgumentException">A visible, nonempty placement has an empty source.</exception>
         public static void Merge(this ushort[,] a, ushort[,] b, Rectangle rectangle)
         {
-            ushort[,] c = Resize(b, 
-                new Size(rectangle.Width, rectangle.Height));
+            if (rectangle.Width < 0 || rectangle.Height < 0)
+                throw new ArgumentOutOfRangeException(nameof(rectangle), "Placement dimensions must be nonnegative.");
 
-            int h = Math.Min(rectangle.Height, a.GetLength(0) - rectangle.Y);
-            int w = Math.Min(rectangle.Width,  a.GetLength(1) - rectangle.X);
+            int top = Math.Max(0, rectangle.Y), left = Math.Max(0, rectangle.X);
+            // Widen before adding coordinates, even for placements entirely outside the map.
+            long bottom = Math.Min(a.GetLength(0), (long)rectangle.Y + rectangle.Height);
+            long right = Math.Min(a.GetLength(1), (long)rectangle.X + rectangle.Width);
+            if (top >= bottom || left >= right) return;
+            if (b.Length == 0)
+                throw new ArgumentException("A nonempty placement requires source samples.", nameof(b));
 
-            for (int i = rectangle.Y; i < h; i++)
+            ushort[,] c = b.GetLength(1) == rectangle.Width && b.GetLength(0) == rectangle.Height
+                ? (ReferenceEquals(a, b) ? (ushort[,])b.Clone() : b)
+                : Resize(b, rectangle.Size);
+
+            for (int i = top; i < bottom; i++)
             {
-                for (int j = rectangle.X; j < w; j++)
+                for (int j = left; j < right; j++)
                 {
                     a[i, j] = c[i - rectangle.Y, j - rectangle.X];
                 }
@@ -493,18 +506,23 @@ namespace UMapx.Imaging
 
         #region Equalize
         /// <summary>
-        /// Equalizes histogram of the depth.
+        /// Equalizes a depth map using its inclusive cumulative histogram.
         /// </summary>
-        /// <param name="depth">Depth</param>
-        /// <returns>Matrix</returns>
+        /// <param name="depth">Unsigned 16-bit depth samples.</param>
+        /// <returns>A map of the same shape, with each value mapped to
+        /// floor(65535 * count(samples less than or equal to value) / population).
+        /// Constant nonempty maps become 65535; empty maps retain their shape.</returns>
         public static ushort[,] Equalize(this ushort[,] depth)
         {
             var width = depth.GetLength(1);
             var height = depth.GetLength(0);
             var hist = ushort.MaxValue + 1;
+            var output = new ushort[height, width];
+            long population = depth.LongLength;
+            if (population == 0) return output;
 
             // histogram
-            var H = new ushort[hist];
+            var H = new long[hist];
 
             for (int x = 0; x < width; x++)
             {
@@ -514,26 +532,22 @@ namespace UMapx.Imaging
                 }
             }
 
-            // cdf
-            var factor = ushort.MaxValue / (float)(height * width);
-            var cdf = new float[hist];
-
-            // recursion
-            cdf[0] = H[0];
-
-            for (int i = 1; i < hist; i++)
+            // Integer CDF ranks avoid both 16-bit count wraparound and float rounding
+            // near output bin boundaries. The product fits Int64 for managed-array sizes.
+            var lookup = new ushort[hist];
+            long cumulative = 0;
+            for (int i = 0; i < hist; i++)
             {
-                cdf[i] = H[i] + cdf[i - 1];
+                cumulative += H[i];
+                lookup[i] = (ushort)(cumulative * ushort.MaxValue / population);
             }
 
             // equalization
-            var output = new ushort[height, width];
-
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    output[y, x] = (ushort)(cdf[depth[y, x]] * factor);
+                    output[y, x] = lookup[depth[y, x]];
                 }
             }
 
