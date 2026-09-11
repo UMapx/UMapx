@@ -136,7 +136,7 @@ namespace UMapx.Distribution
             }
             if (Math.Abs(tau) >= 2 * Math.Abs(t))
             {
-                return 1.0f / tau * Maths.Exp(-2 * Maths.Pi * a * tau * tau);
+                return 1.0f / Math.Abs(tau) * Maths.Exp(-2 * Maths.Pi * a * tau * tau);
             }
             return 0;
         }

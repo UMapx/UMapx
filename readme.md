@@ -66,11 +66,15 @@ using UMapx.Window;
 **MIT**  
 
 # Mathematical audit
-The [matrix decomposition repair report](docs/decomposition-repair-2026-09-11.md)
-records 15 resolved failures and 496 added passing tests, with no regressions or
-removed tests. The complete suite has **15,035 passing and 168 failing cases**.
+The [B07–B10 repair report](docs/b07-b10-repair-2026-09-11.md) records 119 resolved
+failures and 419 added passing cases, with no regressions or removed tests.
+The complete suite has **15,573 passing and 49 failing cases**.
 The [remaining repair blocks](docs/remaining-repair-blocks-2026-09-10.md) assign
-the remaining failures to six open blocks; wavelets (B07) are next.
+the remaining failures to B11 (images, geometry, rendering: 44) and B12 (video
+parsing: 5). B01–B10 are closed; B11 is next.
+
+The earlier [matrix decomposition repair report](docs/decomposition-repair-2026-09-11.md)
+records 15 resolved failures and 496 added passing tests.
 
 The preceding [approximation and local-filter repair report](docs/approximation-repair-2026-09-11.md)
 records 15 resolved failures and 595 added passing tests. The subsequent

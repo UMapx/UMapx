@@ -27,9 +27,13 @@ namespace UMapx.Wavelet
             {
                 return 2.0f / 3 + 4.0f / (3 * Maths.Pi);
             }
-            float phiupper = Maths.Sin(2.0f * Maths.Pi / 3 * x) + 4.0f / 3 * x * Maths.Cos(4 * Maths.Pi / 3 * x);
-            float phidown = Maths.Pi * x - 16 * Maths.Pi / 9 * Maths.Pow(x, 3);
-            return phiupper / phidown;
+            if (Math.Abs(x) == 0.75f) return (float)(2 / (3 * Math.PI));
+            // Double intermediates avoid cancellation at float samples adjacent
+            // to the removable singularities; exact limits handle the poles.
+            double t = x;
+            double phiupper = Math.Sin(2 * Math.PI / 3 * t) + 4.0 / 3 * t * Math.Cos(4 * Math.PI / 3 * t);
+            double phidown = Math.PI * t * (1 - 16.0 / 9 * t * t);
+            return (float)(phiupper / phidown);
         }
         /// <summary>
         /// Returns the value of the wavelet function.
@@ -42,15 +46,18 @@ namespace UMapx.Wavelet
             // the explicit expressions of Meyer wavelet and scale functions:
             //
             // Kernel value:
-            float t = x - 0.5f;
+            double t = (double)x - 0.5;
+            if (t == 0) return (float)(4 / Math.PI);
             // Finding ψ1(t):
-            float psi1upper = 4.0f / (3 * Maths.Pi) * t * Maths.Cos(2 * Maths.Pi / 3 * t) - 1.0f / Maths.Pi * Maths.Sin(4 * Maths.Pi / 3 * t);
-            float psi1down = t - 16.0f / 9 * Maths.Pow(t, 3);
+            double psi1upper = 4.0 / (3 * Math.PI) * t * Math.Cos(2 * Math.PI / 3 * t) - Math.Sin(4 * Math.PI / 3 * t) / Math.PI;
+            double psi1down = t * (1 - 16.0 / 9 * t * t);
             // Finding ψ2(t):
-            float psi2upper = 8.0f / (3 * Maths.Pi) * t * Maths.Cos(8 * Maths.Pi / 3 * t) + 1.0f / Maths.Pi * Maths.Sin(4 * Maths.Pi / 3 * t);
-            float psi2down = t - 64.0f / 9 * Maths.Pow(t, 3);
+            double psi2upper = 8.0 / (3 * Math.PI) * t * Math.Cos(8 * Math.PI / 3 * t) + Math.Sin(4 * Math.PI / 3 * t) / Math.PI;
+            double psi2down = t * (1 - 64.0 / 9 * t * t);
             // Finding ψ(t) = ψ1(t) + ψ2(t):
-            return psi1upper / psi1down + psi2upper / psi2down;
+            double psi1 = Math.Abs(t) == 0.75 ? -1.0 / 3 : psi1upper / psi1down;
+            double psi2 = Math.Abs(t) == 0.375 ? 4 / (3 * Math.PI) : psi2upper / psi2down;
+            return (float)(psi1 + psi2);
         }
         #endregion
     }

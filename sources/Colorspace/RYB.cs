@@ -197,7 +197,7 @@ namespace UMapx.Colorspace
 
             float my = Maths.Max(r, y, b);
 
-            //if (my > 0)
+            if (my > 0)
             {
                 float n = mg / my;
                 r *= n;
@@ -210,7 +210,9 @@ namespace UMapx.Colorspace
             y += w;
             b += w;
 
-            return new RYB(r, y, b);
+            // Round the byte-encoded intermediate to avoid a systematic chroma
+            // bias that is amplified by the inverse normalization.
+            return new RYB((int)Math.Round(r), (int)Math.Round(y), (int)Math.Round(b));
         }
         /// <summary>
         /// Converts from RGB to RYB.
@@ -262,17 +264,20 @@ namespace UMapx.Colorspace
 
                 // Normalize to values.
                 float mg = Maths.Max(rr, gg, bb);
-                float n = my / mg;
-                rr *= n;
-                gg *= n;
-                bb *= n;
+                if (mg > 0)
+                {
+                    float n = my / mg;
+                    rr *= n;
+                    gg *= n;
+                    bb *= n;
+                }
 
                 // Add the white back in.
                 rr += w;
                 gg += w;
                 bb += w;
 
-                return new RGB(rr, gg, bb);
+                return new RGB((int)Math.Round(rr), (int)Math.Round(gg), (int)Math.Round(bb));
             }
         }
         #endregion

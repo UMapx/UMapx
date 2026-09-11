@@ -66,7 +66,8 @@ namespace UMapx.Window
         /// <returns>Value</returns>
         public override float Function(float x, int frameSize)
         {
-            float a = (frameSize - 1) / 2;
+            if (frameSize == 1) return 1;
+            float a = (frameSize - 1) / 2.0f;
             float t = (x - a) / (sigma * a);
             return Maths.Exp(-Maths.Pow(Maths.Abs(t), p));
         }

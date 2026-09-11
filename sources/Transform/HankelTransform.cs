@@ -62,10 +62,7 @@ namespace UMapx.Transform
         {
             if (N <= 0 || a < 0) throw new ArgumentException("Arguments could not be negative");
 
-            float[] j = new float[N + 1 + 1];
-
-            for (int k = 1; k <= N + 1; k++)
-                j[k] = BesselZeroJ(a, k);
+            float[] j = BesselZerosJ(a, N + 1);
 
             float[] Jp = new float[N + 1 + 1];
 
@@ -80,7 +77,7 @@ namespace UMapx.Transform
             {
                 for (int n = 1; n <= N; n++)
                 {
-                    float arg = j[m] * j[n] / denom;
+                    float arg = (float)((double)j[m] * j[n] / denom);
                     float num = Special.J((float)arg, a);
                     float val = 2.0f / denom * num / (Jp[m] * Jp[n]);
                     T[m - 1, n - 1] = val;
@@ -89,35 +86,49 @@ namespace UMapx.Transform
             return T;
         }
         /// <summary>
-        /// K-th positive zero of J_a (ν = a):
-        /// Start from McMahon’s asymptotic and refine with Newton’s method.
-        /// Do all computations in double for ~1e-12 relative accuracy of zeros.
+        /// Finds consecutive positive zeros of the integer-order Bessel function J.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="k">Value</param>
-        /// <returns>Value</returns>
-        private static float BesselZeroJ(int a, int k)
+        /// <param name="a">Nonnegative integer order.</param>
+        /// <param name="count">Number of positive zeros required.</param>
+        /// <returns>Increasing roots in entries 1 through count; entry 0 is unused.</returns>
+        /// <exception cref="ArithmeticException">The roots cannot be separated at single precision.</exception>
+        private static float[] BesselZerosJ(int a, int count)
         {
-            float nu = a;
-            float x = (k + 0.5f * nu - 0.25f) * Maths.Pi;
-            float eps = 1e-16f;
-            int iterations = 120;
-
-            for (int it = 0; it < iterations; it++)
+            float[] roots = new float[count + 1];
+            // The first positive zero lies above the order. Scanning with pi/4
+            // cannot skip consecutive zeros at nonnegative integer orders and
+            // excludes the zero at the origin when a > 0.
+            float left = a, fLeft = Special.J(left, a);
+            int found = 0;
+            int scanLimit = checked(16 * count + 128 + (int)(16 * Math.Pow(a, 1.0 / 3)));
+            for (int scan = 0; scan < scanLimit && found < count; scan++)
             {
-                float Ja = Special.J(x, a);
-                float Ja1 = Special.J(x, a + 1);
-                float Ja_1 = Special.J(x, a - 1);
-
-                float Jprime = 0.5f * (Ja_1 - Ja1);
-                float dx = Ja / Jprime;
-
-                x -= dx;
-
-                if (Math.Abs(dx) <= eps * Math.Abs(x)) break;
+                float right = (float)(left + Math.PI / 4);
+                float fRight = Special.J(right, a);
+                if (right <= left || float.IsNaN(fRight) || float.IsNaN(fLeft)) break;
+                if (fRight == 0 || (fLeft != 0 && (fLeft < 0) != (fRight < 0)))
+                {
+                    float lo = left, hi = right, flo = fLeft;
+                    if (fRight != 0)
+                    {
+                        for (int iteration = 0; iteration < 32; iteration++)
+                        {
+                            float mid = (float)(((double)lo + hi) / 2);
+                            if (mid == lo || mid == hi) break;
+                            float fm = Special.J(mid, a);
+                            if (fm == 0) { lo = hi = mid; break; }
+                            if ((fm < 0) == (flo < 0)) { lo = mid; flo = fm; }
+                            else hi = mid;
+                        }
+                    }
+                    else lo = hi;
+                    roots[++found] = (float)(((double)lo + hi) / 2);
+                }
+                left = right;
+                fLeft = fRight;
             }
-
-            return x;
+            if (found != count) throw new ArithmeticException("Unable to bracket distinct positive Bessel zeros.");
+            return roots;
         }
         #endregion
 

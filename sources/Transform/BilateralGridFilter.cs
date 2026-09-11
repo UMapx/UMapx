@@ -8,6 +8,9 @@ namespace UMapx.Transform
     /// </summary>
     /// <remarks>
     /// Fast implementation of the bilateral filter (real-time).
+    /// Real intensities and complex magnitudes must lie in [0, 1]. Complex
+    /// magnitudes select range bins; real and imaginary components are averaged
+    /// with the same weights, preserving constant phase rotations.
     /// More information can be found on the website:
     /// https://www.researchgate.net/publication/220184523_Real-time_edge-aware_image_processing_with_the_bilateral_grid
     /// </remarks>
@@ -336,6 +339,7 @@ namespace UMapx.Transform
             Complex32[,] gridData = new Complex32[gridZ, gridX];
             Complex32[,] gridWeight = new Complex32[gridZ, gridX];
 
+            // Magnitude selects the range bin; accumulate the full complex sample.
             // SPLAT step
             for (int x = 0; x < length; x++)
             {
@@ -343,7 +347,7 @@ namespace UMapx.Transform
                 int z = (int)(value / sigmaRange);
                 int gx = (int)(x / sigmaSpatial);
 
-                gridData[z, gx] += value;
+                gridData[z, gx] += input[x];
                 gridWeight[z, gx] += 1f;
             }
 
@@ -380,7 +384,7 @@ namespace UMapx.Transform
                     }
                 }
 
-                input[x] = (w.Abs > 1e-5f) ? v / w : value;
+                input[x] = (w.Abs > 1e-5f) ? v / w : input[x];
             }
         }
         /// <summary>
@@ -401,6 +405,7 @@ namespace UMapx.Transform
             Complex32[,,] gridData = new Complex32[gridZ, gridY, gridX];
             Complex32[,,] gridWeight = new Complex32[gridZ, gridY, gridX];
 
+            // Magnitude selects the range bin; accumulate the full complex sample.
             // SPLAT step: accumulate data into the grid
             for (int y = 0; y < height; y++)
             {
@@ -411,7 +416,7 @@ namespace UMapx.Transform
                     int gy = (int)(y / sigmaSpatial);
                     int gx = (int)(x / sigmaSpatial);
 
-                    gridData[z, gy, gx] += value;
+                    gridData[z, gy, gx] += input[y, x];
                     gridWeight[z, gy, gx] += 1f;
                 }
             }
@@ -461,7 +466,7 @@ namespace UMapx.Transform
                         }
                     }
 
-                    input[y, x] = (w.Abs > 1e-5f) ? v / w : value;
+                    input[y, x] = (w.Abs > 1e-5f) ? v / w : input[y, x];
                 }
             }
         }

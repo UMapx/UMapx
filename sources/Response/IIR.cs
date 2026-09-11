@@ -304,20 +304,26 @@ namespace UMapx.Response
             {
                 if (a == null || a.Length == 0) return true;
 
-                int Q = a.Length;
-                float[] p = new float[Q + 1];
+                // Reaction divides by 1-a[0], so the characteristic polynomial
+                // is (1-a[0])*z^(Q-1) - a[1]*z^(Q-2) - ... - a[Q-1].
+                double[] p = new double[a.Length];
+                p[0] = 1.0 - a[0];
+                for (int k = 1; k < a.Length; k++) p[k] = -a[k];
+                for (int k = 0; k < p.Length; k++)
+                    if (double.IsNaN(p[k]) || double.IsInfinity(p[k])) return false;
+                if (p[0] == 0) return false;
 
-                p[0] = 1f;
-                for (int k = 0; k < Q; k++)
-                    p[k + 1] = -a[k];
-
-                var eps = 1e-8f;
-                var rts = new Roots(eps).Compute(p);  // p(1)*x^n + ... + p(n+1) = 0
-
-                for (int i = 0; i < rts.Length; i++)
+                // Real Schur recursion tests strict inclusion in the unit disk
+                // without locating roots, including repeated poles. Each step
+                // removes the trailing coefficient using the reversed polynomial.
+                for (int degree = p.Length - 1; degree > 0; degree--)
                 {
-                    if (rts[i].Abs >= 1f - eps)
-                        return false;
+                    double reflection = p[degree] / p[0];
+                    if (!(Math.Abs(reflection) < 1)) return false;
+                    double[] reduced = new double[degree];
+                    for (int k = 0; k < degree; k++)
+                        reduced[k] = p[k] / p[0] - reflection * (p[degree - k] / p[0]);
+                    p = reduced;
                 }
                 return true;
             }

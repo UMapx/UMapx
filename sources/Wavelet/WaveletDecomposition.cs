@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using UMapx.Core;
 using UMapx.Transform;
 
@@ -169,6 +170,8 @@ namespace UMapx.Wavelet
             int h = R, w = C;
             for (int lev = 1; lev <= L; lev++)
             {
+                if ((w & 1) != 0 || (h & 1) != 0)
+                    throw new ArgumentException("Both image dimensions must be even per level", nameof(A));
                 int halfW = w >> 1, halfH = h >> 1;
                 // rows
                 for (int r = 0; r < h; r++)
@@ -365,6 +368,8 @@ namespace UMapx.Wavelet
             int h = R, w = C;
             for (int lev = 1; lev <= L; lev++)
             {
+                if ((w & 1) != 0 || (h & 1) != 0)
+                    throw new ArgumentException("Both image dimensions must be even per level", nameof(A));
                 int halfW = w >> 1, halfH = h >> 1;
                 // rows
                 for (int r = 0; r < h; r++)
@@ -497,6 +502,7 @@ namespace UMapx.Wavelet
         /// <remarks>
         /// Uses circular (periodic) extension by advancing rotating indices instead of using modulo per tap.
         /// If <see cref="Normalized"/> is true, the output bands are scaled by <c>1/√2</c> to match orthonormal energy.
+        /// Products and sums use double precision to reduce cancellation in dual banks.
         /// Complexity: O(bound · (|lp| + |hp|)).
         /// </remarks>
         private void DWT1D(float[] input, int bound, float[] output)
@@ -511,12 +517,12 @@ namespace UMapx.Wavelet
 
             for (int r = 0; r < h; r++)
             {
-                float a = 0f, b = 0f; int cL = cL0, cH = cH0;
-                for (int k = 0; k < lpLen; k++) { a += lp[k] * input[cL]; if (++cL == bound) cL = 0; }
-                for (int k = 0; k < hpLen; k++) { b += hp[k] * input[cH]; if (++cH == bound) cH = 0; }
+                double a = 0, b = 0; int cL = cL0, cH = cH0;
+                for (int k = 0; k < lpLen; k++) { a += (double)lp[k] * input[cL]; if (++cL == bound) cL = 0; }
+                for (int k = 0; k < hpLen; k++) { b += (double)hp[k] * input[cH]; if (++cH == bound) cH = 0; }
                 cL0 += 2; if (cL0 >= bound) cL0 -= bound; cH0 += 2; if (cH0 >= bound) cH0 -= bound;
-                if (normalized) { output[r] = a / Maths.Sqrt2; output[r + h] = b / Maths.Sqrt2; }
-                else { output[r] = a; output[r + h] = b; }
+                if (normalized) { output[r] = (float)(a / Maths.Sqrt2); output[r + h] = (float)(b / Maths.Sqrt2); }
+                else { output[r] = (float)a; output[r + h] = (float)b; }
             }
         }
         /// <summary>
@@ -530,6 +536,7 @@ namespace UMapx.Wavelet
         /// Uses odd-phase upsampling (values placed at indices <c>i+1</c>) for both A and D branches to reproduce legacy phasing.
         /// Circular (periodic) extension is applied during convolution; indices advance by one per output sample.
         /// If <see cref="Normalized"/> is true, the result is scaled by <c>√2</c> (inverse of analysis scaling).
+        /// Products and sums use double precision to reduce cancellation in dual banks.
         /// Complexity: O(bound · (|ilp| + |ihp|)).
         /// </remarks>
         private void IDWT1D(float[] a_d, int bound, float[] dest)
@@ -550,10 +557,10 @@ namespace UMapx.Wavelet
 
             for (int i = 0; i < bound; i++)
             {
-                float s = 0f; int cL = cL0, cH = cH0;
-                for (int k = 0; k < lpLen; k++) { s += ilp[k] * upL[cL]; if (++cL == bound) cL = 0; }
-                for (int k = 0; k < hpLen; k++) { s += ihp[k] * upH[cH]; if (++cH == bound) cH = 0; }
-                dest[i] = normalized ? s * Maths.Sqrt2 : s;
+                double s = 0; int cL = cL0, cH = cH0;
+                for (int k = 0; k < lpLen; k++) { s += (double)ilp[k] * upL[cL]; if (++cL == bound) cL = 0; }
+                for (int k = 0; k < hpLen; k++) { s += (double)ihp[k] * upH[cH]; if (++cH == bound) cH = 0; }
+                dest[i] = (float)(normalized ? s * Maths.Sqrt2 : s);
                 cL0++; if (cL0 == bound) cL0 = 0; cH0++; if (cH0 == bound) cH0 = 0;
             }
         }
@@ -568,6 +575,7 @@ namespace UMapx.Wavelet
         /// <remarks>
         /// Uses circular (periodic) extension by advancing rotating indices instead of using modulo per tap.
         /// If <see cref="Normalized"/> is true, the output bands are scaled by <c>1/√2</c> to match orthonormal energy.
+        /// Products and sums use double precision to reduce cancellation in dual banks.
         /// Complexity: O(bound · (|lp| + |hp|)).
         /// </remarks>
         private void DWT1D(Complex32[] input, int bound, Complex32[] output)
@@ -581,12 +589,12 @@ namespace UMapx.Wavelet
             int cH0 = ModBound(hpStart, bound);
             for (int r = 0; r < h; r++)
             {
-                Complex32 a = 0, b = 0; int cL = cL0, cH = cH0;
-                for (int k = 0; k < lpLen; k++) { a += lp[k] * input[cL]; if (++cL == bound) cL = 0; }
-                for (int k = 0; k < hpLen; k++) { b += hp[k] * input[cH]; if (++cH == bound) cH = 0; }
+                Complex a = 0, b = 0; int cL = cL0, cH = cH0;
+                for (int k = 0; k < lpLen; k++) { a += lp[k] * (Complex)input[cL]; if (++cL == bound) cL = 0; }
+                for (int k = 0; k < hpLen; k++) { b += hp[k] * (Complex)input[cH]; if (++cH == bound) cH = 0; }
                 cL0 += 2; if (cL0 >= bound) cL0 -= bound; cH0 += 2; if (cH0 >= bound) cH0 -= bound;
-                output[r] = normalized ? a / Maths.Sqrt2 : a;
-                output[r + h] = normalized ? b / Maths.Sqrt2 : b;
+                output[r] = (Complex32)(normalized ? a / Maths.Sqrt2 : a);
+                output[r + h] = (Complex32)(normalized ? b / Maths.Sqrt2 : b);
             }
         }
         /// <summary>
@@ -600,6 +608,7 @@ namespace UMapx.Wavelet
         /// Uses odd-phase upsampling (values placed at indices <c>i+1</c>) for both A and D branches to reproduce legacy phasing.
         /// Circular (periodic) extension is applied during convolution; indices advance by one per output sample.
         /// If <see cref="Normalized"/> is true, the result is scaled by <c>√2</c> (inverse of analysis scaling).
+        /// Products and sums use double precision to reduce cancellation in dual banks.
         /// Complexity: O(bound · (|ilp| + |ihp|)).
         /// </remarks>
         private void IDWT1D(Complex32[] a_d, int bound, Complex32[] dest)
@@ -616,10 +625,10 @@ namespace UMapx.Wavelet
             int cL0 = ModBound(lpStart, bound); int cH0 = ModBound(hpStart, bound);
             for (int i = 0; i < bound; i++)
             {
-                Complex32 s = 0; int cL = cL0, cH = cH0;
-                for (int k = 0; k < lpLen; k++) { s += ilp[k] * upL[cL]; if (++cL == bound) cL = 0; }
-                for (int k = 0; k < hpLen; k++) { s += ihp[k] * upH[cH]; if (++cH == bound) cH = 0; }
-                dest[i] = normalized ? s * Maths.Sqrt2 : s;
+                Complex s = 0; int cL = cL0, cH = cH0;
+                for (int k = 0; k < lpLen; k++) { s += ilp[k] * (Complex)upL[cL]; if (++cL == bound) cL = 0; }
+                for (int k = 0; k < hpLen; k++) { s += ihp[k] * (Complex)upH[cH]; if (++cH == bound) cH = 0; }
+                dest[i] = (Complex32)(normalized ? s * Maths.Sqrt2 : s);
                 cL0++; if (cL0 == bound) cL0 = 0; cH0++; if (cH0 == bound) cH0 = 0;
             }
         }

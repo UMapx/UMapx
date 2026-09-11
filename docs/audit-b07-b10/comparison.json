@@ -1,0 +1,751 @@
+{
+  "baseline_cases": 15203,
+  "current_cases": 15622,
+  "common_cases": 15203,
+  "baseline_totals": {
+    "Passed": 15035,
+    "Failed": 168
+  },
+  "current_totals": {
+    "Passed": 15573,
+    "Failed": 49
+  },
+  "added_totals": {
+    "Passed": 419
+  },
+  "resolved_by_suite": {
+    "AdditionalTransformAuditTests": 6,
+    "ColorSpaceAuditTests": 19,
+    "MathematicalRegressionTests": 7,
+    "ResponseAuditTests": 2,
+    "TransformAuditTests": 14,
+    "WaveletAuditTests": 55,
+    "WindowAuditTests": 16
+  },
+  "resolved_count": 119,
+  "regression_count": 0,
+  "added_count": 419,
+  "removed_count": 0,
+  "resolved": [
+    {
+      "id": "27dce6e8-963d-f15d-b558-f565a9da7d6d",
+      "suite": "AdditionalTransformAuditTests",
+      "case": "UMapx.Tests.AdditionalTransformAuditTests.HankelMatrixMatchesHighPrecisionBesselZeros(order: 5, size: 16, values: \"[[0.00045426352213434666,-0.002639994660238784,0.0\"\u00b7\u00b7\u00b7)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "133329a8-fb1e-5563-a7ec-abf351f9bef5",
+      "suite": "AdditionalTransformAuditTests",
+      "case": "UMapx.Tests.AdditionalTransformAuditTests.HankelMatrixMatchesHighPrecisionBesselZeros(order: 5, size: 2, values: \"[[0.5246329328431766,-0.851408766662878],[-0.85140\"\u00b7\u00b7\u00b7)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "3c896d35-6c91-17b1-98fe-046dd8ed026d",
+      "suite": "AdditionalTransformAuditTests",
+      "case": "UMapx.Tests.AdditionalTransformAuditTests.HankelMatrixMatchesHighPrecisionBesselZeros(order: 5, size: 4, values: \"[[0.11531419632528757,-0.41193988124636266,0.69318\"\u00b7\u00b7\u00b7)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "8c070eb1-d0eb-f62a-55b3-9f25f2fa71b4",
+      "suite": "AdditionalTransformAuditTests",
+      "case": "UMapx.Tests.AdditionalTransformAuditTests.HankelMatrixMatchesHighPrecisionBesselZeros(order: 5, size: 8, values: \"[[0.010355783945353903,-0.05237741134580529,0.1481\"\u00b7\u00b7\u00b7)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "cef0e91b-cef3-847f-d7f4-0f82e01b7aca",
+      "suite": "AdditionalTransformAuditTests",
+      "case": "UMapx.Tests.AdditionalTransformAuditTests.TimeFrequencyKernelsMatchTheirFourierPair(tau: -0.5)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "5a8da1fe-94aa-86ec-98a3-184edb31b589",
+      "suite": "AdditionalTransformAuditTests",
+      "case": "UMapx.Tests.AdditionalTransformAuditTests.TimeFrequencyKernelsMatchTheirFourierPair(tau: -2)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "530d7c62-02cb-b8f9-7b6b-7cd48a8ee336",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.CieXyzAndLabMatchTheD65ReferenceWhite(red: 0, green: 0, blue: 255)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "fbed59db-f7f5-1726-aca8-be2fdfcd4a09",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.CieXyzAndLabMatchTheD65ReferenceWhite(red: 0, green: 255, blue: 0)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "04fff444-c87a-c881-a8df-92a9d384d512",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.CieXyzAndLabMatchTheD65ReferenceWhite(red: 12, green: 64, blue: 190)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "7f8dc3cb-9791-5f3e-3113-0a0121968f58",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.CieXyzAndLabMatchTheD65ReferenceWhite(red: 128, green: 128, blue: 128)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "cde9c91d-1331-0530-bb9d-7d64b156eabc",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.CieXyzAndLabMatchTheD65ReferenceWhite(red: 255, green: 0, blue: 0)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "6ca95e86-f3ce-a6f1-c386-588faade847d",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.CieXyzAndLabMatchTheD65ReferenceWhite(red: 255, green: 255, blue: 255)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "fabd8a60-1419-96a9-2de8-991e30ee9db0",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"AHSL\", r: 64, g: 0, b: 128)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ab12d586-f975-9b5b-aecd-021f000757cd",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"AHSL\", r: 64, g: 128, b: 0)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "bc2eef65-ffe8-de33-416f-82047d9406e1",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"LAB\", r: 0, g: 255, b: 255)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "6666850d-29f0-b860-ac7e-c0fdf8c2ab9c",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"LAB\", r: 128, g: 255, b: 255)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "d4f464cc-64be-cebb-ad14-a3730cc38452",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"LAB\", r: 255, g: 255, b: 255)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "19b30d05-c5a0-ed4d-c8fe-fb2ba1ef1b1f",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"LAB\", r: 64, g: 255, b: 255)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "54f93adf-0e03-2083-faac-78092c725667",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"RYB\", r: 128, g: 128, b: 128)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "59609804-71bf-0002-380c-521e9243e781",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"RYB\", r: 255, g: 255, b: 255)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "4e164e06-fff5-f4b2-8986-2ce8be75b435",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"RYB\", r: 64, g: 64, b: 64)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "5b4317a6-0a71-46ae-aae7-009b9c5c37c2",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"XYZ\", r: 0, g: 255, b: 255)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "d63aa2f1-8fba-3208-3df0-6f6bcbbf505a",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"XYZ\", r: 128, g: 255, b: 255)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "c89c86fe-9711-eab6-7e53-b57d2003457f",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"XYZ\", r: 255, g: 255, b: 255)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "c90a1b06-61e5-ab6d-3c5f-aa7c8ca21e4a",
+      "suite": "ColorSpaceAuditTests",
+      "case": "UMapx.Tests.ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget(name: \"XYZ\", r: 64, g: 255, b: 255)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "2c4d0ef7-27cd-6466-de5f-c4d100240b13",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.BiorthogonalWaveletReconstructsImpulse(normalized: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e24bf1ae-d7bf-cdd3-786a-6b97e1bdd331",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.BiorthogonalWaveletReconstructsImpulse(normalized: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "0ba72556-e9e5-2873-81d0-51cdf06d36a0",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.EvenConfinedWindowIsSymmetric",
+      "outcome": "Passed"
+    },
+    {
+      "id": "4b142828-3624-6f7a-ec2e-c16f16becddd",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.EvenNormalWindowIsSymmetric",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ee3256a6-c6a6-db04-e0ac-ea8213872e89",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.IirStabilityUsesTheSamePolynomialAsReaction",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e84bde7b-a0d5-bdad-ab03-a34ad1996421",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.RybConversionPreservesWhite",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e2d0b487-b598-5f0f-a49c-90c44cf1c92c",
+      "suite": "MathematicalRegressionTests",
+      "case": "UMapx.Tests.MathematicalRegressionTests.XyzCanRepresentItsD65WhitePoint",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a4ab30ec-1f0e-4da4-9fc0-bffb22904455",
+      "suite": "ResponseAuditTests",
+      "case": "UMapx.Tests.ResponseAuditTests.StabilityMatchesThePoleOfTheActualDifferenceEquation(a0: -0.899999976, a1: 1.10000002, stable: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "5ac29599-30e0-4adf-c8be-07958baa65a3",
+      "suite": "ResponseAuditTests",
+      "case": "UMapx.Tests.ResponseAuditTests.StabilityMatchesThePoleOfTheActualDifferenceEquation(a0: 0.899999976, a1: -0.800000012, stable: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "0755e1e3-5d36-119b-a68f-9fe0029de6c9",
+      "suite": "TransformAuditTests",
+      "case": "UMapx.Tests.TransformAuditTests.LaplacianPyramidsReconstructVectors(n: 4, complex: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "2d291bfd-9872-e06e-655b-13a007054958",
+      "suite": "TransformAuditTests",
+      "case": "UMapx.Tests.TransformAuditTests.LaplacianPyramidsReconstructVectors(n: 4, complex: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "33ad1ad1-4fb1-6d4b-d792-25f0613af098",
+      "suite": "TransformAuditTests",
+      "case": "UMapx.Tests.TransformAuditTests.LaplacianPyramidsReconstructVectors(n: 8, complex: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "922444a6-7b92-af01-7d61-73d2ba834fae",
+      "suite": "TransformAuditTests",
+      "case": "UMapx.Tests.TransformAuditTests.LaplacianPyramidsReconstructVectors(n: 8, complex: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "b9da2faa-ffd6-effd-b031-a8de83396d4c",
+      "suite": "TransformAuditTests",
+      "case": "UMapx.Tests.TransformAuditTests.LaplacianPyramidsReconstructVectors(n: 9, complex: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a572bb6a-0c63-2a50-e1be-3ddf3166ca71",
+      "suite": "TransformAuditTests",
+      "case": "UMapx.Tests.TransformAuditTests.LaplacianPyramidsReconstructVectors(n: 9, complex: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "caf68d8e-e9d5-fd39-d2c4-760e639e77a5",
+      "suite": "TransformAuditTests",
+      "case": "UMapx.Tests.TransformAuditTests.SmoothingAndDetailFiltersPreserveConstants(name: \"BilateralGrid\", matrix: False, complex: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "9dc01316-a6bb-d46a-23b6-67c6f1fe6249",
+      "suite": "TransformAuditTests",
+      "case": "UMapx.Tests.TransformAuditTests.SmoothingAndDetailFiltersPreserveConstants(name: \"BilateralGrid\", matrix: True, complex: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "2bdde26d-b6ed-90a0-b97c-1fada69334da",
+      "suite": "TransformAuditTests",
+      "case": "UMapx.Tests.TransformAuditTests.SmoothingAndDetailFiltersPreserveConstants(name: \"Laplacian\", matrix: False, complex: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "8f33a007-0003-3f89-6e7d-137f0b4a4914",
+      "suite": "TransformAuditTests",
+      "case": "UMapx.Tests.TransformAuditTests.SmoothingAndDetailFiltersPreserveConstants(name: \"Laplacian\", matrix: False, complex: True)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "1b49c7bc-2dd1-1307-0587-d6f82c72a126",
+      "suite": "TransformAuditTests",
+      "case": "UMapx.Tests.TransformAuditTests.SmoothingAndDetailFiltersPreserveConstants(name: \"LocalLaplacian\", matrix: False, complex: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "4a532abb-a896-be35-08d3-a41cde7e63d3",
+      "suite": "TransformAuditTests",
+      "case": "UMapx.Tests.TransformAuditTests.SmoothingAndDetailFiltersPreserveConstants(name: \"LocalLaplacian\", matrix: True, complex: False)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "35ca05c7-e59f-b7d3-0148-aa5f3cb0322b",
+      "suite": "TransformAuditTests",
+      "case": "UMapx.Tests.TransformAuditTests.ThresholdFiltersRespectEqualityAndSignedComponents(mode: Over)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a55c1c98-f4f4-4dde-7eed-473b585ff132",
+      "suite": "TransformAuditTests",
+      "case": "UMapx.Tests.TransformAuditTests.ThresholdFiltersRespectEqualityAndSignedComponents(mode: Under)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a762dd59-cd52-28c8-c4dc-eba8a69aeb7a",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.MeyerWaveletAndScalingHaveFiniteRemovableSingularities(wavelet: False, x: -0.75)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "87926853-3b94-e55f-b5b1-12898f01bab6",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.MeyerWaveletAndScalingHaveFiniteRemovableSingularities(wavelet: False, x: 0.75)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "f7beb39f-f144-3905-8019-9bc33da859f6",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.MeyerWaveletAndScalingHaveFiniteRemovableSingularities(wavelet: True, x: 0.5)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "2ba7e993-f3df-9698-cc05-c248520a7fb4",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior13\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e4857d60-2c96-d14d-942e-927f7d24404e",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior13\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "92d9ec79-6b4d-bffc-1e92-99334ba2156b",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior15\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "76baa719-8f6a-d0d3-bb6a-1135ad6c05c2",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior15\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "3054afde-4d67-a49a-f4b9-1e9c1aac4470",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior22\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "d0691257-30f7-8d9f-8444-aa634a5a9051",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior22\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "b77b1e01-a4b9-b9e8-6fac-d2ec7e47463f",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior24\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ecd16ef8-96cf-1563-0f67-e22ae20c1c6a",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior24\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "4dffe3dc-3227-1c9b-567a-62ca839e8b8c",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior26\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "7fb0d517-8005-2061-2515-b8cbfcfd3675",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior26\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a8bb16a2-f27c-5031-b4f8-47aaaef789a0",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior28\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "5002a22b-2cfa-61ec-3846-f75924d64379",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior28\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "59faad89-560b-f0d3-4b28-14a08081e0be",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior31\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "bae00261-1d2c-d470-a6dc-4625d01ab991",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior31\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "21449bbd-f360-272a-ce3f-acbc37264a62",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior33\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "32c2e0ad-a884-32d9-e4dc-962c06361514",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior33\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "4372762f-946b-430c-5b4e-af8f7f0f9a59",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior35\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "366b5425-056d-35b7-81c3-8ff22d5817ee",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior35\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "f4038e47-930b-94e9-616e-dcb9848b891e",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior37\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "5c82447e-901c-4d98-0226-20b68d2ce303",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"Bior37\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "4dfc2811-77db-9a24-6060-c29e0326f04f",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF13\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "6858352f-d487-4666-0da7-2387e097db74",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF13\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e11bd38b-1f43-ec0b-b96e-29b85906021c",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF15\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "114175e3-8c14-0b10-4624-12e8332cc313",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF15\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "d7aab058-e2c6-bff7-f039-4d94e4ab7b24",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF22\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "d290f43f-45ad-bf95-5133-e8bdce91d3bb",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF22\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "bc3233f7-38ab-f5e4-5a94-8fe0eb8225c2",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF24\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "1f083594-9750-2a10-b17d-6f86d69503dc",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF24\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "093bf01a-517f-1f70-9e79-5311c0882372",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF26\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "cfb01231-6645-3ed2-5948-78b5dc712572",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF26\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "8a44a237-e4b3-4f7b-2685-7ee481dbe106",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF31\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "3bc860a3-9a36-2fc5-fcba-099b981d5228",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF31\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "216d6f06-78ff-cb5c-0d23-aa18df95b8d1",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF42\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "1b4d4b71-dd48-ac02-b206-b829eaf42d99",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF42\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "7a2261ec-73af-6753-1a61-4e1e23dea1a3",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF44\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ab6a4ac8-4b7c-a210-be61-172121921114",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF44\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e5384cf7-1768-b923-5a4d-9a34e0f03a96",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF46\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "3b9d9018-4a4c-edb1-cf95-59854da65afa",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF46\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "9e7e91fb-f40f-cd6d-e726-b2bfb0ed6b14",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF51\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "d14eecdd-f0df-747a-f859-eaa0971c2e55",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF51\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "dfa49782-f3c0-23ad-63ba-93788dd5cb61",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF53\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "708fd6df-1d65-c75b-b862-f8b870db1cca",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF53\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "c480ff3a-cb1a-3f7f-8667-6e2e2edebad6",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF55\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "366b1350-b343-1694-c0e1-f67a87a1db72",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF55\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a9966bed-3941-1922-4ec4-cf1677194f06",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF62\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e7ae66c3-f671-6cce-549b-1a6492ce22d9",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF62\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "3e2109dd-9c6d-595d-be32-2d5d33fdf44f",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF64\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "431eae5b-f821-b281-af48-fdbba2f0851b",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF64\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "6e9e989e-6887-e858-68be-9b5572823b15",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF66\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "a56a9771-31fc-dad2-27e9-34a137fd71ea",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF66\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "3539a243-6d80-32cd-4261-ba8c0cabe1f0",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF97\", levels: 1)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "afa526d1-8c30-9223-6c70-5bf2f7662cbe",
+      "suite": "WaveletAuditTests",
+      "case": "UMapx.Tests.WaveletAuditTests.ReconstructionBanksRecoverImpulsesAndDeterministicSignals(name: \"CDF97\", levels: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "1371b39b-17c6-c449-c908-0a8b7c64f5ab",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.ExplicitFrameSizeDoesNotDependOnStoredFrameSize(name: \"Confined\", n: 2)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "9ed453eb-1343-c757-41f4-8b2ccd407b81",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.ExplicitFrameSizeDoesNotDependOnStoredFrameSize(name: \"Confined\", n: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "5ca205cf-f441-34a9-bf62-7feee4a74f9e",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.ExplicitFrameSizeDoesNotDependOnStoredFrameSize(name: \"Confined\", n: 32)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e8cbaf72-8887-2cc8-de97-299732536752",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.ExplicitFrameSizeDoesNotDependOnStoredFrameSize(name: \"Confined\", n: 8)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e9d83317-21ef-6c73-c515-5f643ce54816",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.ExplicitFrameSizeDoesNotDependOnStoredFrameSize(name: \"Confined\", n: 9)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "3673286b-4169-155a-e487-77b22846bbf0",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"BartlettHann\", n: 2)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ee478398-a28f-2d75-2dd1-0012ed799042",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"BartlettHann\", n: 3)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "ba0a5d00-c3a9-f60d-bc8a-c0f1c9bcc990",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"BartlettHann\", n: 32)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "7504c3ec-169f-cfc5-016d-598837b7a041",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"BartlettHann\", n: 8)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "2dc83fee-e2be-6cbf-5292-90ff4fc6be66",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"BartlettHann\", n: 9)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e658587a-9049-2f83-82ac-9b144bbb0803",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"Confined\", n: 2)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "8a5a2879-75c4-5608-41fa-c69ddf43006d",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"Confined\", n: 32)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "f4346077-d970-d9c0-634b-6ed4def4429c",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"Confined\", n: 8)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "689f77b9-063e-8cf2-d0dd-18185ba17842",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"Normal\", n: 2)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "51ff387f-ccc4-c7e6-554f-79cb141772fc",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"Normal\", n: 32)",
+      "outcome": "Passed"
+    },
+    {
+      "id": "e19724d1-3e6e-9ad6-000a-6c0472c18a7d",
+      "suite": "WindowAuditTests",
+      "case": "UMapx.Tests.WindowAuditTests.SamplesAgreeWithIndependentWindowFormulas(name: \"Normal\", n: 8)",
+      "outcome": "Passed"
+    }
+  ],
+  "regressions": [],
+  "removed": [],
+  "evidence_sha256": {
+    "baseline_trx": "395af487dd75eb4c927cfdfb20e04735d02ba041442a8147592c04b594b7e8d9",
+    "current_trx": "9e094b6e8be8fda50db32085ad80bcd217660f4138d01d8f6810d384cae01055"
+  }
+}

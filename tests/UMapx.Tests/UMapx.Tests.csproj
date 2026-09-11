@@ -26,6 +26,7 @@
     <EmbeddedResource Include="Data/special-functions-repair.json" />
     <EmbeddedResource Include="Data/arithmetic-repair.json" />
     <EmbeddedResource Include="Data/hankel.json" />
+    <EmbeddedResource Include="Data/b07-b10-repair.json" />
     <EmbeddedResource Include="Data/distributions.json" />
     <EmbeddedResource Include="Data/distribution-repair.json" />
     <EmbeddedResource Include="Data/distribution-catalog.json" />

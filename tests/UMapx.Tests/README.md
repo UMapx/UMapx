@@ -2,21 +2,22 @@
 
 The audit covers every source area. The current source inventory contains 427 C#
 files after [helper consolidation](../../docs/helper-consolidation-2026-09-11.md).
-See the [decomposition repair report](../../docs/decomposition-repair-2026-09-11.md)
+See the [B07–B10 repair report](../../docs/b07-b10-repair-2026-09-11.md)
 and [remaining repair blocks](../../docs/remaining-repair-blocks-2026-09-10.md).
-The [approximation repair report](../../docs/approximation-repair-2026-09-11.md),
+The [decomposition repair report](../../docs/decomposition-repair-2026-09-11.md),
+[approximation repair report](../../docs/approximation-repair-2026-09-11.md),
 [matrix and distribution repair report](../../docs/matrix-distribution-repair-2026-09-10.md),
 [arithmetic repair report](../../docs/arithmetic-repair-2026-09-10.md),
 [special-function repair report](../../docs/special-functions-repair-2026-09-10.md),
 and [expanded baseline report](../../docs/math-audit-expanded-2026-09-10.md) remain historical records.
 
-The current complete run contains **15,203 cases: 15,035 passed, 168 failed, none
-skipped**. All 14,707 previous cases remain: 15 B06 failures now pass and no
-passing cases regressed. All 496 added cases pass. B01–B06 are closed; B07–B12
-remain open. Failing tests remain enabled and expect the mathematical answer;
-the full command exits with status 1.
+The current complete run contains **15,622 cases: 15,573 passed, 49 failed, none
+skipped**. All 15,203 previous cases remain: 119 B07–B10 failures now pass and no
+passing cases regressed. All 419 added cases pass. B01–B10 are closed; B11 (44)
+and B12 (5) remain open. Failing tests remain enabled and expect the mathematical
+answer; the full command exits with status 1.
 
-Execution coverage is **83.55% of lines** and **77.07% of branches**. These figures
+Execution coverage is **83.69% of lines** and **77.40% of branches**. These figures
 include failing and contract tests. They are not a correctness percentage, and
 this suite does not establish absence of errors. The report explicitly lists
 unexecuted lines/methods, unsupported APIs, and incomplete parameter domains.
@@ -67,7 +68,7 @@ Available categories: `Identity`, `Regression`, `Reference`, `Core`, `Matrix`,
 `Analysis`, `ColorSpace`, `Decomposition`, `Distance`, `Distribution`, `Window`,
 `WindowTransform`, `Transform`, `Wavelet`, `Response`, `Imaging`, `Geometry`,
 `Video`, and `Contract`. Category totals and test-family counts are available in
-[the run summary](../../docs/audit-decomposition/summary.json).
+[the run summary](../../docs/audit-b07-b10/summary.json).
 
 A numeric-only filter for environments without Windows bitmap support is:
 
@@ -105,6 +106,10 @@ The complete reported result is from Windows with .NET SDK 10.0.401.
 - 496 decomposition repair cases cover matrix rank and scaling, all four Penrose
   equations, Schur deflation and complex blocks, generalized eigen-equations,
   homogeneous eigenvalues, QZ structure, and explicit convergence/input contracts.
+- 419 B07–B10 repair cases cover biorthogonal impulses and vanishing moments,
+  independent Meyer quadrature, narrow windows, high-order Bessel zeros, known
+  IIR poles, complex grid sample influences, direct local-Laplacian remapping,
+  threshold components, cone kernel mass, and neutral/chromatic color round trips.
 - Window formulas, wavelet analysis/synthesis coefficients, impulses, filter
   transfer polynomials, image pixel equations and neutral/constant invariants.
 - Real/complex vectors, rectangular matrices, even/odd sizes, singular inputs,
@@ -165,6 +170,13 @@ SVD pseudoinversion discards singular values at or below
 floor to the requested relative tolerance. Their work buffers use scaled double
 arithmetic; public outputs remain float. Iteration failure is explicit.
 
+B07–B10 preserve existing public signatures. Biorthogonal convolution accumulates
+in double; bands remain float. Complex bilateral grids use magnitude guidance
+with shared weights for both components. Complex Under/Over thresholding is
+componentwise; Abs compares magnitude. Local-Laplacian processing preserves its
+base level, interpolates lookup tables, and remains unsupported for complex data.
+XYZ retains nonnegative relative tristimulus values above one.
+
 ## Reference generation
 
 Python and mpmath are not required to run the C# tests: JSON fixtures are embedded.
@@ -200,3 +212,12 @@ Replace `RESULT-ID` with the collector's directory name. Update the explanatory
 report and these counts together; generated evidence includes source and input
 hashes to expose stale snapshots. Do not treat a reduced set of failing tests as
 proof that every corresponding root cause has been fixed.
+
+The [B07–B10 reference generator](../../tools/generate_b07_b10_references.py)
+requires mpmath 1.3.0 and evaluates at 70 decimal digits. Run it from the repository
+root with mpmath on Python's import path. It generates the committed
+`Data/b07-b10-repair.json`: 38 Meyer values from independent spectral quadrature
+and 24 Hankel matrices from ordered positive Bessel zeros. Tests need no Python
+or network access. New Meyer bounds are `2e-7 + 2e-7*abs(x)`; new Hankel bounds
+are `3e-5 + 3e-5*abs(x)`. Direct local-Laplacian references use an absolute 3e-4
+lookup-interpolation budget for the tested widths. Earlier tolerances are unchanged.

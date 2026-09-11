@@ -26,17 +26,17 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates an instance of the structure CIE XYZ.
         /// </summary>
-        /// <param name="x">Component X [0, 1]</param>
-        /// <param name="y">Component Y [0, 1]</param>
-        /// <param name="z">Component Z [0, 1]</param>
+        /// <param name="x">Component X [0, +infinity), relative to a reference white with Y = 1</param>
+        /// <param name="y">Component Y [0, +infinity), relative to a reference white with Y = 1</param>
+        /// <param name="z">Component Z [0, +infinity), relative to a reference white with Y = 1</param>
         public XYZ(float x, float y, float z)
         {
-            this.x = (x > 1.0) ? 1.0f : ((x < 0) ? 0 : x);
-            this.y = (y > 1.0) ? 1.0f : ((y < 0) ? 0 : y);
-            this.z = (z > 1.0) ? 1.0f : ((z < 0) ? 0 : z);
+            this.x = (x < 0) ? 0 : x;
+            this.y = (y < 0) ? 0 : y;
+            this.z = (z < 0) ? 0 : z;
         }
         /// <summary>
-        /// Defines a component of the model [0, 1].
+        /// Defines a component of the model [0, +infinity), relative to a reference white with Y = 1.
         /// </summary>
         public float X
         {
@@ -46,11 +46,11 @@ namespace UMapx.Colorspace
             }
             set
             {
-                this.x = (value > 1.0) ? 1.0f : ((value < 0) ? 0 : value);
+                this.x = (value < 0) ? 0 : value;
             }
         }
         /// <summary>
-        /// Defines a component of the model [0, 1].
+        /// Defines a component of the model [0, +infinity), relative to a reference white with Y = 1.
         /// </summary>
         public float Y
         {
@@ -60,11 +60,11 @@ namespace UMapx.Colorspace
             }
             set
             {
-                this.y = (value > 1.0) ? 1.0f : ((value < 0) ? 0 : value);
+                this.y = (value < 0) ? 0 : value;
             }
         }
         /// <summary>
-        /// Defines a component of the model [0, 1].
+        /// Defines a component of the model [0, +infinity), relative to a reference white with Y = 1.
         /// </summary>
         public float Z
         {
@@ -74,7 +74,7 @@ namespace UMapx.Colorspace
             }
             set
             {
-                this.z = (value > 1.0) ? 1.0f : ((value < 0) ? 0 : value);
+                this.z = (value < 0) ? 0 : value;
             }
         }
         #endregion
@@ -223,11 +223,13 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Computes the nonlinear helper function used in CIE XYZ to LAB conversion.
         /// </summary>
-        /// <param name="t">Input value</param>
-        /// <returns>Transformed value</returns>
+        /// <param name="t">Nonnegative tristimulus component divided by its D65 white component.</param>
+        /// <returns>The cube root above (6/29)^3, and its continuous linear extension below.</returns>
         private static float Fxyz(float t)
         {
-            return (t > 0.008856) ? Maths.Pow(t, 1.0f / 3.0f) : (7.787f * t + 16.0f / 116.0f);
+            const double delta = 6.0 / 29.0;
+            return (float)(t > delta * delta * delta
+                ? Math.Pow(t, 1.0 / 3.0) : t / (3 * delta * delta) + 4.0 / 29.0);
         }
         #endregion
 

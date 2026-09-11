@@ -58,20 +58,26 @@ namespace UMapx.Window
         /// <returns>Value</returns>
         public override float Function(float x, int frameSize)
         {
-            float a = G(-0.5f) * (G(x + frameSize) + G(x - frameSize));
-            float b = G(-0.5f + frameSize) + G(-0.5f - frameSize);
-            return G(x) - a / b;
+            if (frameSize == 1) return 1;
+            // G(-1/2) equals G(N-1/2) by symmetry. Divide before
+            // multiplying to avoid a 0/0 ratio for narrow Gaussians.
+            double scale = 2.0 * sigma;
+            double edge = frameSize / (2.0 * scale);
+            double far = 3.0 * frameSize / (2.0 * scale);
+            double ratio = 1.0 / (1.0 + Math.Exp(edge * edge - far * far));
+            return (float)(G(x, frameSize) - ratio * (G(x + frameSize, frameSize) + G(x - frameSize, frameSize)));
         }
         /// <summary>
-        /// Function G(x).
+        /// Evaluates the Gaussian centered on the supplied window.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
-        private float G(float x)
+        /// <param name="x">Sample coordinate, including points outside the window.</param>
+        /// <param name="frameSize">Number of samples defining the center.</param>
+        /// <returns>The Gaussian value with scale twice the positive standard deviation.</returns>
+        private double G(float x, int frameSize)
         {
-            float a = (frameSize - 1) / 2;
-            float t = (x - a) / (2 * sigma);
-            return Maths.Exp(-t * t);
+            double a = (frameSize - 1) / 2.0;
+            double t = (x - a) / (2.0 * sigma);
+            return Math.Exp(-t * t);
         }
         /// <summary>
         /// Returns the window function.

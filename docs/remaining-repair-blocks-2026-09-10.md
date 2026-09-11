@@ -1,17 +1,14 @@
 # Remaining repair blocks — updated September 11, 2026
 
-After the [matrix decomposition repairs](decomposition-repair-2026-09-11.md),
-**168 failures remain in six open blocks**. B01–B06 are closed. The latest repair
-resolved all 15 B06 failures and added 496 passing cases, with no regressions
-or removed tests. Every remaining failing test ID belongs to exactly one block.
-The complete verified run has 15,203 cases, with 15,035 passed and no skipped cases.
+After the [B07–B10 repairs](b07-b10-repair-2026-09-11.md), **49 failures remain in
+two open blocks**. B01–B10 are closed. The latest repair resolved all 119 assigned
+failures and added 419 passing cases, with no regressions or removed tests.
+Every remaining failing test ID belongs to exactly one block. The complete
+verified run has 15,622 cases, with 15,573 passed and no skipped cases.
 
-**Recommended next: B07 — wavelets (57 failures).**
-No failures outside B06 changed in the latest run.
-
-The table is a suggested work order. Blocks without dependencies can be taken earlier.
-Both IsPrime(1) and zero-matrix Schur termination defects are fixed. Keep their
-subprocess timeout regressions enabled.
+**Recommended next: B11 — images, geometry, and rendering (44 failures).**
+The five B12 video-parser failures also remain. No failure outside B07–B10 changed.
+Keep the repaired prime and zero-matrix Schur termination regressions enabled.
 
 | Block | Scope | Assigned failing cases | Recommended after |
 | --- | --- | ---: | --- |
@@ -21,13 +18,13 @@ subprocess timeout regressions enabled.
 | [B04](#b04) | Probability distributions | 0 (67 resolved) | Closed |
 | [B05](#b05) | Approximation, interpolation, and local array filters | 0 (15 resolved) | Closed |
 | [B06](#b06) | Matrix decompositions | 0 (15 resolved) | Closed |
-| [B07](#b07) | Wavelets | 57 | B01 |
-| [B08](#b08) | Window functions | 18 | B01 |
-| [B09](#b09) | Transforms and response filters | 23 | B01, B05 |
-| [B10](#b10) | Color spaces | 21 | Independent |
+| [B07](#b07) | Wavelets | 0 (57 resolved) | Closed |
+| [B08](#b08) | Window functions | 0 (18 resolved) | Closed |
+| [B09](#b09) | Transforms and response filters | 0 (23 resolved) | Closed |
+| [B10](#b10) | Color spaces | 0 (21 resolved) | Closed |
 | [B11](#b11) | Images, geometry, and rendering | 44 | B03, B05, B10 |
 | [B12](#b12) | Video stream parsing | 5 | Independent |
-| **Remaining** | | **168** | |
+| **Remaining** | | **49** | |
 
 Counts represent failed test cases, not independent bugs. Several parameter sets and original
 regressions can expose the same cause. Fixing one block may also change another block's count.
@@ -235,7 +232,11 @@ normalization, and termination are checked. See the [repair report](decompositio
 </details>
 
 <a id="b07"></a>
-## B07. Wavelets — 57 cases
+## B07. Wavelets — closed (57 cases resolved)
+
+All original assigned failures are resolved. See the [repair report](b07-b10-repair-2026-09-11.md)
+for the implementation, additional tests, and numerical conventions. The list
+below records the original failure groups.
 
 Sources: [Wavelet](../sources/Wavelet).
 
@@ -245,9 +246,9 @@ Sources: [Wavelet](../sources/Wavelet).
 **Validation:** Check synthesis/analysis coefficient pairing, normalization, phase/alignment, impulses, deterministic signals, and analytical limits. Retain the distinction between reconstruction banks and prototype wavelets that do not promise perfect reconstruction.
 
 <details>
-<summary>Assigned failing test families</summary>
+<summary>Resolved failing test families</summary>
 
-| Test family | Cases |
+| Test family | Resolved cases |
 | --- | ---: |
 | [MathematicalRegressionTests.BiorthogonalWaveletReconstructsImpulse](../tests/UMapx.Tests/MathematicalRegressionTests.cs) | 2 |
 | [WaveletAuditTests.MeyerWaveletAndScalingHaveFiniteRemovableSingularities](../tests/UMapx.Tests/WaveletAuditTests.cs) | 3 |
@@ -256,7 +257,11 @@ Sources: [Wavelet](../sources/Wavelet).
 </details>
 
 <a id="b08"></a>
-## B08. Window functions — 18 cases
+## B08. Window functions — closed (18 cases resolved)
+
+All original assigned failures are resolved. See the [repair report](b07-b10-repair-2026-09-11.md)
+for the implementation, additional tests, and numerical conventions. The list
+below records the original failure groups.
 
 Sources: [BartlettHann.cs](../sources/Window/BartlettHann.cs), [Normal.cs](../sources/Window/Normal.cs), [Confined.cs](../sources/Window/Confined.cs).
 
@@ -267,9 +272,9 @@ Sources: [BartlettHann.cs](../sources/Window/BartlettHann.cs), [Normal.cs](../so
 **Validation:** Check odd/even lengths, endpoint values, symmetry, independent sample formulas, and independence from stored size when an explicit size is supplied.
 
 <details>
-<summary>Assigned failing test families</summary>
+<summary>Resolved failing test families</summary>
 
-| Test family | Cases |
+| Test family | Resolved cases |
 | --- | ---: |
 | [MathematicalRegressionTests.EvenConfinedWindowIsSymmetric](../tests/UMapx.Tests/MathematicalRegressionTests.cs) | 1 |
 | [MathematicalRegressionTests.EvenNormalWindowIsSymmetric](../tests/UMapx.Tests/MathematicalRegressionTests.cs) | 1 |
@@ -279,7 +284,11 @@ Sources: [BartlettHann.cs](../sources/Window/BartlettHann.cs), [Normal.cs](../so
 </details>
 
 <a id="b09"></a>
-## B09. Transforms and response filters — 23 cases
+## B09. Transforms and response filters — closed (23 cases resolved)
+
+All original assigned failures are resolved. See the [repair report](b07-b10-repair-2026-09-11.md)
+for the implementation, additional tests, and numerical conventions. The list
+below records the original failure groups.
 
 Sources: [Transform](../sources/Transform), [IIR.cs](../sources/Response/IIR.cs), [ConeShape.cs](../sources/Distribution/ConeShape.cs).
 
@@ -291,12 +300,16 @@ Sources: [Transform](../sources/Transform), [IIR.cs](../sources/Response/IIR.cs)
 
 **Validation:** Check ordered positive Bessel zeros, independent transform matrices, reconstruction, DC/phase preservation, threshold equality, and poles of the actual difference equation.
 
-**Open point:** BilateralGrid complex semantics, LocalLaplacian approximation/DC bias, and component-versus-magnitude thresholding need explicit API decisions. These are six failing expectations, not six already-localized algebraic mistakes. The order-5 Hankel search currently converges toward the origin.
+**Conventions:** BilateralGrid guides by magnitude while averaging full complex
+samples. Under/Over threshold components separately; Abs thresholds magnitude.
+LocalLaplacian modifies detail levels and preserves the Gaussian base. Lookup
+interpolation has an explicit approximation budget. Hankel roots are bracketed
+away from the origin. No original expectation was removed or weakened.
 
 <details>
-<summary>Assigned failing test families</summary>
+<summary>Resolved failing test families</summary>
 
-| Test family | Cases |
+| Test family | Resolved cases |
 | --- | ---: |
 | [AdditionalTransformAuditTests.HankelMatrixMatchesHighPrecisionBesselZeros](../tests/UMapx.Tests/AdditionalTransformAuditTests.cs) | 4 |
 | [AdditionalTransformAuditTests.TimeFrequencyKernelsMatchTheirFourierPair](../tests/UMapx.Tests/AdditionalTransformAuditTests.cs) | 2 |
@@ -309,7 +322,11 @@ Sources: [Transform](../sources/Transform), [IIR.cs](../sources/Response/IIR.cs)
 </details>
 
 <a id="b10"></a>
-## B10. Color spaces — 21 cases
+## B10. Color spaces — closed (21 cases resolved)
+
+All original assigned failures are resolved. See the [repair report](b07-b10-repair-2026-09-11.md)
+for the implementation, additional tests, and numerical conventions. The list
+below records the original failure groups.
 
 Sources: [XYZ.cs](../sources/Colorspace/XYZ.cs), [LAB.cs](../sources/Colorspace/LAB.cs), [RYB.cs](../sources/Colorspace/RYB.cs), [AHSL.cs](../sources/Colorspace/AHSL.cs).
 
@@ -319,9 +336,9 @@ Sources: [XYZ.cs](../sources/Colorspace/XYZ.cs), [LAB.cs](../sources/Colorspace/
 **Validation:** Use D65 reference coordinates, primary/neutral colors, gamut boundaries, and round trips with the existing quantization budgets. Repair XYZ before judging downstream LAB differences.
 
 <details>
-<summary>Assigned failing test families</summary>
+<summary>Resolved failing test families</summary>
 
-| Test family | Cases |
+| Test family | Resolved cases |
 | --- | ---: |
 | [ColorSpaceAuditTests.CieXyzAndLabMatchTheD65ReferenceWhite](../tests/UMapx.Tests/ColorSpaceAuditTests.cs) | 6 |
 | [ColorSpaceAuditTests.ColorConversionsPreserveColorsWithinTheirQuantizationBudget](../tests/UMapx.Tests/ColorSpaceAuditTests.cs) | 13 |
@@ -342,7 +359,7 @@ Sources: [Imaging](../sources/Imaging), [Figure.cs](../sources/Visualization/Fig
 
 **Validation:** Use guarded buffers for stride/padding, exact neutral pixels, independent histogram ranks, opaque alpha for RGB inputs, zero-variance limits, wide area/count arithmetic, and finite rendering ranges.
 
-**Open point:** The bicubic bitmap resize failure belongs to B05 and is not counted here. ColorTransfer should be rechecked after matrix statistics and color-space repairs.
+**Follow-up:** B05 bicubic resizing is already repaired. ColorTransfer was rechecked after B10; its two constant-image failures remain assigned here.
 
 <details>
 <summary>Assigned failing test families</summary>
@@ -386,8 +403,10 @@ Sources: [Boundary.cs](../sources/Video/Internal/Boundary.cs), [MJPEGStreamParse
 
 ## Evidence and commands
 
-- [Current block metadata, focused filters, and all 168 unique test-ID assignments](audit-decomposition/repair-blocks.json).
-- [Current individual failures](audit-decomposition/failures.json) and [run summary](audit-decomposition/summary.json).
+- [Current block metadata, focused filters, and all 49 unique test-ID assignments](audit-b07-b10/repair-blocks.json).
+- [Current individual failures](audit-b07-b10/failures.json) and [run summary](audit-b07-b10/summary.json).
+- [Previous 168-case snapshot](audit-decomposition/repair-blocks.json).
+- [B07–B10 repair results](b07-b10-repair-2026-09-11.md).
 - [Previous 183-case snapshot](audit-consolidation/repair-blocks.json).
 - [Decomposition repair results](decomposition-repair-2026-09-11.md).
 - [Previous B05 snapshot](audit-approximation/repair-blocks.json).
@@ -403,8 +422,8 @@ Sources: [Boundary.cs](../sources/Video/Internal/Boundary.cs), [MJPEGStreamParse
 Run a block's focused test families from the repository root:
 
 ```powershell
-$plan = Get-Content -Raw docs/audit-decomposition/repair-blocks.json | ConvertFrom-Json
-$block = $plan.blocks | Where-Object id -eq 'B07'
+$plan = Get-Content -Raw docs/audit-b07-b10/repair-blocks.json | ConvertFrom-Json
+$block = $plan.blocks | Where-Object id -eq 'B11'
 dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter $block.focused_test_filter
 ```
 
@@ -419,5 +438,5 @@ dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filte
 ./tools/Run-MathAudit.ps1 -NoRestore -ResultsDirectory artifacts/math-audit/next-block
 ```
 
-The full suite currently exits with 1 because all 168 remaining expectations stay enabled.
-The historical snapshots are retained; the current JSON matches the verified matrix-decomposition repair run.
+The full suite currently exits with 1 because all 49 remaining expectations stay enabled.
+The historical snapshots are retained; the current JSON matches the verified B07–B10 repair run.
