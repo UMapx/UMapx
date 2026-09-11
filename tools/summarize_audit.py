@@ -8,6 +8,7 @@ import collections
 import csv
 import hashlib
 import json
+import os
 import re
 import subprocess
 import xml.etree.ElementTree as ET
@@ -24,7 +25,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--trx', type=Path, required=True)
     parser.add_argument('--coverage', type=Path, required=True, help='coverage.cobertura.xml')
-    parser.add_argument('--output', type=Path, default=ROOT / 'docs' / 'audit')
+    parser.add_argument('--output', type=Path, default=ROOT / 'artifacts' / 'math-audit' / 'run' / 'summary')
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     coverage = ET.parse(args.coverage).getroot()
@@ -101,12 +102,13 @@ def main():
         grouped[row['suite']+'.'+row['method']].append(row)
     md = ['# Failed audit checks', '',
           'Generated from the recorded TRX. These are failing test families, not independent root causes.',
-          'The explanatory repair register is in [the expanded report](../math-audit-expanded-2026-09-10.md).', '',
+          'Individual cases and messages are recorded in [failures.json](failures.json).', '',
           '| Test family | Failed cases | Example |', '| --- | ---: | --- |']
     for name, rows in grouped.items():
         example = rows[0]['message'].split('\n')[0].replace('|','\\|')
         file = rows[0]['test_file'] or 'tests/UMapx.Tests/'+rows[0]['suite']+'.cs'
-        md.append(f'| [{name}](../../{file}) | {len(rows)} | {example} |')
+        source_link = Path(os.path.relpath(ROOT / file, args.output)).as_posix()
+        md.append(f'| [{name}]({source_link}) | {len(rows)} | {example} |')
     (args.output / 'failures.md').write_text('\n'.join(md)+'\n',encoding='utf-8')
 
     areas = collections.defaultdict(lambda:dict(files=0, instrumented_files=0, executed_files=0, covered_lines=0, executable_lines=0))
@@ -128,7 +130,8 @@ def main():
         '| Source file | Covered / executable lines | Line coverage | Scope |', '| --- | ---: | ---: | --- |']
     for row in inventory:
         percent='n/a' if row['line_percent'] is None else str(row['line_percent'])+'%'
-        md.append(f"| [{row['file']}](../../{row['file']}) | {row['covered_lines']} / {row['executable_lines']} | {percent} | {row['scope']} |")
+        source_link = Path(os.path.relpath(ROOT / row['file'], args.output)).as_posix()
+        md.append(f"| [{row['file']}]({source_link}) | {row['covered_lines']} / {row['executable_lines']} | {percent} | {row['scope']} |")
     (args.output / 'source-inventory.md').write_text('\n'.join(md)+'\n',encoding='utf-8')
     print(json.dumps({k:summary[k] for k in ['source_files','totals','coverage','uncovered_methods','failing_test_families']},indent=2))
 

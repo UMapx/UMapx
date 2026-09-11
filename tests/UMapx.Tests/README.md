@@ -1,29 +1,14 @@
 # UMapx mathematical audit tests
 
-The audit covers every source area. The current source inventory contains 427 C#
-files after [helper consolidation](../../docs/helper-consolidation-2026-09-11.md).
-See the [B12 completion report](../../docs/b12-repair-2026-09-11.md)
-and [remaining repair blocks](../../docs/remaining-repair-blocks-2026-09-10.md).
-The [B11 completion report](../../docs/b11-repair-2026-09-11.md),
-[selected imaging repair report](../../docs/imaging-selected-repair-2026-09-11.md),
-[B07–B10 repair report](../../docs/b07-b10-repair-2026-09-11.md),
-[decomposition repair report](../../docs/decomposition-repair-2026-09-11.md),
-[approximation repair report](../../docs/approximation-repair-2026-09-11.md),
-[matrix and distribution repair report](../../docs/matrix-distribution-repair-2026-09-10.md),
-[arithmetic repair report](../../docs/arithmetic-repair-2026-09-10.md),
-[special-function repair report](../../docs/special-functions-repair-2026-09-10.md),
-and [expanded baseline report](../../docs/math-audit-expanded-2026-09-10.md) remain historical records.
-
-The current complete run contains **16,360 cases: all passed, none failed or
-skipped**. All 16,291 cases from the B11 snapshot remain: its five B12 failures
-now pass and no passing cases regressed. All 69 added video cases pass. Every
-registered block B01–B12 is closed. The complete command exits with status 0;
-all original expectations remain enabled.
+The audit covers every source area. The September 11, 2026 run included 427 C#
+source files and **16,360 test cases: all passed, none failed or skipped**.
+All registered audit failures were resolved without removing original test cases
+or weakening their expectations. The complete command exited with status 0.
 
 Execution coverage is **83.85% of lines** and **77.74% of branches**. These figures
 include contract tests. They are not a correctness percentage, and
-this suite does not establish absence of errors. The report explicitly lists
-unexecuted lines/methods, unsupported APIs, and incomplete parameter domains.
+this suite does not establish absence of errors. Generated reports list
+unexecuted lines and methods; tests record unsupported APIs and parameter domains.
 
 ## Run the complete audit
 
@@ -50,8 +35,8 @@ library only) and run:
 
 The script preserves the failing test exit code. It creates TRX, Cobertura and
 coverlet JSON results, then generates source inventory, failures, and a summary
-under the selected results directory. It does not overwrite the report snapshot
-in `docs/audit`. Both portable PDB settings are essential because the library's
+under the selected results directory in `artifacts/math-audit`. Both portable
+PDB settings are essential because the library's
 normal Release configuration disables debug symbols.
 
 Equivalent coverage command without Python:
@@ -71,7 +56,7 @@ Available categories: `Identity`, `Regression`, `Reference`, `Core`, `Matrix`,
 `Analysis`, `ColorSpace`, `Decomposition`, `Distance`, `Distribution`, `Window`,
 `WindowTransform`, `Transform`, `Wavelet`, `Response`, `Imaging`, `Geometry`,
 `Video`, and `Contract`. Category totals and test-family counts are available in
-[the run summary](../../docs/audit-b12/summary.json).
+the generated `summary/summary.json` under the selected results directory.
 
 A numeric-only filter for environments without Windows bitmap support is:
 
@@ -173,7 +158,7 @@ proof that an unimplemented numerical operation works.
 Complex sample statistics use squared magnitudes and Hermitian covariance.
 PowerNormal and PowerLognormal follow the NIST survival-power laws. Discrete
 median getters select the lower median; ChiSquare median uses CDF inversion.
-See the current repair report for compatibility details and numerical limits.
+The related tests record compatibility details and numerical limits.
 
 Local mean parameters are window lengths. Windows are clipped and renormalized;
 even lengths have one extra sample on the left. Weighted matrix means retain
@@ -227,17 +212,16 @@ as explicit Infinity/NaN expectations. Arithmetic fixtures omit the three singul
 reciprocal-atan inputs (0, +i, -i) and the two reciprocal-hyperbolic zero poles;
 zero conventions and real poles have separate tests. See the [mpmath documentation](https://mpmath.org/doc/1.3.0/).
 
-To refresh the checked-in report evidence after an intentional new audit, pass
-actual paths from that run:
+To regenerate reports from an existing audit, pass actual paths from that run:
 
 ```powershell
-python -X utf8 tools/summarize_audit.py --trx artifacts/math-audit/run/full-audit.trx --coverage artifacts/math-audit/run/RESULT-ID/coverage.cobertura.xml --output docs/audit
+python -X utf8 tools/summarize_audit.py --trx artifacts/math-audit/run/full-audit.trx --coverage artifacts/math-audit/run/RESULT-ID/coverage.cobertura.xml --output artifacts/math-audit/run/summary
 ```
 
-Replace `RESULT-ID` with the collector's directory name. Update the explanatory
-report and these counts together; generated evidence includes source and input
-hashes to expose stale snapshots. Do not treat a reduced set of failing tests as
-proof that every corresponding root cause has been fixed.
+Replace `RESULT-ID` with the collector's directory name. The output directory
+defaults to `artifacts/math-audit/run/summary`; generated reports are not committed
+to `docs`. Source and input hashes expose stale results. Do not treat a reduced
+set of failing tests as proof that every corresponding root cause has been fixed.
 
 The [B07–B10 reference generator](../../tools/generate_b07_b10_references.py)
 requires mpmath 1.3.0 and evaluates at 70 decimal digits. Run it from the repository
