@@ -14,11 +14,17 @@ namespace UMapx.Tests;
 public class GeometryAndRenderingAuditTests
 {
     [Theory] [InlineData(0,0,10,20,5,10,20,30)] [InlineData(-10,-10,7,8,3,4,10,10)] [InlineData(0,0,50000,50000,0,0,50000,50000)]
+    [InlineData(0,0,46340,46340,0,0,46340,46340)]
+    [InlineData(0,0,46341,46341,0,0,46341,46341)]
+    [InlineData(0,0,65536,32768,0,0,65536,32768)]
+    [InlineData(0,0,65536,65536,0,0,65536,65536)]
+    [InlineData(0,0,70000,70000,10000,10000,70000,70000)]
     public void RectangleOverlapUsesGeometricAreaWithoutIntegerOverflow(int ax,int ay,int aw,int ah,int bx,int by,int bw,int bh)
     {
         var a=new Rectangle(ax,ay,aw,ah);var b=new Rectangle(bx,by,bw,bh);
         double area=(double)Math.Max(0,Math.Min(a.Right,b.Right)-Math.Max(a.Left,b.Left))*Math.Max(0,Math.Min(a.Bottom,b.Bottom)-Math.Max(a.Top,b.Top));
         Close(area/((double)aw*ah+(double)bw*bh-area),a.IoU(b));
+        if(a==b)Assert.Equal(1f,a.IoU(b));
     }
     [Fact]
     public void RectangleAndPointTranslationsAndBoundingBoxesMatchCoordinates()
