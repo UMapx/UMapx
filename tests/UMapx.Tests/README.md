@@ -7,8 +7,8 @@ or weakening their expectations. The complete command exited with status 0.
 
 Execution coverage is **83.85% of lines** and **77.74% of branches**. These figures
 include contract tests. They are not a correctness percentage, and
-this suite does not establish absence of errors. Generated reports list
-unexecuted lines and methods; tests record unsupported APIs and parameter domains.
+this suite does not establish absence of errors. Coverage output records executed
+code; tests describe unsupported APIs and parameter domains.
 
 ## Run the complete audit
 
@@ -24,26 +24,15 @@ From the repository root:
 dotnet test UMapx.sln -c Release -p:GeneratePackageOnBuild=false
 ```
 
-For coverage and a compact evidence export, also install Python 3 (standard
-library only) and run:
-
-```powershell
-./tools/Run-MathAudit.ps1
-# After restoring dependencies:
-./tools/Run-MathAudit.ps1 -NoRestore -ResultsDirectory artifacts/math-audit/run-two
-```
-
-The script preserves the failing test exit code. It creates TRX, Cobertura and
-coverlet JSON results, then generates source inventory, failures, and a summary
-under the selected results directory in `artifacts/math-audit`. Both portable
-PDB settings are essential because the library's
-normal Release configuration disables debug symbols.
-
-Equivalent coverage command without Python:
+For coverage and a TRX results file:
 
 ```powershell
 dotnet test UMapx.sln -c Release -p:GeneratePackageOnBuild=false -p:DebugType=portable -p:DebugSymbols=true --collect "XPlat Code Coverage" --settings tests/UMapx.Tests/coverage.runsettings --logger "trx;LogFileName=full-audit.trx" --results-directory artifacts/math-audit/run
 ```
+
+Both portable PDB settings are essential because the library's normal Release
+configuration disables debug symbols. Results are written to the selected
+directory under `artifacts/math-audit`.
 
 For a particular mathematical area or counterexample:
 
@@ -55,8 +44,7 @@ dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filte
 Available categories: `Identity`, `Regression`, `Reference`, `Core`, `Matrix`,
 `Analysis`, `ColorSpace`, `Decomposition`, `Distance`, `Distribution`, `Window`,
 `WindowTransform`, `Transform`, `Wavelet`, `Response`, `Imaging`, `Geometry`,
-`Video`, and `Contract`. Category totals and test-family counts are available in
-the generated `summary/summary.json` under the selected results directory.
+`Video`, and `Contract`.
 
 A numeric-only filter for environments without Windows bitmap support is:
 
@@ -201,6 +189,7 @@ python -X utf8 tests/UMapx.Tests/Data/generate_special_repair_reference.py
 python -X utf8 tests/UMapx.Tests/Data/generate_arithmetic_reference.py
 python -X utf8 tests/UMapx.Tests/Data/generate_distributions.py
 python -X utf8 tests/UMapx.Tests/Data/generate_distribution_repair_reference.py
+python -X utf8 tests/UMapx.Tests/Data/generate_b07_b10_references.py
 ```
 
 The generators retain their explicit domains and exclusion rules. Original special-function
@@ -212,18 +201,7 @@ as explicit Infinity/NaN expectations. Arithmetic fixtures omit the three singul
 reciprocal-atan inputs (0, +i, -i) and the two reciprocal-hyperbolic zero poles;
 zero conventions and real poles have separate tests. See the [mpmath documentation](https://mpmath.org/doc/1.3.0/).
 
-To regenerate reports from an existing audit, pass actual paths from that run:
-
-```powershell
-python -X utf8 tools/summarize_audit.py --trx artifacts/math-audit/run/full-audit.trx --coverage artifacts/math-audit/run/RESULT-ID/coverage.cobertura.xml --output artifacts/math-audit/run/summary
-```
-
-Replace `RESULT-ID` with the collector's directory name. The output directory
-defaults to `artifacts/math-audit/run/summary`; generated reports are not committed
-to `docs`. Source and input hashes expose stale results. Do not treat a reduced
-set of failing tests as proof that every corresponding root cause has been fixed.
-
-The [B07–B10 reference generator](../../tools/generate_b07_b10_references.py)
+The [B07–B10 reference generator](Data/generate_b07_b10_references.py)
 requires mpmath 1.3.0 and evaluates at 70 decimal digits. Run it from the repository
 root with mpmath on Python's import path. It generates the committed
 `Data/b07-b10-repair.json`: 38 Meyer values from independent spectral quadrature
