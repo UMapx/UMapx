@@ -4,10 +4,10 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides symmetric and Hermitian Lanczos reductions with orthogonal restarts.</summary>
+    /// <summary>Provides symmetric and Hermitian Lanczos reductions with orthogonal restarts</summary>
     public static class Lanczos
     {
-        /// <summary>Computes a symmetric Lanczos tridiagonalization.</summary>
+        /// <summary>Computes a symmetric Lanczos tridiagonalization</summary>
         /// <param name="matrix">Finite nonempty symmetric square matrix.</param>
         /// <param name="full">Whether to perform a second full reorthogonalization pass.</param>
         /// <returns>Q and tridiagonal T satisfying A = Q T Q^T.</returns>
@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
             return (MatrixMath.Real(d.Q), MatrixMath.Real(d.H));
         }
 
-        /// <summary>Computes a Hermitian Lanczos tridiagonalization.</summary>
+        /// <summary>Computes a Hermitian Lanczos tridiagonalization</summary>
         /// <param name="matrix">Finite nonempty Hermitian square matrix.</param>
         /// <param name="full">Whether to perform a second full reorthogonalization pass.</param>
         /// <returns>Q and tridiagonal T satisfying A = Q T Q^H.</returns>

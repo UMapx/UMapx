@@ -4,10 +4,10 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides LU decomposition with partial row pivoting.</summary>
+    /// <summary>Provides LU decomposition with partial row pivoting</summary>
     public static class LU
     {
-        /// <summary>Computes A[P,:] = L U with partial row pivoting.</summary>
+        /// <summary>Computes A[P,:] = L U with partial row pivoting</summary>
         /// <param name="matrix">Finite nonempty square matrix, not modified.</param>
         /// <returns>Unit lower triangular L, upper triangular U, and the row permutation P.</returns>
         public static (float[,] L, float[,] U, int[] P) Decompose(float[,] matrix)
@@ -16,7 +16,7 @@ namespace UMapx.Decomposition
             return (MatrixMath.Real(d.L), MatrixMath.Real(d.U), d.P);
         }
 
-        /// <summary>Computes A[P,:] = L U with complex partial row pivoting.</summary>
+        /// <summary>Computes A[P,:] = L U with complex partial row pivoting</summary>
         /// <param name="matrix">Finite nonempty square matrix, not modified.</param>
         /// <returns>Unit lower triangular L, upper triangular U, and the row permutation P.</returns>
         public static (Complex32[,] L, Complex32[,] U, int[] P) Decompose(Complex32[,] matrix)
@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
             return (MatrixMath.Single(d.L), MatrixMath.Single(d.U), d.P);
         }
 
-        /// <summary>Builds the row permutation matrix from a pivot vector.</summary>
+        /// <summary>Builds the row permutation matrix from a pivot vector</summary>
         /// <param name="permutation">A permutation of indices zero through n-1.</param>
         /// <returns>P such that P*A selects rows A[permutation[i],:].</returns>
         public static float[,] PermutationMatrix(int[] permutation)
@@ -43,7 +43,7 @@ namespace UMapx.Decomposition
             return p;
         }
 
-        /// <summary>Performs Gaussian elimination with magnitude-based row pivoting.</summary>
+        /// <summary>Performs Gaussian elimination with magnitude-based row pivoting</summary>
         /// <param name="a">Private square buffer overwritten by U.</param>
         /// <returns>L, U and row indices, including valid factors of singular matrices.</returns>
         internal static (C[,] L, C[,] U, int[] P) Factor(C[,] a)

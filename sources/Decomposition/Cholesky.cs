@@ -4,30 +4,30 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides Cholesky factorization for symmetric and Hermitian positive definite matrices.</summary>
+    /// <summary>Provides Cholesky factorization for symmetric and Hermitian positive definite matrices</summary>
     public static class Cholesky
     {
-        /// <summary>Computes the lower triangular factor in A = L L^T.</summary>
+        /// <summary>Computes the lower triangular factor in A = L L^T</summary>
         /// <param name="matrix">Finite nonempty symmetric positive definite matrix.</param>
         /// <returns>L with a strictly positive diagonal.</returns>
         public static float[,] Decompose(float[,] matrix) => MatrixMath.Real(Factor(MatrixMath.Copy(matrix, true)));
 
-        /// <summary>Computes the lower triangular factor in A = L L^H.</summary>
+        /// <summary>Computes the lower triangular factor in A = L L^H</summary>
         /// <param name="matrix">Finite nonempty Hermitian positive definite matrix.</param>
         /// <returns>L with a strictly positive real diagonal.</returns>
         public static Complex32[,] Decompose(Complex32[,] matrix) => MatrixMath.Single(Factor(MatrixMath.Copy(matrix, true)));
 
-        /// <summary>Constructs the upper factor from a previously computed lower factor.</summary>
+        /// <summary>Constructs the upper factor from a previously computed lower factor</summary>
         /// <param name="lower">Square lower Cholesky factor.</param>
         /// <returns>L^T.</returns>
         public static float[,] UpperFactor(float[,] lower) => MatrixMath.Real(MatrixMath.Adjoint(MatrixMath.Copy(lower, true)));
 
-        /// <summary>Constructs the upper factor from a previously computed complex lower factor.</summary>
+        /// <summary>Constructs the upper factor from a previously computed complex lower factor</summary>
         /// <param name="lower">Square lower Cholesky factor.</param>
         /// <returns>L^H.</returns>
         public static Complex32[,] UpperFactor(Complex32[,] lower) => MatrixMath.Single(MatrixMath.Adjoint(MatrixMath.Copy(lower, true)));
 
-        /// <summary>Computes Cholesky factors with Hermitian inner products in double precision.</summary>
+        /// <summary>Computes Cholesky factors with Hermitian inner products in double precision</summary>
         /// <param name="a">Private Hermitian square input.</param>
         /// <returns>A lower triangular factor; nonpositive pivots cause an exception.</returns>
         internal static C[,] Factor(C[,] a)

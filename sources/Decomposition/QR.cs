@@ -4,10 +4,10 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides Householder QR factorization and access to its reflection vectors.</summary>
+    /// <summary>Provides Householder QR factorization and access to its reflection vectors</summary>
     public static class QR
     {
-        /// <summary>Computes A = Q R using an economy-size orthogonal factor.</summary>
+        /// <summary>Computes A = Q R using an economy-size orthogonal factor</summary>
         /// <param name="matrix">Finite nonempty m by n matrix; not modified.</param>
         /// <returns>Q of size m by min(m,n) and R of size min(m,n) by n.</returns>
         public static (float[,] Q, float[,] R) Decompose(float[,] matrix)
@@ -18,7 +18,7 @@ namespace UMapx.Decomposition
                     MatrixMath.Real(MatrixMath.Block(d.R, k, matrix.GetLength(1))));
         }
 
-        /// <summary>Computes A = Q R with Q^H Q = I using complex Householder reflections.</summary>
+        /// <summary>Computes A = Q R with Q^H Q = I using complex Householder reflections</summary>
         /// <param name="matrix">Finite nonempty m by n matrix; not modified.</param>
         /// <returns>Q of size m by min(m,n) and R of size min(m,n) by n.</returns>
         public static (Complex32[,] Q, Complex32[,] R) Decompose(Complex32[,] matrix)
@@ -29,17 +29,17 @@ namespace UMapx.Decomposition
                     MatrixMath.Single(MatrixMath.Block(d.R, k, matrix.GetLength(1))));
         }
 
-        /// <summary>Computes normalized reflection vectors without constructing Q.</summary>
+        /// <summary>Computes normalized reflection vectors without constructing Q</summary>
         /// <param name="matrix">Finite input matrix; a separate reduction is performed.</param>
         /// <returns>An m by min(m,n) matrix of vectors v defining H = I - 2 v v^T; zero columns denote identity.</returns>
         public static float[,] HouseholderVectors(float[,] matrix) => MatrixMath.Real(Factor(MatrixMath.Copy(matrix), false).H);
 
-        /// <summary>Computes normalized complex reflection vectors without constructing Q.</summary>
+        /// <summary>Computes normalized complex reflection vectors without constructing Q</summary>
         /// <param name="matrix">Finite input matrix; a separate reduction is performed.</param>
         /// <returns>An m by min(m,n) matrix of vectors v defining H = I - 2 v v^H; zero columns denote identity.</returns>
         public static Complex32[,] HouseholderVectors(Complex32[,] matrix) => MatrixMath.Single(Factor(MatrixMath.Copy(matrix), false).H);
 
-        /// <summary>Reduces a private work matrix to upper trapezoidal form.</summary>
+        /// <summary>Reduces a private work matrix to upper trapezoidal form</summary>
         /// <param name="a">Work buffer overwritten by R.</param>
         /// <param name="vectors">Whether to construct Q from the reflection vectors.</param>
         /// <param name="full">Whether Q should be square instead of economy size.</param>

@@ -4,10 +4,10 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides real and complex Arnoldi reduction.</summary>
+    /// <summary>Provides real and complex Arnoldi reduction</summary>
     public static class Arnoldi
     {
-        /// <summary>Computes a full Arnoldi reduction A = Q H Q^T.</summary>
+        /// <summary>Computes a full Arnoldi reduction A = Q H Q^T</summary>
         /// <param name="matrix">Finite nonempty square input, not modified.</param>
         /// <returns>An orthonormal basis Q and upper Hessenberg H; invariant-subspace breakdown starts a new orthogonal block.</returns>
         public static (float[,] Q, float[,] H) Decompose(float[,] matrix)
@@ -16,7 +16,7 @@ namespace UMapx.Decomposition
             return (MatrixMath.Real(d.Q), MatrixMath.Real(d.H));
         }
 
-        /// <summary>Computes a full Arnoldi reduction A = Q H Q^H.</summary>
+        /// <summary>Computes a full Arnoldi reduction A = Q H Q^H</summary>
         /// <param name="matrix">Finite nonempty square input, not modified.</param>
         /// <returns>An orthonormal basis Q and upper Hessenberg H; invariant-subspace breakdown starts a new orthogonal block.</returns>
         public static (Complex32[,] Q, Complex32[,] H) Decompose(Complex32[,] matrix)
@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
             return (MatrixMath.Single(d.Q), MatrixMath.Single(d.H));
         }
 
-        /// <summary>Builds a complete Krylov basis with deterministic orthogonal restarts.</summary>
+        /// <summary>Builds a complete Krylov basis with deterministic orthogonal restarts</summary>
         /// <param name="a">Private square work matrix.</param>
         /// <param name="full">Whether to use a second reorthogonalization pass.</param>
         /// <returns>Q and H satisfying A Q = Q H to working precision.</returns>

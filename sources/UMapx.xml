@@ -13410,80 +13410,80 @@
             <param name="type">Type</param>
         </member>
         <member name="T:UMapx.Decomposition.Arnoldi">
-            <summary>Provides real and complex Arnoldi reduction.</summary>
+            <summary>Provides real and complex Arnoldi reduction</summary>
         </member>
         <member name="M:UMapx.Decomposition.Arnoldi.Decompose(System.Single[0:,0:])">
-            <summary>Computes a full Arnoldi reduction A = Q H Q^T.</summary>
+            <summary>Computes a full Arnoldi reduction A = Q H Q^T</summary>
             <param name="matrix">Finite nonempty square input, not modified.</param>
             <returns>An orthonormal basis Q and upper Hessenberg H; invariant-subspace breakdown starts a new orthogonal block.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Arnoldi.Decompose(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes a full Arnoldi reduction A = Q H Q^H.</summary>
+            <summary>Computes a full Arnoldi reduction A = Q H Q^H</summary>
             <param name="matrix">Finite nonempty square input, not modified.</param>
             <returns>An orthonormal basis Q and upper Hessenberg H; invariant-subspace breakdown starts a new orthogonal block.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Arnoldi.Factor(System.Numerics.Complex[0:,0:],System.Boolean)">
-            <summary>Builds a complete Krylov basis with deterministic orthogonal restarts.</summary>
+            <summary>Builds a complete Krylov basis with deterministic orthogonal restarts</summary>
             <param name="a">Private square work matrix.</param>
             <param name="full">Whether to use a second reorthogonalization pass.</param>
             <returns>Q and H satisfying A Q = Q H to working precision.</returns>
         </member>
         <member name="T:UMapx.Decomposition.Bidiagonal">
-            <summary>Provides real and complex bidiagonal reduction.</summary>
+            <summary>Provides real and complex bidiagonal reduction</summary>
         </member>
         <member name="M:UMapx.Decomposition.Bidiagonal.Decompose(System.Single[0:,0:])">
-            <summary>Computes A = U B V^T by two-sided Householder reduction.</summary>
+            <summary>Computes A = U B V^T by two-sided Householder reduction</summary>
             <param name="matrix">Finite nonempty rectangular matrix.</param>
             <returns>Full square U and V and upper bidiagonal B with the same dimensions as the input.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Bidiagonal.Decompose(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes A = U B V^H by two-sided Householder reduction.</summary>
+            <summary>Computes A = U B V^H by two-sided Householder reduction</summary>
             <param name="matrix">Finite nonempty rectangular matrix.</param>
             <returns>Full square U and V and upper bidiagonal B with the same dimensions as the input.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Bidiagonal.Factor(System.Numerics.Complex[0:,0:])">
-            <summary>Alternates left and right reflections to obtain upper bidiagonal form.</summary>
+            <summary>Alternates left and right reflections to obtain upper bidiagonal form</summary>
             <param name="a">Private rectangular input buffer, overwritten by B.</param>
             <returns>Accumulated unitary factors and the bidiagonal buffer.</returns>
         </member>
         <member name="T:UMapx.Decomposition.Cholesky">
-            <summary>Provides Cholesky factorization for symmetric and Hermitian positive definite matrices.</summary>
+            <summary>Provides Cholesky factorization for symmetric and Hermitian positive definite matrices</summary>
         </member>
         <member name="M:UMapx.Decomposition.Cholesky.Decompose(System.Single[0:,0:])">
-            <summary>Computes the lower triangular factor in A = L L^T.</summary>
+            <summary>Computes the lower triangular factor in A = L L^T</summary>
             <param name="matrix">Finite nonempty symmetric positive definite matrix.</param>
             <returns>L with a strictly positive diagonal.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Cholesky.Decompose(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes the lower triangular factor in A = L L^H.</summary>
+            <summary>Computes the lower triangular factor in A = L L^H</summary>
             <param name="matrix">Finite nonempty Hermitian positive definite matrix.</param>
             <returns>L with a strictly positive real diagonal.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Cholesky.UpperFactor(System.Single[0:,0:])">
-            <summary>Constructs the upper factor from a previously computed lower factor.</summary>
+            <summary>Constructs the upper factor from a previously computed lower factor</summary>
             <param name="lower">Square lower Cholesky factor.</param>
             <returns>L^T.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Cholesky.UpperFactor(UMapx.Core.Complex32[0:,0:])">
-            <summary>Constructs the upper factor from a previously computed complex lower factor.</summary>
+            <summary>Constructs the upper factor from a previously computed complex lower factor</summary>
             <param name="lower">Square lower Cholesky factor.</param>
             <returns>L^H.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Cholesky.Factor(System.Numerics.Complex[0:,0:])">
-            <summary>Computes Cholesky factors with Hermitian inner products in double precision.</summary>
+            <summary>Computes Cholesky factors with Hermitian inner products in double precision</summary>
             <param name="a">Private Hermitian square input.</param>
             <returns>A lower triangular factor; nonpositive pivots cause an exception.</returns>
         </member>
         <member name="T:UMapx.Decomposition.Diagonal">
-            <summary>Provides diagonal extraction factorization.</summary>
+            <summary>Provides diagonal extraction factorization</summary>
         </member>
         <member name="M:UMapx.Decomposition.Diagonal.Decompose(System.Single[0:,0:])">
-            <summary>Computes A = B diag(D) by extracting and dividing by the diagonal.</summary>
+            <summary>Computes A = B diag(D) by extracting and dividing by the diagonal</summary>
             <param name="matrix">Finite nonempty square matrix with nonzero diagonal entries.</param>
             <returns>A column-normalized B and the original diagonal D.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Diagonal.Decompose(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes A = B diag(D) by extracting and dividing by the diagonal.</summary>
+            <summary>Computes A = B diag(D) by extracting and dividing by the diagonal</summary>
             <param name="matrix">Finite nonempty square matrix with nonzero diagonal entries.</param>
             <returns>A column-normalized B and the original diagonal D.</returns>
         </member>
@@ -13503,39 +13503,39 @@
             </remarks>
         </member>
         <member name="M:UMapx.Decomposition.EVD.Decompose(System.Single[0:,0:],System.Single)">
-            <summary>Computes the real EVD decomposition without modifying the inputs.</summary>
+            <summary>Computes the real EVD decomposition without modifying the inputs</summary>
             <param name="matrix">Finite nonempty input matrix.</param>
             <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
             <returns>The primary factors (V, D).</returns>
         </member>
         <member name="M:UMapx.Decomposition.EVD.Decompose(UMapx.Core.Complex32[0:,0:],System.Single)">
-            <summary>Computes right eigenvectors and eigenvalues of a complex square matrix.</summary>
+            <summary>Computes right eigenvectors and eigenvalues of a complex square matrix</summary>
             <param name="matrix">Finite nonempty square matrix, not modified.</param>
             <param name="eps">Relative Schur deflation tolerance, with a double-roundoff floor.</param>
             <returns>V and D satisfying A V = V diag(D). Hermitian inputs have unitary V and real D. Defective inputs need not have independent eigenvectors.</returns>
         </member>
         <member name="M:UMapx.Decomposition.EVD.EigenvalueMatrix(UMapx.Core.Complex32[])">
-            <summary>Builds the complex diagonal eigenvalue matrix from existing eigenvalues.</summary>
+            <summary>Builds the complex diagonal eigenvalue matrix from existing eigenvalues</summary>
             <param name="values">Eigenvalues in the order of the eigenvector columns.</param>
             <returns>diag(values), without repeating the eigenvalue calculation.</returns>
         </member>
         <member name="M:UMapx.Decomposition.EVD.RealEigenvalueMatrix(UMapx.Core.Complex32[])">
-            <summary>Builds the real block eigenvalue matrix used with real eigenvector storage.</summary>
+            <summary>Builds the real block eigenvalue matrix used with real eigenvector storage</summary>
             <param name="values">Real eigenvalues or adjacent conjugate pairs, positive imaginary part first.</param>
             <returns>One-dimensional real blocks and two-dimensional blocks [a,b;-b,a].</returns>
         </member>
         <member name="M:UMapx.Decomposition.EVD.HessenbergForm(System.Single[0:,0:])">
-            <summary>Computes the Hessenberg form separately when intermediate reduction data are required.</summary>
+            <summary>Computes the Hessenberg form separately when intermediate reduction data are required</summary>
             <param name="matrix">Finite nonempty real square matrix.</param>
             <returns>The Hessenberg matrix of an independent reduction.</returns>
         </member>
         <member name="M:UMapx.Decomposition.EVD.HessenbergForm(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes the complex Hessenberg form separately from eigenvector calculation.</summary>
+            <summary>Computes the complex Hessenberg form separately from eigenvector calculation</summary>
             <param name="matrix">Finite nonempty complex square matrix.</param>
             <returns>The Hessenberg matrix of an independent reduction.</returns>
         </member>
         <member name="M:UMapx.Decomposition.EVD.TriangularVectors(System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Numerics.Complex[],System.Double[])">
-            <summary>Back-substitutes homogeneous eigenvectors of an upper triangular matrix pencil.</summary>
+            <summary>Back-substitutes homogeneous eigenvectors of an upper triangular matrix pencil</summary>
             <param name="s">First upper triangular factor.</param>
             <param name="t">Second upper triangular factor.</param>
             <param name="z">Right unitary transformation to original coordinates.</param>
@@ -13544,7 +13544,7 @@
             <returns>Right eigenvectors normalized to maximum component magnitude one; repeated roots may yield dependent columns.</returns>
         </member>
         <member name="T:UMapx.Decomposition.EVD.RealWorkspace">
-            <summary>Owns the real algorithm work buffers for one call only.</summary>
+            <summary>Owns the real algorithm work buffers for one call only</summary>
         </member>
         <member name="M:UMapx.Decomposition.EVD.RealWorkspace.#ctor(System.Single[0:,0:],System.Single)">
             <summary>
@@ -13618,50 +13618,50 @@
             </remarks>
         </member>
         <member name="M:UMapx.Decomposition.GEVD.Decompose(System.Single[0:,0:],System.Single[0:,0:],System.Single)">
-            <summary>Computes the real GEVD decomposition without modifying the inputs.</summary>
+            <summary>Computes the real GEVD decomposition without modifying the inputs</summary>
             <param name="a">Finite nonempty input matrix.</param>
             <param name="b">Finite nonempty input matrix.</param>
             <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
             <returns>The primary factors (V, Alpha, Beta).</returns>
         </member>
         <member name="M:UMapx.Decomposition.GEVD.Decompose(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Single)">
-            <summary>Computes complex generalized right eigenvectors and homogeneous eigenvalues.</summary>
+            <summary>Computes complex generalized right eigenvectors and homogeneous eigenvalues</summary>
             <param name="a">Finite nonempty square first matrix.</param>
             <param name="b">Finite square second matrix of the same order; it may be singular.</param>
             <param name="eps">Relative QZ deflation tolerance with a roundoff floor.</param>
             <returns>V, Alpha and real nonnegative Beta satisfying beta[j]*A*v[j] = alpha[j]*B*v[j].</returns>
         </member>
         <member name="M:UMapx.Decomposition.GEVD.Eigenvalues(UMapx.Core.Complex32[],System.Single[])">
-            <summary>Forms eigenvalue quotients from an existing homogeneous spectrum.</summary>
+            <summary>Forms eigenvalue quotients from an existing homogeneous spectrum</summary>
             <param name="alpha">Complex numerators.</param>
             <param name="beta">Real denominators of the same length.</param>
             <returns>Alpha/Beta; nonzero/zero maps to positive infinity, and zero/zero to complex NaN.</returns>
             <remarks>The quotient may overflow even when both homogeneous components remain representable.</remarks>
         </member>
         <member name="M:UMapx.Decomposition.GEVD.RealEigenvalueMatrix(UMapx.Core.Complex32[],System.Single[])">
-            <summary>Builds the real block eigenvalue matrix for real generalized eigenvector storage.</summary>
+            <summary>Builds the real block eigenvalue matrix for real generalized eigenvector storage</summary>
             <param name="alpha">Numerators ordered in real blocks or adjacent conjugate pairs.</param>
             <param name="beta">Real denominators in the same order.</param>
             <returns>The real block matrix D in A V = B V D for finite eigenvalues.</returns>
         </member>
         <member name="M:UMapx.Decomposition.GEVD.EigenvalueMatrix(UMapx.Core.Complex32[],System.Single[])">
-            <summary>Builds a complex diagonal matrix of generalized eigenvalue quotients.</summary>
+            <summary>Builds a complex diagonal matrix of generalized eigenvalue quotients</summary>
             <param name="alpha">Numerators.</param>
             <param name="beta">Denominators in the same order.</param>
             <returns>diag(Alpha/Beta), without another decomposition.</returns>
         </member>
         <member name="M:UMapx.Decomposition.GEVD.IsSingular(System.Single[])">
-            <summary>Detects zero denominators in a homogeneous generalized spectrum.</summary>
+            <summary>Detects zero denominators in a homogeneous generalized spectrum</summary>
             <param name="beta">Existing denominator vector.</param>
             <returns>True for any infinite or indeterminate eigenvalue pair; this does not test whether A itself is singular.</returns>
         </member>
         <member name="M:UMapx.Decomposition.GEVD.ValidateSpectrum(UMapx.Core.Complex32[],System.Single[])">
-            <summary>Checks compatible homogeneous spectrum lengths.</summary>
+            <summary>Checks compatible homogeneous spectrum lengths</summary>
             <param name="alpha">Numerator vector.</param>
             <param name="beta">Denominator vector.</param>
         </member>
         <member name="M:UMapx.Decomposition.GEVD.ReduceRealPencil(System.Single[][],System.Single[][],System.Single,System.Single[][],System.Int32@)">
-            <summary>Exposes the existing real QZ kernel to the static QZ entry point.</summary>
+            <summary>Exposes the existing real QZ kernel to the static QZ entry point</summary>
             <param name="a">First matrix overwritten by its quasi-triangular form.</param>
             <param name="b">Second matrix overwritten by its triangular form.</param>
             <param name="eps">Relative convergence tolerance.</param>
@@ -13669,7 +13669,7 @@
             <param name="error">Zero on success, otherwise an unconverged index.</param>
         </member>
         <member name="T:UMapx.Decomposition.GEVD.RealWorkspace">
-            <summary>Owns the real algorithm work buffers for one call only.</summary>
+            <summary>Owns the real algorithm work buffers for one call only</summary>
         </member>
         <member name="M:UMapx.Decomposition.GEVD.RealWorkspace.#ctor(System.Single[0:,0:],System.Single[0:,0:],System.Single)">
             <summary>
@@ -13833,294 +13833,294 @@
             <returns>|a| with the sign of b</returns>
         </member>
         <member name="T:UMapx.Decomposition.GramSchmidt">
-            <summary>Provides modified Gram-Schmidt orthogonalization.</summary>
+            <summary>Provides modified Gram-Schmidt orthogonalization</summary>
         </member>
         <member name="M:UMapx.Decomposition.GramSchmidt.Decompose(System.Single[0:,0:])">
-            <summary>Computes an economy QR factorization using reorthogonalized modified Gram-Schmidt.</summary>
+            <summary>Computes an economy QR factorization using reorthogonalized modified Gram-Schmidt</summary>
             <param name="matrix">Finite nonempty matrix with at least as many rows as columns.</param>
             <returns>Orthonormal columns Q and upper triangular R, including basis completion for dependent columns.</returns>
         </member>
         <member name="M:UMapx.Decomposition.GramSchmidt.Decompose(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes an economy QR factorization using reorthogonalized modified Gram-Schmidt.</summary>
+            <summary>Computes an economy QR factorization using reorthogonalized modified Gram-Schmidt</summary>
             <param name="matrix">Finite nonempty matrix with at least as many rows as columns.</param>
             <returns>Orthonormal columns Q and upper triangular R, including basis completion for dependent columns.</returns>
         </member>
         <member name="M:UMapx.Decomposition.GramSchmidt.Factor(System.Numerics.Complex[0:,0:])">
-            <summary>Orthogonalizes columns twice and completes the basis at numerical breakdown.</summary>
+            <summary>Orthogonalizes columns twice and completes the basis at numerical breakdown</summary>
             <param name="a">Private tall or square matrix.</param>
             <returns>An economy orthonormal basis and its upper triangular coefficients.</returns>
         </member>
         <member name="T:UMapx.Decomposition.GSVD">
-            <summary>Provides generalized singular value decomposition for tall matrix pairs.</summary>
+            <summary>Provides generalized singular value decomposition for tall matrix pairs</summary>
         </member>
         <member name="M:UMapx.Decomposition.GSVD.Decompose(System.Single[0:,0:],System.Single[0:,0:],System.Int32)">
-            <summary>Computes A = U1 diag(S1) X and B = U2 diag(S2) X.</summary>
+            <summary>Computes A = U1 diag(S1) X and B = U2 diag(S2) X</summary>
             <param name="a">Finite m by n matrix with m >= n.</param>
             <param name="b">Finite p by n matrix with p >= n. The stacked pair must have full column rank.</param>
             <param name="iterations">Positive maximum Jacobi SVD sweeps.</param>
             <returns>Orthonormal U1 and U2, nonnegative S1 and S2 with S1^2+S2^2=1, and invertible X.</returns>
         </member>
         <member name="M:UMapx.Decomposition.GSVD.Decompose(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Int32)">
-            <summary>Computes A = U1 diag(S1) X and B = U2 diag(S2) X.</summary>
+            <summary>Computes A = U1 diag(S1) X and B = U2 diag(S2) X</summary>
             <param name="a">Finite m by n matrix with m >= n.</param>
             <param name="b">Finite p by n matrix with p >= n. The stacked pair must have full column rank.</param>
             <param name="iterations">Positive maximum Jacobi SVD sweeps.</param>
             <returns>Orthonormal U1 and U2, nonnegative S1 and S2 with S1^2+S2^2=1, and invertible X.</returns>
         </member>
         <member name="M:UMapx.Decomposition.GSVD.GeneralizedSingularValues(System.Single[],System.Single[])">
-            <summary>Computes generalized singular values from existing diagonal factors.</summary>
+            <summary>Computes generalized singular values from existing diagonal factors</summary>
             <param name="s1">Nonnegative first diagonal.</param>
             <param name="s2">Nonnegative second diagonal of the same length.</param>
             <returns>S1/S2, with positive infinity for positive/zero and NaN for zero/zero.</returns>
         </member>
         <member name="M:UMapx.Decomposition.GSVD.Identity(System.Single[],System.Single[])">
-            <summary>Evaluates the GSVD diagonal normalization identity.</summary>
+            <summary>Evaluates the GSVD diagonal normalization identity</summary>
             <param name="s1">First diagonal.</param>
             <param name="s2">Second diagonal of the same length.</param>
             <returns>The entries S1[i]^2 + S2[i]^2.</returns>
         </member>
         <member name="M:UMapx.Decomposition.GSVD.Validate(System.Single[],System.Single[])">
-            <summary>Validates the two real GSVD diagonal factors.</summary>
+            <summary>Validates the two real GSVD diagonal factors</summary>
             <param name="s1">First nonnegative diagonal.</param>
             <param name="s2">Second nonnegative diagonal.</param>
         </member>
         <member name="M:UMapx.Decomposition.GSVD.Factor(System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Int32)">
-            <summary>Combines stacked QR with an SVD of the upper orthonormal block.</summary>
+            <summary>Combines stacked QR with an SVD of the upper orthonormal block</summary>
             <param name="a">Private tall first matrix.</param>
             <param name="b">Private tall second matrix with the same column count.</param>
             <param name="iterations">Jacobi sweep limit.</param>
             <returns>Economy GSVD factors, with completed orthonormal columns for zero sine values.</returns>
         </member>
         <member name="T:UMapx.Decomposition.Hessenberg">
-            <summary>Provides orthogonal and unitary Hessenberg reductions.</summary>
+            <summary>Provides orthogonal and unitary Hessenberg reductions</summary>
         </member>
         <member name="M:UMapx.Decomposition.Hessenberg.Decompose(System.Single[0:,0:])">
-            <summary>Computes A = P H P^T.</summary>
+            <summary>Computes A = P H P^T</summary>
             <param name="matrix">Finite nonempty square matrix, not modified.</param>
             <returns>Orthogonal P and upper Hessenberg H.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Hessenberg.Decompose(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes A = P H P^H.</summary>
+            <summary>Computes A = P H P^H</summary>
             <param name="matrix">Finite nonempty complex square matrix, not modified.</param>
             <returns>Unitary P and upper Hessenberg H.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Hessenberg.Factor(System.Numerics.Complex[0:,0:])">
-            <summary>Applies two-sided Householder similarities in double precision.</summary>
+            <summary>Applies two-sided Householder similarities in double precision</summary>
             <param name="a">Private square work buffer, overwritten by Hessenberg form.</param>
             <returns>The full unitary accumulator and reduced buffer.</returns>
         </member>
         <member name="T:UMapx.Decomposition.Householder">
-            <summary>Provides Householder reflections and symmetric or Hermitian tridiagonal reduction.</summary>
+            <summary>Provides Householder reflections and symmetric or Hermitian tridiagonal reduction</summary>
         </member>
         <member name="M:UMapx.Decomposition.Householder.Decompose(System.Single[0:,0:])">
-            <summary>Reduces a symmetric matrix as A = H T H^T.</summary>
+            <summary>Reduces a symmetric matrix as A = H T H^T</summary>
             <param name="matrix">Finite nonempty symmetric square matrix.</param>
             <returns>Orthogonal H and symmetric tridiagonal T.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Householder.Decompose(UMapx.Core.Complex32[0:,0:])">
-            <summary>Reduces a Hermitian matrix as A = H T H^H.</summary>
+            <summary>Reduces a Hermitian matrix as A = H T H^H</summary>
             <param name="matrix">Finite nonempty Hermitian square matrix.</param>
             <returns>Unitary H and Hermitian tridiagonal T.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Householder.Reflection(System.Single[])">
-            <summary>Constructs a reflection that maps a vector onto its first coordinate.</summary>
+            <summary>Constructs a reflection that maps a vector onto its first coordinate</summary>
             <param name="vector">Finite nonempty vector to reduce.</param>
             <returns>The orthogonal reflection, or identity for a zero vector.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Householder.Reflection(UMapx.Core.Complex32[])">
-            <summary>Constructs a reflection mapping x to -phase(x[0])*norm(x) times the first coordinate vector.</summary>
+            <summary>Constructs a reflection mapping x to -phase(x[0])*norm(x) times the first coordinate vector</summary>
             <param name="vector">Finite nonempty complex vector to reduce; phase(0) is defined as one.</param>
             <returns>The Hermitian unitary reflection, or identity for a zero vector.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Householder.Reflect(System.Numerics.Complex[0:,0:])">
-            <summary>Forms the reflection that annihilates the tail of a column vector.</summary>
+            <summary>Forms the reflection that annihilates the tail of a column vector</summary>
             <param name="a">Validated single-column work matrix.</param>
             <returns>The reflection, with a zero vector interpreted as identity.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Householder.Tridiagonalize(System.Numerics.Complex[0:,0:])">
-            <summary>Checks Hermitian structure and removes roundoff outside the tridiagonal band.</summary>
+            <summary>Checks Hermitian structure and removes roundoff outside the tridiagonal band</summary>
             <param name="a">Private square input buffer.</param>
             <returns>The similarity transformation and tridiagonal matrix.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Householder.Vector(System.Numerics.Complex[])">
-            <summary>Builds a unit Householder vector mapping x onto its first coordinate.</summary>
+            <summary>Builds a unit Householder vector mapping x onto its first coordinate</summary>
             <param name="x">Finite vector; zero is returned unchanged.</param>
             <returns>A normalized vector v with H = I - 2 v v^H.</returns>
             <remarks>The target is -phase(x[0])*norm(x), with phase(0)=1, to avoid cancellation.</remarks>
         </member>
         <member name="M:UMapx.Decomposition.Householder.ApplyLeft(System.Numerics.Complex[0:,0:],System.Numerics.Complex[],System.Int32,System.Int32)">
-            <summary>Applies I - 2 v v^H to selected rows from the left, in place.</summary>
+            <summary>Applies I - 2 v v^H to selected rows from the left, in place</summary>
             <param name="a">Work matrix to update.</param>
             <param name="v">Normalized reflection vector, or zero for identity.</param>
             <param name="row">First affected row.</param>
             <param name="column">First affected column.</param>
         </member>
         <member name="M:UMapx.Decomposition.Householder.ApplyRight(System.Numerics.Complex[0:,0:],System.Numerics.Complex[],System.Int32,System.Int32)">
-            <summary>Applies I - 2 v v^H to selected columns from the right, in place.</summary>
+            <summary>Applies I - 2 v v^H to selected columns from the right, in place</summary>
             <param name="a">Work matrix to update.</param>
             <param name="v">Normalized reflection vector, or zero for identity.</param>
             <param name="column">First affected column.</param>
             <param name="row">First affected row.</param>
         </member>
         <member name="T:UMapx.Decomposition.Lanczos">
-            <summary>Provides symmetric and Hermitian Lanczos reductions with orthogonal restarts.</summary>
+            <summary>Provides symmetric and Hermitian Lanczos reductions with orthogonal restarts</summary>
         </member>
         <member name="M:UMapx.Decomposition.Lanczos.Decompose(System.Single[0:,0:],System.Boolean)">
-            <summary>Computes a symmetric Lanczos tridiagonalization.</summary>
+            <summary>Computes a symmetric Lanczos tridiagonalization</summary>
             <param name="matrix">Finite nonempty symmetric square matrix.</param>
             <param name="full">Whether to perform a second full reorthogonalization pass.</param>
             <returns>Q and tridiagonal T satisfying A = Q T Q^T.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Lanczos.Decompose(UMapx.Core.Complex32[0:,0:],System.Boolean)">
-            <summary>Computes a Hermitian Lanczos tridiagonalization.</summary>
+            <summary>Computes a Hermitian Lanczos tridiagonalization</summary>
             <param name="matrix">Finite nonempty Hermitian square matrix.</param>
             <param name="full">Whether to perform a second full reorthogonalization pass.</param>
             <returns>Q and tridiagonal T satisfying A = Q T Q^H.</returns>
         </member>
         <member name="T:UMapx.Decomposition.LDL">
-            <summary>Provides unpivoted LDL factorization for symmetric and Hermitian matrices.</summary>
+            <summary>Provides unpivoted LDL factorization for symmetric and Hermitian matrices</summary>
         </member>
         <member name="M:UMapx.Decomposition.LDL.Decompose(System.Single[0:,0:])">
-            <summary>Computes A = L diag(D) L^T without diagonal pivoting.</summary>
+            <summary>Computes A = L diag(D) L^T without diagonal pivoting</summary>
             <param name="matrix">Finite nonempty symmetric matrix with nonzero elimination pivots.</param>
             <returns>Unit lower triangular L and real diagonal D. Indefinite inputs are supported when no pivot vanishes.</returns>
         </member>
         <member name="M:UMapx.Decomposition.LDL.UpperFactor(System.Single[0:,0:])">
-            <summary>Constructs the conjugate-transposed factor from an existing factor.</summary>
+            <summary>Constructs the conjugate-transposed factor from an existing factor</summary>
             <param name="factor">Square triangular factor from Decompose.</param>
             <returns>The upper factor.</returns>
         </member>
         <member name="M:UMapx.Decomposition.LDL.Decompose(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes A = L diag(D) L^H without diagonal pivoting.</summary>
+            <summary>Computes A = L diag(D) L^H without diagonal pivoting</summary>
             <param name="matrix">Finite nonempty Hermitian matrix with nonzero elimination pivots.</param>
             <returns>Unit lower triangular L and real diagonal D. Indefinite inputs are supported when no pivot vanishes.</returns>
         </member>
         <member name="M:UMapx.Decomposition.LDL.UpperFactor(UMapx.Core.Complex32[0:,0:])">
-            <summary>Constructs the conjugate-transposed factor from an existing factor.</summary>
+            <summary>Constructs the conjugate-transposed factor from an existing factor</summary>
             <param name="factor">Square triangular factor from Decompose.</param>
             <returns>The upper factor.</returns>
         </member>
         <member name="M:UMapx.Decomposition.LDL.Factor(System.Numerics.Complex[0:,0:])">
-            <summary>Performs Hermitian diagonal elimination in double precision without pivoting.</summary>
+            <summary>Performs Hermitian diagonal elimination in double precision without pivoting</summary>
             <param name="a">Private Hermitian square buffer.</param>
             <returns>A unit triangular factor and real diagonal; a zero pivot is rejected.</returns>
         </member>
         <member name="T:UMapx.Decomposition.LDU">
-            <summary>Provides pivoted LDU decomposition.</summary>
+            <summary>Provides pivoted LDU decomposition</summary>
         </member>
         <member name="M:UMapx.Decomposition.LDU.Decompose(System.Single[0:,0:])">
-            <summary>Computes A[P,:] = L diag(D) U with unit triangular factors.</summary>
+            <summary>Computes A[P,:] = L diag(D) U with unit triangular factors</summary>
             <param name="matrix">Finite nonempty square matrix with nonzero LU pivots.</param>
             <returns>L, diagonal D, U, and the row permutation P.</returns>
         </member>
         <member name="M:UMapx.Decomposition.LDU.Decompose(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes A[P,:] = L diag(D) U with unit triangular factors.</summary>
+            <summary>Computes A[P,:] = L diag(D) U with unit triangular factors</summary>
             <param name="matrix">Finite nonempty square matrix with nonzero LU pivots.</param>
             <returns>L, diagonal D, U, and the row permutation P.</returns>
         </member>
         <member name="T:UMapx.Decomposition.LQ">
-            <summary>Provides real and complex LQ decomposition.</summary>
+            <summary>Provides real and complex LQ decomposition</summary>
         </member>
         <member name="M:UMapx.Decomposition.LQ.Decompose(System.Single[0:,0:])">
-            <summary>Computes the economy-size LQ factorization of a rectangular matrix.</summary>
+            <summary>Computes the economy-size LQ factorization of a rectangular matrix</summary>
             <param name="matrix">Finite nonempty input matrix, not modified.</param>
             <returns>Factors L, Q; their product equals the input. Q has orthonormal rows.</returns>
         </member>
         <member name="M:UMapx.Decomposition.LQ.Decompose(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes the economy-size LQ factorization of a rectangular matrix.</summary>
+            <summary>Computes the economy-size LQ factorization of a rectangular matrix</summary>
             <param name="matrix">Finite nonempty input matrix, not modified.</param>
             <returns>Factors L, Q; their product equals the input. Q has orthonormal rows.</returns>
         </member>
         <member name="T:UMapx.Decomposition.LU">
-            <summary>Provides LU decomposition with partial row pivoting.</summary>
+            <summary>Provides LU decomposition with partial row pivoting</summary>
         </member>
         <member name="M:UMapx.Decomposition.LU.Decompose(System.Single[0:,0:])">
-            <summary>Computes A[P,:] = L U with partial row pivoting.</summary>
+            <summary>Computes A[P,:] = L U with partial row pivoting</summary>
             <param name="matrix">Finite nonempty square matrix, not modified.</param>
             <returns>Unit lower triangular L, upper triangular U, and the row permutation P.</returns>
         </member>
         <member name="M:UMapx.Decomposition.LU.Decompose(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes A[P,:] = L U with complex partial row pivoting.</summary>
+            <summary>Computes A[P,:] = L U with complex partial row pivoting</summary>
             <param name="matrix">Finite nonempty square matrix, not modified.</param>
             <returns>Unit lower triangular L, upper triangular U, and the row permutation P.</returns>
         </member>
         <member name="M:UMapx.Decomposition.LU.PermutationMatrix(System.Int32[])">
-            <summary>Builds the row permutation matrix from a pivot vector.</summary>
+            <summary>Builds the row permutation matrix from a pivot vector</summary>
             <param name="permutation">A permutation of indices zero through n-1.</param>
             <returns>P such that P*A selects rows A[permutation[i],:].</returns>
         </member>
         <member name="M:UMapx.Decomposition.LU.Factor(System.Numerics.Complex[0:,0:])">
-            <summary>Performs Gaussian elimination with magnitude-based row pivoting.</summary>
+            <summary>Performs Gaussian elimination with magnitude-based row pivoting</summary>
             <param name="a">Private square buffer overwritten by U.</param>
             <returns>L, U and row indices, including valid factors of singular matrices.</returns>
         </member>
         <member name="T:UMapx.Decomposition.MatrixMath">
-            <summary>Provides shared double-precision work-buffer operations for matrix decompositions.</summary>
+            <summary>Provides shared double-precision work-buffer operations for matrix decompositions</summary>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.Copy(System.Single[0:,0:],System.Boolean)">
-            <summary>Copies a finite, nonempty real matrix into complex double-precision storage.</summary>
+            <summary>Copies a finite, nonempty real matrix into complex double-precision storage</summary>
             <param name="a">Input matrix, which is not modified.</param>
             <param name="square">Whether equal dimensions are required.</param>
             <returns>An independent work buffer.</returns>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.Copy(UMapx.Core.Complex32[0:,0:],System.Boolean)">
-            <summary>Copies a finite, nonempty complex matrix into double-precision storage.</summary>
+            <summary>Copies a finite, nonempty complex matrix into double-precision storage</summary>
             <param name="a">Input matrix, which is not modified.</param>
             <param name="square">Whether equal dimensions are required.</param>
             <returns>An independent work buffer.</returns>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.CheckShape(System.Array,System.Boolean)">
-            <summary>Validates matrix dimensions before allocating numerical work buffers.</summary>
+            <summary>Validates matrix dimensions before allocating numerical work buffers</summary>
             <param name="a">A two-dimensional array.</param>
             <param name="square">Whether a square matrix is required.</param>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.Single(System.Numerics.Complex[0:,0:])">
-            <summary>Narrows a work matrix to complex single precision.</summary>
+            <summary>Narrows a work matrix to complex single precision</summary>
             <param name="a">Double-precision values.</param>
             <returns>A newly allocated complex matrix.</returns>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.Real(System.Numerics.Complex[0:,0:])">
-            <summary>Narrows a real-valued work matrix to single precision.</summary>
+            <summary>Narrows a real-valued work matrix to single precision</summary>
             <param name="a">Work buffer whose imaginary components are zero.</param>
             <returns>A newly allocated real matrix.</returns>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.Eye(System.Int32)">
-            <summary>Creates an identity matrix for accumulating unitary transformations.</summary>
+            <summary>Creates an identity matrix for accumulating unitary transformations</summary>
             <param name="n">Nonnegative order.</param>
             <returns>The identity of order n.</returns>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.Adjoint(System.Numerics.Complex[0:,0:])">
-            <summary>Computes conjugate transposition, including for real-valued work buffers.</summary>
+            <summary>Computes conjugate transposition, including for real-valued work buffers</summary>
             <param name="a">Input matrix.</param>
             <returns>The conjugate transpose.</returns>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.Multiply(System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:])">
-            <summary>Multiplies compatible work matrices with complex double accumulation.</summary>
+            <summary>Multiplies compatible work matrices with complex double accumulation</summary>
             <param name="a">Left matrix.</param>
             <param name="b">Right matrix.</param>
             <returns>The matrix product.</returns>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.Norm(System.Numerics.Complex[])">
-            <summary>Computes a scaled Euclidean norm without squaring large or tiny entries directly.</summary>
+            <summary>Computes a scaled Euclidean norm without squaring large or tiny entries directly</summary>
             <param name="v">Vector with finite entries.</param>
             <returns>The nonnegative Euclidean norm.</returns>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.Max(System.Numerics.Complex[0:,0:])">
-            <summary>Returns the largest entry magnitude, or zero for a zero matrix.</summary>
+            <summary>Returns the largest entry magnitude, or zero for a zero matrix</summary>
             <param name="a">Finite work matrix.</param>
             <returns>A nonnegative scale.</returns>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.RequireHermitian(System.Numerics.Complex[0:,0:])">
-            <summary>Checks the Hermitian condition with a relative single-precision tolerance.</summary>
+            <summary>Checks the Hermitian condition with a relative single-precision tolerance</summary>
             <param name="a">Square input matrix.</param>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.IsHermitian(System.Numerics.Complex[0:,0:])">
-            <summary>Detects Hermitian structure to the resolution of single-precision input.</summary>
+            <summary>Detects Hermitian structure to the resolution of single-precision input</summary>
             <param name="a">Finite square work matrix.</param>
             <returns>True when conjugate symmetry holds within eight single-precision rounding units of the matrix scale.</returns>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.Block(System.Numerics.Complex[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>Copies a rectangular leading block or a block starting at specified offsets.</summary>
+            <summary>Copies a rectangular leading block or a block starting at specified offsets</summary>
             <param name="a">Source matrix.</param>
             <param name="rows">Number of rows.</param>
             <param name="columns">Number of columns.</param>
@@ -14129,128 +14129,128 @@
             <returns>An independent block.</returns>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.Complete(System.Numerics.Complex[0:,0:],System.Int32)">
-            <summary>Completes an orthonormal basis after exact or numerical breakdown.</summary>
+            <summary>Completes an orthonormal basis after exact or numerical breakdown</summary>
             <param name="q">Matrix containing orthonormal columns before column k.</param>
             <param name="k">Column to complete.</param>
             <returns>A unit vector orthogonal to the preceding columns.</returns>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.Orthogonalize(System.Numerics.Complex[],System.Numerics.Complex[0:,0:],System.Int32)">
-            <summary>Applies two passes of modified Gram-Schmidt using the Hermitian inner product.</summary>
+            <summary>Applies two passes of modified Gram-Schmidt using the Hermitian inner product</summary>
             <param name="v">Vector modified in place.</param>
             <param name="q">Previously computed orthonormal columns.</param>
             <param name="columns">Number of columns to remove.</param>
         </member>
         <member name="T:UMapx.Decomposition.NMF">
-            <summary>Provides nonnegative factorization of real matrices; nonnegativity is not defined for general complex numbers.</summary>
+            <summary>Provides nonnegative factorization of real matrices; nonnegativity is not defined for general complex numbers</summary>
         </member>
         <member name="M:UMapx.Decomposition.NMF.Decompose(System.Single[0:,0:],System.Int32,System.Int32)">
-            <summary>Approximates a nonnegative matrix as A = W H using multiplicative least-squares updates.</summary>
+            <summary>Approximates a nonnegative matrix as A = W H using multiplicative least-squares updates</summary>
             <param name="matrix">Finite nonempty real matrix with nonnegative entries.</param>
             <param name="rank">Positive number of factor columns/rows, at most min(m,n).</param>
             <param name="iterations">Positive number of alternating updates.</param>
             <returns>Nonnegative W of size m by rank and H of size rank by n.</returns>
         </member>
         <member name="T:UMapx.Decomposition.Polar">
-            <summary>Provides right polar decomposition for real and complex rectangular matrices.</summary>
+            <summary>Provides right polar decomposition for real and complex rectangular matrices</summary>
         </member>
         <member name="M:UMapx.Decomposition.Polar.Decompose(System.Single[0:,0:],System.Int32)">
-            <summary>Computes the right polar decomposition A = U P.</summary>
+            <summary>Computes the right polar decomposition A = U P</summary>
             <param name="matrix">Finite nonempty rectangular matrix.</param>
             <param name="iterations">Positive SVD iteration limit.</param>
             <returns>The partial isometry U and positive semidefinite symmetric P. Square full-rank U is orthogonal.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Polar.Decompose(UMapx.Core.Complex32[0:,0:],System.Int32)">
-            <summary>Computes the right polar decomposition A = U P.</summary>
+            <summary>Computes the right polar decomposition A = U P</summary>
             <param name="matrix">Finite nonempty rectangular matrix.</param>
             <param name="iterations">Positive SVD iteration limit.</param>
             <returns>The partial isometry U and positive semidefinite Hermitian P. Square full-rank U is unitary.</returns>
         </member>
         <member name="T:UMapx.Decomposition.Power">
-            <summary>Provides real and complex power iteration.</summary>
+            <summary>Provides real and complex power iteration</summary>
         </member>
         <member name="M:UMapx.Decomposition.Power.Decompose(System.Single[0:,0:],System.Int32)">
-            <summary>Approximates a dominant right eigenpair by normalized power iteration.</summary>
+            <summary>Approximates a dominant right eigenpair by normalized power iteration</summary>
             <param name="matrix">Finite nonempty square matrix with a dominant eigenvalue separated in modulus.</param>
             <param name="iterations">Positive number of iterations; convergence also depends on the starting vector.</param>
             <returns>A unit vector V and its Rayleigh quotient D; a zero product returns the current vector and zero.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Power.DiagonalMatrix(System.Single[])">
-            <summary>Places an existing power-iteration vector on a diagonal without further iteration.</summary>
+            <summary>Places an existing power-iteration vector on a diagonal without further iteration</summary>
             <param name="vector">Vector returned by Decompose; these entries are eigenvector components.</param>
             <returns>A diagonal matrix containing the vector entries.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Power.Decompose(UMapx.Core.Complex32[0:,0:],System.Int32)">
-            <summary>Approximates a dominant right eigenpair by normalized power iteration.</summary>
+            <summary>Approximates a dominant right eigenpair by normalized power iteration</summary>
             <param name="matrix">Finite nonempty square matrix with a dominant eigenvalue separated in modulus.</param>
             <param name="iterations">Positive number of iterations; convergence also depends on the starting vector.</param>
             <returns>A unit vector V and its Rayleigh quotient D; a zero product returns the current vector and zero.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Power.DiagonalMatrix(UMapx.Core.Complex32[])">
-            <summary>Places an existing power-iteration vector on a diagonal without further iteration.</summary>
+            <summary>Places an existing power-iteration vector on a diagonal without further iteration</summary>
             <param name="vector">Vector returned by Decompose; these entries are eigenvector components.</param>
             <returns>A diagonal matrix containing the vector entries.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Power.Iterate(System.Numerics.Complex[0:,0:],System.Int32)">
-            <summary>Applies normalized matrix-vector products and computes the final Hermitian Rayleigh quotient.</summary>
+            <summary>Applies normalized matrix-vector products and computes the final Hermitian Rayleigh quotient</summary>
             <param name="a">Private square matrix.</param>
             <param name="iterations">Positive iteration count.</param>
             <returns>The unit right vector and corresponding quotient.</returns>
         </member>
         <member name="T:UMapx.Decomposition.QL">
-            <summary>Provides real and complex QL decomposition.</summary>
+            <summary>Provides real and complex QL decomposition</summary>
         </member>
         <member name="M:UMapx.Decomposition.QL.Decompose(System.Single[0:,0:])">
-            <summary>Computes the economy-size QL factorization of a rectangular matrix.</summary>
+            <summary>Computes the economy-size QL factorization of a rectangular matrix</summary>
             <param name="matrix">Finite nonempty input matrix, not modified.</param>
             <returns>Factors Q, L; their product equals the input. Q has orthonormal columns.</returns>
         </member>
         <member name="M:UMapx.Decomposition.QL.Decompose(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes the economy-size QL factorization of a rectangular matrix.</summary>
+            <summary>Computes the economy-size QL factorization of a rectangular matrix</summary>
             <param name="matrix">Finite nonempty input matrix, not modified.</param>
             <returns>Factors Q, L; their product equals the input. Q has orthonormal columns.</returns>
         </member>
         <member name="T:UMapx.Decomposition.QR">
-            <summary>Provides Householder QR factorization and access to its reflection vectors.</summary>
+            <summary>Provides Householder QR factorization and access to its reflection vectors</summary>
         </member>
         <member name="M:UMapx.Decomposition.QR.Decompose(System.Single[0:,0:])">
-            <summary>Computes A = Q R using an economy-size orthogonal factor.</summary>
+            <summary>Computes A = Q R using an economy-size orthogonal factor</summary>
             <param name="matrix">Finite nonempty m by n matrix; not modified.</param>
             <returns>Q of size m by min(m,n) and R of size min(m,n) by n.</returns>
         </member>
         <member name="M:UMapx.Decomposition.QR.Decompose(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes A = Q R with Q^H Q = I using complex Householder reflections.</summary>
+            <summary>Computes A = Q R with Q^H Q = I using complex Householder reflections</summary>
             <param name="matrix">Finite nonempty m by n matrix; not modified.</param>
             <returns>Q of size m by min(m,n) and R of size min(m,n) by n.</returns>
         </member>
         <member name="M:UMapx.Decomposition.QR.HouseholderVectors(System.Single[0:,0:])">
-            <summary>Computes normalized reflection vectors without constructing Q.</summary>
+            <summary>Computes normalized reflection vectors without constructing Q</summary>
             <param name="matrix">Finite input matrix; a separate reduction is performed.</param>
             <returns>An m by min(m,n) matrix of vectors v defining H = I - 2 v v^T; zero columns denote identity.</returns>
         </member>
         <member name="M:UMapx.Decomposition.QR.HouseholderVectors(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes normalized complex reflection vectors without constructing Q.</summary>
+            <summary>Computes normalized complex reflection vectors without constructing Q</summary>
             <param name="matrix">Finite input matrix; a separate reduction is performed.</param>
             <returns>An m by min(m,n) matrix of vectors v defining H = I - 2 v v^H; zero columns denote identity.</returns>
         </member>
         <member name="M:UMapx.Decomposition.QR.Factor(System.Numerics.Complex[0:,0:],System.Boolean,System.Boolean)">
-            <summary>Reduces a private work matrix to upper trapezoidal form.</summary>
+            <summary>Reduces a private work matrix to upper trapezoidal form</summary>
             <param name="a">Work buffer overwritten by R.</param>
             <param name="vectors">Whether to construct Q from the reflection vectors.</param>
             <param name="full">Whether Q should be square instead of economy size.</param>
             <returns>Q (or null), R, and normalized reflection vectors.</returns>
         </member>
         <member name="T:UMapx.Decomposition.QZ">
-            <summary>Provides real and complex generalized Schur decomposition.</summary>
+            <summary>Provides real and complex generalized Schur decomposition</summary>
         </member>
         <member name="M:UMapx.Decomposition.QZ.Decompose(System.Single[0:,0:],System.Single[0:,0:],System.Single)">
-            <summary>Computes the real generalized Schur factors A = Q S Z^T and B = Q T Z^T.</summary>
+            <summary>Computes the real generalized Schur factors A = Q S Z^T and B = Q T Z^T</summary>
             <param name="a">Finite nonempty square matrix A.</param>
             <param name="b">Finite square matrix B of the same order.</param>
             <param name="eps">Relative deflation tolerance with a roundoff floor.</param>
             <returns>Orthogonal Q and Z, quasi-triangular S, and upper triangular T.</returns>
         </member>
         <member name="M:UMapx.Decomposition.QZ.Decompose(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Single,System.Int32)">
-            <summary>Computes the complex generalized Schur factors A = Q S Z^H and B = Q T Z^H.</summary>
+            <summary>Computes the complex generalized Schur factors A = Q S Z^H and B = Q T Z^H</summary>
             <param name="a">Finite nonempty square matrix A.</param>
             <param name="b">Finite square matrix B of the same order; it may be singular.</param>
             <param name="eps">Relative deflation tolerance with a roundoff floor.</param>
@@ -14258,7 +14258,7 @@
             <returns>Unitary Q and Z and upper triangular S and T; T has real nonnegative diagonal entries.</returns>
         </member>
         <member name="M:UMapx.Decomposition.QZ.RecoverLeft(System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:])">
-            <summary>Recovers the real left transformation from both transformed matrices, including singular B.</summary>
+            <summary>Recovers the real left transformation from both transformed matrices, including singular B</summary>
             <param name="a">Original first matrix.</param>
             <param name="b">Original second matrix.</param>
             <param name="s">First Schur form.</param>
@@ -14267,7 +14267,7 @@
             <returns>An orthogonal left factor, completed on any common left nullspace.</returns>
         </member>
         <member name="M:UMapx.Decomposition.QZ.Factor(System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Double,System.Int32)">
-            <summary>Reduces a complex pencil by unitary Hessenberg-triangular reduction and implicit single-shift QZ.</summary>
+            <summary>Reduces a complex pencil by unitary Hessenberg-triangular reduction and implicit single-shift QZ</summary>
             <param name="a">Private first square matrix.</param>
             <param name="b">Private second square matrix of the same order.</param>
             <param name="eps">Relative deflation tolerance.</param>
@@ -14276,20 +14276,20 @@
             <remarks>Zero diagonals of B are chased without inverting B. See the LAPACK ZHGEQZ algorithm and Moler-Stewart QZ method.</remarks>
         </member>
         <member name="M:UMapx.Decomposition.QZ.SmallSubdiagonal(System.Numerics.Complex[0:,0:],System.Int32,System.Double)">
-            <summary>Tests a Hessenberg subdiagonal against a local relative scale.</summary>
+            <summary>Tests a Hessenberg subdiagonal against a local relative scale</summary>
             <param name="a">Hessenberg matrix.</param>
             <param name="i">Subdiagonal row, greater than zero.</param>
             <param name="tolerance">Relative deflation threshold.</param>
             <returns>Whether the entry is negligible on its local scale.</returns>
         </member>
         <member name="M:UMapx.Decomposition.QZ.Rotation(System.Numerics.Complex,System.Numerics.Complex)">
-            <summary>Constructs a complex Givens rotation annihilating the second component.</summary>
+            <summary>Constructs a complex Givens rotation annihilating the second component</summary>
             <param name="f">First component.</param>
             <param name="g">Second component.</param>
             <returns>Real cosine C and complex sine S defining [C,S;-conj(S),C].</returns>
         </member>
         <member name="M:UMapx.Decomposition.QZ.LeftPair(System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Int32,System.Int32,System.Double,System.Numerics.Complex)">
-            <summary>Applies a left plane rotation to both matrices and updates Q.</summary>
+            <summary>Applies a left plane rotation to both matrices and updates Q</summary>
             <param name="a">First work matrix.</param>
             <param name="b">Second work matrix.</param>
             <param name="q">Left accumulator.</param>
@@ -14299,7 +14299,7 @@
             <param name="s">Complex sine.</param>
         </member>
         <member name="M:UMapx.Decomposition.QZ.RightPair(System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Int32,System.Int32,System.Double,System.Numerics.Complex)">
-            <summary>Applies a right rotation to both matrices and updates Z.</summary>
+            <summary>Applies a right rotation to both matrices and updates Z</summary>
             <param name="a">First work matrix.</param>
             <param name="b">Second work matrix.</param>
             <param name="z">Right accumulator.</param>
@@ -14309,7 +14309,7 @@
             <param name="s">Complex sine acting on ordered columns i,j.</param>
         </member>
         <member name="M:UMapx.Decomposition.QZ.Columns(System.Numerics.Complex[0:,0:],System.Int32,System.Int32,System.Double,System.Numerics.Complex)">
-            <summary>Rotates an ordered pair of columns in place.</summary>
+            <summary>Rotates an ordered pair of columns in place</summary>
             <param name="a">Target matrix.</param>
             <param name="i">First column.</param>
             <param name="j">Second column.</param>
@@ -14317,15 +14317,15 @@
             <param name="s">Complex sine.</param>
         </member>
         <member name="T:UMapx.Decomposition.RQ">
-            <summary>Provides real and complex RQ decomposition.</summary>
+            <summary>Provides real and complex RQ decomposition</summary>
         </member>
         <member name="M:UMapx.Decomposition.RQ.Decompose(System.Single[0:,0:])">
-            <summary>Computes the economy-size RQ factorization of a rectangular matrix.</summary>
+            <summary>Computes the economy-size RQ factorization of a rectangular matrix</summary>
             <param name="matrix">Finite nonempty input matrix, not modified.</param>
             <returns>Factors R, Q; their product equals the input. Q has orthonormal rows.</returns>
         </member>
         <member name="M:UMapx.Decomposition.RQ.Decompose(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes the economy-size RQ factorization of a rectangular matrix.</summary>
+            <summary>Computes the economy-size RQ factorization of a rectangular matrix</summary>
             <param name="matrix">Finite nonempty input matrix, not modified.</param>
             <returns>Factors R, Q; their product equals the input. Q has orthonormal rows.</returns>
         </member>
@@ -14341,44 +14341,44 @@
             </remarks>
         </member>
         <member name="M:UMapx.Decomposition.Schur.Decompose(System.Single[0:,0:],System.Single)">
-            <summary>Computes the real Schur decomposition without modifying the inputs.</summary>
+            <summary>Computes the real Schur decomposition without modifying the inputs</summary>
             <param name="matrix">Finite nonempty input matrix.</param>
             <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
             <returns>The primary factors (Q, T).</returns>
         </member>
         <member name="M:UMapx.Decomposition.Schur.Decompose(UMapx.Core.Complex32[0:,0:],System.Single,System.Int32)">
-            <summary>Computes the complex Schur factorization A = Q T Q^H.</summary>
+            <summary>Computes the complex Schur factorization A = Q T Q^H</summary>
             <param name="matrix">Finite nonempty complex square matrix.</param>
             <param name="eps">Relative deflation tolerance, clamped to [0,1] with a double-roundoff floor.</param>
             <param name="iterations">Positive maximum number of QR steps between successive deflations.</param>
             <returns>Unitary Q and upper triangular T.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Schur.Eigenvalues(System.Single[0:,0:])">
-            <summary>Extracts eigenvalues from an existing real quasi-triangular Schur form.</summary>
+            <summary>Extracts eigenvalues from an existing real quasi-triangular Schur form</summary>
             <param name="t">Finite square real Schur factor with isolated one- or two-dimensional blocks.</param>
             <returns>Eigenvalues in block order, with positive imaginary parts first in conjugate pairs.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Schur.Eigenvalues(UMapx.Core.Complex32[0:,0:])">
-            <summary>Extracts eigenvalues from an existing complex triangular Schur form.</summary>
+            <summary>Extracts eigenvalues from an existing complex triangular Schur form</summary>
             <param name="t">Finite square triangular Schur factor.</param>
             <returns>The diagonal entries, without repeating the decomposition.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Schur.Factor(System.Numerics.Complex[0:,0:],System.Double,System.Int32)">
-            <summary>Uses shifted QR similarities on a complex Hessenberg matrix with bounded iteration.</summary>
+            <summary>Uses shifted QR similarities on a complex Hessenberg matrix with bounded iteration</summary>
             <param name="a">Private finite square buffer.</param>
             <param name="eps">Relative requested deflation tolerance.</param>
             <param name="iterations">Maximum steps before a deflation must occur.</param>
             <returns>Double-precision Schur factors; failure to converge causes an exception.</returns>
         </member>
         <member name="M:UMapx.Decomposition.Schur.Similarity(System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Int32)">
-            <summary>Applies an embedded unitary similarity and accumulates its right factor.</summary>
+            <summary>Applies an embedded unitary similarity and accumulates its right factor</summary>
             <param name="a">Full square work matrix.</param>
             <param name="q">Accumulated unitary factor.</param>
             <param name="rotation">Unitary transformation on a contiguous active block.</param>
             <param name="offset">First index of the active block.</param>
         </member>
         <member name="T:UMapx.Decomposition.Schur.RealWorkspace">
-            <summary>Owns the real algorithm work buffers for one call only.</summary>
+            <summary>Owns the real algorithm work buffers for one call only</summary>
         </member>
         <member name="M:UMapx.Decomposition.Schur.RealWorkspace.#ctor(System.Single[0:,0:],System.Single)">
             <summary>
@@ -14434,20 +14434,20 @@
             </remarks>
         </member>
         <member name="M:UMapx.Decomposition.SVD.Decompose(System.Single[0:,0:],System.Int32)">
-            <summary>Computes the economy real SVD, A = U diag(S) V^T, without modifying the input.</summary>
+            <summary>Computes the economy real SVD, A = U diag(S) V^T, without modifying the input</summary>
             <param name="matrix">Finite nonempty m by n matrix.</param>
             <param name="iterations">Positive maximum QR sweeps per singular value.</param>
             <returns>U of size m by k, descending nonnegative S of length k, and V of size n by k, where k=min(m,n).</returns>
         </member>
         <member name="M:UMapx.Decomposition.SVD.Decompose(UMapx.Core.Complex32[0:,0:],System.Int32)">
-            <summary>Computes the economy complex SVD, A = U diag(S) V^H, using one-sided Jacobi sweeps.</summary>
+            <summary>Computes the economy complex SVD, A = U diag(S) V^H, using one-sided Jacobi sweeps</summary>
             <param name="matrix">Finite nonempty m by n complex matrix, not modified.</param>
             <param name="iterations">Positive maximum number of cyclic Jacobi sweeps.</param>
             <returns>U of size m by k, descending nonnegative S of length k, and V of size n by k, where k=min(m,n).</returns>
             <exception cref="T:System.InvalidOperationException">The iteration limit is reached before convergence.</exception>
         </member>
         <member name="M:UMapx.Decomposition.SVD.PseudoInverse(System.Single[0:,0:],System.Single[],System.Single[0:,0:],System.Single)">
-            <summary>Constructs the Moore-Penrose inverse from existing real economy SVD factors.</summary>
+            <summary>Constructs the Moore-Penrose inverse from existing real economy SVD factors</summary>
             <param name="u">Left singular vectors, m by k.</param>
             <param name="s">Nonnegative singular values of length k.</param>
             <param name="v">Right singular vectors, n by k.</param>
@@ -14455,7 +14455,7 @@
             <returns>The n by m pseudoinverse. No decomposition is repeated.</returns>
         </member>
         <member name="M:UMapx.Decomposition.SVD.PseudoInverse(UMapx.Core.Complex32[0:,0:],System.Single[],UMapx.Core.Complex32[0:,0:],System.Single)">
-            <summary>Constructs the Moore-Penrose inverse from existing complex economy SVD factors.</summary>
+            <summary>Constructs the Moore-Penrose inverse from existing complex economy SVD factors</summary>
             <param name="u">Left singular vectors, m by k.</param>
             <param name="s">Nonnegative singular values of length k.</param>
             <param name="v">Right singular vectors, n by k.</param>
@@ -14463,34 +14463,34 @@
             <returns>V diag(S+) U^H, of size n by m. No decomposition is repeated.</returns>
         </member>
         <member name="M:UMapx.Decomposition.SVD.Rank(System.Single[],System.Single)">
-            <summary>Counts singular values exceeding a relative cutoff.</summary>
+            <summary>Counts singular values exceeding a relative cutoff</summary>
             <param name="s">Finite nonnegative singular values.</param>
             <param name="tolerance">Relative cutoff; -1 uses length(S)*2^-23. Supply max(m,n)*2^-23 for rectangular inputs.</param>
             <returns>The numerical rank.</returns>
         </member>
         <member name="M:UMapx.Decomposition.SVD.Norm(System.Single[])">
-            <summary>Returns the spectral norm from existing singular values.</summary>
+            <summary>Returns the spectral norm from existing singular values</summary>
             <param name="s">Finite nonnegative singular values.</param>
             <returns>The largest singular value, or zero for an empty sequence.</returns>
         </member>
         <member name="M:UMapx.Decomposition.SVD.ConditionNumber(System.Single[])">
-            <summary>Returns the spectral condition number from existing singular values.</summary>
+            <summary>Returns the spectral condition number from existing singular values</summary>
             <param name="s">Finite nonnegative singular values.</param>
             <returns>max(S)/min(S), or positive infinity if the sequence is empty or contains zero.</returns>
         </member>
         <member name="M:UMapx.Decomposition.SVD.Cutoff(System.Single,System.Int32)">
-            <summary>Validates a relative rank cutoff and selects the single-precision default.</summary>
+            <summary>Validates a relative rank cutoff and selects the single-precision default</summary>
             <param name="tolerance">Nonnegative relative cutoff, or -1 for the default.</param>
             <param name="dimension">Dimension used for the default error scale.</param>
             <returns>A nonnegative relative cutoff.</returns>
         </member>
         <member name="M:UMapx.Decomposition.SVD.ValidateValues(System.Single[])">
-            <summary>Validates finite nonnegative singular values without requiring sorted order.</summary>
+            <summary>Validates finite nonnegative singular values without requiring sorted order</summary>
             <param name="s">Singular-value vector.</param>
             <returns>The largest value, or zero for an empty vector.</returns>
         </member>
         <member name="M:UMapx.Decomposition.SVD.Inverse(System.Numerics.Complex[0:,0:],System.Single[],System.Numerics.Complex[0:,0:],System.Single)">
-            <summary>Accumulates a truncated pseudoinverse with conjugation and double-precision division.</summary>
+            <summary>Accumulates a truncated pseudoinverse with conjugation and double-precision division</summary>
             <param name="u">Left factors.</param>
             <param name="s">Singular values.</param>
             <param name="v">Right factors.</param>
@@ -14498,19 +14498,19 @@
             <returns>The pseudoinverse; inputs are not modified.</returns>
         </member>
         <member name="M:UMapx.Decomposition.SVD.Factor(System.Numerics.Complex[0:,0:],System.Int32)">
-            <summary>Orthogonalizes complex columns using unitary plane rotations without forming A^H A.</summary>
+            <summary>Orthogonalizes complex columns using unitary plane rotations without forming A^H A</summary>
             <param name="a">Private work matrix.</param>
             <param name="iterations">Maximum positive sweep count.</param>
             <returns>Double-precision economy singular factors and descending singular values.</returns>
         </member>
         <member name="M:UMapx.Decomposition.SVD.ColumnNorm(System.Numerics.Complex[0:,0:],System.Int32)">
-            <summary>Computes a column norm without directly squaring unscaled entries.</summary>
+            <summary>Computes a column norm without directly squaring unscaled entries</summary>
             <param name="a">Work matrix.</param>
             <param name="column">Column index.</param>
             <returns>A nonnegative double-precision norm.</returns>
         </member>
         <member name="M:UMapx.Decomposition.SVD.RotateColumns(System.Numerics.Complex[0:,0:],System.Int32,System.Int32,System.Double,System.Double,System.Numerics.Complex)">
-            <summary>Applies a unitary Jacobi rotation to two columns.</summary>
+            <summary>Applies a unitary Jacobi rotation to two columns</summary>
             <param name="a">Matrix updated in place.</param>
             <param name="p">First column.</param>
             <param name="q">Second column.</param>
@@ -14519,7 +14519,7 @@
             <param name="phase">Unit phase of the Hermitian cross product.</param>
         </member>
         <member name="T:UMapx.Decomposition.SVD.RealWorkspace">
-            <summary>Owns the real algorithm work buffers for one call only.</summary>
+            <summary>Owns the real algorithm work buffers for one call only</summary>
         </member>
         <member name="M:UMapx.Decomposition.SVD.RealWorkspace.#ctor(System.Single[0:,0:],System.Int32)">
             <summary>
@@ -14596,30 +14596,30 @@
             <returns>The absolute magnitude with the selected sign.</returns>
         </member>
         <member name="T:UMapx.Decomposition.UDL">
-            <summary>Provides unpivoted UDL factorization for symmetric and Hermitian matrices.</summary>
+            <summary>Provides unpivoted UDL factorization for symmetric and Hermitian matrices</summary>
         </member>
         <member name="M:UMapx.Decomposition.UDL.Decompose(System.Single[0:,0:])">
-            <summary>Computes A = U diag(D) U^T without diagonal pivoting.</summary>
+            <summary>Computes A = U diag(D) U^T without diagonal pivoting</summary>
             <param name="matrix">Finite nonempty symmetric matrix with nonzero elimination pivots.</param>
             <returns>Unit upper triangular U and real diagonal D. Indefinite inputs are supported when no pivot vanishes.</returns>
         </member>
         <member name="M:UMapx.Decomposition.UDL.LowerFactor(System.Single[0:,0:])">
-            <summary>Constructs the conjugate-transposed factor from an existing factor.</summary>
+            <summary>Constructs the conjugate-transposed factor from an existing factor</summary>
             <param name="factor">Square triangular factor from Decompose.</param>
             <returns>The lower factor.</returns>
         </member>
         <member name="M:UMapx.Decomposition.UDL.Decompose(UMapx.Core.Complex32[0:,0:])">
-            <summary>Computes A = U diag(D) U^H without diagonal pivoting.</summary>
+            <summary>Computes A = U diag(D) U^H without diagonal pivoting</summary>
             <param name="matrix">Finite nonempty Hermitian matrix with nonzero elimination pivots.</param>
             <returns>Unit upper triangular U and real diagonal D. Indefinite inputs are supported when no pivot vanishes.</returns>
         </member>
         <member name="M:UMapx.Decomposition.UDL.LowerFactor(UMapx.Core.Complex32[0:,0:])">
-            <summary>Constructs the conjugate-transposed factor from an existing factor.</summary>
+            <summary>Constructs the conjugate-transposed factor from an existing factor</summary>
             <param name="factor">Square triangular factor from Decompose.</param>
             <returns>The lower factor.</returns>
         </member>
         <member name="M:UMapx.Decomposition.UDL.Factor(System.Numerics.Complex[0:,0:])">
-            <summary>Performs Hermitian diagonal elimination in double precision without pivoting.</summary>
+            <summary>Performs Hermitian diagonal elimination in double precision without pivoting</summary>
             <param name="a">Private Hermitian square buffer.</param>
             <returns>A unit triangular factor and real diagonal; a zero pivot is rejected.</returns>
         </member>
@@ -16135,10 +16135,10 @@
             </summary>
         </member>
         <member name="F:UMapx.Distribution.DistributionNumerics.EulerGamma">
-            <summary>Euler–Mascheroni constant used by entropy formulas.</summary>
+            <summary>Euler–Mascheroni constant used by entropy formulas</summary>
         </member>
         <member name="F:UMapx.Distribution.DistributionNumerics.LogSqrtTwoPi">
-            <summary>Natural logarithm of sqrt(2*pi), used in Gaussian normalizations.</summary>
+            <summary>Natural logarithm of sqrt(2*pi), used in Gaussian normalizations</summary>
         </member>
         <member name="M:UMapx.Distribution.DistributionNumerics.Log1p(System.Double)">
             <summary>

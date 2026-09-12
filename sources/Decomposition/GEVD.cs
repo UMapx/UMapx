@@ -14,7 +14,7 @@ namespace UMapx.Decomposition
     /// </remarks>
     public static class GEVD
     {
-        /// <summary>Computes the real GEVD decomposition without modifying the inputs.</summary>
+        /// <summary>Computes the real GEVD decomposition without modifying the inputs</summary>
         /// <param name="a">Finite nonempty input matrix.</param>
         /// <param name="b">Finite nonempty input matrix.</param>
         /// <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
             return (work.V, work.Alpha, work.Beta);
         }
 
-        /// <summary>Computes complex generalized right eigenvectors and homogeneous eigenvalues.</summary>
+        /// <summary>Computes complex generalized right eigenvectors and homogeneous eigenvalues</summary>
         /// <param name="a">Finite nonempty square first matrix.</param>
         /// <param name="b">Finite square second matrix of the same order; it may be singular.</param>
         /// <param name="eps">Relative QZ deflation tolerance with a roundoff floor.</param>
@@ -49,7 +49,7 @@ namespace UMapx.Decomposition
             return (MatrixMath.Single(vectors), numerators, denominators);
         }
 
-        /// <summary>Forms eigenvalue quotients from an existing homogeneous spectrum.</summary>
+        /// <summary>Forms eigenvalue quotients from an existing homogeneous spectrum</summary>
         /// <param name="alpha">Complex numerators.</param>
         /// <param name="beta">Real denominators of the same length.</param>
         /// <returns>Alpha/Beta; nonzero/zero maps to positive infinity, and zero/zero to complex NaN.</returns>
@@ -65,21 +65,21 @@ namespace UMapx.Decomposition
             return values;
         }
 
-        /// <summary>Builds the real block eigenvalue matrix for real generalized eigenvector storage.</summary>
+        /// <summary>Builds the real block eigenvalue matrix for real generalized eigenvector storage</summary>
         /// <param name="alpha">Numerators ordered in real blocks or adjacent conjugate pairs.</param>
         /// <param name="beta">Real denominators in the same order.</param>
         /// <returns>The real block matrix D in A V = B V D for finite eigenvalues.</returns>
         public static float[,] RealEigenvalueMatrix(Complex32[] alpha, float[] beta)
             => EVD.RealEigenvalueMatrix(Eigenvalues(alpha, beta));
 
-        /// <summary>Builds a complex diagonal matrix of generalized eigenvalue quotients.</summary>
+        /// <summary>Builds a complex diagonal matrix of generalized eigenvalue quotients</summary>
         /// <param name="alpha">Numerators.</param>
         /// <param name="beta">Denominators in the same order.</param>
         /// <returns>diag(Alpha/Beta), without another decomposition.</returns>
         public static Complex32[,] EigenvalueMatrix(Complex32[] alpha, float[] beta)
             => EVD.EigenvalueMatrix(Eigenvalues(alpha, beta));
 
-        /// <summary>Detects zero denominators in a homogeneous generalized spectrum.</summary>
+        /// <summary>Detects zero denominators in a homogeneous generalized spectrum</summary>
         /// <param name="beta">Existing denominator vector.</param>
         /// <returns>True for any infinite or indeterminate eigenvalue pair; this does not test whether A itself is singular.</returns>
         public static bool IsSingular(float[] beta)
@@ -89,7 +89,7 @@ namespace UMapx.Decomposition
             return false;
         }
 
-        /// <summary>Checks compatible homogeneous spectrum lengths.</summary>
+        /// <summary>Checks compatible homogeneous spectrum lengths</summary>
         /// <param name="alpha">Numerator vector.</param>
         /// <param name="beta">Denominator vector.</param>
         private static void ValidateSpectrum(Complex32[] alpha, float[] beta)
@@ -99,7 +99,7 @@ namespace UMapx.Decomposition
             if (alpha.Length != beta.Length) throw new ArgumentException("Spectrum vectors must have equal lengths.");
         }
 
-        /// <summary>Exposes the existing real QZ kernel to the static QZ entry point.</summary>
+        /// <summary>Exposes the existing real QZ kernel to the static QZ entry point</summary>
         /// <param name="a">First matrix overwritten by its quasi-triangular form.</param>
         /// <param name="b">Second matrix overwritten by its triangular form.</param>
         /// <param name="eps">Relative convergence tolerance.</param>
@@ -110,7 +110,7 @@ namespace UMapx.Decomposition
 
 
 
-        /// <summary>Owns the real algorithm work buffers for one call only.</summary>
+        /// <summary>Owns the real algorithm work buffers for one call only</summary>
         private sealed class RealWorkspace
         {
             #region Private data

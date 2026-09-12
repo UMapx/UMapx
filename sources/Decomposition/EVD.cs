@@ -19,7 +19,7 @@ namespace UMapx.Decomposition
     /// </remarks>
     public static class EVD
     {
-        /// <summary>Computes the real EVD decomposition without modifying the inputs.</summary>
+        /// <summary>Computes the real EVD decomposition without modifying the inputs</summary>
         /// <param name="matrix">Finite nonempty input matrix.</param>
         /// <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
         /// <returns>The primary factors (V, D).</returns>
@@ -31,7 +31,7 @@ namespace UMapx.Decomposition
             return (work.V, work.D);
         }
 
-        /// <summary>Computes right eigenvectors and eigenvalues of a complex square matrix.</summary>
+        /// <summary>Computes right eigenvectors and eigenvalues of a complex square matrix</summary>
         /// <param name="matrix">Finite nonempty square matrix, not modified.</param>
         /// <param name="eps">Relative Schur deflation tolerance, with a double-roundoff floor.</param>
         /// <returns>V and D satisfying A V = V diag(D). Hermitian inputs have unitary V and real D. Defective inputs need not have independent eigenvectors.</returns>
@@ -54,7 +54,7 @@ namespace UMapx.Decomposition
             return (MatrixMath.Single(vectors), values);
         }
 
-        /// <summary>Builds the complex diagonal eigenvalue matrix from existing eigenvalues.</summary>
+        /// <summary>Builds the complex diagonal eigenvalue matrix from existing eigenvalues</summary>
         /// <param name="values">Eigenvalues in the order of the eigenvector columns.</param>
         /// <returns>diag(values), without repeating the eigenvalue calculation.</returns>
         public static Complex32[,] EigenvalueMatrix(Complex32[] values)
@@ -63,7 +63,7 @@ namespace UMapx.Decomposition
             return values.Diag();
         }
 
-        /// <summary>Builds the real block eigenvalue matrix used with real eigenvector storage.</summary>
+        /// <summary>Builds the real block eigenvalue matrix used with real eigenvector storage</summary>
         /// <param name="values">Real eigenvalues or adjacent conjugate pairs, positive imaginary part first.</param>
         /// <returns>One-dimensional real blocks and two-dimensional blocks [a,b;-b,a].</returns>
         public static float[,] RealEigenvalueMatrix(Complex32[] values)
@@ -88,17 +88,17 @@ namespace UMapx.Decomposition
             return r;
         }
 
-        /// <summary>Computes the Hessenberg form separately when intermediate reduction data are required.</summary>
+        /// <summary>Computes the Hessenberg form separately when intermediate reduction data are required</summary>
         /// <param name="matrix">Finite nonempty real square matrix.</param>
         /// <returns>The Hessenberg matrix of an independent reduction.</returns>
         public static float[,] HessenbergForm(float[,] matrix) => Hessenberg.Decompose(matrix).H;
 
-        /// <summary>Computes the complex Hessenberg form separately from eigenvector calculation.</summary>
+        /// <summary>Computes the complex Hessenberg form separately from eigenvector calculation</summary>
         /// <param name="matrix">Finite nonempty complex square matrix.</param>
         /// <returns>The Hessenberg matrix of an independent reduction.</returns>
         public static Complex32[,] HessenbergForm(Complex32[,] matrix) => Hessenberg.Decompose(matrix).H;
 
-        /// <summary>Back-substitutes homogeneous eigenvectors of an upper triangular matrix pencil.</summary>
+        /// <summary>Back-substitutes homogeneous eigenvectors of an upper triangular matrix pencil</summary>
         /// <param name="s">First upper triangular factor.</param>
         /// <param name="t">Second upper triangular factor.</param>
         /// <param name="z">Right unitary transformation to original coordinates.</param>
@@ -148,7 +148,7 @@ namespace UMapx.Decomposition
 
 
 
-        /// <summary>Owns the real algorithm work buffers for one call only.</summary>
+        /// <summary>Owns the real algorithm work buffers for one call only</summary>
         private sealed class RealWorkspace
         {
             #region Private data

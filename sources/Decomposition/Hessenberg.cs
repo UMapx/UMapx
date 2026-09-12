@@ -4,10 +4,10 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides orthogonal and unitary Hessenberg reductions.</summary>
+    /// <summary>Provides orthogonal and unitary Hessenberg reductions</summary>
     public static class Hessenberg
     {
-        /// <summary>Computes A = P H P^T.</summary>
+        /// <summary>Computes A = P H P^T</summary>
         /// <param name="matrix">Finite nonempty square matrix, not modified.</param>
         /// <returns>Orthogonal P and upper Hessenberg H.</returns>
         public static (float[,] P, float[,] H) Decompose(float[,] matrix)
@@ -16,7 +16,7 @@ namespace UMapx.Decomposition
             return (MatrixMath.Real(d.P), MatrixMath.Real(d.H));
         }
 
-        /// <summary>Computes A = P H P^H.</summary>
+        /// <summary>Computes A = P H P^H</summary>
         /// <param name="matrix">Finite nonempty complex square matrix, not modified.</param>
         /// <returns>Unitary P and upper Hessenberg H.</returns>
         public static (Complex32[,] P, Complex32[,] H) Decompose(Complex32[,] matrix)
@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
             return (MatrixMath.Single(d.P), MatrixMath.Single(d.H));
         }
 
-        /// <summary>Applies two-sided Householder similarities in double precision.</summary>
+        /// <summary>Applies two-sided Householder similarities in double precision</summary>
         /// <param name="a">Private square work buffer, overwritten by Hessenberg form.</param>
         /// <returns>The full unitary accumulator and reduced buffer.</returns>
         internal static (C[,] P, C[,] H) Factor(C[,] a)

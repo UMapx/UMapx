@@ -165,7 +165,7 @@ public class DepthAndTensorRepairTests
         Assert.Throws<ArgumentException>(() => target.Merge(source, new Rectangle(0, 0, 2, 2)));
     }
 
-    /// <summary>Checks placement against independent destination-to-source coordinate mapping.</summary>
+    /// <summary>Checks placement against independent destination-to-source coordinate mapping</summary>
     /// <param name="before">Original destination samples.</param><param name="source">Full placement samples.</param>
     /// <param name="after">Actual destination.</param><param name="x">Placement column.</param><param name="y">Placement row.</param>
     private static void AssertPlacement(ushort[,] before, ushort[,] source, ushort[,] after, int x, int y)
@@ -179,7 +179,7 @@ public class DepthAndTensorRepairTests
         }
     }
 
-    /// <summary>Finds the inclusive population rank without using a histogram or the implementation CDF.</summary>
+    /// <summary>Finds the inclusive population rank without using a histogram or the implementation CDF</summary>
     /// <param name="sorted">Ascending samples.</param><param name="value">Observed depth value.</param>
     /// <returns>The number of samples less than or equal to the value.</returns>
     private static int UpperBound(ushort[] sorted, ushort value)
@@ -193,7 +193,7 @@ public class DepthAndTensorRepairTests
         return first;
     }
 
-    /// <summary>Creates a depth map from a coordinate-based sample definition.</summary>
+    /// <summary>Creates a depth map from a coordinate-based sample definition</summary>
     /// <param name="width">Map width.</param><param name="height">Map height.</param>
     /// <param name="sample">Sample generator.</param><returns>The generated map.</returns>
     private static ushort[,] CreateDepth(int width, int height, Func<int, int, ushort> sample)

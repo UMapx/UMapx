@@ -15,7 +15,7 @@ namespace UMapx.Decomposition
     /// </remarks>
     public static class Schur
     {
-        /// <summary>Computes the real Schur decomposition without modifying the inputs.</summary>
+        /// <summary>Computes the real Schur decomposition without modifying the inputs</summary>
         /// <param name="matrix">Finite nonempty input matrix.</param>
         /// <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
         /// <returns>The primary factors (Q, T).</returns>
@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
             return (work.Q, work.T);
         }
 
-        /// <summary>Computes the complex Schur factorization A = Q T Q^H.</summary>
+        /// <summary>Computes the complex Schur factorization A = Q T Q^H</summary>
         /// <param name="matrix">Finite nonempty complex square matrix.</param>
         /// <param name="eps">Relative deflation tolerance, clamped to [0,1] with a double-roundoff floor.</param>
         /// <param name="iterations">Positive maximum number of QR steps between successive deflations.</param>
@@ -37,7 +37,7 @@ namespace UMapx.Decomposition
             return (MatrixMath.Single(d.Q), MatrixMath.Single(d.T));
         }
 
-        /// <summary>Extracts eigenvalues from an existing real quasi-triangular Schur form.</summary>
+        /// <summary>Extracts eigenvalues from an existing real quasi-triangular Schur form</summary>
         /// <param name="t">Finite square real Schur factor with isolated one- or two-dimensional blocks.</param>
         /// <returns>Eigenvalues in block order, with positive imaginary parts first in conjugate pairs.</returns>
         public static Complex32[] Eigenvalues(float[,] t)
@@ -61,7 +61,7 @@ namespace UMapx.Decomposition
             return result;
         }
 
-        /// <summary>Extracts eigenvalues from an existing complex triangular Schur form.</summary>
+        /// <summary>Extracts eigenvalues from an existing complex triangular Schur form</summary>
         /// <param name="t">Finite square triangular Schur factor.</param>
         /// <returns>The diagonal entries, without repeating the decomposition.</returns>
         public static Complex32[] Eigenvalues(Complex32[,] t)
@@ -72,7 +72,7 @@ namespace UMapx.Decomposition
             return values;
         }
 
-        /// <summary>Uses shifted QR similarities on a complex Hessenberg matrix with bounded iteration.</summary>
+        /// <summary>Uses shifted QR similarities on a complex Hessenberg matrix with bounded iteration</summary>
         /// <param name="a">Private finite square buffer.</param>
         /// <param name="eps">Relative requested deflation tolerance.</param>
         /// <param name="iterations">Maximum steps before a deflation must occur.</param>
@@ -126,7 +126,7 @@ namespace UMapx.Decomposition
             return (q, a);
         }
 
-        /// <summary>Applies an embedded unitary similarity and accumulates its right factor.</summary>
+        /// <summary>Applies an embedded unitary similarity and accumulates its right factor</summary>
         /// <param name="a">Full square work matrix.</param>
         /// <param name="q">Accumulated unitary factor.</param>
         /// <param name="rotation">Unitary transformation on a contiguous active block.</param>
@@ -158,7 +158,7 @@ namespace UMapx.Decomposition
 
 
 
-        /// <summary>Owns the real algorithm work buffers for one call only.</summary>
+        /// <summary>Owns the real algorithm work buffers for one call only</summary>
         private sealed class RealWorkspace
         {
             #region Private data

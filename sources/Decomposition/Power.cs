@@ -4,10 +4,10 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides real and complex power iteration.</summary>
+    /// <summary>Provides real and complex power iteration</summary>
     public static class Power
     {
-        /// <summary>Approximates a dominant right eigenpair by normalized power iteration.</summary>
+        /// <summary>Approximates a dominant right eigenpair by normalized power iteration</summary>
         /// <param name="matrix">Finite nonempty square matrix with a dominant eigenvalue separated in modulus.</param>
         /// <param name="iterations">Positive number of iterations; convergence also depends on the starting vector.</param>
         /// <returns>A unit vector V and its Rayleigh quotient D; a zero product returns the current vector and zero.</returns>
@@ -19,7 +19,7 @@ namespace UMapx.Decomposition
             return (v, (float)d.D.Real);
         }
 
-        /// <summary>Places an existing power-iteration vector on a diagonal without further iteration.</summary>
+        /// <summary>Places an existing power-iteration vector on a diagonal without further iteration</summary>
         /// <param name="vector">Vector returned by Decompose; these entries are eigenvector components.</param>
         /// <returns>A diagonal matrix containing the vector entries.</returns>
         public static float[,] DiagonalMatrix(float[] vector)
@@ -28,7 +28,7 @@ namespace UMapx.Decomposition
             return vector.Diag();
         }
 
-        /// <summary>Approximates a dominant right eigenpair by normalized power iteration.</summary>
+        /// <summary>Approximates a dominant right eigenpair by normalized power iteration</summary>
         /// <param name="matrix">Finite nonempty square matrix with a dominant eigenvalue separated in modulus.</param>
         /// <param name="iterations">Positive number of iterations; convergence also depends on the starting vector.</param>
         /// <returns>A unit vector V and its Rayleigh quotient D; a zero product returns the current vector and zero.</returns>
@@ -40,7 +40,7 @@ namespace UMapx.Decomposition
             return (v, new Complex32((float)d.D.Real, (float)d.D.Imaginary));
         }
 
-        /// <summary>Places an existing power-iteration vector on a diagonal without further iteration.</summary>
+        /// <summary>Places an existing power-iteration vector on a diagonal without further iteration</summary>
         /// <param name="vector">Vector returned by Decompose; these entries are eigenvector components.</param>
         /// <returns>A diagonal matrix containing the vector entries.</returns>
         public static Complex32[,] DiagonalMatrix(Complex32[] vector)
@@ -49,7 +49,7 @@ namespace UMapx.Decomposition
             return vector.Diag();
         }
 
-        /// <summary>Applies normalized matrix-vector products and computes the final Hermitian Rayleigh quotient.</summary>
+        /// <summary>Applies normalized matrix-vector products and computes the final Hermitian Rayleigh quotient</summary>
         /// <param name="a">Private square matrix.</param>
         /// <param name="iterations">Positive iteration count.</param>
         /// <returns>The unit right vector and corresponding quotient.</returns>

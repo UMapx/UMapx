@@ -4,10 +4,10 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides modified Gram-Schmidt orthogonalization.</summary>
+    /// <summary>Provides modified Gram-Schmidt orthogonalization</summary>
     public static class GramSchmidt
     {
-        /// <summary>Computes an economy QR factorization using reorthogonalized modified Gram-Schmidt.</summary>
+        /// <summary>Computes an economy QR factorization using reorthogonalized modified Gram-Schmidt</summary>
         /// <param name="matrix">Finite nonempty matrix with at least as many rows as columns.</param>
         /// <returns>Orthonormal columns Q and upper triangular R, including basis completion for dependent columns.</returns>
         public static (float[,] Q, float[,] R) Decompose(float[,] matrix)
@@ -16,7 +16,7 @@ namespace UMapx.Decomposition
             return (MatrixMath.Real(d.Q), MatrixMath.Real(d.R));
         }
 
-        /// <summary>Computes an economy QR factorization using reorthogonalized modified Gram-Schmidt.</summary>
+        /// <summary>Computes an economy QR factorization using reorthogonalized modified Gram-Schmidt</summary>
         /// <param name="matrix">Finite nonempty matrix with at least as many rows as columns.</param>
         /// <returns>Orthonormal columns Q and upper triangular R, including basis completion for dependent columns.</returns>
         public static (Complex32[,] Q, Complex32[,] R) Decompose(Complex32[,] matrix)
@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
             return (MatrixMath.Single(d.Q), MatrixMath.Single(d.R));
         }
 
-        /// <summary>Orthogonalizes columns twice and completes the basis at numerical breakdown.</summary>
+        /// <summary>Orthogonalizes columns twice and completes the basis at numerical breakdown</summary>
         /// <param name="a">Private tall or square matrix.</param>
         /// <returns>An economy orthonormal basis and its upper triangular coefficients.</returns>
         private static (C[,] Q, C[,] R) Factor(C[,] a)

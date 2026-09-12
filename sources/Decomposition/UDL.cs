@@ -4,10 +4,10 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides unpivoted UDL factorization for symmetric and Hermitian matrices.</summary>
+    /// <summary>Provides unpivoted UDL factorization for symmetric and Hermitian matrices</summary>
     public static class UDL
     {
-        /// <summary>Computes A = U diag(D) U^T without diagonal pivoting.</summary>
+        /// <summary>Computes A = U diag(D) U^T without diagonal pivoting</summary>
         /// <param name="matrix">Finite nonempty symmetric matrix with nonzero elimination pivots.</param>
         /// <returns>Unit upper triangular U and real diagonal D. Indefinite inputs are supported when no pivot vanishes.</returns>
         public static (float[,] U, float[] D) Decompose(float[,] matrix)
@@ -16,12 +16,12 @@ namespace UMapx.Decomposition
             return (MatrixMath.Real(d.F), d.D);
         }
 
-        /// <summary>Constructs the conjugate-transposed factor from an existing factor.</summary>
+        /// <summary>Constructs the conjugate-transposed factor from an existing factor</summary>
         /// <param name="factor">Square triangular factor from Decompose.</param>
         /// <returns>The lower factor.</returns>
         public static float[,] LowerFactor(float[,] factor) => MatrixMath.Real(MatrixMath.Adjoint(MatrixMath.Copy(factor, true)));
 
-        /// <summary>Computes A = U diag(D) U^H without diagonal pivoting.</summary>
+        /// <summary>Computes A = U diag(D) U^H without diagonal pivoting</summary>
         /// <param name="matrix">Finite nonempty Hermitian matrix with nonzero elimination pivots.</param>
         /// <returns>Unit upper triangular U and real diagonal D. Indefinite inputs are supported when no pivot vanishes.</returns>
         public static (Complex32[,] U, float[] D) Decompose(Complex32[,] matrix)
@@ -30,12 +30,12 @@ namespace UMapx.Decomposition
             return (MatrixMath.Single(d.F), d.D);
         }
 
-        /// <summary>Constructs the conjugate-transposed factor from an existing factor.</summary>
+        /// <summary>Constructs the conjugate-transposed factor from an existing factor</summary>
         /// <param name="factor">Square triangular factor from Decompose.</param>
         /// <returns>The lower factor.</returns>
         public static Complex32[,] LowerFactor(Complex32[,] factor) => MatrixMath.Single(MatrixMath.Adjoint(MatrixMath.Copy(factor, true)));
 
-        /// <summary>Performs Hermitian diagonal elimination in double precision without pivoting.</summary>
+        /// <summary>Performs Hermitian diagonal elimination in double precision without pivoting</summary>
         /// <param name="a">Private Hermitian square buffer.</param>
         /// <returns>A unit triangular factor and real diagonal; a zero pivot is rejected.</returns>
         private static (C[,] F, float[] D) Factor(C[,] a)

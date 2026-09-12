@@ -4,13 +4,13 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides shared double-precision work-buffer operations for matrix decompositions.</summary>
+    /// <summary>Provides shared double-precision work-buffer operations for matrix decompositions</summary>
     internal static class MatrixMath
     {
         internal const double Roundoff = 2.2204460492503131e-16;
         internal const double SingleRoundoff = 1.1920928955078125e-7;
 
-        /// <summary>Copies a finite, nonempty real matrix into complex double-precision storage.</summary>
+        /// <summary>Copies a finite, nonempty real matrix into complex double-precision storage</summary>
         /// <param name="a">Input matrix, which is not modified.</param>
         /// <param name="square">Whether equal dimensions are required.</param>
         /// <returns>An independent work buffer.</returns>
@@ -28,7 +28,7 @@ namespace UMapx.Decomposition
             return b;
         }
 
-        /// <summary>Copies a finite, nonempty complex matrix into double-precision storage.</summary>
+        /// <summary>Copies a finite, nonempty complex matrix into double-precision storage</summary>
         /// <param name="a">Input matrix, which is not modified.</param>
         /// <param name="square">Whether equal dimensions are required.</param>
         /// <returns>An independent work buffer.</returns>
@@ -47,7 +47,7 @@ namespace UMapx.Decomposition
             return b;
         }
 
-        /// <summary>Validates matrix dimensions before allocating numerical work buffers.</summary>
+        /// <summary>Validates matrix dimensions before allocating numerical work buffers</summary>
         /// <param name="a">A two-dimensional array.</param>
         /// <param name="square">Whether a square matrix is required.</param>
         internal static void CheckShape(Array a, bool square = false)
@@ -59,7 +59,7 @@ namespace UMapx.Decomposition
                 throw new ArgumentException("The matrix must be square.", nameof(a));
         }
 
-        /// <summary>Narrows a work matrix to complex single precision.</summary>
+        /// <summary>Narrows a work matrix to complex single precision</summary>
         /// <param name="a">Double-precision values.</param>
         /// <returns>A newly allocated complex matrix.</returns>
         internal static Complex32[,] Single(C[,] a)
@@ -70,7 +70,7 @@ namespace UMapx.Decomposition
             return b;
         }
 
-        /// <summary>Narrows a real-valued work matrix to single precision.</summary>
+        /// <summary>Narrows a real-valued work matrix to single precision</summary>
         /// <param name="a">Work buffer whose imaginary components are zero.</param>
         /// <returns>A newly allocated real matrix.</returns>
         internal static float[,] Real(C[,] a)
@@ -81,7 +81,7 @@ namespace UMapx.Decomposition
             return b;
         }
 
-        /// <summary>Creates an identity matrix for accumulating unitary transformations.</summary>
+        /// <summary>Creates an identity matrix for accumulating unitary transformations</summary>
         /// <param name="n">Nonnegative order.</param>
         /// <returns>The identity of order n.</returns>
         internal static C[,] Eye(int n)
@@ -91,7 +91,7 @@ namespace UMapx.Decomposition
             return a;
         }
 
-        /// <summary>Computes conjugate transposition, including for real-valued work buffers.</summary>
+        /// <summary>Computes conjugate transposition, including for real-valued work buffers</summary>
         /// <param name="a">Input matrix.</param>
         /// <returns>The conjugate transpose.</returns>
         internal static C[,] Adjoint(C[,] a)
@@ -102,7 +102,7 @@ namespace UMapx.Decomposition
             return b;
         }
 
-        /// <summary>Multiplies compatible work matrices with complex double accumulation.</summary>
+        /// <summary>Multiplies compatible work matrices with complex double accumulation</summary>
         /// <param name="a">Left matrix.</param>
         /// <param name="b">Right matrix.</param>
         /// <returns>The matrix product.</returns>
@@ -116,7 +116,7 @@ namespace UMapx.Decomposition
             return c;
         }
 
-        /// <summary>Computes a scaled Euclidean norm without squaring large or tiny entries directly.</summary>
+        /// <summary>Computes a scaled Euclidean norm without squaring large or tiny entries directly</summary>
         /// <param name="v">Vector with finite entries.</param>
         /// <returns>The nonnegative Euclidean norm.</returns>
         internal static double Norm(C[] v)
@@ -132,7 +132,7 @@ namespace UMapx.Decomposition
             return scale == 0 ? 0 : scale * Math.Sqrt(sum);
         }
 
-        /// <summary>Returns the largest entry magnitude, or zero for a zero matrix.</summary>
+        /// <summary>Returns the largest entry magnitude, or zero for a zero matrix</summary>
         /// <param name="a">Finite work matrix.</param>
         /// <returns>A nonnegative scale.</returns>
         internal static double Max(C[,] a)
@@ -142,14 +142,14 @@ namespace UMapx.Decomposition
             return scale;
         }
 
-        /// <summary>Checks the Hermitian condition with a relative single-precision tolerance.</summary>
+        /// <summary>Checks the Hermitian condition with a relative single-precision tolerance</summary>
         /// <param name="a">Square input matrix.</param>
         internal static void RequireHermitian(C[,] a)
         {
             if (!IsHermitian(a)) throw new ArgumentException("The matrix must be Hermitian (symmetric for real inputs).");
         }
 
-        /// <summary>Detects Hermitian structure to the resolution of single-precision input.</summary>
+        /// <summary>Detects Hermitian structure to the resolution of single-precision input</summary>
         /// <param name="a">Finite square work matrix.</param>
         /// <returns>True when conjugate symmetry holds within eight single-precision rounding units of the matrix scale.</returns>
         internal static bool IsHermitian(C[,] a)
@@ -164,7 +164,7 @@ namespace UMapx.Decomposition
             return true;
         }
 
-        /// <summary>Copies a rectangular leading block or a block starting at specified offsets.</summary>
+        /// <summary>Copies a rectangular leading block or a block starting at specified offsets</summary>
         /// <param name="a">Source matrix.</param>
         /// <param name="rows">Number of rows.</param>
         /// <param name="columns">Number of columns.</param>
@@ -179,7 +179,7 @@ namespace UMapx.Decomposition
             return b;
         }
 
-        /// <summary>Completes an orthonormal basis after exact or numerical breakdown.</summary>
+        /// <summary>Completes an orthonormal basis after exact or numerical breakdown</summary>
         /// <param name="q">Matrix containing orthonormal columns before column k.</param>
         /// <param name="k">Column to complete.</param>
         /// <returns>A unit vector orthogonal to the preceding columns.</returns>
@@ -200,7 +200,7 @@ namespace UMapx.Decomposition
             return best;
         }
 
-        /// <summary>Applies two passes of modified Gram-Schmidt using the Hermitian inner product.</summary>
+        /// <summary>Applies two passes of modified Gram-Schmidt using the Hermitian inner product</summary>
         /// <param name="v">Vector modified in place.</param>
         /// <param name="q">Previously computed orthonormal columns.</param>
         /// <param name="columns">Number of columns to remove.</param>
