@@ -10,7 +10,7 @@ namespace UMapx.Decomposition
         /// <summary>Computes the lower triangular factor in A = L L^T.</summary>
         /// <param name="matrix">Finite nonempty symmetric positive definite matrix.</param>
         /// <returns>L with a strictly positive diagonal.</returns>
-        public static float[,] Decompose(float[,] matrix) => InternalMatrixMath.Real(Factor(InternalMatrixMath.Copy(matrix, true)));
+        public static float[,] Decompose(float[,] matrix) => InternalRealMatrixMath.Real(Factor(InternalRealMatrixMath.Copy(matrix, true)));
 
         /// <summary>Computes the lower triangular factor in A = L L^H.</summary>
         /// <param name="matrix">Finite nonempty Hermitian positive definite matrix.</param>
@@ -20,7 +20,7 @@ namespace UMapx.Decomposition
         /// <summary>Constructs the upper factor from a previously computed lower factor.</summary>
         /// <param name="lower">Square lower Cholesky factor.</param>
         /// <returns>L^T.</returns>
-        public static float[,] UpperFactor(float[,] lower) => InternalMatrixMath.Real(InternalMatrixMath.Adjoint(InternalMatrixMath.Copy(lower, true)));
+        public static float[,] UpperFactor(float[,] lower) => InternalRealMatrixMath.Real(InternalRealMatrixMath.Transpose(InternalRealMatrixMath.Copy(lower, true)));
 
         /// <summary>Constructs the upper factor from a previously computed complex lower factor.</summary>
         /// <param name="lower">Square lower Cholesky factor.</param>
@@ -46,6 +46,28 @@ namespace UMapx.Decomposition
                         l[i, i] = Math.Sqrt(sum.Real);
                     }
                     else l[i, j] = sum / l[j, j].Real;
+                }
+            return l;
+        }
+
+        /// <summary>Computes Cholesky factors with symmetric inner products in double precision.</summary>
+        /// <param name="a">Private symmetric square input.</param>
+        /// <returns>A lower triangular factor; nonpositive pivots cause an exception.</returns>
+        internal static double[][] Factor(double[][] a)
+        {
+            InternalRealMatrixMath.RequireSymmetric(a);
+            int n = a.Length;
+            var l = InternalRealMatrixMath.Create(n, n);
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j <= i; j++)
+                {
+                    double sum = a[i][j] - InternalRealMatrixMath.Dot(l[i], l[j], j);
+                    if (i == j)
+                    {
+                        if (!(sum > 0)) throw new ArgumentException("The matrix must be positive definite.");
+                        l[i][i] = Math.Sqrt(sum);
+                    }
+                    else l[i][j] = sum / l[j][j];
                 }
             return l;
         }

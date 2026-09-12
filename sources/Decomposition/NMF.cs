@@ -1,6 +1,4 @@
 using System;
-using UMapx.Core;
-using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
@@ -14,7 +12,7 @@ namespace UMapx.Decomposition
         /// <returns>Nonnegative W of size m by rank and H of size rank by n.</returns>
         public static (float[,] W, float[,] H) Decompose(float[,] matrix, int rank, int iterations = 100)
         {
-            InternalMatrixMath.Copy(matrix);
+            InternalRealMatrixMath.Validate(matrix);
             int m = matrix.GetLength(0), n = matrix.GetLength(1);
             if (rank < 1 || rank > Math.Min(m, n)) throw new ArgumentOutOfRangeException(nameof(rank));
             if (iterations < 1) throw new ArgumentOutOfRangeException(nameof(iterations));
@@ -27,45 +25,56 @@ namespace UMapx.Decomposition
             var resultW = new float[m, rank];
             var resultH = new float[rank, n];
             if (scale == 0) return (resultW, resultH);
-            var w = new double[m, rank];
-            var h = new double[rank, n];
+            var a = InternalMatrixMath.CopyJagged(matrix);
+            InternalRealMatrixMath.Divide(a, scale);
+            var w = InternalRealMatrixMath.Create(m, rank);
+            var h = InternalRealMatrixMath.Create(rank, n);
+            var nextW = InternalRealMatrixMath.Create(m, rank);
+            var nextH = InternalRealMatrixMath.Create(rank, n);
+            var numeratorH = InternalRealMatrixMath.Create(rank, n);
+            var gram = InternalRealMatrixMath.Create(rank, rank);
             var random = new Random(1729);
-            for (int i = 0; i < m; i++) for (int k = 0; k < rank; k++) w[i, k] = 0.5 + random.NextDouble();
-            for (int k = 0; k < rank; k++) for (int j = 0; j < n; j++) h[k, j] = 0.5 + random.NextDouble();
+            for (int i = 0; i < m; i++) for (int k = 0; k < rank; k++) w[i][k] = 0.5 + random.NextDouble();
+            for (int k = 0; k < rank; k++) for (int j = 0; j < n; j++) h[k][j] = 0.5 + random.NextDouble();
             for (int step = 0; step < iterations; step++)
             {
-                var gram = new double[rank, rank];
                 for (int k = 0; k < rank; k++)
-                    for (int l = 0; l < rank; l++)
-                        for (int i = 0; i < m; i++) gram[k, l] += w[i, k] * w[i, l];
-                var nextH = new double[rank, n];
-                for (int k = 0; k < rank; k++)
-                    for (int j = 0; j < n; j++)
-                    {
-                        double numerator = 0, denominator = 0;
-                        for (int i = 0; i < m; i++) numerator += w[i, k] * (matrix[i, j] / scale);
-                        for (int l = 0; l < rank; l++) denominator += gram[k, l] * h[l, j];
-                        nextH[k, j] = denominator == 0 ? 0 : h[k, j] * numerator / denominator;
-                    }
-                h = nextH;
-                gram = new double[rank, rank];
-                for (int k = 0; k < rank; k++)
-                    for (int l = 0; l < rank; l++)
-                        for (int j = 0; j < n; j++) gram[k, l] += h[k, j] * h[l, j];
-                var nextW = new double[m, rank];
+                {
+                    Array.Clear(gram[k], 0, rank);
+                    Array.Clear(numeratorH[k], 0, n);
+                }
+                // W^T W and W^T A: keep the wide inner loop contiguous in memory.
                 for (int i = 0; i < m; i++)
                     for (int k = 0; k < rank; k++)
                     {
-                        double numerator = 0, denominator = 0;
-                        for (int j = 0; j < n; j++) numerator += (matrix[i, j] / scale) * h[k, j];
-                        for (int l = 0; l < rank; l++) denominator += w[i, l] * gram[l, k];
-                        nextW[i, k] = denominator == 0 ? 0 : w[i, k] * numerator / denominator;
+                        double weight = w[i][k];
+                        for (int l = 0; l < rank; l++) gram[k][l] += weight * w[i][l];
+                        var numerator = numeratorH[k]; var row = a[i];
+                        for (int j = 0; j < n; j++) numerator[j] += weight * row[j];
                     }
-                w = nextW;
+                for (int k = 0; k < rank; k++)
+                    for (int j = 0; j < n; j++)
+                    {
+                        double denominator = 0;
+                        for (int l = 0; l < rank; l++) denominator += gram[k][l] * h[l][j];
+                        nextH[k][j] = denominator == 0 ? 0 : h[k][j] * numeratorH[k][j] / denominator;
+                    }
+                var oldH = h; h = nextH; nextH = oldH;
+                for (int k = 0; k < rank; k++)
+                    for (int l = 0; l <= k; l++)
+                        gram[k][l] = gram[l][k] = InternalRealMatrixMath.Dot(h[k], h[l], n);
+                for (int i = 0; i < m; i++)
+                    for (int k = 0; k < rank; k++)
+                    {
+                        double numerator = InternalRealMatrixMath.Dot(a[i], h[k], n);
+                        double denominator = InternalRealMatrixMath.Dot(w[i], gram[k], rank);
+                        nextW[i][k] = denominator == 0 ? 0 : w[i][k] * numerator / denominator;
+                    }
+                var oldW = w; w = nextW; nextW = oldW;
             }
             double factorScale = Math.Sqrt(scale);
-            for (int i = 0; i < m; i++) for (int k = 0; k < rank; k++) resultW[i, k] = (float)(w[i, k] * factorScale);
-            for (int k = 0; k < rank; k++) for (int j = 0; j < n; j++) resultH[k, j] = (float)(h[k, j] * factorScale);
+            for (int i = 0; i < m; i++) for (int k = 0; k < rank; k++) resultW[i, k] = (float)(w[i][k] * factorScale);
+            for (int k = 0; k < rank; k++) for (int j = 0; j < n; j++) resultH[k, j] = (float)(h[k][j] * factorScale);
             return (resultW, resultH);
         }
     }

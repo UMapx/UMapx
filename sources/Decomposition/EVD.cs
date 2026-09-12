@@ -26,7 +26,7 @@ namespace UMapx.Decomposition
         /// <exception cref="InvalidOperationException">The QR or QL iteration limit is reached before convergence.</exception>
         public static (float[,] V, Complex32[] D) Decompose(float[,] matrix, float eps = 1e-16f)
         {
-            InternalMatrixMath.Copy(matrix, true);
+            InternalRealMatrixMath.Validate(matrix, true);
             if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
             var work = new RealWorkspace(matrix, eps);
             return (work.V, work.D);

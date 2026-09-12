@@ -103,10 +103,11 @@ namespace UMapx.Decomposition
         /// <param name="a">First matrix overwritten by its quasi-triangular form.</param>
         /// <param name="b">Second matrix overwritten by its triangular form.</param>
         /// <param name="eps">Relative convergence tolerance.</param>
+        /// <param name="q">Transposed left transformation accumulator, initially the identity.</param>
         /// <param name="z">Right transformation accumulator, initially the identity.</param>
         /// <param name="error">Zero on success, otherwise an unconverged index.</param>
-        internal static void ReduceRealPencil(float[][] a, float[][] b, float eps, float[][] z, ref int error)
-            => RealWorkspace.qzdecomp(a, b, eps, z, ref error);
+        internal static void ReduceRealPencil(double[][] a, double[][] b, float eps, double[][] q, double[][] z, ref int error)
+            => RealWorkspace.qzdecomp(a, b, eps, q, z, ref error);
 
         /// <summary>Owns the real algorithm work buffers for one call only.</summary>
         private sealed class RealWorkspace
@@ -238,24 +239,26 @@ namespace UMapx.Decomposition
             /// <param name="b">Matrix B (will be overwritten by the upper triangular form T).</param>
             /// <param name="eps">Epsilon [0, 1].</param>
             /// <param name="z">Matrix that accumulates the right orthogonal transformations.</param>
+            /// <param name="q">Transposed left orthogonal accumulator, initially the identity.</param>
             /// <param name="ierr">Convergence flag.</param>
-            internal static void qzdecomp(float[][] a, float[][] b, float eps, float[][] z, ref int ierr)
+            internal static void qzdecomp(double[][] a, double[][] b, float eps, double[][] q, double[][] z, ref int ierr)
             {
                 int n = a.Length;
-                var first = InternalMatrixMath.CopyJagged(a);
-                var second = InternalMatrixMath.CopyJagged(b);
-                var vectors = InternalMatrixMath.CopyJagged(z);
-                double scale = InternalMatrixMath.ScalePair(first, second);
-                qzhes(n, first, second, true, vectors);
-                qzit(n, first, second, eps, true, vectors, ref ierr);
+                // Independent scales preserve a small B even when A uses much larger units.
+                double scaleA = InternalRealMatrixMath.Max(a), scaleB = InternalRealMatrixMath.Max(b);
+                if (scaleA == 0) scaleA = 1;
+                if (scaleB == 0) scaleB = 1;
+                InternalRealMatrixMath.Divide(a, scaleA);
+                InternalRealMatrixMath.Divide(b, scaleB);
+                qzhes(n, a, b, true, z, q);
+                qzit(n, a, b, Maths.Float(eps), true, z, ref ierr, q);
                 // The bottom-left entry is scratch storage for epsb, not part of T.
-                if (n > 1) second[n - 1][0] = 0;
+                if (n > 1) b[n - 1][0] = 0;
                 for (int i = 0; i < n; i++)
                     for (int j = 0; j < n; j++)
                     {
-                        a[i][j] = (float)(first[i][j] * scale);
-                        b[i][j] = (float)(second[i][j] * scale);
-                        z[i][j] = (float)vectors[i][j];
+                        a[i][j] *= scaleA;
+                        b[i][j] *= scaleB;
                     }
             }
             /// <summary>
@@ -277,7 +280,8 @@ namespace UMapx.Decomposition
             /// <param name="z">
             /// Right transformation accumulator Z (n×n). If <paramref name="matz"/> is true, updated as Z ← ZG; otherwise unused.
             /// </param>
-            private static void qzhes(int n, double[][] a, double[][] b, bool matz, double[][] z)
+            /// <param name="left">Optional transposed left orthogonal accumulator, initially the identity.</param>
+            private static void qzhes(int n, double[][] a, double[][] b, bool matz, double[][] z, double[][] left = null)
             {
                 int i, j, k, l;
                 double r, s, t;
@@ -331,6 +335,14 @@ namespace UMapx.Decomposition
                             a[i][j] += t * b[i][l];
                     }
 
+                    if (left != null)
+                    {
+                        var reflection = new double[n - l];
+                        double divisor = Math.Sqrt(2 * rho);
+                        for (i = l; i < n; i++) reflection[i - l] = b[i][l] / divisor;
+                        InternalRealMatrixMath.ReflectLeft(left, reflection, l, 0);
+                    }
+
                     b[l][l] = -s * r;
                     for (i = l1; i < n; ++i)
                         b[i][l] = 0.0f;
@@ -374,6 +386,9 @@ namespace UMapx.Decomposition
                             b[l][j] += t * v1;
                             b[l1][j] += t * v2;
                         }
+
+                        if (left != null)
+                            InternalRealMatrixMath.ReflectRows(left, l, l1, u2, v1, v2);
 
                         // Zero b(l+1,l)
                         s = (System.Math.Abs(b[l1][l1])) + (System.Math.Abs(b[l1][l]));
@@ -435,7 +450,8 @@ namespace UMapx.Decomposition
             /// <param name="ierr">
             /// Output status: 0 if all subdiagonals converged; otherwise set to <c>en+1</c> at failure as in EISPACK.
             /// </param>
-            private static void qzit(int n, double[][] a, double[][] b, double eps1, bool matz, double[][] z, ref int ierr)
+            /// <param name="left">Optional transposed left orthogonal accumulator from the Hessenberg reduction.</param>
+            private static void qzit(int n, double[][] a, double[][] b, double eps1, bool matz, double[][] z, ref int ierr, double[][] left = null)
             {
 
                 int i, j, k, l = 0;
@@ -554,6 +570,9 @@ namespace UMapx.Decomposition
                     b[l][j] += t * v1;
                     b[l1][j] += t * v2;
                 }
+
+                if (left != null)
+                    InternalRealMatrixMath.ReflectRows(left, l, l1, u2, v1, v2);
 
                 if (l != 0)
                     a[l][lm1] = -a[l][lm1];
@@ -681,6 +700,9 @@ namespace UMapx.Decomposition
                         b[k1][j] += t * v2;
                     }
 
+                    if (left != null)
+                        InternalRealMatrixMath.ReflectRows(left, k, k1, u2, v1, v2);
+
                     if (k != l)
                         a[k1][km1] = 0.0f;
                     goto L240;
@@ -717,6 +739,9 @@ namespace UMapx.Decomposition
                         b[k1][j] += t * v2;
                         b[k2][j] += t * v3;
                     }
+
+                    if (left != null)
+                        InternalRealMatrixMath.ReflectRows(left, k, k1, k2, u2, u3, v1, v2, v3);
 
                     if (k == l) goto L220;
                     a[k1][km1] = 0.0f;

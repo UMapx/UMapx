@@ -12,8 +12,8 @@ namespace UMapx.Decomposition
         /// <returns>Full square U and V and upper bidiagonal B with the same dimensions as the input.</returns>
         public static (float[,] U, float[,] B, float[,] V) Decompose(float[,] matrix)
         {
-            var d = Factor(InternalMatrixMath.Copy(matrix));
-            return (InternalMatrixMath.Real(d.U), InternalMatrixMath.Real(d.B), InternalMatrixMath.Real(d.V));
+            var d = Factor(InternalRealMatrixMath.Copy(matrix));
+            return (InternalRealMatrixMath.Real(d.U), InternalRealMatrixMath.Real(d.B), InternalRealMatrixMath.Real(d.V));
         }
 
         /// <summary>Computes A = U B V^H by two-sided Householder reduction.</summary>
@@ -46,6 +46,32 @@ namespace UMapx.Decomposition
                 InternalMatrixMath.ReflectRight(a, right, k + 1, k);
                 InternalMatrixMath.ReflectRight(v, right, k + 1, 0);
                 for (int j = k + 2; j < n; j++) a[k, j] = 0;
+            }
+            return (u, a, v);
+        }
+
+        /// <summary>Alternates left and right reflections to obtain upper bidiagonal form.</summary>
+        /// <param name="a">Private rectangular input buffer, overwritten by B.</param>
+        /// <returns>Accumulated orthogonal factors and the bidiagonal buffer.</returns>
+        internal static (double[][] U, double[][] B, double[][] V) Factor(double[][] a)
+        {
+            int m = a.Length, n = a[0].Length;
+            var scratch = new double[Math.Max(m, n)];
+            var u = InternalRealMatrixMath.Eye(m);
+            var v = InternalRealMatrixMath.Eye(n);
+            for (int k = 0; k < Math.Min(m, n); k++)
+            {
+                var left = InternalRealMatrixMath.Column(a, k, k);
+                left = InternalRealMatrixMath.HouseholderVector(left);
+                InternalRealMatrixMath.ReflectLeft(a, left, k, k, scratch);
+                InternalRealMatrixMath.ReflectRight(u, left, k, 0);
+                for (int i = k + 1; i < m; i++) a[i][k] = 0;
+                if (k + 1 >= n) continue;
+                var right = InternalRealMatrixMath.Row(a, k, k + 1);
+                right = InternalRealMatrixMath.HouseholderVector(right);
+                InternalRealMatrixMath.ReflectRight(a, right, k + 1, k);
+                InternalRealMatrixMath.ReflectRight(v, right, k + 1, 0);
+                for (int j = k + 2; j < n; j++) a[k][j] = 0;
             }
             return (u, a, v);
         }

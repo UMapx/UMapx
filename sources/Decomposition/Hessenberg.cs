@@ -12,8 +12,8 @@ namespace UMapx.Decomposition
         /// <returns>Orthogonal P and upper Hessenberg H.</returns>
         public static (float[,] P, float[,] H) Decompose(float[,] matrix)
         {
-            var d = Factor(InternalMatrixMath.Copy(matrix, true));
-            return (InternalMatrixMath.Real(d.P), InternalMatrixMath.Real(d.H));
+            var d = Factor(InternalRealMatrixMath.Copy(matrix, true));
+            return (InternalRealMatrixMath.Real(d.P), InternalRealMatrixMath.Real(d.H));
         }
 
         /// <summary>Computes A = P H P^H.</summary>
@@ -40,6 +40,26 @@ namespace UMapx.Decomposition
                 InternalMatrixMath.ReflectRight(a, v, k + 1, 0);
                 InternalMatrixMath.ReflectRight(p, v, k + 1, 0);
                 for (int i = k + 2; i < n; i++) a[i, k] = 0;
+            }
+            return (p, a);
+        }
+
+        /// <summary>Applies two-sided Householder similarities in double precision.</summary>
+        /// <param name="a">Private square work buffer, overwritten by Hessenberg form.</param>
+        /// <returns>The full orthogonal accumulator and reduced buffer.</returns>
+        internal static (double[][] P, double[][] H) Factor(double[][] a)
+        {
+            int n = a.Length;
+            var scratch = new double[n];
+            var p = InternalRealMatrixMath.Eye(n);
+            for (int k = 0; k < n - 2; k++)
+            {
+                var v = InternalRealMatrixMath.Column(a, k, k + 1);
+                v = InternalRealMatrixMath.HouseholderVector(v);
+                InternalRealMatrixMath.ReflectLeft(a, v, k + 1, k, scratch);
+                InternalRealMatrixMath.ReflectRight(a, v, k + 1, 0);
+                InternalRealMatrixMath.ReflectRight(p, v, k + 1, 0);
+                for (int i = k + 2; i < n; i++) a[i][k] = 0;
             }
             return (p, a);
         }

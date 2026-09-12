@@ -13,8 +13,8 @@ namespace UMapx.Decomposition
         /// <returns>A unit vector V and its Rayleigh quotient D; a zero product returns the current vector and zero.</returns>
         public static (float[] V, float D) Decompose(float[,] matrix, int iterations = 100)
         {
-            var d = Iterate(InternalMatrixMath.Copy(matrix, true), iterations);
-            return (InternalMatrixMath.Real(d.V), (float)d.D.Real);
+            var d = Iterate(InternalRealMatrixMath.Copy(matrix, true), iterations);
+            return (InternalRealMatrixMath.Real(d.V), (float)d.D);
         }
 
         /// <summary>Places an existing power-iteration vector on a diagonal without further iteration.</summary>
@@ -66,6 +66,30 @@ namespace UMapx.Decomposition
             C eigenvalue = 0;
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < n; j++) eigenvalue += C.Conjugate(v[i]) * a[i, j] * v[j];
+            return (v, eigenvalue);
+        }
+
+        /// <summary>Applies normalized matrix-vector products and computes the final symmetric Rayleigh quotient.</summary>
+        /// <param name="a">Private square matrix.</param>
+        /// <param name="iterations">Positive iteration count.</param>
+        /// <returns>The unit right vector and corresponding quotient.</returns>
+        private static (double[] V, double D) Iterate(double[][] a, int iterations)
+        {
+            if (iterations < 1) throw new ArgumentOutOfRangeException(nameof(iterations));
+            int n = a.Length;
+            var v = new double[n];
+            for (int i = 0; i < n; i++) v[i] = 1 / Math.Sqrt(n);
+            for (int step = 0; step < iterations; step++)
+            {
+                var w = InternalRealMatrixMath.Multiply(a, v);
+                double norm = InternalRealMatrixMath.Norm(w);
+                if (norm == 0) return (v, 0);
+                InternalRealMatrixMath.Divide(w, norm);
+                v = w;
+            }
+            double eigenvalue = 0;
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++) eigenvalue += (v[i]) * a[i][j] * v[j];
             return (v, eigenvalue);
         }
     }

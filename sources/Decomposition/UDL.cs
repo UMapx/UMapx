@@ -12,14 +12,14 @@ namespace UMapx.Decomposition
         /// <returns>Unit upper triangular U and real diagonal D. Indefinite inputs are supported when no pivot vanishes.</returns>
         public static (float[,] U, float[] D) Decompose(float[,] matrix)
         {
-            var d = Factor(InternalMatrixMath.Copy(matrix, true));
-            return (InternalMatrixMath.Real(d.F), d.D);
+            var d = Factor(InternalRealMatrixMath.Copy(matrix, true));
+            return (InternalRealMatrixMath.Real(d.F), d.D);
         }
 
         /// <summary>Constructs the conjugate-transposed factor from an existing factor.</summary>
         /// <param name="factor">Square triangular factor from Decompose.</param>
         /// <returns>The lower factor.</returns>
-        public static float[,] LowerFactor(float[,] factor) => InternalMatrixMath.Real(InternalMatrixMath.Adjoint(InternalMatrixMath.Copy(factor, true)));
+        public static float[,] LowerFactor(float[,] factor) => InternalRealMatrixMath.Real(InternalRealMatrixMath.Transpose(InternalRealMatrixMath.Copy(factor, true)));
 
         /// <summary>Computes A = U diag(D) U^H without diagonal pivoting.</summary>
         /// <param name="matrix">Finite nonempty Hermitian matrix with nonzero elimination pivots.</param>
@@ -66,6 +66,34 @@ namespace UMapx.Decomposition
                         sum -= f[i, k] * d[k] * C.Conjugate(f[j, k]);
                     }
                     f[i, j] = sum / pivot;
+                }
+            }
+            var diagonal = new float[n];
+            for (int i = 0; i < n; i++) diagonal[i] = (float)d[i];
+            return (f, diagonal);
+        }
+
+        /// <summary>Performs symmetric diagonal elimination in double precision without pivoting.</summary>
+        /// <param name="a">Private symmetric square buffer.</param>
+        /// <returns>A unit triangular factor and real diagonal; a zero pivot is rejected.</returns>
+        private static (double[][] F, float[] D) Factor(double[][] a)
+        {
+            InternalRealMatrixMath.RequireSymmetric(a);
+            int n = a.Length;
+            var f = InternalRealMatrixMath.Eye(n);
+            var d = new double[n];
+            for (int step = 0; step < n; step++)
+            {
+                int j = n - 1 - step;
+                int start = j + 1;
+                var pivotRow = f[j];
+                double pivot = a[j][j] - InternalRealMatrixMath.WeightedDot(pivotRow, pivotRow, d, start, step);
+                if (pivot == 0) throw new InvalidOperationException("A zero pivot requires a pivoted symmetric factorization.");
+                d[j] = pivot;
+                for (int next = step + 1; next < n; next++)
+                {
+                    int i = n - 1 - next;
+                    f[i][j] = (a[i][j] - InternalRealMatrixMath.WeightedDot(f[i], pivotRow, d, start, step)) / pivot;
                 }
             }
             var diagonal = new float[n];

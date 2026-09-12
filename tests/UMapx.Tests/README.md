@@ -63,6 +63,12 @@ dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filte
 dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter "FullyQualifiedName~IsolatedLargeEigenvalueDoesNotCorruptSmallBlockEigenvectors"
 ```
 
+For reproducible decomposition timings across library versions, use the
+[standalone comparison runner](../UMapx.DecompositionBenchmarks/README.md).
+`DecompositionPerformanceRepairTests` covers numerical accuracy of the optimized
+real kernels, QZ accumulation, Lanczos reorthogonalization, and NMF workspace
+reuse. Wall-clock performance thresholds are kept outside the unit suite.
+
 Categories describe subject areas, not operating-system compatibility.
 For example, [ApproximationRepairTests.cs](ApproximationRepairTests.cs) contains
 bitmap tests under `Category=Analysis`. Excluding `Imaging`, `Geometry`,

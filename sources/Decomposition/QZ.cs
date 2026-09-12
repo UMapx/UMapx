@@ -14,21 +14,18 @@ namespace UMapx.Decomposition
         /// <returns>Orthogonal Q and Z, quasi-triangular S, and upper triangular T.</returns>
         public static (float[,] Q, float[,] S, float[,] T, float[,] Z) Decompose(float[,] a, float[,] b, float eps = 1e-16f)
         {
-            var first = InternalMatrixMath.Copy(a, true);
-            var second = InternalMatrixMath.Copy(b, true);
+            var s = InternalRealMatrixMath.Copy(a, true);
+            var t = InternalRealMatrixMath.Copy(b, true);
             if (a.GetLength(0) != b.GetLength(0)) throw new ArgumentException("The matrices must have equal orders.");
             if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
-            var s = Jagged.ToJagged(a);
-            var t = Jagged.ToJagged(b);
             int n = a.GetLength(0), error = 0;
-            var z = Jagged.ToJagged(Matrice.Eye(n, n));
-            GEVD.ReduceRealPencil(s, t, eps, z, ref error);
+            // Store Q^T so each left reflection updates contiguous rows.
+            var q = InternalRealMatrixMath.Eye(n);
+            var z = InternalRealMatrixMath.Eye(n);
+            GEVD.ReduceRealPencil(s, t, eps, q, z, ref error);
             if (error != 0) throw new InvalidOperationException("Real QZ decomposition failed to converge.");
-            var ss = Jagged.FromJagged(s);
-            var tt = Jagged.FromJagged(t);
-            var zz = Jagged.FromJagged(z);
-            var q = RecoverLeft(first, second, InternalMatrixMath.Copy(ss), InternalMatrixMath.Copy(tt), InternalMatrixMath.Copy(zz));
-            return (InternalMatrixMath.Real(q), ss, tt, zz);
+            return (InternalRealMatrixMath.RealTranspose(q), InternalRealMatrixMath.Real(s),
+                    InternalRealMatrixMath.Real(t), InternalRealMatrixMath.Real(z));
         }
 
         /// <summary>Computes the complex generalized Schur factors A = Q S Z^H and B = Q T Z^H.</summary>
@@ -43,52 +40,6 @@ namespace UMapx.Decomposition
             if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
             var d = Factor(InternalMatrixMath.Copy(a, true), InternalMatrixMath.Copy(b, true), eps, iterations);
             return (InternalMatrixMath.Single(d.Q), InternalMatrixMath.Single(d.S), InternalMatrixMath.Single(d.T), InternalMatrixMath.Single(d.Z));
-        }
-
-        /// <summary>Recovers the real left transformation from both transformed matrices, including singular B.</summary>
-        /// <param name="a">Original first matrix.</param>
-        /// <param name="b">Original second matrix.</param>
-        /// <param name="s">First Schur form.</param>
-        /// <param name="t">Second Schur form.</param>
-        /// <param name="z">Accumulated right transformation.</param>
-        /// <returns>An orthogonal left factor, completed on any common left nullspace.</returns>
-        private static C[,] RecoverLeft(C[,] a, C[,] b, C[,] s, C[,] t, C[,] z)
-        {
-            int n = a.GetLength(0);
-            double sa = Math.Max(InternalMatrixMath.Max(a), InternalMatrixMath.Max(s));
-            double sb = Math.Max(InternalMatrixMath.Max(b), InternalMatrixMath.Max(t));
-            if (sa == 0) sa = 1;
-            if (sb == 0) sb = 1;
-            var az = InternalMatrixMath.Multiply(a, z);
-            var bz = InternalMatrixMath.Multiply(b, z);
-            var c = new C[n, 2 * n];
-            var d = new C[n, 2 * n];
-            for (int i = 0; i < n; i++)
-                for (int j = 0; j < n; j++)
-                {
-                    c[i, j] = s[i, j] / sa; c[i, j + n] = t[i, j] / sb;
-                    d[i, j] = az[i, j] / sa; d[i, j + n] = bz[i, j] / sb;
-                }
-            var svd = SVD.Factor(c, 100);
-            var w = InternalMatrixMath.Multiply(d, svd.V);
-            double cutoff = n * 8 * InternalMatrixMath.SingleRoundoff * svd.S[0];
-            for (int j = 0; j < n; j++)
-            {
-                if (svd.S[j] > cutoff)
-                {
-                    var column = new C[n];
-                    for (int i = 0; i < n; i++) column[i] = w[i, j] / svd.S[j];
-                    InternalMatrixMath.Orthogonalize(column, w, j);
-                    double norm = InternalMatrixMath.Norm(column);
-                    for (int i = 0; i < n; i++) w[i, j] = column[i] / norm;
-                }
-                else
-                {
-                    var column = InternalMatrixMath.Complete(w, j);
-                    InternalMatrixMath.SetColumn(w, j, column);
-                }
-            }
-            return InternalMatrixMath.Multiply(w, InternalMatrixMath.Adjoint(svd.U));
         }
 
         /// <summary>Reduces a complex pencil by unitary Hessenberg-triangular reduction and implicit single-shift QZ.</summary>

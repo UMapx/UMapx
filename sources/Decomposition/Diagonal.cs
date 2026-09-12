@@ -12,7 +12,7 @@ namespace UMapx.Decomposition
         /// <returns>A column-normalized B and the original diagonal D.</returns>
         public static (float[,] B, float[] D) Decompose(float[,] matrix)
         {
-            InternalMatrixMath.Copy(matrix, true);
+            InternalRealMatrixMath.Validate(matrix, true);
             int n = matrix.GetLength(0);
             var d = new float[n];
             var b = (float[,])matrix.Clone();

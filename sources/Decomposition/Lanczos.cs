@@ -9,25 +9,24 @@ namespace UMapx.Decomposition
     {
         /// <summary>Computes a symmetric Lanczos tridiagonalization.</summary>
         /// <param name="matrix">Finite nonempty symmetric square matrix.</param>
-        /// <param name="full">Whether to perform a second full reorthogonalization pass.</param>
+        /// <param name="full">Whether to always perform a second reorthogonalization pass; otherwise it is applied when cancellation requires it.</param>
         /// <returns>Q and tridiagonal T satisfying A = Q T Q^T.</returns>
         public static (float[,] Q, float[,] T) Decompose(float[,] matrix, bool full = false)
         {
-            var a = InternalMatrixMath.Copy(matrix, true);
-            InternalMatrixMath.RequireHermitian(a);
+            var a = InternalRealMatrixMath.Copy(matrix, true);
+            InternalRealMatrixMath.RequireSymmetric(a);
             var d = Arnoldi.Factor(a, full);
             int n = a.GetLength(0);
             for (int i = 0; i < n; i++)
             {
-                d.H[i, i] = d.H[i, i].Real;
-                for (int j = i + 1; j < n; j++) d.H[i, j] = j == i + 1 ? C.Conjugate(d.H[j, i]) : C.Zero;
+                for (int j = i + 1; j < n; j++) d.H[i][j] = j == i + 1 ? d.H[j][i] : 0;
             }
-            return (InternalMatrixMath.Real(d.Q), InternalMatrixMath.Real(d.H));
+            return (InternalRealMatrixMath.Real(d.Q), InternalRealMatrixMath.Real(d.H));
         }
 
         /// <summary>Computes a Hermitian Lanczos tridiagonalization.</summary>
         /// <param name="matrix">Finite nonempty Hermitian square matrix.</param>
-        /// <param name="full">Whether to perform a second full reorthogonalization pass.</param>
+        /// <param name="full">Whether to always perform a second reorthogonalization pass; otherwise it is applied when cancellation requires it.</param>
         /// <returns>Q and tridiagonal T satisfying A = Q T Q^H.</returns>
         public static (Complex32[,] Q, Complex32[,] T) Decompose(Complex32[,] matrix, bool full = false)
         {

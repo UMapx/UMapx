@@ -10,13 +10,13 @@ namespace UMapx.Decomposition
         /// <summary>Computes A = U1 diag(S1) X and B = U2 diag(S2) X.</summary>
         /// <param name="a">Finite m by n matrix with m >= n.</param>
         /// <param name="b">Finite p by n matrix with p >= n. The stacked pair must have full column rank.</param>
-        /// <param name="iterations">Positive maximum Jacobi SVD sweeps.</param>
+        /// <param name="iterations">Positive maximum QR sweeps per singular value.</param>
         /// <returns>Orthonormal U1 and U2, nonnegative S1 and S2 with S1^2+S2^2=1, and invertible X.</returns>
         public static (float[,] U1, float[] S1, float[,] U2, float[] S2, float[,] X)
             Decompose(float[,] a, float[,] b, int iterations = 50)
         {
-            var d = Factor(InternalMatrixMath.Copy(a), InternalMatrixMath.Copy(b), iterations);
-            return (InternalMatrixMath.Real(d.U1), d.S1, InternalMatrixMath.Real(d.U2), d.S2, InternalMatrixMath.Real(d.X));
+            var d = Factor(InternalRealMatrixMath.Copy(a), InternalRealMatrixMath.Copy(b), iterations);
+            return (InternalRealMatrixMath.Real(d.U1), d.S1, InternalRealMatrixMath.Real(d.U2), d.S2, InternalRealMatrixMath.Real(d.X));
         }
 
         /// <summary>Computes A = U1 diag(S1) X and B = U2 diag(S2) X.</summary>
@@ -67,7 +67,7 @@ namespace UMapx.Decomposition
         /// <summary>Combines independently scaled stacked QR with complementary block SVDs.</summary>
         /// <param name="a">Private tall first matrix.</param>
         /// <param name="b">Private tall second matrix with the same column count.</param>
-        /// <param name="iterations">Jacobi sweep limit.</param>
+        /// <param name="iterations">Positive SVD iteration limit.</param>
         /// <returns>Economy GSVD factors, with completed orthonormal columns for zero sine values.</returns>
         private static (C[,] U1, float[] S1, C[,] U2, float[] S2, C[,] X) Factor(C[,] a, C[,] b, int iterations)
         {
@@ -182,6 +182,127 @@ namespace UMapx.Decomposition
                 for (int i = 0; i < n; i++) v[i, j] = right[i, j];
                 for (int i = 0; i < rows; i++)
                     lower[i, j] = complement.U[i, count - 1 - j] * complement.S[count - 1 - j];
+            }
+        }
+
+        /// <summary>Combines independently scaled stacked QR with complementary block SVDs.</summary>
+        /// <param name="a">Private tall first matrix.</param>
+        /// <param name="b">Private tall second matrix with the same column count.</param>
+        /// <param name="iterations">Positive SVD iteration limit.</param>
+        /// <returns>Economy GSVD factors, with completed orthonormal columns for zero sine values.</returns>
+        private static (double[][] U1, float[] S1, double[][] U2, float[] S2, double[][] X) Factor(double[][] a, double[][] b, int iterations)
+        {
+            int m = a.Length, p = b.Length, n = a[0].Length;
+            if (b[0].Length != n || m < n || p < n)
+                throw new ArgumentException("Both matrices must have the same column count and at least that many rows.");
+            // Equalize the input units before QR. Otherwise the smaller block can be lost
+            // when the larger block's singular values round to one, leaving its basis unresolved.
+            double scaleA = InternalRealMatrixMath.Max(a), scaleB = InternalRealMatrixMath.Max(b);
+            if (scaleA == 0) scaleA = 1;
+            if (scaleB == 0) scaleB = 1;
+            var stacked = InternalRealMatrixMath.Create(m + p, n);
+            for (int j = 0; j < n; j++)
+            {
+                for (int i = 0; i < m; i++) stacked[i][j] = a[i][j] / scaleA;
+                for (int i = 0; i < p; i++) stacked[m + i][j] = b[i][j] / scaleB;
+            }
+            var qr = QR.Factor(stacked, full: false);
+            var r = InternalRealMatrixMath.Block(qr.R, n, n);
+            double threshold = 32 * InternalRealMatrixMath.Roundoff * InternalRealMatrixMath.Max(r);
+            for (int i = 0; i < n; i++)
+                if (Math.Abs(r[i][i]) <= threshold) throw new ArgumentException("The stacked matrix must have full column rank.");
+            var svd = SVD.Factor(InternalRealMatrixMath.Block(qr.Q, m, n), iterations);
+            var w = InternalRealMatrixMath.Multiply(InternalRealMatrixMath.Block(qr.Q, p, n, m), svd.V);
+            RefineComplement(svd.U, svd.S, svd.V, w, iterations);
+            var x = InternalRealMatrixMath.Multiply(InternalRealMatrixMath.Transpose(svd.V), r);
+            var s1 = new float[n];
+            var s2 = new float[n];
+            var u2 = InternalRealMatrixMath.Create(p, n);
+            var basis = InternalRealMatrixMath.Create(p, n);
+            var zero = new bool[n];
+            int count = 0;
+            for (int j = 0; j < n; j++)
+            {
+                var column = InternalRealMatrixMath.Column(w, j);
+                double sine = InternalRealMatrixMath.Norm(column);
+                if (sine <= 64 * InternalRealMatrixMath.Roundoff) { sine = 0; zero[j] = true; }
+                else
+                {
+                    InternalRealMatrixMath.Divide(column, sine);
+                    InternalRealMatrixMath.SetColumn(u2, j, column);
+                    InternalRealMatrixMath.SetColumn(basis, count, column);
+                    count++;
+                }
+                // Restore each input scale through the diagonal factors and shared X.
+                // This preserves S1^2 + S2^2 = 1 without changing either orthonormal basis.
+                sine *= scaleB;
+                double cosine = svd.S[j] * scaleA;
+                double normalization = Math.Sqrt(cosine * cosine + sine * sine);
+                s1[j] = (float)(cosine / normalization);
+                s2[j] = (float)(sine / normalization);
+                for (int k = 0; k < n; k++) x[j][k] *= normalization;
+            }
+            for (int j = 0; j < n; j++)
+                if (zero[j])
+                {
+                    var column = InternalRealMatrixMath.Complete(basis, count);
+                    InternalRealMatrixMath.SetColumn(u2, j, column);
+                    InternalRealMatrixMath.SetColumn(basis, count, column);
+                    count++;
+                }
+            return (svd.U, s1, u2, s2, x);
+        }
+
+        /// <summary>Resolves small sine values through the lower block instead of subtracting nearly equal cosines.</summary>
+        /// <param name="u">Upper left singular vectors, updated within the large-cosine subspace.</param>
+        /// <param name="cosines">Descending upper singular values, updated after the common rotation.</param>
+        /// <param name="v">Common right singular vectors, updated in place.</param>
+        /// <param name="lower">Lower orthonormal block multiplied by v, updated by the same rotation.</param>
+        /// <param name="iterations">Positive maximum QR sweeps per singular value in the complementary SVD.</param>
+        /// <remarks>
+        /// For cosines above sqrt(1/2), the upper vectors remain well conditioned under rotation.
+        /// The lower block supplies accurate directions even when the corresponding cosines round to one.
+        /// Projections onto the remaining lower columns remove only stacked-QR roundoff.
+        /// </remarks>
+        private static void RefineComplement(double[][] u, double[] cosines, double[][] v, double[][] lower, int iterations)
+        {
+            int n = cosines.Length, count = 0;
+            while (count < n && cosines[count] > Math.Sqrt(0.5)) count++;
+            if (count == 0) return;
+
+            int rows = lower.Length;
+            var basis = InternalRealMatrixMath.Create(rows, n - count);
+            for (int j = count; j < n; j++)
+            {
+                var column = InternalRealMatrixMath.Column(lower, j);
+                InternalRealMatrixMath.Orthogonalize(column, basis, j - count);
+                InternalRealMatrixMath.Divide(column, InternalRealMatrixMath.Norm(column));
+                InternalRealMatrixMath.SetColumn(basis, j - count, column);
+            }
+            var small = InternalRealMatrixMath.Create(rows, count);
+            for (int j = 0; j < count; j++)
+            {
+                var column = InternalRealMatrixMath.Column(lower, j);
+                InternalRealMatrixMath.Orthogonalize(column, basis, n - count);
+                InternalRealMatrixMath.SetColumn(small, j, column);
+            }
+            var complement = SVD.Factor(small, iterations);
+            // Reverse the sine order to retain descending cosines within this subspace.
+            var rotation = InternalRealMatrixMath.Create(count, count);
+            for (int i = 0; i < count; i++)
+                for (int j = 0; j < count; j++) rotation[i][j] = complement.V[i][count - 1 - j];
+            var upper = InternalRealMatrixMath.Block(u, u.Length, count);
+            for (int i = 0; i < upper.Length; i++)
+                for (int j = 0; j < count; j++) upper[i][j] *= cosines[j];
+            upper = InternalRealMatrixMath.Multiply(upper, rotation);
+            var right = InternalRealMatrixMath.Multiply(InternalRealMatrixMath.Block(v, n, count), rotation);
+            for (int j = 0; j < count; j++)
+            {
+                cosines[j] = InternalRealMatrixMath.ColumnNorm(upper, j);
+                for (int i = 0; i < u.Length; i++) u[i][j] = upper[i][j] / cosines[j];
+                for (int i = 0; i < n; i++) v[i][j] = right[i][j];
+                for (int i = 0; i < rows; i++)
+                    lower[i][j] = complement.U[i][count - 1 - j] * complement.S[count - 1 - j];
             }
         }
     }

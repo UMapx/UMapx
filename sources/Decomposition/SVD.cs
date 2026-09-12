@@ -21,8 +21,8 @@ namespace UMapx.Decomposition
         /// <returns>U of size m by k, descending nonnegative S of length k, and V of size n by k, where k=min(m,n).</returns>
         public static (float[,] U, float[] S, float[,] V) Decompose(float[,] matrix, int iterations = 10)
         {
-            var work = new RealWorkspace(matrix, iterations);
-            return (work.U, work.S, work.V);
+            var d = Factor(InternalRealMatrixMath.Copy(matrix), iterations);
+            return (InternalRealMatrixMath.Real(d.U), InternalMatrixMath.Single(d.S), InternalRealMatrixMath.Real(d.V));
         }
 
         /// <summary>Computes the economy complex SVD, A = U diag(S) V^H, using one-sided Jacobi sweeps.</summary>
@@ -201,15 +201,22 @@ namespace UMapx.Decomposition
             return (u, singular, v);
         }
 
+        /// <summary>Consumes a private real buffer without narrowing intermediate singular factors.</summary>
+        internal static (double[][] U, double[] S, double[][] V) Factor(double[][] a, int iterations = 50)
+        {
+            var work = new RealWorkspace(a, iterations);
+            return (work.U, work.S, work.V);
+        }
+
         /// <summary>Owns the real algorithm work buffers for one call only.</summary>
         private sealed class RealWorkspace
         {
             #region Private data
             private int n, m;
             private int iterations;
-            private float[][] Ur;
-            private float[][] Vr;
-            private float[] Sr;
+            private double[][] Ur;
+            private double[][] Vr;
+            private double[] Sr;
             private bool reversed;
             #endregion
 
@@ -221,24 +228,24 @@ namespace UMapx.Decomposition
             /// <param name="iterations">Positive maximum number of QR sweeps per singular value.</param>
             /// <exception cref="ArgumentException">The matrix is empty or contains nonfinite entries.</exception>
             /// <exception cref="InvalidOperationException">The QR iteration limit is reached before convergence.</exception>
-            public RealWorkspace(float[,] A, int iterations = 10)
+            public RealWorkspace(double[][] A, int iterations = 10)
             {
                 if (A == null) throw new ArgumentNullException(nameof(A));
-                if (A.GetLength(0) == 0 || A.GetLength(1) == 0)
+                if (A.Length == 0 || A[0].Length == 0)
                     throw new ArgumentException("The matrix must be nonempty.", nameof(A));
                 if (iterations < 1) throw new ArgumentOutOfRangeException(nameof(iterations), "The iteration limit must be positive.");
                 // set:
                 this.iterations = iterations;
-                this.n = A.GetLength(0);
-                this.m = A.GetLength(1);
+                this.n = A.Length;
+                this.m = A[0].Length;
 
                 // options:
                 if (n < m)
                 {
                     this.reversed = true;
-                    this.n = A.GetLength(1);
-                    this.m = A.GetLength(0);
-                    this.svdcmp(A.Transpose());
+                    this.n = A[0].Length;
+                    this.m = A.Length;
+                    this.svdcmp(InternalRealMatrixMath.Transpose(A));
                 }
                 else
                 {
@@ -252,28 +259,28 @@ namespace UMapx.Decomposition
             /// <summary>
             /// Gets the left vectors.
             /// </summary>
-            public float[,] U
+            public double[][] U
             {
                 get
                 {
-                    return reversed ? Jagged.FromJagged(Vr) : Jagged.FromJagged(Ur);
+                    return reversed ? Vr : Ur;
                 }
             }
             /// <summary>
             /// Gets singular values.
             /// </summary>
-            public float[] S
+            public double[] S
             {
                 get { return Sr; }
             }
             /// <summary>
             /// Gets the right vectors.
             /// </summary>
-            public float[,] V
+            public double[][] V
             {
                 get
                 {
-                    return reversed ? Jagged.FromJagged(Ur) : Jagged.FromJagged(Vr);
+                    return reversed ? Ur : Vr;
                 }
             }
 
@@ -295,9 +302,12 @@ namespace UMapx.Decomposition
             /// Uses jagged arrays for speed. Columns of U and V are orthonormal. The number
             /// of QR sweeps is limited by the instance field <see cref="iterations"/>.
             /// </remarks>
-            private void svdcmp(float[,] A)
+            private void svdcmp(double[][] A)
             {
-                var Ur = InternalMatrixMath.ScaledCopyJagged(A, out double inputScale);
+                double inputScale = InternalRealMatrixMath.Max(A);
+                if (inputScale == 0) inputScale = 1;
+                InternalRealMatrixMath.Divide(A, inputScale);
+                var Ur = A;
                 var Sr = new double[m];
                 var Vr = InternalMatrixMath.CreateJagged(m, m);
                 double[] rv1 = new double[m];
@@ -657,16 +667,10 @@ namespace UMapx.Decomposition
                     }
                 }
                 // Orthogonal factors do not depend on a positive common scale.
-                this.Ur = Jagged.Zero(n, m);
-                this.Vr = Jagged.Zero(m, m);
-                this.Sr = new float[m];
-                for (i = 0; i < n; i++)
-                    for (j = 0; j < m; j++) this.Ur[i][j] = (float)Ur[i][j];
-                for (i = 0; i < m; i++)
-                {
-                    this.Sr[i] = (float)(Sr[i] * inputScale);
-                    for (j = 0; j < m; j++) this.Vr[i][j] = (float)Vr[i][j];
-                }
+                this.Ur = Ur;
+                this.Vr = Vr;
+                this.Sr = Sr;
+                for (i = 0; i < m; i++) Sr[i] *= inputScale;
             }
 
             #endregion

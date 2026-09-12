@@ -12,8 +12,8 @@ namespace UMapx.Decomposition
         /// <returns>Orthogonal H and symmetric tridiagonal T.</returns>
         public static (float[,] H, float[,] T) Decompose(float[,] matrix)
         {
-            var d = Tridiagonalize(InternalMatrixMath.Copy(matrix, true));
-            return (InternalMatrixMath.Real(d.P), InternalMatrixMath.Real(d.H));
+            var d = Tridiagonalize(InternalRealMatrixMath.Copy(matrix, true));
+            return (InternalRealMatrixMath.Real(d.P), InternalRealMatrixMath.Real(d.H));
         }
 
         /// <summary>Reduces a Hermitian matrix as A = H T H^H.</summary>
@@ -33,7 +33,7 @@ namespace UMapx.Decomposition
             if (vector == null) throw new ArgumentNullException(nameof(vector));
             var a = new float[vector.Length, 1];
             for (int i = 0; i < vector.Length; i++) a[i, 0] = vector[i];
-            return InternalMatrixMath.Real(Reflect(InternalMatrixMath.Copy(a)));
+            return InternalRealMatrixMath.Real(Reflect(InternalRealMatrixMath.Copy(a)));
         }
 
         /// <summary>Constructs a reflection mapping x to -phase(x[0])*norm(x) times the first coordinate vector.</summary>
@@ -77,5 +77,52 @@ namespace UMapx.Decomposition
             return d;
         }
 
+
+        /// <summary>Forms the reflection that annihilates the tail of a column vector.</summary>
+        /// <param name="a">Validated single-column work matrix.</param>
+        /// <returns>The reflection, with a zero vector interpreted as identity.</returns>
+        private static double[][] Reflect(double[][] a)
+        {
+            int n = a.Length;
+            var v = InternalRealMatrixMath.Column(a, 0);
+            v = InternalRealMatrixMath.HouseholderVector(v);
+            var h = InternalRealMatrixMath.Eye(n);
+            InternalRealMatrixMath.ReflectLeft(h, v, 0, 0);
+            return h;
+        }
+
+        /// <summary>Checks symmetric structure and removes roundoff outside the tridiagonal band.</summary>
+        /// <param name="a">Private square input buffer.</param>
+        /// <returns>The similarity transformation and tridiagonal matrix.</returns>
+        private static (double[][] P, double[][] H) Tridiagonalize(double[][] a)
+        {
+            InternalRealMatrixMath.RequireSymmetric(a);
+            int n = a.Length;
+            var q = InternalRealMatrixMath.Eye(n);
+            for (int k = 0; k < n - 2; k++)
+            {
+                var v = InternalRealMatrixMath.Column(a, k, k + 1);
+                double beta = -InternalMatrixMath.CopySign(InternalRealMatrixMath.Norm(v), v[0]);
+                InternalRealMatrixMath.HouseholderVector(v);
+                var w = new double[v.Length];
+                for (int i = 0; i < v.Length; i++)
+                    w[i] = 2 * InternalRealMatrixMath.Dot(a[k + 1 + i], v, v.Length, k + 1);
+                double correction = InternalRealMatrixMath.Dot(v, w, v.Length);
+                for (int i = 0; i < v.Length; i++) w[i] -= correction * v[i];
+                // Symmetric rank-two update: H A H = A - v w^T - w v^T.
+                for (int i = 0; i < v.Length; i++)
+                    for (int j = 0; j <= i; j++)
+                    {
+                        double value = a[k + 1 + i][k + 1 + j] - v[i] * w[j] - w[i] * v[j];
+                        a[k + 1 + i][k + 1 + j] = a[k + 1 + j][k + 1 + i] = value;
+                    }
+                a[k + 1][k] = a[k][k + 1] = beta;
+                for (int i = k + 2; i < n; i++) a[i][k] = a[k][i] = 0;
+                InternalRealMatrixMath.ReflectRight(q, v, k + 1, 0);
+            }
+            for (int i = 0; i < n; i++)
+                for (int j = i + 1; j < n; j++) a[i][j] = j == i + 1 ? a[j][i] : 0;
+            return (q, a);
+        }
     }
 }
