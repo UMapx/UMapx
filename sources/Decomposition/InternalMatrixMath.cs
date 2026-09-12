@@ -11,8 +11,8 @@ namespace UMapx.Decomposition
     /// </remarks>
     internal static class InternalMatrixMath
     {
-        internal const double Roundoff = 2.2204460492503131e-16;
-        internal const double SingleRoundoff = 1.1920928955078125e-7;
+        public const double Roundoff = 2.2204460492503131e-16;
+        public const double SingleRoundoff = 1.1920928955078125e-7;
 
         #region Real work buffers and scalar arithmetic
 
@@ -22,7 +22,7 @@ namespace UMapx.Decomposition
         /// <param name="matrix">Real rectangular matrix whose dimensions have already been validated.</param>
         /// <param name="scale">Receives the original maximum magnitude, or one for a zero matrix.</param>
         /// <returns>A scaled jagged copy; the caller must restore the scale to the resulting matrix or spectrum.</returns>
-        internal static double[][] ScaledCopyJagged(float[,] matrix, out double scale)
+        public static double[][] ScaledCopyJagged(float[,] matrix, out double scale)
         {
             scale = 0;
             foreach (float value in matrix)
@@ -44,7 +44,7 @@ namespace UMapx.Decomposition
         /// <param name="a">First finite real component.</param>
         /// <param name="b">Second finite real component.</param>
         /// <returns>The nonnegative Euclidean length, including zero for two zero components.</returns>
-        internal static double Hypotenuse(double a, double b)
+        public static double Hypotenuse(double a, double b)
         {
             a = Math.Abs(a); b = Math.Abs(b);
             if (a < b) { double temporary = a; a = b; b = temporary; }
@@ -59,7 +59,7 @@ namespace UMapx.Decomposition
         /// <param name="magnitude">Real magnitude donor.</param>
         /// <param name="sign">Sign donor; zero selects the nonnegative sign.</param>
         /// <returns>The absolute magnitude with the selected sign.</returns>
-        internal static double CopySign(double magnitude, double sign)
+        public static double CopySign(double magnitude, double sign)
         {
             return sign < 0 ? -Math.Abs(magnitude) : Math.Abs(magnitude);
         }
@@ -70,7 +70,7 @@ namespace UMapx.Decomposition
         /// <param name="a">Square copy of A; overwritten by its scaled values.</param>
         /// <param name="b">Square copy of B of the same order; overwritten by its scaled values.</param>
         /// <returns>The common scale to restore to alpha and beta after eigenvector calculation.</returns>
-        internal static double ScalePair(double[][] a, double[][] b)
+        public static double ScalePair(double[][] a, double[][] b)
         {
             double scale = 0;
             for (int i = 0; i < a.Length; i++)
@@ -104,7 +104,7 @@ namespace UMapx.Decomposition
         /// Chooses the scaling branch by comparing |yr| and |yi| to avoid overflow/underflow.
         /// If both <paramref name="yr"/> and <paramref name="yi"/> are zero, the result follows IEEE-754 (Inf/NaN).
         /// </remarks>
-        internal static void DivideComplex(double xr, double xi, double yr, double yi, ref double cdivr, ref double cdivi)
+        public static void DivideComplex(double xr, double xi, double yr, double yi, ref double cdivr, ref double cdivi)
         {
             // Complex scalar division.
             double r;
@@ -130,7 +130,7 @@ namespace UMapx.Decomposition
         /// <param name="rows">Nonnegative row count.</param>
         /// <param name="columns">Nonnegative column count.</param>
         /// <returns>A zero-initialized rectangular jagged matrix.</returns>
-        internal static double[][] CreateJagged(int rows, int columns)
+        public static double[][] CreateJagged(int rows, int columns)
         {
             var result = new double[rows][];
             for (int i = 0; i < rows; i++) result[i] = new double[columns];
@@ -140,7 +140,7 @@ namespace UMapx.Decomposition
         /// <summary>Creates a real identity accumulator in jagged double-precision storage.</summary>
         /// <param name="size">Nonnegative matrix order.</param>
         /// <returns>An independent identity matrix.</returns>
-        internal static double[][] EyeJagged(int size)
+        public static double[][] EyeJagged(int size)
         {
             var result = CreateJagged(size, size);
             for (int i = 0; i < size; i++) result[i][i] = 1;
@@ -150,7 +150,7 @@ namespace UMapx.Decomposition
         /// <summary>Promotes a real rectangular input without scaling or discarding small entries.</summary>
         /// <param name="matrix">Input whose dimensions have already been validated by the caller.</param>
         /// <returns>An independent jagged double-precision copy; finite-value validation is left to the caller.</returns>
-        internal static double[][] CopyJagged(float[,] matrix)
+        public static double[][] CopyJagged(float[,] matrix)
         {
             var result = CreateJagged(matrix.GetLength(0), matrix.GetLength(1));
             for (int i = 0; i < result.Length; i++)
@@ -161,7 +161,7 @@ namespace UMapx.Decomposition
         /// <summary>Promotes single-precision row arrays for an internal real numerical kernel.</summary>
         /// <param name="matrix">Validated nonnull row arrays.</param>
         /// <returns>An independent double-precision copy with the same row lengths.</returns>
-        internal static double[][] CopyJagged(float[][] matrix)
+        public static double[][] CopyJagged(float[][] matrix)
         {
             var result = new double[matrix.Length][];
             for (int i = 0; i < result.Length; i++)
@@ -175,7 +175,7 @@ namespace UMapx.Decomposition
         /// <summary>Narrows a real rectangular work buffer to the public single-precision representation.</summary>
         /// <param name="matrix">Nonempty jagged matrix with equal nonnull row lengths.</param>
         /// <returns>A new rectangular matrix; values outside the float range follow IEEE-754 conversion.</returns>
-        internal static float[,] Real(double[][] matrix)
+        public static float[,] Real(double[][] matrix)
         {
             var result = new float[matrix.Length, matrix[0].Length];
             for (int i = 0; i < matrix.Length; i++)
@@ -191,7 +191,7 @@ namespace UMapx.Decomposition
         /// <param name="a">Input matrix, which is not modified.</param>
         /// <param name="square">Whether equal dimensions are required.</param>
         /// <returns>An independent work buffer.</returns>
-        internal static C[,] Copy(float[,] a, bool square = false)
+        public static C[,] Copy(float[,] a, bool square = false)
         {
             CheckShape(a, square);
             var b = new C[a.GetLength(0), a.GetLength(1)];
@@ -209,7 +209,7 @@ namespace UMapx.Decomposition
         /// <param name="a">Input matrix, which is not modified.</param>
         /// <param name="square">Whether equal dimensions are required.</param>
         /// <returns>An independent work buffer.</returns>
-        internal static C[,] Copy(Complex32[,] a, bool square = false)
+        public static C[,] Copy(Complex32[,] a, bool square = false)
         {
             CheckShape(a, square);
             var b = new C[a.GetLength(0), a.GetLength(1)];
@@ -227,7 +227,7 @@ namespace UMapx.Decomposition
         /// <summary>Validates matrix dimensions before allocating numerical work buffers.</summary>
         /// <param name="a">A two-dimensional array.</param>
         /// <param name="square">Whether a square matrix is required.</param>
-        internal static void CheckShape(Array a, bool square = false)
+        public static void CheckShape(Array a, bool square = false)
         {
             if (a == null) throw new ArgumentNullException(nameof(a));
             if (a.Rank != 2 || a.GetLength(0) == 0 || a.GetLength(1) == 0)
@@ -239,7 +239,7 @@ namespace UMapx.Decomposition
         /// <summary>Narrows a work matrix to complex single precision.</summary>
         /// <param name="a">Double-precision values.</param>
         /// <returns>A newly allocated complex matrix.</returns>
-        internal static Complex32[,] Single(C[,] a)
+        public static Complex32[,] Single(C[,] a)
         {
             var b = new Complex32[a.GetLength(0), a.GetLength(1)];
             for (int i = 0; i < b.GetLength(0); i++)
@@ -250,7 +250,7 @@ namespace UMapx.Decomposition
         /// <summary>Narrows a real-valued work matrix to single precision.</summary>
         /// <param name="a">Work buffer whose imaginary components are zero.</param>
         /// <returns>A newly allocated real matrix.</returns>
-        internal static float[,] Real(C[,] a)
+        public static float[,] Real(C[,] a)
         {
             var b = new float[a.GetLength(0), a.GetLength(1)];
             for (int i = 0; i < b.GetLength(0); i++)
@@ -261,7 +261,7 @@ namespace UMapx.Decomposition
         /// <summary>Narrows complex vector components to single precision.</summary>
         /// <param name="values">Non-null double-precision vector.</param>
         /// <returns>An independent complex single-precision vector.</returns>
-        internal static Complex32[] Single(C[] values)
+        public static Complex32[] Single(C[] values)
         {
             var result = new Complex32[values.Length];
             for (int i = 0; i < values.Length; i++)
@@ -272,7 +272,7 @@ namespace UMapx.Decomposition
         /// <summary>Narrows a real vector to single precision without changing its ordering.</summary>
         /// <param name="values">Non-null double-precision vector.</param>
         /// <returns>An independent real single-precision vector.</returns>
-        internal static float[] Single(double[] values)
+        public static float[] Single(double[] values)
         {
             var result = new float[values.Length];
             for (int i = 0; i < values.Length; i++) result[i] = (float)values[i];
@@ -282,7 +282,7 @@ namespace UMapx.Decomposition
         /// <summary>Extracts and narrows the real components of a work vector.</summary>
         /// <param name="values">Non-null work vector whose imaginary components are zero.</param>
         /// <returns>An independent real single-precision vector.</returns>
-        internal static float[] Real(C[] values)
+        public static float[] Real(C[] values)
         {
             var result = new float[values.Length];
             for (int i = 0; i < values.Length; i++) result[i] = (float)values[i].Real;
@@ -300,7 +300,7 @@ namespace UMapx.Decomposition
         /// <param name="M">Matrix represented as an array of row arrays (double[rows][cols]).</param>
         /// <param name="c1">Index of the first column.</param>
         /// <param name="c2">Index of the second column.</param>
-        internal static void SwapColumns(double[][] M, int c1, int c2)
+        public static void SwapColumns(double[][] M, int c1, int c2)
         {
             if (c1 == c2) return;
             int rows = M.Length;
@@ -316,7 +316,7 @@ namespace UMapx.Decomposition
         /// <summary>Creates an identity matrix for accumulating unitary transformations.</summary>
         /// <param name="n">Nonnegative order.</param>
         /// <returns>The identity of order n.</returns>
-        internal static C[,] Eye(int n)
+        public static C[,] Eye(int n)
         {
             var a = new C[n, n];
             for (int i = 0; i < n; i++) a[i, i] = C.One;
@@ -326,7 +326,7 @@ namespace UMapx.Decomposition
         /// <summary>Computes conjugate transposition, including for real-valued work buffers.</summary>
         /// <param name="a">Input matrix.</param>
         /// <returns>The conjugate transpose.</returns>
-        internal static C[,] Adjoint(C[,] a)
+        public static C[,] Adjoint(C[,] a)
         {
             var b = new C[a.GetLength(1), a.GetLength(0)];
             for (int i = 0; i < a.GetLength(0); i++)
@@ -338,7 +338,7 @@ namespace UMapx.Decomposition
         /// <param name="a">Left matrix.</param>
         /// <param name="b">Right matrix.</param>
         /// <returns>The matrix product.</returns>
-        internal static C[,] Multiply(C[,] a, C[,] b)
+        public static C[,] Multiply(C[,] a, C[,] b)
         {
             if (a.GetLength(1) != b.GetLength(0)) throw new ArgumentException("Incompatible matrix dimensions.");
             var c = new C[a.GetLength(0), b.GetLength(1)];
@@ -352,7 +352,7 @@ namespace UMapx.Decomposition
         /// <param name="a">Matrix with as many columns as there are vector entries.</param>
         /// <param name="v">Input vector, which is not modified.</param>
         /// <returns>A new vector accumulated in row-major order with complex double arithmetic.</returns>
-        internal static C[] Multiply(C[,] a, C[] v)
+        public static C[] Multiply(C[,] a, C[] v)
         {
             var result = new C[a.GetLength(0)];
             for (int i = 0; i < result.Length; i++)
@@ -365,7 +365,7 @@ namespace UMapx.Decomposition
         /// <param name="column">Valid source column index.</param>
         /// <param name="row">First row, from zero through the row count.</param>
         /// <returns>Entries from the selected row to the end of the column.</returns>
-        internal static C[] Column(C[,] a, int column, int row = 0)
+        public static C[] Column(C[,] a, int column, int row = 0)
         {
             var result = new C[a.GetLength(0) - row];
             for (int i = 0; i < result.Length; i++) result[i] = a[row + i, column];
@@ -377,7 +377,7 @@ namespace UMapx.Decomposition
         /// <param name="row">Valid source row index.</param>
         /// <param name="column">First column, from zero through the column count.</param>
         /// <returns>The conjugated row tail as an independent column vector.</returns>
-        internal static C[] ConjugateRow(C[,] a, int row, int column = 0)
+        public static C[] ConjugateRow(C[,] a, int row, int column = 0)
         {
             var result = new C[a.GetLength(1) - column];
             for (int j = 0; j < result.Length; j++) result[j] = C.Conjugate(a[row, column + j]);
@@ -389,7 +389,7 @@ namespace UMapx.Decomposition
         /// <param name="column">Valid target column index.</param>
         /// <param name="values">Source entries; their length must fit in the target column.</param>
         /// <param name="row">First target row.</param>
-        internal static void SetColumn(C[,] a, int column, C[] values, int row = 0)
+        public static void SetColumn(C[,] a, int column, C[] values, int row = 0)
         {
             for (int i = 0; i < values.Length; i++) a[row + i, column] = values[i];
         }
@@ -398,7 +398,7 @@ namespace UMapx.Decomposition
         /// <param name="a">Matrix modified in place.</param>
         /// <param name="first">First valid column index.</param>
         /// <param name="second">Second valid column index.</param>
-        internal static void SwapColumns(C[,] a, int first, int second)
+        public static void SwapColumns(C[,] a, int first, int second)
         {
             for (int i = 0; i < a.GetLength(0); i++)
             {
@@ -409,7 +409,7 @@ namespace UMapx.Decomposition
         /// <summary>Divides a finite matrix by a nonzero real scale without forming its reciprocal.</summary>
         /// <param name="a">Matrix modified in place.</param>
         /// <param name="scale">Finite nonzero divisor.</param>
-        internal static void Divide(C[,] a, double scale)
+        public static void Divide(C[,] a, double scale)
         {
             for (int i = 0; i < a.GetLength(0); i++)
                 for (int j = 0; j < a.GetLength(1); j++) a[i, j] /= scale;
@@ -418,7 +418,7 @@ namespace UMapx.Decomposition
         /// <summary>Divides a finite vector by a nonzero real scale without forming its reciprocal.</summary>
         /// <param name="v">Vector modified in place.</param>
         /// <param name="scale">Finite nonzero divisor, normally a vector norm.</param>
-        internal static void Divide(C[] v, double scale)
+        public static void Divide(C[] v, double scale)
         {
             for (int i = 0; i < v.Length; i++) v[i] /= scale;
         }
@@ -426,7 +426,7 @@ namespace UMapx.Decomposition
         /// <summary>Computes a scaled Euclidean norm without squaring large or tiny entries directly.</summary>
         /// <param name="v">Vector with finite entries.</param>
         /// <returns>The nonnegative Euclidean norm.</returns>
-        internal static double Norm(C[] v)
+        public static double Norm(C[] v)
         {
             double scale = 0, sum = 1;
             foreach (C value in v)
@@ -438,7 +438,7 @@ namespace UMapx.Decomposition
         /// <param name="a">Finite work matrix.</param>
         /// <param name="column">Valid column index.</param>
         /// <returns>The nonnegative Euclidean column norm, including zero for a zero column.</returns>
-        internal static double ColumnNorm(C[,] a, int column)
+        public static double ColumnNorm(C[,] a, int column)
         {
             double scale = 0, sum = 1;
             for (int i = 0; i < a.GetLength(0); i++)
@@ -470,7 +470,7 @@ namespace UMapx.Decomposition
         /// <summary>Returns the largest entry magnitude, or zero for a zero matrix.</summary>
         /// <param name="a">Finite work matrix.</param>
         /// <returns>A nonnegative scale.</returns>
-        internal static double Max(C[,] a)
+        public static double Max(C[,] a)
         {
             double scale = 0;
             foreach (C z in a) scale = Math.Max(scale, C.Abs(z));
@@ -479,7 +479,7 @@ namespace UMapx.Decomposition
 
         /// <summary>Checks the Hermitian condition with a relative single-precision tolerance.</summary>
         /// <param name="a">Square input matrix.</param>
-        internal static void RequireHermitian(C[,] a)
+        public static void RequireHermitian(C[,] a)
         {
             if (!IsHermitian(a)) throw new ArgumentException("The matrix must be Hermitian (symmetric for real inputs).");
         }
@@ -488,7 +488,7 @@ namespace UMapx.Decomposition
         /// <param name="a">Finite square work matrix.</param>
         /// <param name="relativeTolerance">Nonnegative fraction of the matrix scale; zero requires exact conjugate symmetry.</param>
         /// <returns>True when conjugate symmetry holds within the tolerance, defaulting to eight single-precision rounding units.</returns>
-        internal static bool IsHermitian(C[,] a, double relativeTolerance = 8 * SingleRoundoff)
+        public static bool IsHermitian(C[,] a, double relativeTolerance = 8 * SingleRoundoff)
         {
             int n = a.GetLength(0);
             if (n != a.GetLength(1)) return false;
@@ -507,7 +507,7 @@ namespace UMapx.Decomposition
         /// <param name="row">First source row.</param>
         /// <param name="column">First source column.</param>
         /// <returns>An independent block.</returns>
-        internal static C[,] Block(C[,] a, int rows, int columns, int row = 0, int column = 0)
+        public static C[,] Block(C[,] a, int rows, int columns, int row = 0, int column = 0)
         {
             var b = new C[rows, columns];
             for (int i = 0; i < rows; i++)
@@ -523,7 +523,7 @@ namespace UMapx.Decomposition
         /// <param name="x">Finite vector modified in place; a zero vector is returned unchanged.</param>
         /// <returns>The same array, containing a normalized vector v with H = I - 2 v v^H, or zero for identity.</returns>
         /// <remarks>The target is -phase(x[0])*norm(x), with phase(0)=1, to avoid cancellation.</remarks>
-        internal static C[] HouseholderVector(C[] x)
+        public static C[] HouseholderVector(C[] x)
         {
             double norm = Norm(x);
             if (norm == 0) return x;
@@ -540,7 +540,7 @@ namespace UMapx.Decomposition
         /// <param name="v">Normalized reflection vector, or zero for identity.</param>
         /// <param name="row">First affected row.</param>
         /// <param name="column">First affected column.</param>
-        internal static void ReflectLeft(C[,] a, C[] v, int row, int column)
+        public static void ReflectLeft(C[,] a, C[] v, int row, int column)
         {
             for (int j = column; j < a.GetLength(1); j++)
             {
@@ -555,7 +555,7 @@ namespace UMapx.Decomposition
         /// <param name="v">Normalized reflection vector, or zero for identity.</param>
         /// <param name="column">First affected column.</param>
         /// <param name="row">First affected row.</param>
-        internal static void ReflectRight(C[,] a, C[] v, int column, int row)
+        public static void ReflectRight(C[,] a, C[] v, int column, int row)
         {
             for (int i = row; i < a.GetLength(0); i++)
             {
@@ -570,7 +570,7 @@ namespace UMapx.Decomposition
         /// <param name="g">Second component.</param>
         /// <returns>Real cosine C and complex sine S defining [C,S;-conj(S),C].</returns>
         /// <remarks>The rotation maps (f,g) to (r,0); two zero inputs select identity, and f=0 selects a positive real r.</remarks>
-        internal static (double C, C S) Givens(C f, C g)
+        public static (double C, C S) Givens(C f, C g)
         {
             double af = C.Abs(f), ag = C.Abs(g);
             if (ag == 0) return (1, C.Zero);
@@ -586,7 +586,7 @@ namespace UMapx.Decomposition
         /// <param name="j">Second column.</param>
         /// <param name="c">Real cosine with c squared plus the squared magnitude of s equal to one.</param>
         /// <param name="s">Complex sine; conjugate it to accumulate the adjoint of a left G rotation.</param>
-        internal static void RotateColumns(C[,] a, int i, int j, double c, C s)
+        public static void RotateColumns(C[,] a, int i, int j, double c, C s)
         {
             for (int k = 0; k < a.GetLength(0); k++)
             {
@@ -602,7 +602,7 @@ namespace UMapx.Decomposition
         /// <param name="j">Second valid row index, distinct from the first.</param>
         /// <param name="c">Real cosine with c squared plus the squared magnitude of s equal to one.</param>
         /// <param name="s">Complex sine following the convention returned by Givens.</param>
-        internal static void RotateRows(C[,] a, int i, int j, double c, C s)
+        public static void RotateRows(C[,] a, int i, int j, double c, C s)
         {
             for (int k = 0; k < a.GetLength(1); k++)
             {
@@ -617,7 +617,7 @@ namespace UMapx.Decomposition
         /// <param name="q">Distinct square accumulator with the same dimensions as a.</param>
         /// <param name="rotation">Unitary transformation on a contiguous active block.</param>
         /// <param name="offset">First index of the active block.</param>
-        internal static void ApplySimilarity(C[,] a, C[,] q, C[,] rotation, int offset)
+        public static void ApplySimilarity(C[,] a, C[,] q, C[,] rotation, int offset)
         {
             int n = a.GetLength(0), size = rotation.GetLength(0);
             var buffer = new C[size];
@@ -650,7 +650,7 @@ namespace UMapx.Decomposition
         /// <param name="q">Matrix containing orthonormal columns before column k.</param>
         /// <param name="k">Column to complete.</param>
         /// <returns>A unit vector orthogonal to the preceding columns.</returns>
-        internal static C[] Complete(C[,] q, int k)
+        public static C[] Complete(C[,] q, int k)
         {
             int n = q.GetLength(0);
             var best = new C[n];
@@ -674,7 +674,7 @@ namespace UMapx.Decomposition
         /// <param name="passes">Positive pass count; two reorthogonalizes against roundoff.</param>
         /// <param name="coefficients">Optional matrix receiving each projection, added to its existing entries.</param>
         /// <param name="column">Target column in the coefficient matrix, ignored when it is null.</param>
-        internal static void Orthogonalize(C[] v, C[,] q, int columns, int passes = 2, C[,] coefficients = null, int column = 0)
+        public static void Orthogonalize(C[] v, C[,] q, int columns, int passes = 2, C[,] coefficients = null, int column = 0)
         {
             for (int pass = 0; pass < passes; pass++)
                 for (int j = 0; j < columns; j++)
