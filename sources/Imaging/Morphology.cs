@@ -99,7 +99,7 @@ namespace UMapx.Imaging
             int windowWidth = 2 * rx + 1;
             int windowSize = windowHeight * windowWidth;
 
-            int rank = LinealgOptions.MorphologyHistogramFastFilter.GetFilterRank(Mode, windowSize);
+            int rank = InternalMatrixOperations.MorphologyHistogramFastFilter.GetFilterRank(Mode, windowSize);
             int range = byte.MaxValue + 1;
 
             byte* src = (byte*)bmSrc.Scan0.ToPointer();
@@ -127,9 +127,9 @@ namespace UMapx.Imaging
                 }
 
                 byte* dstPixel = dst + y * stride;
-                dstPixel[0] = LinealgOptions.MorphologyHistogramFastFilter.GetHistogramRank(histB, rank); // B
-                dstPixel[1] = LinealgOptions.MorphologyHistogramFastFilter.GetHistogramRank(histG, rank); // G
-                dstPixel[2] = LinealgOptions.MorphologyHistogramFastFilter.GetHistogramRank(histR, rank); // R
+                dstPixel[0] = InternalMatrixOperations.MorphologyHistogramFastFilter.GetHistogramRank(histB, rank); // B
+                dstPixel[1] = InternalMatrixOperations.MorphologyHistogramFastFilter.GetHistogramRank(histG, rank); // G
+                dstPixel[2] = InternalMatrixOperations.MorphologyHistogramFastFilter.GetHistogramRank(histR, rank); // R
 
                 for (int x = 1; x < width; x++)
                 {
@@ -153,9 +153,9 @@ namespace UMapx.Imaging
                     }
 
                     byte* pDst = dst + y * stride + x * 4;
-                    pDst[0] = LinealgOptions.MorphologyHistogramFastFilter.GetHistogramRank(histB, rank); // B
-                    pDst[1] = LinealgOptions.MorphologyHistogramFastFilter.GetHistogramRank(histG, rank); // G
-                    pDst[2] = LinealgOptions.MorphologyHistogramFastFilter.GetHistogramRank(histR, rank); // R
+                    pDst[0] = InternalMatrixOperations.MorphologyHistogramFastFilter.GetHistogramRank(histB, rank); // B
+                    pDst[1] = InternalMatrixOperations.MorphologyHistogramFastFilter.GetHistogramRank(histG, rank); // G
+                    pDst[2] = InternalMatrixOperations.MorphologyHistogramFastFilter.GetHistogramRank(histR, rank); // R
                 }
             });
         }

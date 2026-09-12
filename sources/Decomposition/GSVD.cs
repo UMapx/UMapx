@@ -15,8 +15,8 @@ namespace UMapx.Decomposition
         public static (float[,] U1, float[] S1, float[,] U2, float[] S2, float[,] X)
             Decompose(float[,] a, float[,] b, int iterations = 50)
         {
-            var d = Factor(MatrixMath.Copy(a), MatrixMath.Copy(b), iterations);
-            return (MatrixMath.Real(d.U1), d.S1, MatrixMath.Real(d.U2), d.S2, MatrixMath.Real(d.X));
+            var d = Factor(InternalMatrixMath.Copy(a), InternalMatrixMath.Copy(b), iterations);
+            return (InternalMatrixMath.Real(d.U1), d.S1, InternalMatrixMath.Real(d.U2), d.S2, InternalMatrixMath.Real(d.X));
         }
 
         /// <summary>Computes A = U1 diag(S1) X and B = U2 diag(S2) X</summary>
@@ -27,8 +27,8 @@ namespace UMapx.Decomposition
         public static (Complex32[,] U1, float[] S1, Complex32[,] U2, float[] S2, Complex32[,] X)
             Decompose(Complex32[,] a, Complex32[,] b, int iterations = 50)
         {
-            var d = Factor(MatrixMath.Copy(a), MatrixMath.Copy(b), iterations);
-            return (MatrixMath.Single(d.U1), d.S1, MatrixMath.Single(d.U2), d.S2, MatrixMath.Single(d.X));
+            var d = Factor(InternalMatrixMath.Copy(a), InternalMatrixMath.Copy(b), iterations);
+            return (InternalMatrixMath.Single(d.U1), d.S1, InternalMatrixMath.Single(d.U2), d.S2, InternalMatrixMath.Single(d.X));
         }
 
         /// <summary>Computes generalized singular values from existing diagonal factors</summary>
@@ -76,7 +76,7 @@ namespace UMapx.Decomposition
                 throw new ArgumentException("Both matrices must have the same column count and at least that many rows.");
             // Equalize the input units before QR. Otherwise the smaller block can be lost
             // when the larger block's singular values round to one, leaving its basis unresolved.
-            double scaleA = MatrixMath.Max(a), scaleB = MatrixMath.Max(b);
+            double scaleA = InternalMatrixMath.Max(a), scaleB = InternalMatrixMath.Max(b);
             if (scaleA == 0) scaleA = 1;
             if (scaleB == 0) scaleB = 1;
             var stacked = new C[m + p, n];
@@ -86,13 +86,13 @@ namespace UMapx.Decomposition
                 for (int i = 0; i < p; i++) stacked[m + i, j] = b[i, j] / scaleB;
             }
             var qr = QR.Factor(stacked, full: false);
-            var r = MatrixMath.Block(qr.R, n, n);
-            double threshold = 32 * MatrixMath.Roundoff * MatrixMath.Max(r);
+            var r = InternalMatrixMath.Block(qr.R, n, n);
+            double threshold = 32 * InternalMatrixMath.Roundoff * InternalMatrixMath.Max(r);
             for (int i = 0; i < n; i++)
                 if (C.Abs(r[i, i]) <= threshold) throw new ArgumentException("The stacked matrix must have full column rank.");
-            var svd = SVD.Factor(MatrixMath.Block(qr.Q, m, n), iterations);
-            var w = MatrixMath.Multiply(MatrixMath.Block(qr.Q, p, n, m), svd.V);
-            var x = MatrixMath.Multiply(MatrixMath.Adjoint(svd.V), r);
+            var svd = SVD.Factor(InternalMatrixMath.Block(qr.Q, m, n), iterations);
+            var w = InternalMatrixMath.Multiply(InternalMatrixMath.Block(qr.Q, p, n, m), svd.V);
+            var x = InternalMatrixMath.Multiply(InternalMatrixMath.Adjoint(svd.V), r);
             var s1 = new float[n];
             var s2 = new float[n];
             var u2 = new C[p, n];
@@ -101,14 +101,14 @@ namespace UMapx.Decomposition
             int count = 0;
             for (int j = 0; j < n; j++)
             {
-                var column = MatrixMath.Column(w, j);
-                double sine = MatrixMath.Norm(column);
-                if (sine <= 64 * MatrixMath.Roundoff) { sine = 0; zero[j] = true; }
+                var column = InternalMatrixMath.Column(w, j);
+                double sine = InternalMatrixMath.Norm(column);
+                if (sine <= 64 * InternalMatrixMath.Roundoff) { sine = 0; zero[j] = true; }
                 else
                 {
-                    MatrixMath.Divide(column, sine);
-                    MatrixMath.SetColumn(u2, j, column);
-                    MatrixMath.SetColumn(basis, count, column);
+                    InternalMatrixMath.Divide(column, sine);
+                    InternalMatrixMath.SetColumn(u2, j, column);
+                    InternalMatrixMath.SetColumn(basis, count, column);
                     count++;
                 }
                 // Restore each input scale through the diagonal factors and shared X.
@@ -123,9 +123,9 @@ namespace UMapx.Decomposition
             for (int j = 0; j < n; j++)
                 if (zero[j])
                 {
-                    var column = MatrixMath.Complete(basis, count);
-                    MatrixMath.SetColumn(u2, j, column);
-                    MatrixMath.SetColumn(basis, count, column);
+                    var column = InternalMatrixMath.Complete(basis, count);
+                    InternalMatrixMath.SetColumn(u2, j, column);
+                    InternalMatrixMath.SetColumn(basis, count, column);
                     count++;
                 }
             return (svd.U, s1, u2, s2, x);

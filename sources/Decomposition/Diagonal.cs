@@ -12,7 +12,7 @@ namespace UMapx.Decomposition
         /// <returns>A column-normalized B and the original diagonal D.</returns>
         public static (float[,] B, float[] D) Decompose(float[,] matrix)
         {
-            MatrixMath.Copy(matrix, true);
+            InternalMatrixMath.Copy(matrix, true);
             int n = matrix.GetLength(0);
             var d = new float[n];
             var b = (float[,])matrix.Clone();
@@ -30,7 +30,7 @@ namespace UMapx.Decomposition
         /// <returns>A column-normalized B and the original diagonal D.</returns>
         public static (Complex32[,] B, Complex32[] D) Decompose(Complex32[,] matrix)
         {
-            MatrixMath.Copy(matrix, true);
+            InternalMatrixMath.Copy(matrix, true);
             int n = matrix.GetLength(0);
             var d = new Complex32[n];
             var b = (Complex32[,])matrix.Clone();

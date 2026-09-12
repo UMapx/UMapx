@@ -8,7 +8,7 @@ namespace UMapx.Core
     /// <summary>
     /// Defines the class of optimizations of matrix operations.
     /// </summary>
-    internal static class LinealgOptions
+    internal static class InternalMatrixOperations
     {
         #region Operation
         /// <summary>
@@ -418,14 +418,14 @@ namespace UMapx.Core
                 {
                     Parallel.For(0, height, i =>
                     {
-                        LinealgOptions.MatrixOperation.SIMD_Mul(A, B, C, length, width, i);
+                        InternalMatrixOperations.MatrixOperation.SIMD_Mul(A, B, C, length, width, i);
                     });
                 }
                 else
                 {
                     Parallel.For(0, height, i =>
                     {
-                        LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
+                        InternalMatrixOperations.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
                     });
                 }
 
@@ -453,14 +453,14 @@ namespace UMapx.Core
                     PrecomputeSoA(B, out var B_re, out var B_im);
                     Parallel.For(0, height, i =>
                     {
-                        LinealgOptions.MatrixOperation.SIMD_Mul(A, B_re, B_im, C, length, width, i);
+                        InternalMatrixOperations.MatrixOperation.SIMD_Mul(A, B_re, B_im, C, length, width, i);
                     });
                 }
                 else
                 {
                     Parallel.For(0, height, i =>
                     {
-                        LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
+                        InternalMatrixOperations.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
                     });
                 }
 
@@ -487,14 +487,14 @@ namespace UMapx.Core
                 {
                     Parallel.For(0, height, i =>
                     {
-                        LinealgOptions.MatrixOperation.SIMD_Mul(A, B, C, length, width, i);
+                        InternalMatrixOperations.MatrixOperation.SIMD_Mul(A, B, C, length, width, i);
                     });
                 }
                 else
                 {
                     Parallel.For(0, height, i =>
                     {
-                        LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
+                        InternalMatrixOperations.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
                     });
                 }
 
@@ -522,14 +522,14 @@ namespace UMapx.Core
                     PrecomputeSoA(B, out var B_re, out var B_im);
                     Parallel.For(0, height, i =>
                     {
-                        LinealgOptions.MatrixOperation.SIMD_Mul(A, B_re, B_im, C, length, width, i);
+                        InternalMatrixOperations.MatrixOperation.SIMD_Mul(A, B_re, B_im, C, length, width, i);
                     });
                 }
                 else
                 {
                     Parallel.For(0, height, i =>
                     {
-                        LinealgOptions.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
+                        InternalMatrixOperations.MatrixOperation.Whittle_Mul(A, B, C, length, width, i);
                     });
                 }
 

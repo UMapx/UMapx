@@ -400,7 +400,7 @@ namespace UMapx.Core
         /// <returns>Text as a sequence of Unicode characters</returns>
         public string ToString(string format)
         {
-            return StringOptions.Disp(new float[] { this.X, this.Y, this.Z, this.W }, format, StringOptions.Q);
+            return InternalStringOperations.Disp(new float[] { this.X, this.Y, this.Z, this.W }, format, InternalStringOperations.Q);
         }
         /// <summary>
         /// Returns the hash code for this object.
@@ -466,7 +466,7 @@ namespace UMapx.Core
         /// <returns>Quaternion</returns>
         public static Quaternion32 Parse(string s)
         {
-            string[] cols = StringOptions.Matpar(s);
+            string[] cols = InternalStringOperations.Matpar(s);
             string[] nums = cols[0].Split('|');
 
             if (cols.Length > 1 || nums.Length != 4)

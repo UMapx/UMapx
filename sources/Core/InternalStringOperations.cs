@@ -6,7 +6,7 @@ namespace UMapx.Core
     /// <summary>
     /// Defines a class of string operations.
     /// </summary>
-    internal static class StringOptions
+    internal static class InternalStringOperations
     {
         #region String voids
         /// <summary>

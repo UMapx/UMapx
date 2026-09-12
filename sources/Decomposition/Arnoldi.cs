@@ -12,8 +12,8 @@ namespace UMapx.Decomposition
         /// <returns>An orthonormal basis Q and upper Hessenberg H; invariant-subspace breakdown starts a new orthogonal block.</returns>
         public static (float[,] Q, float[,] H) Decompose(float[,] matrix)
         {
-            var d = Factor(MatrixMath.Copy(matrix, true), true);
-            return (MatrixMath.Real(d.Q), MatrixMath.Real(d.H));
+            var d = Factor(InternalMatrixMath.Copy(matrix, true), true);
+            return (InternalMatrixMath.Real(d.Q), InternalMatrixMath.Real(d.H));
         }
 
         /// <summary>Computes a full Arnoldi reduction A = Q H Q^H</summary>
@@ -21,8 +21,8 @@ namespace UMapx.Decomposition
         /// <returns>An orthonormal basis Q and upper Hessenberg H; invariant-subspace breakdown starts a new orthogonal block.</returns>
         public static (Complex32[,] Q, Complex32[,] H) Decompose(Complex32[,] matrix)
         {
-            var d = Factor(MatrixMath.Copy(matrix, true), true);
-            return (MatrixMath.Single(d.Q), MatrixMath.Single(d.H));
+            var d = Factor(InternalMatrixMath.Copy(matrix, true), true);
+            return (InternalMatrixMath.Single(d.Q), InternalMatrixMath.Single(d.H));
         }
 
         /// <summary>Builds a complete Krylov basis with deterministic orthogonal restarts</summary>
@@ -35,18 +35,18 @@ namespace UMapx.Decomposition
             var q = new C[n, n];
             var h = new C[n, n];
             for (int i = 0; i < n; i++) q[i, 0] = 1 / Math.Sqrt(n);
-            double threshold = 32 * MatrixMath.Roundoff * n * MatrixMath.Max(a);
+            double threshold = 32 * InternalMatrixMath.Roundoff * n * InternalMatrixMath.Max(a);
             for (int k = 0; k < n; k++)
             {
                 var v = new C[n];
                 for (int i = 0; i < n; i++)
                     for (int j = 0; j < n; j++) v[i] += a[i, j] * q[j, k];
-                MatrixMath.Orthogonalize(v, q, k + 1, full ? 2 : 1, h, k);
+                InternalMatrixMath.Orthogonalize(v, q, k + 1, full ? 2 : 1, h, k);
                 if (k + 1 == n) continue;
-                double norm = MatrixMath.Norm(v);
-                if (norm <= threshold) v = MatrixMath.Complete(q, k + 1);
-                else { h[k + 1, k] = norm; MatrixMath.Divide(v, norm); }
-                MatrixMath.SetColumn(q, k + 1, v);
+                double norm = InternalMatrixMath.Norm(v);
+                if (norm <= threshold) v = InternalMatrixMath.Complete(q, k + 1);
+                else { h[k + 1, k] = norm; InternalMatrixMath.Divide(v, norm); }
+                InternalMatrixMath.SetColumn(q, k + 1, v);
             }
             return (q, h);
         }

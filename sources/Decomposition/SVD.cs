@@ -32,8 +32,8 @@ namespace UMapx.Decomposition
         /// <exception cref="InvalidOperationException">The iteration limit is reached before convergence.</exception>
         public static (Complex32[,] U, float[] S, Complex32[,] V) Decompose(Complex32[,] matrix, int iterations = 50)
         {
-            var d = Factor(MatrixMath.Copy(matrix), iterations);
-            return (MatrixMath.Single(d.U), MatrixMath.Single(d.S), MatrixMath.Single(d.V));
+            var d = Factor(InternalMatrixMath.Copy(matrix), iterations);
+            return (InternalMatrixMath.Single(d.U), InternalMatrixMath.Single(d.S), InternalMatrixMath.Single(d.V));
         }
 
         /// <summary>Constructs the Moore-Penrose inverse from existing real economy SVD factors</summary>
@@ -43,7 +43,7 @@ namespace UMapx.Decomposition
         /// <param name="tolerance">Relative rank cutoff; -1 uses max(m,n)*2^-23.</param>
         /// <returns>The n by m pseudoinverse. No decomposition is repeated.</returns>
         public static float[,] PseudoInverse(float[,] u, float[] s, float[,] v, float tolerance = -1)
-            => MatrixMath.Real(Inverse(MatrixMath.Copy(u), s, MatrixMath.Copy(v), tolerance));
+            => InternalMatrixMath.Real(Inverse(InternalMatrixMath.Copy(u), s, InternalMatrixMath.Copy(v), tolerance));
 
         /// <summary>Constructs the Moore-Penrose inverse from existing complex economy SVD factors</summary>
         /// <param name="u">Left singular vectors, m by k.</param>
@@ -52,7 +52,7 @@ namespace UMapx.Decomposition
         /// <param name="tolerance">Relative rank cutoff; -1 uses max(m,n)*2^-23.</param>
         /// <returns>V diag(S+) U^H, of size n by m. No decomposition is repeated.</returns>
         public static Complex32[,] PseudoInverse(Complex32[,] u, float[] s, Complex32[,] v, float tolerance = -1)
-            => MatrixMath.Single(Inverse(MatrixMath.Copy(u), s, MatrixMath.Copy(v), tolerance));
+            => InternalMatrixMath.Single(Inverse(InternalMatrixMath.Copy(u), s, InternalMatrixMath.Copy(v), tolerance));
 
         /// <summary>Counts singular values exceeding a relative cutoff</summary>
         /// <param name="s">Finite nonnegative singular values.</param>
@@ -90,7 +90,7 @@ namespace UMapx.Decomposition
         {
             if (float.IsNaN(tolerance) || float.IsInfinity(tolerance) || (tolerance < 0 && tolerance != -1))
                 throw new ArgumentOutOfRangeException(nameof(tolerance));
-            return tolerance == -1 ? dimension * MatrixMath.SingleRoundoff : tolerance;
+            return tolerance == -1 ? dimension * InternalMatrixMath.SingleRoundoff : tolerance;
         }
 
         /// <summary>Validates finite nonnegative singular values without requiring sorted order</summary>
@@ -141,10 +141,10 @@ namespace UMapx.Decomposition
             int m = a.GetLength(0), n = a.GetLength(1);
             if (m < n)
             {
-                var wide = Factor(MatrixMath.Adjoint(a), iterations);
+                var wide = Factor(InternalMatrixMath.Adjoint(a), iterations);
                 return (wide.V, wide.S, wide.U);
             }
-            var v = MatrixMath.Eye(n);
+            var v = InternalMatrixMath.Eye(n);
             bool converged = n < 2;
             for (int sweep = 0; sweep < iterations && !converged; sweep++)
             {
@@ -152,14 +152,14 @@ namespace UMapx.Decomposition
                 for (int p = 0; p < n - 1; p++)
                     for (int q = p + 1; q < n; q++)
                     {
-                        double np = MatrixMath.ColumnNorm(a, p), nq = MatrixMath.ColumnNorm(a, q);
+                        double np = InternalMatrixMath.ColumnNorm(a, p), nq = InternalMatrixMath.ColumnNorm(a, q);
                         double scale = Math.Max(np, nq);
                         if (np == 0 || nq == 0) continue;
                         double ap = np / scale, aq = nq / scale;
                         C dot = 0;
                         for (int i = 0; i < m; i++) dot += C.Conjugate(a[i, p] / np) * (a[i, q] / nq);
                         double correlation = C.Abs(dot);
-                        if (correlation <= 8 * MatrixMath.Roundoff * Math.Max(1, m)) continue;
+                        if (correlation <= 8 * InternalMatrixMath.Roundoff * Math.Max(1, m)) continue;
                         // Normalize the two-column Gram entries locally, preserving isolated tiny singular values.
                         double cross = correlation * ap * aq;
                         if (cross == 0) continue;
@@ -170,22 +170,22 @@ namespace UMapx.Decomposition
                         C phase = dot / correlation;
                         // Express the Jacobi update in the shared complex rotation convention.
                         C sine = -sn * C.Conjugate(phase);
-                        MatrixMath.RotateColumns(a, p, q, c, sine);
-                        MatrixMath.RotateColumns(v, p, q, c, sine);
+                        InternalMatrixMath.RotateColumns(a, p, q, c, sine);
+                        InternalMatrixMath.RotateColumns(v, p, q, c, sine);
                         converged = false;
                     }
             }
             if (!converged) throw new InvalidOperationException("Complex SVD failed to converge within the Jacobi sweep limit.");
             var singular = new double[n];
-            for (int j = 0; j < n; j++) singular[j] = MatrixMath.ColumnNorm(a, j);
+            for (int j = 0; j < n; j++) singular[j] = InternalMatrixMath.ColumnNorm(a, j);
             for (int p = 0; p < n; p++)
             {
                 int best = p;
                 for (int q = p + 1; q < n; q++) if (singular[q] > singular[best]) best = q;
                 if (best == p) continue;
                 double d = singular[p]; singular[p] = singular[best]; singular[best] = d;
-                MatrixMath.SwapColumns(a, p, best);
-                MatrixMath.SwapColumns(v, p, best);
+                InternalMatrixMath.SwapColumns(a, p, best);
+                InternalMatrixMath.SwapColumns(v, p, best);
             }
             var u = new C[m, n];
             for (int j = 0; j < n; j++)
@@ -194,8 +194,8 @@ namespace UMapx.Decomposition
                     for (int i = 0; i < m; i++) u[i, j] = a[i, j] / singular[j];
                 else
                 {
-                    var column = MatrixMath.Complete(u, j);
-                    MatrixMath.SetColumn(u, j, column);
+                    var column = InternalMatrixMath.Complete(u, j);
+                    InternalMatrixMath.SetColumn(u, j, column);
                 }
             }
             return (u, singular, v);
@@ -297,9 +297,9 @@ namespace UMapx.Decomposition
             /// </remarks>
             private void svdcmp(float[,] A)
             {
-                var Ur = MatrixMath.ScaledCopyJagged(A, out double inputScale);
+                var Ur = InternalMatrixMath.ScaledCopyJagged(A, out double inputScale);
                 var Sr = new double[m];
-                var Vr = MatrixMath.CreateJagged(m, m);
+                var Vr = InternalMatrixMath.CreateJagged(m, m);
                 double[] rv1 = new double[m];
 
                 int flag, i, its, j, jj, k, l = 0, nm = 0;
@@ -330,7 +330,7 @@ namespace UMapx.Decomposition
                             }
 
                             f = Ur[i][i];
-                            g = -MatrixMath.CopySign(Math.Sqrt(e), f);
+                            g = -InternalMatrixMath.CopySign(Math.Sqrt(e), f);
                             h = f * g - e;
                             Ur[i][i] = f - g;
 
@@ -378,7 +378,7 @@ namespace UMapx.Decomposition
                             }
 
                             f = Ur[i][l];
-                            g = -MatrixMath.CopySign(Math.Sqrt(e), f);
+                            g = -InternalMatrixMath.CopySign(Math.Sqrt(e), f);
                             h = f * g - e;
                             Ur[i][l] = f - g;
 
@@ -530,7 +530,7 @@ namespace UMapx.Decomposition
 
                                 if (Math.Abs(f) + anorm == anorm) break;
                                 g = Sr[i];
-                                h = MatrixMath.Hypotenuse(f, g);
+                                h = InternalMatrixMath.Hypotenuse(f, g);
                                 Sr[i] = h;
                                 h = 1.0f / h;
                                 c = g * h;
@@ -575,8 +575,8 @@ namespace UMapx.Decomposition
                         g = rv1[nm];
                         h = rv1[k];
                         f = ((y - z) * (y + z) + (g - h) * (g + h)) / (2.0f * h * y);
-                        g = MatrixMath.Hypotenuse(f, 1.0f);
-                        f = ((x - z) * (x + z) + h * ((y / (f + MatrixMath.CopySign(g, f))) - h)) / x;
+                        g = InternalMatrixMath.Hypotenuse(f, 1.0f);
+                        f = ((x - z) * (x + z) + h * ((y / (f + InternalMatrixMath.CopySign(g, f))) - h)) / x;
 
                         // next QR transformation
                         c = e = 1.0f;
@@ -588,7 +588,7 @@ namespace UMapx.Decomposition
                             y = Sr[i];
                             h = e * g;
                             g = c * g;
-                            z = MatrixMath.Hypotenuse(f, h);
+                            z = InternalMatrixMath.Hypotenuse(f, h);
                             rv1[j] = z;
                             c = f / z;
                             e = h / z;
@@ -605,7 +605,7 @@ namespace UMapx.Decomposition
                                 Vr[jj][i] = z * c - x * e;
                             }
 
-                            z = MatrixMath.Hypotenuse(f, h);
+                            z = InternalMatrixMath.Hypotenuse(f, h);
                             Sr[j] = z;
 
                             if (z != 0)
@@ -651,9 +651,9 @@ namespace UMapx.Decomposition
                         // swap S
                         var tS = Sr[i]; Sr[i] = Sr[maxIdx]; Sr[maxIdx] = tS;
                         // swap columns in U (n x m)
-                        MatrixMath.SwapColumns(Ur, i, maxIdx);
+                        InternalMatrixMath.SwapColumns(Ur, i, maxIdx);
                         // swap columns in V (m x m)
-                        MatrixMath.SwapColumns(Vr, i, maxIdx);
+                        InternalMatrixMath.SwapColumns(Vr, i, maxIdx);
                     }
                 }
                 // Orthogonal factors do not depend on a positive common scale.

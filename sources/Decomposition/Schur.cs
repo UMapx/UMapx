@@ -33,8 +33,8 @@ namespace UMapx.Decomposition
         public static (Complex32[,] Q, Complex32[,] T) Decompose(Complex32[,] matrix, float eps = 1e-16f, int iterations = 1000)
         {
             if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
-            var d = Factor(MatrixMath.Copy(matrix, true), eps, iterations);
-            return (MatrixMath.Single(d.Q), MatrixMath.Single(d.T));
+            var d = Factor(InternalMatrixMath.Copy(matrix, true), eps, iterations);
+            return (InternalMatrixMath.Single(d.Q), InternalMatrixMath.Single(d.T));
         }
 
         /// <summary>Extracts eigenvalues from an existing real quasi-triangular Schur form</summary>
@@ -42,7 +42,7 @@ namespace UMapx.Decomposition
         /// <returns>Eigenvalues in block order, with positive imaginary parts first in conjugate pairs.</returns>
         public static Complex32[] Eigenvalues(float[,] t)
         {
-            var a = MatrixMath.Copy(t, true);
+            var a = InternalMatrixMath.Copy(t, true);
             int n = a.GetLength(0);
             var result = new Complex32[n];
             for (int i = 0; i < n; i++)
@@ -66,7 +66,7 @@ namespace UMapx.Decomposition
         /// <returns>The diagonal entries, without repeating the decomposition.</returns>
         public static Complex32[] Eigenvalues(Complex32[,] t)
         {
-            MatrixMath.Copy(t, true);
+            InternalMatrixMath.Copy(t, true);
             var values = new Complex32[t.GetLength(0)];
             for (int i = 0; i < values.Length; i++) values[i] = t[i, i];
             return values;
@@ -81,12 +81,12 @@ namespace UMapx.Decomposition
         {
             if (iterations < 1) throw new ArgumentOutOfRangeException(nameof(iterations));
             int n = a.GetLength(0);
-            double scale = MatrixMath.Max(a);
-            if (scale == 0) return (MatrixMath.Eye(n), a);
-            MatrixMath.Divide(a, scale);
+            double scale = InternalMatrixMath.Max(a);
+            if (scale == 0) return (InternalMatrixMath.Eye(n), a);
+            InternalMatrixMath.Divide(a, scale);
             var h = Hessenberg.Factor(a);
             var q = h.P;
-            double tolerance = Math.Max(8 * MatrixMath.Roundoff, Math.Min(1, Math.Max(0, eps)));
+            double tolerance = Math.Max(8 * InternalMatrixMath.Roundoff, Math.Min(1, Math.Max(0, eps)));
             int high = n - 1, steps = 0;
             while (high > 0)
             {
@@ -113,10 +113,10 @@ namespace UMapx.Decomposition
                 // Periodic exceptional shifts prevent stagnation on tightly clustered roots.
                 if (steps % 20 == 0) shift = a[high, high] + new C(0.75, 0.25) * C.Abs(a[high, high - 1]);
                 int size = high - low + 1;
-                var block = MatrixMath.Block(a, size, size, low, low);
+                var block = InternalMatrixMath.Block(a, size, size, low, low);
                 for (int i = 0; i < size; i++) block[i, i] -= shift;
                 var rotation = QR.Factor(block).Q;
-                MatrixMath.ApplySimilarity(a, q, rotation, low);
+                InternalMatrixMath.ApplySimilarity(a, q, rotation, low);
                 for (int i = low + 2; i <= high; i++)
                     for (int j = low; j < i - 1; j++) a[i, j] = 0;
             }
@@ -157,7 +157,7 @@ namespace UMapx.Decomposition
                 this.Im = new double[n];
                 this.eps = Maths.Float(eps);
 
-                var hessenberg = MatrixMath.ScaledCopyJagged(A, out double inputScale);
+                var hessenberg = InternalMatrixMath.ScaledCopyJagged(A, out double inputScale);
                 var matrices = ReduceToHessenberg(hessenberg);
                 this.matrices = Jagged.Zero(n, n);
                 this.hessenberg = Jagged.Zero(n, n);
@@ -191,7 +191,7 @@ namespace UMapx.Decomposition
             private static double[][] ReduceToHessenberg(double[][] hessenberg)
             {
                 int n = hessenberg.Length;
-                var matrices = MatrixMath.CreateJagged(n, n);
+                var matrices = InternalMatrixMath.CreateJagged(n, n);
                 var orthogonal = new double[n];
                 int low = 0;
                 int high = n - 1;
@@ -300,7 +300,7 @@ namespace UMapx.Decomposition
             private void hqr2(double[][] hessenberg, double[][] matrices, double inputScale)
             {
                 int nn = this.n;
-                double eps = Math.Max(this.eps, MatrixMath.Roundoff);
+                double eps = Math.Max(this.eps, InternalMatrixMath.Roundoff);
                 int n = nn - 1;
                 int low = 0;
                 int high = nn - 1;

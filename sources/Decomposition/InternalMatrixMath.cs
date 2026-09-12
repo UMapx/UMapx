@@ -9,7 +9,7 @@ namespace UMapx.Decomposition
     /// Public entry points validate input contracts; internal primitives assume compatible dimensions
     /// unless documented otherwise. Mutating operations work only on buffers owned by the current call.
     /// </remarks>
-    internal static class MatrixMath
+    internal static class InternalMatrixMath
     {
         internal const double Roundoff = 2.2204460492503131e-16;
         internal const double SingleRoundoff = 1.1920928955078125e-7;

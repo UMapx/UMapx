@@ -12,8 +12,8 @@ namespace UMapx.Decomposition
         /// <returns>Full square U and V and upper bidiagonal B with the same dimensions as the input.</returns>
         public static (float[,] U, float[,] B, float[,] V) Decompose(float[,] matrix)
         {
-            var d = Factor(MatrixMath.Copy(matrix));
-            return (MatrixMath.Real(d.U), MatrixMath.Real(d.B), MatrixMath.Real(d.V));
+            var d = Factor(InternalMatrixMath.Copy(matrix));
+            return (InternalMatrixMath.Real(d.U), InternalMatrixMath.Real(d.B), InternalMatrixMath.Real(d.V));
         }
 
         /// <summary>Computes A = U B V^H by two-sided Householder reduction</summary>
@@ -21,8 +21,8 @@ namespace UMapx.Decomposition
         /// <returns>Full square U and V and upper bidiagonal B with the same dimensions as the input.</returns>
         public static (Complex32[,] U, Complex32[,] B, Complex32[,] V) Decompose(Complex32[,] matrix)
         {
-            var d = Factor(MatrixMath.Copy(matrix));
-            return (MatrixMath.Single(d.U), MatrixMath.Single(d.B), MatrixMath.Single(d.V));
+            var d = Factor(InternalMatrixMath.Copy(matrix));
+            return (InternalMatrixMath.Single(d.U), InternalMatrixMath.Single(d.B), InternalMatrixMath.Single(d.V));
         }
 
         /// <summary>Alternates left and right reflections to obtain upper bidiagonal form</summary>
@@ -31,20 +31,20 @@ namespace UMapx.Decomposition
         internal static (C[,] U, C[,] B, C[,] V) Factor(C[,] a)
         {
             int m = a.GetLength(0), n = a.GetLength(1);
-            var u = MatrixMath.Eye(m);
-            var v = MatrixMath.Eye(n);
+            var u = InternalMatrixMath.Eye(m);
+            var v = InternalMatrixMath.Eye(n);
             for (int k = 0; k < Math.Min(m, n); k++)
             {
-                var left = MatrixMath.Column(a, k, k);
-                left = MatrixMath.HouseholderVector(left);
-                MatrixMath.ReflectLeft(a, left, k, k);
-                MatrixMath.ReflectRight(u, left, k, 0);
+                var left = InternalMatrixMath.Column(a, k, k);
+                left = InternalMatrixMath.HouseholderVector(left);
+                InternalMatrixMath.ReflectLeft(a, left, k, k);
+                InternalMatrixMath.ReflectRight(u, left, k, 0);
                 for (int i = k + 1; i < m; i++) a[i, k] = 0;
                 if (k + 1 >= n) continue;
-                var right = MatrixMath.ConjugateRow(a, k, k + 1);
-                right = MatrixMath.HouseholderVector(right);
-                MatrixMath.ReflectRight(a, right, k + 1, k);
-                MatrixMath.ReflectRight(v, right, k + 1, 0);
+                var right = InternalMatrixMath.ConjugateRow(a, k, k + 1);
+                right = InternalMatrixMath.HouseholderVector(right);
+                InternalMatrixMath.ReflectRight(a, right, k + 1, k);
+                InternalMatrixMath.ReflectRight(v, right, k + 1, 0);
                 for (int j = k + 2; j < n; j++) a[k, j] = 0;
             }
             return (u, a, v);

@@ -12,8 +12,8 @@ namespace UMapx.Decomposition
         /// <returns>Orthonormal columns Q and upper triangular R, including basis completion for dependent columns.</returns>
         public static (float[,] Q, float[,] R) Decompose(float[,] matrix)
         {
-            var d = Factor(MatrixMath.Copy(matrix));
-            return (MatrixMath.Real(d.Q), MatrixMath.Real(d.R));
+            var d = Factor(InternalMatrixMath.Copy(matrix));
+            return (InternalMatrixMath.Real(d.Q), InternalMatrixMath.Real(d.R));
         }
 
         /// <summary>Computes an economy QR factorization using reorthogonalized modified Gram-Schmidt</summary>
@@ -21,8 +21,8 @@ namespace UMapx.Decomposition
         /// <returns>Orthonormal columns Q and upper triangular R, including basis completion for dependent columns.</returns>
         public static (Complex32[,] Q, Complex32[,] R) Decompose(Complex32[,] matrix)
         {
-            var d = Factor(MatrixMath.Copy(matrix));
-            return (MatrixMath.Single(d.Q), MatrixMath.Single(d.R));
+            var d = Factor(InternalMatrixMath.Copy(matrix));
+            return (InternalMatrixMath.Single(d.Q), InternalMatrixMath.Single(d.R));
         }
 
         /// <summary>Orthogonalizes columns twice and completes the basis at numerical breakdown</summary>
@@ -36,13 +36,13 @@ namespace UMapx.Decomposition
             var r = new C[n, n];
             for (int j = 0; j < n; j++)
             {
-                var v = MatrixMath.Column(a, j);
-                double original = MatrixMath.Norm(v);
-                MatrixMath.Orthogonalize(v, q, j, coefficients: r, column: j);
-                double norm = MatrixMath.Norm(v);
-                if (norm <= 16 * MatrixMath.Roundoff * original) v = MatrixMath.Complete(q, j);
-                else { r[j, j] = norm; MatrixMath.Divide(v, norm); }
-                MatrixMath.SetColumn(q, j, v);
+                var v = InternalMatrixMath.Column(a, j);
+                double original = InternalMatrixMath.Norm(v);
+                InternalMatrixMath.Orthogonalize(v, q, j, coefficients: r, column: j);
+                double norm = InternalMatrixMath.Norm(v);
+                if (norm <= 16 * InternalMatrixMath.Roundoff * original) v = InternalMatrixMath.Complete(q, j);
+                else { r[j, j] = norm; InternalMatrixMath.Divide(v, norm); }
+                InternalMatrixMath.SetColumn(q, j, v);
             }
             return (q, r);
         }

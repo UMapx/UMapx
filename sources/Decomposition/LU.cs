@@ -12,8 +12,8 @@ namespace UMapx.Decomposition
         /// <returns>Unit lower triangular L, upper triangular U, and the row permutation P.</returns>
         public static (float[,] L, float[,] U, int[] P) Decompose(float[,] matrix)
         {
-            var d = Factor(MatrixMath.Copy(matrix, true));
-            return (MatrixMath.Real(d.L), MatrixMath.Real(d.U), d.P);
+            var d = Factor(InternalMatrixMath.Copy(matrix, true));
+            return (InternalMatrixMath.Real(d.L), InternalMatrixMath.Real(d.U), d.P);
         }
 
         /// <summary>Computes A[P,:] = L U with complex partial row pivoting</summary>
@@ -21,8 +21,8 @@ namespace UMapx.Decomposition
         /// <returns>Unit lower triangular L, upper triangular U, and the row permutation P.</returns>
         public static (Complex32[,] L, Complex32[,] U, int[] P) Decompose(Complex32[,] matrix)
         {
-            var d = Factor(MatrixMath.Copy(matrix, true));
-            return (MatrixMath.Single(d.L), MatrixMath.Single(d.U), d.P);
+            var d = Factor(InternalMatrixMath.Copy(matrix, true));
+            return (InternalMatrixMath.Single(d.L), InternalMatrixMath.Single(d.U), d.P);
         }
 
         /// <summary>Builds the row permutation matrix from a pivot vector</summary>
@@ -49,7 +49,7 @@ namespace UMapx.Decomposition
         internal static (C[,] L, C[,] U, int[] P) Factor(C[,] a)
         {
             int n = a.GetLength(0);
-            var l = MatrixMath.Eye(n);
+            var l = InternalMatrixMath.Eye(n);
             var p = new int[n];
             for (int i = 0; i < n; i++) p[i] = i;
             for (int k = 0; k < n; k++)

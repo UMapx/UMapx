@@ -26,7 +26,7 @@ namespace UMapx.Decomposition
         /// <exception cref="InvalidOperationException">The QR or QL iteration limit is reached before convergence.</exception>
         public static (float[,] V, Complex32[] D) Decompose(float[,] matrix, float eps = 1e-16f)
         {
-            MatrixMath.Copy(matrix, true);
+            InternalMatrixMath.Copy(matrix, true);
             if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
             var work = new RealWorkspace(matrix, eps);
             return (work.V, work.D);
@@ -39,10 +39,10 @@ namespace UMapx.Decomposition
         public static (Complex32[,] V, Complex32[] D) Decompose(Complex32[,] matrix, float eps = 1e-16f)
         {
             if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
-            var a = MatrixMath.Copy(matrix, true);
+            var a = InternalMatrixMath.Copy(matrix, true);
             // Automatic dispatch must not erase a small imaginary eigenvalue by treating
             // a nearly Hermitian matrix as exactly Hermitian.
-            bool hermitian = MatrixMath.IsHermitian(a, 0);
+            bool hermitian = InternalMatrixMath.IsHermitian(a, 0);
             var schur = Schur.Factor(a, eps);
             int n = a.GetLength(0);
             var alpha = new C[n];
@@ -53,8 +53,8 @@ namespace UMapx.Decomposition
                 alpha[i] = hermitian ? new C(schur.T[i, i].Real, 0) : schur.T[i, i]; beta[i] = 1;
                 values[i] = new Complex32((float)alpha[i].Real, (float)alpha[i].Imaginary);
             }
-            var vectors = hermitian ? schur.Q : TriangularVectors(schur.T, MatrixMath.Eye(n), schur.Q, alpha, beta);
-            return (MatrixMath.Single(vectors), values);
+            var vectors = hermitian ? schur.Q : TriangularVectors(schur.T, InternalMatrixMath.Eye(n), schur.Q, alpha, beta);
+            return (InternalMatrixMath.Single(vectors), values);
         }
 
         /// <summary>Builds the complex diagonal eigenvalue matrix from existing eigenvalues</summary>
@@ -80,7 +80,7 @@ namespace UMapx.Decomposition
                 if (values[i].Imag == 0) continue;
                 if (values[i].Imag < 0 || i + 1 >= n || values[i + 1].Imag >= 0 ||
                     C.Abs(new C(values[i + 1].Real - (double)values[i].Real, values[i + 1].Imag + (double)values[i].Imag)) >
-                        16 * MatrixMath.SingleRoundoff * C.Abs(new C(values[i].Real, values[i].Imag)))
+                        16 * InternalMatrixMath.SingleRoundoff * C.Abs(new C(values[i].Real, values[i].Imag)))
                     throw new ArgumentException("Complex eigenvalues must be adjacent conjugate pairs, positive imaginary part first.", nameof(values));
                 r[i, i + 1] = values[i].Imag;
                 // Homogeneous alpha/beta quotients can differ by a few rounding units within a conjugate pair.
@@ -112,14 +112,14 @@ namespace UMapx.Decomposition
         {
             int n = s.GetLength(0);
             var vectors = new C[n, n];
-            double normS = MatrixMath.Max(s), normT = MatrixMath.Max(t);
+            double normS = InternalMatrixMath.Max(s), normT = InternalMatrixMath.Max(t);
             for (int k = 0; k < n; k++)
             {
                 // Normalize coefficients before multiplication; homogeneous pairs may span very different units.
                 double pairScale = Math.Max(C.Abs(alpha[k]), Math.Abs(beta[k]));
                 C numerator = pairScale == 0 ? C.Zero : alpha[k] / pairScale;
                 double denominator = pairScale == 0 ? 0 : beta[k] / pairScale;
-                double floor = Math.Max(1e-300, 16 * MatrixMath.Roundoff *
+                double floor = Math.Max(1e-300, 16 * InternalMatrixMath.Roundoff *
                     (Math.Abs(denominator) * normS + C.Abs(numerator) * normT));
                 var y = new C[n]; y[k] = 1;
                 for (int i = k - 1; i >= 0; i--)
@@ -176,14 +176,14 @@ namespace UMapx.Decomposition
                 this.n = A.GetLength(0);
                 this.Re = new double[n];
                 this.Im = new double[n];
-                this.eps = Math.Max(8 * MatrixMath.Roundoff, Math.Min(1, Math.Max(0, eps)));
+                this.eps = Math.Max(8 * InternalMatrixMath.Roundoff, Math.Min(1, Math.Max(0, eps)));
 
                 // for symmetric matrices eigen-value decomposition
                 // without Hessenberg form.
                 if (Matrice.IsSymmetric(A))
                 {
-                    hessenberg = MatrixMath.CreateJagged(n, n);
-                    matrices = MatrixMath.CopyJagged(A);
+                    hessenberg = InternalMatrixMath.CreateJagged(n, n);
+                    matrices = InternalMatrixMath.CopyJagged(A);
 
                     tred2(); // Tridiagonalize.
                     tql2();  // Diagonalize.
@@ -191,8 +191,8 @@ namespace UMapx.Decomposition
                 // with Hessenberg form.
                 else
                 {
-                    matrices = MatrixMath.CreateJagged(n, n);
-                    hessenberg = MatrixMath.CopyJagged(A);
+                    matrices = InternalMatrixMath.CreateJagged(n, n);
+                    hessenberg = InternalMatrixMath.CopyJagged(A);
                     orthogonal = new double[n];
 
                     orthes(); // Reduce to Hessenberg form.
@@ -209,7 +209,7 @@ namespace UMapx.Decomposition
             {
                 get
                 {
-                    return MatrixMath.Real(matrices);
+                    return InternalMatrixMath.Real(matrices);
                 }
             }
             /// <summary>
@@ -401,7 +401,7 @@ namespace UMapx.Decomposition
                             // Compute implicit shift
                             g = Re[l];
                             p = (Re[l + 1] - g) / (2 * Im[l]);
-                            r = MatrixMath.Hypotenuse(p, 1);
+                            r = InternalMatrixMath.Hypotenuse(p, 1);
                             if (p < 0)
                             {
                                 r = -r;
@@ -434,7 +434,7 @@ namespace UMapx.Decomposition
                                 s2 = s;
                                 g = c * Im[i];
                                 h = c * p;
-                                r = MatrixMath.Hypotenuse(p, Im[i]);
+                                r = InternalMatrixMath.Hypotenuse(p, Im[i]);
                                 Im[i + 1] = s * r;
                                 s = Im[i] / r;
                                 c = p / r;
@@ -939,7 +939,7 @@ namespace UMapx.Decomposition
                         }
                         else
                         {
-                            MatrixMath.DivideComplex(0, -hessenberg[n - 1][n], hessenberg[n - 1][n - 1] - p, q, ref hessenberg[n - 1][n - 1], ref hessenberg[n - 1][n]);
+                            InternalMatrixMath.DivideComplex(0, -hessenberg[n - 1][n], hessenberg[n - 1][n - 1] - p, q, ref hessenberg[n - 1][n - 1], ref hessenberg[n - 1][n]);
                         }
 
                         hessenberg[n][n - 1] = 0;
@@ -968,7 +968,7 @@ namespace UMapx.Decomposition
                                 l = i;
                                 if (Im[i] == 0)
                                 {
-                                    MatrixMath.DivideComplex(-ra, -sa, w, q, ref hessenberg[i][n - 1], ref hessenberg[i][n]);
+                                    InternalMatrixMath.DivideComplex(-ra, -sa, w, q, ref hessenberg[i][n - 1], ref hessenberg[i][n]);
                                 }
                                 else
                                 {
@@ -979,7 +979,7 @@ namespace UMapx.Decomposition
                                     vi = (Re[i] - p) * 2 * q;
                                     if (vr == 0 & vi == 0)
                                         vr = eps * norm * (System.Math.Abs(w) + System.Math.Abs(q) + System.Math.Abs(x) + System.Math.Abs(y) + System.Math.Abs(z));
-                                    MatrixMath.DivideComplex(x * r - z * ra + q * sa, x * s - z * sa - q * ra, vr, vi, ref hessenberg[i][n - 1], ref hessenberg[i][n]);
+                                    InternalMatrixMath.DivideComplex(x * r - z * ra + q * sa, x * s - z * sa - q * ra, vr, vi, ref hessenberg[i][n - 1], ref hessenberg[i][n]);
                                     if (System.Math.Abs(x) > (System.Math.Abs(z) + System.Math.Abs(q)))
                                     {
                                         hessenberg[i + 1][n - 1] = (-ra - w * hessenberg[i][n - 1] + q * hessenberg[i][n]) / x;
@@ -987,7 +987,7 @@ namespace UMapx.Decomposition
                                     }
                                     else
                                     {
-                                        MatrixMath.DivideComplex(-r - y * hessenberg[i][n - 1], -s - y * hessenberg[i][n], z, q, ref hessenberg[i + 1][n - 1], ref hessenberg[i + 1][n]);
+                                        InternalMatrixMath.DivideComplex(-r - y * hessenberg[i][n - 1], -s - y * hessenberg[i][n], z, q, ref hessenberg[i + 1][n - 1], ref hessenberg[i + 1][n]);
                                     }
                                 }
 

@@ -96,7 +96,7 @@ namespace UMapx.Core
         /// <returns>Text as a sequence of Unicode characters</returns>
         public string ToString(string format)
         {
-            return StringOptions.Disp(new float[] { this.Real, this.Imag }, format, StringOptions.C);
+            return InternalStringOperations.Disp(new float[] { this.Real, this.Imag }, format, InternalStringOperations.C);
         }
         #endregion
 
@@ -410,7 +410,7 @@ namespace UMapx.Core
         /// <returns>Complex number</returns>
         public static Complex32 Parse(string s)
         {
-            return StringOptions.Compar(s);
+            return InternalStringOperations.Compar(s);
         }
         /// <summary>
         /// Tries to parse the string to complex number.

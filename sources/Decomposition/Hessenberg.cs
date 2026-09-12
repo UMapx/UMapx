@@ -12,8 +12,8 @@ namespace UMapx.Decomposition
         /// <returns>Orthogonal P and upper Hessenberg H.</returns>
         public static (float[,] P, float[,] H) Decompose(float[,] matrix)
         {
-            var d = Factor(MatrixMath.Copy(matrix, true));
-            return (MatrixMath.Real(d.P), MatrixMath.Real(d.H));
+            var d = Factor(InternalMatrixMath.Copy(matrix, true));
+            return (InternalMatrixMath.Real(d.P), InternalMatrixMath.Real(d.H));
         }
 
         /// <summary>Computes A = P H P^H</summary>
@@ -21,8 +21,8 @@ namespace UMapx.Decomposition
         /// <returns>Unitary P and upper Hessenberg H.</returns>
         public static (Complex32[,] P, Complex32[,] H) Decompose(Complex32[,] matrix)
         {
-            var d = Factor(MatrixMath.Copy(matrix, true));
-            return (MatrixMath.Single(d.P), MatrixMath.Single(d.H));
+            var d = Factor(InternalMatrixMath.Copy(matrix, true));
+            return (InternalMatrixMath.Single(d.P), InternalMatrixMath.Single(d.H));
         }
 
         /// <summary>Applies two-sided Householder similarities in double precision</summary>
@@ -31,14 +31,14 @@ namespace UMapx.Decomposition
         internal static (C[,] P, C[,] H) Factor(C[,] a)
         {
             int n = a.GetLength(0);
-            var p = MatrixMath.Eye(n);
+            var p = InternalMatrixMath.Eye(n);
             for (int k = 0; k < n - 2; k++)
             {
-                var v = MatrixMath.Column(a, k, k + 1);
-                v = MatrixMath.HouseholderVector(v);
-                MatrixMath.ReflectLeft(a, v, k + 1, k);
-                MatrixMath.ReflectRight(a, v, k + 1, 0);
-                MatrixMath.ReflectRight(p, v, k + 1, 0);
+                var v = InternalMatrixMath.Column(a, k, k + 1);
+                v = InternalMatrixMath.HouseholderVector(v);
+                InternalMatrixMath.ReflectLeft(a, v, k + 1, k);
+                InternalMatrixMath.ReflectRight(a, v, k + 1, 0);
+                InternalMatrixMath.ReflectRight(p, v, k + 1, 0);
                 for (int i = k + 2; i < n; i++) a[i, k] = 0;
             }
             return (p, a);

@@ -12,10 +12,10 @@ namespace UMapx.Decomposition
         /// <returns>Q of size m by min(m,n) and R of size min(m,n) by n.</returns>
         public static (float[,] Q, float[,] R) Decompose(float[,] matrix)
         {
-            var d = Factor(MatrixMath.Copy(matrix), full: false);
+            var d = Factor(InternalMatrixMath.Copy(matrix), full: false);
             int k = Math.Min(matrix.GetLength(0), matrix.GetLength(1));
-            return (MatrixMath.Real(MatrixMath.Block(d.Q, matrix.GetLength(0), k)),
-                    MatrixMath.Real(MatrixMath.Block(d.R, k, matrix.GetLength(1))));
+            return (InternalMatrixMath.Real(InternalMatrixMath.Block(d.Q, matrix.GetLength(0), k)),
+                    InternalMatrixMath.Real(InternalMatrixMath.Block(d.R, k, matrix.GetLength(1))));
         }
 
         /// <summary>Computes A = Q R with Q^H Q = I using complex Householder reflections</summary>
@@ -23,21 +23,21 @@ namespace UMapx.Decomposition
         /// <returns>Q of size m by min(m,n) and R of size min(m,n) by n.</returns>
         public static (Complex32[,] Q, Complex32[,] R) Decompose(Complex32[,] matrix)
         {
-            var d = Factor(MatrixMath.Copy(matrix), full: false);
+            var d = Factor(InternalMatrixMath.Copy(matrix), full: false);
             int k = Math.Min(matrix.GetLength(0), matrix.GetLength(1));
-            return (MatrixMath.Single(MatrixMath.Block(d.Q, matrix.GetLength(0), k)),
-                    MatrixMath.Single(MatrixMath.Block(d.R, k, matrix.GetLength(1))));
+            return (InternalMatrixMath.Single(InternalMatrixMath.Block(d.Q, matrix.GetLength(0), k)),
+                    InternalMatrixMath.Single(InternalMatrixMath.Block(d.R, k, matrix.GetLength(1))));
         }
 
         /// <summary>Computes normalized reflection vectors without constructing Q</summary>
         /// <param name="matrix">Finite input matrix; a separate reduction is performed.</param>
         /// <returns>An m by min(m,n) matrix of vectors v defining H = I - 2 v v^T; zero columns denote identity.</returns>
-        public static float[,] HouseholderVectors(float[,] matrix) => MatrixMath.Real(Factor(MatrixMath.Copy(matrix), false).H);
+        public static float[,] HouseholderVectors(float[,] matrix) => InternalMatrixMath.Real(Factor(InternalMatrixMath.Copy(matrix), false).H);
 
         /// <summary>Computes normalized complex reflection vectors without constructing Q</summary>
         /// <param name="matrix">Finite input matrix; a separate reduction is performed.</param>
         /// <returns>An m by min(m,n) matrix of vectors v defining H = I - 2 v v^H; zero columns denote identity.</returns>
-        public static Complex32[,] HouseholderVectors(Complex32[,] matrix) => MatrixMath.Single(Factor(MatrixMath.Copy(matrix), false).H);
+        public static Complex32[,] HouseholderVectors(Complex32[,] matrix) => InternalMatrixMath.Single(Factor(InternalMatrixMath.Copy(matrix), false).H);
 
         /// <summary>Reduces a private work matrix to upper trapezoidal form</summary>
         /// <param name="a">Work buffer overwritten by R.</param>
@@ -51,10 +51,10 @@ namespace UMapx.Decomposition
             var h = new C[m, kmax];
             for (int k = 0; k < kmax; k++)
             {
-                var v = MatrixMath.Column(a, k, k);
-                v = MatrixMath.HouseholderVector(v);
-                MatrixMath.ReflectLeft(a, v, k, k);
-                MatrixMath.SetColumn(h, k, v, k);
+                var v = InternalMatrixMath.Column(a, k, k);
+                v = InternalMatrixMath.HouseholderVector(v);
+                InternalMatrixMath.ReflectLeft(a, v, k, k);
+                InternalMatrixMath.SetColumn(h, k, v, k);
                 for (int i = k + 1; i < m; i++) a[i, k] = 0;
             }
             if (vectors)
@@ -65,8 +65,8 @@ namespace UMapx.Decomposition
                 // Reverse application builds Q without allocating an m by m matrix for a tall economy QR.
                 for (int k = kmax - 1; k >= 0; k--)
                 {
-                    var v = MatrixMath.Column(h, k, k);
-                    MatrixMath.ReflectLeft(q, v, k, 0);
+                    var v = InternalMatrixMath.Column(h, k, k);
+                    InternalMatrixMath.ReflectLeft(q, v, k, 0);
                 }
             }
             return (q, a, h);

@@ -33,7 +33,7 @@ namespace UMapx.Decomposition
         public static (Complex32[,] V, Complex32[] Alpha, float[] Beta) Decompose(Complex32[,] a, Complex32[,] b, float eps = 1e-16f)
         {
             if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
-            var d = QZ.Factor(MatrixMath.Copy(a, true), MatrixMath.Copy(b, true), eps);
+            var d = QZ.Factor(InternalMatrixMath.Copy(a, true), InternalMatrixMath.Copy(b, true), eps);
             int n = a.GetLength(0);
             var alpha = new C[n];
             var beta = new double[n];
@@ -46,7 +46,7 @@ namespace UMapx.Decomposition
                 denominators[i] = (float)beta[i];
             }
             var vectors = EVD.TriangularVectors(d.S, d.T, d.Z, alpha, beta);
-            return (MatrixMath.Single(vectors), numerators, denominators);
+            return (InternalMatrixMath.Single(vectors), numerators, denominators);
         }
 
         /// <summary>Forms eigenvalue quotients from an existing homogeneous spectrum</summary>
@@ -151,13 +151,13 @@ namespace UMapx.Decomposition
                 this.Z = Jagged.Zero(n, n);
                 // Right transformations must start from the identity: multiplying a zero
                 // accumulator loses every eigenvector before back-substitution begins.
-                var vectors = MatrixMath.EyeJagged(n);
+                var vectors = InternalMatrixMath.EyeJagged(n);
                 var real = new double[n];
                 var imaginary = new double[n];
                 var denominator = new double[n];
-                var A = MatrixMath.CopyJagged(a);
-                var B = MatrixMath.CopyJagged(b);
-                double inputScale = MatrixMath.ScalePair(A, B);
+                var A = InternalMatrixMath.CopyJagged(a);
+                var B = InternalMatrixMath.CopyJagged(b);
+                double inputScale = InternalMatrixMath.ScalePair(A, B);
                 bool matz = true;
                 int ierr = 0;
 
@@ -242,10 +242,10 @@ namespace UMapx.Decomposition
             internal static void qzdecomp(float[][] a, float[][] b, float eps, float[][] z, ref int ierr)
             {
                 int n = a.Length;
-                var first = MatrixMath.CopyJagged(a);
-                var second = MatrixMath.CopyJagged(b);
-                var vectors = MatrixMath.CopyJagged(z);
-                double scale = MatrixMath.ScalePair(first, second);
+                var first = InternalMatrixMath.CopyJagged(a);
+                var second = InternalMatrixMath.CopyJagged(b);
+                var vectors = InternalMatrixMath.CopyJagged(z);
+                double scale = InternalMatrixMath.ScalePair(first, second);
                 qzhes(n, first, second, true, vectors);
                 qzit(n, first, second, eps, true, vectors, ref ierr);
                 // The bottom-left entry is scratch storage for epsb, not part of T.
@@ -307,7 +307,7 @@ namespace UMapx.Decomposition
                         r += b[i][l] * b[i][l];
                     }
 
-                    r = MatrixMath.CopySign(Math.Sqrt(r), b[l][l]);
+                    r = InternalMatrixMath.CopySign(Math.Sqrt(r), b[l][l]);
                     b[l][l] += r;
                     rho = r * b[l][l];
 
@@ -354,7 +354,7 @@ namespace UMapx.Decomposition
                         if (s == 0.0) continue;
                         u1 = a[l][k] / s;
                         u2 = a[l1][k] / s;
-                        r = MatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
+                        r = InternalMatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                         v1 = -(u1 + r) / r;
                         v2 = -u2 / r;
                         u2 = v2 / v1;
@@ -381,7 +381,7 @@ namespace UMapx.Decomposition
                         if (s == 0.0) continue;
                         u1 = b[l1][l1] / s;
                         u2 = b[l1][l] / s;
-                        r = MatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
+                        r = InternalMatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                         v1 = -(u1 + r) / r;
                         v2 = -u2 / r;
                         u2 = v2 / v1;
@@ -428,7 +428,7 @@ namespace UMapx.Decomposition
             /// <param name="a">On entry: upper-Hessenberg from <see cref="qzhes"/>; on exit: quasi-triangular S. Modified in place</param>
             /// <param name="b">On entry: upper-triangular from <see cref="qzhes"/>; on exit: upper-triangular T. Modified in place</param>
             /// <param name="eps1">
-            /// Relative convergence tolerance. If zero, machine roundoff is used (via <see cref="MatrixMath.Roundoff"/>)
+            /// Relative convergence tolerance. If zero, machine roundoff is used (via <see cref="InternalMatrixMath.Roundoff"/>)
             /// </param>
             /// <param name="matz">If true, accumulate right transformations into <paramref name="z"/></param>
             /// <param name="z">Right orthogonal accumulator Z (updated if <paramref name="matz"/> is true)</param>
@@ -481,7 +481,7 @@ namespace UMapx.Decomposition
 
                 // Deflation cannot resolve changes below the precision of the work buffers.
                 // Enforce this floor even when the requested tolerance is zero.
-                ep = Math.Max(eps1, MatrixMath.Roundoff);
+                ep = Math.Max(eps1, InternalMatrixMath.Roundoff);
 
                 epsa = ep * anorm;
                 epsb = ep * bnorm;
@@ -539,7 +539,7 @@ namespace UMapx.Decomposition
                 s = (Math.Abs(a[l][l]) + Math.Abs(a[l1][l]));
                 u1 = a[l][l] / s;
                 u2 = a[l1][l] / s;
-                r = MatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
+                r = InternalMatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                 v1 = -(u1 + r) / r;
                 v2 = -u2 / r;
                 u2 = v2 / v1;
@@ -665,7 +665,7 @@ namespace UMapx.Decomposition
                     if (s == 0.0) goto L70;
                     u1 = a1 / s;
                     u2 = a2 / s;
-                    r = MatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
+                    r = InternalMatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                     v1 = -(u1 + r) / r;
                     v2 = -u2 / r;
                     u2 = v2 / v1;
@@ -698,7 +698,7 @@ namespace UMapx.Decomposition
                     u1 = a1 / s;
                     u2 = a2 / s;
                     u3 = a3 / s;
-                    r = MatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2 + u3 * u3), u1);
+                    r = InternalMatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2 + u3 * u3), u1);
                     v1 = -(u1 + r) / r;
                     v2 = -u2 / r;
                     v3 = -u3 / r;
@@ -729,7 +729,7 @@ namespace UMapx.Decomposition
                     u1 = b[k2][k2] / s;
                     u2 = b[k2][k1] / s;
                     u3 = b[k2][k] / s;
-                    r = MatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2 + u3 * u3), u1);
+                    r = InternalMatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2 + u3 * u3), u1);
                     v1 = -(u1 + r) / r;
                     v2 = -u2 / r;
                     v3 = -u3 / r;
@@ -769,7 +769,7 @@ namespace UMapx.Decomposition
                     if (s == 0.0) goto L260;
                     u1 = b[k1][k1] / s;
                     u2 = b[k1][k] / s;
-                    r = MatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
+                    r = InternalMatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                     v1 = -(u1 + r) / r;
                     v2 = -u2 / r;
                     u2 = v2 / v1;
@@ -908,7 +908,7 @@ namespace UMapx.Decomposition
                     if (d < 0.0) goto L480;
 
                     // Two real roots. Zero both a(en,na) and b(en,na)
-                    e += c + MatrixMath.CopySign(Math.Sqrt(d), c);
+                    e += c + InternalMatrixMath.CopySign(Math.Sqrt(d), c);
                     a11 -= e * b11;
                     a12 -= e * b12;
                     a22 -= e * b22;
@@ -929,7 +929,7 @@ namespace UMapx.Decomposition
                     s = Math.Abs(a1) + Math.Abs(a2);
                     u1 = a1 / s;
                     u2 = a2 / s;
-                    r = MatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
+                    r = InternalMatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                     v1 = -(u1 + r) / r;
                     v2 = -u2 / r;
                     u2 = v2 / v1;
@@ -971,7 +971,7 @@ namespace UMapx.Decomposition
                     if (s == 0.0) goto L475;
                     u1 = a1 / s;
                     u2 = a2 / s;
-                    r = MatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
+                    r = InternalMatrixMath.CopySign(Math.Sqrt(u1 * u1 + u2 * u2), u1);
                     v1 = -(u1 + r) / r;
                     v2 = -u2 / r;
                     u2 = v2 / v1;

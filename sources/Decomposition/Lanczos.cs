@@ -13,8 +13,8 @@ namespace UMapx.Decomposition
         /// <returns>Q and tridiagonal T satisfying A = Q T Q^T.</returns>
         public static (float[,] Q, float[,] T) Decompose(float[,] matrix, bool full = false)
         {
-            var a = MatrixMath.Copy(matrix, true);
-            MatrixMath.RequireHermitian(a);
+            var a = InternalMatrixMath.Copy(matrix, true);
+            InternalMatrixMath.RequireHermitian(a);
             var d = Arnoldi.Factor(a, full);
             int n = a.GetLength(0);
             for (int i = 0; i < n; i++)
@@ -22,7 +22,7 @@ namespace UMapx.Decomposition
                 d.H[i, i] = d.H[i, i].Real;
                 for (int j = i + 1; j < n; j++) d.H[i, j] = j == i + 1 ? C.Conjugate(d.H[j, i]) : C.Zero;
             }
-            return (MatrixMath.Real(d.Q), MatrixMath.Real(d.H));
+            return (InternalMatrixMath.Real(d.Q), InternalMatrixMath.Real(d.H));
         }
 
         /// <summary>Computes a Hermitian Lanczos tridiagonalization</summary>
@@ -31,8 +31,8 @@ namespace UMapx.Decomposition
         /// <returns>Q and tridiagonal T satisfying A = Q T Q^H.</returns>
         public static (Complex32[,] Q, Complex32[,] T) Decompose(Complex32[,] matrix, bool full = false)
         {
-            var a = MatrixMath.Copy(matrix, true);
-            MatrixMath.RequireHermitian(a);
+            var a = InternalMatrixMath.Copy(matrix, true);
+            InternalMatrixMath.RequireHermitian(a);
             var d = Arnoldi.Factor(a, full);
             int n = a.GetLength(0);
             for (int i = 0; i < n; i++)
@@ -40,7 +40,7 @@ namespace UMapx.Decomposition
                 d.H[i, i] = d.H[i, i].Real;
                 for (int j = i + 1; j < n; j++) d.H[i, j] = j == i + 1 ? C.Conjugate(d.H[j, i]) : C.Zero;
             }
-            return (MatrixMath.Single(d.Q), MatrixMath.Single(d.H));
+            return (InternalMatrixMath.Single(d.Q), InternalMatrixMath.Single(d.H));
         }
 
 

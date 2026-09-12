@@ -14,8 +14,8 @@ namespace UMapx.Decomposition
         /// <returns>Orthogonal Q and Z, quasi-triangular S, and upper triangular T.</returns>
         public static (float[,] Q, float[,] S, float[,] T, float[,] Z) Decompose(float[,] a, float[,] b, float eps = 1e-16f)
         {
-            var first = MatrixMath.Copy(a, true);
-            var second = MatrixMath.Copy(b, true);
+            var first = InternalMatrixMath.Copy(a, true);
+            var second = InternalMatrixMath.Copy(b, true);
             if (a.GetLength(0) != b.GetLength(0)) throw new ArgumentException("The matrices must have equal orders.");
             if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
             var s = Jagged.ToJagged(a);
@@ -27,8 +27,8 @@ namespace UMapx.Decomposition
             var ss = Jagged.FromJagged(s);
             var tt = Jagged.FromJagged(t);
             var zz = Jagged.FromJagged(z);
-            var q = RecoverLeft(first, second, MatrixMath.Copy(ss), MatrixMath.Copy(tt), MatrixMath.Copy(zz));
-            return (MatrixMath.Real(q), ss, tt, zz);
+            var q = RecoverLeft(first, second, InternalMatrixMath.Copy(ss), InternalMatrixMath.Copy(tt), InternalMatrixMath.Copy(zz));
+            return (InternalMatrixMath.Real(q), ss, tt, zz);
         }
 
         /// <summary>Computes the complex generalized Schur factors A = Q S Z^H and B = Q T Z^H</summary>
@@ -41,8 +41,8 @@ namespace UMapx.Decomposition
             Complex32[,] a, Complex32[,] b, float eps = 1e-16f, int iterations = 1000)
         {
             if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
-            var d = Factor(MatrixMath.Copy(a, true), MatrixMath.Copy(b, true), eps, iterations);
-            return (MatrixMath.Single(d.Q), MatrixMath.Single(d.S), MatrixMath.Single(d.T), MatrixMath.Single(d.Z));
+            var d = Factor(InternalMatrixMath.Copy(a, true), InternalMatrixMath.Copy(b, true), eps, iterations);
+            return (InternalMatrixMath.Single(d.Q), InternalMatrixMath.Single(d.S), InternalMatrixMath.Single(d.T), InternalMatrixMath.Single(d.Z));
         }
 
         /// <summary>Recovers the real left transformation from both transformed matrices, including singular B</summary>
@@ -55,12 +55,12 @@ namespace UMapx.Decomposition
         private static C[,] RecoverLeft(C[,] a, C[,] b, C[,] s, C[,] t, C[,] z)
         {
             int n = a.GetLength(0);
-            double sa = Math.Max(MatrixMath.Max(a), MatrixMath.Max(s));
-            double sb = Math.Max(MatrixMath.Max(b), MatrixMath.Max(t));
+            double sa = Math.Max(InternalMatrixMath.Max(a), InternalMatrixMath.Max(s));
+            double sb = Math.Max(InternalMatrixMath.Max(b), InternalMatrixMath.Max(t));
             if (sa == 0) sa = 1;
             if (sb == 0) sb = 1;
-            var az = MatrixMath.Multiply(a, z);
-            var bz = MatrixMath.Multiply(b, z);
+            var az = InternalMatrixMath.Multiply(a, z);
+            var bz = InternalMatrixMath.Multiply(b, z);
             var c = new C[n, 2 * n];
             var d = new C[n, 2 * n];
             for (int i = 0; i < n; i++)
@@ -70,25 +70,25 @@ namespace UMapx.Decomposition
                     d[i, j] = az[i, j] / sa; d[i, j + n] = bz[i, j] / sb;
                 }
             var svd = SVD.Factor(c, 100);
-            var w = MatrixMath.Multiply(d, svd.V);
-            double cutoff = n * 8 * MatrixMath.SingleRoundoff * svd.S[0];
+            var w = InternalMatrixMath.Multiply(d, svd.V);
+            double cutoff = n * 8 * InternalMatrixMath.SingleRoundoff * svd.S[0];
             for (int j = 0; j < n; j++)
             {
                 if (svd.S[j] > cutoff)
                 {
                     var column = new C[n];
                     for (int i = 0; i < n; i++) column[i] = w[i, j] / svd.S[j];
-                    MatrixMath.Orthogonalize(column, w, j);
-                    double norm = MatrixMath.Norm(column);
+                    InternalMatrixMath.Orthogonalize(column, w, j);
+                    double norm = InternalMatrixMath.Norm(column);
                     for (int i = 0; i < n; i++) w[i, j] = column[i] / norm;
                 }
                 else
                 {
-                    var column = MatrixMath.Complete(w, j);
-                    MatrixMath.SetColumn(w, j, column);
+                    var column = InternalMatrixMath.Complete(w, j);
+                    InternalMatrixMath.SetColumn(w, j, column);
                 }
             }
-            return MatrixMath.Multiply(w, MatrixMath.Adjoint(svd.U));
+            return InternalMatrixMath.Multiply(w, InternalMatrixMath.Adjoint(svd.U));
         }
 
         /// <summary>Reduces a complex pencil by unitary Hessenberg-triangular reduction and implicit single-shift QZ</summary>
@@ -103,28 +103,28 @@ namespace UMapx.Decomposition
             int n = a.GetLength(0);
             if (b.GetLength(0) != n) throw new ArgumentException("The matrices must have equal orders.");
             if (iterations < 1) throw new ArgumentOutOfRangeException(nameof(iterations));
-            double scaleA = MatrixMath.Max(a), scaleB = MatrixMath.Max(b);
+            double scaleA = InternalMatrixMath.Max(a), scaleB = InternalMatrixMath.Max(b);
             if (scaleA == 0) scaleA = 1;
             if (scaleB == 0) scaleB = 1;
-            MatrixMath.Divide(a, scaleA);
-            MatrixMath.Divide(b, scaleB);
+            InternalMatrixMath.Divide(a, scaleA);
+            InternalMatrixMath.Divide(b, scaleB);
             var qr = QR.Factor(b);
             b = qr.R;
             var q = qr.Q;
-            var z = MatrixMath.Eye(n);
-            a = MatrixMath.Multiply(MatrixMath.Adjoint(q), a);
+            var z = InternalMatrixMath.Eye(n);
+            a = InternalMatrixMath.Multiply(InternalMatrixMath.Adjoint(q), a);
             for (int k = 0; k < n - 2; k++)
                 for (int i = n - 1; i > k + 1; i--)
                 {
-                    var left = MatrixMath.Givens(a[i - 1, k], a[i, k]);
+                    var left = InternalMatrixMath.Givens(a[i - 1, k], a[i, k]);
                     LeftPair(a, b, q, i - 1, i, left.C, left.S);
                     a[i, k] = 0;
-                    var right = MatrixMath.Givens(b[i, i], b[i, i - 1]);
+                    var right = InternalMatrixMath.Givens(b[i, i], b[i, i - 1]);
                     RightPair(a, b, z, i, i - 1, right.C, right.S);
                     b[i, i - 1] = 0;
                 }
-            double tolerance = Math.Max(8 * MatrixMath.Roundoff, Math.Min(1, Math.Max(0, eps)));
-            double bTolerance = tolerance * MatrixMath.Max(b);
+            double tolerance = Math.Max(8 * InternalMatrixMath.Roundoff, Math.Min(1, Math.Max(0, eps)));
+            double bTolerance = tolerance * InternalMatrixMath.Max(b);
             int high = n - 1, steps = 0;
             while (high >= 0)
             {
@@ -137,7 +137,7 @@ namespace UMapx.Decomposition
                 if (C.Abs(b[high, high]) <= bTolerance)
                 {
                     b[high, high] = 0;
-                    var r = MatrixMath.Givens(a[high, high], a[high, high - 1]);
+                    var r = InternalMatrixMath.Givens(a[high, high], a[high, high - 1]);
                     RightPair(a, b, z, high, high - 1, r.C, r.S);
                     a[high, high - 1] = 0;
                     high--; steps = 0; continue;
@@ -153,7 +153,7 @@ namespace UMapx.Decomposition
                         b[j, j] = 0;
                         if (split)
                         {
-                            var r = MatrixMath.Givens(a[j, j], a[j + 1, j]);
+                            var r = InternalMatrixMath.Givens(a[j, j], a[j + 1, j]);
                             LeftPair(a, b, q, j, j + 1, r.C, r.S);
                             a[j + 1, j] = 0;
                         }
@@ -162,10 +162,10 @@ namespace UMapx.Decomposition
                             // Move a zero B diagonal to the trailing corner while removing each Hessenberg bulge.
                             for (int k = j; k < high; k++)
                             {
-                                var left = MatrixMath.Givens(b[k, k + 1], b[k + 1, k + 1]);
+                                var left = InternalMatrixMath.Givens(b[k, k + 1], b[k + 1, k + 1]);
                                 LeftPair(a, b, q, k, k + 1, left.C, left.S);
                                 b[k + 1, k + 1] = 0;
-                                var right = MatrixMath.Givens(a[k + 1, k], a[k + 1, k - 1]);
+                                var right = InternalMatrixMath.Givens(a[k + 1, k], a[k + 1, k - 1]);
                                 RightPair(a, b, z, k, k - 1, right.C, right.S);
                                 a[k + 1, k - 1] = 0;
                             }
@@ -186,13 +186,13 @@ namespace UMapx.Decomposition
                 C shift1 = center + root, shift2 = center - root;
                 C shift = C.Abs(shift1 - bottom) < C.Abs(shift2 - bottom) ? shift1 : shift2;
                 if (steps % 10 == 0) shift = bottom + new C(0.75, 0.25) * C.Abs(d21);
-                var rotation = MatrixMath.Givens(a[low, low] - shift * b[low, low], a[low + 1, low]);
+                var rotation = InternalMatrixMath.Givens(a[low, low] - shift * b[low, low], a[low + 1, low]);
                 for (int j = low; j < high; j++)
                 {
-                    if (j > low) rotation = MatrixMath.Givens(a[j, j - 1], a[j + 1, j - 1]);
+                    if (j > low) rotation = InternalMatrixMath.Givens(a[j, j - 1], a[j + 1, j - 1]);
                     LeftPair(a, b, q, j, j + 1, rotation.C, rotation.S);
                     if (j > low) a[j + 1, j - 1] = 0;
-                    var right = MatrixMath.Givens(b[j + 1, j + 1], b[j + 1, j]);
+                    var right = InternalMatrixMath.Givens(b[j + 1, j + 1], b[j + 1, j]);
                     RightPair(a, b, z, j + 1, j, right.C, right.S);
                     b[j + 1, j] = 0;
                 }
@@ -234,9 +234,9 @@ namespace UMapx.Decomposition
         /// <param name="s">Complex sine.</param>
         private static void LeftPair(C[,] a, C[,] b, C[,] q, int i, int j, double c, C s)
         {
-            MatrixMath.RotateRows(a, i, j, c, s);
-            MatrixMath.RotateRows(b, i, j, c, s);
-            MatrixMath.RotateColumns(q, i, j, c, C.Conjugate(s));
+            InternalMatrixMath.RotateRows(a, i, j, c, s);
+            InternalMatrixMath.RotateRows(b, i, j, c, s);
+            InternalMatrixMath.RotateColumns(q, i, j, c, C.Conjugate(s));
         }
 
         /// <summary>Applies a right rotation to both matrices and updates Z</summary>
@@ -249,9 +249,9 @@ namespace UMapx.Decomposition
         /// <param name="s">Complex sine acting on ordered columns i,j.</param>
         private static void RightPair(C[,] a, C[,] b, C[,] z, int i, int j, double c, C s)
         {
-            MatrixMath.RotateColumns(a, i, j, c, s);
-            MatrixMath.RotateColumns(b, i, j, c, s);
-            MatrixMath.RotateColumns(z, i, j, c, s);
+            InternalMatrixMath.RotateColumns(a, i, j, c, s);
+            InternalMatrixMath.RotateColumns(b, i, j, c, s);
+            InternalMatrixMath.RotateColumns(z, i, j, c, s);
         }
 
     }

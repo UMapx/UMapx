@@ -13,8 +13,8 @@ namespace UMapx.Decomposition
         /// <returns>A unit vector V and its Rayleigh quotient D; a zero product returns the current vector and zero.</returns>
         public static (float[] V, float D) Decompose(float[,] matrix, int iterations = 100)
         {
-            var d = Iterate(MatrixMath.Copy(matrix, true), iterations);
-            return (MatrixMath.Real(d.V), (float)d.D.Real);
+            var d = Iterate(InternalMatrixMath.Copy(matrix, true), iterations);
+            return (InternalMatrixMath.Real(d.V), (float)d.D.Real);
         }
 
         /// <summary>Places an existing power-iteration vector on a diagonal without further iteration</summary>
@@ -32,8 +32,8 @@ namespace UMapx.Decomposition
         /// <returns>A unit vector V and its Rayleigh quotient D; a zero product returns the current vector and zero.</returns>
         public static (Complex32[] V, Complex32 D) Decompose(Complex32[,] matrix, int iterations = 100)
         {
-            var d = Iterate(MatrixMath.Copy(matrix, true), iterations);
-            return (MatrixMath.Single(d.V), new Complex32((float)d.D.Real, (float)d.D.Imaginary));
+            var d = Iterate(InternalMatrixMath.Copy(matrix, true), iterations);
+            return (InternalMatrixMath.Single(d.V), new Complex32((float)d.D.Real, (float)d.D.Imaginary));
         }
 
         /// <summary>Places an existing power-iteration vector on a diagonal without further iteration</summary>
@@ -57,10 +57,10 @@ namespace UMapx.Decomposition
             for (int i = 0; i < n; i++) v[i] = 1 / Math.Sqrt(n);
             for (int step = 0; step < iterations; step++)
             {
-                var w = MatrixMath.Multiply(a, v);
-                double norm = MatrixMath.Norm(w);
+                var w = InternalMatrixMath.Multiply(a, v);
+                double norm = InternalMatrixMath.Norm(w);
                 if (norm == 0) return (v, C.Zero);
-                MatrixMath.Divide(w, norm);
+                InternalMatrixMath.Divide(w, norm);
                 v = w;
             }
             C eigenvalue = 0;

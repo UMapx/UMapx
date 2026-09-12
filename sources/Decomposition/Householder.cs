@@ -12,8 +12,8 @@ namespace UMapx.Decomposition
         /// <returns>Orthogonal H and symmetric tridiagonal T.</returns>
         public static (float[,] H, float[,] T) Decompose(float[,] matrix)
         {
-            var d = Tridiagonalize(MatrixMath.Copy(matrix, true));
-            return (MatrixMath.Real(d.P), MatrixMath.Real(d.H));
+            var d = Tridiagonalize(InternalMatrixMath.Copy(matrix, true));
+            return (InternalMatrixMath.Real(d.P), InternalMatrixMath.Real(d.H));
         }
 
         /// <summary>Reduces a Hermitian matrix as A = H T H^H</summary>
@@ -21,8 +21,8 @@ namespace UMapx.Decomposition
         /// <returns>Unitary H and Hermitian tridiagonal T.</returns>
         public static (Complex32[,] H, Complex32[,] T) Decompose(Complex32[,] matrix)
         {
-            var d = Tridiagonalize(MatrixMath.Copy(matrix, true));
-            return (MatrixMath.Single(d.P), MatrixMath.Single(d.H));
+            var d = Tridiagonalize(InternalMatrixMath.Copy(matrix, true));
+            return (InternalMatrixMath.Single(d.P), InternalMatrixMath.Single(d.H));
         }
 
         /// <summary>Constructs a reflection that maps a vector onto its first coordinate</summary>
@@ -33,7 +33,7 @@ namespace UMapx.Decomposition
             if (vector == null) throw new ArgumentNullException(nameof(vector));
             var a = new float[vector.Length, 1];
             for (int i = 0; i < vector.Length; i++) a[i, 0] = vector[i];
-            return MatrixMath.Real(Reflect(MatrixMath.Copy(a)));
+            return InternalMatrixMath.Real(Reflect(InternalMatrixMath.Copy(a)));
         }
 
         /// <summary>Constructs a reflection mapping x to -phase(x[0])*norm(x) times the first coordinate vector</summary>
@@ -44,7 +44,7 @@ namespace UMapx.Decomposition
             if (vector == null) throw new ArgumentNullException(nameof(vector));
             var a = new Complex32[vector.Length, 1];
             for (int i = 0; i < vector.Length; i++) a[i, 0] = vector[i];
-            return MatrixMath.Single(Reflect(MatrixMath.Copy(a)));
+            return InternalMatrixMath.Single(Reflect(InternalMatrixMath.Copy(a)));
         }
 
         /// <summary>Forms the reflection that annihilates the tail of a column vector</summary>
@@ -53,10 +53,10 @@ namespace UMapx.Decomposition
         private static C[,] Reflect(C[,] a)
         {
             int n = a.GetLength(0);
-            var v = MatrixMath.Column(a, 0);
-            v = MatrixMath.HouseholderVector(v);
-            var h = MatrixMath.Eye(n);
-            MatrixMath.ReflectLeft(h, v, 0, 0);
+            var v = InternalMatrixMath.Column(a, 0);
+            v = InternalMatrixMath.HouseholderVector(v);
+            var h = InternalMatrixMath.Eye(n);
+            InternalMatrixMath.ReflectLeft(h, v, 0, 0);
             return h;
         }
 
@@ -65,7 +65,7 @@ namespace UMapx.Decomposition
         /// <returns>The similarity transformation and tridiagonal matrix.</returns>
         private static (C[,] P, C[,] H) Tridiagonalize(C[,] a)
         {
-            MatrixMath.RequireHermitian(a);
+            InternalMatrixMath.RequireHermitian(a);
             var d = Hessenberg.Factor(a);
             int n = a.GetLength(0);
             for (int i = 0; i < n; i++)

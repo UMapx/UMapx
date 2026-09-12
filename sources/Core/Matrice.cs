@@ -266,7 +266,7 @@ namespace UMapx.Core
             if (!Matrice.IsSquare(m))
                 throw new ArgumentException("The matrix must be square");
 
-            return Jagged.FromJagged(LinealgOptions.MatrixOperation.Invert(Jagged.ToJagged(m)));
+            return Jagged.FromJagged(InternalMatrixOperations.MatrixOperation.Invert(Jagged.ToJagged(m)));
         }
         /// <summary>
         /// Implements the transpose of the matrix.
@@ -299,7 +299,7 @@ namespace UMapx.Core
             if (!Matrice.IsSquare(m))
                 throw new ArgumentException("The matrix must be square");
 
-            return Jagged.FromJagged(LinealgOptions.MatrixOperation.Invert(Jagged.ToJagged(m)));
+            return Jagged.FromJagged(InternalMatrixOperations.MatrixOperation.Invert(Jagged.ToJagged(m)));
         }
         /// <summary>
         /// Implements the transpose of the matrix.
@@ -459,7 +459,7 @@ namespace UMapx.Core
                 float[,] n = (float[,])m.Clone();
 
                 fixed (float* pm = &n[0, 0])
-                    return LinealgOptions.MatrixOperation.Determinant(pm, mr);
+                    return InternalMatrixOperations.MatrixOperation.Determinant(pm, mr);
             }
         }
         /// <summary>
@@ -587,7 +587,7 @@ namespace UMapx.Core
                 Complex32[,] n = (Complex32[,])m.Clone();
 
                 fixed (Complex32* pm = &n[0, 0])
-                    return LinealgOptions.MatrixOperation.Determinant(pm, mr);
+                    return InternalMatrixOperations.MatrixOperation.Determinant(pm, mr);
             }
         }
         /// <summary>
@@ -2570,7 +2570,7 @@ namespace UMapx.Core
                 }
 
                 Array.Sort(v);
-                u[i] = v[LinealgOptions.MorphologyFilter.GetFilterRank(mode, v.Length)];
+                u[i] = v[InternalMatrixOperations.MorphologyFilter.GetFilterRank(mode, v.Length)];
             }
             return u;
         }
@@ -2840,8 +2840,8 @@ namespace UMapx.Core
                         throw new ArgumentException("For horizontal concat, row counts must match");
                     {
                         var R = new float[aRows, aCols + bCols];
-                        LinealgOptions.MatrixOperation.Copy(A, R, 0, 0);
-                        LinealgOptions.MatrixOperation.Copy(B, R, 0, aCols);
+                        InternalMatrixOperations.MatrixOperation.Copy(A, R, 0, 0);
+                        InternalMatrixOperations.MatrixOperation.Copy(B, R, 0, aCols);
                         return R;
                     }
 
@@ -2850,8 +2850,8 @@ namespace UMapx.Core
                         throw new ArgumentException("For vertical concat, column counts must match");
                     {
                         var R = new float[aRows + bRows, aCols];
-                        LinealgOptions.MatrixOperation.Copy(A, R, 0, 0);
-                        LinealgOptions.MatrixOperation.Copy(B, R, aRows, 0);
+                        InternalMatrixOperations.MatrixOperation.Copy(A, R, 0, 0);
+                        InternalMatrixOperations.MatrixOperation.Copy(B, R, aRows, 0);
                         return R;
                     }
 
@@ -2879,8 +2879,8 @@ namespace UMapx.Core
                         throw new ArgumentException("For horizontal concat, row counts must match");
                     {
                         var R = new Complex32[aRows, aCols + bCols];
-                        LinealgOptions.MatrixOperation.Copy(A, R, 0, 0);
-                        LinealgOptions.MatrixOperation.Copy(B, R, 0, aCols);
+                        InternalMatrixOperations.MatrixOperation.Copy(A, R, 0, 0);
+                        InternalMatrixOperations.MatrixOperation.Copy(B, R, 0, aCols);
                         return R;
                     }
 
@@ -2889,8 +2889,8 @@ namespace UMapx.Core
                         throw new ArgumentException("For vertical concat, column counts must match");
                     {
                         var R = new Complex32[aRows + bRows, aCols];
-                        LinealgOptions.MatrixOperation.Copy(A, R, 0, 0);
-                        LinealgOptions.MatrixOperation.Copy(B, R, aRows, 0);
+                        InternalMatrixOperations.MatrixOperation.Copy(A, R, 0, 0);
+                        InternalMatrixOperations.MatrixOperation.Copy(B, R, aRows, 0);
                         return R;
                     }
 
@@ -2918,8 +2918,8 @@ namespace UMapx.Core
                         throw new ArgumentException("For horizontal concat, row counts must match");
                     {
                         var R = new Complex32[aRows, aCols + bCols];
-                        LinealgOptions.MatrixOperation.Copy(A, R, 0, 0);
-                        LinealgOptions.MatrixOperation.Copy(B, R, 0, aCols);
+                        InternalMatrixOperations.MatrixOperation.Copy(A, R, 0, 0);
+                        InternalMatrixOperations.MatrixOperation.Copy(B, R, 0, aCols);
                         return R;
                     }
 
@@ -2928,8 +2928,8 @@ namespace UMapx.Core
                         throw new ArgumentException("For vertical concat, column counts must match");
                     {
                         var R = new Complex32[aRows + bRows, aCols];
-                        LinealgOptions.MatrixOperation.Copy(A, R, 0, 0);
-                        LinealgOptions.MatrixOperation.Copy(B, R, aRows, 0);
+                        InternalMatrixOperations.MatrixOperation.Copy(A, R, 0, 0);
+                        InternalMatrixOperations.MatrixOperation.Copy(B, R, aRows, 0);
                         return R;
                     }
 
@@ -2957,8 +2957,8 @@ namespace UMapx.Core
                         throw new ArgumentException("For horizontal concat, row counts must match");
                     {
                         var R = new Complex32[aRows, aCols + bCols];
-                        LinealgOptions.MatrixOperation.Copy(A, R, 0, 0);
-                        LinealgOptions.MatrixOperation.Copy(B, R, 0, aCols);
+                        InternalMatrixOperations.MatrixOperation.Copy(A, R, 0, 0);
+                        InternalMatrixOperations.MatrixOperation.Copy(B, R, 0, aCols);
                         return R;
                     }
 
@@ -2967,8 +2967,8 @@ namespace UMapx.Core
                         throw new ArgumentException("For vertical concat, column counts must match");
                     {
                         var R = new Complex32[aRows + bRows, aCols];
-                        LinealgOptions.MatrixOperation.Copy(A, R, 0, 0);
-                        LinealgOptions.MatrixOperation.Copy(B, R, aRows, 0);
+                        InternalMatrixOperations.MatrixOperation.Copy(A, R, 0, 0);
+                        InternalMatrixOperations.MatrixOperation.Copy(B, R, aRows, 0);
                         return R;
                     }
 
@@ -2990,7 +2990,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float[,] Dot(this float[,] m, float[,] n)
         {
-            return Jagged.FromJagged(LinealgOptions.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n), Globals.SIMD));
+            return Jagged.FromJagged(InternalMatrixOperations.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n), Globals.SIMD));
         }
         /// <summary>
         /// Implements a scalar product of matrices.
@@ -3000,7 +3000,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Dot(this Complex32[,] m, Complex32[,] n)
         {
-            return Jagged.FromJagged(LinealgOptions.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n), Globals.SIMD));
+            return Jagged.FromJagged(InternalMatrixOperations.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n), Globals.SIMD));
         }
         /// <summary>
         /// Implements a scalar product of matrices.
@@ -3010,7 +3010,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Dot(this Complex32[,] m, float[,] n)
         {
-            return Jagged.FromJagged(LinealgOptions.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n), Globals.SIMD));
+            return Jagged.FromJagged(InternalMatrixOperations.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n), Globals.SIMD));
         }
         /// <summary>
         /// Implements a scalar product of matrices.
@@ -3020,7 +3020,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Dot(this float[,] m, Complex32[,] n)
         {
-            return Jagged.FromJagged(LinealgOptions.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n), Globals.SIMD));
+            return Jagged.FromJagged(InternalMatrixOperations.MatrixOperation.Mul(Jagged.ToJagged(m), Jagged.ToJagged(n), Globals.SIMD));
         }
         #endregion
 
@@ -3034,7 +3034,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float[,] Conv(this float[,] m, float[,] n, bool normalize = true)
         {
-            return LinealgOptions.ConvolutionFilter.Conv(m, n, normalize);
+            return InternalMatrixOperations.ConvolutionFilter.Conv(m, n, normalize);
         }
         /// <summary>
         /// Implements discrete convolution of matrices.
@@ -3045,7 +3045,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Conv(this Complex32[,] m, Complex32[,] n, bool normalize = true)
         {
-            return LinealgOptions.ConvolutionFilter.Conv(m, n, normalize);
+            return InternalMatrixOperations.ConvolutionFilter.Conv(m, n, normalize);
         }
         /// <summary>
         /// Implements discrete convolution of matrices.
@@ -3056,7 +3056,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Conv(this Complex32[,] m, float[,] n, bool normalize = true)
         {
-            return LinealgOptions.ConvolutionFilter.Conv(m, n, normalize);
+            return InternalMatrixOperations.ConvolutionFilter.Conv(m, n, normalize);
         }
         /// <summary>
         /// Implements discrete convolution of matrices.
@@ -3067,7 +3067,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static Complex32[,] Conv(this float[,] m, Complex32[,] n, bool normalize = true)
         {
-            return LinealgOptions.ConvolutionFilter.Conv(m, n, normalize);
+            return InternalMatrixOperations.ConvolutionFilter.Conv(m, n, normalize);
         }
         #endregion
 
@@ -3085,16 +3085,16 @@ namespace UMapx.Core
             // direction of processing
             if (direction == Direction.Horizontal)
             {
-                return LinealgOptions.ConvolutionFilter.ConvHorizontal(m, n, normalize);
+                return InternalMatrixOperations.ConvolutionFilter.ConvHorizontal(m, n, normalize);
             }
             else if (direction == Direction.Vertical)
             {
-                return LinealgOptions.ConvolutionFilter.ConvVertical(m, n, normalize);
+                return InternalMatrixOperations.ConvolutionFilter.ConvVertical(m, n, normalize);
             }
 
             // both processing
-            return LinealgOptions.ConvolutionFilter.ConvVertical(
-                LinealgOptions.ConvolutionFilter.ConvHorizontal(m, n, normalize), n, normalize);
+            return InternalMatrixOperations.ConvolutionFilter.ConvVertical(
+                InternalMatrixOperations.ConvolutionFilter.ConvHorizontal(m, n, normalize), n, normalize);
         }
         /// <summary>
         /// Implements discrete convolution of matrices.
@@ -3109,16 +3109,16 @@ namespace UMapx.Core
             // direction of processing
             if (direction == Direction.Horizontal)
             {
-                return LinealgOptions.ConvolutionFilter.ConvHorizontal(m, n, normalize);
+                return InternalMatrixOperations.ConvolutionFilter.ConvHorizontal(m, n, normalize);
             }
             else if (direction == Direction.Vertical)
             {
-                return LinealgOptions.ConvolutionFilter.ConvVertical(m, n, normalize);
+                return InternalMatrixOperations.ConvolutionFilter.ConvVertical(m, n, normalize);
             }
 
             // both processing
-            return LinealgOptions.ConvolutionFilter.ConvVertical(
-                LinealgOptions.ConvolutionFilter.ConvHorizontal(m, n, normalize), n, normalize);
+            return InternalMatrixOperations.ConvolutionFilter.ConvVertical(
+                InternalMatrixOperations.ConvolutionFilter.ConvHorizontal(m, n, normalize), n, normalize);
         }
         /// <summary>
         /// Implements discrete convolution of matrices.
@@ -3133,16 +3133,16 @@ namespace UMapx.Core
             // direction of processing
             if (direction == Direction.Horizontal)
             {
-                return LinealgOptions.ConvolutionFilter.ConvHorizontal(m, n, normalize);
+                return InternalMatrixOperations.ConvolutionFilter.ConvHorizontal(m, n, normalize);
             }
             else if (direction == Direction.Vertical)
             {
-                return LinealgOptions.ConvolutionFilter.ConvVertical(m, n, normalize);
+                return InternalMatrixOperations.ConvolutionFilter.ConvVertical(m, n, normalize);
             }
 
             // both processing
-            return LinealgOptions.ConvolutionFilter.ConvVertical(
-                LinealgOptions.ConvolutionFilter.ConvHorizontal(m, n, normalize), n, normalize);
+            return InternalMatrixOperations.ConvolutionFilter.ConvVertical(
+                InternalMatrixOperations.ConvolutionFilter.ConvHorizontal(m, n, normalize), n, normalize);
         }
         /// <summary>
         /// Implements discrete convolution of matrices.
@@ -3157,16 +3157,16 @@ namespace UMapx.Core
             // direction of processing
             if (direction == Direction.Horizontal)
             {
-                return LinealgOptions.ConvolutionFilter.ConvHorizontal(m, n, normalize);
+                return InternalMatrixOperations.ConvolutionFilter.ConvHorizontal(m, n, normalize);
             }
             else if (direction == Direction.Vertical)
             {
-                return LinealgOptions.ConvolutionFilter.ConvVertical(m, n, normalize);
+                return InternalMatrixOperations.ConvolutionFilter.ConvVertical(m, n, normalize);
             }
 
             // both processing
-            return LinealgOptions.ConvolutionFilter.ConvVertical(
-                LinealgOptions.ConvolutionFilter.ConvHorizontal(m, n, normalize), n, normalize);
+            return InternalMatrixOperations.ConvolutionFilter.ConvVertical(
+                InternalMatrixOperations.ConvolutionFilter.ConvHorizontal(m, n, normalize), n, normalize);
         }
         #endregion
 
@@ -3203,7 +3203,7 @@ namespace UMapx.Core
         /// <returns>Matrix</returns>
         public static float[,] Morph(this float[,] m, int r0, int r1, MorphologyMode mode = MorphologyMode.Median)
         {
-            return LinealgOptions.MorphologySortFilter.Apply(m, r0 / 2, r1 / 2, mode);
+            return InternalMatrixOperations.MorphologySortFilter.Apply(m, r0 / 2, r1 / 2, mode);
         }
         #endregion
 
@@ -3216,7 +3216,7 @@ namespace UMapx.Core
         /// <param name="r1">Width window length</param>
         public static float[,] Mean(this float[,] m, int r0, int r1)
         {
-            return LinealgOptions.MeanFilter.MeanVertical(LinealgOptions.MeanFilter.MeanHorizontal(m, r1), r0);
+            return InternalMatrixOperations.MeanFilter.MeanVertical(InternalMatrixOperations.MeanFilter.MeanHorizontal(m, r1), r0);
         }
         /// <summary>
         /// Returns the result matrix of local averaging.
@@ -3226,7 +3226,7 @@ namespace UMapx.Core
         /// <param name="r1">Width window length</param>
         public static Complex32[,] Mean(this Complex32[,] m, int r0, int r1)
         {
-            return LinealgOptions.MeanFilter.MeanVertical(LinealgOptions.MeanFilter.MeanHorizontal(m, r1), r0);
+            return InternalMatrixOperations.MeanFilter.MeanVertical(InternalMatrixOperations.MeanFilter.MeanHorizontal(m, r1), r0);
         }
 
         /// <summary>
@@ -3238,7 +3238,7 @@ namespace UMapx.Core
         /// <param name="r1">Width window length</param>
         public static float[,] Mean(this float[,] m, float[,] w, int r0, int r1)
         {
-            return LinealgOptions.MeanFilter.MeanVerticalWeighted(LinealgOptions.MeanFilter.MeanHorizontalWeighted(m, w, r1), w, r0);
+            return InternalMatrixOperations.MeanFilter.MeanVerticalWeighted(InternalMatrixOperations.MeanFilter.MeanHorizontalWeighted(m, w, r1), w, r0);
         }
         /// <summary>
         /// Returns the result matrix of local weighted averaging.
@@ -3249,7 +3249,7 @@ namespace UMapx.Core
         /// <param name="r1">Width window length</param>
         public static Complex32[,] Mean(this Complex32[,] m, Complex32[,] w, int r0, int r1)
         {
-            return LinealgOptions.MeanFilter.MeanVerticalWeighted(LinealgOptions.MeanFilter.MeanHorizontalWeighted(m, w, r1), w, r0);
+            return InternalMatrixOperations.MeanFilter.MeanVerticalWeighted(InternalMatrixOperations.MeanFilter.MeanHorizontalWeighted(m, w, r1), w, r0);
         }
         #endregion
 
@@ -5272,7 +5272,7 @@ namespace UMapx.Core
         {
             float[] u = (float[])v.Clone();
             Array.Sort(u);
-            return u[LinealgOptions.MorphologyFilter.GetFilterRank(mode, u.Length)];
+            return u[InternalMatrixOperations.MorphologyFilter.GetFilterRank(mode, u.Length)];
         }
         /// <summary>
         /// Returns the covariance value of a vector.
@@ -6213,7 +6213,7 @@ namespace UMapx.Core
         /// <returns>Array</returns>
         public static float[] Morph(this float[] v, int r, MorphologyMode mode = MorphologyMode.Median)
         {
-            return LinealgOptions.MorphologySortFilter.Apply(v, r / 2, mode);
+            return InternalMatrixOperations.MorphologySortFilter.Apply(v, r / 2, mode);
         }
         #endregion
 
@@ -6225,7 +6225,7 @@ namespace UMapx.Core
         /// <param name="r">Window length</param>
         public static float[] Mean(this float[] v, int r)
         {
-            return LinealgOptions.MeanFilter.Mean(v, r);
+            return InternalMatrixOperations.MeanFilter.Mean(v, r);
         }
         /// <summary>
         /// Returns the result vector of local averaging.
@@ -6234,7 +6234,7 @@ namespace UMapx.Core
         /// <param name="r">Window length</param>
         public static Complex32[] Mean(this Complex32[] v, int r)
         {
-            return LinealgOptions.MeanFilter.Mean(v, r);
+            return InternalMatrixOperations.MeanFilter.Mean(v, r);
         }
         /// <summary>
         /// Returns the result vector of local weighted averaging.
@@ -6244,7 +6244,7 @@ namespace UMapx.Core
         /// <param name="r">Window length</param>
         public static float[] Mean(this float[] v, float[] w, int r)
         {
-            return LinealgOptions.MeanFilter.MeanWeighted(v, w, r);
+            return InternalMatrixOperations.MeanFilter.MeanWeighted(v, w, r);
         }
         /// <summary>
         /// Returns the result vector of local weighted averaging.
@@ -6254,7 +6254,7 @@ namespace UMapx.Core
         /// <param name="r">Window length</param>
         public static Complex32[] Mean(this Complex32[] v, Complex32[] w, int r)
         {
-            return LinealgOptions.MeanFilter.MeanWeighted(v, w, r);
+            return InternalMatrixOperations.MeanFilter.MeanWeighted(v, w, r);
         }
         #endregion
 
@@ -11047,7 +11047,7 @@ namespace UMapx.Core
         public static float[,] Parse(this float[,] a, string s)
 #pragma warning restore IDE0060 // Remove unused parameter
         {
-            string[] rows = StringOptions.Matpar(s);
+            string[] rows = InternalStringOperations.Matpar(s);
             string[] nums = rows[0].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             int r = rows.Length, n = nums.Length, k;
             float[,] H = new float[r, n];
@@ -11105,7 +11105,7 @@ namespace UMapx.Core
         public static Complex32[,] Parse(this Complex32[,] a, string s)
 #pragma warning restore IDE0060 // Remove unused parameter
         {
-            string[] rows = StringOptions.Matpar(s);
+            string[] rows = InternalStringOperations.Matpar(s);
             string[] nums = rows[0].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             int r = rows.Length, n = nums.Length, k;
             Complex32[,] H = new Complex32[r, n];
@@ -11114,7 +11114,7 @@ namespace UMapx.Core
             // first row
             for (j = 0; j < n; j++)
             {
-                H[0, j] = StringOptions.Compar(nums[j]);
+                H[0, j] = InternalStringOperations.Compar(nums[j]);
             }
 
             // other rows
@@ -11125,7 +11125,7 @@ namespace UMapx.Core
 
                 for (j = 0; j < k; j++)
                 {
-                    H[i, j] = StringOptions.Compar(nums[j]);
+                    H[i, j] = InternalStringOperations.Compar(nums[j]);
                 }
             }
 
@@ -11165,7 +11165,7 @@ namespace UMapx.Core
         public static float[] Parse(this float[] a, string s)
 #pragma warning restore IDE0060 // Remove unused parameter
         {
-            string[] rows = StringOptions.Matpar(s);
+            string[] rows = InternalStringOperations.Matpar(s);
             int r = rows.Length;
 
             // vector?
@@ -11220,7 +11220,7 @@ namespace UMapx.Core
         public static Complex32[] Parse(this Complex32[] a, string s)
 #pragma warning restore IDE0060 // Remove unused parameter
         {
-            string[] rows = StringOptions.Matpar(s);
+            string[] rows = InternalStringOperations.Matpar(s);
             int r = rows.Length;
 
             // vector?
@@ -11233,7 +11233,7 @@ namespace UMapx.Core
                 // collecting rows:
                 for (i = 0; i < n; i++)
                 {
-                    H[i] = StringOptions.Compar(nums[i]);
+                    H[i] = InternalStringOperations.Compar(nums[i]);
                 }
                 return H;
             }

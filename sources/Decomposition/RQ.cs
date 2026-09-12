@@ -12,7 +12,7 @@ namespace UMapx.Decomposition
         /// <returns>Factors R, Q; their product equals the input. Q has orthonormal rows.</returns>
         public static (float[,] R, float[,] Q) Decompose(float[,] matrix)
         {
-            MatrixMath.CheckShape(matrix);
+            InternalMatrixMath.CheckShape(matrix);
             var d = QR.Decompose(matrix.Flip(Direction.Vertical).Transpose());
             return (d.R.Transpose().Flip(Direction.Both), d.Q.Transpose().Flip(Direction.Vertical));
         }
@@ -22,7 +22,7 @@ namespace UMapx.Decomposition
         /// <returns>Factors R, Q; their product equals the input. Q has orthonormal rows.</returns>
         public static (Complex32[,] R, Complex32[,] Q) Decompose(Complex32[,] matrix)
         {
-            MatrixMath.CheckShape(matrix);
+            InternalMatrixMath.CheckShape(matrix);
             var d = QR.Decompose(matrix.Flip(Direction.Vertical).Hermitian());
             return (d.R.Hermitian().Flip(Direction.Both), d.Q.Hermitian().Flip(Direction.Vertical));
         }

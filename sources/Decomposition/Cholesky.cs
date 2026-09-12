@@ -10,29 +10,29 @@ namespace UMapx.Decomposition
         /// <summary>Computes the lower triangular factor in A = L L^T</summary>
         /// <param name="matrix">Finite nonempty symmetric positive definite matrix.</param>
         /// <returns>L with a strictly positive diagonal.</returns>
-        public static float[,] Decompose(float[,] matrix) => MatrixMath.Real(Factor(MatrixMath.Copy(matrix, true)));
+        public static float[,] Decompose(float[,] matrix) => InternalMatrixMath.Real(Factor(InternalMatrixMath.Copy(matrix, true)));
 
         /// <summary>Computes the lower triangular factor in A = L L^H</summary>
         /// <param name="matrix">Finite nonempty Hermitian positive definite matrix.</param>
         /// <returns>L with a strictly positive real diagonal.</returns>
-        public static Complex32[,] Decompose(Complex32[,] matrix) => MatrixMath.Single(Factor(MatrixMath.Copy(matrix, true)));
+        public static Complex32[,] Decompose(Complex32[,] matrix) => InternalMatrixMath.Single(Factor(InternalMatrixMath.Copy(matrix, true)));
 
         /// <summary>Constructs the upper factor from a previously computed lower factor</summary>
         /// <param name="lower">Square lower Cholesky factor.</param>
         /// <returns>L^T.</returns>
-        public static float[,] UpperFactor(float[,] lower) => MatrixMath.Real(MatrixMath.Adjoint(MatrixMath.Copy(lower, true)));
+        public static float[,] UpperFactor(float[,] lower) => InternalMatrixMath.Real(InternalMatrixMath.Adjoint(InternalMatrixMath.Copy(lower, true)));
 
         /// <summary>Constructs the upper factor from a previously computed complex lower factor</summary>
         /// <param name="lower">Square lower Cholesky factor.</param>
         /// <returns>L^H.</returns>
-        public static Complex32[,] UpperFactor(Complex32[,] lower) => MatrixMath.Single(MatrixMath.Adjoint(MatrixMath.Copy(lower, true)));
+        public static Complex32[,] UpperFactor(Complex32[,] lower) => InternalMatrixMath.Single(InternalMatrixMath.Adjoint(InternalMatrixMath.Copy(lower, true)));
 
         /// <summary>Computes Cholesky factors with Hermitian inner products in double precision</summary>
         /// <param name="a">Private Hermitian square input.</param>
         /// <returns>A lower triangular factor; nonpositive pivots cause an exception.</returns>
         internal static C[,] Factor(C[,] a)
         {
-            MatrixMath.RequireHermitian(a);
+            InternalMatrixMath.RequireHermitian(a);
             int n = a.GetLength(0);
             var l = new C[n, n];
             for (int i = 0; i < n; i++)

@@ -14,7 +14,7 @@ namespace UMapx.Decomposition
         /// <returns>Nonnegative W of size m by rank and H of size rank by n.</returns>
         public static (float[,] W, float[,] H) Decompose(float[,] matrix, int rank, int iterations = 100)
         {
-            MatrixMath.Copy(matrix);
+            InternalMatrixMath.Copy(matrix);
             int m = matrix.GetLength(0), n = matrix.GetLength(1);
             if (rank < 1 || rank > Math.Min(m, n)) throw new ArgumentOutOfRangeException(nameof(rank));
             if (iterations < 1) throw new ArgumentOutOfRangeException(nameof(iterations));
