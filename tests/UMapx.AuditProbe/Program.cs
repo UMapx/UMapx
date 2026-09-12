@@ -15,6 +15,7 @@ public static class Program
             "FactorLong" => string.Join(",", Maths.Itf(long.Parse(args[1]))),
             "SchurZero" => SchurZero(int.Parse(args[1])),
             "EigenScale" => EigenScale(args[1]),
+            "VideoLifecycle" => VideoLifecycleProbe.Run(args[1]),
             _ => throw new ArgumentException("Unknown audit operation.")
         });
     }

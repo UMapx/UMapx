@@ -47,13 +47,13 @@ namespace UMapx.Video
         {
             lock (_locker)
             {
-                var frame = BitmapTransform.Resize(
-                    _image,
-                    new Size(_videoResolution.FrameSize.Width,
-                    _videoResolution.FrameSize.Height));
+                // A timer callback may already be queued when a run stops or restarts.
+                if (_timer == null || !ReferenceEquals(sender, _timer)) return;
 
-                OnNewFrame(frame);
-                frame?.Dispose();
+                using (var frame = BitmapTransform.Resize(_image, _videoResolution.FrameSize))
+                {
+                    OnNewFrame(frame);
+                }
             }
         }
 
@@ -150,7 +150,10 @@ namespace UMapx.Video
         /// 
         /// <remarks>Current state of video source object - running or not.</remarks>
         /// 
-        public bool IsRunning { get; private set; }
+        public bool IsRunning
+        {
+            get { lock (_locker) return _timer != null; }
+        }
 
         #endregion
 
@@ -195,13 +198,23 @@ namespace UMapx.Video
         {
             try
             {
-                if (!IsRunning)
+                lock (_locker)
                 {
-                    _timer = new Timer();
-                    _timer.Elapsed += OnElapsed;
-                    _timer.Interval = 1000.0 / _videoResolution.MaximumFrameRate;
-                    _timer?.Start();
-                    IsRunning = true;
+                    if (_disposed) throw new ObjectDisposedException(GetType().Name);
+                    if (_timer != null) return;
+
+                    var timer = new Timer(1000.0 / _videoResolution.MaximumFrameRate);
+                    timer.Elapsed += OnElapsed;
+                    try
+                    {
+                        timer.Start();
+                        _timer = timer;
+                    }
+                    catch
+                    {
+                        timer.Dispose();
+                        throw;
+                    }
                 }
             }
             catch (Exception ex)
@@ -220,13 +233,13 @@ namespace UMapx.Video
         /// 
         public void SignalToStop()
         {
-            if (IsRunning)
+            lock (_locker)
             {
-                _timer?.Stop();
-                _timer?.Dispose();
-                IsRunning = false;
-                PlayingFinished?.Invoke(this, ReasonToFinishPlaying.StoppedByUser);
+                if (_timer == null) return;
+                _timer.Dispose();
+                _timer = null;
             }
+            PlayingFinished?.Invoke(this, ReasonToFinishPlaying.StoppedByUser);
         }
 
         /// <summary>
@@ -268,14 +281,16 @@ namespace UMapx.Video
         /// <inheritdoc/>
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposed)
+            lock (_locker)
             {
+                if (_disposed) return;
+                _disposed = true;
                 if (disposing)
                 {
                     _timer?.Dispose();
+                    _timer = null;
                     _image?.Dispose();
                 }
-                _disposed = true;
             }
         }
 

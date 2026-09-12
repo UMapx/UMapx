@@ -60,6 +60,7 @@ namespace UMapx.Video
         // if we should use basic authentication when connecting to the video source
         private bool _forceBasicAuthentication = false;
 
+        private readonly object _sync = new object();
         private Thread _thread = null;
         private ManualResetEvent _stopEvent = null;
         private ManualResetEvent _reloadEvent = null;
@@ -133,8 +134,7 @@ namespace UMapx.Video
         /// </summary>
         private void ReloadThread()
         {
-            if (_thread != null)
-                _reloadEvent.Set();
+            lock (_sync) _reloadEvent?.Set();
         }
 
         /// <summary>
@@ -268,22 +268,13 @@ namespace UMapx.Video
         /// <returns><c>true</c> if running; otherwise, false.</returns>
         private bool IsThreadRunning()
         {
-            bool isRunning = false;
-
-            if (_thread != null)
+            lock (_sync)
             {
-                // check thread status
-                if (_thread.Join(0) == false)
-                {
-                    isRunning = true;
-                }
-                else
-                {
-                    // the thread is not running, so free resources
-                    FreeThreadResources();
-                }
+                if (_thread == null) return false;
+                if (!_thread.Join(0)) return true;
+                FreeThreadResources();
+                return false;
             }
-            return isRunning;
         }
 
         private bool IsReloadRequested
@@ -343,25 +334,31 @@ namespace UMapx.Video
         /// 
         public void Start()
         {
-            if (!IsRunning)
+            lock (_sync)
             {
-                // check source
-                if ((_source == null) || (_source == string.Empty))
+                if (_disposed) throw new ObjectDisposedException(GetType().Name);
+                if (IsRunning) return;
+
+                if (string.IsNullOrEmpty(_source))
                     throw new ArgumentException("Video source is not specified");
 
                 _framesReceived = 0;
                 _bytesReceived = 0;
-
-                // create events
                 _stopEvent = new ManualResetEvent(false);
                 _reloadEvent = new ManualResetEvent(false);
-
-                // create and start new thread
-                _thread = new Thread(new ThreadStart(WorkerThread))
+                _thread = new Thread(WorkerThread)
                 {
                     Name = _source
                 };
-                _thread.Start();
+                try
+                {
+                    _thread.Start();
+                }
+                catch
+                {
+                    FreeThreadResources();
+                    throw;
+                }
             }
         }
 
@@ -374,12 +371,7 @@ namespace UMapx.Video
         /// 
         public void SignalToStop()
         {
-            // stop thread
-            if (_thread != null)
-            {
-                // signal to stop
-                _stopEvent.Set();
-            }
+            lock (_sync) _stopEvent?.Set();
         }
 
         /// <summary>
@@ -391,12 +383,14 @@ namespace UMapx.Video
         /// 
         public void WaitForStop()
         {
-            if (_thread != null)
-            {
-                // wait for thread stop
-                _thread.Join();
+            Thread worker;
+            lock (_sync) worker = _thread;
+            if (worker == null || worker == Thread.CurrentThread) return;
 
-                FreeThreadResources();
+            worker.Join();
+            lock (_sync)
+            {
+                if (ReferenceEquals(_thread, worker)) FreeThreadResources();
             }
         }
 
@@ -430,11 +424,9 @@ namespace UMapx.Video
         private void FreeThreadResources()
         {
             _thread = null;
-
-            // release events
-            _stopEvent.Close();
+            _stopEvent?.Dispose();
             _stopEvent = null;
-            _reloadEvent.Close();
+            _reloadEvent?.Dispose();
             _reloadEvent = null;
         }
 
@@ -442,6 +434,25 @@ namespace UMapx.Video
         /// Thread procedure that downloads and parses the MJPEG stream.
         /// </summary>
         private void WorkerThread()
+        {
+            try
+            {
+                WorkerThreadCore();
+            }
+            finally
+            {
+                // Dispose may be called by a subscriber on this worker itself.
+                lock (_sync)
+                {
+                    if (_disposed) FreeThreadResources();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Runs the frame loop while its synchronization events remain available.
+        /// </summary>
+        private void WorkerThreadCore()
         {
             while (!IsStopRequested)
             {
@@ -672,15 +683,19 @@ namespace UMapx.Video
         /// <inheritdoc/>
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposed)
+            if (!disposing)
             {
-                if (disposing)
-                {
-                    _stopEvent?.Dispose();
-                    _reloadEvent?.Dispose();
-                }
                 _disposed = true;
+                return;
             }
+
+            lock (_sync)
+            {
+                _disposed = true;
+                _stopEvent?.Set();
+            }
+            // Never wait under the lock or join the worker from its own callback.
+            WaitForStop();
         }
 
         /// <inheritdoc/>

@@ -53,6 +53,7 @@
         // received frames count
         private int framesReceived;
 
+        private readonly object _sync = new object();
         private Thread thread = null;
         private ManualResetEvent stopEvent = null;
 
@@ -170,16 +171,13 @@
         {
             get
             {
-                if ( thread != null )
+                lock (_sync)
                 {
-                    // check thread status
-                    if ( thread.Join( 0 ) == false )
-                        return true;
-
-                    // the thread is not running, free resources
-                    Free( );
+                    if (thread == null) return false;
+                    if (!thread.Join(0)) return true;
+                    Free();
+                    return false;
                 }
-                return false;
             }
         }
 
@@ -217,21 +215,28 @@
         /// 
         /// <exception cref="ArgumentException">Video source is not specified.</exception>
         /// 
-        public void Start( )
+        public void Start()
         {
-            if ( !IsRunning )
+            lock (_sync)
             {
+                if (_disposed) throw new ObjectDisposedException(GetType().Name);
+                if (IsRunning) return;
+
                 framesReceived = 0;
-
-                // create events
-                stopEvent = new ManualResetEvent( false );
-
-                // create and start new thread
-                thread = new Thread(new ThreadStart(WorkerThread))
+                stopEvent = new ManualResetEvent(false);
+                thread = new Thread(WorkerThread)
                 {
-                    Name = Source // mainly for debugging
+                    Name = Source
                 };
-                thread.Start( );
+                try
+                {
+                    thread.Start();
+                }
+                catch
+                {
+                    Free();
+                    throw;
+                }
             }
         }
 
@@ -242,14 +247,9 @@
         /// <remarks>Signals video source to stop its background thread, stop to
         /// provide new frames and free resources.</remarks>
         /// 
-        public void SignalToStop( )
+        public void SignalToStop()
         {
-            // stop thread
-            if ( thread != null )
-            {
-                // signal to stop
-                stopEvent.Set( );
-            }
+            lock (_sync) stopEvent?.Set();
         }
 
         /// <summary>
@@ -259,14 +259,16 @@
         /// <remarks>Waits for source stopping after it was signalled to stop using
         /// <see cref="SignalToStop"/> method.</remarks>
         /// 
-        public void WaitForStop( )
+        public void WaitForStop()
         {
-            if ( thread != null )
-            {
-                // wait for thread stop
-                thread.Join( );
+            Thread worker;
+            lock (_sync) worker = thread;
+            if (worker == null || worker == Thread.CurrentThread) return;
 
-                Free( );
+            worker.Join();
+            lock (_sync)
+            {
+                if (ReferenceEquals(thread, worker)) Free();
             }
         }
 
@@ -297,19 +299,36 @@
         /// Free resource.
         /// </summary>
         /// 
-        private void Free( )
+        private void Free()
         {
             thread = null;
-
-            // release events
-            stopEvent.Close( );
+            stopEvent?.Dispose();
             stopEvent = null;
         }
 
         /// <summary>
         /// Captures frames from the screen in a background thread.
         /// </summary>
-        private void WorkerThread( )
+        private void WorkerThread()
+        {
+            try
+            {
+                WorkerThreadCore();
+            }
+            finally
+            {
+                // Dispose may be called by a subscriber on this worker itself.
+                lock (_sync)
+                {
+                    if (_disposed) Free();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Runs the frame loop while its synchronization events remain available.
+        /// </summary>
+        private void WorkerThreadCore()
         {
             int width = region.Width;
             int height = region.Height;
@@ -392,14 +411,19 @@
         /// <inheritdoc/>
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposed)
+            if (!disposing)
             {
-                if (disposing)
-                {
-                    stopEvent?.Dispose();
-                }
                 _disposed = true;
+                return;
             }
+
+            lock (_sync)
+            {
+                _disposed = true;
+                stopEvent?.Set();
+            }
+            // Never wait under the lock or join the worker from its own callback.
+            WaitForStop();
         }
 
         /// <inheritdoc/>
