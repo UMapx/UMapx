@@ -1,0 +1,1 @@
+dotnet build sources/UMapx.csproj -c Release
