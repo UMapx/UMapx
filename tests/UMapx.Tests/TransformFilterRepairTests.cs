@@ -180,7 +180,7 @@ public class TransformFilterRepairTests
         Assert.Contains(Enumerable.Range(0, input.Length), i => Math.Abs(actual[i] - input[i]) > 1e-4);
     }
 
-    /// <summary>Evaluates the sampled local-Laplacian definition with independent double pyramids and no lookup tables.</summary>
+    /// <summary>Evaluates the sampled local-Laplacian definition with independent double pyramids and no lookup tables</summary>
     /// <param name="input">Unit-interval signal with at least eight samples.</param>
     /// <param name="steps">Number of intensity intervals.</param>
     /// <param name="sigma">Positive remapping width.</param>

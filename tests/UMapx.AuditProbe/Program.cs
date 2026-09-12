@@ -20,7 +20,7 @@ public static class Program
 
     private static bool SchurZero(int size)
     {
-        var d=new Schur(new float[size,size],1e-7f);
+        var d=Schur.Decompose(new float[size,size],1e-7f);
         if(d.T.Cast<float>().Any(x=>x!=0))return false;
         for(int i=0;i<size;i++)for(int j=0;j<size;j++)
         {

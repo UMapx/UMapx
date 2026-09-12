@@ -159,7 +159,7 @@ public class VideoRepairTests
             AssertMarkerFrames(data, boundary, removals, Enumerable.Repeat(chunk, data.Length).ToArray());
     }
 
-    /// <summary>Checks detection and exact unread bytes against known frame offsets.</summary>
+    /// <summary>Checks detection and exact unread bytes against known frame offsets</summary>
     /// <param name="data">Synthetic frame bytes, independent of JPEG decoding.</param>
     /// <param name="boundary">Delimiter, or empty for JPEG-header delimiters.</param>
     /// <param name="removals">Absolute offsets after removing each complete frame.</param>
@@ -192,7 +192,7 @@ public class VideoRepairTests
         Assert.Equal(removals.Length, frames);
     }
 
-    /// <summary>Creates two frames with misleading partial headers and known removal offsets.</summary>
+    /// <summary>Creates two frames with misleading partial headers and known removal offsets</summary>
     /// <param name="boundary">Delimiter string, or empty to use the next header.</param>
     /// <param name="removals">Offsets of unread bytes after each removal.</param>
     /// <returns>Stream bytes ending with a delimiter for the second frame.</returns>
@@ -220,7 +220,7 @@ public class VideoRepairTests
         return data.ToArray();
     }
 
-    /// <summary>Encodes a solid-color JPEG using the platform encoder.</summary>
+    /// <summary>Encodes a solid-color JPEG using the platform encoder</summary>
     /// <param name="color">Expected decoded color, subject to JPEG quantization.</param>
     /// <returns>Encoded image bytes.</returns>
     private static byte[] Jpeg(Color color)
@@ -232,7 +232,7 @@ public class VideoRepairTests
         return stream.ToArray();
     }
 
-    /// <summary>Returns prescribed transport partitions while honoring the caller's read limit.</summary>
+    /// <summary>Returns prescribed transport partitions while honoring the caller's read limit</summary>
     private sealed class PartitionStream(byte[] data, int[] chunks) : MemoryStream(data)
     {
         private int index;

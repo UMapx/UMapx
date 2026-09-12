@@ -1,104 +1,78 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines LU decomposition.
-    /// </summary>
-    /// <remarks>
-    /// This is a representation of the square matrix A as the product of two matrices: A = L * U, 
-    /// where L is the lower triangular matrix, U is the upper triangular matrix.
-    /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/LU_decomposition
-    /// </remarks>
-    [Serializable]
-    public class LU
+    /// <summary>Provides LU decomposition with partial row pivoting</summary>
+    public static class LU
     {
-        #region Private data
-        private float[][] lower;
-        private float[][] upper;
-        #endregion
-
-        #region Initialize
-        /// <summary>
-        /// Initializes LU decomposition.
-        /// </summary>
-        /// <param name="A">Square matrix</param>
-        public LU(float[,] A)
+        /// <summary>Computes A[P,:] = L U with partial row pivoting</summary>
+        /// <param name="matrix">Finite nonempty square matrix, not modified.</param>
+        /// <returns>Unit lower triangular L, upper triangular U, and the row permutation P.</returns>
+        public static (float[,] L, float[,] U, int[] P) Decompose(float[,] matrix)
         {
-            if (!Matrice.IsSquare(A))
-                throw new ArgumentException("The matrix must be square");
-
-            // LU-decomposition:
-            LuDcmp(Jagged.ToJagged(A));
+            var d = Factor(MatrixMath.Copy(matrix, true));
+            return (MatrixMath.Real(d.L), MatrixMath.Real(d.U), d.P);
         }
-        #endregion
 
-        #region Standard voids
-        /// <summary>
-        /// Gets the lower triangular matrix.
-        /// </summary>
-        public float[,] L
+        /// <summary>Computes A[P,:] = L U with complex partial row pivoting</summary>
+        /// <param name="matrix">Finite nonempty square matrix, not modified.</param>
+        /// <returns>Unit lower triangular L, upper triangular U, and the row permutation P.</returns>
+        public static (Complex32[,] L, Complex32[,] U, int[] P) Decompose(Complex32[,] matrix)
         {
-            get { return Jagged.FromJagged(lower); }
+            var d = Factor(MatrixMath.Copy(matrix, true));
+            return (MatrixMath.Single(d.L), MatrixMath.Single(d.U), d.P);
         }
-        /// <summary>
-        /// Gets the upper triangular matrix.
-        /// </summary>
-        public float[,] U
-        {
-            get { return Jagged.FromJagged(upper); }
-        }
-        #endregion
 
-        #region Private voids
-        /// <summary>
-        /// Performs LU decomposition of the specified matrix.
-        /// </summary>
-        /// <param name="a">Square matrix to factorize</param>
-        private void LuDcmp(float[][] a)
+        /// <summary>Builds the row permutation matrix from a pivot vector</summary>
+        /// <param name="permutation">A permutation of indices zero through n-1.</param>
+        /// <returns>P such that P*A selects rows A[permutation[i],:].</returns>
+        public static float[,] PermutationMatrix(int[] permutation)
         {
-            int i, j, k;
+            if (permutation == null) throw new ArgumentNullException(nameof(permutation));
+            int n = permutation.Length;
+            var p = new float[n, n];
+            var used = new bool[n];
+            for (int i = 0; i < n; i++)
+            {
+                int j = permutation[i];
+                if (j < 0 || j >= n || used[j]) throw new ArgumentException("Invalid row permutation.", nameof(permutation));
+                used[j] = true; p[i, j] = 1;
+            }
+            return p;
+        }
+
+        /// <summary>Performs Gaussian elimination with magnitude-based row pivoting</summary>
+        /// <param name="a">Private square buffer overwritten by U.</param>
+        /// <returns>L, U and row indices, including valid factors of singular matrices.</returns>
+        internal static (C[,] L, C[,] U, int[] P) Factor(C[,] a)
+        {
             int n = a.GetLength(0);
-            float alpha, beta;
-            this.upper = Jagged.Zero(n, n);
-            this.lower = Jagged.Zero(n, n);
-
-            for (i = 0; i < n; i++)
+            var l = MatrixMath.Eye(n);
+            var p = new int[n];
+            for (int i = 0; i < n; i++) p[i] = i;
+            for (int k = 0; k < n; k++)
             {
-                this.upper[i][i] = 1;
-            }
-
-            for (j = 0; j < n; j++)
-            {
-                for (i = j; i < n; i++)
+                int pivot = k;
+                for (int i = k + 1; i < n; i++)
+                    if (C.Abs(a[i, k]) > C.Abs(a[pivot, k])) pivot = i;
+                if (pivot != k)
                 {
-                    alpha = 0;
-                    for (k = 0; k < j; k++)
-                    {
-                        alpha = alpha + this.lower[i][k] * this.upper[k][j];
-                    }
-                    this.lower[i][j] = a[i][j] - alpha;
+                    int t = p[k]; p[k] = p[pivot]; p[pivot] = t;
+                    for (int j = 0; j < n; j++) { C z = a[k, j]; a[k, j] = a[pivot, j]; a[pivot, j] = z; }
+                    for (int j = 0; j < k; j++) { C z = l[k, j]; l[k, j] = l[pivot, j]; l[pivot, j] = z; }
                 }
-
-                beta = lower[j][j];
-
-                for (i = j; i < n; i++)
+                if (a[k, k] == C.Zero) continue;
+                for (int i = k + 1; i < n; i++)
                 {
-                    alpha = 0;
-                    for (k = 0; k < j; k++)
-                    {
-                        alpha = alpha + this.lower[j][k] * this.upper[k][i];
-                    }
-
-                    if (beta != 0)
-                    {
-                        this.upper[j][i] = (a[j][i] - alpha) / beta;
-                    }
+                    l[i, k] = a[i, k] / a[k, k];
+                    a[i, k] = 0;
+                    for (int j = k + 1; j < n; j++) a[i, j] -= l[i, k] * a[k, j];
                 }
             }
+            return (l, a, p);
         }
-        #endregion
+
     }
 }

@@ -1,65 +1,32 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines RQ decomposition.
-    /// </summary>
-    /// <remarks>
-    /// This is a matrix representation in the form of a product of two matrices: A = R * Q, 
-    /// where Q is a unitary (or orthogonal) matrix, and R is an upper triangular matrix.
-    /// RQ decomposition is one of the modifications of the QR algorithm.
-    /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/QR_decomposition
-    /// </remarks>
-    [Serializable]
-    public class RQ
+    /// <summary>Provides real and complex RQ decomposition</summary>
+    public static class RQ
     {
-        #region Private data
-        private QR qr;
-        private float[,] r;
-        private float[,] q;
-        #endregion
-
-        #region Initialize
-        /// <summary>
-        /// Initializes RQ decomposition.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        public RQ(float[,] A)
+        /// <summary>Computes the economy-size RQ factorization of a rectangular matrix</summary>
+        /// <param name="matrix">Finite nonempty input matrix, not modified.</param>
+        /// <returns>Factors R, Q; their product equals the input. Q has orthonormal rows.</returns>
+        public static (float[,] R, float[,] Q) Decompose(float[,] matrix)
         {
-            qr = new QR(A.Flip(Direction.Vertical).Transpose());
-
-            r = qr.R.Transpose();
-            q = qr.Q.Transpose();
-
-            r = r.Flip(Direction.Both);
-            q = q.Flip(Direction.Vertical);
+            MatrixMath.CheckShape(matrix);
+            var d = QR.Decompose(matrix.Flip(Direction.Vertical).Transpose());
+            return (d.R.Transpose().Flip(Direction.Both), d.Q.Transpose().Flip(Direction.Vertical));
         }
-        #endregion
 
-        #region Standard voids
-        /// <summary>
-        /// Returns the lower triangular matrix R.
-        /// </summary>
-        public float[,] R
+        /// <summary>Computes the economy-size RQ factorization of a rectangular matrix</summary>
+        /// <param name="matrix">Finite nonempty input matrix, not modified.</param>
+        /// <returns>Factors R, Q; their product equals the input. Q has orthonormal rows.</returns>
+        public static (Complex32[,] R, Complex32[,] Q) Decompose(Complex32[,] matrix)
         {
-            get
-            {
-                return this.r;
-            }
+            MatrixMath.CheckShape(matrix);
+            var d = QR.Decompose(matrix.Flip(Direction.Vertical).Hermitian());
+            return (d.R.Hermitian().Flip(Direction.Both), d.Q.Hermitian().Flip(Direction.Vertical));
         }
-        /// <summary>
-        /// Returns the orthogonal matrix Q.
-        /// </summary>
-        public float[,] Q
-        {
-            get
-            {
-                return this.q;
-            }
-        }
-        #endregion
+
+
     }
 }

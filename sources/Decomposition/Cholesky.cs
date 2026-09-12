@@ -1,111 +1,53 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines Cholesky decomposition.
-    /// </summary>
-    /// <remarks>
-    /// This is a representation of a symmetric positive definite square matrix in the form of a product: A = L * Lᵀ, 
-    /// where L is a lower triangular matrix with strictly positive elements on the diagonal.
-    /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Cholesky_decomposition
-    /// </remarks>
-    [Serializable]
-    public class Cholesky
+    /// <summary>Provides Cholesky factorization for symmetric and Hermitian positive definite matrices</summary>
+    public static class Cholesky
     {
-        #region Private data
-        float[][] lower;
-        #endregion
+        /// <summary>Computes the lower triangular factor in A = L L^T</summary>
+        /// <param name="matrix">Finite nonempty symmetric positive definite matrix.</param>
+        /// <returns>L with a strictly positive diagonal.</returns>
+        public static float[,] Decompose(float[,] matrix) => MatrixMath.Real(Factor(MatrixMath.Copy(matrix, true)));
 
-        #region Initialize
-        /// <summary>
-        /// Initializes Cholesky decomposition.
-        /// </summary>
-        /// <param name="A">Square symmetric positive definite matrix</param>
-        public Cholesky(float[,] A)
-        {
-            if (!Matrice.IsSquare(A))
-                throw new ArgumentException("The matrix must be square");
+        /// <summary>Computes the lower triangular factor in A = L L^H</summary>
+        /// <param name="matrix">Finite nonempty Hermitian positive definite matrix.</param>
+        /// <returns>L with a strictly positive real diagonal.</returns>
+        public static Complex32[,] Decompose(Complex32[,] matrix) => MatrixMath.Single(Factor(MatrixMath.Copy(matrix, true)));
 
-            // Cholesky decomposition:
-            CholDcmp(Jagged.ToJagged(A));
-        }
-        #endregion
+        /// <summary>Constructs the upper factor from a previously computed lower factor</summary>
+        /// <param name="lower">Square lower Cholesky factor.</param>
+        /// <returns>L^T.</returns>
+        public static float[,] UpperFactor(float[,] lower) => MatrixMath.Real(MatrixMath.Adjoint(MatrixMath.Copy(lower, true)));
 
-        #region Standard voids
-        /// <summary>
-        /// Gets the lower triangular matrix L.
-        /// </summary>
-        public float[,] L
-        {
-            get { return Jagged.FromJagged(lower); }
-        }
-        /// <summary>
-        /// Gets the upper triangular matrix U.
-        /// </summary>
-        public float[,] U
-        {
-            get { return Matrice.Transpose(L); }
-        }
-        #endregion
+        /// <summary>Constructs the upper factor from a previously computed complex lower factor</summary>
+        /// <param name="lower">Square lower Cholesky factor.</param>
+        /// <returns>L^H.</returns>
+        public static Complex32[,] UpperFactor(Complex32[,] lower) => MatrixMath.Single(MatrixMath.Adjoint(MatrixMath.Copy(lower, true)));
 
-        #region Private voids
-        /// <summary>
-        /// Computes Cholesky decomposition for the matrix A.
-        /// </summary>
-        /// <param name="a">Matrix</param>
-        private void CholDcmp(float[][] a)
+        /// <summary>Computes Cholesky factors with Hermitian inner products in double precision</summary>
+        /// <param name="a">Private Hermitian square input.</param>
+        /// <returns>A lower triangular factor; nonpositive pivots cause an exception.</returns>
+        internal static C[,] Factor(C[,] a)
         {
-            // Cholesky decomposition
+            MatrixMath.RequireHermitian(a);
             int n = a.GetLength(0);
-            this.lower = new float[n][];
-            float[] v, w, z, d = new float[n];
-            float alpha;
-            int j, i, k;
-
-            // get diagonal elements
-            for (i = 0; i < n; i++)
-            {
-                d[i] = a[i][i];
-            }
-
-            // do job
-            for (j = 0; j < n; j++)
-            {
-                v = lower[j] = new float[n];
-                z = a[j];
-
-                for (i = 0; i <= j; i++)
+            var l = new C[n, n];
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j <= i; j++)
                 {
-                    w = lower[i];
-                    alpha = 0;
-
+                    C sum = a[i, j];
+                    for (int k = 0; k < j; k++) sum -= l[i, k] * C.Conjugate(l[j, k]);
                     if (i == j)
                     {
-                        for (k = 0; k < i; k++)
-                        {
-                            alpha += w[k] * w[k];
-                        }
-
-                        w[i] = Maths.Sqrt(d[i] - alpha);
-                        lower[i] = w;
+                        if (!(sum.Real > 0)) throw new ArgumentException("The matrix must be positive definite.");
+                        l[i, i] = Math.Sqrt(sum.Real);
                     }
-                    else
-                    {
-                        for (k = 0; k < i; k++)
-                        {
-                            alpha += w[k] * v[k];
-                        }
-
-                        v[i] = (z[i] - alpha) / w[i];
-                    }
+                    else l[i, j] = sum / l[j, j].Real;
                 }
-
-                lower[j] = v;
-            }
+            return l;
         }
-        #endregion
     }
 }

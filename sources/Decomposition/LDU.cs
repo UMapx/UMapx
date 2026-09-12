@@ -1,73 +1,46 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines LDU decomposition.
-    /// </summary>
-    /// <remarks>
-    /// This is the representation of a square matrix A as the product of three matrices: A = L * D * U, 
-    /// where L is the lower triangular matrix, D is the diagonal matrix, and U is the upper triangular matrix.
-    /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/LU_decomposition
-    /// </remarks>
-    [Serializable]
-    public class LDU
+    /// <summary>Provides pivoted LDU decomposition</summary>
+    public static class LDU
     {
-        #region Private data
-        private LU ludecomp;
-        private Diagonal diagdecomp;
-        private float[,] lower;
-        private float[,] upper;
-        private float[] diag;
-        #endregion
-
-        #region Initialize
-        /// <summary>
-        /// Initializes LDU decomposition.
-        /// </summary>
-        /// <param name="A">Square matrix</param>
-        public LDU(float[,] A)
+        /// <summary>Computes A[P,:] = L diag(D) U with unit triangular factors</summary>
+        /// <param name="matrix">Finite nonempty square matrix with nonzero LU pivots.</param>
+        /// <returns>L, diagonal D, U, and the row permutation P.</returns>
+        public static (float[,] L, float[] D, float[,] U, int[] P) Decompose(float[,] matrix)
         {
-            if (!Matrice.IsSquare(A))
-                throw new ArgumentException("The matrix must be square");
+            var lu = LU.Decompose(matrix);
+            int n = matrix.GetLength(0);
+            var d = new float[n];
+            for (int i = 0; i < n; i++)
+            {
+                d[i] = lu.U[i, i];
+                if (d[i] == 0) throw new InvalidOperationException("A zero pivot prevents unit-diagonal LDU factorization.");
+                for (int j = i; j < n; j++) lu.U[i, j] /= d[i];
+            }
+            return (lu.L, d, lu.U, lu.P);
+        }
 
-            // LDU algorithm:
-            // LU-decomposition:
-            ludecomp = new LU(A);
-            lower = ludecomp.L;
-            upper = ludecomp.U;
+        /// <summary>Computes A[P,:] = L diag(D) U with unit triangular factors</summary>
+        /// <param name="matrix">Finite nonempty square matrix with nonzero LU pivots.</param>
+        /// <returns>L, diagonal D, U, and the row permutation P.</returns>
+        public static (Complex32[,] L, Complex32[] D, Complex32[,] U, int[] P) Decompose(Complex32[,] matrix)
+        {
+            var lu = LU.Decompose(matrix);
+            int n = matrix.GetLength(0);
+            var d = new Complex32[n];
+            for (int i = 0; i < n; i++)
+            {
+                d[i] = lu.U[i, i];
+                if (d[i] == 0) throw new InvalidOperationException("A zero pivot prevents unit-diagonal LDU factorization.");
+                for (int j = i; j < n; j++) lu.U[i, j] /= d[i];
+            }
+            return (lu.L, d, lu.U, lu.P);
+        }
 
-            // Diagonal decomposition:
-            diagdecomp = new Diagonal(lower);
-            lower = diagdecomp.B;
-            diag = diagdecomp.D;
-        }
-        #endregion
 
-        #region Standard voids
-        /// <summary>
-        /// Gets the lower triangular matrix.
-        /// </summary>
-        public float[,] L
-        {
-            get { return lower; }
-        }
-        /// <summary>
-        /// Gets the upper triangular matrix.
-        /// </summary>
-        public float[,] U
-        {
-            get { return upper; }
-        }
-        /// <summary>
-        /// Gets the vector of diagonal elements.
-        /// </summary>
-        public float[] D
-        {
-            get { return diag; }
-        }
-        #endregion
     }
 }

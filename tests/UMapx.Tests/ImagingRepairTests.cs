@@ -229,7 +229,7 @@ public class ImagingRepairTests
         }
     }
 
-    /// <summary>Applies a scalar Floyd-Steinberg raster to B,G,R,A samples, preserving alpha.</summary>
+    /// <summary>Applies a scalar Floyd-Steinberg raster to B,G,R,A samples, preserving alpha</summary>
     /// <param name="pixels">Integer channels, updated in place with truncation after each diffusion step.</param>
     /// <param name="width">Logical width.</param>
     /// <param name="height">Logical height.</param>
@@ -338,7 +338,7 @@ public class ImagingRepairTests
         }
     }
 
-    /// <summary>Builds exact byte samples with varied spatial and per-channel variance.</summary>
+    /// <summary>Builds exact byte samples with varied spatial and per-channel variance</summary>
     /// <param name="x">Column coordinate.</param><param name="y">Row coordinate.</param>
     /// <param name="kind">The spatial pattern, including constant-channel degeneracies.</param>
     /// <param name="reference">Selects a distinct mean and contrast for the reference image.</param>
@@ -350,7 +350,7 @@ public class ImagingRepairTests
         return Color.FromArgb(r + reference * 27, 79 + v / 2 + reference * 11, 93 + v + reference * 17);
     }
 
-    /// <summary>Computes a byte-space transfer reference using pairwise population variance.</summary>
+    /// <summary>Computes a byte-space transfer reference using pairwise population variance</summary>
     /// <param name="target">Destination samples before transfer.</param><param name="source">Reference samples.</param>
     /// <param name="inverted">Whether to use the existing reciprocal gain.</param><param name="factor">Contrast factor.</param>
     /// <returns>An independently computed opaque bitmap, saturated and truncated to bytes.</returns>
@@ -382,11 +382,11 @@ public class ImagingRepairTests
         });
     }
 
-    /// <summary>Clamps a finite scalar to the byte range and truncates its fractional part.</summary>
+    /// <summary>Clamps a finite scalar to the byte range and truncates its fractional part</summary>
     /// <param name="value">The unquantized sample.</param><returns>An integer from zero through 255.</returns>
     private static int QuantizeByte(double value) => (int)Math.Clamp(value, 0, 255);
 
-    /// <summary>Creates a 32-bit test image from independently specified pixel values.</summary>
+    /// <summary>Creates a 32-bit test image from independently specified pixel values</summary>
     /// <param name="width">Positive width.</param><param name="height">Positive height.</param>
     /// <param name="pixel">Pixel generator addressed by column and row.</param><returns>The new bitmap.</returns>
     private static Bitmap CreateImage(int width, int height, Func<int, int, Color> pixel)

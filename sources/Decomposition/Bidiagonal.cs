@@ -1,182 +1,55 @@
 using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines bidiagonal decomposition.
-    /// </summary>
-    /// <remarks>
-    /// This is a representation of a matrix in the form A = U * B * Vᵀ, where U and V are orthogonal matrices
-    /// obtained using Householder transformations and B is a bidiagonal matrix.
-    /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Bidiagonalization
-    /// </remarks>
-    [Serializable]
-    public class Bidiagonal
+    /// <summary>Provides real and complex bidiagonal reduction</summary>
+    public static class Bidiagonal
     {
-        #region Private data
-        private float[][] b;
-        private float[][] u;
-        private float[][] v;
-        private int m, n;
-        #endregion
-
-        #region Initialize
-        /// <summary>
-        /// Initializes bidiagonal decomposition.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        public Bidiagonal(float[,] A)
+        /// <summary>Computes A = U B V^T by two-sided Householder reduction</summary>
+        /// <param name="matrix">Finite nonempty rectangular matrix.</param>
+        /// <returns>Full square U and V and upper bidiagonal B with the same dimensions as the input.</returns>
+        public static (float[,] U, float[,] B, float[,] V) Decompose(float[,] matrix)
         {
-            BidiagDcmp(A);
+            var d = Factor(MatrixMath.Copy(matrix));
+            return (MatrixMath.Real(d.U), MatrixMath.Real(d.B), MatrixMath.Real(d.V));
         }
-        #endregion
 
-        #region Standard voids
-        /// <summary>
-        /// Gets the orthogonal matrix U.
-        /// </summary>
-        public float[,] U
+        /// <summary>Computes A = U B V^H by two-sided Householder reduction</summary>
+        /// <param name="matrix">Finite nonempty rectangular matrix.</param>
+        /// <returns>Full square U and V and upper bidiagonal B with the same dimensions as the input.</returns>
+        public static (Complex32[,] U, Complex32[,] B, Complex32[,] V) Decompose(Complex32[,] matrix)
         {
-            get { return Jagged.FromJagged(u); }
+            var d = Factor(MatrixMath.Copy(matrix));
+            return (MatrixMath.Single(d.U), MatrixMath.Single(d.B), MatrixMath.Single(d.V));
         }
-        /// <summary>
-        /// Gets the bidiagonal matrix B.
-        /// </summary>
-        public float[,] B
-        {
-            get { return Jagged.FromJagged(b); }
-        }
-        /// <summary>
-        /// Gets the orthogonal matrix V.
-        /// </summary>
-        public float[,] V
-        {
-            get { return Jagged.FromJagged(v); }
-        }
-        #endregion
 
-        #region Private voids
-        /// <summary>
-        /// Performs bidiagonal decomposition using Householder transformations.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        private void BidiagDcmp(float[,] A)
+        /// <summary>Alternates left and right reflections to obtain upper bidiagonal form</summary>
+        /// <param name="a">Private rectangular input buffer, overwritten by B.</param>
+        /// <returns>Accumulated unitary factors and the bidiagonal buffer.</returns>
+        internal static (C[,] U, C[,] B, C[,] V) Factor(C[,] a)
         {
-            m = A.GetLength(0);
-            n = A.GetLength(1);
-            b = Jagged.ToJagged(A);
-            u = Jagged.ToJagged(Matrice.Eye(m, m));
-            v = Jagged.ToJagged(Matrice.Eye(n, n));
-            int p = Math.Min(m, n);
-
-            for (int k = 0; k < p; k++)
+            int m = a.GetLength(0), n = a.GetLength(1);
+            var u = MatrixMath.Eye(m);
+            var v = MatrixMath.Eye(n);
+            for (int k = 0; k < Math.Min(m, n); k++)
             {
-                // -------- Left Householder (zero below diagonal in column k) --------
-                float norm = 0f;
-                for (int i = k; i < m; i++)
-                    norm = Maths.Hypotenuse(norm, b[i][k]);
-
-                if (norm != 0f)
-                {
-                    // Sign choice: make v0 = 1 + b[k][k]/norm well-conditioned
-                    if (b[k][k] < 0f) norm = -norm;
-
-                    // v := x/norm; v0 += 1  (store v in b[k..,k])
-                    for (int i = k; i < m; i++)
-                        b[i][k] /= norm;
-                    b[k][k] += 1f;
-
-                    float v0 = b[k][k];
-
-                    // Apply to B on the left: B[:,j] += s * v, s = -(v^T B[:,j]) / v0
-                    for (int j = k + 1; j < n; j++)
-                    {
-                        float s = 0f;
-                        for (int i = k; i < m; i++)
-                            s += b[i][k] * b[i][j];
-
-                        s = -s / v0;
-
-                        for (int i = k; i < m; i++)
-                            b[i][j] += s * b[i][k];
-                    }
-
-                    // Accumulate U on the RIGHT: U = U * H_left  (update rows of U)
-                    for (int i = 0; i < m; i++)
-                    {
-                        float s = 0f;
-                        for (int t = k; t < m; t++)
-                            s += u[i][t] * b[t][k];
-
-                        s = -s / v0;
-
-                        for (int t = k; t < m; t++)
-                            u[i][t] += s * b[t][k];
-                    }
-                }
-
-                // Save diagonal and zero below it in column k
-                float dk = -norm;
-                b[k][k] = dk;
-                for (int i = k + 1; i < m; i++)
-                    b[i][k] = 0f;
-
-                if (k < n - 1)
-                {
-                    // -------- Right Householder (zero beyond superdiagonal in row k) --------
-                    norm = 0f;
-                    for (int j = k + 1; j < n; j++)
-                        norm = Maths.Hypotenuse(norm, b[k][j]);
-
-                    if (norm != 0f)
-                    {
-                        // Sign choice for row reflector
-                        if (b[k][k + 1] < 0f) norm = -norm;
-
-                        // w := row/norm; w0 += 1  (store w in b[k, k+1..])
-                        for (int j = k + 1; j < n; j++)
-                            b[k][j] /= norm;
-                        b[k][k + 1] += 1f;
-
-                        float w0 = b[k][k + 1];
-
-                        // Apply to B on the right: B[i,:] += t * w^T, t = -(B[i,:]·w) / w0
-                        for (int i = k + 1; i < m; i++)
-                        {
-                            float s = 0f;
-                            for (int j = k + 1; j < n; j++)
-                                s += b[i][j] * b[k][j];
-
-                            s = -s / w0;
-
-                            for (int j = k + 1; j < n; j++)
-                                b[i][j] += s * b[k][j];
-                        }
-
-                        // Accumulate V on the RIGHT: V = V * H_right  (update rows of V)
-                        for (int i = 0; i < n; i++)
-                        {
-                            float s = 0f;
-                            for (int j = k + 1; j < n; j++)
-                                s += v[i][j] * b[k][j];
-
-                            s = -s / w0;
-
-                            for (int j = k + 1; j < n; j++)
-                                v[i][j] += s * b[k][j];
-                        }
-                    }
-
-                    // Save superdiagonal and zero the rest to the right in row k
-                    float ek = -norm;
-                    b[k][k + 1] = ek;
-                    for (int j = k + 2; j < n; j++)
-                        b[k][j] = 0f;
-                }
+                var left = new C[m - k];
+                for (int i = k; i < m; i++) left[i - k] = a[i, k];
+                left = Householder.Vector(left);
+                Householder.ApplyLeft(a, left, k, k);
+                Householder.ApplyRight(u, left, k, 0);
+                for (int i = k + 1; i < m; i++) a[i, k] = 0;
+                if (k + 1 >= n) continue;
+                var right = new C[n - k - 1];
+                for (int j = k + 1; j < n; j++) right[j - k - 1] = C.Conjugate(a[k, j]);
+                right = Householder.Vector(right);
+                Householder.ApplyRight(a, right, k + 1, k);
+                Householder.ApplyRight(v, right, k + 1, 0);
+                for (int j = k + 2; j < n; j++) a[k, j] = 0;
             }
+            return (u, a, v);
         }
-        #endregion
     }
 }

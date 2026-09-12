@@ -56,7 +56,7 @@ public class MathematicalIdentityTests
     [InlineData(1, 1)] [InlineData(2, 2)] [InlineData(3, 3)] [InlineData(5, 3)] [InlineData(3, 5)] [InlineData(8, 8)]
     public void SvdReconstructsRectangularMatrices(int m, int n)
     {
-        var a = Matrix(m, n); var d = new SVD(a);
+        var a = Matrix(m, n); var d = SVD.Decompose(a);
         Close(a, Product(Product(d.U, Diagonal(d.S)), Transpose(d.V)));
         Assert.All(d.S, value => Assert.True(float.IsFinite(value) && value >= 0));
     }
@@ -64,7 +64,7 @@ public class MathematicalIdentityTests
     [Theory] [InlineData(2, 2)] [InlineData(5, 3)] [InlineData(8, 8)]
     public void QrReconstructsAndHasOrthonormalColumns(int m, int n)
     {
-        var a = Matrix(m, n); var d = new QR(a);
+        var a = Matrix(m, n); var d = QR.Decompose(a);
         Close(a, Product(d.Q, d.R));
         Close(Diagonal(Enumerable.Repeat(1f, n).ToArray()), Product(Transpose(d.Q), d.Q));
     }
@@ -73,15 +73,15 @@ public class MathematicalIdentityTests
     public void SquareMatrixDecompositionsReconstruct(int n)
     {
         var a = Matrix(n, n);
-        var lu = new LU(a); Close(a, Product(lu.L, lu.U));
-        var ldu = new LDU(a); Close(a, Product(Product(ldu.L, Diagonal(ldu.D)), ldu.U));
-        var lq = new LQ(a); Close(a, Product(lq.L, lq.Q));
-        var ql = new QL(a); Close(a, Product(ql.Q, ql.L));
-        var rq = new RQ(a); Close(a, Product(rq.R, rq.Q));
-        var polar = new Polar(a); Close(a, Product(polar.U, polar.P));
-        var h = new Hessenberg(a); Close(a, Product(Product(h.P, h.H), Transpose(h.P)));
-        var schur = new Schur(a); Close(a, Product(Product(schur.Q, schur.T), Transpose(schur.Q)));
-        var evd = new EVD(a); Close(Product(a, evd.V), Product(evd.V, evd.R));
+        var lu = LU.Decompose(a); Close(Product(LU.PermutationMatrix(lu.P), a), Product(lu.L, lu.U));
+        var ldu = LDU.Decompose(a); Close(Product(LU.PermutationMatrix(ldu.P), a), Product(Product(ldu.L, Diagonal(ldu.D)), ldu.U));
+        var lq = LQ.Decompose(a); Close(a, Product(lq.L, lq.Q));
+        var ql = QL.Decompose(a); Close(a, Product(ql.Q, ql.L));
+        var rq = RQ.Decompose(a); Close(a, Product(rq.R, rq.Q));
+        var polar = Polar.Decompose(a); Close(a, Product(polar.U, polar.P));
+        var h = Hessenberg.Decompose(a); Close(a, Product(Product(h.P, h.H), Transpose(h.P)));
+        var schur = Schur.Decompose(a); Close(a, Product(Product(schur.Q, schur.T), Transpose(schur.Q)));
+        var evd = EVD.Decompose(a); Close(Product(a, evd.V), Product(evd.V, EVD.RealEigenvalueMatrix(evd.D)));
     }
 
     [Theory] [InlineData(2)] [InlineData(3)] [InlineData(5)]
@@ -89,9 +89,9 @@ public class MathematicalIdentityTests
     {
         var r = Matrix(n, n); var a = Product(r, Transpose(r));
         for (int i = 0; i < n; i++) a[i, i] += 1;
-        var chol = new Cholesky(a); Close(a, Product(chol.L, Transpose(chol.L)));
-        var ldl = new LDL(a); Close(a, Product(Product(ldl.L, Diagonal(ldl.D)), ldl.U));
-        var udl = new UDL(a); Close(a, Product(Product(udl.U, Diagonal(udl.D)), udl.L));
+        var chol = Cholesky.Decompose(a); Close(a, Product(chol, Transpose(chol)));
+        var ldl = LDL.Decompose(a); Close(a, Product(Product(ldl.L, Diagonal(ldl.D)), LDL.UpperFactor(ldl.L)));
+        var udl = UDL.Decompose(a); Close(a, Product(Product(udl.U, Diagonal(udl.D)), UDL.LowerFactor(udl.U)));
     }
 
     [Theory] [InlineData(2)] [InlineData(3)] [InlineData(5)] [InlineData(8)] [InlineData(9)]

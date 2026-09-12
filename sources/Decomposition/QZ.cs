@@ -1,113 +1,292 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines QZ decomposition (generalized Schur decomposition).
-    /// </summary>
-    /// <remarks>
-    /// This is a matrix representation for a pair of matrices A and B such that
-    /// A = Q * S * Zᵀ and B = Q * T * Zᵀ, where Q and Z are orthogonal and
-    /// S and T are upper (quasi) triangular matrices.
-    /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/QZ_decomposition
-    /// </remarks>
-    [Serializable]
-    public class QZ
+    /// <summary>Provides real and complex generalized Schur decomposition</summary>
+    public static class QZ
     {
-        #region Private data
-        private readonly int n;
-        private readonly float[,] q;
-        private readonly float[,] z;
-        private readonly float[,] s;
-        private readonly float[,] t;
-        #endregion
-
-        #region Initialize
-        /// <summary>
-        /// Initializes QZ decomposition.
-        /// </summary>
-        /// <param name="A">Matrix A</param>
-        /// <param name="B">Matrix B</param>
-        /// <param name="eps">Epsilon [0, 1]</param>
-        public QZ(float[,] A, float[,] B, float eps = 1e-16f)
+        /// <summary>Computes the real generalized Schur factors A = Q S Z^T and B = Q T Z^T</summary>
+        /// <param name="a">Finite nonempty square matrix A.</param>
+        /// <param name="b">Finite square matrix B of the same order.</param>
+        /// <param name="eps">Relative deflation tolerance with a roundoff floor.</param>
+        /// <returns>Orthogonal Q and Z, quasi-triangular S, and upper triangular T.</returns>
+        public static (float[,] Q, float[,] S, float[,] T, float[,] Z) Decompose(float[,] a, float[,] b, float eps = 1e-16f)
         {
-            if (A.GetLength(0) != A.GetLength(1))
-                throw new ArgumentException("The matrix must be square");
-            if (B.GetLength(0) != B.GetLength(1))
-                throw new ArgumentException("The matrix must be square");
-            if (A.GetLength(0) != B.GetLength(0) || A.GetLength(1) != B.GetLength(1))
-                throw new ArgumentException("Matrices should be the same size");
-
-            this.n = A.GetLength(0);
-
-            var a = Jagged.ToJagged(A);
-            var b = Jagged.ToJagged(B);
-            var zMat = Jagged.Zero(n, n);
-            for (int i = 0; i < n; i++) zMat[i][i] = 1f;
-            int ierr = 0;
-
-            GEVD.qzdecomp(a, b, Maths.Float(eps), zMat, ref ierr);
-
-            if (ierr != 0)
-                throw new Exception("QZ decomposition failed to converge");
-
-            this.s = Jagged.FromJagged(a);
-            this.t = Jagged.FromJagged(b);
-            this.z = Jagged.FromJagged(zMat);
-
-            float[,] bz = Matrice.Dot(B, this.z);
-            float[,] tinv = InvertUpperTriangular(this.t);
-            this.q = Matrice.Dot(bz, tinv);
+            var first = MatrixMath.Copy(a, true);
+            var second = MatrixMath.Copy(b, true);
+            if (a.GetLength(0) != b.GetLength(0)) throw new ArgumentException("The matrices must have equal orders.");
+            if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
+            var s = Jagged.ToJagged(a);
+            var t = Jagged.ToJagged(b);
+            int n = a.GetLength(0), error = 0;
+            var z = Jagged.ToJagged(Matrice.Eye(n, n));
+            GEVD.ReduceRealPencil(s, t, eps, z, ref error);
+            if (error != 0) throw new InvalidOperationException("Real QZ decomposition failed to converge.");
+            var ss = Jagged.FromJagged(s);
+            var tt = Jagged.FromJagged(t);
+            var zz = Jagged.FromJagged(z);
+            var q = RecoverLeft(first, second, MatrixMath.Copy(ss), MatrixMath.Copy(tt), MatrixMath.Copy(zz));
+            return (MatrixMath.Real(q), ss, tt, zz);
         }
-        #endregion
 
-        #region Standard voids
-        /// <summary>
-        /// Gets the orthogonal matrix Q.
-        /// </summary>
-        public float[,] Q { get { return q; } }
-        /// <summary>
-        /// Gets the orthogonal matrix Z.
-        /// </summary>
-        public float[,] Z { get { return z; } }
-        /// <summary>
-        /// Gets the quasi upper triangular matrix S.
-        /// </summary>
-        public float[,] S { get { return s; } }
-        /// <summary>
-        /// Gets the upper triangular matrix T.
-        /// </summary>
-        public float[,] T { get { return t; } }
-        #endregion
-
-        #region Private voids
-        /// <summary>
-        /// Inverts an upper triangular matrix.
-        /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Matrix</returns>
-        private static float[,] InvertUpperTriangular(float[,] m)
+        /// <summary>Computes the complex generalized Schur factors A = Q S Z^H and B = Q T Z^H</summary>
+        /// <param name="a">Finite nonempty square matrix A.</param>
+        /// <param name="b">Finite square matrix B of the same order; it may be singular.</param>
+        /// <param name="eps">Relative deflation tolerance with a roundoff floor.</param>
+        /// <param name="iterations">Positive maximum QZ steps between successive deflations.</param>
+        /// <returns>Unitary Q and Z and upper triangular S and T; T has real nonnegative diagonal entries.</returns>
+        public static (Complex32[,] Q, Complex32[,] S, Complex32[,] T, Complex32[,] Z) Decompose(
+            Complex32[,] a, Complex32[,] b, float eps = 1e-16f, int iterations = 1000)
         {
-            int n = m.GetLength(0);
-            float[,] inv = new float[n, n];
+            if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
+            var d = Factor(MatrixMath.Copy(a, true), MatrixMath.Copy(b, true), eps, iterations);
+            return (MatrixMath.Single(d.Q), MatrixMath.Single(d.S), MatrixMath.Single(d.T), MatrixMath.Single(d.Z));
+        }
 
-            for (int i = n - 1; i >= 0; i--)
-            {
-                inv[i, i] = 1f / m[i, i];
-
-                for (int j = i + 1; j < n; j++)
+        /// <summary>Recovers the real left transformation from both transformed matrices, including singular B</summary>
+        /// <param name="a">Original first matrix.</param>
+        /// <param name="b">Original second matrix.</param>
+        /// <param name="s">First Schur form.</param>
+        /// <param name="t">Second Schur form.</param>
+        /// <param name="z">Accumulated right transformation.</param>
+        /// <returns>An orthogonal left factor, completed on any common left nullspace.</returns>
+        private static C[,] RecoverLeft(C[,] a, C[,] b, C[,] s, C[,] t, C[,] z)
+        {
+            int n = a.GetLength(0);
+            double sa = Math.Max(MatrixMath.Max(a), MatrixMath.Max(s));
+            double sb = Math.Max(MatrixMath.Max(b), MatrixMath.Max(t));
+            if (sa == 0) sa = 1;
+            if (sb == 0) sb = 1;
+            var az = MatrixMath.Multiply(a, z);
+            var bz = MatrixMath.Multiply(b, z);
+            var c = new C[n, 2 * n];
+            var d = new C[n, 2 * n];
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
                 {
-                    float sum = 0f;
-                    for (int k = i + 1; k <= j; k++)
-                        sum += m[i, k] * inv[k, j];
-                    inv[i, j] = -inv[i, i] * sum;
+                    c[i, j] = s[i, j] / sa; c[i, j + n] = t[i, j] / sb;
+                    d[i, j] = az[i, j] / sa; d[i, j + n] = bz[i, j] / sb;
+                }
+            var svd = SVD.Factor(c, 100);
+            var w = MatrixMath.Multiply(d, svd.V);
+            double cutoff = n * 8 * MatrixMath.SingleRoundoff * svd.S[0];
+            for (int j = 0; j < n; j++)
+            {
+                if (svd.S[j] > cutoff)
+                {
+                    var column = new C[n];
+                    for (int i = 0; i < n; i++) column[i] = w[i, j] / svd.S[j];
+                    MatrixMath.Orthogonalize(column, w, j);
+                    double norm = MatrixMath.Norm(column);
+                    for (int i = 0; i < n; i++) w[i, j] = column[i] / norm;
+                }
+                else
+                {
+                    var column = MatrixMath.Complete(w, j);
+                    for (int i = 0; i < n; i++) w[i, j] = column[i];
                 }
             }
-
-            return inv;
+            return MatrixMath.Multiply(w, MatrixMath.Adjoint(svd.U));
         }
-        #endregion
+
+        /// <summary>Reduces a complex pencil by unitary Hessenberg-triangular reduction and implicit single-shift QZ</summary>
+        /// <param name="a">Private first square matrix.</param>
+        /// <param name="b">Private second square matrix of the same order.</param>
+        /// <param name="eps">Relative deflation tolerance.</param>
+        /// <param name="iterations">Maximum steps between deflations.</param>
+        /// <returns>Double-precision generalized Schur factors, including infinite and indeterminate diagonal pairs.</returns>
+        /// <remarks>Zero diagonals of B are chased without inverting B. See the LAPACK ZHGEQZ algorithm and Moler-Stewart QZ method.</remarks>
+        internal static (C[,] Q, C[,] S, C[,] T, C[,] Z) Factor(C[,] a, C[,] b, double eps = 1e-16, int iterations = 1000)
+        {
+            int n = a.GetLength(0);
+            if (b.GetLength(0) != n) throw new ArgumentException("The matrices must have equal orders.");
+            if (iterations < 1) throw new ArgumentOutOfRangeException(nameof(iterations));
+            double scaleA = MatrixMath.Max(a), scaleB = MatrixMath.Max(b);
+            if (scaleA == 0) scaleA = 1;
+            if (scaleB == 0) scaleB = 1;
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++) { a[i, j] /= scaleA; b[i, j] /= scaleB; }
+            var qr = QR.Factor(b);
+            b = qr.R;
+            var q = qr.Q;
+            var z = MatrixMath.Eye(n);
+            a = MatrixMath.Multiply(MatrixMath.Adjoint(q), a);
+            for (int k = 0; k < n - 2; k++)
+                for (int i = n - 1; i > k + 1; i--)
+                {
+                    var left = Rotation(a[i - 1, k], a[i, k]);
+                    LeftPair(a, b, q, i - 1, i, left.C, left.S);
+                    a[i, k] = 0;
+                    var right = Rotation(b[i, i], b[i, i - 1]);
+                    RightPair(a, b, z, i, i - 1, right.C, right.S);
+                    b[i, i - 1] = 0;
+                }
+            double tolerance = Math.Max(8 * MatrixMath.Roundoff, Math.Min(1, Math.Max(0, eps)));
+            double bTolerance = tolerance * MatrixMath.Max(b);
+            int high = n - 1, steps = 0;
+            while (high >= 0)
+            {
+                if (high == 0 || SmallSubdiagonal(a, high, tolerance))
+                {
+                    if (high > 0) a[high, high - 1] = 0;
+                    high--; steps = 0; continue;
+                }
+                if (++steps > iterations) throw new InvalidOperationException("Complex QZ decomposition failed to converge.");
+                if (C.Abs(b[high, high]) <= bTolerance)
+                {
+                    b[high, high] = 0;
+                    var r = Rotation(a[high, high], a[high, high - 1]);
+                    RightPair(a, b, z, high, high - 1, r.C, r.S);
+                    a[high, high - 1] = 0;
+                    high--; steps = 0; continue;
+                }
+                int low = 0;
+                bool chased = false;
+                for (int j = high - 1; j >= 0; j--)
+                {
+                    bool split = j == 0 || SmallSubdiagonal(a, j, tolerance);
+                    if (split && j > 0) a[j, j - 1] = 0;
+                    if (C.Abs(b[j, j]) <= bTolerance)
+                    {
+                        b[j, j] = 0;
+                        if (split)
+                        {
+                            var r = Rotation(a[j, j], a[j + 1, j]);
+                            LeftPair(a, b, q, j, j + 1, r.C, r.S);
+                            a[j + 1, j] = 0;
+                        }
+                        else
+                        {
+                            // Move a zero B diagonal to the trailing corner while removing each Hessenberg bulge.
+                            for (int k = j; k < high; k++)
+                            {
+                                var left = Rotation(b[k, k + 1], b[k + 1, k + 1]);
+                                LeftPair(a, b, q, k, k + 1, left.C, left.S);
+                                b[k + 1, k + 1] = 0;
+                                var right = Rotation(a[k + 1, k], a[k + 1, k - 1]);
+                                RightPair(a, b, z, k, k - 1, right.C, right.S);
+                                a[k + 1, k - 1] = 0;
+                            }
+                        }
+                        chased = true; break;
+                    }
+                    if (split) { low = j; break; }
+                }
+                if (chased) continue;
+                C u12 = b[high - 1, high] / b[high, high];
+                C d11 = a[high - 1, high - 1] / b[high - 1, high - 1];
+                C d21 = a[high, high - 1] / b[high - 1, high - 1];
+                C d12 = a[high - 1, high] / b[high, high];
+                C d22 = a[high, high] / b[high, high];
+                C bottom = d22 - u12 * d21;
+                C center = (d11 + bottom) / 2;
+                C root = C.Sqrt(center * center + d12 * d21 - d11 * d22);
+                C shift1 = center + root, shift2 = center - root;
+                C shift = C.Abs(shift1 - bottom) < C.Abs(shift2 - bottom) ? shift1 : shift2;
+                if (steps % 10 == 0) shift = bottom + new C(0.75, 0.25) * C.Abs(d21);
+                var rotation = Rotation(a[low, low] - shift * b[low, low], a[low + 1, low]);
+                for (int j = low; j < high; j++)
+                {
+                    if (j > low) rotation = Rotation(a[j, j - 1], a[j + 1, j - 1]);
+                    LeftPair(a, b, q, j, j + 1, rotation.C, rotation.S);
+                    if (j > low) a[j + 1, j - 1] = 0;
+                    var right = Rotation(b[j + 1, j + 1], b[j + 1, j]);
+                    RightPair(a, b, z, j + 1, j, right.C, right.S);
+                    b[j + 1, j] = 0;
+                }
+            }
+            for (int j = 0; j < n; j++)
+            {
+                double magnitude = C.Abs(b[j, j]);
+                C phase = magnitude == 0 ? C.One : C.Conjugate(b[j, j]) / magnitude;
+                for (int i = 0; i < n; i++)
+                {
+                    a[i, j] = i > j ? C.Zero : a[i, j] * phase * scaleA;
+                    b[i, j] = i > j ? C.Zero : b[i, j] * phase * scaleB;
+                    z[i, j] *= phase;
+                }
+                b[j, j] = magnitude * scaleB;
+            }
+            return (q, a, b, z);
+        }
+
+        /// <summary>Tests a Hessenberg subdiagonal against a local relative scale</summary>
+        /// <param name="a">Hessenberg matrix.</param>
+        /// <param name="i">Subdiagonal row, greater than zero.</param>
+        /// <param name="tolerance">Relative deflation threshold.</param>
+        /// <returns>Whether the entry is negligible on its local scale.</returns>
+        private static bool SmallSubdiagonal(C[,] a, int i, double tolerance)
+        {
+            double scale = C.Abs(a[i - 1, i - 1]) + C.Abs(a[i, i]);
+            if (scale == 0) scale = C.Abs(a[i - 1, i]) + (i > 1 ? C.Abs(a[i - 1, i - 2]) : 0);
+            return C.Abs(a[i, i - 1]) <= tolerance * scale;
+        }
+
+        /// <summary>Constructs a complex Givens rotation annihilating the second component</summary>
+        /// <param name="f">First component.</param>
+        /// <param name="g">Second component.</param>
+        /// <returns>Real cosine C and complex sine S defining [C,S;-conj(S),C].</returns>
+        private static (double C, C S) Rotation(C f, C g)
+        {
+            double af = C.Abs(f), ag = C.Abs(g);
+            if (ag == 0) return (1, C.Zero);
+            if (af == 0) return (0, C.Conjugate(g) / ag);
+            double scale = Math.Max(af, ag);
+            double norm = scale * Math.Sqrt((af / scale) * (af / scale) + (ag / scale) * (ag / scale));
+            return (af / norm, (f / af) * (C.Conjugate(g) / norm));
+        }
+
+        /// <summary>Applies a left plane rotation to both matrices and updates Q</summary>
+        /// <param name="a">First work matrix.</param>
+        /// <param name="b">Second work matrix.</param>
+        /// <param name="q">Left accumulator.</param>
+        /// <param name="i">First row.</param>
+        /// <param name="j">Second row.</param>
+        /// <param name="c">Real cosine.</param>
+        /// <param name="s">Complex sine.</param>
+        private static void LeftPair(C[,] a, C[,] b, C[,] q, int i, int j, double c, C s)
+        {
+            foreach (var matrix in new[] { a, b })
+                for (int k = 0; k < matrix.GetLength(1); k++)
+                {
+                    C x = matrix[i, k], y = matrix[j, k];
+                    matrix[i, k] = c * x + s * y;
+                    matrix[j, k] = -C.Conjugate(s) * x + c * y;
+                }
+            Columns(q, i, j, c, C.Conjugate(s));
+        }
+
+        /// <summary>Applies a right rotation to both matrices and updates Z</summary>
+        /// <param name="a">First work matrix.</param>
+        /// <param name="b">Second work matrix.</param>
+        /// <param name="z">Right accumulator.</param>
+        /// <param name="i">First column.</param>
+        /// <param name="j">Second column.</param>
+        /// <param name="c">Real cosine.</param>
+        /// <param name="s">Complex sine acting on ordered columns i,j.</param>
+        private static void RightPair(C[,] a, C[,] b, C[,] z, int i, int j, double c, C s)
+        {
+            Columns(a, i, j, c, s);
+            Columns(b, i, j, c, s);
+            Columns(z, i, j, c, s);
+        }
+
+        /// <summary>Rotates an ordered pair of columns in place</summary>
+        /// <param name="a">Target matrix.</param>
+        /// <param name="i">First column.</param>
+        /// <param name="j">Second column.</param>
+        /// <param name="c">Real cosine.</param>
+        /// <param name="s">Complex sine.</param>
+        private static void Columns(C[,] a, int i, int j, double c, C s)
+        {
+            for (int k = 0; k < a.GetLength(0); k++)
+            {
+                C x = a[k, i], y = a[k, j];
+                a[k, i] = c * x + s * y;
+                a[k, j] = -C.Conjugate(s) * x + c * y;
+            }
+        }
     }
 }

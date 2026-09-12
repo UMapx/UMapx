@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 using UMapx.Decomposition;
 
@@ -15,7 +15,6 @@ namespace UMapx.Analysis
     public class Roots
     {
         #region Private data
-        private EVD eig;
         private float eps;
         #endregion
 
@@ -88,7 +87,7 @@ namespace UMapx.Analysis
 
             // Eigen-value decomposition for
             // companion matrix:
-            eig = new EVD(Matrice.Companion(c), this.eps);
+            var eig = EVD.Decompose(Matrice.Companion(c), this.eps);
 
             // Complex result:
             return eig.D;

@@ -1,203 +1,77 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines QR decomposition.
-    /// </summary>
-    /// <remarks>
-    /// This is a matrix representation in the form of a product of two matrices: A = Q * R, 
-    /// where Q is a unitary (or orthogonal) matrix, and R is an upper triangular matrix.
-    /// QR decomposition is the basis of one of the search methods for eigenvectors and matrix numbers - the QR algorithm.
-    /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/QR_decomposition
-    /// </remarks>
-    [Serializable]
-    public class QR
+    /// <summary>Provides Householder QR factorization and access to its reflection vectors</summary>
+    public static class QR
     {
-        #region Private data
-        private int m, n;
-        private float[][] qr;
-        private float[] diag;
-        private float[,] q;
-        private float[,] r;
-        private float[,] h;
-        #endregion
-
-        #region Initialize
-        /// <summary>
-        /// Initializes QR decomposition.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        public QR(float[,] A)
+        /// <summary>Computes A = Q R using an economy-size orthogonal factor</summary>
+        /// <param name="matrix">Finite nonempty m by n matrix; not modified.</param>
+        /// <returns>Q of size m by min(m,n) and R of size min(m,n) by n.</returns>
+        public static (float[,] Q, float[,] R) Decompose(float[,] matrix)
         {
-            QrDcmp(A);
+            var d = Factor(MatrixMath.Copy(matrix), full: false);
+            int k = Math.Min(matrix.GetLength(0), matrix.GetLength(1));
+            return (MatrixMath.Real(MatrixMath.Block(d.Q, matrix.GetLength(0), k)),
+                    MatrixMath.Real(MatrixMath.Block(d.R, k, matrix.GetLength(1))));
         }
-        #endregion
 
-        #region Standard voids
-        /// <summary>
-        /// Returns a matrix containing Householder reflection vectors.
-        /// </summary>
-        public float[,] H
+        /// <summary>Computes A = Q R with Q^H Q = I using complex Householder reflections</summary>
+        /// <param name="matrix">Finite nonempty m by n matrix; not modified.</param>
+        /// <returns>Q of size m by min(m,n) and R of size min(m,n) by n.</returns>
+        public static (Complex32[,] Q, Complex32[,] R) Decompose(Complex32[,] matrix)
         {
-            get
-            {
-                return h;
-            }
+            var d = Factor(MatrixMath.Copy(matrix), full: false);
+            int k = Math.Min(matrix.GetLength(0), matrix.GetLength(1));
+            return (MatrixMath.Single(MatrixMath.Block(d.Q, matrix.GetLength(0), k)),
+                    MatrixMath.Single(MatrixMath.Block(d.R, k, matrix.GetLength(1))));
         }
-        /// <summary>
-        /// Returns the upper triangular matrix R.
-        /// </summary>
-        public float[,] R
+
+        /// <summary>Computes normalized reflection vectors without constructing Q</summary>
+        /// <param name="matrix">Finite input matrix; a separate reduction is performed.</param>
+        /// <returns>An m by min(m,n) matrix of vectors v defining H = I - 2 v v^T; zero columns denote identity.</returns>
+        public static float[,] HouseholderVectors(float[,] matrix) => MatrixMath.Real(Factor(MatrixMath.Copy(matrix), false).H);
+
+        /// <summary>Computes normalized complex reflection vectors without constructing Q</summary>
+        /// <param name="matrix">Finite input matrix; a separate reduction is performed.</param>
+        /// <returns>An m by min(m,n) matrix of vectors v defining H = I - 2 v v^H; zero columns denote identity.</returns>
+        public static Complex32[,] HouseholderVectors(Complex32[,] matrix) => MatrixMath.Single(Factor(MatrixMath.Copy(matrix), false).H);
+
+        /// <summary>Reduces a private work matrix to upper trapezoidal form</summary>
+        /// <param name="a">Work buffer overwritten by R.</param>
+        /// <param name="vectors">Whether to construct Q from the reflection vectors.</param>
+        /// <param name="full">Whether Q should be square instead of economy size.</param>
+        /// <returns>Q (or null), R, and normalized reflection vectors.</returns>
+        internal static (C[,] Q, C[,] R, C[,] H) Factor(C[,] a, bool vectors = true, bool full = true)
         {
-            get
+            int m = a.GetLength(0), n = a.GetLength(1), kmax = Math.Min(m, n);
+            C[,] q = null;
+            var h = new C[m, kmax];
+            for (int k = 0; k < kmax; k++)
             {
-                return r;
+                var v = new C[m - k];
+                for (int i = k; i < m; i++) v[i - k] = a[i, k];
+                v = Householder.Vector(v);
+                Householder.ApplyLeft(a, v, k, k);
+                for (int i = k; i < m; i++) h[i, k] = v[i - k];
+                for (int i = k + 1; i < m; i++) a[i, k] = 0;
             }
+            if (vectors)
+            {
+                int columns = full ? m : kmax;
+                q = new C[m, columns];
+                for (int i = 0; i < columns; i++) q[i, i] = 1;
+                // Reverse application builds Q without allocating an m by m matrix for a tall economy QR.
+                for (int k = kmax - 1; k >= 0; k--)
+                {
+                    var v = new C[m - k];
+                    for (int i = k; i < m; i++) v[i - k] = h[i, k];
+                    Householder.ApplyLeft(q, v, k, 0);
+                }
+            }
+            return (q, a, h);
         }
-        /// <summary>
-        /// Returns the orthogonal matrix Q.
-        /// </summary>
-        public float[,] Q
-        {
-            get
-            {
-                return q;
-            }
-        }
-        #endregion
-
-        #region Private voids
-        /// <summary>
-        /// Computes a QR decomposition for the matrix A.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        private void QrDcmp(float[,] A)
-        {
-            // params
-            this.m = A.GetLength(0);
-            this.n = A.GetLength(1);
-            this.diag = new float[n];
-            this.qr = Jagged.ToJagged(A);
-            float nrm, s;
-            int k, i, j;
-
-            // Main loop.
-            for (k = 0; k < n; k++)
-            {
-                // Compute 2-norm of k-th column without under/overflow.
-                nrm = 0;
-
-                for (i = k; i < m; i++)
-                {
-                    nrm = Maths.Hypotenuse(nrm, qr[i][k]);
-                }
-
-                if (nrm != 0.0)
-                {
-                    // Form k-th Householder vector.
-                    if (qr[k][k] < 0)
-                    {
-                        nrm = -nrm;
-                    }
-                    for (i = k; i < m; i++)
-                    {
-                        qr[i][k] /= nrm; // Make v a unit vector
-                    }
-                    qr[k][k] += 1.0f; // + the (e)kth vector
-
-                    // Apply transformation to remaining columns.
-                    for (j = k + 1; j < n; j++) // For each column
-                    {
-                        s = 0.0f;
-                        for (i = k; i < m; i++) // For each row
-                        {
-                            s += qr[i][k] * qr[i][j];
-                        }
-
-                        s = (-s) / qr[k][k]; // Unit vector product
-
-                        for (i = k; i < m; i++) // For each row
-                        {
-                            qr[i][j] += s * qr[i][k];
-                        }
-                    }
-                }
-
-                diag[k] = -nrm;
-            }
-
-            // prepare Q matrix
-            q = new float[m, n];
-
-            for (k = n - 1; k >= 0; k--)
-            {
-                for (i = 0; i < m; i++)
-                {
-                    q[i, k] = 0.0f;
-                }
-                q[k, k] = 1.0f;
-                for (j = k; j < n; j++)
-                {
-                    if (qr[k][k] != 0)
-                    {
-                        s = 0.0f;
-                        for (i = k; i < m; i++)
-                        {
-                            s += qr[i][k] * q[i, j];
-                        }
-                        s = (-s) / qr[k][k];
-
-                        for (i = k; i < m; i++)
-                        {
-                            q[i, j] += s * qr[i][k];
-                        }
-                    }
-                }
-            }
-
-            // prepare R matrix
-            r = new float[n, n];
-
-            for (i = 0; i < n; i++)
-            {
-                for (j = 0; j < n; j++)
-                {
-                    if (i < j)
-                    {
-                        r[i, j] = qr[i][j];
-                    }
-                    else if (i == j)
-                    {
-                        r[i, j] = diag[i];
-                    }
-                    else
-                    {
-                        r[i, j] = 0.0f;
-                    }
-                }
-            }
-
-            // prepare H matrix
-            h = new float[m, n];
-
-            for (i = 0; i < m; i++)
-            {
-                for (j = 0; j < n; j++)
-                {
-                    if (i >= j)
-                    {
-                        h[i, j] = qr[i][j];
-                    }
-                    else
-                    {
-                        h[i, j] = 0.0f;
-                    }
-                }
-            }
-        }
-        #endregion
     }
 }

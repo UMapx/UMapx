@@ -1,169 +1,48 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines decomposition with a cast to Hessenberg form.
-    /// </summary>
-    /// <remarks>
-    /// This is a representation of a square matrix in the form of a product of three matrices: A = P * H * Pᵀ, 
-    /// where H is the Hessenberg form and P is the unitary matrix.
-    /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Hessenberg_matrix
-    /// </remarks>
-    [Serializable]
-    public class Hessenberg
+    /// <summary>Provides orthogonal and unitary Hessenberg reductions</summary>
+    public static class Hessenberg
     {
-        #region Private data
-        private float[][] matrices;
-        private float[][] hessenberg;
-        #endregion
-
-        #region Initialize
-        /// <summary>
-        /// Initializes decomposition to a Hessenberg form.
-        /// </summary>
-        /// <param name="A">Square matrix</param>
-        public Hessenberg(float[,] A)
+        /// <summary>Computes A = P H P^T</summary>
+        /// <param name="matrix">Finite nonempty square matrix, not modified.</param>
+        /// <returns>Orthogonal P and upper Hessenberg H.</returns>
+        public static (float[,] P, float[,] H) Decompose(float[,] matrix)
         {
-            if (!Matrice.IsSquare(A))
-                throw new ArgumentException("The matrix must be square");
-
-            // Reduce to Hessenberg form.
-            orthes(A);
+            var d = Factor(MatrixMath.Copy(matrix, true));
+            return (MatrixMath.Real(d.P), MatrixMath.Real(d.H));
         }
-        #endregion
 
-        #region Standard voids
-        /// <summary>
-        /// Gets the unitary matrix.
-        /// </summary>
-        public float[,] P
+        /// <summary>Computes A = P H P^H</summary>
+        /// <param name="matrix">Finite nonempty complex square matrix, not modified.</param>
+        /// <returns>Unitary P and upper Hessenberg H.</returns>
+        public static (Complex32[,] P, Complex32[,] H) Decompose(Complex32[,] matrix)
         {
-            get { return Jagged.FromJagged(matrices); }
+            var d = Factor(MatrixMath.Copy(matrix, true));
+            return (MatrixMath.Single(d.P), MatrixMath.Single(d.H));
         }
-        /// <summary>
-        /// Gets the Hessenberg form.
-        /// </summary>
-        public float[,] H
+
+        /// <summary>Applies two-sided Householder similarities in double precision</summary>
+        /// <param name="a">Private square work buffer, overwritten by Hessenberg form.</param>
+        /// <returns>The full unitary accumulator and reduced buffer.</returns>
+        internal static (C[,] P, C[,] H) Factor(C[,] a)
         {
-            get { return Jagged.FromJagged(hessenberg); }
-        }
-        #endregion
-
-        #region Private voids
-        /// <summary>
-        /// Nonsymmetric reduction to Hessenberg form.
-        /// This is derived from the Algol procedures orthes and ortran, by Martin and Wilkinson, 
-        /// Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutines in EISPACK.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        private void orthes(float[,] A)
-        {
-            // Properties
-            int n = A.GetLength(0);
-            this.matrices = Jagged.Zero(n, n);
-            this.hessenberg = Jagged.ToJagged(A);
-            float[] orthogonal = new float[n];
-
-            int low = 0;
-            int high = n - 1;
-            int m, i, j;
-            float scale, h, g, f;
-
-            for (m = low + 1; m <= high - 1; m++)
+            int n = a.GetLength(0);
+            var p = MatrixMath.Eye(n);
+            for (int k = 0; k < n - 2; k++)
             {
-                // Scale column.
-
-                scale = 0;
-                for (i = m; i <= high; i++)
-                    scale = scale + System.Math.Abs(hessenberg[i][m - 1]);
-
-                if (scale != 0)
-                {
-                    // Compute Householder transformation.
-                    h = 0;
-                    for (i = high; i >= m; i--)
-                    {
-                        orthogonal[i] = hessenberg[i][m - 1] / scale;
-                        h += orthogonal[i] * orthogonal[i];
-                    }
-
-                    g = (float)System.Math.Sqrt(h);
-                    if (orthogonal[m] > 0) g = -g;
-
-                    h = h - orthogonal[m] * g;
-                    orthogonal[m] = orthogonal[m] - g;
-
-                    // Apply Householder similarity transformation
-                    // H = (I - u * u' / h) * H * (I - u * u') / h)
-                    for (j = m; j < n; j++)
-                    {
-                        f = 0;
-                        for (i = high; i >= m; i--)
-                            f += orthogonal[i] * hessenberg[i][j];
-
-                        f = f / h;
-                        for (i = m; i <= high; i++)
-                            hessenberg[i][j] -= f * orthogonal[i];
-                    }
-
-                    for (i = 0; i <= high; i++)
-                    {
-                        f = 0;
-                        for (j = high; j >= m; j--)
-                            f += orthogonal[j] * hessenberg[i][j];
-
-                        f = f / h;
-                        for (j = m; j <= high; j++)
-                            hessenberg[i][j] -= f * orthogonal[j];
-                    }
-
-                    orthogonal[m] = scale * orthogonal[m];
-                    hessenberg[m][m - 1] = scale * g;
-                }
+                var v = new C[n - k - 1];
+                for (int i = k + 1; i < n; i++) v[i - k - 1] = a[i, k];
+                v = Householder.Vector(v);
+                Householder.ApplyLeft(a, v, k + 1, k);
+                Householder.ApplyRight(a, v, k + 1, 0);
+                Householder.ApplyRight(p, v, k + 1, 0);
+                for (int i = k + 2; i < n; i++) a[i, k] = 0;
             }
-
-            // Accumulate transformations (Algol's ortran).
-            for (i = 0; i < n; i++)
-                for (j = 0; j < n; j++)
-                    matrices[i][j] = (i == j ? 1 : 0);
-
-            for (m = high - 1; m >= low + 1; m--)
-            {
-                if (hessenberg[m][m - 1] != 0)
-                {
-                    for (i = m + 1; i <= high; i++)
-                        orthogonal[i] = hessenberg[i][m - 1];
-
-                    for (j = m; j <= high; j++)
-                    {
-                        g = 0;
-                        for (i = m; i <= high; i++)
-                            g += orthogonal[i] * matrices[i][j];
-
-                        // float division avoids possible underflow.
-                        g = (g / orthogonal[m]) / hessenberg[m][m - 1];
-                        for (i = m; i <= high; i++)
-                            matrices[i][j] += g * orthogonal[i];
-                    }
-                }
-            }
-
-            // final reduction:
-            if (n > 2)
-            {
-                for (i = 0; i < n - 2; i++)
-                {
-                    for (j = i + 2; j < n; j++)
-                    {
-                        hessenberg[j][i] = 0;
-                    }
-                }
-            }
-
+            return (p, a);
         }
-        #endregion
     }
 }

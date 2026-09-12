@@ -8,9 +8,9 @@ namespace UMapx.Distribution
     /// </summary>
     internal static class DistributionNumerics
     {
-        /// <summary>Euler–Mascheroni constant used by entropy formulas.</summary>
+        /// <summary>Euler–Mascheroni constant used by entropy formulas</summary>
         internal const double EulerGamma = 0.57721566490153286061;
-        /// <summary>Natural logarithm of sqrt(2*pi), used in Gaussian normalizations.</summary>
+        /// <summary>Natural logarithm of sqrt(2*pi), used in Gaussian normalizations</summary>
         internal const double LogSqrtTwoPi = 0.91893853320467274178;
 
         /// <summary>

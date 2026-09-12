@@ -1,111 +1,76 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines UDL decomposition.
-    /// </summary>
-    /// <remarks>
-    /// This is the representation of a symmetric square matrix as the product of three matrices: A = U * D * L, 
-    /// where U is the upper triangular matrix, D is the diagonal matrix, and L is the lower triangular matrix.
-    /// This decomposition is a specific form of Cholesky decomposition.
-    /// </remarks>
-    [Serializable]
-    public class UDL
+    /// <summary>Provides unpivoted UDL factorization for symmetric and Hermitian matrices</summary>
+    public static class UDL
     {
-        #region Private data
-        private float[,] upper;
-        private float[] diag;
-        #endregion
+        /// <summary>Computes A = U diag(D) U^T without diagonal pivoting</summary>
+        /// <param name="matrix">Finite nonempty symmetric matrix with nonzero elimination pivots.</param>
+        /// <returns>Unit upper triangular U and real diagonal D. Indefinite inputs are supported when no pivot vanishes.</returns>
+        public static (float[,] U, float[] D) Decompose(float[,] matrix)
+        {
+            var d = Factor(MatrixMath.Copy(matrix, true));
+            return (MatrixMath.Real(d.F), d.D);
+        }
 
-        #region UDL components
-        /// <summary>
-        /// Initializes UDL decomposition.
-        /// </summary>
-        /// <param name="A">Square symmetric matrix</param>
-        public UDL(float[,] A)
-        {
-            if (!Matrice.IsSquare(A))
-                throw new ArgumentException("The matrix must be square");
+        /// <summary>Constructs the conjugate-transposed factor from an existing factor</summary>
+        /// <param name="factor">Square triangular factor from Decompose.</param>
+        /// <returns>The lower factor.</returns>
+        public static float[,] LowerFactor(float[,] factor) => MatrixMath.Real(MatrixMath.Adjoint(MatrixMath.Copy(factor, true)));
 
-            udldecomp(A);
-        }
-        /// <summary>
-        /// Returns the top triangular matrix.
-        /// </summary>
-        public float[,] U
+        /// <summary>Computes A = U diag(D) U^H without diagonal pivoting</summary>
+        /// <param name="matrix">Finite nonempty Hermitian matrix with nonzero elimination pivots.</param>
+        /// <returns>Unit upper triangular U and real diagonal D. Indefinite inputs are supported when no pivot vanishes.</returns>
+        public static (Complex32[,] U, float[] D) Decompose(Complex32[,] matrix)
         {
-            get
-            {
-                return this.upper;
-            }
+            var d = Factor(MatrixMath.Copy(matrix, true));
+            return (MatrixMath.Single(d.F), d.D);
         }
-        /// <summary>
-        /// Returns the diagonal matrix.
-        /// </summary>
-        public float[] D
-        {
-            get
-            {
-                return this.diag;
-            }
-        }
-        /// <summary>
-        /// Returns the lower triangular matrix.
-        /// </summary>
-        public float[,] L
-        {
-            get
-            {
-                return this.upper.Transpose();
-            }
-        }
-        #endregion
 
-        #region Private voids
-        /// <summary>
-        /// UDU* factorization algorithm.
-        /// </summary>
-        /// <param name="a">Matrix</param>
-        private void udldecomp(float[,] a)
+        /// <summary>Constructs the conjugate-transposed factor from an existing factor</summary>
+        /// <param name="factor">Square triangular factor from Decompose.</param>
+        /// <returns>The lower factor.</returns>
+        public static Complex32[,] LowerFactor(Complex32[,] factor) => MatrixMath.Single(MatrixMath.Adjoint(MatrixMath.Copy(factor, true)));
+
+        /// <summary>Performs Hermitian diagonal elimination in double precision without pivoting</summary>
+        /// <param name="a">Private Hermitian square buffer.</param>
+        /// <returns>A unit triangular factor and real diagonal; a zero pivot is rejected.</returns>
+        private static (C[,] F, float[] D) Factor(C[,] a)
         {
-            int i, j, k;
+            MatrixMath.RequireHermitian(a);
             int n = a.GetLength(0);
-            this.upper = new float[n, n];
-            this.diag = new float[n];
-            float[][] p = Jagged.ToJagged(a);
-            float alpha, beta, gamma;
-
-            // Mathematics in science and engineering, v.128,
-            // Factorization methods for discrete sequential estimation, Gerald J. Bierman.
-            // UDU* factorization algorithm.
-            // 
-            for (j = n - 1; j >= 1; j--)
+            var f = MatrixMath.Eye(n);
+            var d = new double[n];
+            for (int step = 0; step < n; step++)
             {
-                gamma = p[j][j];
-                diag[j] = gamma;
-                alpha = 1.0f / gamma;
-
-                for (k = 0; k < j; k++)
+                int j = n - 1 - step;
+                double pivot = a[j, j].Real;
+                for (int prev = 0; prev < step; prev++)
                 {
-                    beta = p[k][j];
-                    upper[k, j] = alpha * beta;
-
-                    for (i = 0; i <= k; i++)
+                    int k = n - 1 - prev;
+                    double magnitude = C.Abs(f[j, k]);
+                    pivot -= magnitude * magnitude * d[k];
+                }
+                if (pivot == 0) throw new InvalidOperationException("A zero pivot requires a pivoted Hermitian factorization.");
+                d[j] = pivot;
+                for (int next = step + 1; next < n; next++)
+                {
+                    int i = n - 1 - next;
+                    C sum = a[i, j];
+                    for (int prev = 0; prev < step; prev++)
                     {
-                        p[i][k] -= beta * upper[i, j];
+                        int k = n - 1 - prev;
+                        sum -= f[i, k] * d[k] * C.Conjugate(f[j, k]);
                     }
+                    f[i, j] = sum / pivot;
                 }
             }
-            diag[0] = p[0][0];
-
-            // diagonal eyes:
-            for (i = 0; i < n; i++)
-            {
-                upper[i, i] = 1.0f;
-            }
+            var diagonal = new float[n];
+            for (int i = 0; i < n; i++) diagonal[i] = (float)d[i];
+            return (f, diagonal);
         }
-        #endregion
     }
 }

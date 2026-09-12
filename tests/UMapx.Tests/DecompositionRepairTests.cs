@@ -20,7 +20,7 @@ public class DecompositionRepairTests
     {
         var input = Sample(rows, columns, kind, scale);
         var original = (float[,])input.Clone();
-        var decomposition = new SVD(input);
+        var decomposition = SVD.Decompose(input);
         var u = Double(decomposition.U);
         var v = Double(decomposition.V);
         var singular = decomposition.S;
@@ -37,7 +37,7 @@ public class DecompositionRepairTests
         Orthonormal(u);
         Orthonormal(v);
         Relative(Double(input), Product(Product(u, diagonal), Transpose(v)), 2e-5);
-        var inverse = Double(decomposition.P);
+        var inverse = Double(SVD.PseudoInverse(decomposition.U, decomposition.S, decomposition.V));
         var a = Double(input);
         var ap = Product(a, inverse);
         var pa = Product(inverse, a);
@@ -64,7 +64,8 @@ public class DecompositionRepairTests
     public void PseudoinverseThresholdUsesRelativeSinglePrecisionRank(float scale)
     {
         var input = new float[,] { { scale, 0, 0 }, { 0, scale * 1e-4f, 0 }, { 0, 0, scale * 1e-8f } };
-        var inverse = new SVD(input).P;
+        var factors = SVD.Decompose(input);
+        var inverse = SVD.PseudoInverse(factors.U, factors.S, factors.V);
         NumericAssert.Close(1.0 / input[0, 0], inverse[0, 0], 0, 2e-6);
         NumericAssert.Close(1.0 / input[1, 1], inverse[1, 1], 0, 2e-6);
         Assert.Equal(0, inverse[2, 2]);
@@ -73,13 +74,13 @@ public class DecompositionRepairTests
     [Theory] [InlineData(0)] [InlineData(-1)]
     public void SingularDecompositionRejectsAnInvalidIterationLimit(int iterations)
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => new SVD(new float[,] { { 1 } }, iterations));
+        Assert.Throws<ArgumentOutOfRangeException>(() => SVD.Decompose(new float[,] { { 1 } }, iterations));
     }
 
     [Fact]
     public void SingularDecompositionReportsNonconvergenceInsteadOfReturningPartialFactors()
     {
-        Assert.Throws<InvalidOperationException>(() => new SVD(Sample(8, 8, "Dense", 1), 1));
+        Assert.Throws<InvalidOperationException>(() => SVD.Decompose(Sample(8, 8, "Dense", 1), 1));
     }
 
     public static IEnumerable<object[]> SchurCases()
@@ -96,7 +97,7 @@ public class DecompositionRepairTests
     {
         var input = Sample(size, size, kind, scale);
         var original = (float[,])input.Clone();
-        var decomposition = new Schur(input, tolerance);
+        var decomposition = Schur.Decompose(input, tolerance);
         var q = Double(decomposition.Q);
         var t = Double(decomposition.T);
         Orthonormal(q);
@@ -128,11 +129,11 @@ public class DecompositionRepairTests
         var b = Single(bBase, scale);
         var originalA = (float[,])a.Clone();
         var originalB = (float[,])b.Clone();
-        var decomposition = new GEVD(a, b);
-        Assert.False(decomposition.IsSingular);
+        var decomposition = GEVD.Decompose(a, b);
+        Assert.False(GEVD.IsSingular(decomposition.Beta));
         var vectors = Double(decomposition.V);
-        var eigenvalues = decomposition.Eigenvalues;
-        Relative(Product(Double(a), vectors), Product(Product(Double(b), vectors), Double(decomposition.D)), 3e-5);
+        var eigenvalues = GEVD.Eigenvalues(decomposition.Alpha, decomposition.Beta);
+        Relative(Product(Double(a), vectors), Product(Product(Double(b), vectors), Double(GEVD.RealEigenvalueMatrix(decomposition.Alpha, decomposition.Beta))), 3e-5);
         for (int j = 0; j < size; j++)
         {
             bool complex = decomposition.Alpha[j].Imag > 0;
@@ -158,8 +159,8 @@ public class DecompositionRepairTests
     {
         var a = new float[,] { { 2, 0, 0 }, { 0, 3, 0 }, { 0, 0, 4 } };
         var b = new float[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 2 } };
-        var decomposition = new GEVD(a, b);
-        Assert.True(decomposition.IsSingular);
+        var decomposition = GEVD.Decompose(a, b);
+        Assert.True(GEVD.IsSingular(decomposition.Beta));
         Assert.Equal(1, decomposition.Beta.Count(x => x == 0));
         var v = decomposition.V;
         for (int j = 0; j < 3; j++)
@@ -172,10 +173,10 @@ public class DecompositionRepairTests
     public void ScalingDoesNotEraseRepresentableIsolatedValues()
     {
         var diagonal = new float[,] { { 1e30f, 0 }, { 0, 1e-30f } };
-        var singular = new SVD(diagonal).S;
+        var singular = SVD.Decompose(diagonal).S;
         NumericAssert.Close(diagonal[0, 0], singular[0], 0, 2e-6);
         NumericAssert.Close(diagonal[1, 1], singular[1], 0, 2e-6);
-        var schur = new Schur(diagonal).T;
+        var schur = Schur.Decompose(diagonal).T;
         NumericAssert.Close(diagonal[0, 0], schur[0, 0], 0, 2e-6);
         NumericAssert.Close(diagonal[1, 1], schur[1, 1], 0, 2e-6);
     }
@@ -185,8 +186,8 @@ public class DecompositionRepairTests
     {
         var a = new float[,] { { 1e30f, 0 }, { 0, 2e30f } };
         var b = new float[,] { { 1e-30f, 0 }, { 0, 2e-30f } };
-        var decomposition = new GEVD(a, b);
-        Assert.False(decomposition.IsSingular);
+        var decomposition = GEVD.Decompose(a, b);
+        Assert.False(GEVD.IsSingular(decomposition.Beta));
         for (int j = 0; j < 2; j++)
         {
             Assert.True(decomposition.Beta[j] > 0);
@@ -200,29 +201,29 @@ public class DecompositionRepairTests
     {
         var invalid = new float[,] { { value } };
         var valid = new float[,] { { 1 } };
-        Assert.Throws<ArgumentException>(() => new SVD(invalid));
-        Assert.Throws<ArgumentException>(() => new Schur(invalid));
-        Assert.Throws<ArgumentException>(() => new GEVD(invalid, valid));
-        Assert.Throws<ArgumentException>(() => new GEVD(valid, invalid));
+        Assert.Throws<ArgumentException>(() => SVD.Decompose(invalid));
+        Assert.Throws<ArgumentException>(() => Schur.Decompose(invalid));
+        Assert.Throws<ArgumentException>(() => GEVD.Decompose(invalid, valid));
+        Assert.Throws<ArgumentException>(() => GEVD.Decompose(valid, invalid));
     }
 
     [Fact]
     public void DecompositionsRejectUndefinedDimensionsAndTolerances()
     {
-        Assert.Throws<ArgumentNullException>(() => new SVD(null!));
-        Assert.Throws<ArgumentNullException>(() => new Schur(null!));
-        Assert.Throws<ArgumentNullException>(() => new GEVD(null!, new float[1, 1]));
-        Assert.Throws<ArgumentNullException>(() => new GEVD(new float[1, 1], null!));
-        Assert.Throws<ArgumentException>(() => new SVD(new float[0, 2]));
-        Assert.Throws<ArgumentException>(() => new SVD(new float[2, 0]));
-        Assert.Throws<ArgumentException>(() => new Schur(new float[0, 0]));
-        Assert.Throws<ArgumentException>(() => new Schur(new float[2, 3]));
-        Assert.Throws<ArgumentException>(() => new GEVD(new float[0, 0], new float[0, 0]));
-        Assert.Throws<ArgumentException>(() => new GEVD(new float[2, 2], new float[3, 3]));
-        Assert.Throws<ArgumentException>(() => new GEVD(new float[2, 3], new float[2, 3]));
-        Assert.Throws<ArgumentException>(() => new GEVD(new float[2, 2], new float[2, 3]));
-        Assert.Throws<ArgumentOutOfRangeException>(() => new Schur(new float[1, 1], float.NaN));
-        Assert.Throws<ArgumentOutOfRangeException>(() => new GEVD(new float[1, 1], new float[1, 1], float.NaN));
+        Assert.Throws<ArgumentNullException>(() => SVD.Decompose((float[,])null!));
+        Assert.Throws<ArgumentNullException>(() => Schur.Decompose((float[,])null!));
+        Assert.Throws<ArgumentNullException>(() => GEVD.Decompose(null!, new float[1, 1]));
+        Assert.Throws<ArgumentNullException>(() => GEVD.Decompose(new float[1, 1], null!));
+        Assert.Throws<ArgumentException>(() => SVD.Decompose(new float[0, 2]));
+        Assert.Throws<ArgumentException>(() => SVD.Decompose(new float[2, 0]));
+        Assert.Throws<ArgumentException>(() => Schur.Decompose(new float[0, 0]));
+        Assert.Throws<ArgumentException>(() => Schur.Decompose(new float[2, 3]));
+        Assert.Throws<ArgumentException>(() => GEVD.Decompose(new float[0, 0], new float[0, 0]));
+        Assert.Throws<ArgumentException>(() => GEVD.Decompose(new float[2, 2], new float[3, 3]));
+        Assert.Throws<ArgumentException>(() => GEVD.Decompose(new float[2, 3], new float[2, 3]));
+        Assert.Throws<ArgumentException>(() => GEVD.Decompose(new float[2, 2], new float[2, 3]));
+        Assert.Throws<ArgumentOutOfRangeException>(() => Schur.Decompose(new float[1, 1], float.NaN));
+        Assert.Throws<ArgumentOutOfRangeException>(() => GEVD.Decompose(new float[1, 1], new float[1, 1], float.NaN));
     }
 
     [Theory] [InlineData(2)] [InlineData(3)] [InlineData(5)]
@@ -231,7 +232,7 @@ public class DecompositionRepairTests
         var a = Sample(size, size, "Dense", 1);
         var b = NumericAssert.Product(NumericAssert.Transpose(a), a);
         for (int i = 0; i < size; i++) b[i, i] += 1;
-        var decomposition = new QZ(a, b, 1e-7f);
+        var decomposition = QZ.Decompose(a, b, 1e-7f);
         var q = Double(decomposition.Q);
         var z = Double(decomposition.Z);
         Orthonormal(q);

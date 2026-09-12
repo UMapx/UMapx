@@ -1,69 +1,77 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines power iteration.
-    /// </summary>
-    /// <remarks>
-    /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Power_iteration
-    /// </remarks>
-    [Serializable]
-    public class Power
+    /// <summary>Provides real and complex power iteration</summary>
+    public static class Power
     {
-        #region Private data
-        private float[] v;
-        #endregion
-
-        #region Power iteration components
-        /// <summary>
-        /// Initializes power iteration.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <param name="iterations">Number of iterations</param>
-        public Power(float[,] A, int iterations = 10)
+        /// <summary>Approximates a dominant right eigenpair by normalized power iteration</summary>
+        /// <param name="matrix">Finite nonempty square matrix with a dominant eigenvalue separated in modulus.</param>
+        /// <param name="iterations">Positive number of iterations; convergence also depends on the starting vector.</param>
+        /// <returns>A unit vector V and its Rayleigh quotient D; a zero product returns the current vector and zero.</returns>
+        public static (float[] V, float D) Decompose(float[,] matrix, int iterations = 100)
         {
-            if (!Matrice.IsSquare(A))
-                throw new ArgumentException("The matrix must be square");
+            var d = Iterate(MatrixMath.Copy(matrix, true), iterations);
+            var v = new float[d.V.Length];
+            for (int i = 0; i < v.Length; i++) v[i] = (float)d.V[i].Real;
+            return (v, (float)d.D.Real);
+        }
 
-            // eigenvalue power algorithm:
-            int n = A.GetLength(0);
-            this.v = Matrice.Rand(n);
-            float[] w;
-            float beta;
+        /// <summary>Places an existing power-iteration vector on a diagonal without further iteration</summary>
+        /// <param name="vector">Vector returned by Decompose; these entries are eigenvector components.</param>
+        /// <returns>A diagonal matrix containing the vector entries.</returns>
+        public static float[,] DiagonalMatrix(float[] vector)
+        {
+            if (vector == null) throw new ArgumentNullException(nameof(vector));
+            return vector.Diag();
+        }
 
-            // power iteration:
-            for (int i = 0; i < iterations; i++)
-            {
-                // formula:
-                // v[j] = (v[j-1] * A) / || v[j-1] * A ||
-                w = Matrice.Dot(v, A);
-                beta = Matrice.Norm(w);
-                v = Matrice.Div(w, beta);
-            }
-        }
-        /// <summary>
-        /// Returns a vector of eigenvalues.
-        /// </summary>
-        public float[] V
+        /// <summary>Approximates a dominant right eigenpair by normalized power iteration</summary>
+        /// <param name="matrix">Finite nonempty square matrix with a dominant eigenvalue separated in modulus.</param>
+        /// <param name="iterations">Positive number of iterations; convergence also depends on the starting vector.</param>
+        /// <returns>A unit vector V and its Rayleigh quotient D; a zero product returns the current vector and zero.</returns>
+        public static (Complex32[] V, Complex32 D) Decompose(Complex32[,] matrix, int iterations = 100)
         {
-            get
-            {
-                return v;
-            }
+            var d = Iterate(MatrixMath.Copy(matrix, true), iterations);
+            var v = new Complex32[d.V.Length];
+            for (int i = 0; i < v.Length; i++) v[i] = new Complex32((float)d.V[i].Real, (float)d.V[i].Imaginary);
+            return (v, new Complex32((float)d.D.Real, (float)d.D.Imaginary));
         }
-        /// <summary>
-        /// Returns the diagonalized matrix of eigenvalues.
-        /// </summary>
-        public float[,] J
+
+        /// <summary>Places an existing power-iteration vector on a diagonal without further iteration</summary>
+        /// <param name="vector">Vector returned by Decompose; these entries are eigenvector components.</param>
+        /// <returns>A diagonal matrix containing the vector entries.</returns>
+        public static Complex32[,] DiagonalMatrix(Complex32[] vector)
         {
-            get
-            {
-                return Matrice.Diag(v);
-            }
+            if (vector == null) throw new ArgumentNullException(nameof(vector));
+            return vector.Diag();
         }
-        #endregion
+
+        /// <summary>Applies normalized matrix-vector products and computes the final Hermitian Rayleigh quotient</summary>
+        /// <param name="a">Private square matrix.</param>
+        /// <param name="iterations">Positive iteration count.</param>
+        /// <returns>The unit right vector and corresponding quotient.</returns>
+        private static (C[] V, C D) Iterate(C[,] a, int iterations)
+        {
+            if (iterations < 1) throw new ArgumentOutOfRangeException(nameof(iterations));
+            int n = a.GetLength(0);
+            var v = new C[n];
+            for (int i = 0; i < n; i++) v[i] = 1 / Math.Sqrt(n);
+            for (int step = 0; step < iterations; step++)
+            {
+                var w = new C[n];
+                for (int i = 0; i < n; i++)
+                    for (int j = 0; j < n; j++) w[i] += a[i, j] * v[j];
+                double norm = MatrixMath.Norm(w);
+                if (norm == 0) return (v, C.Zero);
+                for (int i = 0; i < n; i++) v[i] = w[i] / norm;
+            }
+            C eigenvalue = 0;
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++) eigenvalue += C.Conjugate(v[i]) * a[i, j] * v[j];
+            return (v, eigenvalue);
+        }
     }
 }
