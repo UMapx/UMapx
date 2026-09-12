@@ -1,75 +1,76 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines LDL decomposition.
-    /// </summary>
-    /// <remarks>
-    /// This is a representation of a symmetric positive definite square matrix in the form of a product of three matrices: A = L * D * Lᵀ, 
-    /// where L is a lower triangular matrix with strictly positive elements on the diagonal,
-    /// and D is the diagonal matrix.
-    /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Cholesky_decomposition#LDL_decomposition_2
-    /// </remarks>
-    [Serializable]
-    public class LDL
+    /// <summary>Provides unpivoted LDL factorization for symmetric and Hermitian matrices.</summary>
+    public static class LDL
     {
-        #region Private data
-        private Cholesky choldecomp;
-        private Diagonal diagdecomp;
-        private float[,] lower;
-        private float[] diag;
-        #endregion
-
-        #region Initialize
-        /// <summary>
-        /// Initializes LDL decomposition.
-        /// </summary>
-        /// <param name="A">Square symmetric positive definite matrix</param>
-        public LDL(float[,] A)
+        /// <summary>Computes A = L diag(D) L^T without diagonal pivoting.</summary>
+        /// <param name="matrix">Finite nonempty symmetric matrix with nonzero elimination pivots.</param>
+        /// <returns>Unit lower triangular L and real diagonal D. Indefinite inputs are supported when no pivot vanishes.</returns>
+        public static (float[,] L, float[] D) Decompose(float[,] matrix)
         {
-            if (!Matrice.IsSquare(A))
-                throw new ArgumentException("The matrix must be square");
-
-            // LDL'-decomposition algorithm
-            // Cholesky decomposition:
-            choldecomp = new Cholesky(A);
-            lower = choldecomp.L;
-
-            // Diagonal decomposition:
-            diagdecomp = new Diagonal(lower);
-            lower = diagdecomp.B;
-            diag = diagdecomp.D;
-
-            // D = d^2:
-            diag = Matrice.Mul(diag, diag);
+            var d = Factor(MatrixMath.Copy(matrix, true));
+            return (MatrixMath.Real(d.F), d.D);
         }
-        #endregion
 
-        #region Standard voids
-        /// <summary>
-        /// Gets the lower triangular matrix L.
-        /// </summary>
-        public float[,] L
+        /// <summary>Constructs the conjugate-transposed factor from an existing factor.</summary>
+        /// <param name="factor">Square triangular factor from Decompose.</param>
+        /// <returns>The upper factor.</returns>
+        public static float[,] UpperFactor(float[,] factor) => MatrixMath.Real(MatrixMath.Adjoint(MatrixMath.Copy(factor, true)));
+
+        /// <summary>Computes A = L diag(D) L^H without diagonal pivoting.</summary>
+        /// <param name="matrix">Finite nonempty Hermitian matrix with nonzero elimination pivots.</param>
+        /// <returns>Unit lower triangular L and real diagonal D. Indefinite inputs are supported when no pivot vanishes.</returns>
+        public static (Complex32[,] L, float[] D) Decompose(Complex32[,] matrix)
         {
-            get { return lower; }
+            var d = Factor(MatrixMath.Copy(matrix, true));
+            return (MatrixMath.Single(d.F), d.D);
         }
-        /// <summary>
-        /// Gets the upper triangular matrix U.
-        /// </summary>
-        public float[,] U
+
+        /// <summary>Constructs the conjugate-transposed factor from an existing factor.</summary>
+        /// <param name="factor">Square triangular factor from Decompose.</param>
+        /// <returns>The upper factor.</returns>
+        public static Complex32[,] UpperFactor(Complex32[,] factor) => MatrixMath.Single(MatrixMath.Adjoint(MatrixMath.Copy(factor, true)));
+
+        /// <summary>Performs Hermitian diagonal elimination in double precision without pivoting.</summary>
+        /// <param name="a">Private Hermitian square buffer.</param>
+        /// <returns>A unit triangular factor and real diagonal; a zero pivot is rejected.</returns>
+        private static (C[,] F, float[] D) Factor(C[,] a)
         {
-            get { return Matrice.Transpose(lower); }
+            MatrixMath.RequireHermitian(a);
+            int n = a.GetLength(0);
+            var f = MatrixMath.Eye(n);
+            var d = new double[n];
+            for (int step = 0; step < n; step++)
+            {
+                int j = step;
+                double pivot = a[j, j].Real;
+                for (int prev = 0; prev < step; prev++)
+                {
+                    int k = prev;
+                    double magnitude = C.Abs(f[j, k]);
+                    pivot -= magnitude * magnitude * d[k];
+                }
+                if (pivot == 0) throw new InvalidOperationException("A zero pivot requires a pivoted Hermitian factorization.");
+                d[j] = pivot;
+                for (int next = step + 1; next < n; next++)
+                {
+                    int i = next;
+                    C sum = a[i, j];
+                    for (int prev = 0; prev < step; prev++)
+                    {
+                        int k = prev;
+                        sum -= f[i, k] * d[k] * C.Conjugate(f[j, k]);
+                    }
+                    f[i, j] = sum / pivot;
+                }
+            }
+            var diagonal = new float[n];
+            for (int i = 0; i < n; i++) diagonal[i] = (float)d[i];
+            return (f, diagonal);
         }
-        /// <summary>
-        /// Gets the diagonal matrix.
-        /// </summary>
-        public float[] D
-        {
-            get { return diag; }
-        }
-        #endregion
     }
 }

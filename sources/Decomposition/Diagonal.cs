@@ -1,58 +1,48 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines diagonal decomposition.
-    /// </summary>
-    /// <remarks>
-    /// This is a representation of the square matrix A as the product of two matrices: A = B * D, where B is the Square matrix and D is the diagonal matrix.
-    /// This decomposition is used to highlight diagonal matrices in other decompositions (for example, LDU-, LDL-decompositions).
-    /// </remarks>
-    [Serializable]
-    public class Diagonal
+    /// <summary>Provides diagonal extraction factorization.</summary>
+    public static class Diagonal
     {
-        #region Private data
-        private float[,] matrix;
-        private float[] diag;
-        #endregion
-
-        #region Initialize
-        /// <summary>
-        /// Initializes diagonal decomposition.
-        /// </summary>
-        /// <param name="A">Square matrix</param>
-        public Diagonal(float[,] A)
+        /// <summary>Computes A = B diag(D) by extracting and dividing by the diagonal.</summary>
+        /// <param name="matrix">Finite nonempty square matrix with nonzero diagonal entries.</param>
+        /// <returns>A column-normalized B and the original diagonal D.</returns>
+        public static (float[,] B, float[] D) Decompose(float[,] matrix)
         {
-            if (!Matrice.IsSquare(A))
-                throw new ArgumentException("The matrix must be square");
-
-            int n = A.GetLength(0), i;
-            this.diag = new float[n];
-
-            for (i = 0; i < n; i++)
-                diag[i] = A[i, i];
-
-            this.matrix = Matrice.Dot(A, diag, true);
+            MatrixMath.Copy(matrix, true);
+            int n = matrix.GetLength(0);
+            var d = new float[n];
+            var b = (float[,])matrix.Clone();
+            for (int j = 0; j < n; j++)
+            {
+                d[j] = matrix[j, j];
+                if (d[j] == 0) throw new ArgumentException("Diagonal entries must be nonzero.", nameof(matrix));
+                for (int i = 0; i < n; i++) b[i, j] /= d[j];
+            }
+            return (b, d);
         }
-        #endregion
 
-        #region Standard voids
-        /// <summary>
-        /// Gets the square matrix.
-        /// </summary>
-        public float[,] B
+        /// <summary>Computes A = B diag(D) by extracting and dividing by the diagonal.</summary>
+        /// <param name="matrix">Finite nonempty square matrix with nonzero diagonal entries.</param>
+        /// <returns>A column-normalized B and the original diagonal D.</returns>
+        public static (Complex32[,] B, Complex32[] D) Decompose(Complex32[,] matrix)
         {
-            get { return matrix; }
+            MatrixMath.Copy(matrix, true);
+            int n = matrix.GetLength(0);
+            var d = new Complex32[n];
+            var b = (Complex32[,])matrix.Clone();
+            for (int j = 0; j < n; j++)
+            {
+                d[j] = matrix[j, j];
+                if (d[j] == 0) throw new ArgumentException("Diagonal entries must be nonzero.", nameof(matrix));
+                for (int i = 0; i < n; i++) b[i, j] /= d[j];
+            }
+            return (b, d);
         }
-        /// <summary>
-        /// Gets the vector of diagonal elements.
-        /// </summary>
-        public float[] D
-        {
-            get { return diag; }
-        }
-        #endregion
+
+
     }
 }

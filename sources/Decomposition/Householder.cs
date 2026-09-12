@@ -1,270 +1,127 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines Householder transformation.
-    /// </summary>
-    /// <remarks>
-    /// This is a linear transformation H (u) of the vector space V, which describes its mapping with respect to the hyperplane,
-    /// which passes through the origin. It was proposed in 1958 by the American mathematician Elston Scott Householder. 
-    /// Widely used in linear algebra for QR decomposition of a matrix.
-    /// In addition, the Householder transform is actively used for orthogonalization of bases; ultimately, the Householder matrix has the following properties:
-    /// H = Hᵀ, Hᵀ * H = I; det(H) = -1.
-    /// In this class, two types of the Householder transform are implemented: reduction to a three-diagonal matrix and construction of the 
-    /// Householder matrix from a given vector.
-    /// In the first case, the original square matrix is defined as: A = H * T * Hᵀ.
-    /// More information can be found on the website: 
-    /// https://en.wikipedia.org/wiki/Householder_transformation
-    /// </remarks>
-    [Serializable]
-    public class Householder
+    /// <summary>Provides Householder reflections and symmetric or Hermitian tridiagonal reduction.</summary>
+    public static class Householder
     {
-        #region Private data
-        private int n;
-        private float[] Re, Im;
-        private float[][] matrices;
-        #endregion
-
-        #region Initialize
-        /// <summary>
-        /// Initializes Householder transformation.
-        /// </summary>
-        /// <param name="v">Array</param>
-        public Householder(float[] v)
+        /// <summary>Reduces a symmetric matrix as A = H T H^T.</summary>
+        /// <param name="matrix">Finite nonempty symmetric square matrix.</param>
+        /// <returns>Orthogonal H and symmetric tridiagonal T.</returns>
+        public static (float[,] H, float[,] T) Decompose(float[,] matrix)
         {
-            // properties:
-            this.n = v.Length;
-            this.Re = Matrice.One(n);
-            this.Im = new float[n];
-
-            // reflection to 
-            // Householder matrix:
-            hmatx(v);
+            var d = Tridiagonalize(MatrixMath.Copy(matrix, true));
+            return (MatrixMath.Real(d.P), MatrixMath.Real(d.H));
         }
-        /// <summary>
-        /// Initializes Householder transformation.
-        /// </summary>
-        /// <param name="A">Symmetric matrix</param>
-        public Householder(float[,] A)
+
+        /// <summary>Reduces a Hermitian matrix as A = H T H^H.</summary>
+        /// <param name="matrix">Finite nonempty Hermitian square matrix.</param>
+        /// <returns>Unitary H and Hermitian tridiagonal T.</returns>
+        public static (Complex32[,] H, Complex32[,] T) Decompose(Complex32[,] matrix)
         {
-            if (!Matrice.IsSymmetric(A))
-                throw new ArgumentException("The matrix must be symmetric");
-
-            // properties:
-            this.n = A.GetLength(0);
-            this.Re = new float[n];
-            this.Im = new float[n];
-
-            // reduction to 
-            // tridiagonalization matrix:
-            tred2(A);
+            var d = Tridiagonalize(MatrixMath.Copy(matrix, true));
+            return (MatrixMath.Single(d.P), MatrixMath.Single(d.H));
         }
-        #endregion
 
-        #region Standard voids
-        /// <summary>
-        /// Returns the Householder matrix.
-        /// </summary>
-        public float[,] H
+        /// <summary>Constructs a reflection that maps a vector onto its first coordinate.</summary>
+        /// <param name="vector">Finite nonempty vector to reduce.</param>
+        /// <returns>The orthogonal reflection, or identity for a zero vector.</returns>
+        public static float[,] Reflection(float[] vector)
         {
-            get
+            if (vector == null) throw new ArgumentNullException(nameof(vector));
+            var a = new float[vector.Length, 1];
+            for (int i = 0; i < vector.Length; i++) a[i, 0] = vector[i];
+            return MatrixMath.Real(Reflect(MatrixMath.Copy(a)));
+        }
+
+        /// <summary>Constructs a reflection mapping x to -phase(x[0])*norm(x) times the first coordinate vector.</summary>
+        /// <param name="vector">Finite nonempty complex vector to reduce; phase(0) is defined as one.</param>
+        /// <returns>The Hermitian unitary reflection, or identity for a zero vector.</returns>
+        public static Complex32[,] Reflection(Complex32[] vector)
+        {
+            if (vector == null) throw new ArgumentNullException(nameof(vector));
+            var a = new Complex32[vector.Length, 1];
+            for (int i = 0; i < vector.Length; i++) a[i, 0] = vector[i];
+            return MatrixMath.Single(Reflect(MatrixMath.Copy(a)));
+        }
+
+        /// <summary>Forms the reflection that annihilates the tail of a column vector.</summary>
+        /// <param name="a">Validated single-column work matrix.</param>
+        /// <returns>The reflection, with a zero vector interpreted as identity.</returns>
+        private static C[,] Reflect(C[,] a)
+        {
+            int n = a.GetLength(0);
+            var v = new C[n];
+            for (int i = 0; i < n; i++) v[i] = a[i, 0];
+            v = Vector(v);
+            var h = MatrixMath.Eye(n);
+            ApplyLeft(h, v, 0, 0);
+            return h;
+        }
+
+        /// <summary>Checks Hermitian structure and removes roundoff outside the tridiagonal band.</summary>
+        /// <param name="a">Private square input buffer.</param>
+        /// <returns>The similarity transformation and tridiagonal matrix.</returns>
+        private static (C[,] P, C[,] H) Tridiagonalize(C[,] a)
+        {
+            MatrixMath.RequireHermitian(a);
+            var d = Hessenberg.Factor(a);
+            int n = a.GetLength(0);
+            for (int i = 0; i < n; i++)
             {
-                return Jagged.FromJagged(matrices);
+                d.H[i, i] = d.H[i, i].Real;
+                for (int j = i + 1; j < n; j++)
+                    d.H[i, j] = j == i + 1 ? C.Conjugate(d.H[j, i]) : C.Zero;
             }
+            return d;
         }
-        /// <summary>
-        /// Gets the diagonal matrix.
-        /// </summary>
-        public float[,] T
+
+        /// <summary>Builds a unit Householder vector mapping x onto its first coordinate.</summary>
+        /// <param name="x">Finite vector; zero is returned unchanged.</param>
+        /// <returns>A normalized vector v with H = I - 2 v v^H.</returns>
+        /// <remarks>The target is -phase(x[0])*norm(x), with phase(0)=1, to avoid cancellation.</remarks>
+        internal static C[] Vector(C[] x)
         {
-            get
-            {
-                float[,] D = new float[n, n];
-                int i;
-
-                // diagonal:
-                for (i = 0; i < n; i++)
-                {
-                    D[i, i] = Re[i];
-                }
-                // diagonal left and right 
-                // sides:
-                for (i = 1; i < n; i++)
-                {
-                    D[i - 1, i] = Im[i];
-                    D[i, i - 1] = Im[i];
-                }
-
-                return D;
-            }
+            double norm = MatrixMath.Norm(x);
+            if (norm == 0) return x;
+            C phase = C.Abs(x[0]) == 0 ? C.One : x[0] / C.Abs(x[0]);
+            for (int i = 0; i < x.Length; i++) x[i] /= norm;
+            x[0] += phase;
+            norm = MatrixMath.Norm(x);
+            for (int i = 0; i < x.Length; i++) x[i] /= norm;
+            return x;
         }
-        #endregion
 
-        #region Private voids
-        /// <summary>
-        /// Builds a full Householder reflector matrix for the input vector.
-        /// </summary>
-        /// <param name="v">Vector</param>
-        private void hmatx(float[] v)
+        /// <summary>Applies I - 2 v v^H to selected rows from the left, in place.</summary>
+        /// <param name="a">Work matrix to update.</param>
+        /// <param name="v">Normalized reflection vector, or zero for identity.</param>
+        /// <param name="row">First affected row.</param>
+        /// <param name="column">First affected column.</param>
+        internal static void ApplyLeft(C[,] a, C[] v, int row, int column)
         {
-            // [1] Alston S. Householder, "Unitary Triangularization of a Nonsymmetric Matrix", 
-            // Journal of the ACM 5, 339-242, 1958;
-            // [2] G. W. Stewart, Matrix Algorithms: Volume 1: Basic Decompositions, SIAM, xix+458, 1998.
-            // 
-            // Get Householder vector:
-            float[] w = Matrice.Householder(v);
-
-            // Get Householder matrix:
-            int n = w.Length, i, j;
-            float[] z;
-            this.matrices = new float[n][];
-
-            // M = I - w * w':
-            for (i = 0; i < n; i++)
+            for (int j = column; j < a.GetLength(1); j++)
             {
-                // eye vector
-                z = new float[n];
-                z[i] = 1.0f;
-
-                for (j = 0; j < n; j++)
-                {
-                    z[j] -= 2 * w[i] * w[j];
-                }
-
-                matrices[i] = z;
+                C dot = 0;
+                for (int i = 0; i < v.Length; i++) dot += C.Conjugate(v[i]) * a[row + i, j];
+                for (int i = 0; i < v.Length; i++) a[row + i, j] -= 2 * v[i] * dot;
             }
         }
-        /// <summary>
-        /// Symmetric Householder reduction to tridiagonal form.
-        /// This is derived from the Algol procedures tred2 by Bowdler, Martin, Reinsch, and Wilkinson, 
-        /// Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutine in EISPACK.
-        /// </summary>
-        /// <param name="a">Matrix</param>
-        private void tred2(float[,] a)
+
+        /// <summary>Applies I - 2 v v^H to selected columns from the right, in place.</summary>
+        /// <param name="a">Work matrix to update.</param>
+        /// <param name="v">Normalized reflection vector, or zero for identity.</param>
+        /// <param name="column">First affected column.</param>
+        /// <param name="row">First affected row.</param>
+        internal static void ApplyRight(C[,] a, C[] v, int column, int row)
         {
-            int i, j, k;
-            this.matrices = Jagged.ToJagged(a);
-
-            for (j = 0; j < n; j++)
+            for (int i = row; i < a.GetLength(0); i++)
             {
-                Re[j] = matrices[n - 1][j];
+                C dot = 0;
+                for (int j = 0; j < v.Length; j++) dot += a[i, column + j] * v[j];
+                for (int j = 0; j < v.Length; j++) a[i, column + j] -= 2 * dot * C.Conjugate(v[j]);
             }
-
-            float scale, h, f, g, hh;
-
-            // Householder reduction to tridiagonal form.
-            for (i = n - 1; i > 0; i--)
-            {
-                // Scale to avoid under/overflow.
-                scale = 0;
-                h = 0;
-                for (k = 0; k < i; k++)
-                    scale = scale + System.Math.Abs(Re[k]);
-
-                if (scale == 0)
-                {
-                    Im[i] = Re[i - 1];
-                    for (j = 0; j < i; j++)
-                    {
-                        Re[j] = matrices[i - 1][j];
-                        matrices[i][j] = 0;
-                        matrices[j][i] = 0;
-                    }
-                }
-                else
-                {
-                    // Generate Householder Matrice.
-                    for (k = 0; k < i; k++)
-                    {
-                        Re[k] /= scale;
-                        h += Re[k] * Re[k];
-                    }
-
-                    f = Re[i - 1];
-                    g = (float)System.Math.Sqrt(h);
-                    if (f > 0) g = -g;
-
-                    Im[i] = scale * g;
-                    h = h - f * g;
-                    Re[i - 1] = f - g;
-                    for (j = 0; j < i; j++)
-                        Im[j] = 0;
-
-                    // Apply similarity transformation to remaining columns.
-                    for (j = 0; j < i; j++)
-                    {
-                        f = Re[j];
-                        matrices[j][i] = f;
-                        g = Im[j] + matrices[j][j] * f;
-                        for (k = j + 1; k <= i - 1; k++)
-                        {
-                            g += matrices[k][j] * Re[k];
-                            Im[k] += matrices[k][j] * f;
-                        }
-                        Im[j] = g;
-                    }
-
-                    f = 0;
-                    for (j = 0; j < i; j++)
-                    {
-                        Im[j] /= h;
-                        f += Im[j] * Re[j];
-                    }
-
-                    hh = f / (h + h);
-                    for (j = 0; j < i; j++)
-                        Im[j] -= hh * Re[j];
-
-                    for (j = 0; j < i; j++)
-                    {
-                        f = Re[j];
-                        g = Im[j];
-                        for (k = j; k <= i - 1; k++)
-                            matrices[k][j] -= (f * Im[k] + g * Re[k]);
-
-                        Re[j] = matrices[i - 1][j];
-                        matrices[i][j] = 0;
-                    }
-                }
-                Re[i] = h;
-            }
-
-            // Accumulate transformations.
-            for (i = 0; i < n - 1; i++)
-            {
-                matrices[n - 1][i] = matrices[i][i];
-                matrices[i][i] = 1;
-                h = Re[i + 1];
-                if (h != 0)
-                {
-                    for (k = 0; k <= i; k++)
-                        Re[k] = matrices[k][i + 1] / h;
-
-                    for (j = 0; j <= i; j++)
-                    {
-                        g = 0;
-                        for (k = 0; k <= i; k++)
-                            g += matrices[k][i + 1] * matrices[k][j];
-                        for (k = 0; k <= i; k++)
-                            matrices[k][j] -= g * Re[k];
-                    }
-                }
-
-                for (k = 0; k <= i; k++)
-                    matrices[k][i + 1] = 0;
-            }
-
-            for (j = 0; j < n; j++)
-            {
-                Re[j] = matrices[n - 1][j];
-                matrices[n - 1][j] = 0;
-            }
-
-            matrices[n - 1][n - 1] = 1;
-            Im[0] = 0;
         }
-        #endregion
     }
 }

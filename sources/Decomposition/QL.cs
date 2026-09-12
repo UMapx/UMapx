@@ -1,60 +1,32 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines the QL decomposition of a square matrix.
-    /// </summary>
-    /// <remarks>
-    /// This is a representation of a matrix in the form of a product of two matrices: A = Q * L, 
-    /// where Q is a unitary (or orthogonal) matrix and L is a lower triangular matrix.
-    /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/QR_decomposition
-    /// </remarks>
-    [Serializable]
-    public class QL
+    /// <summary>Provides real and complex QL decomposition.</summary>
+    public static class QL
     {
-        #region Private data
-        private QR qr;
-        private float[,] l;
-        private float[,] q;
-        #endregion
+        /// <summary>Computes the economy-size QL factorization of a rectangular matrix.</summary>
+        /// <param name="matrix">Finite nonempty input matrix, not modified.</param>
+        /// <returns>Factors Q, L; their product equals the input. Q has orthonormal columns.</returns>
+        public static (float[,] Q, float[,] L) Decompose(float[,] matrix)
+        {
+            MatrixMath.CheckShape(matrix);
+            var d = QR.Decompose(matrix.Flip(Direction.Horizontal));
+            return (d.Q.Flip(Direction.Horizontal), d.R.Flip(Direction.Both));
+        }
 
-        #region Initialize
-        /// <summary>
-        /// Initializes the QL decomposition of a square matrix.
-        /// </summary>
-        /// <param name="A">Square matrix</param>
-        public QL(float[,] A)
+        /// <summary>Computes the economy-size QL factorization of a rectangular matrix.</summary>
+        /// <param name="matrix">Finite nonempty input matrix, not modified.</param>
+        /// <returns>Factors Q, L; their product equals the input. Q has orthonormal columns.</returns>
+        public static (Complex32[,] Q, Complex32[,] L) Decompose(Complex32[,] matrix)
         {
-            qr = new QR(A.Flip(Direction.Horizontal));
-            q = qr.Q.Flip(Direction.Horizontal);
-            l = qr.R.Flip(Direction.Both);
+            MatrixMath.CheckShape(matrix);
+            var d = QR.Decompose(matrix.Flip(Direction.Horizontal));
+            return (d.Q.Flip(Direction.Horizontal), d.R.Flip(Direction.Both));
         }
-        #endregion
 
-        #region Standard voids
-        /// <summary>
-        /// Returns the lower triangular matrix L.
-        /// </summary>
-        public float[,] L
-        {
-            get
-            {
-                return this.l;
-            }
-        }
-        /// <summary>
-        /// Returns the orthogonal matrix Q.
-        /// </summary>
-        public float[,] Q
-        {
-            get
-            {
-                return this.q;
-            }
-        }
-        #endregion
+
     }
 }

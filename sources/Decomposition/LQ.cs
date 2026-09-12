@@ -1,61 +1,32 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines LQ decomposition.
-    /// </summary>
-    /// <remarks>
-    /// This is the representation of a matrix in the form of a product of two matrices: A = L * Q, 
-    /// where Q is a unitary (or orthogonal) matrix, and L is a lower triangular matrix.
-    /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/QR_decomposition
-    /// </remarks>
-    [Serializable]
-    public class LQ
+    /// <summary>Provides real and complex LQ decomposition.</summary>
+    public static class LQ
     {
-        #region Private data
-        private QR qr;
-        private float[,] l;
-        private float[,] q;
-        #endregion
-
-        #region Initialize
-        /// <summary>
-        /// Initializes LQ decomposition.
-        /// </summary>
-        /// <param name="A">Square matrix</param>
-        public LQ(float[,] A)
+        /// <summary>Computes the economy-size LQ factorization of a rectangular matrix.</summary>
+        /// <param name="matrix">Finite nonempty input matrix, not modified.</param>
+        /// <returns>Factors L, Q; their product equals the input. Q has orthonormal rows.</returns>
+        public static (float[,] L, float[,] Q) Decompose(float[,] matrix)
         {
-            qr = new QR(A.Transpose());
+            MatrixMath.CheckShape(matrix);
+            var d = QR.Decompose(matrix.Transpose());
+            return (d.R.Transpose(), d.Q.Transpose());
+        }
 
-            l = qr.R.Transpose();
-            q = qr.Q.Transpose();
+        /// <summary>Computes the economy-size LQ factorization of a rectangular matrix.</summary>
+        /// <param name="matrix">Finite nonempty input matrix, not modified.</param>
+        /// <returns>Factors L, Q; their product equals the input. Q has orthonormal rows.</returns>
+        public static (Complex32[,] L, Complex32[,] Q) Decompose(Complex32[,] matrix)
+        {
+            MatrixMath.CheckShape(matrix);
+            var d = QR.Decompose(matrix.Hermitian());
+            return (d.R.Hermitian(), d.Q.Hermitian());
         }
-        #endregion
 
-        #region Standard voids
-        /// <summary>
-        /// Returns the lower triangular matrix L.
-        /// </summary>
-        public float[,] L
-        {
-            get
-            {
-                return this.l;
-            }
-        }
-        /// <summary>
-        /// Returns the orthogonal matrix Q.
-        /// </summary>
-        public float[,] Q
-        {
-            get
-            {
-                return this.q;
-            }
-        }
-        #endregion
+
     }
 }

@@ -1,68 +1,58 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines the Gram-Schmidt orthogonalization process.
-    /// </summary>
-    /// <remarks>
-    /// In mathematics, in particular linear algebra and numerical analysis, the Gram-Schmidt process is a method of orthonormalizing a set of vectors
-    /// in the space of internal works. This procedure is actively used for orthogonalization of bases.
-    /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Gram%E2%80%93Schmidt_process
-    /// </remarks>
-    [Serializable]
-    public class GramSchmidt
+    /// <summary>Provides modified Gram-Schmidt orthogonalization.</summary>
+    public static class GramSchmidt
     {
-        #region Private data
-        private float[,] q;
-        private float[] v1, v2;
-        private float[] u;
-        private int n;
-        #endregion
-
-        #region Initialize
-        /// <summary>
-        /// Initializes the Gram-Schmidt orthogonalization process.
-        /// </summary>
-        /// <param name="A">Square matrix</param>
-        public GramSchmidt(float[,] A)
+        /// <summary>Computes an economy QR factorization using reorthogonalized modified Gram-Schmidt.</summary>
+        /// <param name="matrix">Finite nonempty matrix with at least as many rows as columns.</param>
+        /// <returns>Orthonormal columns Q and upper triangular R, including basis completion for dependent columns.</returns>
+        public static (float[,] Q, float[,] R) Decompose(float[,] matrix)
         {
-            if (!Matrice.IsSquare(A))
-                throw new ArgumentException("The matrix must be square");
+            var d = Factor(MatrixMath.Copy(matrix));
+            return (MatrixMath.Real(d.Q), MatrixMath.Real(d.R));
+        }
 
-            // UMapx.NET
-            // gram-schmidt result matrix:
-            n = A.GetLength(0);
-            q = new float[n, n];
-            int i, j;
+        /// <summary>Computes an economy QR factorization using reorthogonalized modified Gram-Schmidt.</summary>
+        /// <param name="matrix">Finite nonempty matrix with at least as many rows as columns.</param>
+        /// <returns>Orthonormal columns Q and upper triangular R, including basis completion for dependent columns.</returns>
+        public static (Complex32[,] Q, Complex32[,] R) Decompose(Complex32[,] matrix)
+        {
+            var d = Factor(MatrixMath.Copy(matrix));
+            return (MatrixMath.Single(d.Q), MatrixMath.Single(d.R));
+        }
 
-            for (j = 0; j < n; j++)
+        /// <summary>Orthogonalizes columns twice and completes the basis at numerical breakdown.</summary>
+        /// <param name="a">Private tall or square matrix.</param>
+        /// <returns>An economy orthonormal basis and its upper triangular coefficients.</returns>
+        private static (C[,] Q, C[,] R) Factor(C[,] a)
+        {
+            int m = a.GetLength(0), n = a.GetLength(1);
+            if (m < n) throw new ArgumentException("Gram-Schmidt requires rows >= columns.");
+            var q = new C[m, n];
+            var r = new C[n, n];
+            for (int j = 0; j < n; j++)
             {
-                u = Matrice.GetCol(A, j); // get j-column of matrix A,
-                v2 = u;                   // copy this column for the second Matrice.
-
-                for (i = 0; i < j; i++)
-                {
-                    v1 = Matrice.GetCol(q, i); // get i-column of matrix Q
-                    u = Matrice.Sub(u, Matrice.GramProj(v1, v2)); // calculate: u - proj'<v1, v2>, 
-                    // where ' - means transpose operator for projection.
-                }
-
-                q = Matrice.SetCol(q, Matrice.Div(u, Matrice.Norm(u)), j); // set j-column of matrix Q.
+                var v = new C[m];
+                for (int i = 0; i < m; i++) v[i] = a[i, j];
+                double original = MatrixMath.Norm(v);
+                for (int pass = 0; pass < 2; pass++)
+                    for (int k = 0; k < j; k++)
+                    {
+                        C dot = 0;
+                        for (int i = 0; i < m; i++) dot += C.Conjugate(q[i, k]) * v[i];
+                        r[k, j] += dot;
+                        for (int i = 0; i < m; i++) v[i] -= q[i, k] * dot;
+                    }
+                double norm = MatrixMath.Norm(v);
+                if (norm <= 16 * MatrixMath.Roundoff * original) v = MatrixMath.Complete(q, j);
+                else { r[j, j] = norm; for (int i = 0; i < m; i++) v[i] /= norm; }
+                for (int i = 0; i < m; i++) q[i, j] = v[i];
             }
+            return (q, r);
         }
-        #endregion
-
-        #region Standard voids
-        /// <summary>
-        /// Gets the orthogonal matrix Q.
-        /// </summary>
-        public float[,] Q
-        {
-            get { return q; }
-        }
-        #endregion
     }
 }

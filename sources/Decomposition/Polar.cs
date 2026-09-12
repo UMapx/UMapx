@@ -1,66 +1,34 @@
-﻿using System;
+using System;
 using UMapx.Core;
+using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>
-    /// Defines polar decomposition.
-    /// </summary>
-    /// <remarks>
-    /// This is a representation of a rectangular matrix A in the form of a product of two matrices: A = U * P, 
-    /// where U is a unitary matrix, P is a positive definite matrix.
-    /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Polar_decomposition
-    /// </remarks>
-    [Serializable]
-    public class Polar
+    /// <summary>Provides right polar decomposition for real and complex rectangular matrices.</summary>
+    public static class Polar
     {
-        #region Private data
-        private readonly SVD svd;
-        readonly float[,] u;
-        readonly float[,] p;
-        #endregion
-
-        #region Initialize
-        /// <summary>
-        /// Initializes polar decomposition.
-        /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <param name="iterations">Number of iterations</param>
-        public Polar(float[,] A, int iterations = 10)
+        /// <summary>Computes the right polar decomposition A = U P.</summary>
+        /// <param name="matrix">Finite nonempty rectangular matrix.</param>
+        /// <param name="iterations">Positive SVD iteration limit.</param>
+        /// <returns>The partial isometry U and positive semidefinite symmetric P. Square full-rank U is orthogonal.</returns>
+        public static (float[,] U, float[,] P) Decompose(float[,] matrix, int iterations = 10)
         {
-            svd = new SVD(A, iterations);
-
-            float[,] U = svd.U;
-            float[,] V = svd.V;
-            float[,] H = V.Transpose();
-            float[] S = svd.S;
-
-            u = U.Dot(H); p = V.Dot(S).Dot(H);
+            var d = SVD.Decompose(matrix, iterations);
+            var right = d.V.Transpose();
+            return (d.U.Dot(right), d.V.Dot(d.S).Dot(right));
         }
-        #endregion
 
-        #region Standard voids
-        /// <summary>
-        /// Gets the unitary matrix.
-        /// </summary>
-        public float[,] U
+        /// <summary>Computes the right polar decomposition A = U P.</summary>
+        /// <param name="matrix">Finite nonempty rectangular matrix.</param>
+        /// <param name="iterations">Positive SVD iteration limit.</param>
+        /// <returns>The partial isometry U and positive semidefinite Hermitian P. Square full-rank U is unitary.</returns>
+        public static (Complex32[,] U, Complex32[,] P) Decompose(Complex32[,] matrix, int iterations = 50)
         {
-            get
-            {
-                return this.u;
-            }
+            var d = SVD.Decompose(matrix, iterations);
+            var right = d.V.Hermitian();
+            return (d.U.Dot(right), d.V.Dot(d.S).Dot(right));
         }
-        /// <summary>
-        /// Gets a positive definite matrix.
-        /// </summary>
-        public float[,] P
-        {
-            get
-            {
-                return this.p;
-            }
-        }
-        #endregion
+
+
     }
 }
