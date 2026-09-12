@@ -15,8 +15,8 @@ namespace UMapx.Decomposition
         public static (float[,] U1, float[] S1, float[,] U2, float[] S2, float[,] X)
             Decompose(float[,] a, float[,] b, int iterations = 50)
         {
-            var d = Factor(InternalRealMatrixMath.Copy(a), InternalRealMatrixMath.Copy(b), iterations);
-            return (InternalRealMatrixMath.Real(d.U1), d.S1, InternalRealMatrixMath.Real(d.U2), d.S2, InternalRealMatrixMath.Real(d.X));
+            var d = Factor(InternalMatrixMath.CopyReal(a), InternalMatrixMath.CopyReal(b), iterations);
+            return (InternalMatrixMath.Real(d.U1), d.S1, InternalMatrixMath.Real(d.U2), d.S2, InternalMatrixMath.Real(d.X));
         }
 
         /// <summary>Computes A = U1 diag(S1) X and B = U2 diag(S2) X.</summary>
@@ -197,40 +197,40 @@ namespace UMapx.Decomposition
                 throw new ArgumentException("Both matrices must have the same column count and at least that many rows.");
             // Equalize the input units before QR. Otherwise the smaller block can be lost
             // when the larger block's singular values round to one, leaving its basis unresolved.
-            double scaleA = InternalRealMatrixMath.Max(a), scaleB = InternalRealMatrixMath.Max(b);
+            double scaleA = InternalMatrixMath.Max(a), scaleB = InternalMatrixMath.Max(b);
             if (scaleA == 0) scaleA = 1;
             if (scaleB == 0) scaleB = 1;
-            var stacked = InternalRealMatrixMath.Create(m + p, n);
+            var stacked = InternalMatrixMath.CreateJagged(m + p, n);
             for (int j = 0; j < n; j++)
             {
                 for (int i = 0; i < m; i++) stacked[i][j] = a[i][j] / scaleA;
                 for (int i = 0; i < p; i++) stacked[m + i][j] = b[i][j] / scaleB;
             }
             var qr = QR.Factor(stacked, full: false);
-            var r = InternalRealMatrixMath.Block(qr.R, n, n);
-            double threshold = 32 * InternalRealMatrixMath.Roundoff * InternalRealMatrixMath.Max(r);
+            var r = InternalMatrixMath.Block(qr.R, n, n);
+            double threshold = 32 * InternalMatrixMath.Roundoff * InternalMatrixMath.Max(r);
             for (int i = 0; i < n; i++)
                 if (Math.Abs(r[i][i]) <= threshold) throw new ArgumentException("The stacked matrix must have full column rank.");
-            var svd = SVD.Factor(InternalRealMatrixMath.Block(qr.Q, m, n), iterations);
-            var w = InternalRealMatrixMath.Multiply(InternalRealMatrixMath.Block(qr.Q, p, n, m), svd.V);
+            var svd = SVD.Factor(InternalMatrixMath.Block(qr.Q, m, n), iterations);
+            var w = InternalMatrixMath.Multiply(InternalMatrixMath.Block(qr.Q, p, n, m), svd.V);
             RefineComplement(svd.U, svd.S, svd.V, w, iterations);
-            var x = InternalRealMatrixMath.Multiply(InternalRealMatrixMath.Transpose(svd.V), r);
+            var x = InternalMatrixMath.Multiply(InternalMatrixMath.Transpose(svd.V), r);
             var s1 = new float[n];
             var s2 = new float[n];
-            var u2 = InternalRealMatrixMath.Create(p, n);
-            var basis = InternalRealMatrixMath.Create(p, n);
+            var u2 = InternalMatrixMath.CreateJagged(p, n);
+            var basis = InternalMatrixMath.CreateJagged(p, n);
             var zero = new bool[n];
             int count = 0;
             for (int j = 0; j < n; j++)
             {
-                var column = InternalRealMatrixMath.Column(w, j);
-                double sine = InternalRealMatrixMath.Norm(column);
-                if (sine <= 64 * InternalRealMatrixMath.Roundoff) { sine = 0; zero[j] = true; }
+                var column = InternalMatrixMath.Column(w, j);
+                double sine = InternalMatrixMath.Norm(column);
+                if (sine <= 64 * InternalMatrixMath.Roundoff) { sine = 0; zero[j] = true; }
                 else
                 {
-                    InternalRealMatrixMath.Divide(column, sine);
-                    InternalRealMatrixMath.SetColumn(u2, j, column);
-                    InternalRealMatrixMath.SetColumn(basis, count, column);
+                    InternalMatrixMath.Divide(column, sine);
+                    InternalMatrixMath.SetColumn(u2, j, column);
+                    InternalMatrixMath.SetColumn(basis, count, column);
                     count++;
                 }
                 // Restore each input scale through the diagonal factors and shared X.
@@ -245,9 +245,9 @@ namespace UMapx.Decomposition
             for (int j = 0; j < n; j++)
                 if (zero[j])
                 {
-                    var column = InternalRealMatrixMath.Complete(basis, count);
-                    InternalRealMatrixMath.SetColumn(u2, j, column);
-                    InternalRealMatrixMath.SetColumn(basis, count, column);
+                    var column = InternalMatrixMath.Complete(basis, count);
+                    InternalMatrixMath.SetColumn(u2, j, column);
+                    InternalMatrixMath.SetColumn(basis, count, column);
                     count++;
                 }
             return (svd.U, s1, u2, s2, x);
@@ -271,34 +271,34 @@ namespace UMapx.Decomposition
             if (count == 0) return;
 
             int rows = lower.Length;
-            var basis = InternalRealMatrixMath.Create(rows, n - count);
+            var basis = InternalMatrixMath.CreateJagged(rows, n - count);
             for (int j = count; j < n; j++)
             {
-                var column = InternalRealMatrixMath.Column(lower, j);
-                InternalRealMatrixMath.Orthogonalize(column, basis, j - count);
-                InternalRealMatrixMath.Divide(column, InternalRealMatrixMath.Norm(column));
-                InternalRealMatrixMath.SetColumn(basis, j - count, column);
+                var column = InternalMatrixMath.Column(lower, j);
+                InternalMatrixMath.Orthogonalize(column, basis, j - count);
+                InternalMatrixMath.Divide(column, InternalMatrixMath.Norm(column));
+                InternalMatrixMath.SetColumn(basis, j - count, column);
             }
-            var small = InternalRealMatrixMath.Create(rows, count);
+            var small = InternalMatrixMath.CreateJagged(rows, count);
             for (int j = 0; j < count; j++)
             {
-                var column = InternalRealMatrixMath.Column(lower, j);
-                InternalRealMatrixMath.Orthogonalize(column, basis, n - count);
-                InternalRealMatrixMath.SetColumn(small, j, column);
+                var column = InternalMatrixMath.Column(lower, j);
+                InternalMatrixMath.Orthogonalize(column, basis, n - count);
+                InternalMatrixMath.SetColumn(small, j, column);
             }
             var complement = SVD.Factor(small, iterations);
             // Reverse the sine order to retain descending cosines within this subspace.
-            var rotation = InternalRealMatrixMath.Create(count, count);
+            var rotation = InternalMatrixMath.CreateJagged(count, count);
             for (int i = 0; i < count; i++)
                 for (int j = 0; j < count; j++) rotation[i][j] = complement.V[i][count - 1 - j];
-            var upper = InternalRealMatrixMath.Block(u, u.Length, count);
+            var upper = InternalMatrixMath.Block(u, u.Length, count);
             for (int i = 0; i < upper.Length; i++)
                 for (int j = 0; j < count; j++) upper[i][j] *= cosines[j];
-            upper = InternalRealMatrixMath.Multiply(upper, rotation);
-            var right = InternalRealMatrixMath.Multiply(InternalRealMatrixMath.Block(v, n, count), rotation);
+            upper = InternalMatrixMath.Multiply(upper, rotation);
+            var right = InternalMatrixMath.Multiply(InternalMatrixMath.Block(v, n, count), rotation);
             for (int j = 0; j < count; j++)
             {
-                cosines[j] = InternalRealMatrixMath.ColumnNorm(upper, j);
+                cosines[j] = InternalMatrixMath.ColumnNorm(upper, j);
                 for (int i = 0; i < u.Length; i++) u[i][j] = upper[i][j] / cosines[j];
                 for (int i = 0; i < n; i++) v[i][j] = right[i][j];
                 for (int i = 0; i < rows; i++)

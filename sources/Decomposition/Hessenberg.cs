@@ -12,8 +12,8 @@ namespace UMapx.Decomposition
         /// <returns>Orthogonal P and upper Hessenberg H.</returns>
         public static (float[,] P, float[,] H) Decompose(float[,] matrix)
         {
-            var d = Factor(InternalRealMatrixMath.Copy(matrix, true));
-            return (InternalRealMatrixMath.Real(d.P), InternalRealMatrixMath.Real(d.H));
+            var d = Factor(InternalMatrixMath.CopyReal(matrix, true));
+            return (InternalMatrixMath.Real(d.P), InternalMatrixMath.Real(d.H));
         }
 
         /// <summary>Computes A = P H P^H.</summary>
@@ -51,14 +51,14 @@ namespace UMapx.Decomposition
         {
             int n = a.Length;
             var scratch = new double[n];
-            var p = InternalRealMatrixMath.Eye(n);
+            var p = InternalMatrixMath.EyeJagged(n);
             for (int k = 0; k < n - 2; k++)
             {
-                var v = InternalRealMatrixMath.Column(a, k, k + 1);
-                v = InternalRealMatrixMath.HouseholderVector(v);
-                InternalRealMatrixMath.ReflectLeft(a, v, k + 1, k, scratch);
-                InternalRealMatrixMath.ReflectRight(a, v, k + 1, 0);
-                InternalRealMatrixMath.ReflectRight(p, v, k + 1, 0);
+                var v = InternalMatrixMath.Column(a, k, k + 1);
+                v = InternalMatrixMath.HouseholderVector(v);
+                InternalMatrixMath.ReflectLeft(a, v, k + 1, k, scratch);
+                InternalMatrixMath.ReflectRight(a, v, k + 1, 0);
+                InternalMatrixMath.ReflectRight(p, v, k + 1, 0);
                 for (int i = k + 2; i < n; i++) a[i][k] = 0;
             }
             return (p, a);

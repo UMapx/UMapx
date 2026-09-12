@@ -14,18 +14,18 @@ namespace UMapx.Decomposition
         /// <returns>Orthogonal Q and Z, quasi-triangular S, and upper triangular T.</returns>
         public static (float[,] Q, float[,] S, float[,] T, float[,] Z) Decompose(float[,] a, float[,] b, float eps = 1e-16f)
         {
-            var s = InternalRealMatrixMath.Copy(a, true);
-            var t = InternalRealMatrixMath.Copy(b, true);
+            var s = InternalMatrixMath.CopyReal(a, true);
+            var t = InternalMatrixMath.CopyReal(b, true);
             if (a.GetLength(0) != b.GetLength(0)) throw new ArgumentException("The matrices must have equal orders.");
             if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
             int n = a.GetLength(0), error = 0;
             // Store Q^T so each left reflection updates contiguous rows.
-            var q = InternalRealMatrixMath.Eye(n);
-            var z = InternalRealMatrixMath.Eye(n);
+            var q = InternalMatrixMath.EyeJagged(n);
+            var z = InternalMatrixMath.EyeJagged(n);
             GEVD.ReduceRealPencil(s, t, eps, q, z, ref error);
             if (error != 0) throw new InvalidOperationException("Real QZ decomposition failed to converge.");
-            return (InternalRealMatrixMath.RealTranspose(q), InternalRealMatrixMath.Real(s),
-                    InternalRealMatrixMath.Real(t), InternalRealMatrixMath.Real(z));
+            return (InternalMatrixMath.RealTranspose(q), InternalMatrixMath.Real(s),
+                    InternalMatrixMath.Real(t), InternalMatrixMath.Real(z));
         }
 
         /// <summary>Computes the complex generalized Schur factors A = Q S Z^H and B = Q T Z^H.</summary>

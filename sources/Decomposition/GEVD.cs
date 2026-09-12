@@ -245,11 +245,11 @@ namespace UMapx.Decomposition
             {
                 int n = a.Length;
                 // Independent scales preserve a small B even when A uses much larger units.
-                double scaleA = InternalRealMatrixMath.Max(a), scaleB = InternalRealMatrixMath.Max(b);
+                double scaleA = InternalMatrixMath.Max(a), scaleB = InternalMatrixMath.Max(b);
                 if (scaleA == 0) scaleA = 1;
                 if (scaleB == 0) scaleB = 1;
-                InternalRealMatrixMath.Divide(a, scaleA);
-                InternalRealMatrixMath.Divide(b, scaleB);
+                InternalMatrixMath.Divide(a, scaleA);
+                InternalMatrixMath.Divide(b, scaleB);
                 qzhes(n, a, b, true, z, q);
                 qzit(n, a, b, Maths.Float(eps), true, z, ref ierr, q);
                 // The bottom-left entry is scratch storage for epsb, not part of T.
@@ -340,7 +340,7 @@ namespace UMapx.Decomposition
                         var reflection = new double[n - l];
                         double divisor = Math.Sqrt(2 * rho);
                         for (i = l; i < n; i++) reflection[i - l] = b[i][l] / divisor;
-                        InternalRealMatrixMath.ReflectLeft(left, reflection, l, 0);
+                        InternalMatrixMath.ReflectLeft(left, reflection, l, 0);
                     }
 
                     b[l][l] = -s * r;
@@ -388,7 +388,7 @@ namespace UMapx.Decomposition
                         }
 
                         if (left != null)
-                            InternalRealMatrixMath.ReflectRows(left, l, l1, u2, v1, v2);
+                            InternalMatrixMath.ReflectRows(left, l, l1, u2, v1, v2);
 
                         // Zero b(l+1,l)
                         s = (System.Math.Abs(b[l1][l1])) + (System.Math.Abs(b[l1][l]));
@@ -572,7 +572,7 @@ namespace UMapx.Decomposition
                 }
 
                 if (left != null)
-                    InternalRealMatrixMath.ReflectRows(left, l, l1, u2, v1, v2);
+                    InternalMatrixMath.ReflectRows(left, l, l1, u2, v1, v2);
 
                 if (l != 0)
                     a[l][lm1] = -a[l][lm1];
@@ -701,7 +701,7 @@ namespace UMapx.Decomposition
                     }
 
                     if (left != null)
-                        InternalRealMatrixMath.ReflectRows(left, k, k1, u2, v1, v2);
+                        InternalMatrixMath.ReflectRows(left, k, k1, u2, v1, v2);
 
                     if (k != l)
                         a[k1][km1] = 0.0f;
@@ -741,7 +741,7 @@ namespace UMapx.Decomposition
                     }
 
                     if (left != null)
-                        InternalRealMatrixMath.ReflectRows(left, k, k1, k2, u2, u3, v1, v2, v3);
+                        InternalMatrixMath.ReflectRows(left, k, k1, k2, u2, u3, v1, v2, v3);
 
                     if (k == l) goto L220;
                     a[k1][km1] = 0.0f;

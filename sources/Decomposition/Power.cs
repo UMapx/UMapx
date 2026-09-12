@@ -13,8 +13,8 @@ namespace UMapx.Decomposition
         /// <returns>A unit vector V and its Rayleigh quotient D; a zero product returns the current vector and zero.</returns>
         public static (float[] V, float D) Decompose(float[,] matrix, int iterations = 100)
         {
-            var d = Iterate(InternalRealMatrixMath.Copy(matrix, true), iterations);
-            return (InternalRealMatrixMath.Real(d.V), (float)d.D);
+            var d = Iterate(InternalMatrixMath.CopyReal(matrix, true), iterations);
+            return (InternalMatrixMath.Single(d.V), (float)d.D);
         }
 
         /// <summary>Places an existing power-iteration vector on a diagonal without further iteration.</summary>
@@ -81,10 +81,10 @@ namespace UMapx.Decomposition
             for (int i = 0; i < n; i++) v[i] = 1 / Math.Sqrt(n);
             for (int step = 0; step < iterations; step++)
             {
-                var w = InternalRealMatrixMath.Multiply(a, v);
-                double norm = InternalRealMatrixMath.Norm(w);
+                var w = InternalMatrixMath.Multiply(a, v);
+                double norm = InternalMatrixMath.Norm(w);
                 if (norm == 0) return (v, 0);
-                InternalRealMatrixMath.Divide(w, norm);
+                InternalMatrixMath.Divide(w, norm);
                 v = w;
             }
             double eigenvalue = 0;

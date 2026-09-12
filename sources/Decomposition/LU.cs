@@ -12,8 +12,8 @@ namespace UMapx.Decomposition
         /// <returns>Unit lower triangular L, upper triangular U, and the row permutation P.</returns>
         public static (float[,] L, float[,] U, int[] P) Decompose(float[,] matrix)
         {
-            var d = Factor(InternalRealMatrixMath.Copy(matrix, true));
-            return (InternalRealMatrixMath.Real(d.L), InternalRealMatrixMath.Real(d.U), d.P);
+            var d = Factor(InternalMatrixMath.CopyReal(matrix, true));
+            return (InternalMatrixMath.Real(d.L), InternalMatrixMath.Real(d.U), d.P);
         }
 
         /// <summary>Computes A[P,:] = L U with complex partial row pivoting.</summary>
@@ -81,7 +81,7 @@ namespace UMapx.Decomposition
         internal static (double[][] L, double[][] U, int[] P) Factor(double[][] a)
         {
             int n = a.Length;
-            var l = InternalRealMatrixMath.Eye(n);
+            var l = InternalMatrixMath.EyeJagged(n);
             var p = new int[n];
             for (int i = 0; i < n; i++) p[i] = i;
             for (int k = 0; k < n; k++)

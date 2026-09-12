@@ -21,8 +21,8 @@ namespace UMapx.Decomposition
         /// <returns>U of size m by k, descending nonnegative S of length k, and V of size n by k, where k=min(m,n).</returns>
         public static (float[,] U, float[] S, float[,] V) Decompose(float[,] matrix, int iterations = 10)
         {
-            var d = Factor(InternalRealMatrixMath.Copy(matrix), iterations);
-            return (InternalRealMatrixMath.Real(d.U), InternalMatrixMath.Single(d.S), InternalRealMatrixMath.Real(d.V));
+            var d = Factor(InternalMatrixMath.CopyReal(matrix), iterations);
+            return (InternalMatrixMath.Real(d.U), InternalMatrixMath.Single(d.S), InternalMatrixMath.Real(d.V));
         }
 
         /// <summary>Computes the economy complex SVD, A = U diag(S) V^H, using one-sided Jacobi sweeps.</summary>
@@ -245,7 +245,7 @@ namespace UMapx.Decomposition
                     this.reversed = true;
                     this.n = A[0].Length;
                     this.m = A.Length;
-                    this.svdcmp(InternalRealMatrixMath.Transpose(A));
+                    this.svdcmp(InternalMatrixMath.Transpose(A));
                 }
                 else
                 {
@@ -304,9 +304,9 @@ namespace UMapx.Decomposition
             /// </remarks>
             private void svdcmp(double[][] A)
             {
-                double inputScale = InternalRealMatrixMath.Max(A);
+                double inputScale = InternalMatrixMath.Max(A);
                 if (inputScale == 0) inputScale = 1;
-                InternalRealMatrixMath.Divide(A, inputScale);
+                InternalMatrixMath.Divide(A, inputScale);
                 var Ur = A;
                 var Sr = new double[m];
                 var Vr = InternalMatrixMath.CreateJagged(m, m);

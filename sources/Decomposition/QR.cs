@@ -12,10 +12,10 @@ namespace UMapx.Decomposition
         /// <returns>Q of size m by min(m,n) and R of size min(m,n) by n.</returns>
         public static (float[,] Q, float[,] R) Decompose(float[,] matrix)
         {
-            var d = Factor(InternalRealMatrixMath.Copy(matrix), full: false);
+            var d = Factor(InternalMatrixMath.CopyReal(matrix), full: false);
             int k = Math.Min(matrix.GetLength(0), matrix.GetLength(1));
-            return (InternalRealMatrixMath.Real(d.Q),
-                    InternalRealMatrixMath.Real(d.R, k, matrix.GetLength(1)));
+            return (InternalMatrixMath.Real(d.Q),
+                    InternalMatrixMath.Real(d.R, k, matrix.GetLength(1)));
         }
 
         /// <summary>Computes A = Q R with Q^H Q = I using complex Householder reflections.</summary>
@@ -32,7 +32,7 @@ namespace UMapx.Decomposition
         /// <summary>Computes normalized reflection vectors without constructing Q.</summary>
         /// <param name="matrix">Finite input matrix; a separate reduction is performed.</param>
         /// <returns>An m by min(m,n) matrix of vectors v defining H = I - 2 v v^T; zero columns denote identity.</returns>
-        public static float[,] HouseholderVectors(float[,] matrix) => InternalRealMatrixMath.Real(Factor(InternalRealMatrixMath.Copy(matrix), false).H);
+        public static float[,] HouseholderVectors(float[,] matrix) => InternalMatrixMath.Real(Factor(InternalMatrixMath.CopyReal(matrix), false).H);
 
         /// <summary>Computes normalized complex reflection vectors without constructing Q.</summary>
         /// <param name="matrix">Finite input matrix; a separate reduction is performed.</param>
@@ -82,25 +82,25 @@ namespace UMapx.Decomposition
             int m = a.Length, n = a[0].Length, kmax = Math.Min(m, n);
             double[][] q = null;
             var scratch = new double[Math.Max(m, n)];
-            var h = InternalRealMatrixMath.Create(m, kmax);
+            var h = InternalMatrixMath.CreateJagged(m, kmax);
             for (int k = 0; k < kmax; k++)
             {
-                var v = InternalRealMatrixMath.Column(a, k, k);
-                v = InternalRealMatrixMath.HouseholderVector(v);
-                InternalRealMatrixMath.ReflectLeft(a, v, k, k, scratch);
-                InternalRealMatrixMath.SetColumn(h, k, v, k);
+                var v = InternalMatrixMath.Column(a, k, k);
+                v = InternalMatrixMath.HouseholderVector(v);
+                InternalMatrixMath.ReflectLeft(a, v, k, k, scratch);
+                InternalMatrixMath.SetColumn(h, k, v, k);
                 for (int i = k + 1; i < m; i++) a[i][k] = 0;
             }
             if (vectors)
             {
                 int columns = full ? m : kmax;
-                q = InternalRealMatrixMath.Create(m, columns);
+                q = InternalMatrixMath.CreateJagged(m, columns);
                 for (int i = 0; i < columns; i++) q[i][i] = 1;
                 // Reverse application builds Q without allocating an m by m matrix for a tall economy QR.
                 for (int k = kmax - 1; k >= 0; k--)
                 {
-                    var v = InternalRealMatrixMath.Column(h, k, k);
-                    InternalRealMatrixMath.ReflectLeft(q, v, k, k, scratch);
+                    var v = InternalMatrixMath.Column(h, k, k);
+                    InternalMatrixMath.ReflectLeft(q, v, k, k, scratch);
                 }
             }
             return (q, a, h);

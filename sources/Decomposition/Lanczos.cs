@@ -13,15 +13,15 @@ namespace UMapx.Decomposition
         /// <returns>Q and tridiagonal T satisfying A = Q T Q^T.</returns>
         public static (float[,] Q, float[,] T) Decompose(float[,] matrix, bool full = false)
         {
-            var a = InternalRealMatrixMath.Copy(matrix, true);
-            InternalRealMatrixMath.RequireSymmetric(a);
+            var a = InternalMatrixMath.CopyReal(matrix, true);
+            InternalMatrixMath.RequireSymmetric(a);
             var d = Arnoldi.Factor(a, full);
             int n = a.GetLength(0);
             for (int i = 0; i < n; i++)
             {
                 for (int j = i + 1; j < n; j++) d.H[i][j] = j == i + 1 ? d.H[j][i] : 0;
             }
-            return (InternalRealMatrixMath.Real(d.Q), InternalRealMatrixMath.Real(d.H));
+            return (InternalMatrixMath.Real(d.Q), InternalMatrixMath.Real(d.H));
         }
 
         /// <summary>Computes a Hermitian Lanczos tridiagonalization.</summary>

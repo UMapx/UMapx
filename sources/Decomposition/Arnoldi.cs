@@ -12,8 +12,8 @@ namespace UMapx.Decomposition
         /// <returns>An orthonormal basis Q and upper Hessenberg H; invariant-subspace breakdown starts a new orthogonal block.</returns>
         public static (float[,] Q, float[,] H) Decompose(float[,] matrix)
         {
-            var d = Factor(InternalRealMatrixMath.Copy(matrix, true), true);
-            return (InternalRealMatrixMath.Real(d.Q), InternalRealMatrixMath.Real(d.H));
+            var d = Factor(InternalMatrixMath.CopyReal(matrix, true), true);
+            return (InternalMatrixMath.Real(d.Q), InternalMatrixMath.Real(d.H));
         }
 
         /// <summary>Computes a full Arnoldi reduction A = Q H Q^H.</summary>
@@ -61,22 +61,22 @@ namespace UMapx.Decomposition
         internal static (double[][] Q, double[][] H) Factor(double[][] a, bool full)
         {
             int n = a.Length;
-            var q = InternalRealMatrixMath.Create(n, n);
-            var h = InternalRealMatrixMath.Create(n, n);
+            var q = InternalMatrixMath.CreateJagged(n, n);
+            var h = InternalMatrixMath.CreateJagged(n, n);
             for (int i = 0; i < n; i++) q[i][0] = 1 / Math.Sqrt(n);
-            double threshold = 32 * InternalRealMatrixMath.Roundoff * n * InternalRealMatrixMath.Max(a);
+            double threshold = 32 * InternalMatrixMath.Roundoff * n * InternalMatrixMath.Max(a);
             for (int k = 0; k < n; k++)
             {
-                var v = InternalRealMatrixMath.Multiply(a, InternalRealMatrixMath.Column(q, k));
-                double before = full ? 0 : InternalRealMatrixMath.Norm(v);
-                InternalRealMatrixMath.Orthogonalize(v, q, k + 1, full ? 2 : 1, h, k);
-                if (!full && InternalRealMatrixMath.Norm(v) < 0.5 * before)
-                    InternalRealMatrixMath.Orthogonalize(v, q, k + 1, 1, h, k);
+                var v = InternalMatrixMath.Multiply(a, InternalMatrixMath.Column(q, k));
+                double before = full ? 0 : InternalMatrixMath.Norm(v);
+                InternalMatrixMath.Orthogonalize(v, q, k + 1, full ? 2 : 1, h, k);
+                if (!full && InternalMatrixMath.Norm(v) < 0.5 * before)
+                    InternalMatrixMath.Orthogonalize(v, q, k + 1, 1, h, k);
                 if (k + 1 == n) continue;
-                double norm = InternalRealMatrixMath.Norm(v);
-                if (norm <= threshold) v = InternalRealMatrixMath.Complete(q, k + 1);
-                else { h[k + 1][k] = norm; InternalRealMatrixMath.Divide(v, norm); }
-                InternalRealMatrixMath.SetColumn(q, k + 1, v);
+                double norm = InternalMatrixMath.Norm(v);
+                if (norm <= threshold) v = InternalMatrixMath.Complete(q, k + 1);
+                else { h[k + 1][k] = norm; InternalMatrixMath.Divide(v, norm); }
+                InternalMatrixMath.SetColumn(q, k + 1, v);
             }
             return (q, h);
         }
