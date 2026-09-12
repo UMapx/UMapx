@@ -11,8 +11,12 @@ namespace UMapx.Decomposition
     /// </remarks>
     internal static class InternalMatrixMath
     {
+        #region Constants
+
         public const double Roundoff = 2.2204460492503131e-16;
         public const double SingleRoundoff = 1.1920928955078125e-7;
+
+        #endregion
 
         #region Real work buffers and scalar arithmetic
 
