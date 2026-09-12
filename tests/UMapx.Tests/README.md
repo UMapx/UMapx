@@ -1,213 +1,168 @@
-# UMapx mathematical audit tests
+# UMapx tests
 
-The audit covers every source area. The September 11, 2026 run included 427 C#
-source files and **16,360 test cases: all passed, none failed or skipped**.
-All registered audit failures were resolved without removing original test cases
-or weakening their expectations. The complete command exited with status 0.
+The xUnit suite exercises numerical algorithms, transforms, imaging, rendering,
+video parsing, and public API contracts. It includes independent reference
+values, mathematical identities, and regression cases for previously observed
+failures.
 
-Execution coverage is **83.85% of lines** and **77.74% of branches**. These figures
-include contract tests. They are not a correctness percentage, and
-this suite does not establish absence of errors. Coverage output records executed
-code; tests describe unsupported APIs and parameter domains.
+## Latest recorded full run
 
-## Run the complete audit
+The September 12, 2026 run used Windows, .NET SDK 10.0.401, the .NET 8 test
+target, and the Release configuration.
 
-Requirements: Windows, .NET SDK 8 or later, the .NET 8 runtime, and restored NuGet
-packages. Bitmap and rendering tests use System.Drawing.Common and require
-Windows. SupportedOSPlatform attributes document that restriction but do not
-skip tests automatically on other platforms. No camera, live network stream, or
-screen capture is used.
+| Measure | Result |
+| --- | --- |
+| Test cases | 17,740 passed; 0 failed; 0 skipped. |
+| Line coverage | 28,449 / 33,925 lines (83.86%). |
+| Branch coverage | 11,229 / 14,452 branches (77.70%). |
 
-From the repository root:
+Percentages are rounded from the coverage counts. These are recorded results,
+not values automatically refreshed when tests change. The local evidence is
+`artifacts/release-readiness/final/release-final.trx` and its accompanying
+`coverage.cobertura.xml`; generated artifacts are not tracked in Git.
+
+Coverage measures executed code, not numerical correctness. A passing run
+validates the included cases; it does not establish that every supported input
+is correct. Contract tests for unsupported operations do not establish that
+those operations are implemented.
+
+## Run the tests
+
+Requirements for the complete suite:
+
+- Windows, because bitmap and rendering tests use System.Drawing.Common.
+- .NET SDK 8 or later and the .NET 8 runtime.
+- NuGet access for the initial restore, or already restored dependencies.
+
+Run commands from the repository root:
 
 ```powershell
 dotnet test UMapx.sln -c Release -p:GeneratePackageOnBuild=false
 ```
 
-For coverage and a TRX results file:
+The command builds the test project, the probe executable, and the library. Package generation is
+disabled because testing does not require a NuGet package. Add `--no-restore`
+only when dependencies have already been restored.
+
+To collect coverage and a TRX results file:
 
 ```powershell
 dotnet test UMapx.sln -c Release -p:GeneratePackageOnBuild=false -p:DebugType=portable -p:DebugSymbols=true --collect "XPlat Code Coverage" --settings tests/UMapx.Tests/coverage.runsettings --logger "trx;LogFileName=full-audit.trx" --results-directory artifacts/math-audit/run
 ```
 
-Both portable PDB settings are essential because the library's normal Release
-configuration disables debug symbols. Results are written to the selected
-directory under `artifacts/math-audit`.
+Both PDB settings are required: the library's normal Release configuration
+disables debug symbols. [coverage.runsettings](coverage.runsettings) collects
+Cobertura and JSON coverage for the UMapx assembly, excluding the test assembly
+and generated `obj` files.
 
-For a particular mathematical area or counterexample:
+To select an area, a test class, or a specific regression:
 
 ```powershell
 dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter "Category=Decomposition"
-dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter "FullyQualifiedName~MeshEvaluationUsesBothIndependentCoordinates"
+dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter "FullyQualifiedName~TimeoutStreamRepairTests"
+dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter "FullyQualifiedName~IsolatedLargeEigenvalueDoesNotCorruptSmallBlockEigenvectors"
 ```
 
-Available categories: `Identity`, `Regression`, `Reference`, `Core`, `Matrix`,
-`Analysis`, `ColorSpace`, `Decomposition`, `Distance`, `Distribution`, `Window`,
-`WindowTransform`, `Transform`, `Wavelet`, `Response`, `Imaging`, `Geometry`,
-`Video`, and `Contract`.
+Categories describe subject areas, not operating-system compatibility.
+For example, [ApproximationRepairTests.cs](ApproximationRepairTests.cs) contains
+bitmap tests under `Category=Analysis`. Excluding `Imaging`, `Geometry`,
+`Video`, and `Contract` therefore does not produce a guaranteed portable suite.
+`SupportedOSPlatform` attributes document restrictions; they do not
+automatically skip tests. No full Linux/macOS run is recorded here.
 
-A numeric-only filter for environments without Windows bitmap support is:
+## Projects and coverage areas
 
-```powershell
-dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter "Category!=Imaging&Category!=Geometry&Category!=Video&Category!=Contract"
-```
+[UMapx.Tests.csproj](UMapx.Tests.csproj) targets .NET 8 and references the
+`netstandard2.0` library. [UMapx.AuditProbe](../UMapx.AuditProbe/Program.cs)
+is a separate executable for operations whose termination must be bounded.
 
-This filter has not been validated as a full cross-platform compatibility test.
-The complete reported result is from Windows with .NET SDK 10.0.401.
+| Categories | Main checks |
+| --- | --- |
+| `Core`, `Matrix`, `Analysis`, `Distance` | Scalar and complex arithmetic, number theory, containers, matrix operations, approximation, interpolation, calculus, and distances. |
+| `Reference`, `Identity`, `Regression` | Special-function reference values, mathematical identities, branch conventions, and boundary regressions. |
+| `Decomposition` | Real and complex factorizations, reconstruction, orthogonality, eigenvector equations, pseudoinverses, rank, scaling, and convergence contracts. |
+| `Distribution` | Densities, CDFs, support, moments, entropy, medians, modes, and parameter boundaries. |
+| `Transform`, `Wavelet`, `Window`, `WindowTransform`, `Response` | Direct transform references, reconstruction, window formulas, wavelet coefficients, framed transforms, and filter responses. |
+| `ColorSpace`, `Imaging`, `Geometry` | Color conversions, pixel equations, bitmap composition, stride and padding, depth maps, tensors, and rendering. |
+| `Video` | MIME boundaries, partial reads, JPEG framing, synthetic video sources, stream deadlines, and exception propagation. |
+| `Contract` | Public API behavior, invalid inputs, and explicitly unsupported operations. |
 
-## Independent evidence
+The latest release regressions add 40 cases to the preceding 17,700-case run:
 
-- Direct DFT and transform matrices, double-precision matrix products,
-  reconstruction residuals, orthogonality, and all four Penrose equations.
-- BigInteger arithmetic, independent scalar and complex equations, exact index
-  mappings, and component/stride tests with guarded memory.
-- 1,029 arithmetic references at 100 decimal digits, boundary cases spanning the
-  float range, cubic/quadratic residuals and Vieta identities, exact integer
-  arithmetic at signed limits, pseudoprimes, and large-semiprime factorization.
-- 3,727 special-function reference cases, 1,991 distribution reference cases,
-  and 16 high-precision Hankel matrix fixtures. Fixtures use mpmath 1.3.0 at
-  40, 60, or 80 decimal digits, with library inputs rounded to binary32 first.
-  The dedicated special-function suites also contain 22 boundary/identity cases.
-- Independent PDF integration for distribution moments and entropy. Median/mode
-  consistency checks supplement these references; they are not independent
-  proofs when they call the library's own CDF/PDF.
-- 1,611 additional distribution references at 70 decimal digits, including small
-  tails, moment-existence boundaries, direct entropy/moment integrals, and exact
-  discrete probability sums. A further 55 checks cover modes, scaling and support.
-- 316 matrix/distance repair cases cover clipping, empty/rectangular arrays,
-  extreme shifts, mixed diagonal products, Hermitian statistics and contingency counts.
-- 595 approximation/filter repair cases cover Padé Taylor equations, clamped
-  grid interpolation, direct window sums, sorted morphology windows, independent
-  cubic Hermite resampling, exact orthogonal rotations, and bitmap channels.
-- 496 decomposition repair cases cover matrix rank and scaling, all four Penrose
-  equations, Schur deflation and complex blocks, generalized eigen-equations,
-  homogeneous eigenvalues, QZ structure, and explicit convergence/input contracts.
-- 419 wavelet, window, transform, and color repair cases cover biorthogonal
-  impulses and vanishing moments, independent Meyer quadrature, narrow windows,
-  high-order Bessel zeros, known
-  IIR poles, complex grid sample influences, direct local-Laplacian remapping,
-  threshold components, cone kernel mass, and neutral/chromatic color round trips.
-- 477 selected imaging repair cases cover lookup-table endpoints, every neutral
-  byte value, scalar pixel equations, signed stride and guarded padding, all 11
-  diffusion kernels, histogram ranks, and color transfer checked against
-  independent pairwise population variance and distribution invariance.
-- 187 depth, tensor, and rendering repair cases cover opaque tensor reconstruction,
-  exact inclusive depth CDF ranks from sorted samples, all depth codes, clipped and overlapping
-  placement, and constant-series rendering with finite ranges and visible pixels.
-  Five preceding IoU additions cover large areas and nonidentical rectangles.
-- 69 video repair cases cover HTTP parameter parsing, boundary case and quoting,
-  invalid headers, decoded JPEG frames under partial reads, camera boundary
-  correction, every split position in synthetic marker streams, and exact unread
-  bytes after frame removal. Short delimiters and raw streams are included.
-- Window formulas, wavelet analysis/synthesis coefficients, impulses, filter
-  transfer polynomials, image pixel equations and neutral/constant invariants.
-- Real/complex vectors, rectangular matrices, even/odd sizes, singular inputs,
-  large finite values, and selected parameter boundaries.
+- [ComplexDecompositionTests.cs](ComplexDecompositionTests.cs): 26 cases for
+  eigenvectors in independently scaled blocks and GSVD bases, including
+  orthogonality, small-block reconstruction, independent singular values,
+  swapped inputs, and zero subspaces.
+- [TimeoutStreamRepairTests.cs](TimeoutStreamRepairTests.cs): 14 cases for
+  operation deadlines, idle intervals, timeout recovery, native stream
+  settings, exception propagation, cancellation, and argument validation.
 
-Random test inputs use fixed seeds. Several production algorithms have internal
-random initialization without a public seed, so their tests use stated residual
-budgets. A dedicated nonparallel collection protects the global SIMD flag.
-Prime termination regressions, large factorization cases, and the repaired Schur zero-matrix termination cases run in `UMapx.AuditProbe` with a five-second
-process deadline and process-tree termination; they do not hang the test host.
-Subprocess execution is not added to the parent coverlet coverage totals.
+Video tests use synthetic streams and generated images. They do not exercise
+live cameras, external MJPEG servers, or screen capture.
 
-## Tolerances and conventions
+## Numerical checks and reproducibility
 
-`NumericAssert` uses mixed absolute and relative bounds and rejects nonfinite
-results when a finite result is expected. Scalar defaults are `2e-6 + 2e-5*abs(x)`.
-Original special-function references use `2e-4 + 2e-4*abs(x)`. New special-function
-references use `1e-7 + 2e-5*abs(x)`, replacing the absolute term with `1e-44` for
-nonzero reference magnitudes below `1e-4` to test small tails. Distribution density/CDF
-references normally use `3e-4 + 3e-4*abs(x)`; integrated moments use `2e-3` for
-both terms. Individual tests tighten or relax these explicitly according to the
-operation, conditioning, approximation, or pixel quantization. Hankel matrix
-entries use `5e-4 + 5e-4*abs(x)`.
+Independent checks include direct DFT formulas, double-precision matrix
+products, all four Penrose equations, BigInteger arithmetic, exact index
+mappings, high-precision fixtures, scalar pixel formulas, guarded image buffers,
+and numerical integration of distribution densities. Checks that reuse the
+library's own CDF or PDF establish consistency rather than independent accuracy.
 
-The distribution repair references use `2*float.Epsilon + 2e-5*abs(x)`, with
-exact discrete medians and explicit NaN/infinity checks. This keeps small tails
-under a relative accuracy budget. Existing reference tolerances were retained.
+[NumericAssert.cs](NumericAssert.cs) uses a mixed absolute and relative bound.
+The scalar default is `2e-6 + 2e-5 * abs(expected)`; finite expectations reject
+nonfinite results. Tests override these tolerances according to the operation,
+conditioning, and quantization. Some matrix tests use relative residuals rather
+than scalar tolerances.
 
-These are audit acceptance budgets, not an existing library accuracy guarantee.
-Absolute tolerances near zero do not prove relative accuracy. Loosening a budget
-requires a documented mathematical reason, not merely a failing test.
+[SpecialFunctionRepairTests.cs](SpecialFunctionRepairTests.cs) and
+[DistributionRepairTests.cs](DistributionRepairTests.cs) tighten absolute
+bounds for small nonzero results so that returning zero cannot pass merely
+because of a large absolute tolerance. Undefined or infinite expected values
+have explicit checks. Test tolerances are acceptance criteria for those cases,
+not a general accuracy guarantee. Do not relax a tolerance just to hide a
+failure.
 
-The test sources record nonstandard but intentional conventions: Fresnel
-integrals use cos(t*t)/sin(t*t), Struve H/L are not Hankel functions, matrix
-convolution uses correlation orientation, complex 2D transforms conjugate the
-right-side matrix, and some wavelet prototypes do not promise perfect
-reconstruction. Geometric entropy uses bits in the existing API. Wrapped-Cauchy
-variance is circular variance. These differences are not silently called bugs.
+Branch choices, normalization, matrix orientation, and parameter conventions
+are recorded beside the relevant assertions and in the fixture generators.
+Use those sources when extending a test, especially for complex functions,
+wavelets, statistical distributions, and image interpolation.
 
-Complex LogGamma uses analytic continuation with a negative-real-axis cut; the
-previously excluded record now runs. Gerf uses the entire continuation of
-`n!/sqrt(pi) * integral(exp(-t^n), 0, x)`. Unsupported distribution getters and undefined mode
-sets are identified separately; a contract check returning successfully is not
-proof that an unimplemented numerical operation works.
+Random test inputs use fixed seeds where generated by the suite. Some
+production algorithms initialize randomly without exposing a seed; their tests
+use residual bounds. [TestCulture.cs](TestCulture.cs) sets invariant culture,
+and the `SIMD audit` collection in
+[MatrixFilterAuditTests.cs](MatrixFilterAuditTests.cs) disables parallel
+execution while changing the global SIMD setting.
 
-Complex sample statistics use squared magnitudes and Hermitian covariance.
-PowerNormal and PowerLognormal follow the NIST survival-power laws. Discrete
-median getters select the lower median; ChiSquare median uses CDF inversion.
-The related tests record compatibility details and numerical limits.
+[AuditProcess.cs](AuditProcess.cs) runs selected primality, factorization,
+Schur, and eigenvalue termination checks in the probe process with a
+five-second deadline and process-tree termination. Child-process execution is
+not included in the parent test host's coverage totals.
 
-Local mean parameters are window lengths. Windows are clipped and renormalized;
-even lengths have one extra sample on the left. Weighted matrix means retain
-separate horizontal and vertical passes. Bicubic resizing aligns sample centers
-using `(index+0.5)*sourceLength/destinationLength-0.5` and floors the anchor.
+## Reference data
 
-SVD pseudoinversion discards singular values at or below
-`max(rows, columns) * 2^-23 * max(S)`. Schur and GEVD apply a binary64 roundoff
-floor to the requested relative tolerance. Their work buffers use scaled double
-arithmetic; public outputs remain float. Iteration failure is explicit.
+The JSON files in [Data](Data) are embedded resources. Python and mpmath are
+not needed to run the C# tests.
 
-The wavelet, window, transform, and color repairs preserve existing public
-signatures. Biorthogonal convolution accumulates
-in double; bands remain float. Complex bilateral grids use magnitude guidance
-with shared weights for both components. Complex Under/Over thresholding is
-componentwise; Abs compares magnitude. Local-Laplacian processing preserves its
-base level, interpolates lookup tables, and remains unsupported for complex data.
-XYZ retains nonnegative relative tristimulus values above one.
-
-Depth equalization uses the inclusive empirical CDF without subtracting its
-first occupied value. Constant maps become 65535; equal-size depth placements
-copy samples exactly. Figure automatic constant axes use a five-percent margin
-with minimum half-width 0.5, clipped to finite float bounds. Manual ranges are
-unchanged. Three-plane tensor reconstruction sets alpha to 255.
-
-MJPEG searches preserve incomplete markers between reads. Raw octet streams
-retain the existing next-JPEG-header delimiter convention; EOF alone does not
-emit their final frame. HTTP media types and parameter names are case-insensitive,
-while boundary values preserve case.
-
-## Reference generation
-
-Python and mpmath are not required to run the C# tests: JSON fixtures are embedded.
-To regenerate them in a Python environment with mpmath 1.3.0:
+To regenerate fixtures, use Python with mpmath 1.3.0 and run the required script
+from the repository root:
 
 ```powershell
 python -m pip install mpmath==1.3.0
 python -X utf8 tests/UMapx.Tests/Data/generate_reference.py
-python -X utf8 tests/UMapx.Tests/Data/generate_extended_reference.py
-python -X utf8 tests/UMapx.Tests/Data/generate_special_repair_reference.py
-python -X utf8 tests/UMapx.Tests/Data/generate_arithmetic_reference.py
-python -X utf8 tests/UMapx.Tests/Data/generate_distributions.py
-python -X utf8 tests/UMapx.Tests/Data/generate_distribution_repair_reference.py
-python -X utf8 tests/UMapx.Tests/Data/generate_meyer_hankel_references.py
 ```
 
-The generators retain their explicit domains and exclusion rules. Original special-function
-fixtures omit poles, non-real answers for real APIs, nonfinite values and finite
-magnitudes above `1e35`. The repair generator permits magnitudes through `3e38`
-for single-precision results and `1e300` for its selected double-returning APIs.
-Distribution fixtures include selected divergent moments
-as explicit Infinity/NaN expectations. Arithmetic fixtures omit the three singular
-reciprocal-atan inputs (0, +i, -i) and the two reciprocal-hyperbolic zero poles;
-zero conventions and real poles have separate tests. See the [mpmath documentation](https://mpmath.org/doc/1.3.0/).
+| Generator in `tests/UMapx.Tests/Data` | Output files | Decimal precision |
+| --- | --- | --- |
+| [generate_reference.py](Data/generate_reference.py) | `special-functions.json` | 60 |
+| [generate_extended_reference.py](Data/generate_extended_reference.py) | `special-functions-extended.json`, `hankel.json` | 60 |
+| [generate_special_repair_reference.py](Data/generate_special_repair_reference.py) | `special-functions-repair.json` | 80 |
+| [generate_arithmetic_reference.py](Data/generate_arithmetic_reference.py) | `arithmetic-repair.json` | 100 |
+| [generate_distributions.py](Data/generate_distributions.py) | `distributions.json`, `distribution-catalog.json` | 40 |
+| [generate_distribution_repair_reference.py](Data/generate_distribution_repair_reference.py) | `distribution-repair.json` | 70 |
+| [generate_meyer_hankel_references.py](Data/generate_meyer_hankel_references.py) | `meyer-hankel.json` | 70 |
 
-The [Meyer and Hankel reference generator](Data/generate_meyer_hankel_references.py)
-requires mpmath 1.3.0 and evaluates at 70 decimal digits. Run it from the repository
-root with mpmath on Python's import path. It generates the committed
-`Data/meyer-hankel.json`: 38 Meyer values from independent spectral quadrature
-and 24 Hankel matrices from ordered positive Bessel zeros. Tests need no Python
-or network access. New Meyer bounds are `2e-7 + 2e-7*abs(x)`; new Hankel bounds
-are `3e-5 + 3e-5*abs(x)`. Direct local-Laplacian references use an absolute 3e-4
-lookup-interpolation budget for the tested widths. Earlier tolerances are unchanged.
+Generators specify their input rounding, parameter domains, exclusions, and
+handling of poles or divergent results. Preserve those conventions when
+regenerating data. Inspect fixture changes and run the affected tests before
+accepting regenerated values.
