@@ -113,10 +113,22 @@ namespace UMapx.Imaging
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
-            Apply(bmData, bmSrc);
-            BitmapFormat.Unlock(Data, bmData);
-            BitmapFormat.Unlock(Src, bmSrc);
+            try
+            {
+                BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
+                try
+                {
+                    Apply(bmData, bmSrc);
+                }
+                finally
+                {
+                    BitmapFormat.Unlock(Src, bmSrc);
+                }
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         #endregion
 

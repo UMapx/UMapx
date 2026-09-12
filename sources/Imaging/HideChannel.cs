@@ -68,8 +68,14 @@ namespace UMapx.Imaging
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            Apply(bmData);
-            BitmapFormat.Unlock(Data, bmData);
+            try
+            {
+                Apply(bmData);
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         #endregion
     }

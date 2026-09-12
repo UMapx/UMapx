@@ -103,11 +103,16 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data.</param>
         public void Apply(BitmapData bmData)
         {
-            Bitmap Src = BitmapFormat.ToBitmap(bmData);
+            using Bitmap Src = BitmapFormat.ToBitmap(bmData);
             BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
-            Apply(bmData, bmSrc);
-            BitmapFormat.Unlock(Src, bmSrc);
-            Src.Dispose();
+            try
+            {
+                Apply(bmData, bmSrc);
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Src, bmSrc);
+            }
         }
         /// <summary>
         /// Apply filter.
@@ -117,10 +122,22 @@ namespace UMapx.Imaging
         public void Apply(Bitmap Data, Bitmap Src)
         {
             var bmDst = BitmapFormat.Lock32bpp(Data);
-            var bmSrc = BitmapFormat.Lock32bpp(Src);
-            Apply(bmDst, bmSrc);
-            BitmapFormat.Unlock(Data, bmDst);
-            BitmapFormat.Unlock(Src, bmSrc);
+            try
+            {
+                var bmSrc = BitmapFormat.Lock32bpp(Src);
+                try
+                {
+                    Apply(bmDst, bmSrc);
+                }
+                finally
+                {
+                    BitmapFormat.Unlock(Src, bmSrc);
+                }
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmDst);
+            }
         }
         /// <summary>
         /// Apply filter.

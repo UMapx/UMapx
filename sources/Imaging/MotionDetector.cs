@@ -75,23 +75,40 @@ namespace UMapx.Imaging
 
                 // creating clone of current frame
                 var temp = (Bitmap)bitmap.Clone();
+                try
+                {
+                    // lock in memory
+                    float alarm;
+                    var bitmapData = BitmapFormat.Lock32bpp(bitmap);
+                    try
+                    {
+                        var frameData = BitmapFormat.Lock32bpp(Frame);
+                        try
+                        {
+                            // calculate alarm
+                            alarm = UseFilter ? ProcessFrameWithFilter(bitmapData, frameData) :
+                                ProcessFrameWithoutFilter(bitmapData, frameData);
+                        }
+                        finally
+                        {
+                            Frame.Unlock(frameData);
+                        }
+                    }
+                    finally
+                    {
+                        bitmap.Unlock(bitmapData);
+                    }
 
-                // lock in memory
-                var bitmapData = BitmapFormat.Lock32bpp(bitmap);
-                var frameData = BitmapFormat.Lock32bpp(Frame);
-
-                // calculate alarm
-                var alarm = UseFilter ? ProcessFrameWithFilter(bitmapData, frameData) :
-                    ProcessFrameWithoutFilter(bitmapData, frameData);
-
-                // unlock
-                bitmap.Unlock(bitmapData);
-                Frame.Unlock(frameData);
-
-                // update detector
-                Frame.Dispose();
-                Frame = temp;
-                return alarm;
+                    // update detector
+                    Frame.Dispose();
+                    Frame = temp;
+                    return alarm;
+                }
+                catch
+                {
+                    temp.Dispose();
+                    throw;
+                }
             }
         }
         /// <summary>
@@ -117,24 +134,33 @@ namespace UMapx.Imaging
                 }
 
                 // creating clone of current frame
-#pragma warning disable DF0010 // Marks undisposed local variables.
                 var temp = BitmapFormat.ToBitmap(bmData);
-#pragma warning restore DF0010 // Marks undisposed local variables.
+                try
+                {
+                    // lock in memory
+                    float alarm;
+                    var frameData = BitmapFormat.Lock32bpp(Frame);
+                    try
+                    {
+                        // calculate alarm
+                        alarm = UseFilter ? ProcessFrameWithFilter(bmData, frameData) :
+                            ProcessFrameWithoutFilter(bmData, frameData);
+                    }
+                    finally
+                    {
+                        Frame.Unlock(frameData);
+                    }
 
-                // lock in memory
-                var frameData = BitmapFormat.Lock32bpp(Frame);
-
-                // calculate alarm
-                var alarm = UseFilter ? ProcessFrameWithFilter(bmData, frameData) :
-                    ProcessFrameWithoutFilter(bmData, frameData);
-
-                // unlock
-                Frame.Unlock(frameData);
-
-                // update detector
-                Frame.Dispose();
-                Frame = temp;
-                return alarm;
+                    // update detector
+                    Frame.Dispose();
+                    Frame = temp;
+                    return alarm;
+                }
+                catch
+                {
+                    temp.Dispose();
+                    throw;
+                }
             }
         }
         #endregion

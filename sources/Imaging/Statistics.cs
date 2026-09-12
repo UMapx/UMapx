@@ -102,9 +102,15 @@ namespace UMapx.Imaging
         public static int[] Histogram(this Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            int[] rgb = Histogram(bmData);
-            BitmapFormat.Unlock(Data, bmData);
-            return rgb;
+            try
+            {
+                int[] rgb = Histogram(bmData);
+                return rgb;
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         /// <summary>
         /// Gets a histogram of the image.
@@ -115,9 +121,15 @@ namespace UMapx.Imaging
         public static int[] Histogram(this Bitmap Data, RGBA channel)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            int[] rgb = Histogram(bmData, channel);
-            BitmapFormat.Unlock(Data, bmData);
-            return rgb;
+            try
+            {
+                int[] rgb = Histogram(bmData, channel);
+                return rgb;
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         #endregion
 
@@ -211,9 +223,15 @@ namespace UMapx.Imaging
         public static int OtsuThreshold(this Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            int threshold = OtsuThreshold(bmData);
-            BitmapFormat.Unlock(Data, bmData);
-            return threshold;
+            try
+            {
+                int threshold = OtsuThreshold(bmData);
+                return threshold;
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         #endregion
 
@@ -278,9 +296,15 @@ namespace UMapx.Imaging
         public static int SISThreshold(this Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            int threshold = SISThreshold(bmData);
-            BitmapFormat.Unlock(Data, bmData);
-            return threshold;
+            try
+            {
+                int threshold = SISThreshold(bmData);
+                return threshold;
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         #endregion
 

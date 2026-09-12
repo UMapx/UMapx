@@ -134,10 +134,22 @@ namespace UMapx.Imaging
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
-            Apply(bmData, bmSrc);
-            BitmapFormat.Unlock(Data, bmData);
-            BitmapFormat.Unlock(Src, bmSrc);
+            try
+            {
+                BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
+                try
+                {
+                    Apply(bmData, bmSrc);
+                }
+                finally
+                {
+                    BitmapFormat.Unlock(Src, bmSrc);
+                }
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         /// <summary>
         /// Apply filter.
@@ -145,11 +157,16 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data.</param>
         public void Apply(BitmapData bmData)
         {
-            Bitmap src = BitmapFormat.ToBitmap(bmData);
+            using Bitmap src = BitmapFormat.ToBitmap(bmData);
             BitmapData bmSrc = BitmapFormat.Lock32bpp(src);
-            Apply(bmData, bmSrc);
-            BitmapFormat.Unlock(src, bmSrc);
-            src.Dispose();
+            try
+            {
+                Apply(bmData, bmSrc);
+            }
+            finally
+            {
+                BitmapFormat.Unlock(src, bmSrc);
+            }
         }
         /// <summary>
         /// Apply filter.
@@ -157,9 +174,8 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
-            var Src = (Bitmap)Data.Clone();
+            using var Src = (Bitmap)Data.Clone();
             Apply(Data, Src);
-            Src.Dispose();
         }
         #endregion
 

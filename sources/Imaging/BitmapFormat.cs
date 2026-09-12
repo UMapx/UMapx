@@ -120,32 +120,40 @@ namespace UMapx.Imaging
             var format = bmData.PixelFormat;
 
             var dst = new Bitmap(w, h, format);
-            var rect = new Rectangle(0, 0, w, h);
-            var dstData = dst.LockBits(rect, ImageLockMode.WriteOnly, format);
-
             try
             {
-                int bpp = Image.GetPixelFormatSize(format) / 8;
-                int rowBytes = checked(w * bpp);
+                var rect = new Rectangle(0, 0, w, h);
+                var dstData = dst.LockBits(rect, ImageLockMode.WriteOnly, format);
 
-                byte* sBase = (byte*)bmData.Scan0;
-                int sStride = bmData.Stride;
-
-                byte* dBase = (byte*)dstData.Scan0;
-                int dStride = dstData.Stride;
-
-                for (int y = 0; y < h; y++)
+                try
                 {
-                    byte* s = sBase + (sStride > 0 ? y * sStride : (h - 1 - y) * (-sStride));
-                    byte* d = dBase + y * dStride;
-                    Buffer.MemoryCopy(s, d, rowBytes, rowBytes);
-                }
+                    int bpp = Image.GetPixelFormatSize(format) / 8;
+                    int rowBytes = checked(w * bpp);
 
-                return dst;
+                    byte* sBase = (byte*)bmData.Scan0;
+                    int sStride = bmData.Stride;
+
+                    byte* dBase = (byte*)dstData.Scan0;
+                    int dStride = dstData.Stride;
+
+                    for (int y = 0; y < h; y++)
+                    {
+                        byte* s = sBase + (sStride > 0 ? y * sStride : (h - 1 - y) * (-sStride));
+                        byte* d = dBase + y * dStride;
+                        Buffer.MemoryCopy(s, d, rowBytes, rowBytes);
+                    }
+
+                    return dst;
+                }
+                finally
+                {
+                    dst.UnlockBits(dstData);
+                }
             }
-            finally
+            catch
             {
-                dst.UnlockBits(dstData);
+                dst.Dispose();
+                throw;
             }
         }
         /// <summary>

@@ -24,9 +24,15 @@ namespace UMapx.Imaging
             var height = bitmap.Height;
             var rectangle = new Rectangle(0, 0, width, height);
             var bmData = bitmap.LockBits(rectangle, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-            var output = ToDepth(bmData);
-            bitmap.Unlock(bmData);
-            return output;
+            try
+            {
+                var output = ToDepth(bmData);
+                return output;
+            }
+            finally
+            {
+                bitmap.Unlock(bmData);
+            }
         }
         /// <summary>
         /// Converts Bitmap data into ushort matrix.
@@ -69,22 +75,35 @@ namespace UMapx.Imaging
             var height = depth.GetLength(0);
             var rectangle = new Rectangle(0, 0, width, height);
             var bitmap = new Bitmap(width, height);
-            var bmData = bitmap.LockBits(rectangle, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-            var dst = (byte*)bmData.Scan0.ToPointer();
-            var stride = bmData.Stride;
-
-            for (int x = 0; x < width; x++)
+            try
             {
-                for (int y = 0; y < height; y++)
+                var bmData = bitmap.LockBits(rectangle, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+                try
                 {
-                    var k = x * 3 + y * stride;
-                    dst[k + 0] = dst[k + 1] = dst[k + 2] = Maths.Byte((float)depth[y, x] / byte.MaxValue);
-                    // ignore alpha channel
-                }
-            }
+                    var dst = (byte*)bmData.Scan0.ToPointer();
+                    var stride = bmData.Stride;
 
-            bitmap.Unlock(bmData);
-            return bitmap;
+                    for (int x = 0; x < width; x++)
+                    {
+                        for (int y = 0; y < height; y++)
+                        {
+                            var k = x * 3 + y * stride;
+                            dst[k + 0] = dst[k + 1] = dst[k + 2] = Maths.Byte((float)depth[y, x] / byte.MaxValue);
+                            // ignore alpha channel
+                        }
+                    }
+                }
+                finally
+                {
+                    bitmap.Unlock(bmData);
+                }
+                return bitmap;
+            }
+            catch
+            {
+                bitmap.Dispose();
+                throw;
+            }
         }
         /// <summary>
         /// Converts the depth to the matrix.

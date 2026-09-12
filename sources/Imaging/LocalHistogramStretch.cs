@@ -140,25 +140,33 @@ namespace UMapx.Imaging
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
                 throw new NotSupportedException("Only support Format32bppArgb pixelFormat");
 
-            Bitmap Max = BitmapFormat.ToBitmap(bmData);
-            Bitmap Min = (Bitmap)Max.Clone();
+            using Bitmap Max = BitmapFormat.ToBitmap(bmData);
+            using Bitmap Min = (Bitmap)Max.Clone();
 
             di.Apply(Max); er.Apply(Min);
 
             BitmapData bmMax = BitmapFormat.Lock32bpp(Max);
-            BitmapData bmMin = BitmapFormat.Lock32bpp(Min);
-
-            if (smoothing)
+            try
             {
-                gb.Apply(bmMax); gb.Apply(bmMin);
+                BitmapData bmMin = BitmapFormat.Lock32bpp(Min);
+                try
+                {
+                    if (smoothing)
+                    {
+                        gb.Apply(bmMax); gb.Apply(bmMin);
+                    }
+
+                    Apply(bmData, bmMax, bmMin);
+                }
+                finally
+                {
+                    BitmapFormat.Unlock(Min, bmMin);
+                }
             }
-
-            Apply(bmData, bmMax, bmMin);
-
-            BitmapFormat.Unlock(Max, bmMax);
-            BitmapFormat.Unlock(Min, bmMin);
-
-            Max.Dispose(); Min.Dispose();
+            finally
+            {
+                BitmapFormat.Unlock(Max, bmMax);
+            }
         }
         /// <summary>
         /// Apply filter.
@@ -166,27 +174,41 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
-            Bitmap Max = (Bitmap)Data.Clone();
-            Bitmap Min = (Bitmap)Data.Clone();
+            using Bitmap Max = (Bitmap)Data.Clone();
+            using Bitmap Min = (Bitmap)Data.Clone();
 
             di.Apply(Max); er.Apply(Min);
 
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            BitmapData bmMax = BitmapFormat.Lock32bpp(Max);
-            BitmapData bmMin = BitmapFormat.Lock32bpp(Min);
-
-            if (smoothing)
+            try
             {
-                gb.Apply(bmMax); gb.Apply(bmMin);
+                BitmapData bmMax = BitmapFormat.Lock32bpp(Max);
+                try
+                {
+                    BitmapData bmMin = BitmapFormat.Lock32bpp(Min);
+                    try
+                    {
+                        if (smoothing)
+                        {
+                            gb.Apply(bmMax); gb.Apply(bmMin);
+                        }
+
+                        Apply(bmData, bmMax, bmMin);
+                    }
+                    finally
+                    {
+                        BitmapFormat.Unlock(Min, bmMin);
+                    }
+                }
+                finally
+                {
+                    BitmapFormat.Unlock(Max, bmMax);
+                }
             }
-
-            Apply(bmData, bmMax, bmMin);
-
-            BitmapFormat.Unlock(Data, bmData);
-            BitmapFormat.Unlock(Max, bmMax);
-            BitmapFormat.Unlock(Min, bmMin);
-
-            Max.Dispose(); Min.Dispose();
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         #endregion
 

@@ -110,8 +110,14 @@ namespace UMapx.Imaging
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            Apply(bmData);
-            BitmapFormat.Unlock(Data, bmData);
+            try
+            {
+                Apply(bmData);
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         #endregion
 
@@ -153,9 +159,15 @@ namespace UMapx.Imaging
         public static bool IsGrayscale(Bitmap data)
         {
             var bmData = data.Lock32bpp();
-            var result = IsGrayscale(bmData);
-            data.Unlock(bmData);
-            return result;
+            try
+            {
+                var result = IsGrayscale(bmData);
+                return result;
+            }
+            finally
+            {
+                data.Unlock(bmData);
+            }
         }
         /// <summary>
         /// The image is grayscale or not.

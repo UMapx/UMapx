@@ -22,9 +22,15 @@ namespace UMapx.Imaging
         public static float[][,] ToRGB(this Bitmap Data, bool alpha = false)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            float[][,] rgb = BitmapMatrix.ToRGB(bmData, alpha);
-            BitmapFormat.Unlock(Data, bmData);
-            return rgb;
+            try
+            {
+                float[][,] rgb = BitmapMatrix.ToRGB(bmData, alpha);
+                return rgb;
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         /// <summary>
         /// Converts a Bitmap to an RGB structure with or without alpha-channel.
@@ -105,57 +111,69 @@ namespace UMapx.Imaging
             // params
             int width = x.GetLength(1), height = x.GetLength(0);
             Bitmap bitmap = new Bitmap(width, height);
-            BitmapData bmData = BitmapFormat.Lock32bpp(bitmap);
-            int stride = bmData.Stride;
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            // alpha
-            bool alpha = array.Length == 4;
-
-            if (alpha)
+            try
             {
-                float[,] a = array[3];
-
-                Parallel.For(0, height, j =>
+                BitmapData bmData = BitmapFormat.Lock32bpp(bitmap);
+                try
                 {
-                    int i, k, jstride = j * stride;
+                    int stride = bmData.Stride;
+                    byte* p = (byte*)bmData.Scan0.ToPointer();
 
-                    for (i = 0; i < width; i++)
+                    // alpha
+                    bool alpha = array.Length == 4;
+
+                    if (alpha)
                     {
-                        // shift:
-                        k = jstride + i * 4;
+                        float[,] a = array[3];
 
-                        // recording model:
-                        p[k + 0] = Maths.Byte(x[j, i] * 255.0f);
-                        p[k + 1] = Maths.Byte(y[j, i] * 255.0f);
-                        p[k + 2] = Maths.Byte(z[j, i] * 255.0f);
-                        p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                        Parallel.For(0, height, j =>
+                        {
+                            int i, k, jstride = j * stride;
+
+                            for (i = 0; i < width; i++)
+                            {
+                                // shift:
+                                k = jstride + i * 4;
+
+                                // recording model:
+                                p[k + 0] = Maths.Byte(x[j, i] * 255.0f);
+                                p[k + 1] = Maths.Byte(y[j, i] * 255.0f);
+                                p[k + 2] = Maths.Byte(z[j, i] * 255.0f);
+                                p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                            }
+                        });
                     }
-                });
+                    else
+                    {
+                        Parallel.For(0, height, j =>
+                        {
+                            int i, k, jstride = j * stride;
+
+                            for (i = 0; i < width; i++)
+                            {
+                                // shift:
+                                k = jstride + i * 4;
+
+                                // recording model:
+                                p[k + 0] = Maths.Byte(x[j, i] * 255.0f);
+                                p[k + 1] = Maths.Byte(y[j, i] * 255.0f);
+                                p[k + 2] = Maths.Byte(z[j, i] * 255.0f);
+                                p[k + 3] = 255;
+                            }
+                        });
+                    }
+                }
+                finally
+                {
+                    BitmapFormat.Unlock(bitmap, bmData);
+                }
+                return bitmap;
             }
-            else
+            catch
             {
-                Parallel.For(0, height, j =>
-                {
-                    int i, k, jstride = j * stride;
-
-                    for (i = 0; i < width; i++)
-                    {
-                        // shift:
-                        k = jstride + i * 4;
-
-                        // recording model:
-                        p[k + 0] = Maths.Byte(x[j, i] * 255.0f);
-                        p[k + 1] = Maths.Byte(y[j, i] * 255.0f);
-                        p[k + 2] = Maths.Byte(z[j, i] * 255.0f);
-                        p[k + 3] = 255;
-                    }
-                });
+                bitmap.Dispose();
+                throw;
             }
-
-
-            BitmapFormat.Unlock(bitmap, bmData);
-            return bitmap;
         }
         /// <summary>
         /// Converts an RGB structure to a color image.
@@ -229,8 +247,14 @@ namespace UMapx.Imaging
         public static void FromRGB(this float[][,] array, Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            FromRGB(array, bmData);
-            BitmapFormat.Unlock(Data, bmData);
+            try
+            {
+                FromRGB(array, bmData);
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         #endregion
 
@@ -244,9 +268,15 @@ namespace UMapx.Imaging
         public static float[][,] ToHSB(this Bitmap Data, bool alpha = false)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            float[][,] rgb = BitmapMatrix.ToHSB(bmData, alpha);
-            BitmapFormat.Unlock(Data, bmData);
-            return rgb;
+            try
+            {
+                float[][,] rgb = BitmapMatrix.ToHSB(bmData, alpha);
+                return rgb;
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         /// <summary>
         /// Converts a Bitmap to an HSB structure with or without alpha-channel.
@@ -331,64 +361,77 @@ namespace UMapx.Imaging
             // params
             int width = x.GetLength(1), height = x.GetLength(0);
             Bitmap bitmap = new Bitmap(width, height);
-            BitmapData bmData = BitmapFormat.Lock32bpp(bitmap);
-            int stride = bmData.Stride;
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            // alpha
-            bool alpha = array.Length == 4;
-
-            if (alpha)
+            try
             {
-                float[,] a = array[3];
-
-                Parallel.For(0, height, j =>
+                BitmapData bmData = BitmapFormat.Lock32bpp(bitmap);
+                try
                 {
-                    RGB rgb;
+                    int stride = bmData.Stride;
+                    byte* p = (byte*)bmData.Scan0.ToPointer();
 
-                    int i, k, jstride = j * stride;
+                    // alpha
+                    bool alpha = array.Length == 4;
 
-                    for (i = 0; i < width; i++)
+                    if (alpha)
                     {
-                        // shift:
-                        k = jstride + i * 4;
+                        float[,] a = array[3];
 
-                        rgb = new HSB(x[j, i], y[j, i], z[j, i]).ToRGB;
+                        Parallel.For(0, height, j =>
+                        {
+                            RGB rgb;
 
-                        // recording model:
-                        p[k + 0] = rgb.Blue;
-                        p[k + 1] = rgb.Green;
-                        p[k + 2] = rgb.Red;
-                        p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                            int i, k, jstride = j * stride;
+
+                            for (i = 0; i < width; i++)
+                            {
+                                // shift:
+                                k = jstride + i * 4;
+
+                                rgb = new HSB(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                                // recording model:
+                                p[k + 0] = rgb.Blue;
+                                p[k + 1] = rgb.Green;
+                                p[k + 2] = rgb.Red;
+                                p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                            }
+                        });
                     }
-                });
+                    else
+                    {
+                        Parallel.For(0, height, j =>
+                        {
+                            RGB rgb;
+
+                            int i, k, jstride = j * stride;
+
+                            for (i = 0; i < width; i++)
+                            {
+                                // shift:
+                                k = jstride + i * 4;
+
+                                rgb = new HSB(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                                // recording model:
+                                p[k + 0] = rgb.Blue;
+                                p[k + 1] = rgb.Green;
+                                p[k + 2] = rgb.Red;
+                                p[k + 3] = 255;
+                            }
+                        });
+                    }
+                }
+                finally
+                {
+                    BitmapFormat.Unlock(bitmap, bmData);
+                }
+                return bitmap;
             }
-            else
+            catch
             {
-                Parallel.For(0, height, j =>
-                {
-                    RGB rgb;
-
-                    int i, k, jstride = j * stride;
-
-                    for (i = 0; i < width; i++)
-                    {
-                        // shift:
-                        k = jstride + i * 4;
-
-                        rgb = new HSB(x[j, i], y[j, i], z[j, i]).ToRGB;
-
-                        // recording model:
-                        p[k + 0] = rgb.Blue;
-                        p[k + 1] = rgb.Green;
-                        p[k + 2] = rgb.Red;
-                        p[k + 3] = 255;
-                    }
-                });
+                bitmap.Dispose();
+                throw;
             }
-
-            BitmapFormat.Unlock(bitmap, bmData);
-            return bitmap;
         }
         /// <summary>
         /// Converts an HSB structure to a color image.
@@ -472,8 +515,14 @@ namespace UMapx.Imaging
         public static void FromHSB(this float[][,] array, Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            FromHSB(array, bmData);
-            BitmapFormat.Unlock(Data, bmData);
+            try
+            {
+                FromHSB(array, bmData);
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         #endregion
 
@@ -487,9 +536,15 @@ namespace UMapx.Imaging
         public static float[][,] ToHSL(this Bitmap Data, bool alpha = false)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            float[][,] rgb = BitmapMatrix.ToHSL(bmData, alpha);
-            BitmapFormat.Unlock(Data, bmData);
-            return rgb;
+            try
+            {
+                float[][,] rgb = BitmapMatrix.ToHSL(bmData, alpha);
+                return rgb;
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         /// <summary>
         /// Converts a Bitmap to an HSL structure with or without alpha-channel.
@@ -574,64 +629,77 @@ namespace UMapx.Imaging
             // params
             int width = x.GetLength(1), height = x.GetLength(0);
             Bitmap bitmap = new Bitmap(width, height);
-            BitmapData bmData = BitmapFormat.Lock32bpp(bitmap);
-            int stride = bmData.Stride;
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            // alpha
-            bool alpha = array.Length == 4;
-
-            if (alpha)
+            try
             {
-                float[,] a = array[3];
-
-                Parallel.For(0, height, j =>
+                BitmapData bmData = BitmapFormat.Lock32bpp(bitmap);
+                try
                 {
-                    RGB rgb;
+                    int stride = bmData.Stride;
+                    byte* p = (byte*)bmData.Scan0.ToPointer();
 
-                    int i, k, jstride = j * stride;
+                    // alpha
+                    bool alpha = array.Length == 4;
 
-                    for (i = 0; i < width; i++)
+                    if (alpha)
                     {
-                        // shift:
-                        k = jstride + i * 4;
+                        float[,] a = array[3];
 
-                        rgb = new HSL(x[j, i], y[j, i], z[j, i]).ToRGB;
+                        Parallel.For(0, height, j =>
+                        {
+                            RGB rgb;
 
-                        // recording model:
-                        p[k + 0] = rgb.Blue;
-                        p[k + 1] = rgb.Green;
-                        p[k + 2] = rgb.Red;
-                        p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                            int i, k, jstride = j * stride;
+
+                            for (i = 0; i < width; i++)
+                            {
+                                // shift:
+                                k = jstride + i * 4;
+
+                                rgb = new HSL(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                                // recording model:
+                                p[k + 0] = rgb.Blue;
+                                p[k + 1] = rgb.Green;
+                                p[k + 2] = rgb.Red;
+                                p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                            }
+                        });
                     }
-                });
+                    else
+                    {
+                        Parallel.For(0, height, j =>
+                        {
+                            RGB rgb;
+
+                            int i, k, jstride = j * stride;
+
+                            for (i = 0; i < width; i++)
+                            {
+                                // shift:
+                                k = jstride + i * 4;
+
+                                rgb = new HSL(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                                // recording model:
+                                p[k + 0] = rgb.Blue;
+                                p[k + 1] = rgb.Green;
+                                p[k + 2] = rgb.Red;
+                                p[k + 3] = 255;
+                            }
+                        });
+                    }
+                }
+                finally
+                {
+                    BitmapFormat.Unlock(bitmap, bmData);
+                }
+                return bitmap;
             }
-            else
+            catch
             {
-                Parallel.For(0, height, j =>
-                {
-                    RGB rgb;
-
-                    int i, k, jstride = j * stride;
-
-                    for (i = 0; i < width; i++)
-                    {
-                        // shift:
-                        k = jstride + i * 4;
-
-                        rgb = new HSL(x[j, i], y[j, i], z[j, i]).ToRGB;
-
-                        // recording model:
-                        p[k + 0] = rgb.Blue;
-                        p[k + 1] = rgb.Green;
-                        p[k + 2] = rgb.Red;
-                        p[k + 3] = 255;
-                    }
-                });
+                bitmap.Dispose();
+                throw;
             }
-
-            BitmapFormat.Unlock(bitmap, bmData);
-            return bitmap;
         }
         /// <summary>
         /// Converts an HSL structure to a color image.
@@ -713,8 +781,14 @@ namespace UMapx.Imaging
         public static void FromHSL(this float[][,] array, Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            FromHSL(array, bmData);
-            BitmapFormat.Unlock(Data, bmData);
+            try
+            {
+                FromHSL(array, bmData);
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         #endregion
 
@@ -728,9 +802,15 @@ namespace UMapx.Imaging
         public static float[][,] ToYCbCr(this Bitmap Data, bool alpha = false)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            float[][,] rgb = BitmapMatrix.ToYCbCr(bmData, alpha);
-            BitmapFormat.Unlock(Data, bmData);
-            return rgb;
+            try
+            {
+                float[][,] rgb = BitmapMatrix.ToYCbCr(bmData, alpha);
+                return rgb;
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         /// <summary>
         /// Converts a Bitmap to an YCbCr structure with or without alpha-channel.
@@ -815,64 +895,77 @@ namespace UMapx.Imaging
             // params
             int width = x.GetLength(1), height = x.GetLength(0);
             Bitmap bitmap = new Bitmap(width, height);
-            BitmapData bmData = BitmapFormat.Lock32bpp(bitmap);
-            int stride = bmData.Stride;
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            // alpha
-            bool alpha = array.Length == 4;
-
-            if (alpha)
+            try
             {
-                float[,] a = array[3];
-
-                Parallel.For(0, height, j =>
+                BitmapData bmData = BitmapFormat.Lock32bpp(bitmap);
+                try
                 {
-                    RGB rgb;
+                    int stride = bmData.Stride;
+                    byte* p = (byte*)bmData.Scan0.ToPointer();
 
-                    int i, k, jstride = j * stride;
+                    // alpha
+                    bool alpha = array.Length == 4;
 
-                    for (i = 0; i < width; i++)
+                    if (alpha)
                     {
-                        // shift:
-                        k = jstride + i * 4;
+                        float[,] a = array[3];
 
-                        rgb = new YCbCr(x[j, i], y[j, i], z[j, i]).ToRGB;
+                        Parallel.For(0, height, j =>
+                        {
+                            RGB rgb;
 
-                        // recording model:
-                        p[k + 0] = rgb.Blue;
-                        p[k + 1] = rgb.Green;
-                        p[k + 2] = rgb.Red;
-                        p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                            int i, k, jstride = j * stride;
+
+                            for (i = 0; i < width; i++)
+                            {
+                                // shift:
+                                k = jstride + i * 4;
+
+                                rgb = new YCbCr(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                                // recording model:
+                                p[k + 0] = rgb.Blue;
+                                p[k + 1] = rgb.Green;
+                                p[k + 2] = rgb.Red;
+                                p[k + 3] = Maths.Byte(a[j, i] * 255.0f);
+                            }
+                        });
                     }
-                });
+                    else
+                    {
+                        Parallel.For(0, height, j =>
+                        {
+                            RGB rgb;
+
+                            int i, k, jstride = j * stride;
+
+                            for (i = 0; i < width; i++)
+                            {
+                                // shift:
+                                k = jstride + i * 4;
+
+                                rgb = new YCbCr(x[j, i], y[j, i], z[j, i]).ToRGB;
+
+                                // recording model:
+                                p[k + 0] = rgb.Blue;
+                                p[k + 1] = rgb.Green;
+                                p[k + 2] = rgb.Red;
+                                p[k + 3] = 255;
+                            }
+                        });
+                    }
+                }
+                finally
+                {
+                    BitmapFormat.Unlock(bitmap, bmData);
+                }
+                return bitmap;
             }
-            else
+            catch
             {
-                Parallel.For(0, height, j =>
-                {
-                    RGB rgb;
-
-                    int i, k, jstride = j * stride;
-
-                    for (i = 0; i < width; i++)
-                    {
-                        // shift:
-                        k = jstride + i * 4;
-
-                        rgb = new YCbCr(x[j, i], y[j, i], z[j, i]).ToRGB;
-
-                        // recording model:
-                        p[k + 0] = rgb.Blue;
-                        p[k + 1] = rgb.Green;
-                        p[k + 2] = rgb.Red;
-                        p[k + 3] = 255;
-                    }
-                });
+                bitmap.Dispose();
+                throw;
             }
-
-            BitmapFormat.Unlock(bitmap, bmData);
-            return bitmap;
         }
         /// <summary>
         /// Converts an YCbCr structure to a color image.
@@ -954,8 +1047,14 @@ namespace UMapx.Imaging
         public static void FromYCbCr(this float[][,] array, Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            FromYCbCr(array, bmData);
-            BitmapFormat.Unlock(Data, bmData);
+            try
+            {
+                FromYCbCr(array, bmData);
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         #endregion
 
@@ -968,9 +1067,15 @@ namespace UMapx.Imaging
         public static float[,] ToGrayscale(this Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            float[,] rgb = ToGrayscale(bmData);
-            BitmapFormat.Unlock(Data, bmData);
-            return rgb;
+            try
+            {
+                float[,] rgb = ToGrayscale(bmData);
+                return rgb;
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         /// <summary>
         /// Converts Bitmap to averaged channel value matrix.
@@ -1008,24 +1113,37 @@ namespace UMapx.Imaging
         {
             int width = m.GetLength(1), height = m.GetLength(0);
             Bitmap bitmap = new Bitmap(width, height);
-            BitmapData bmData = BitmapFormat.Lock32bpp(bitmap);
-            int stride = bmData.Stride;
-            byte* p = (byte*)bmData.Scan0.ToPointer();
-
-            Parallel.For(0, height, j =>
+            try
             {
-                int i, k, jstride = j * stride;
-
-                for (i = 0; i < width; i++)
+                BitmapData bmData = BitmapFormat.Lock32bpp(bitmap);
+                try
                 {
-                    k = jstride + i * 4;
-                    p[k + 2] = p[k + 1] = p[k] = Maths.Byte(m[j, i] * 255.0f);
-                    p[k + 3] = 255;
-                }
-            });
+                    int stride = bmData.Stride;
+                    byte* p = (byte*)bmData.Scan0.ToPointer();
 
-            BitmapFormat.Unlock(bitmap, bmData);
-            return bitmap;
+                    Parallel.For(0, height, j =>
+                    {
+                        int i, k, jstride = j * stride;
+
+                        for (i = 0; i < width; i++)
+                        {
+                            k = jstride + i * 4;
+                            p[k + 2] = p[k + 1] = p[k] = Maths.Byte(m[j, i] * 255.0f);
+                            p[k + 3] = 255;
+                        }
+                    });
+                }
+                finally
+                {
+                    BitmapFormat.Unlock(bitmap, bmData);
+                }
+                return bitmap;
+            }
+            catch
+            {
+                bitmap.Dispose();
+                throw;
+            }
         }
         /// <summary>
         /// Converts a matrix of channel values to a monochrome Bitmap.
@@ -1061,8 +1179,14 @@ namespace UMapx.Imaging
         public static void FromGrayscale(this float[,] m, Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            FromGrayscale(m, bmData);
-            BitmapFormat.Unlock(Data, bmData);
+            try
+            {
+                FromGrayscale(m, bmData);
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         #endregion
     }

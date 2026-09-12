@@ -152,10 +152,22 @@ namespace UMapx.Imaging
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
-            BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
-            Apply(bmData, bmSrc);
-            BitmapFormat.Unlock(Data, bmData);
-            BitmapFormat.Unlock(Src, bmSrc);
+            try
+            {
+                BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
+                try
+                {
+                    Apply(bmData, bmSrc);
+                }
+                finally
+                {
+                    BitmapFormat.Unlock(Src, bmSrc);
+                }
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Data, bmData);
+            }
         }
         /// <summary>
         /// Apply filter.
@@ -163,11 +175,16 @@ namespace UMapx.Imaging
         /// <param name="bmData">Bitmap data.</param>
         public void Apply(BitmapData bmData)
         {
-            Bitmap Src = BitmapFormat.ToBitmap(bmData);
+            using Bitmap Src = BitmapFormat.ToBitmap(bmData);
             BitmapData bmSrc = BitmapFormat.Lock32bpp(Src);
-            Apply(bmData, bmSrc);
-            BitmapFormat.Unlock(Src, bmSrc);
-            Src.Dispose();
+            try
+            {
+                Apply(bmData, bmSrc);
+            }
+            finally
+            {
+                BitmapFormat.Unlock(Src, bmSrc);
+            }
         }
         /// <summary>
         /// Apply filter.
@@ -175,9 +192,8 @@ namespace UMapx.Imaging
         /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
-            var Src = (Bitmap)Data.Clone();
+            using var Src = (Bitmap)Data.Clone();
             Apply(Data, Src);
-            Src.Dispose();
         }
         #endregion
 
@@ -253,14 +269,14 @@ namespace UMapx.Imaging
             int width = blurred.GetLength(1);
             int height = blurred.GetLength(0);
 
-            int[,] sobelX = new int[,] 
+            int[,] sobelX = new int[,]
             {
                 { -1, 0, 1 },
                 { -2, 0, 2 },
                 { -1, 0, 1 }
             };
 
-            int[,] sobelY = new int[,] 
+            int[,] sobelY = new int[,]
             {
                 { -1, -2, -1 },
                 {  0,  0,  0 },
