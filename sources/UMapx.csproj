@@ -14,13 +14,14 @@
     <Description>Cross-platform .NET library for digital signal processing. Fast and optimized.</Description>
     <PackageProjectUrl>https://github.com/asiryan/UMapx</PackageProjectUrl>
     <RepositoryUrl>https://github.com/asiryan/UMapx</RepositoryUrl>
-    <RepositoryType>Open-source</RepositoryType>
+    <RepositoryType>git</RepositoryType>
     <PackageTags>image video signal processing analytics streaming wavelet fourier analysis matrix decomposition transformation complex algebra</PackageTags>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageIcon>umapxnet.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>umapxnet.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
@@ -47,6 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="README.md" Pack="true" PackagePath="" />
     <None Include="LICENSE.md">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

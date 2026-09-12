@@ -64,7 +64,7 @@ namespace UMapx.Decomposition
             if (s1.Length != s2.Length) throw new ArgumentException("Diagonal lengths must agree.");
         }
 
-        /// <summary>Combines stacked QR with an SVD of the upper orthonormal block</summary>
+        /// <summary>Combines independently scaled stacked QR with an SVD of the upper orthonormal block</summary>
         /// <param name="a">Private tall first matrix.</param>
         /// <param name="b">Private tall second matrix with the same column count.</param>
         /// <param name="iterations">Jacobi sweep limit.</param>
@@ -74,11 +74,16 @@ namespace UMapx.Decomposition
             int m = a.GetLength(0), p = b.GetLength(0), n = a.GetLength(1);
             if (b.GetLength(1) != n || m < n || p < n)
                 throw new ArgumentException("Both matrices must have the same column count and at least that many rows.");
+            // Equalize the input units before QR. Otherwise the smaller block can be lost
+            // when the larger block's singular values round to one, leaving its basis unresolved.
+            double scaleA = MatrixMath.Max(a), scaleB = MatrixMath.Max(b);
+            if (scaleA == 0) scaleA = 1;
+            if (scaleB == 0) scaleB = 1;
             var stacked = new C[m + p, n];
             for (int j = 0; j < n; j++)
             {
-                for (int i = 0; i < m; i++) stacked[i, j] = a[i, j];
-                for (int i = 0; i < p; i++) stacked[m + i, j] = b[i, j];
+                for (int i = 0; i < m; i++) stacked[i, j] = a[i, j] / scaleA;
+                for (int i = 0; i < p; i++) stacked[m + i, j] = b[i, j] / scaleB;
             }
             var qr = QR.Factor(stacked, full: false);
             var r = MatrixMath.Block(qr.R, n, n);
@@ -105,7 +110,10 @@ namespace UMapx.Decomposition
                     for (int i = 0; i < p; i++) { u2[i, j] = column[i] / sine; basis[i, count] = u2[i, j]; }
                     count++;
                 }
-                double cosine = svd.S[j];
+                // Restore each input scale through the diagonal factors and shared X.
+                // This preserves S1^2 + S2^2 = 1 without changing either orthonormal basis.
+                sine *= scaleB;
+                double cosine = svd.S[j] * scaleA;
                 double normalization = Math.Sqrt(cosine * cosine + sine * sine);
                 s1[j] = (float)(cosine / normalization);
                 s2[j] = (float)(sine / normalization);

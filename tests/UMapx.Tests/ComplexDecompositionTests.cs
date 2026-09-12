@@ -8,6 +8,89 @@ namespace UMapx.Tests;
 [Trait("Category", "Decomposition")]
 public class ComplexDecompositionTests
 {
+    [Theory]
+    [InlineData(1e-4f)] [InlineData(1e-10f)] [InlineData(1e-20f)]
+    [InlineData(1e-30f)] [InlineData(1e10f)] [InlineData(1e20f)] [InlineData(1e30f)]
+    public void GsvdPreservesSmallInputsAndBothOrthonormalBases(float scale)
+    {
+        foreach (bool complex in new[] { false, true })
+        foreach (bool swap in new[] { false, true })
+        {
+            var a = new Complex32[,] { { 1, 0 }, { 0, 1 } };
+            var b = new Complex32[,] { { scale, new(scale, complex ? scale : 0) }, { 0, 2 * scale } };
+            if (swap) (a, b) = (b, a);
+            var d = GSVD.Decompose(a, b, 100);
+            Relative(Work(a), Product(Product(Work(d.U1), Diagonal(d.S1)), Work(d.X)));
+            Relative(Work(b), Product(Product(Work(d.U2), Diagonal(d.S2)), Work(d.X)));
+            Orthonormal(d.U1); Orthonormal(d.U2);
+            Assert.All(d.S2, x => Assert.True(x > 0));
+            if (!complex)
+            {
+                var ra = new float[,] { { 1, 0 }, { 0, 1 } };
+                var rb = new float[,] { { scale, scale }, { 0, 2 * scale } };
+                if (swap) (ra, rb) = (rb, ra);
+                var real = GSVD.Decompose(ra, rb, 100);
+                for (int j = 0; j < 2; j++) NumericAssert.Close(d.S2[j], real.S2[j], 0, 2e-6);
+            }
+        }
+    }
+
+    [Theory]
+    [InlineData("Rotation,1e30,1e-16")]
+    [InlineData("Rotation,1e-30,1e-16")]
+    [InlineData("Symmetric,1e30,1e-16")]
+    [InlineData("Symmetric,1e-30,1e-16")]
+    [InlineData("Triangular,1,0")]
+    public async Task RealEigenvaluesPreserveScaleAndTerminateAtZeroTolerance(string argument)
+    {
+        Assert.Equal("True", await AuditProcess.RunAsync("EigenScale", argument));
+    }
+
+    [Theory]
+    [InlineData(1e-8f)] [InlineData(1e-30f)]
+    public void ComplexEigenvaluesRetainSmallImaginaryComponents(float imaginary)
+    {
+        var a = new Complex32[,] { { 1, 0 }, { 0, new(0, imaginary) } };
+        var d = EVD.Decompose(a);
+        Assert.Contains(d.D, z => z.Real == 0 && z.Imag == imaginary);
+        a[1, 1] = new(1, imaginary);
+        d = EVD.Decompose(a);
+        Assert.Contains(d.D, z => z.Real == 1 && z.Imag == imaginary);
+    }
+
+    public static IEnumerable<object[]> RealEigenCases()
+    {
+        foreach (int n in new[] { 1, 2, 5, 12, 24 })
+        foreach (bool symmetric in new[] { false, true })
+        foreach (float scale in new[] { 1e-30f, 1f, 1e30f })
+        foreach (float eps in new[] { 0f, 1e-16f, 1e-7f })
+            yield return new object[] { n, symmetric, scale, eps };
+    }
+
+    [Theory, MemberData(nameof(RealEigenCases))]
+    public void RealEigenvectorsSatisfyScaledEquations(int n, bool symmetric, float scale, float eps)
+    {
+        var a = NumericAssert.Matrix(n, n);
+        if (symmetric)
+            for (int i = 0; i < n; i++) for (int j = 0; j < i; j++) a[i, j] = a[j, i];
+        for (int i = 0; i < n; i++) for (int j = 0; j < n; j++) a[i, j] *= scale;
+        var original = (float[,])a.Clone();
+        var d = EVD.Decompose(a, eps);
+        var v = Work(d.V);
+        var blocks = new Complex[n, n];
+        for (int j = 0; j < n; j++)
+        {
+            blocks[j, j] = d.D[j].Real;
+            if (d.D[j].Imag > 0) blocks[j, j + 1] = d.D[j].Imag;
+            if (d.D[j].Imag < 0) blocks[j, j - 1] = d.D[j].Imag;
+            Assert.True(Enumerable.Range(0, n).Sum(i => v[i, j].Magnitude) > 0);
+        }
+        Relative(Product(Work(a), v), Product(v, blocks), 2e-5);
+        if (symmetric)
+            Relative(Diagonal(Enumerable.Repeat(1f, n).ToArray()), Product(Adjoint(v), v));
+        Assert.Equal(original.Cast<float>(), a.Cast<float>());
+    }
+
     public static IEnumerable<object[]> RectangularCases()
     {
         foreach (string algorithm in new[] { "QR", "LQ", "QL", "RQ", "SVD", "Bidiagonal", "Polar", "GramSchmidt" })
@@ -383,6 +466,13 @@ public class ComplexDecompositionTests
                 a[i, j] = new Complex32((float)(z.Real * scale), (float)(z.Imaginary * scale));
             }
         return a;
+    }
+
+    private static Complex[,] Work(float[,] a)
+    {
+        var b = new Complex[a.GetLength(0), a.GetLength(1)];
+        for (int i = 0; i < b.GetLength(0); i++) for (int j = 0; j < b.GetLength(1); j++) b[i, j] = a[i, j];
+        return b;
     }
 
     private static Complex[,] Work(Complex32[,] a)

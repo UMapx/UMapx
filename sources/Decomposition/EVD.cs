@@ -23,6 +23,7 @@ namespace UMapx.Decomposition
         /// <param name="matrix">Finite nonempty input matrix.</param>
         /// <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
         /// <returns>The primary factors (V, D).</returns>
+        /// <exception cref="InvalidOperationException">The QR or QL iteration limit is reached before convergence.</exception>
         public static (float[,] V, Complex32[] D) Decompose(float[,] matrix, float eps = 1e-16f)
         {
             MatrixMath.Copy(matrix, true);
@@ -39,7 +40,9 @@ namespace UMapx.Decomposition
         {
             if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
             var a = MatrixMath.Copy(matrix, true);
-            bool hermitian = MatrixMath.IsHermitian(a);
+            // Automatic dispatch must not erase a small imaginary eigenvalue by treating
+            // a nearly Hermitian matrix as exactly Hermitian.
+            bool hermitian = MatrixMath.IsHermitian(a, 0);
             var schur = Schur.Factor(a, eps);
             int n = a.GetLength(0);
             var alpha = new C[n];
@@ -151,13 +154,46 @@ namespace UMapx.Decomposition
         /// <summary>Owns the real algorithm work buffers for one call only</summary>
         private sealed class RealWorkspace
         {
+            /// <summary>Allocates square double-precision storage for the real eigensolver.</summary>
+            /// <param name="size">Positive matrix order.</param>
+            /// <returns>A zero-initialized square jagged matrix.</returns>
+            private static double[][] CreateMatrix(int size)
+            {
+                var result = new double[size][];
+                for (int i = 0; i < size; i++) result[i] = new double[size];
+                return result;
+            }
+
+            /// <summary>Promotes finite single-precision inputs before products in the QR and QL iterations.</summary>
+            /// <param name="matrix">Validated square matrix, which is not modified.</param>
+            /// <returns>An independent double-precision copy, preserving small isolated entries.</returns>
+            private static double[][] CopyMatrix(float[,] matrix)
+            {
+                var result = CreateMatrix(matrix.GetLength(0));
+                for (int i = 0; i < result.Length; i++)
+                    for (int j = 0; j < result.Length; j++) result[i][j] = matrix[i, j];
+                return result;
+            }
+
+            /// <summary>Computes a Euclidean norm while avoiding unscaled squares in QL rotations.</summary>
+            /// <param name="a">First finite component.</param>
+            /// <param name="b">Second finite component.</param>
+            /// <returns>The nonnegative square root of a squared plus b squared.</returns>
+            private static double Hypotenuse(double a, double b)
+            {
+                double largest = Math.Max(Math.Abs(a), Math.Abs(b));
+                if (largest == 0) return 0;
+                double ratio = Math.Min(Math.Abs(a), Math.Abs(b)) / largest;
+                return largest * Math.Sqrt(1 + ratio * ratio);
+            }
+
             #region Private data
             private int n;
-            private float[] Re, Im;
-            private float[][] matrices;
-            private float[][] hessenberg;
-            private float[] orthogonal;
-            private float eps;
+            private double[] Re, Im;
+            private double[][] matrices;
+            private double[][] hessenberg;
+            private double[] orthogonal;
+            private double eps;
             #endregion
 
             #region Initialize
@@ -166,22 +202,22 @@ namespace UMapx.Decomposition
             /// </summary>
             /// <param name="A">Square matrix</param>
             /// <param name="eps">Epsilon [0, 1]</param>
-            public RealWorkspace(float[,] A, float eps = 1e-16f)
+            public RealWorkspace(float[,] A, double eps = 1e-16f)
             {
                 if (!Matrice.IsSquare(A))
                     throw new ArgumentException("The matrix must be square");
 
                 this.n = A.GetLength(0);
-                this.Re = new float[n];
-                this.Im = new float[n];
-                this.eps = Maths.Float(eps);
+                this.Re = new double[n];
+                this.Im = new double[n];
+                this.eps = Math.Max(8 * MatrixMath.Roundoff, Math.Min(1, Math.Max(0, eps)));
 
                 // for symmetric matrices eigen-value decomposition
                 // without Hessenberg form.
                 if (Matrice.IsSymmetric(A))
                 {
-                    hessenberg = Jagged.Zero(n, n);
-                    matrices = Jagged.ToJagged(A);
+                    hessenberg = CreateMatrix(n);
+                    matrices = CopyMatrix(A);
 
                     tred2(); // Tridiagonalize.
                     tql2();  // Diagonalize.
@@ -189,9 +225,9 @@ namespace UMapx.Decomposition
                 // with Hessenberg form.
                 else
                 {
-                    matrices = Jagged.Zero(n, n);
-                    hessenberg = Jagged.ToJagged(A);
-                    orthogonal = new float[n];
+                    matrices = CreateMatrix(n);
+                    hessenberg = CopyMatrix(A);
+                    orthogonal = new double[n];
 
                     orthes(); // Reduce to Hessenberg form.
                     hqr2();   // Reduce Hessenberg to real Schur form.
@@ -205,7 +241,13 @@ namespace UMapx.Decomposition
             /// </summary>
             public float[,] V
             {
-                get { return Jagged.FromJagged(matrices); }
+                get
+                {
+                    var result = new float[n, n];
+                    for (int i = 0; i < n; i++)
+                        for (int j = 0; j < n; j++) result[i, j] = (float)matrices[i][j];
+                    return result;
+                }
             }
             /// <summary>
             /// Gets eigenvalues.
@@ -218,7 +260,7 @@ namespace UMapx.Decomposition
 
                     for (int i = 0; i < n; i++)
                     {
-                        D[i] = new Complex32(Re[i], Im[i]);
+                        D[i] = new Complex32((float)Re[i], (float)Im[i]);
                     }
 
                     return D;
@@ -243,7 +285,7 @@ namespace UMapx.Decomposition
                     Re[j] = matrices[n - 1][j];
                 }
 
-                float scale, h, f, g, hh;
+                double scale, h, f, g, hh;
 
                 // Householder reduction to tridiagonal form.
                 for (i = n - 1; i > 0; i--)
@@ -274,7 +316,7 @@ namespace UMapx.Decomposition
                         }
 
                         f = Re[i - 1];
-                        g = (float)System.Math.Sqrt(h);
+                        g = System.Math.Sqrt(h);
                         if (f > 0) g = -g;
 
                         Im[i] = scale * g;
@@ -363,11 +405,11 @@ namespace UMapx.Decomposition
             /// </summary>
             private void tql2()
             {
-                float f = 0;
-                float tst1 = 0;
+                double f = 0;
+                double tst1 = 0;
                 int i, l, j, k, iter, m;
-                float g, p, r, dl1, h;
-                float c, c2, c3, el1, s, s2;
+                double g, p, r, dl1, h;
+                double c, c2, c3, el1, s, s2;
 
                 for (i = 1; i < n; i++)
                     Im[i - 1] = Im[i];
@@ -392,12 +434,12 @@ namespace UMapx.Decomposition
                         iter = 0;
                         do
                         {
-                            iter = iter + 1;  // (Could check iteration count here.)
+                            if (++iter > 1000) throw new InvalidOperationException("Real symmetric EVD failed to converge.");
 
                             // Compute implicit shift
                             g = Re[l];
                             p = (Re[l + 1] - g) / (2 * Im[l]);
-                            r = Maths.Hypotenuse(p, 1);
+                            r = Hypotenuse(p, 1);
                             if (p < 0)
                             {
                                 r = -r;
@@ -430,7 +472,7 @@ namespace UMapx.Decomposition
                                 s2 = s;
                                 g = c * Im[i];
                                 h = c * p;
-                                r = Maths.Hypotenuse(p, Im[i]);
+                                r = Hypotenuse(p, Im[i]);
                                 Im[i + 1] = s * r;
                                 s = Im[i] / r;
                                 c = p / r;
@@ -495,7 +537,7 @@ namespace UMapx.Decomposition
                 int low = 0;
                 int high = n - 1;
                 int m, i, j;
-                float scale, h, g, f;
+                double scale, h, g, f;
 
                 for (m = low + 1; m <= high - 1; m++)
                 {
@@ -515,7 +557,7 @@ namespace UMapx.Decomposition
                             h += orthogonal[i] * orthogonal[i];
                         }
 
-                        g = (float)System.Math.Sqrt(h);
+                        g = System.Math.Sqrt(h);
                         if (orthogonal[m] > 0) g = -g;
 
                         h = h - orthogonal[m] * g;
@@ -568,7 +610,7 @@ namespace UMapx.Decomposition
                             for (i = m; i <= high; i++)
                                 g += orthogonal[i] * matrices[i][j];
 
-                            // float division avoids possible underflow.
+                            // Divide in two stages to avoid underflow in the denominator product.
                             g = (g / orthogonal[m]) / hessenberg[m][m - 1];
                             for (i = m; i <= high; i++)
                                 matrices[i][j] += g * orthogonal[i];
@@ -587,22 +629,21 @@ namespace UMapx.Decomposition
                 int n = nn - 1;
                 int low = 0;
                 int high = nn - 1;
-                //float eps = 2 * float.Epsilon;
-                float exshift = 0;
-                float p = 0;
-                float q = 0;
-                float r = 0;
-                float s = 0;
-                float z = 0;
-                float t;
-                float w;
-                float x;
-                float y;
+                double exshift = 0;
+                double p = 0;
+                double q = 0;
+                double r = 0;
+                double s = 0;
+                double z = 0;
+                double t;
+                double w;
+                double x;
+                double y;
                 int i, j, k, m;
                 bool notlast;
 
                 // Store roots isolated by balanc and compute matrix norm
-                float norm = 0;
+                double norm = 0;
                 for (i = 0; i < nn; i++)
                 {
                     if (i < low | i > high)
@@ -628,10 +669,10 @@ namespace UMapx.Decomposition
                         if (s == 0)
                             s = norm;
 
-                        if (float.IsNaN(s))
+                        if (double.IsNaN(s))
                             break;
 
-                        if (System.Math.Abs(hessenberg[l][l - 1]) < eps * s)
+                        if (System.Math.Abs(hessenberg[l][l - 1]) <= eps * s)
                             break;
 
                         l--;
@@ -653,7 +694,7 @@ namespace UMapx.Decomposition
                         w = hessenberg[n][n - 1] * hessenberg[n - 1][n];
                         p = (hessenberg[n - 1][n - 1] - hessenberg[n][n]) / 2;
                         q = p * p + w;
-                        z = (float)System.Math.Sqrt(System.Math.Abs(q));
+                        z = System.Math.Sqrt(System.Math.Abs(q));
                         hessenberg[n][n] = hessenberg[n][n] + exshift;
                         hessenberg[n - 1][n - 1] = hessenberg[n - 1][n - 1] + exshift;
                         x = hessenberg[n][n];
@@ -672,7 +713,7 @@ namespace UMapx.Decomposition
                             s = System.Math.Abs(x) + System.Math.Abs(z);
                             p = x / s;
                             q = z / s;
-                            r = (float)System.Math.Sqrt(p * p + q * q);
+                            r = System.Math.Sqrt(p * p + q * q);
                             p = p / r;
                             q = q / r;
 
@@ -734,8 +775,8 @@ namespace UMapx.Decomposition
                                 hessenberg[i][i] -= x;
 
                             s = System.Math.Abs(hessenberg[n][n - 1]) + System.Math.Abs(hessenberg[n - 1][n - 2]);
-                            x = y = (float)0.75 * s;
-                            w = (float)(-0.4375) * s * s;
+                            x = y = 0.75 * s;
+                            w = (-0.4375) * s * s;
                         }
 
                         // MATLAB's new ad hoc shift
@@ -745,17 +786,17 @@ namespace UMapx.Decomposition
                             s = s * s + w;
                             if (s > 0)
                             {
-                                s = (float)System.Math.Sqrt(s);
+                                s = System.Math.Sqrt(s);
                                 if (y < x) s = -s;
                                 s = x - w / ((y - x) / 2 + s);
                                 for (i = low; i <= n; i++)
                                     hessenberg[i][i] -= s;
                                 exshift += s;
-                                x = y = w = (float)0.964;
+                                x = y = w = 0.964;
                             }
                         }
 
-                        iter = iter + 1;
+                        if (++iter > 1000) throw new InvalidOperationException("Real nonsymmetric EVD failed to converge.");
 
                         // Look for two consecutive small sub-diagonal elements
                         m = n - 2;
@@ -785,7 +826,7 @@ namespace UMapx.Decomposition
                                 hessenberg[i][i - 3] = 0;
                         }
 
-                        // float QR step involving rows l:n and columns m:n
+                        // Double QR step involving rows l:n and columns m:n.
                         for (k = m; k <= n - 1; k++)
                         {
                             notlast = (k != n - 1);
@@ -805,7 +846,7 @@ namespace UMapx.Decomposition
 
                             if (x == 0) break;
 
-                            s = (float)System.Math.Sqrt(p * p + q * q + r * r);
+                            s = System.Math.Sqrt(p * p + q * q + r * r);
                             if (p < 0) s = -s;
 
                             if (s != 0)
@@ -943,7 +984,7 @@ namespace UMapx.Decomposition
                         hessenberg[n][n] = 1;
                         for (i = n - 2; i >= 0; i--)
                         {
-                            float ra, sa, vr, vi;
+                            double ra, sa, vr, vi;
                             ra = 0;
                             sa = 0;
                             for (j = l; j <= n; j++)
@@ -1035,11 +1076,11 @@ namespace UMapx.Decomposition
             /// Chooses the scaling branch by comparing |yr| and |yi| to avoid overflow/underflow.
             /// If both <paramref name="yr"/> and <paramref name="yi"/> are zero, the result follows IEEE-754 (Inf/NaN).
             /// </remarks>
-            private static void cdiv(float xr, float xi, float yr, float yi, ref float cdivr, ref float cdivi)
+            private static void cdiv(double xr, double xi, double yr, double yi, ref double cdivr, ref double cdivi)
             {
                 // Complex scalar division.
-                float r;
-                float d;
+                double r;
+                double d;
 
                 if (System.Math.Abs(yr) > System.Math.Abs(yi))
                 {

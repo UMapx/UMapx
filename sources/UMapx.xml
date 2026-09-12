@@ -13507,6 +13507,7 @@
             <param name="matrix">Finite nonempty input matrix.</param>
             <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
             <returns>The primary factors (V, D).</returns>
+            <exception cref="T:System.InvalidOperationException">The QR or QL iteration limit is reached before convergence.</exception>
         </member>
         <member name="M:UMapx.Decomposition.EVD.Decompose(UMapx.Core.Complex32[0:,0:],System.Single)">
             <summary>Computes right eigenvectors and eigenvalues of a complex square matrix</summary>
@@ -13546,7 +13547,23 @@
         <member name="T:UMapx.Decomposition.EVD.RealWorkspace">
             <summary>Owns the real algorithm work buffers for one call only</summary>
         </member>
-        <member name="M:UMapx.Decomposition.EVD.RealWorkspace.#ctor(System.Single[0:,0:],System.Single)">
+        <member name="M:UMapx.Decomposition.EVD.RealWorkspace.CreateMatrix(System.Int32)">
+            <summary>Allocates square double-precision storage for the real eigensolver.</summary>
+            <param name="size">Positive matrix order.</param>
+            <returns>A zero-initialized square jagged matrix.</returns>
+        </member>
+        <member name="M:UMapx.Decomposition.EVD.RealWorkspace.CopyMatrix(System.Single[0:,0:])">
+            <summary>Promotes finite single-precision inputs before products in the QR and QL iterations.</summary>
+            <param name="matrix">Validated square matrix, which is not modified.</param>
+            <returns>An independent double-precision copy, preserving small isolated entries.</returns>
+        </member>
+        <member name="M:UMapx.Decomposition.EVD.RealWorkspace.Hypotenuse(System.Double,System.Double)">
+            <summary>Computes a Euclidean norm while avoiding unscaled squares in QL rotations.</summary>
+            <param name="a">First finite component.</param>
+            <param name="b">Second finite component.</param>
+            <returns>The nonnegative square root of a squared plus b squared.</returns>
+        </member>
+        <member name="M:UMapx.Decomposition.EVD.RealWorkspace.#ctor(System.Single[0:,0:],System.Double)">
             <summary>
             Initializes eigenvalue decomposition.
             </summary>
@@ -13591,7 +13608,7 @@
             Vol.ii-Linear Algebra, and the corresponding  Fortran subroutine in EISPACK.
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.EVD.RealWorkspace.cdiv(System.Single,System.Single,System.Single,System.Single,System.Single@,System.Single@)">
+        <member name="M:UMapx.Decomposition.EVD.RealWorkspace.cdiv(System.Double,System.Double,System.Double,System.Double,System.Double@,System.Double@)">
             <summary>
             Complex scalar division using a numerically stable branch (Smith’s method).
             Computes (xr + i·xi) / (yr + i·yi) and stores the real/imag parts in <paramref name="cdivr"/> / <paramref name="cdivi"/>.
@@ -13885,7 +13902,7 @@
             <param name="s2">Second nonnegative diagonal.</param>
         </member>
         <member name="M:UMapx.Decomposition.GSVD.Factor(System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Int32)">
-            <summary>Combines stacked QR with an SVD of the upper orthonormal block</summary>
+            <summary>Combines independently scaled stacked QR with an SVD of the upper orthonormal block</summary>
             <param name="a">Private tall first matrix.</param>
             <param name="b">Private tall second matrix with the same column count.</param>
             <param name="iterations">Jacobi sweep limit.</param>
@@ -14114,10 +14131,11 @@
             <summary>Checks the Hermitian condition with a relative single-precision tolerance</summary>
             <param name="a">Square input matrix.</param>
         </member>
-        <member name="M:UMapx.Decomposition.MatrixMath.IsHermitian(System.Numerics.Complex[0:,0:])">
-            <summary>Detects Hermitian structure to the resolution of single-precision input</summary>
+        <member name="M:UMapx.Decomposition.MatrixMath.IsHermitian(System.Numerics.Complex[0:,0:],System.Double)">
+            <summary>Detects Hermitian structure with an optional relative tolerance</summary>
             <param name="a">Finite square work matrix.</param>
-            <returns>True when conjugate symmetry holds within eight single-precision rounding units of the matrix scale.</returns>
+            <param name="relativeTolerance">Nonnegative fraction of the matrix scale; zero requires exact conjugate symmetry.</param>
+            <returns>True when conjugate symmetry holds within the tolerance, defaulting to eight single-precision rounding units.</returns>
         </member>
         <member name="M:UMapx.Decomposition.MatrixMath.Block(System.Numerics.Complex[0:,0:],System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>Copies a rectangular leading block or a block starting at specified offsets</summary>

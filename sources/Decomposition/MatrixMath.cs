@@ -149,14 +149,15 @@ namespace UMapx.Decomposition
             if (!IsHermitian(a)) throw new ArgumentException("The matrix must be Hermitian (symmetric for real inputs).");
         }
 
-        /// <summary>Detects Hermitian structure to the resolution of single-precision input</summary>
+        /// <summary>Detects Hermitian structure with an optional relative tolerance</summary>
         /// <param name="a">Finite square work matrix.</param>
-        /// <returns>True when conjugate symmetry holds within eight single-precision rounding units of the matrix scale.</returns>
-        internal static bool IsHermitian(C[,] a)
+        /// <param name="relativeTolerance">Nonnegative fraction of the matrix scale; zero requires exact conjugate symmetry.</param>
+        /// <returns>True when conjugate symmetry holds within the tolerance, defaulting to eight single-precision rounding units.</returns>
+        internal static bool IsHermitian(C[,] a, double relativeTolerance = 8 * SingleRoundoff)
         {
             int n = a.GetLength(0);
             if (n != a.GetLength(1)) return false;
-            double tolerance = 8 * SingleRoundoff * Max(a);
+            double tolerance = relativeTolerance * Max(a);
             for (int i = 0; i < n; i++)
                 for (int j = 0; j <= i; j++)
                     if (C.Abs(a[i, j] - C.Conjugate(a[j, i])) > tolerance)
