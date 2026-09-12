@@ -14,6 +14,8 @@ internal static class VideoLifecycleProbe
     internal static bool Run(string argument)
     {
         string[] parts = argument.Split(',');
+        if (parts[1].StartsWith("blocked-", StringComparison.Ordinal))
+            return BlockedNetwork(parts[0] == "mjpeg", parts[1]);
         if (parts[1].StartsWith("frame-", StringComparison.Ordinal))
         {
             if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException();
@@ -172,6 +174,78 @@ internal static class VideoLifecycleProbe
             throw new Exception("Delivered bitmap was not disposed");
         }
         finally { listener.Stop(); }
+    }
+
+    private static bool BlockedNetwork(bool mjpeg, string scenario)
+    {
+        string[] parts = scenario.Split('-');
+        string mode = parts[2];
+        using var listener = new TcpListener(IPAddress.Loopback, 0);
+        listener.Start();
+        string url = $"http://127.0.0.1:{((IPEndPoint)listener.LocalEndpoint).Port}/frame";
+        using IVideoSource source = mjpeg
+            ? new MJPEGStream(url) { RequestTimeout = Timeout.Infinite, Proxy = new WebProxy() }
+            : new JPEGStream(url) { RequestTimeout = Timeout.Infinite, Proxy = new WebProxy(), PreventCaching = false };
+        int errors = 0, frames = 0, finishes = 0;
+        ReasonToFinishPlaying? reason = null;
+        source.NewFrame += (_, _) => Interlocked.Increment(ref frames);
+        source.VideoSourceError += (_, _) => Interlocked.Increment(ref errors);
+        source.PlayingFinished += (_, value) => { reason = value; Interlocked.Increment(ref finishes); };
+        int runs = mode == "restart" ? 2 : 1;
+        for (int run = 0; run < runs; run++)
+        {
+            using var entered = new ManualResetEventSlim();
+            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+            var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            var server = Task.Run(async () =>
+            {
+                try
+                {
+                    using var client = await listener.AcceptTcpClientAsync(cancellation.Token);
+                    using var stream = client.GetStream();
+                    using var reader = new StreamReader(stream, Encoding.ASCII, leaveOpen: true);
+                    while (!string.IsNullOrEmpty(await reader.ReadLineAsync(cancellation.Token))) { }
+                    string type = mjpeg ? "multipart/x-mixed-replace; boundary=frame" : "image/jpeg";
+                    await stream.WriteAsync(Encoding.ASCII.GetBytes($"HTTP/1.1 200 OK\r\nContent-Type: {type}\r\nContent-Length: 1000\r\nConnection: close\r\n\r\n"), cancellation.Token);
+                    // One byte proves the worker entered the body-reading loop; no complete frame follows.
+                    await stream.WriteAsync(new byte[] { 255 }, cancellation.Token);
+                    entered.Set();
+                    await release.Task.WaitAsync(cancellation.Token);
+                }
+                catch (OperationCanceledException) when (cancellation.IsCancellationRequested) { }
+            });
+            Task? stopping = null;
+            try
+            {
+                source.Start();
+                var worker = (Thread)source.GetType().GetField(mjpeg ? "_thread" : "thread", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(source)!;
+                Require(entered.Wait(TimeSpan.FromSeconds(2)), "Server did not receive the request");
+                Require(SpinWait.SpinUntil(() => source.BytesReceived > 0, 1000), "Worker did not read the partial body");
+                Require(SpinWait.SpinUntil(() => (worker.ThreadState & ThreadState.WaitSleepJoin) != 0, 1000), "Worker did not enter a blocking network operation");
+                Action stopAndWait = () => { source.SignalToStop(); source.WaitForStop(); };
+                stopping = mode == "concurrent"
+                    ? Task.WhenAll(Task.Run(source.Dispose), Task.Run(source.Dispose), Task.Run(stopAndWait))
+                    : Task.Run(mode == "dispose" ? source.Dispose : stopAndWait);
+                Require(stopping.Wait(TimeSpan.FromSeconds(1)), "Stopping waited for the stalled server");
+                Require(!release.Task.IsCompleted, "Server was released before the stop completed");
+                Require(!source.IsRunning && !worker.IsAlive, "Worker remained alive after stopping");
+                Require(finishes == run + 1 && reason == ReasonToFinishPlaying.StoppedByUser, "Missing or duplicate stop notification");
+                Require(errors == 0, "Cancellation was reported as a source error");
+                Require(frames == 0, "An incomplete frame was delivered");
+            }
+            finally
+            {
+                release.TrySetResult();
+                cancellation.Cancel();
+                Require(server.Wait(TimeSpan.FromSeconds(2)), "Server did not finish");
+                source.SignalToStop();
+                source.WaitForStop();
+                if (stopping != null) Require(stopping.Wait(TimeSpan.FromSeconds(1)), "Stop did not finish after server cleanup");
+            }
+        }
+        source.Dispose();
+        source.Dispose();
+        return true;
     }
 
     private static ManualResetEvent StopEvent(IVideoSource source) => (ManualResetEvent)source.GetType()

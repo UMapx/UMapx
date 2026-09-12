@@ -79,6 +79,9 @@ namespace UMapx.Video
 		private const int readSize = 1024;		
 
         private readonly object _sync = new object();
+        private HttpWebRequest _activeRequest;
+        private WebResponse _activeResponse;
+        private CancellationTokenSource _readCancellation;
 		private Thread thread = null;
 		private ManualResetEvent stopEvent = null;
 
@@ -335,6 +338,7 @@ namespace UMapx.Video
                 framesReceived = 0;
                 bytesReceived = 0;
                 stopEvent = new ManualResetEvent(false);
+                _readCancellation = new CancellationTokenSource();
                 thread = new Thread(WorkerThread)
                 {
                     Name = source
@@ -360,7 +364,18 @@ namespace UMapx.Video
         /// 
         public void SignalToStop()
 		{
-            lock (_sync) stopEvent?.Set();
+            HttpWebRequest request;
+            WebResponse response;
+            lock (_sync)
+            {
+                stopEvent?.Set();
+                _readCancellation?.Cancel();
+                request = _activeRequest;
+                response = _activeResponse;
+            }
+            // Abort outside the lock so the worker can finish its cleanup.
+            try { request?.Abort(); }
+            finally { response?.Close(); }
         }
 
         /// <summary>
@@ -415,6 +430,8 @@ namespace UMapx.Video
             thread = null;
             stopEvent?.Dispose();
             stopEvent = null;
+            _readCancellation?.Dispose();
+            _readCancellation = null;
         }
 
         /// <summary>
@@ -497,11 +514,22 @@ namespace UMapx.Video
                         authInfo = Convert.ToBase64String( Encoding.Default.GetBytes( authInfo ) );
                         request.Headers["Authorization"] = "Basic " + authInfo;
                     }
+                    // Publish the request atomically with the stop check.
+                    lock (_sync)
+                    {
+                        if (stopEvent.WaitOne(0, false)) break;
+                        _activeRequest = request;
+                    }
 					// get response
-                    response = request.GetResponse( );
+                    response = request.GetResponse();
+                    lock (_sync)
+                    {
+                        if (stopEvent.WaitOne(0, false)) break;
+                        _activeResponse = response;
+                    }
 					// get response stream
                     stream = response.GetResponseStream( );
-                    if (!stream.CanTimeout) stream = new TimeoutStream(stream);
+                    if (!stream.CanTimeout) stream = new TimeoutStream(stream, _readCancellation.Token);
                     stream.ReadTimeout = requestTimeout;
 
 					// loop
@@ -553,6 +581,11 @@ namespace UMapx.Video
                             break;
 					}
 				}
+                catch (Exception) when (stopEvent.WaitOne(0, false))
+                {
+                    // Aborting a request during shutdown is normal completion.
+                    break;
+                }
                 catch ( ThreadAbortException )
                 {
                     break;
@@ -562,10 +595,15 @@ namespace UMapx.Video
                     // provide information to clients
                     VideoSourceError?.Invoke(this, new VideoSourceErrorEventArgs(exception.Message));
                     // wait for a while before the next try
-                    Thread.Sleep( 250 );
+                    stopEvent.WaitOne(250, false);
                 }
 				finally
 				{
+                    lock (_sync)
+                    {
+                        if (ReferenceEquals(_activeRequest, request)) _activeRequest = null;
+                        if (ReferenceEquals(_activeResponse, response)) _activeResponse = null;
+                    }
 					// abort request
 					if ( request != null)
 					{
@@ -619,8 +657,8 @@ namespace UMapx.Video
             lock (_sync)
             {
                 _disposed = true;
-                stopEvent?.Set();
             }
+            SignalToStop();
             // Never wait under the lock or join the worker from its own callback.
             WaitForStop();
         }

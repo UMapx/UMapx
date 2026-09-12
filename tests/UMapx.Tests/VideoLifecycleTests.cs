@@ -133,6 +133,19 @@ public class VideoLifecycleTests
         Assert.Equal("True", await AuditProcess.RunAsync("VideoLifecycle", scenario));
     }
 
+    public static IEnumerable<object[]> StalledFrameCases()
+    {
+        foreach (string source in new[] { "jpeg", "mjpeg" })
+        foreach (string mode in new[] { "dispose", "signal", "concurrent", "restart" })
+            yield return new object[] { $"{source},blocked-body-{mode}" };
+    }
+
+    [Theory, MemberData(nameof(StalledFrameCases))]
+    public async Task NetworkSourcesStopWhileReadingAStalledFrame(string scenario)
+    {
+        Assert.Equal("True", await AuditProcess.RunAsync("VideoLifecycle", scenario));
+    }
+
     private static IVideoSource ImageSource(bool depth)
     {
         var resolution = new VideoCapabilities(new Size(2, 2), 1, 1, 32);

@@ -14,6 +14,7 @@ namespace UMapx.Video
         private const int DEFAULT_TIMEOUT_WRITE = 30000;
 
         private readonly Stream _baseStream;
+        private readonly CancellationToken _readCancellation;
 
         private int _readTimeout = DEFAULT_TIMEOUT_READ;
         private int _writeTimeout = DEFAULT_TIMEOUT_WRITE;
@@ -23,8 +24,15 @@ namespace UMapx.Video
         /// </summary>
         /// <param name="stream">Stream which may not support read or write timeouts.</param>
         public TimeoutStream(Stream stream)
+            : this(stream, CancellationToken.None)
+        {
+        }
+
+        /// <summary>Allows a video source to cancel response reads when it stops.</summary>
+        internal TimeoutStream(Stream stream, CancellationToken readCancellation)
         {
             _baseStream = stream ?? throw new ArgumentNullException(nameof(stream));
+            _readCancellation = readCancellation;
 #if NET35 || NET40
             throw new NotSupportedException();
 #endif
@@ -155,13 +163,15 @@ namespace UMapx.Video
             {
                 // A deadline belongs to one operation. Disposing its timer prevents an idle
                 // interval from cancelling the next read or a simultaneous write.
-                using var source = new CancellationTokenSource();
+                using var source = _readCancellation.CanBeCanceled
+                    ? CancellationTokenSource.CreateLinkedTokenSource(_readCancellation)
+                    : new CancellationTokenSource();
                 source.CancelAfter(_readTimeout);
                 try
                 {
                     return _baseStream.ReadAsync(buffer, offset, count, source.Token).GetAwaiter().GetResult();
                 }
-                catch (OperationCanceledException exception) when (source.IsCancellationRequested)
+                catch (OperationCanceledException exception) when (source.IsCancellationRequested && !_readCancellation.IsCancellationRequested)
                 {
                     throw new TimeoutException("The operation timed out.", exception);
                 }

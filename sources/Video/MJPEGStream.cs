@@ -62,6 +62,9 @@ namespace UMapx.Video
 
         private readonly object _sync = new object();
         private Thread _thread = null;
+        private HttpWebRequest _activeRequest;
+        private WebResponse _activeResponse;
+        private CancellationTokenSource _readCancellation;
         private ManualResetEvent _stopEvent = null;
         private ManualResetEvent _reloadEvent = null;
 
@@ -345,6 +348,7 @@ namespace UMapx.Video
                 _framesReceived = 0;
                 _bytesReceived = 0;
                 _stopEvent = new ManualResetEvent(false);
+                _readCancellation = new CancellationTokenSource();
                 _reloadEvent = new ManualResetEvent(false);
                 _thread = new Thread(WorkerThread)
                 {
@@ -371,7 +375,18 @@ namespace UMapx.Video
         /// 
         public void SignalToStop()
         {
-            lock (_sync) _stopEvent?.Set();
+            HttpWebRequest request;
+            WebResponse response;
+            lock (_sync)
+            {
+                _stopEvent?.Set();
+                _readCancellation?.Cancel();
+                request = _activeRequest;
+                response = _activeResponse;
+            }
+            // Abort outside the lock so the worker can finish its cleanup.
+            try { request?.Abort(); }
+            finally { response?.Close(); }
         }
 
         /// <summary>
@@ -426,6 +441,8 @@ namespace UMapx.Video
             _thread = null;
             _stopEvent?.Dispose();
             _stopEvent = null;
+            _readCancellation?.Dispose();
+            _readCancellation = null;
             _reloadEvent?.Dispose();
             _reloadEvent = null;
         }
@@ -458,6 +475,7 @@ namespace UMapx.Video
             {
                 MJPEGStreamParser parser;
                 Boundary boundary;
+                HttpWebRequest request = null;
                 WebResponse response = null;
 
                 // reset reload event
@@ -465,7 +483,12 @@ namespace UMapx.Video
 
                 try
                 {
-                    response = GetResponse();
+                    response = GetResponse(out request);
+                    lock (_sync)
+                    {
+                        if (IsStopRequested) break;
+                        _activeResponse = response;
+                    }
 
                     boundary = Boundary.FromResponse(response);
                     parser = new MJPEGStreamParser(boundary, JPEG_HEADER_BYTES);
@@ -505,11 +528,16 @@ namespace UMapx.Video
                         }
                     }
                 }
+                catch (Exception) when (IsStopRequested)
+                {
+                    // Aborting a request during shutdown is normal completion.
+                    break;
+                }
                 catch (ApplicationException)
                 {
                     // do nothing for Application Exception, which we raised on our own
                     // wait for a while before the next try
-                    Thread.Sleep(250);
+                    _stopEvent.WaitOne(250, false);
                 }
                 catch (ThreadAbortException)
                 {
@@ -523,10 +551,16 @@ namespace UMapx.Video
                         VideoSourceError(this, new VideoSourceErrorEventArgs(exception.Message, exception));
                     }
                     // wait for a while before the next try
-                    Thread.Sleep(250);
+                    _stopEvent.WaitOne(250, false);
                 }
                 finally
                 {
+                    lock (_sync)
+                    {
+                        if (ReferenceEquals(_activeRequest, request)) _activeRequest = null;
+                        if (ReferenceEquals(_activeResponse, response)) _activeResponse = null;
+                    }
+                    request?.Abort();
                     // close response
                     if (response != null)
                     {
@@ -548,9 +582,10 @@ namespace UMapx.Video
         /// <summary>
         /// Creates and configures the HTTP request and returns its response.
         /// </summary>
-        private WebResponse GetResponse()
+        /// <param name="request">Request retained by the caller for cleanup.</param>
+        private WebResponse GetResponse(out HttpWebRequest request)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_source);
+            request = (HttpWebRequest)WebRequest.Create(_source);
 
             try
             {
@@ -566,6 +601,12 @@ namespace UMapx.Video
                     SetBasicAuthentication(request);
                 }
 
+                // Publish the request atomically with the stop check.
+                lock (_sync)
+                {
+                    if (IsStopRequested) throw new OperationCanceledException();
+                    _activeRequest = request;
+                }
                 return request.GetResponse();
             }
             catch (WebException)
@@ -653,7 +694,7 @@ namespace UMapx.Video
 
             if (!stream.CanTimeout)
             {
-                stream = new TimeoutStream(stream);
+                stream = new TimeoutStream(stream, _readCancellation.Token);
             }
 
             SetTimeout(stream);
@@ -695,8 +736,8 @@ namespace UMapx.Video
             lock (_sync)
             {
                 _disposed = true;
-                _stopEvent?.Set();
             }
+            SignalToStop();
             // Never wait under the lock or join the worker from its own callback.
             WaitForStop();
         }
