@@ -73,7 +73,7 @@ namespace UMapx.Video
         // if we should use basic authentication when connecting to the video source
         private bool forceBasicAuthentication = false;
 
-        // buffer size used to download JPEG image
+        // initial buffer size used to download JPEG image
 		private const int bufferSize = 1024 * 1024;
         // size of portion to read at once
 		private const int readSize = 1024;		
@@ -507,10 +507,12 @@ namespace UMapx.Video
 					// loop
 					while ( !stopEvent.WaitOne( 0, false ) )
 					{
-						// check total read
-						if ( total > bufferSize - readSize )
+						// preserve the complete image when it exceeds the current buffer
+						int required = checked(total + readSize);
+						if (required > buffer.Length)
 						{
-							total = 0;
+							int capacity = Math.Max(required, (int)Math.Min((long)buffer.Length * 2, int.MaxValue));
+							Array.Resize(ref buffer, capacity);
 						}
 
 						// read next portion from stream

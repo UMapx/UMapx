@@ -485,18 +485,21 @@ namespace UMapx.Video
                             {
                                 parser.DetectFrame();
 
-                                if (parser.HasFrame)
+                                // Drain buffered frames before the next read, which may block or reach EOF.
+                                while (parser.HasFrame && !IsStopRequested && !IsReloadRequested)
                                 {
                                     _framesReceived++;
 
-                                    if (NewFrame != null && !IsStopRequested)
+                                    var handler = NewFrame;
+                                    if (handler != null)
                                     {
                                         using (Bitmap frame = parser.GetFrame())
                                         {
-                                            NewFrame(this, new NewFrameEventArgs(frame));
+                                            handler(this, new NewFrameEventArgs(frame));
                                         }
-                                        parser.RemoveFrame();
                                     }
+                                    parser.RemoveFrame();
+                                    parser.DetectFrame();
                                 }
                             }
                         }

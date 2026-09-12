@@ -12,7 +12,7 @@
         private const int READ_SIZE = 1024;
         private const int BUFFER_SIZE = READ_SIZE * READ_SIZE;
 
-        private readonly byte[] _buffer;
+        private byte[] _buffer;
 
         private int _position = 0;
         private int _totalReadBytes = 0;
@@ -28,7 +28,7 @@
         /// </summary>
         /// <param name="boundary"></param>
         /// <param name="header"></param>
-        /// <param name="bufferSize"></param>
+        /// <param name="bufferSize">Initial buffer capacity. The buffer grows to fit incoming frames.</param>
         public MJPEGStreamParser(Boundary boundary, byte[] header, int bufferSize = BUFFER_SIZE)
         {
             _header = header;
@@ -38,7 +38,7 @@
         }
 
         /// <summary>
-        /// Content of byte array buffer.
+        /// Content of the current byte array buffer. Reading may replace the array when it grows.
         /// </summary>
         public byte[] Content
         {
@@ -69,48 +69,34 @@
         }
 
         /// <summary>
-        /// Appends new data into the internal buffer.
-        /// </summary>
-        /// <param name="content">Source byte array.</param>
-        /// <param name="readBytes">Number of bytes read.</param>
-        private void Add(byte[] content, int readBytes)
-        {
-            Array.Copy(content, 0, _buffer, _totalReadBytes, readBytes);
-            _totalReadBytes += readBytes;
-        }
-
-        /// <summary>
         /// Reads byte content to internal buffer from a stream.
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
         public int Read(Stream stream)
         {
-            EnsurePositionInRange();
+            EnsureBufferCapacity();
 
-            int readBytes;
-            byte[] buffer = new byte[READ_SIZE];
-            int offset = _totalReadBytes;
-
-            readBytes = stream.Read(buffer, 0, READ_SIZE);
+            int readBytes = stream.Read(_buffer, _totalReadBytes, READ_SIZE);
 
             if (readBytes == 0)
                 throw new ApplicationException();
 
-            Add(buffer, readBytes);
+            _totalReadBytes += readBytes;
 
             return readBytes;
         }
 
         /// <summary>
-        /// Prevents buffer pointers from exceeding the buffer size.
+        /// Reserves space for the next read without discarding frame data or search positions.
         /// </summary>
-        private void EnsurePositionInRange()
+        private void EnsureBufferCapacity()
         {
-            bool isOutOfRange = _totalReadBytes > BUFFER_SIZE - READ_SIZE;
-            if (isOutOfRange)
+            int required = checked(_totalReadBytes + READ_SIZE);
+            if (required > _buffer.Length)
             {
-                _position = 0;
+                int capacity = Math.Max(required, (int)Math.Min((long)_buffer.Length * 2, int.MaxValue));
+                Array.Resize(ref _buffer, capacity);
             }
         }
 
