@@ -33,9 +33,7 @@ namespace UMapx.Decomposition
         public static (Complex32[,] U, float[] S, Complex32[,] V) Decompose(Complex32[,] matrix, int iterations = 50)
         {
             var d = Factor(MatrixMath.Copy(matrix), iterations);
-            var s = new float[d.S.Length];
-            for (int i = 0; i < s.Length; i++) s[i] = (float)d.S[i];
-            return (MatrixMath.Single(d.U), s, MatrixMath.Single(d.V));
+            return (MatrixMath.Single(d.U), MatrixMath.Single(d.S), MatrixMath.Single(d.V));
         }
 
         /// <summary>Constructs the Moore-Penrose inverse from existing real economy SVD factors</summary>
@@ -154,7 +152,7 @@ namespace UMapx.Decomposition
                 for (int p = 0; p < n - 1; p++)
                     for (int q = p + 1; q < n; q++)
                     {
-                        double np = ColumnNorm(a, p), nq = ColumnNorm(a, q);
+                        double np = MatrixMath.ColumnNorm(a, p), nq = MatrixMath.ColumnNorm(a, q);
                         double scale = Math.Max(np, nq);
                         if (np == 0 || nq == 0) continue;
                         double ap = np / scale, aq = nq / scale;
@@ -170,22 +168,24 @@ namespace UMapx.Decomposition
                         if (t == 0) continue;
                         double c = 1 / Math.Sqrt(1 + t * t), sn = t * c;
                         C phase = dot / correlation;
-                        RotateColumns(a, p, q, c, sn, phase);
-                        RotateColumns(v, p, q, c, sn, phase);
+                        // Express the Jacobi update in the shared complex rotation convention.
+                        C sine = -sn * C.Conjugate(phase);
+                        MatrixMath.RotateColumns(a, p, q, c, sine);
+                        MatrixMath.RotateColumns(v, p, q, c, sine);
                         converged = false;
                     }
             }
             if (!converged) throw new InvalidOperationException("Complex SVD failed to converge within the Jacobi sweep limit.");
             var singular = new double[n];
-            for (int j = 0; j < n; j++) singular[j] = ColumnNorm(a, j);
+            for (int j = 0; j < n; j++) singular[j] = MatrixMath.ColumnNorm(a, j);
             for (int p = 0; p < n; p++)
             {
                 int best = p;
                 for (int q = p + 1; q < n; q++) if (singular[q] > singular[best]) best = q;
                 if (best == p) continue;
                 double d = singular[p]; singular[p] = singular[best]; singular[best] = d;
-                for (int i = 0; i < m; i++) { C z = a[i, p]; a[i, p] = a[i, best]; a[i, best] = z; }
-                for (int i = 0; i < n; i++) { C z = v[i, p]; v[i, p] = v[i, best]; v[i, best] = z; }
+                MatrixMath.SwapColumns(a, p, best);
+                MatrixMath.SwapColumns(v, p, best);
             }
             var u = new C[m, n];
             for (int j = 0; j < n; j++)
@@ -195,41 +195,11 @@ namespace UMapx.Decomposition
                 else
                 {
                     var column = MatrixMath.Complete(u, j);
-                    for (int i = 0; i < m; i++) u[i, j] = column[i];
+                    MatrixMath.SetColumn(u, j, column);
                 }
             }
             return (u, singular, v);
         }
-
-        /// <summary>Computes a column norm without directly squaring unscaled entries</summary>
-        /// <param name="a">Work matrix.</param>
-        /// <param name="column">Column index.</param>
-        /// <returns>A nonnegative double-precision norm.</returns>
-        private static double ColumnNorm(C[,] a, int column)
-        {
-            var v = new C[a.GetLength(0)];
-            for (int i = 0; i < v.Length; i++) v[i] = a[i, column];
-            return MatrixMath.Norm(v);
-        }
-
-        /// <summary>Applies a unitary Jacobi rotation to two columns</summary>
-        /// <param name="a">Matrix updated in place.</param>
-        /// <param name="p">First column.</param>
-        /// <param name="q">Second column.</param>
-        /// <param name="c">Real cosine.</param>
-        /// <param name="s">Real sine.</param>
-        /// <param name="phase">Unit phase of the Hermitian cross product.</param>
-        private static void RotateColumns(C[,] a, int p, int q, double c, double s, C phase)
-        {
-            for (int i = 0; i < a.GetLength(0); i++)
-            {
-                C x = a[i, p], y = a[i, q];
-                a[i, p] = c * x - s * C.Conjugate(phase) * y;
-                a[i, q] = s * phase * x + c * y;
-            }
-        }
-
-
 
         /// <summary>Owns the real algorithm work buffers for one call only</summary>
         private sealed class RealWorkspace
@@ -327,10 +297,9 @@ namespace UMapx.Decomposition
             /// </remarks>
             private void svdcmp(float[,] A)
             {
-                var Ur = ScaleInput(A, out double inputScale);
+                var Ur = MatrixMath.ScaledCopyJagged(A, out double inputScale);
                 var Sr = new double[m];
-                var Vr = new double[m][];
-                for (int row = 0; row < m; row++) Vr[row] = new double[m];
+                var Vr = MatrixMath.CreateJagged(m, m);
                 double[] rv1 = new double[m];
 
                 int flag, i, its, j, jj, k, l = 0, nm = 0;
@@ -361,7 +330,7 @@ namespace UMapx.Decomposition
                             }
 
                             f = Ur[i][i];
-                            g = -CopySign(Math.Sqrt(e), f);
+                            g = -MatrixMath.CopySign(Math.Sqrt(e), f);
                             h = f * g - e;
                             Ur[i][i] = f - g;
 
@@ -409,7 +378,7 @@ namespace UMapx.Decomposition
                             }
 
                             f = Ur[i][l];
-                            g = -CopySign(Math.Sqrt(e), f);
+                            g = -MatrixMath.CopySign(Math.Sqrt(e), f);
                             h = f * g - e;
                             Ur[i][l] = f - g;
 
@@ -561,7 +530,7 @@ namespace UMapx.Decomposition
 
                                 if (Math.Abs(f) + anorm == anorm) break;
                                 g = Sr[i];
-                                h = Hypotenuse(f, g);
+                                h = MatrixMath.Hypotenuse(f, g);
                                 Sr[i] = h;
                                 h = 1.0f / h;
                                 c = g * h;
@@ -606,8 +575,8 @@ namespace UMapx.Decomposition
                         g = rv1[nm];
                         h = rv1[k];
                         f = ((y - z) * (y + z) + (g - h) * (g + h)) / (2.0f * h * y);
-                        g = Hypotenuse(f, 1.0f);
-                        f = ((x - z) * (x + z) + h * ((y / (f + CopySign(g, f))) - h)) / x;
+                        g = MatrixMath.Hypotenuse(f, 1.0f);
+                        f = ((x - z) * (x + z) + h * ((y / (f + MatrixMath.CopySign(g, f))) - h)) / x;
 
                         // next QR transformation
                         c = e = 1.0f;
@@ -619,7 +588,7 @@ namespace UMapx.Decomposition
                             y = Sr[i];
                             h = e * g;
                             g = c * g;
-                            z = Hypotenuse(f, h);
+                            z = MatrixMath.Hypotenuse(f, h);
                             rv1[j] = z;
                             c = f / z;
                             e = h / z;
@@ -636,7 +605,7 @@ namespace UMapx.Decomposition
                                 Vr[jj][i] = z * c - x * e;
                             }
 
-                            z = Hypotenuse(f, h);
+                            z = MatrixMath.Hypotenuse(f, h);
                             Sr[j] = z;
 
                             if (z != 0)
@@ -682,9 +651,9 @@ namespace UMapx.Decomposition
                         // swap S
                         var tS = Sr[i]; Sr[i] = Sr[maxIdx]; Sr[maxIdx] = tS;
                         // swap columns in U (n x m)
-                        SwapColumns(Ur, i, maxIdx);
+                        MatrixMath.SwapColumns(Ur, i, maxIdx);
                         // swap columns in V (m x m)
-                        SwapColumns(Vr, i, maxIdx);
+                        MatrixMath.SwapColumns(Vr, i, maxIdx);
                     }
                 }
                 // Orthogonal factors do not depend on a positive common scale.
@@ -699,74 +668,7 @@ namespace UMapx.Decomposition
                     for (j = 0; j < m; j++) this.Vr[i][j] = (float)Vr[i][j];
                 }
             }
-            /// <summary>
-            /// Copies a finite matrix and scales its largest magnitude to one before bidiagonalization.
-            /// </summary>
-            /// <param name="matrix">Real input matrix, with at least as many rows as columns.</param>
-            /// <param name="scale">Receives the original maximum magnitude, or one for a zero matrix.</param>
-            /// <returns>A scaled jagged copy; the caller must multiply the resulting singular values by scale.</returns>
-            private static double[][] ScaleInput(float[,] matrix, out double scale)
-            {
-                scale = 0;
-                foreach (float value in matrix)
-                {
-                    if (float.IsNaN(value) || float.IsInfinity(value))
-                        throw new ArgumentException("The matrix must contain only finite values.", nameof(matrix));
-                    scale = Math.Max(scale, Math.Abs((double)value));
-                }
-                if (scale == 0) scale = 1;
-                var result = new double[matrix.GetLength(0)][];
-                for (int i = 0; i < result.Length; i++)
-                {
-                    result[i] = new double[matrix.GetLength(1)];
-                    for (int j = 0; j < result[i].Length; j++) result[i][j] = matrix[i, j] / scale;
-                }
-                return result;
-            }
-            /// <summary>
-            /// Swaps two columns in a jagged matrix <paramref name="M"/> (double[rows][cols]).
-            /// No operation is performed if <paramref name="c1"/> equals <paramref name="c2"/>.
-            /// </summary>
-            /// <param name="M">Matrix represented as an array of row arrays (double[rows][cols])</param>
-            /// <param name="c1">Index of the first column</param>
-            /// <param name="c2">Index of the second column</param>
-            private static void SwapColumns(double[][] M, int c1, int c2)
-            {
-                if (c1 == c2) return;
-                int rows = M.Length;
 
-                for (int r = 0; r < rows; r++)
-                {
-                    var tmp = M[r][c1];
-                    M[r][c1] = M[r][c2];
-                    M[r][c2] = tmp;
-                }
-            }
-            /// <summary>
-            /// Computes sqrt(a*a + b*b) by a ratio to avoid squaring the larger magnitude.
-            /// </summary>
-            /// <param name="a">First finite real component.</param>
-            /// <param name="b">Second finite real component.</param>
-            /// <returns>The nonnegative Euclidean length, including zero for two zero components.</returns>
-            private static double Hypotenuse(double a, double b)
-            {
-                a = Math.Abs(a); b = Math.Abs(b);
-                if (a < b) { double temporary = a; a = b; b = temporary; }
-                if (a == 0) return 0;
-                double ratio = b / a;
-                return a * Math.Sqrt(1 + ratio * ratio);
-            }
-
-            /// <summary>
-            /// Transfers an algebraic sign to a magnitude for stable Householder and QR shifts.
-            /// </summary>
-            /// <param name="magnitude">Real magnitude donor.</param>
-            /// <param name="sign">Sign donor; zero selects the nonnegative sign.</param>
-            /// <returns>The absolute magnitude with the selected sign.</returns>
-            private static double CopySign(double magnitude, double sign)
-            {
-                return sign < 0 ? -Math.Abs(magnitude) : Math.Abs(magnitude);
-            }
             #endregion
 
         }

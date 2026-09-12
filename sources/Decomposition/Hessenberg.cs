@@ -34,12 +34,11 @@ namespace UMapx.Decomposition
             var p = MatrixMath.Eye(n);
             for (int k = 0; k < n - 2; k++)
             {
-                var v = new C[n - k - 1];
-                for (int i = k + 1; i < n; i++) v[i - k - 1] = a[i, k];
-                v = Householder.Vector(v);
-                Householder.ApplyLeft(a, v, k + 1, k);
-                Householder.ApplyRight(a, v, k + 1, 0);
-                Householder.ApplyRight(p, v, k + 1, 0);
+                var v = MatrixMath.Column(a, k, k + 1);
+                v = MatrixMath.HouseholderVector(v);
+                MatrixMath.ReflectLeft(a, v, k + 1, k);
+                MatrixMath.ReflectRight(a, v, k + 1, 0);
+                MatrixMath.ReflectRight(p, v, k + 1, 0);
                 for (int i = k + 2; i < n; i++) a[i, k] = 0;
             }
             return (p, a);

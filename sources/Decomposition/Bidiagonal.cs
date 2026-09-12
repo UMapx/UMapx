@@ -35,18 +35,16 @@ namespace UMapx.Decomposition
             var v = MatrixMath.Eye(n);
             for (int k = 0; k < Math.Min(m, n); k++)
             {
-                var left = new C[m - k];
-                for (int i = k; i < m; i++) left[i - k] = a[i, k];
-                left = Householder.Vector(left);
-                Householder.ApplyLeft(a, left, k, k);
-                Householder.ApplyRight(u, left, k, 0);
+                var left = MatrixMath.Column(a, k, k);
+                left = MatrixMath.HouseholderVector(left);
+                MatrixMath.ReflectLeft(a, left, k, k);
+                MatrixMath.ReflectRight(u, left, k, 0);
                 for (int i = k + 1; i < m; i++) a[i, k] = 0;
                 if (k + 1 >= n) continue;
-                var right = new C[n - k - 1];
-                for (int j = k + 1; j < n; j++) right[j - k - 1] = C.Conjugate(a[k, j]);
-                right = Householder.Vector(right);
-                Householder.ApplyRight(a, right, k + 1, k);
-                Householder.ApplyRight(v, right, k + 1, 0);
+                var right = MatrixMath.ConjugateRow(a, k, k + 1);
+                right = MatrixMath.HouseholderVector(right);
+                MatrixMath.ReflectRight(a, right, k + 1, k);
+                MatrixMath.ReflectRight(v, right, k + 1, 0);
                 for (int j = k + 2; j < n; j++) a[k, j] = 0;
             }
             return (u, a, v);

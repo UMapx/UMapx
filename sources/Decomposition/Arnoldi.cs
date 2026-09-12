@@ -41,19 +41,12 @@ namespace UMapx.Decomposition
                 var v = new C[n];
                 for (int i = 0; i < n; i++)
                     for (int j = 0; j < n; j++) v[i] += a[i, j] * q[j, k];
-                for (int pass = 0; pass < (full ? 2 : 1); pass++)
-                    for (int j = 0; j <= k; j++)
-                    {
-                        C dot = 0;
-                        for (int i = 0; i < n; i++) dot += C.Conjugate(q[i, j]) * v[i];
-                        h[j, k] += dot;
-                        for (int i = 0; i < n; i++) v[i] -= q[i, j] * dot;
-                    }
+                MatrixMath.Orthogonalize(v, q, k + 1, full ? 2 : 1, h, k);
                 if (k + 1 == n) continue;
                 double norm = MatrixMath.Norm(v);
                 if (norm <= threshold) v = MatrixMath.Complete(q, k + 1);
-                else { h[k + 1, k] = norm; for (int i = 0; i < n; i++) v[i] /= norm; }
-                for (int i = 0; i < n; i++) q[i, k + 1] = v[i];
+                else { h[k + 1, k] = norm; MatrixMath.Divide(v, norm); }
+                MatrixMath.SetColumn(q, k + 1, v);
             }
             return (q, h);
         }

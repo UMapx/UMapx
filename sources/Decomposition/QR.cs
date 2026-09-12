@@ -51,11 +51,10 @@ namespace UMapx.Decomposition
             var h = new C[m, kmax];
             for (int k = 0; k < kmax; k++)
             {
-                var v = new C[m - k];
-                for (int i = k; i < m; i++) v[i - k] = a[i, k];
-                v = Householder.Vector(v);
-                Householder.ApplyLeft(a, v, k, k);
-                for (int i = k; i < m; i++) h[i, k] = v[i - k];
+                var v = MatrixMath.Column(a, k, k);
+                v = MatrixMath.HouseholderVector(v);
+                MatrixMath.ReflectLeft(a, v, k, k);
+                MatrixMath.SetColumn(h, k, v, k);
                 for (int i = k + 1; i < m; i++) a[i, k] = 0;
             }
             if (vectors)
@@ -66,9 +65,8 @@ namespace UMapx.Decomposition
                 // Reverse application builds Q without allocating an m by m matrix for a tall economy QR.
                 for (int k = kmax - 1; k >= 0; k--)
                 {
-                    var v = new C[m - k];
-                    for (int i = k; i < m; i++) v[i - k] = h[i, k];
-                    Householder.ApplyLeft(q, v, k, 0);
+                    var v = MatrixMath.Column(h, k, k);
+                    MatrixMath.ReflectLeft(q, v, k, 0);
                 }
             }
             return (q, a, h);

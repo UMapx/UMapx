@@ -85,7 +85,7 @@ namespace UMapx.Decomposition
                 else
                 {
                     var column = MatrixMath.Complete(w, j);
-                    for (int i = 0; i < n; i++) w[i, j] = column[i];
+                    MatrixMath.SetColumn(w, j, column);
                 }
             }
             return MatrixMath.Multiply(w, MatrixMath.Adjoint(svd.U));
@@ -106,8 +106,8 @@ namespace UMapx.Decomposition
             double scaleA = MatrixMath.Max(a), scaleB = MatrixMath.Max(b);
             if (scaleA == 0) scaleA = 1;
             if (scaleB == 0) scaleB = 1;
-            for (int i = 0; i < n; i++)
-                for (int j = 0; j < n; j++) { a[i, j] /= scaleA; b[i, j] /= scaleB; }
+            MatrixMath.Divide(a, scaleA);
+            MatrixMath.Divide(b, scaleB);
             var qr = QR.Factor(b);
             b = qr.R;
             var q = qr.Q;
@@ -116,10 +116,10 @@ namespace UMapx.Decomposition
             for (int k = 0; k < n - 2; k++)
                 for (int i = n - 1; i > k + 1; i--)
                 {
-                    var left = Rotation(a[i - 1, k], a[i, k]);
+                    var left = MatrixMath.Givens(a[i - 1, k], a[i, k]);
                     LeftPair(a, b, q, i - 1, i, left.C, left.S);
                     a[i, k] = 0;
-                    var right = Rotation(b[i, i], b[i, i - 1]);
+                    var right = MatrixMath.Givens(b[i, i], b[i, i - 1]);
                     RightPair(a, b, z, i, i - 1, right.C, right.S);
                     b[i, i - 1] = 0;
                 }
@@ -137,7 +137,7 @@ namespace UMapx.Decomposition
                 if (C.Abs(b[high, high]) <= bTolerance)
                 {
                     b[high, high] = 0;
-                    var r = Rotation(a[high, high], a[high, high - 1]);
+                    var r = MatrixMath.Givens(a[high, high], a[high, high - 1]);
                     RightPair(a, b, z, high, high - 1, r.C, r.S);
                     a[high, high - 1] = 0;
                     high--; steps = 0; continue;
@@ -153,7 +153,7 @@ namespace UMapx.Decomposition
                         b[j, j] = 0;
                         if (split)
                         {
-                            var r = Rotation(a[j, j], a[j + 1, j]);
+                            var r = MatrixMath.Givens(a[j, j], a[j + 1, j]);
                             LeftPair(a, b, q, j, j + 1, r.C, r.S);
                             a[j + 1, j] = 0;
                         }
@@ -162,10 +162,10 @@ namespace UMapx.Decomposition
                             // Move a zero B diagonal to the trailing corner while removing each Hessenberg bulge.
                             for (int k = j; k < high; k++)
                             {
-                                var left = Rotation(b[k, k + 1], b[k + 1, k + 1]);
+                                var left = MatrixMath.Givens(b[k, k + 1], b[k + 1, k + 1]);
                                 LeftPair(a, b, q, k, k + 1, left.C, left.S);
                                 b[k + 1, k + 1] = 0;
-                                var right = Rotation(a[k + 1, k], a[k + 1, k - 1]);
+                                var right = MatrixMath.Givens(a[k + 1, k], a[k + 1, k - 1]);
                                 RightPair(a, b, z, k, k - 1, right.C, right.S);
                                 a[k + 1, k - 1] = 0;
                             }
@@ -186,13 +186,13 @@ namespace UMapx.Decomposition
                 C shift1 = center + root, shift2 = center - root;
                 C shift = C.Abs(shift1 - bottom) < C.Abs(shift2 - bottom) ? shift1 : shift2;
                 if (steps % 10 == 0) shift = bottom + new C(0.75, 0.25) * C.Abs(d21);
-                var rotation = Rotation(a[low, low] - shift * b[low, low], a[low + 1, low]);
+                var rotation = MatrixMath.Givens(a[low, low] - shift * b[low, low], a[low + 1, low]);
                 for (int j = low; j < high; j++)
                 {
-                    if (j > low) rotation = Rotation(a[j, j - 1], a[j + 1, j - 1]);
+                    if (j > low) rotation = MatrixMath.Givens(a[j, j - 1], a[j + 1, j - 1]);
                     LeftPair(a, b, q, j, j + 1, rotation.C, rotation.S);
                     if (j > low) a[j + 1, j - 1] = 0;
-                    var right = Rotation(b[j + 1, j + 1], b[j + 1, j]);
+                    var right = MatrixMath.Givens(b[j + 1, j + 1], b[j + 1, j]);
                     RightPair(a, b, z, j + 1, j, right.C, right.S);
                     b[j + 1, j] = 0;
                 }
@@ -224,20 +224,6 @@ namespace UMapx.Decomposition
             return C.Abs(a[i, i - 1]) <= tolerance * scale;
         }
 
-        /// <summary>Constructs a complex Givens rotation annihilating the second component</summary>
-        /// <param name="f">First component.</param>
-        /// <param name="g">Second component.</param>
-        /// <returns>Real cosine C and complex sine S defining [C,S;-conj(S),C].</returns>
-        private static (double C, C S) Rotation(C f, C g)
-        {
-            double af = C.Abs(f), ag = C.Abs(g);
-            if (ag == 0) return (1, C.Zero);
-            if (af == 0) return (0, C.Conjugate(g) / ag);
-            double scale = Math.Max(af, ag);
-            double norm = scale * Math.Sqrt((af / scale) * (af / scale) + (ag / scale) * (ag / scale));
-            return (af / norm, (f / af) * (C.Conjugate(g) / norm));
-        }
-
         /// <summary>Applies a left plane rotation to both matrices and updates Q</summary>
         /// <param name="a">First work matrix.</param>
         /// <param name="b">Second work matrix.</param>
@@ -248,14 +234,9 @@ namespace UMapx.Decomposition
         /// <param name="s">Complex sine.</param>
         private static void LeftPair(C[,] a, C[,] b, C[,] q, int i, int j, double c, C s)
         {
-            foreach (var matrix in new[] { a, b })
-                for (int k = 0; k < matrix.GetLength(1); k++)
-                {
-                    C x = matrix[i, k], y = matrix[j, k];
-                    matrix[i, k] = c * x + s * y;
-                    matrix[j, k] = -C.Conjugate(s) * x + c * y;
-                }
-            Columns(q, i, j, c, C.Conjugate(s));
+            MatrixMath.RotateRows(a, i, j, c, s);
+            MatrixMath.RotateRows(b, i, j, c, s);
+            MatrixMath.RotateColumns(q, i, j, c, C.Conjugate(s));
         }
 
         /// <summary>Applies a right rotation to both matrices and updates Z</summary>
@@ -268,25 +249,10 @@ namespace UMapx.Decomposition
         /// <param name="s">Complex sine acting on ordered columns i,j.</param>
         private static void RightPair(C[,] a, C[,] b, C[,] z, int i, int j, double c, C s)
         {
-            Columns(a, i, j, c, s);
-            Columns(b, i, j, c, s);
-            Columns(z, i, j, c, s);
+            MatrixMath.RotateColumns(a, i, j, c, s);
+            MatrixMath.RotateColumns(b, i, j, c, s);
+            MatrixMath.RotateColumns(z, i, j, c, s);
         }
 
-        /// <summary>Rotates an ordered pair of columns in place</summary>
-        /// <param name="a">Target matrix.</param>
-        /// <param name="i">First column.</param>
-        /// <param name="j">Second column.</param>
-        /// <param name="c">Real cosine.</param>
-        /// <param name="s">Complex sine.</param>
-        private static void Columns(C[,] a, int i, int j, double c, C s)
-        {
-            for (int k = 0; k < a.GetLength(0); k++)
-            {
-                C x = a[k, i], y = a[k, j];
-                a[k, i] = c * x + s * y;
-                a[k, j] = -C.Conjugate(s) * x + c * y;
-            }
-        }
     }
 }

@@ -53,11 +53,10 @@ namespace UMapx.Decomposition
         private static C[,] Reflect(C[,] a)
         {
             int n = a.GetLength(0);
-            var v = new C[n];
-            for (int i = 0; i < n; i++) v[i] = a[i, 0];
-            v = Vector(v);
+            var v = MatrixMath.Column(a, 0);
+            v = MatrixMath.HouseholderVector(v);
             var h = MatrixMath.Eye(n);
-            ApplyLeft(h, v, 0, 0);
+            MatrixMath.ReflectLeft(h, v, 0, 0);
             return h;
         }
 
@@ -78,50 +77,5 @@ namespace UMapx.Decomposition
             return d;
         }
 
-        /// <summary>Builds a unit Householder vector mapping x onto its first coordinate</summary>
-        /// <param name="x">Finite vector; zero is returned unchanged.</param>
-        /// <returns>A normalized vector v with H = I - 2 v v^H.</returns>
-        /// <remarks>The target is -phase(x[0])*norm(x), with phase(0)=1, to avoid cancellation.</remarks>
-        internal static C[] Vector(C[] x)
-        {
-            double norm = MatrixMath.Norm(x);
-            if (norm == 0) return x;
-            C phase = C.Abs(x[0]) == 0 ? C.One : x[0] / C.Abs(x[0]);
-            for (int i = 0; i < x.Length; i++) x[i] /= norm;
-            x[0] += phase;
-            norm = MatrixMath.Norm(x);
-            for (int i = 0; i < x.Length; i++) x[i] /= norm;
-            return x;
-        }
-
-        /// <summary>Applies I - 2 v v^H to selected rows from the left, in place</summary>
-        /// <param name="a">Work matrix to update.</param>
-        /// <param name="v">Normalized reflection vector, or zero for identity.</param>
-        /// <param name="row">First affected row.</param>
-        /// <param name="column">First affected column.</param>
-        internal static void ApplyLeft(C[,] a, C[] v, int row, int column)
-        {
-            for (int j = column; j < a.GetLength(1); j++)
-            {
-                C dot = 0;
-                for (int i = 0; i < v.Length; i++) dot += C.Conjugate(v[i]) * a[row + i, j];
-                for (int i = 0; i < v.Length; i++) a[row + i, j] -= 2 * v[i] * dot;
-            }
-        }
-
-        /// <summary>Applies I - 2 v v^H to selected columns from the right, in place</summary>
-        /// <param name="a">Work matrix to update.</param>
-        /// <param name="v">Normalized reflection vector, or zero for identity.</param>
-        /// <param name="column">First affected column.</param>
-        /// <param name="row">First affected row.</param>
-        internal static void ApplyRight(C[,] a, C[] v, int column, int row)
-        {
-            for (int i = row; i < a.GetLength(0); i++)
-            {
-                C dot = 0;
-                for (int j = 0; j < v.Length; j++) dot += a[i, column + j] * v[j];
-                for (int j = 0; j < v.Length; j++) a[i, column + j] -= 2 * dot * C.Conjugate(v[j]);
-            }
-        }
     }
 }

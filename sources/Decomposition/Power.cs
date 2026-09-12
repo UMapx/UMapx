@@ -14,9 +14,7 @@ namespace UMapx.Decomposition
         public static (float[] V, float D) Decompose(float[,] matrix, int iterations = 100)
         {
             var d = Iterate(MatrixMath.Copy(matrix, true), iterations);
-            var v = new float[d.V.Length];
-            for (int i = 0; i < v.Length; i++) v[i] = (float)d.V[i].Real;
-            return (v, (float)d.D.Real);
+            return (MatrixMath.Real(d.V), (float)d.D.Real);
         }
 
         /// <summary>Places an existing power-iteration vector on a diagonal without further iteration</summary>
@@ -35,9 +33,7 @@ namespace UMapx.Decomposition
         public static (Complex32[] V, Complex32 D) Decompose(Complex32[,] matrix, int iterations = 100)
         {
             var d = Iterate(MatrixMath.Copy(matrix, true), iterations);
-            var v = new Complex32[d.V.Length];
-            for (int i = 0; i < v.Length; i++) v[i] = new Complex32((float)d.V[i].Real, (float)d.V[i].Imaginary);
-            return (v, new Complex32((float)d.D.Real, (float)d.D.Imaginary));
+            return (MatrixMath.Single(d.V), new Complex32((float)d.D.Real, (float)d.D.Imaginary));
         }
 
         /// <summary>Places an existing power-iteration vector on a diagonal without further iteration</summary>
@@ -61,12 +57,11 @@ namespace UMapx.Decomposition
             for (int i = 0; i < n; i++) v[i] = 1 / Math.Sqrt(n);
             for (int step = 0; step < iterations; step++)
             {
-                var w = new C[n];
-                for (int i = 0; i < n; i++)
-                    for (int j = 0; j < n; j++) w[i] += a[i, j] * v[j];
+                var w = MatrixMath.Multiply(a, v);
                 double norm = MatrixMath.Norm(w);
                 if (norm == 0) return (v, C.Zero);
-                for (int i = 0; i < n; i++) v[i] = w[i] / norm;
+                MatrixMath.Divide(w, norm);
+                v = w;
             }
             C eigenvalue = 0;
             for (int i = 0; i < n; i++)

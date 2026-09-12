@@ -101,13 +101,14 @@ namespace UMapx.Decomposition
             int count = 0;
             for (int j = 0; j < n; j++)
             {
-                var column = new C[p];
-                for (int i = 0; i < p; i++) column[i] = w[i, j];
+                var column = MatrixMath.Column(w, j);
                 double sine = MatrixMath.Norm(column);
                 if (sine <= 64 * MatrixMath.Roundoff) { sine = 0; zero[j] = true; }
                 else
                 {
-                    for (int i = 0; i < p; i++) { u2[i, j] = column[i] / sine; basis[i, count] = u2[i, j]; }
+                    MatrixMath.Divide(column, sine);
+                    MatrixMath.SetColumn(u2, j, column);
+                    MatrixMath.SetColumn(basis, count, column);
                     count++;
                 }
                 // Restore each input scale through the diagonal factors and shared X.
@@ -123,7 +124,8 @@ namespace UMapx.Decomposition
                 if (zero[j])
                 {
                     var column = MatrixMath.Complete(basis, count);
-                    for (int i = 0; i < p; i++) { u2[i, j] = column[i]; basis[i, count] = column[i]; }
+                    MatrixMath.SetColumn(u2, j, column);
+                    MatrixMath.SetColumn(basis, count, column);
                     count++;
                 }
             return (svd.U, s1, u2, s2, x);

@@ -83,8 +83,7 @@ namespace UMapx.Decomposition
             int n = a.GetLength(0);
             double scale = MatrixMath.Max(a);
             if (scale == 0) return (MatrixMath.Eye(n), a);
-            for (int i = 0; i < n; i++)
-                for (int j = 0; j < n; j++) a[i, j] /= scale;
+            MatrixMath.Divide(a, scale);
             var h = Hessenberg.Factor(a);
             var q = h.P;
             double tolerance = Math.Max(8 * MatrixMath.Roundoff, Math.Min(1, Math.Max(0, eps)));
@@ -117,7 +116,7 @@ namespace UMapx.Decomposition
                 var block = MatrixMath.Block(a, size, size, low, low);
                 for (int i = 0; i < size; i++) block[i, i] -= shift;
                 var rotation = QR.Factor(block).Q;
-                Similarity(a, q, rotation, low);
+                MatrixMath.ApplySimilarity(a, q, rotation, low);
                 for (int i = low + 2; i <= high; i++)
                     for (int j = low; j < i - 1; j++) a[i, j] = 0;
             }
@@ -125,38 +124,6 @@ namespace UMapx.Decomposition
                 for (int j = 0; j < n; j++) a[i, j] = i > j ? C.Zero : a[i, j] * scale;
             return (q, a);
         }
-
-        /// <summary>Applies an embedded unitary similarity and accumulates its right factor</summary>
-        /// <param name="a">Full square work matrix.</param>
-        /// <param name="q">Accumulated unitary factor.</param>
-        /// <param name="rotation">Unitary transformation on a contiguous active block.</param>
-        /// <param name="offset">First index of the active block.</param>
-        private static void Similarity(C[,] a, C[,] q, C[,] rotation, int offset)
-        {
-            int n = a.GetLength(0), size = rotation.GetLength(0);
-            var buffer = new C[size];
-            for (int j = 0; j < n; j++)
-            {
-                for (int i = 0; i < size; i++)
-                {
-                    buffer[i] = 0;
-                    for (int k = 0; k < size; k++) buffer[i] += C.Conjugate(rotation[k, i]) * a[offset + k, j];
-                }
-                for (int i = 0; i < size; i++) a[offset + i, j] = buffer[i];
-            }
-            foreach (var target in new[] { a, q })
-                for (int i = 0; i < n; i++)
-                {
-                    for (int j = 0; j < size; j++)
-                    {
-                        buffer[j] = 0;
-                        for (int k = 0; k < size; k++) buffer[j] += target[i, offset + k] * rotation[k, j];
-                    }
-                    for (int j = 0; j < size; j++) target[i, offset + j] = buffer[j];
-                }
-        }
-
-
 
         /// <summary>Owns the real algorithm work buffers for one call only</summary>
         private sealed class RealWorkspace
@@ -190,7 +157,7 @@ namespace UMapx.Decomposition
                 this.Im = new double[n];
                 this.eps = Maths.Float(eps);
 
-                var hessenberg = ScaleInput(A, out double inputScale);
+                var hessenberg = MatrixMath.ScaledCopyJagged(A, out double inputScale);
                 var matrices = ReduceToHessenberg(hessenberg);
                 this.matrices = Jagged.Zero(n, n);
                 this.hessenberg = Jagged.Zero(n, n);
@@ -217,30 +184,6 @@ namespace UMapx.Decomposition
 
             #region Private voids
             /// <summary>
-            /// Scales a finite square matrix before Hessenberg reduction to protect products in the QR shifts.
-            /// </summary>
-            /// <param name="matrix">Original real square matrix.</param>
-            /// <param name="scale">Receives the maximum magnitude, or one for a zero matrix.</param>
-            /// <returns>A scaled copy; the Schur form must subsequently be multiplied by scale.</returns>
-            private static double[][] ScaleInput(float[,] matrix, out double scale)
-            {
-                scale = 0;
-                foreach (float value in matrix)
-                {
-                    if (float.IsNaN(value) || float.IsInfinity(value))
-                        throw new ArgumentException("The matrix must contain only finite values.", nameof(matrix));
-                    scale = Math.Max(scale, Math.Abs((double)value));
-                }
-                if (scale == 0) scale = 1;
-                var result = new double[matrix.GetLength(0)][];
-                for (int i = 0; i < result.Length; i++)
-                {
-                    result[i] = new double[matrix.GetLength(1)];
-                    for (int j = 0; j < result[i].Length; j++) result[i][j] = matrix[i, j] / scale;
-                }
-                return result;
-            }
-            /// <summary>
             /// Reduces a scaled square matrix to Hessenberg form by Householder similarities in double precision.
             /// </summary>
             /// <param name="hessenberg">Matrix overwritten by its upper Hessenberg form H.</param>
@@ -248,8 +191,7 @@ namespace UMapx.Decomposition
             private static double[][] ReduceToHessenberg(double[][] hessenberg)
             {
                 int n = hessenberg.Length;
-                var matrices = new double[n][];
-                for (int row = 0; row < n; row++) matrices[row] = new double[n];
+                var matrices = MatrixMath.CreateJagged(n, n);
                 var orthogonal = new double[n];
                 int low = 0;
                 int high = n - 1;
@@ -358,7 +300,7 @@ namespace UMapx.Decomposition
             private void hqr2(double[][] hessenberg, double[][] matrices, double inputScale)
             {
                 int nn = this.n;
-                double eps = Math.Max(this.eps, 2.2204460492503131e-16);
+                double eps = Math.Max(this.eps, MatrixMath.Roundoff);
                 int n = nn - 1;
                 int low = 0;
                 int high = nn - 1;

@@ -149,43 +149,9 @@ namespace UMapx.Decomposition
             return vectors;
         }
 
-
-
         /// <summary>Owns the real algorithm work buffers for one call only</summary>
         private sealed class RealWorkspace
         {
-            /// <summary>Allocates square double-precision storage for the real eigensolver.</summary>
-            /// <param name="size">Positive matrix order.</param>
-            /// <returns>A zero-initialized square jagged matrix.</returns>
-            private static double[][] CreateMatrix(int size)
-            {
-                var result = new double[size][];
-                for (int i = 0; i < size; i++) result[i] = new double[size];
-                return result;
-            }
-
-            /// <summary>Promotes finite single-precision inputs before products in the QR and QL iterations.</summary>
-            /// <param name="matrix">Validated square matrix, which is not modified.</param>
-            /// <returns>An independent double-precision copy, preserving small isolated entries.</returns>
-            private static double[][] CopyMatrix(float[,] matrix)
-            {
-                var result = CreateMatrix(matrix.GetLength(0));
-                for (int i = 0; i < result.Length; i++)
-                    for (int j = 0; j < result.Length; j++) result[i][j] = matrix[i, j];
-                return result;
-            }
-
-            /// <summary>Computes a Euclidean norm while avoiding unscaled squares in QL rotations.</summary>
-            /// <param name="a">First finite component.</param>
-            /// <param name="b">Second finite component.</param>
-            /// <returns>The nonnegative square root of a squared plus b squared.</returns>
-            private static double Hypotenuse(double a, double b)
-            {
-                double largest = Math.Max(Math.Abs(a), Math.Abs(b));
-                if (largest == 0) return 0;
-                double ratio = Math.Min(Math.Abs(a), Math.Abs(b)) / largest;
-                return largest * Math.Sqrt(1 + ratio * ratio);
-            }
 
             #region Private data
             private int n;
@@ -216,8 +182,8 @@ namespace UMapx.Decomposition
                 // without Hessenberg form.
                 if (Matrice.IsSymmetric(A))
                 {
-                    hessenberg = CreateMatrix(n);
-                    matrices = CopyMatrix(A);
+                    hessenberg = MatrixMath.CreateJagged(n, n);
+                    matrices = MatrixMath.CopyJagged(A);
 
                     tred2(); // Tridiagonalize.
                     tql2();  // Diagonalize.
@@ -225,8 +191,8 @@ namespace UMapx.Decomposition
                 // with Hessenberg form.
                 else
                 {
-                    matrices = CreateMatrix(n);
-                    hessenberg = CopyMatrix(A);
+                    matrices = MatrixMath.CreateJagged(n, n);
+                    hessenberg = MatrixMath.CopyJagged(A);
                     orthogonal = new double[n];
 
                     orthes(); // Reduce to Hessenberg form.
@@ -243,10 +209,7 @@ namespace UMapx.Decomposition
             {
                 get
                 {
-                    var result = new float[n, n];
-                    for (int i = 0; i < n; i++)
-                        for (int j = 0; j < n; j++) result[i, j] = (float)matrices[i][j];
-                    return result;
+                    return MatrixMath.Real(matrices);
                 }
             }
             /// <summary>
@@ -266,7 +229,6 @@ namespace UMapx.Decomposition
                     return D;
                 }
             }
-
 
             #endregion
 
@@ -439,7 +401,7 @@ namespace UMapx.Decomposition
                             // Compute implicit shift
                             g = Re[l];
                             p = (Re[l + 1] - g) / (2 * Im[l]);
-                            r = Hypotenuse(p, 1);
+                            r = MatrixMath.Hypotenuse(p, 1);
                             if (p < 0)
                             {
                                 r = -r;
@@ -472,7 +434,7 @@ namespace UMapx.Decomposition
                                 s2 = s;
                                 g = c * Im[i];
                                 h = c * p;
-                                r = Hypotenuse(p, Im[i]);
+                                r = MatrixMath.Hypotenuse(p, Im[i]);
                                 Im[i + 1] = s * r;
                                 s = Im[i] / r;
                                 c = p / r;
@@ -977,7 +939,7 @@ namespace UMapx.Decomposition
                         }
                         else
                         {
-                            cdiv(0, -hessenberg[n - 1][n], hessenberg[n - 1][n - 1] - p, q, ref hessenberg[n - 1][n - 1], ref hessenberg[n - 1][n]);
+                            MatrixMath.DivideComplex(0, -hessenberg[n - 1][n], hessenberg[n - 1][n - 1] - p, q, ref hessenberg[n - 1][n - 1], ref hessenberg[n - 1][n]);
                         }
 
                         hessenberg[n][n - 1] = 0;
@@ -1006,7 +968,7 @@ namespace UMapx.Decomposition
                                 l = i;
                                 if (Im[i] == 0)
                                 {
-                                    cdiv(-ra, -sa, w, q, ref hessenberg[i][n - 1], ref hessenberg[i][n]);
+                                    MatrixMath.DivideComplex(-ra, -sa, w, q, ref hessenberg[i][n - 1], ref hessenberg[i][n]);
                                 }
                                 else
                                 {
@@ -1017,7 +979,7 @@ namespace UMapx.Decomposition
                                     vi = (Re[i] - p) * 2 * q;
                                     if (vr == 0 & vi == 0)
                                         vr = eps * norm * (System.Math.Abs(w) + System.Math.Abs(q) + System.Math.Abs(x) + System.Math.Abs(y) + System.Math.Abs(z));
-                                    cdiv(x * r - z * ra + q * sa, x * s - z * sa - q * ra, vr, vi, ref hessenberg[i][n - 1], ref hessenberg[i][n]);
+                                    MatrixMath.DivideComplex(x * r - z * ra + q * sa, x * s - z * sa - q * ra, vr, vi, ref hessenberg[i][n - 1], ref hessenberg[i][n]);
                                     if (System.Math.Abs(x) > (System.Math.Abs(z) + System.Math.Abs(q)))
                                     {
                                         hessenberg[i + 1][n - 1] = (-ra - w * hessenberg[i][n - 1] + q * hessenberg[i][n]) / x;
@@ -1025,7 +987,7 @@ namespace UMapx.Decomposition
                                     }
                                     else
                                     {
-                                        cdiv(-r - y * hessenberg[i][n - 1], -s - y * hessenberg[i][n], z, q, ref hessenberg[i + 1][n - 1], ref hessenberg[i + 1][n]);
+                                        MatrixMath.DivideComplex(-r - y * hessenberg[i][n - 1], -s - y * hessenberg[i][n], z, q, ref hessenberg[i + 1][n - 1], ref hessenberg[i + 1][n]);
                                     }
                                 }
 
@@ -1060,41 +1022,6 @@ namespace UMapx.Decomposition
                             z = z + matrices[i][k] * hessenberg[k][j];
                         matrices[i][j] = z;
                     }
-                }
-            }
-            /// <summary>
-            /// Complex scalar division using a numerically stable branch (Smith’s method).
-            /// Computes (xr + i·xi) / (yr + i·yi) and stores the real/imag parts in <paramref name="cdivr"/> / <paramref name="cdivi"/>.
-            /// </summary>
-            /// <param name="xr">Real part of the numerator</param>
-            /// <param name="xi">Imag part of the numerator</param>
-            /// <param name="yr">Real part of the denominator</param>
-            /// <param name="yi">Imag part of the denominator</param>
-            /// <param name="cdivr">[out] Real part of the quotient</param>
-            /// <param name="cdivi">[out] Imag part of the quotient</param>
-            /// <remarks>
-            /// Chooses the scaling branch by comparing |yr| and |yi| to avoid overflow/underflow.
-            /// If both <paramref name="yr"/> and <paramref name="yi"/> are zero, the result follows IEEE-754 (Inf/NaN).
-            /// </remarks>
-            private static void cdiv(double xr, double xi, double yr, double yi, ref double cdivr, ref double cdivi)
-            {
-                // Complex scalar division.
-                double r;
-                double d;
-
-                if (System.Math.Abs(yr) > System.Math.Abs(yi))
-                {
-                    r = yi / yr;
-                    d = yr + r * yi;
-                    cdivr = (xr + r * xi) / d;
-                    cdivi = (xi - r * xr) / d;
-                }
-                else
-                {
-                    r = yr / yi;
-                    d = yi + r * yr;
-                    cdivr = (r * xr + xi) / d;
-                    cdivi = (r * xi - xr) / d;
                 }
             }
             #endregion
