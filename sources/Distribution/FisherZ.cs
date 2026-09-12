@@ -10,7 +10,7 @@ namespace UMapx.Distribution
     /// The distribution is defined for positive degrees of freedom
     /// <c>d1 &gt; 0</c> and <c>d2 &gt; 0</c>. Its median has no closed form and is
     /// computed numerically. More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Fisher%27s_z-distribution
+    /// <see href="https://en.wikipedia.org/wiki/Fisher%27s_z-distribution"/>.
     /// </remarks>
     [Serializable]
     public class FisherZ : IDistribution
@@ -24,8 +24,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the Fisher Z-distribution.
         /// </summary>
-        /// <param name="d1">Degree of freedom d1 > 0</param>
-        /// <param name="d2">Degree of freedom d2 > 0</param>
+        /// <param name="d1">Degree of freedom d1 > 0.</param>
+        /// <param name="d2">Degree of freedom d2 > 0.</param>
         public FisherZ(float d1, float d2)
         {
             D1 = d1; D2 = d2;
@@ -178,8 +178,8 @@ namespace UMapx.Distribution
         /// after converting <paramref name="x"/> to the corresponding
         /// F-distribution variable.
         /// </remarks>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             double z = Math.Log(d1 / (double)d2) + 2.0 * x;
@@ -194,8 +194,8 @@ namespace UMapx.Distribution
         /// The density is given by:
         /// f(x; d1, d2) = 2^{-(d1 + d2)/2} · d1^{d1/2} · d2^{d2/2} · e^{d1·x} / (B(d1/2, d2/2) · (d1·e^{2x} + d2)^{(d1 + d2)/2}).
         /// </remarks>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (float.IsInfinity(x)) return 0;

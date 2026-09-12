@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://www.itl.nist.gov/div898/handbook/eda/section3/eda366e.htm
+    /// <see href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda366e.htm"/>.
     /// </remarks>
     [Serializable]
     public class PowerLognormal : IDistribution
@@ -22,8 +22,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the power lognormal distribution with the given parameters.
         /// </summary>
-        /// <param name="power">Shape parameter (must be greater than zero)</param>
-        /// <param name="sigma">Scale parameter (must be greater than zero)</param>
+        /// <param name="power">Shape parameter (must be greater than zero).</param>
+        /// <param name="sigma">Scale parameter (must be greater than zero).</param>
         public PowerLognormal(float power, float sigma)
         {
             Power = power;
@@ -127,8 +127,8 @@ namespace UMapx.Distribution
         /// Returns the value of the probability density function f(x) = power · φ(z) · Φ(-z)^(power - 1) / (x · sigma).
         /// Here z = ln(x) / sigma.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x <= 0) return 0;
@@ -137,8 +137,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function F(x) = 1 - Φ(-z)^power, where z = ln(x) / sigma.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x <= 0) return 0;

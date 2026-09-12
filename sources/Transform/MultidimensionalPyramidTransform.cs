@@ -13,7 +13,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the multidimensional pyramid transform.
         /// </summary>
-        /// <param name="transform">IPyramidTransform</param>
+        /// <param name="transform">IPyramidTransform.</param>
         public MultidimensionalPyramidTransform(IPyramidTransform transform)
         {
             Transform = transform;
@@ -28,8 +28,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward multidimensional pyramid transform.
         /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <returns>Jagged array</returns>
+        /// <param name="A">Jagged array.</param>
+        /// <returns>Jagged array.</returns>
         public float[][][] Forward(params float[][] A)
         {
             int count = A.Length;
@@ -45,8 +45,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward multidimensional pyramid transform.
         /// </summary>
-        /// <param name="A">Jagged matrix</param>
-        /// <returns>Jagged matrix</returns>
+        /// <param name="A">Jagged matrix.</param>
+        /// <returns>Jagged matrix.</returns>
         public float[][][,] Forward(params float[][,] A)
         {
             int count = A.Length;
@@ -62,8 +62,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward multidimensional pyramid transform.
         /// </summary>
-        /// <param name="A">Jagged array</param>
-        /// <returns>Jagged array</returns>
+        /// <param name="A">Jagged array.</param>
+        /// <returns>Jagged array.</returns>
         public Complex32[][][] Forward(params Complex32[][] A)
         {
             int count = A.Length;
@@ -79,8 +79,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward multidimensional pyramid transform.
         /// </summary>
-        /// <param name="A">Jagged matrix</param>
-        /// <returns>Jagged matrix</returns>
+        /// <param name="A">Jagged matrix.</param>
+        /// <returns>Jagged matrix.</returns>
         public Complex32[][][,] Forward(params Complex32[][,] A)
         {
             int count = A.Length;
@@ -96,8 +96,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward multidimensional pyramid transform.
         /// </summary>
-        /// <param name="B">Jagged array</param>
-        /// <returns>Jagged array</returns>
+        /// <param name="B">Jagged array.</param>
+        /// <returns>Jagged array.</returns>
         public float[][] Backward(params float[][][] B)
         {
             int count = B.Length;
@@ -113,8 +113,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward multidimensional pyramid transform.
         /// </summary>
-        /// <param name="B">Jagged matrix</param>
-        /// <returns>Jagged matrix</returns>
+        /// <param name="B">Jagged matrix.</param>
+        /// <returns>Jagged matrix.</returns>
         public float[][,] Backward(params float[][][,] B)
         {
             int count = B.Length;
@@ -130,8 +130,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward multidimensional pyramid transform.
         /// </summary>
-        /// <param name="B">Jagged array</param>
-        /// <returns>Jagged array</returns>
+        /// <param name="B">Jagged array.</param>
+        /// <returns>Jagged array.</returns>
         public Complex32[][] Backward(params Complex32[][][] B)
         {
             int count = B.Length;
@@ -147,8 +147,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward multidimensional pyramid transform.
         /// </summary>
-        /// <param name="B">Jagged matrix</param>
-        /// <returns>Jagged matrix</returns>
+        /// <param name="B">Jagged matrix.</param>
+        /// <returns>Jagged matrix.</returns>
         public Complex32[][,] Backward(params Complex32[][][,] B)
         {
             int count = B.Length;

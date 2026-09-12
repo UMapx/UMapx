@@ -10,7 +10,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// Filter usage example:
-    /// https://en.wikipedia.org/wiki/Gaussian_noise
+    /// <see href="https://en.wikipedia.org/wiki/Gaussian_noise"/>.
     /// </remarks>
     [Serializable]
     public class AdditiveNoise : IBitmapFilter
@@ -28,7 +28,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the additive noise filter.
         /// </summary>
-        /// <param name="amount">Amount [0, 100]</param>
+        /// <param name="amount">Amount [0, 100].</param>
         public AdditiveNoise(int amount)
         {
             Amount = amount;
@@ -50,7 +50,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -73,7 +73,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);

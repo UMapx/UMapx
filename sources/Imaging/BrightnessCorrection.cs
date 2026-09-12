@@ -7,7 +7,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// http://esate.ru/uroki/OpenGL/image_processing/_p4106/
+    /// <see href="http://esate.ru/uroki/OpenGL/image_processing/_p4106/"/>.
     /// </remarks>
     [Serializable]
     public class BrightnessCorrection : Correction, IBitmapFilter
@@ -20,8 +20,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the brightness correction filter.
         /// </summary>
-        /// <param name="brightness">Brightness [-1, 1]</param>
-        /// <param name="space">Color space</param>
+        /// <param name="brightness">Brightness [-1, 1].</param>
+        /// <param name="space">Color space.</param>
         public BrightnessCorrection(float brightness, Space space)
         {
             Brightness = brightness; this.Space = space;

@@ -10,7 +10,7 @@ namespace UMapx.Transform
     /// NOT RECOMMENDED.
     /// 
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Hilbert_transform
+    /// <see href="https://en.wikipedia.org/wiki/Hilbert_transform"/>.
     /// </remarks>
     [Serializable]
     public class HilbertTransform : TransformBaseComplex32, ITransform
@@ -26,8 +26,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the Hilbert transform.
         /// </summary>
-        /// <param name="normalized">Normalized transform or not</param>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="normalized">Normalized transform or not.</param>
+        /// <param name="direction">Processing direction.</param>
         public HilbertTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
             this.DFT = new FourierTransform(normalized, Direction.Both);
@@ -53,8 +53,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="A">Array.</param>
+        /// <returns>Array.</returns>
         public override Complex32[] Forward(Complex32[] A)
         {
             var F = DFT.Forward(A);
@@ -64,8 +64,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward transform.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="B">Array.</param>
+        /// <returns>Array.</returns>
         public override Complex32[] Backward(Complex32[] B)
         {
             var Hx = Forward(B);
@@ -78,7 +78,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Applies Hilber spectrum operator.
         /// </summary>
-        /// <param name="F">Array</param>
+        /// <param name="F">Array.</param>
         internal static void ApplyHilbertOperatorMaskInplace(Complex32[] F)
         {
             int N = F.Length;

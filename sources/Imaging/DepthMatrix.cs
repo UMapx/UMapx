@@ -15,8 +15,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts Bitmap into ushort matrix.
         /// </summary>
-        /// <param name="bitmap">Bitmap</param>
-        /// <returns>Depth</returns>
+        /// <param name="bitmap">Bitmap.</param>
+        /// <returns>Depth.</returns>
         /// <remarks>It locks bitmap in 24bpp RGB format.</remarks>
         public unsafe static ushort[,] ToDepth(this Bitmap bitmap)
         {
@@ -31,8 +31,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts Bitmap data into ushort matrix.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <returns>Depth</returns>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <returns>Depth.</returns>
         public unsafe static ushort[,] ToDepth(this BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format24bppRgb && bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -60,8 +60,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts ushort matrix into Bitmap.
         /// </summary>
-        /// <param name="depth">Matrix</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="depth">Matrix.</param>
+        /// <returns>Bitmap.</returns>
         /// <remarks>It returns bitmap in 24bpp RGB format.</remarks>
         public unsafe static Bitmap FromDepth(this ushort[,] depth)
         {
@@ -89,8 +89,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts the depth to the matrix.
         /// </summary>
-        /// <param name="depth">Depth</param>
-        /// <returns>Matrix</returns>
+        /// <param name="depth">Depth.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] ToFloat(this ushort[,] depth)
         {
             int h = depth.GetLength(0);
@@ -110,8 +110,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts the ushort matrix to the float matrix.
         /// </summary>
-        /// <param name="depth">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="depth">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public static ushort[,] FromFloat(this float[,] depth)
         {
             int h = depth.GetLength(0);

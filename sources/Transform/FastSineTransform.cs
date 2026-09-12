@@ -9,7 +9,7 @@ namespace UMapx.Transform
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// http://sernam.ru/book_prett1.php?id=91
+    /// <see href="http://sernam.ru/book_prett1.php?id=91"/>.
     /// </remarks>
     [Serializable]
     public class FastSineTransform : TransformBaseFloat, ITransform
@@ -25,7 +25,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Defines the fast sine transform.
         /// </summary>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="direction">Processing direction.</param>
         public FastSineTransform(Direction direction = Direction.Vertical)
         {
             this.FFT = new FastFourierTransform(false, Direction.Both);
@@ -37,8 +37,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="A">Array.</param>
+        /// <returns>Array.</returns>
         public override float[] Forward(float[] A)
         {
             int n = A.Length;
@@ -69,8 +69,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward transform.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="B">Array.</param>
+        /// <returns>Array.</returns>
         public override float[] Backward(float[] B)
         {
             int n = B.Length;

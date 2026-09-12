@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Gompertz_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Gompertz_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Gompertz : IDistribution
@@ -22,8 +22,8 @@ namespace UMapx.Distribution
         /// <summary>
         ///Initializes the Gompertz distribution.
         /// </summary>
-        /// <param name="eta">Form parameter η > 0</param>
-        /// <param name="b">Scale parameter b > 0</param>
+        /// <param name="eta">Form parameter η > 0.</param>
+        /// <param name="b">Scale parameter b > 0.</param>
         public Gompertz(float eta, float b)
         {
             Eta = eta; B = b;
@@ -142,8 +142,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x < 0)
@@ -160,8 +160,8 @@ namespace UMapx.Distribution
         /// <remarks>
         /// The normalization ensures that the integral of the PDF over its support equals one.
         /// </remarks>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x < 0)

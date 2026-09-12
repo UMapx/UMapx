@@ -8,7 +8,7 @@ namespace UMapx.Transform
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Discrete_Chebyshev_transform
+    /// <see href="https://en.wikipedia.org/wiki/Discrete_Chebyshev_transform"/>.
     /// </remarks>
     [Serializable]
     public class ChebyshevTransform : TransformBaseMatrixFloat, ITransform
@@ -17,7 +17,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the Chebyshev transform (Type-I, orthonormal).
         /// </summary>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="direction">Processing direction.</param>
         public ChebyshevTransform(Direction direction = Direction.Vertical)
         {
             this.Direction = direction;
@@ -28,8 +28,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Constructs the orthonormal Chebyshev (DCT-I) matrix.
         /// </summary>
-        /// <param name="n">Size</param>
-        /// <returns>Matrix</returns>
+        /// <param name="n">Size.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] Matrix(int n)
         {
             if (n == 1)

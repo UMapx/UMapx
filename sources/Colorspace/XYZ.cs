@@ -26,9 +26,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates an instance of the structure CIE XYZ.
         /// </summary>
-        /// <param name="x">Component X [0, +infinity), relative to a reference white with Y = 1</param>
-        /// <param name="y">Component Y [0, +infinity), relative to a reference white with Y = 1</param>
-        /// <param name="z">Component Z [0, +infinity), relative to a reference white with Y = 1</param>
+        /// <param name="x">Component X [0, +infinity), relative to a reference white with Y = 1.</param>
+        /// <param name="y">Component Y [0, +infinity), relative to a reference white with Y = 1.</param>
+        /// <param name="z">Component Z [0, +infinity), relative to a reference white with Y = 1.</param>
         public XYZ(float x, float y, float z)
         {
             this.x = (x < 0) ? 0 : x;
@@ -83,9 +83,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">CIE XYZ structure</param>
-        /// <param name="item2">CIE XYZ structure</param>
-        /// <returns>Boolean</returns>
+        /// <param name="item1">CIE XYZ structure.</param>
+        /// <param name="item2">CIE XYZ structure.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator ==(XYZ item1, XYZ item2)
         {
             return (
@@ -97,9 +97,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">CIE XYZ structure</param>
-        /// <param name="item2">CIE XYZ structure</param>
-        /// <returns>Boolean</returns>
+        /// <param name="item1">CIE XYZ structure.</param>
+        /// <param name="item2">CIE XYZ structure.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator !=(XYZ item1, XYZ item2)
         {
             return !(item1 == item2);
@@ -110,8 +110,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Element</param>
-        /// <returns>Boolean</returns>
+        /// <param name="obj">Element.</param>
+        /// <returns>Boolean.</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -121,7 +121,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Integer number</returns>
+        /// <returns>Integer number.</returns>
         public override int GetHashCode()
         {
             return x.GetHashCode() ^ y.GetHashCode() ^ z.GetHashCode();
@@ -129,7 +129,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public override string ToString()
         {
             return $"{x}{Environment.NewLine}{y}{Environment.NewLine}{z}";
@@ -140,7 +140,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Structure</returns>
+        /// <returns>Structure.</returns>
         object ICloneable.Clone()
         {
             return new XYZ(this.X, this.Y, this.Z);
@@ -148,7 +148,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Structure</returns>
+        /// <returns>Structure.</returns>
         public XYZ Clone()
         {
             return new XYZ(this.X, this.Y, this.Z);
@@ -159,10 +159,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from CIE XYZ to CIE Lab.
         /// </summary>
-        /// <param name="x">Component X</param>
-        /// <param name="y">Component Y</param>
-        /// <param name="z">Component Z</param>
-        /// <returns>CIE Lab structure</returns>
+        /// <param name="x">Component X.</param>
+        /// <param name="y">Component Y.</param>
+        /// <param name="z">Component Z.</param>
+        /// <returns>CIE Lab structure.</returns>
         public static LAB ToLAB(float x, float y, float z)
         {
             LAB lab = new LAB();
@@ -176,8 +176,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from CIE XYZ to CIE Lab.
         /// </summary>
-        /// <param name="xyz">CIE XYZ structure</param>
-        /// <returns>CIE Lab structure</returns>
+        /// <param name="xyz">CIE XYZ structure.</param>
+        /// <returns>CIE Lab structure.</returns>
         public static LAB ToLAB(XYZ xyz)
         {
             return ToLAB(xyz.X, xyz.Y, xyz.Z);
@@ -185,10 +185,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from RGB to CIE XYZ.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="green">Green [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>CIE XYZ structure</returns>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="green">Green [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
+        /// <returns>CIE XYZ structure.</returns>
         public static XYZ FromRGB(int red, int green, int blue)
         {
             // normalize red, green, blue values
@@ -211,8 +211,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from RGB to CIE XYZ.
         /// </summary>
-        /// <param name="rgb">RGB structure</param>
-        /// <returns>CIE XYZ structure</returns>
+        /// <param name="rgb">RGB structure.</param>
+        /// <returns>CIE XYZ structure.</returns>
         public static XYZ FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -237,7 +237,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from CIE XYZ to RGB.
         /// </summary>
-        /// <returns>RGB structure</returns>
+        /// <returns>RGB structure.</returns>
         public RGB ToRGB
         {
             get

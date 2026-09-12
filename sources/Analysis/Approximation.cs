@@ -9,7 +9,7 @@ namespace UMapx.Analysis
     /// <remarks>
     /// This class is a solution to the problem of finding the function A (x) ≈ F (x), where F (x) is the original function.
     /// More information can be found on the website:
-    /// http://simenergy.ru/math-analysis/digital-processing/85-ordinary_least_squares
+    /// <see href="http://simenergy.ru/math-analysis/digital-processing/85-ordinary_least_squares"/>.
     /// </remarks>
     [Serializable]
     public class Approximation
@@ -23,8 +23,8 @@ namespace UMapx.Analysis
         /// <summary>
         /// Initializes the least squares approximation class.
         /// </summary>
-        /// <param name="power">Polynomial degree</param>
-        /// <param name="method">Approximation method</param>
+        /// <param name="power">Polynomial degree.</param>
+        /// <param name="method">Approximation method.</param>
         public Approximation(int power = 1, ApproximationMethod method = ApproximationMethod.Polynomial)
         {
             this.Power = power;
@@ -67,9 +67,9 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Array of argument values</param>
-        /// <param name="y">Array of function values</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Array of argument values.</param>
+        /// <param name="y">Array of function values.</param>
+        /// <returns>Array.</returns>
         public float[] Compute(float[] x, float[] y)
         {
             // choose method of approximation
@@ -91,10 +91,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Array of argument values</param>
-        /// <param name="y">Array of function values</param>
-        /// <param name="cf">Approximation coefficients</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Array of argument values.</param>
+        /// <param name="y">Array of function values.</param>
+        /// <param name="cf">Approximation coefficients.</param>
+        /// <returns>Array.</returns>
         public float[] Compute(float[] x, float[] y, out float[] cf)
         {
             // choose method of approximation
@@ -116,11 +116,11 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Array of argument values</param>
-        /// <param name="y">Array of function values</param>
-        /// <param name="cf">Approximation coefficients</param>
-        /// <param name="similarity">Similarity</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Array of argument values.</param>
+        /// <param name="y">Array of function values.</param>
+        /// <param name="cf">Approximation coefficients.</param>
+        /// <param name="similarity">Similarity.</param>
+        /// <returns>Array.</returns>
         public float[] Compute(float[] x, float[] y, out float[] cf, out float similarity)
         {
             // choose method of approximation
@@ -142,12 +142,12 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Array of argument values</param>
-        /// <param name="y">Array of function values</param>
-        /// <param name="cf">Approximation coefficients</param>
-        /// <param name="similarity">Similarity</param>
-        /// <param name="equation">Equation</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Array of argument values.</param>
+        /// <param name="y">Array of function values.</param>
+        /// <param name="cf">Approximation coefficients.</param>
+        /// <param name="similarity">Similarity.</param>
+        /// <param name="equation">Equation.</param>
+        /// <returns>Array.</returns>
         public float[] Compute(float[] x, float[] y, out float[] cf, out float similarity, out string equation)
         {
             // choose method of approximation
@@ -170,9 +170,9 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Array of argument values</param>
-        /// <param name="y">Array of function values</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Array of argument values.</param>
+        /// <param name="y">Array of function values.</param>
+        /// <returns>Array.</returns>
         public Complex32[] Compute(Complex32[] x, Complex32[] y)
         {
             // choose method of approximation
@@ -194,10 +194,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Array of argument values</param>
-        /// <param name="y">Array of function values</param>
-        /// <param name="cf">Approximation coefficients</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Array of argument values.</param>
+        /// <param name="y">Array of function values.</param>
+        /// <param name="cf">Approximation coefficients.</param>
+        /// <returns>Array.</returns>
         public Complex32[] Compute(Complex32[] x, Complex32[] y, out Complex32[] cf)
         {
             // choose method of approximation
@@ -219,11 +219,11 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Array of argument values</param>
-        /// <param name="y">Array of function values</param>
-        /// <param name="cf">Approximation coefficients</param>
-        /// <param name="similarity">Similarity</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Array of argument values.</param>
+        /// <param name="y">Array of function values.</param>
+        /// <param name="cf">Approximation coefficients.</param>
+        /// <param name="similarity">Similarity.</param>
+        /// <returns>Array.</returns>
         public Complex32[] Compute(Complex32[] x, Complex32[] y, out Complex32[] cf, out Complex32 similarity)
         {
             // choose method of approximation
@@ -245,12 +245,12 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the approximation value.
         /// </summary>
-        /// <param name="x">Array of argument values</param>
-        /// <param name="y">Array of function values</param>
-        /// <param name="cf">Approximation coefficients</param>
-        /// <param name="similarity">Similarity</param>
-        /// <param name="equation">Equation</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Array of argument values.</param>
+        /// <param name="y">Array of function values.</param>
+        /// <param name="cf">Approximation coefficients.</param>
+        /// <param name="similarity">Similarity.</param>
+        /// <param name="equation">Equation.</param>
+        /// <returns>Array.</returns>
         public Complex32[] Compute(Complex32[] x, Complex32[] y, out Complex32[] cf, out Complex32 similarity, out string equation)
         {
             // choose method of approximation
@@ -281,13 +281,13 @@ namespace UMapx.Analysis
         /// sample points <paramref name="x"/> and also outputs the coefficients, an error metric,
         /// and a human-readable equation string.
         /// </remarks>
-        /// <param name="x">Sample abscissas</param>
-        /// <param name="y">Sample ordinates</param>
-        /// <param name="power">Polynomial degree (≥ 1)</param>
-        /// <param name="cf">Output: polynomial coefficients c[0..power]</param>
-        /// <param name="error">Output: fit error (as computed by LeastSquaresOptions.Error)</param>
-        /// <param name="equation">Output: formatted equation string</param>
-        /// <returns>Fitted values ŷ at points x (same length as <paramref name="y"/>)</returns>
+        /// <param name="x">Sample abscissas.</param>
+        /// <param name="y">Sample ordinates.</param>
+        /// <param name="power">Polynomial degree (≥ 1).</param>
+        /// <param name="cf">Output: polynomial coefficients c[0..power].</param>
+        /// <param name="error">Output: fit error (as computed by LeastSquaresOptions.Error).</param>
+        /// <param name="equation">Output: formatted equation string.</param>
+        /// <returns>Fitted values ŷ at points x (same length as <paramref name="y"/>).</returns>
         private static float[] Poly(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
@@ -307,13 +307,13 @@ namespace UMapx.Analysis
         /// sample points <paramref name="x"/> and also outputs the coefficients, an error metric,
         /// and a human-readable equation string.
         /// </remarks>
-        /// <param name="x">Sample abscissas</param>
-        /// <param name="y">Sample ordinates</param>
-        /// <param name="power">Polynomial degree (≥ 1)</param>
-        /// <param name="cf">Output: polynomial coefficients c[0..power]</param>
-        /// <param name="error">Output: fit error (as computed by LeastSquaresOptions.Error)</param>
-        /// <param name="equation">Output: formatted equation string</param>
-        /// <returns>Fitted values ŷ at points x (same length as <paramref name="y"/>)</returns>
+        /// <param name="x">Sample abscissas.</param>
+        /// <param name="y">Sample ordinates.</param>
+        /// <param name="power">Polynomial degree (≥ 1).</param>
+        /// <param name="cf">Output: polynomial coefficients c[0..power].</param>
+        /// <param name="error">Output: fit error (as computed by LeastSquaresOptions.Error).</param>
+        /// <param name="equation">Output: formatted equation string.</param>
+        /// <returns>Fitted values ŷ at points x (same length as <paramref name="y"/>).</returns>
         private static Complex32[] Poly(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
         {
             // Options:
@@ -331,13 +331,13 @@ namespace UMapx.Analysis
         /// Fits a polynomial in the transformed variable u = log(x).
         /// <para><b>Domain:</b> requires x[i] &gt; 0 for all i.</para>
         /// </remarks>
-        /// <param name="x">Sample abscissas (must be &gt; 0)</param>
-        /// <param name="y">Sample ordinates</param>
-        /// <param name="power">Degree in log-domain (≥ 1)</param>
-        /// <param name="cf">Output: coefficients in the log-domain</param>
-        /// <param name="error">Output: fit error on original y</param>
-        /// <param name="equation">Output: equation string using “* Log(x)^k”</param>
-        /// <returns>Fitted values ŷ at x</returns>
+        /// <param name="x">Sample abscissas (must be &gt; 0).</param>
+        /// <param name="y">Sample ordinates.</param>
+        /// <param name="power">Degree in log-domain (≥ 1).</param>
+        /// <param name="cf">Output: coefficients in the log-domain.</param>
+        /// <param name="error">Output: fit error on original y.</param>
+        /// <param name="equation">Output: equation string using “* Log(x)^k”.</param>
+        /// <returns>Fitted values ŷ at x.</returns>
         private static float[] Logc(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
@@ -366,13 +366,13 @@ namespace UMapx.Analysis
         /// Fits a polynomial in the transformed variable u = log(x).
         /// <para><b>Domain:</b> requires x[i] &gt; 0 for all i.</para>
         /// </remarks>
-        /// <param name="x">Sample abscissas (must be &gt; 0)</param>
-        /// <param name="y">Sample ordinates</param>
-        /// <param name="power">Degree in log-domain (≥ 1)</param>
-        /// <param name="cf">Output: coefficients in the log-domain</param>
-        /// <param name="error">Output: fit error on original y</param>
-        /// <param name="equation">Output: equation string using “* Log(x)^k”</param>
-        /// <returns>Fitted values ŷ at x</returns>
+        /// <param name="x">Sample abscissas (must be &gt; 0).</param>
+        /// <param name="y">Sample ordinates.</param>
+        /// <param name="power">Degree in log-domain (≥ 1).</param>
+        /// <param name="cf">Output: coefficients in the log-domain.</param>
+        /// <param name="error">Output: fit error on original y.</param>
+        /// <param name="equation">Output: equation string using “* Log(x)^k”.</param>
+        /// <returns>Fitted values ŷ at x.</returns>
         private static Complex32[] Logc(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
         {
             // Options:
@@ -402,13 +402,13 @@ namespace UMapx.Analysis
         /// then maps back by exponentiation ŷ = exp( Σ c_k x^k ).
         /// <para><b>Domain:</b> requires y[i] &gt; 0 for all i (log defined).</para>
         /// </remarks>
-        /// <param name="x">Sample abscissas</param>
-        /// <param name="y">Sample ordinates (must be &gt; 0)</param>
-        /// <param name="power">Polynomial degree inside the exponent (≥ 1)</param>
-        /// <param name="cf">Output: polynomial coefficients for log(y)</param>
-        /// <param name="error">Output: fit error on original y</param>
-        /// <param name="equation">Output: equation string “Exp( … )”</param>
-        /// <returns>Fitted values ŷ at x</returns>
+        /// <param name="x">Sample abscissas.</param>
+        /// <param name="y">Sample ordinates (must be &gt; 0).</param>
+        /// <param name="power">Polynomial degree inside the exponent (≥ 1).</param>
+        /// <param name="cf">Output: polynomial coefficients for log(y).</param>
+        /// <param name="error">Output: fit error on original y.</param>
+        /// <param name="equation">Output: equation string “Exp( … )”.</param>
+        /// <returns>Fitted values ŷ at x.</returns>
         private static float[] Expn(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
@@ -444,13 +444,13 @@ namespace UMapx.Analysis
         /// then maps back by exponentiation ŷ = exp( Σ c_k x^k ).
         /// <para><b>Domain:</b> requires y[i] &gt; 0 for all i (log defined).</para>
         /// </remarks>
-        /// <param name="x">Sample abscissas</param>
-        /// <param name="y">Sample ordinates (must be &gt; 0)</param>
-        /// <param name="power">Polynomial degree inside the exponent (≥ 1)</param>
-        /// <param name="cf">Output: polynomial coefficients for log(y)</param>
-        /// <param name="error">Output: fit error on original y</param>
-        /// <param name="equation">Output: equation string “Exp( … )”</param>
-        /// <returns>Fitted values ŷ at x</returns>
+        /// <param name="x">Sample abscissas.</param>
+        /// <param name="y">Sample ordinates (must be &gt; 0).</param>
+        /// <param name="power">Polynomial degree inside the exponent (≥ 1).</param>
+        /// <param name="cf">Output: polynomial coefficients for log(y).</param>
+        /// <param name="error">Output: fit error on original y.</param>
+        /// <param name="equation">Output: equation string “Exp( … )”.</param>
+        /// <returns>Fitted values ŷ at x.</returns>
         private static Complex32[] Expn(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
         {
             // Options:
@@ -486,13 +486,13 @@ namespace UMapx.Analysis
         /// then maps back as ŷ = exp( Σ c_k [log(x)]^k ).
         /// <para><b>Domain:</b> requires x[i] &gt; 0 and y[i] &gt; 0 for all i.</para>
         /// </remarks>
-        /// <param name="x">Sample abscissas (must be &gt; 0)</param>
-        /// <param name="y">Sample ordinates (must be &gt; 0)</param>
-        /// <param name="power">Polynomial degree in log-log domain (≥ 1)</param>
-        /// <param name="cf">Output: coefficients in the log-log domain</param>
-        /// <param name="error">Output: fit error on original y</param>
-        /// <param name="equation">Output: equation string using “Exp( … * Log(x)^k … )”</param>
-        /// <returns>Fitted values ŷ at x</returns>
+        /// <param name="x">Sample abscissas (must be &gt; 0).</param>
+        /// <param name="y">Sample ordinates (must be &gt; 0).</param>
+        /// <param name="power">Polynomial degree in log-log domain (≥ 1).</param>
+        /// <param name="cf">Output: coefficients in the log-log domain.</param>
+        /// <param name="error">Output: fit error on original y.</param>
+        /// <param name="equation">Output: equation string using “Exp( … * Log(x)^k … )”.</param>
+        /// <returns>Fitted values ŷ at x.</returns>
         private static float[] Powr(float[] x, float[] y, int power, out float[] cf, out float error, out string equation)
         {
             // Options:
@@ -530,13 +530,13 @@ namespace UMapx.Analysis
         /// then maps back as ŷ = exp( Σ c_k [log(x)]^k ).
         /// <para><b>Domain:</b> requires x[i] &gt; 0 and y[i] &gt; 0 for all i.</para>
         /// </remarks>
-        /// <param name="x">Sample abscissas (must be &gt; 0)</param>
-        /// <param name="y">Sample ordinates (must be &gt; 0)</param>
-        /// <param name="power">Polynomial degree in log-log domain (≥ 1)</param>
-        /// <param name="cf">Output: coefficients in the log-log domain</param>
-        /// <param name="error">Output: fit error on original y</param>
-        /// <param name="equation">Output: equation string using “Exp( … * Log(x)^k … )”</param>
-        /// <returns>Fitted values ŷ at x</returns>
+        /// <param name="x">Sample abscissas (must be &gt; 0).</param>
+        /// <param name="y">Sample ordinates (must be &gt; 0).</param>
+        /// <param name="power">Polynomial degree in log-log domain (≥ 1).</param>
+        /// <param name="cf">Output: coefficients in the log-log domain.</param>
+        /// <param name="error">Output: fit error on original y.</param>
+        /// <param name="equation">Output: equation string using “Exp( … * Log(x)^k … )”.</param>
+        /// <returns>Fitted values ŷ at x.</returns>
         private static Complex32[] Powr(Complex32[] x, Complex32[] y, int power, out Complex32[] cf, out Complex32 error, out string equation)
         {
             // Options:

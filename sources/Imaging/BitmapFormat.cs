@@ -14,9 +14,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts Bitmap to icon file.
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <param name="size">Size</param>
-        /// <returns>Icon</returns>
+        /// <param name="b">Bitmap.</param>
+        /// <param name="size">Size.</param>
+        /// <returns>Icon.</returns>
         public static Icon ToIco(this Bitmap b, int size)
         {
             using Bitmap bmp = new Bitmap(b, new Size(size, size));
@@ -46,8 +46,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts Bitmap to JPEG format.
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="b">Bitmap.</param>
+        /// <returns>Bitmap.</returns>
         public static Bitmap ToJpeg(this Bitmap b)
         {
             MemoryStream stream = new MemoryStream();
@@ -59,8 +59,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts Bitmap to BMP format.
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="b">Bitmap.</param>
+        /// <returns>Bitmap.</returns>
         public static Bitmap ToBmp(this Bitmap b)
         {
             MemoryStream stream = new MemoryStream();
@@ -72,8 +72,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts Bitmap to GIF format.
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="b">Bitmap.</param>
+        /// <returns>Bitmap.</returns>
         public static Bitmap ToGif(this Bitmap b)
         {
             MemoryStream stream = new MemoryStream();
@@ -85,8 +85,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts Bitmap to PNG format.
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="b">Bitmap.</param>
+        /// <returns>Bitmap.</returns>
         public static Bitmap ToPng(this Bitmap b)
         {
             MemoryStream stream = new MemoryStream();
@@ -98,8 +98,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts Bitmap to TIFF format.
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="b">Bitmap.</param>
+        /// <returns>Bitmap.</returns>
         public static Bitmap ToTiff(this Bitmap b)
         {
             MemoryStream stream = new MemoryStream();
@@ -111,8 +111,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts BitmapData to Bitmap.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <returns>Bitmap.</returns>
         public unsafe static Bitmap ToBitmap(this BitmapData bmData)
         {
             int w = bmData.Width;
@@ -151,8 +151,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts Bitmap to 32bpp ARGB format.
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="b">Bitmap.</param>
+        /// <returns>Bitmap.</returns>
         public static Bitmap To32bpp(this Bitmap b)
         {
             return b.Clone(new Rectangle(0, 0, b.Width, b.Height), PixelFormat.Format32bppArgb);
@@ -163,8 +163,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Blocks Bitmap in system memory.
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <returns>Bitmap data</returns>
+        /// <param name="b">Bitmap.</param>
+        /// <returns>Bitmap data.</returns>
         public static BitmapData Lock32bpp(this Bitmap b)
         {
             return b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
@@ -172,8 +172,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Unblocks Bitmap in system memory.
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="b">Bitmap.</param>
+        /// <param name="bmData">Bitmap data.</param>
         public static void Unlock(this Bitmap b, BitmapData bmData)
         {
             b.UnlockBits(bmData);

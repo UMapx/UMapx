@@ -8,7 +8,7 @@ namespace UMapx.Core
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Special_functions
+    /// <see href="https://en.wikipedia.org/wiki/Special_functions"/>.
     /// </remarks>
     public static partial class Special
     {
@@ -16,9 +16,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the first kind.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="n">Order.</param>
+        /// <returns>Value.</returns>
         public static float ChebyshevT(float x, int n)
         {
             return (float)ChebyshevValue((Complex)x, n, false).Real;
@@ -26,9 +26,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the first kind.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="n">Order.</param>
+        /// <returns>Value.</returns>
         public static Complex32 ChebyshevT(Complex32 x, int n)
         {
             return (Complex32)ChebyshevValue((Complex)x, n, false);
@@ -36,9 +36,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the second kind.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="n">Order.</param>
+        /// <returns>Value.</returns>
         public static float ChebyshevU(float x, int n)
         {
             return (float)ChebyshevValue((Complex)x, n, true).Real;
@@ -46,9 +46,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Chebyshev polynomial of the second kind.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="n">Order.</param>
+        /// <returns>Value.</returns>
         public static Complex32 ChebyshevU(Complex32 x, int n)
         {
             return (Complex32)ChebyshevValue((Complex)x, n, true);
@@ -59,10 +59,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Abel polynomial.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Power</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Power.</param>
+        /// <param name="n">Order.</param>
+        /// <returns>Value.</returns>
         public static float Abel(float x, float a, int n)
         {
             if (n < 0) return float.NaN;
@@ -72,10 +72,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Abel polynomial.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Complex power</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Complex power.</param>
+        /// <param name="n">Order.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Abel(Complex32 x, Complex32 a, int n)
         {
             if (n < 0) return Complex32.NaN;
@@ -88,10 +88,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Laguerre polynomial.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Power</param>
-        /// <param name="k">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Power.</param>
+        /// <param name="k">Order.</param>
+        /// <returns>Value.</returns>
         public static float Laguerre(float x, float a, int k)
         {
             return (float)OrthogonalPolynomial((Complex)x, (Complex)a, k, 0).Real;
@@ -99,10 +99,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Laguerre polynomial.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Power</param>
-        /// <param name="k">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Power.</param>
+        /// <param name="k">Order.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Laguerre(Complex32 x, Complex32 a, int k)
         {
             return (Complex32)OrthogonalPolynomial((Complex)x, (Complex)a, k, 0);
@@ -113,9 +113,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Legendre polynomial of the first kind.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="m">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="m">Order.</param>
+        /// <returns>Value.</returns>
         public static float Legendre(float x, int m)
         {
             return (float)OrthogonalPolynomial((Complex)x, Complex.Zero, m, 1).Real;
@@ -123,9 +123,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Legendre polynomial of the first kind.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="m">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="m">Order.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Legendre(Complex32 x, int m)
         {
             return (Complex32)OrthogonalPolynomial((Complex)x, Complex.Zero, m, 1);
@@ -136,9 +136,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Hermite polynomial.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="m">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="m">Order.</param>
+        /// <returns>Value.</returns>
         public static float Hermite(float x, int m)
         {
             return (float)OrthogonalPolynomial((Complex)x, Complex.Zero, m, 2).Real;
@@ -146,9 +146,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Hermite polynomial.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="m">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="m">Order.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Hermite(Complex32 x, int m)
         {
             return (Complex32)OrthogonalPolynomial((Complex)x, Complex.Zero, m, 2);
@@ -159,10 +159,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Gegenbauer polynomial.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Power</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Power.</param>
+        /// <param name="n">Order.</param>
+        /// <returns>Value.</returns>
         public static float Gegenbauer(float x, float a, int n)
         {
             return (float)OrthogonalPolynomial((Complex)x, (Complex)a, n, 3).Real;
@@ -170,10 +170,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Gegenbauer polynomial.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Power</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Power.</param>
+        /// <param name="n">Order.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Gegenbauer(Complex32 x, Complex32 a, int n)
         {
             return (Complex32)OrthogonalPolynomial((Complex)x, (Complex)a, n, 3);
@@ -184,8 +184,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Sinc(float x)
         {
             return Special.Sinc(x, Maths.Pi);
@@ -193,8 +193,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the normalized cardinal sine function: f(x) = sin(πx) / (πx).
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Sinc(Complex32 x)
         {
             return Special.Sinc(x, Maths.Pi);
@@ -202,9 +202,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Sinc(float x, float a)
         {
             var ax = a * x;
@@ -217,9 +217,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the cardinal sine function with the parameter: f(x, a) = sin(ax) / (ax).
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Sinc(Complex32 x, Complex32 a)
         {
             var ax = a * x;
@@ -235,8 +235,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the inverse Guderman function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Agd(float x)
         {
             // gd^{-1}(x) = artanh(sin(x))
@@ -245,8 +245,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the inverse Guderman function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Agd(Complex32 x)
         {
             // gd^{-1}(x) = artanh(sin(x))
@@ -255,8 +255,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Guderman function.
         /// </summary>
-        /// <param name="x">Angle in radians</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Angle in radians.</param>
+        /// <returns>Value.</returns>
         public static float Gd(float x)
         {
             return (float)(2 * Math.Atan(Math.Tanh((double)x / 2)));
@@ -264,8 +264,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Guderman function.
         /// </summary>
-        /// <param name="x">Angle in radians</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Angle in radians.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Gd(Complex32 x)
         {
             return (Complex32)(2 * Complex.Atan(2 * LogisticValue((Complex)x) - 1));
@@ -273,8 +273,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the function Cas(x).
         /// </summary>
-        /// <param name="theta">Theta</param>
-        /// <returns>Value</returns>
+        /// <param name="theta">Theta.</param>
+        /// <returns>Value.</returns>
         public static float Cas(float theta)
         {
             return Maths.Cos(theta) + Maths.Sin(theta);
@@ -282,8 +282,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the function Cas(x).
         /// </summary>
-        /// <param name="theta">Theta</param>
-        /// <returns>Value</returns>
+        /// <param name="theta">Theta.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Cas(Complex32 theta)
         {
             return Maths.Cos(theta) + Maths.Sin(theta);
@@ -294,9 +294,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Radamecher function.
         /// </summary>
-        /// <param name="t">Value [0, 1]</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="t">Value [0, 1].</param>
+        /// <param name="n">Order.</param>
+        /// <returns>Value.</returns>
         public static float Rademacher(float t, int n)
         {
             return (float)RademacherValue((Complex)t, n).Real;
@@ -304,9 +304,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Radamecher function.
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <param name="n">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Value.</param>
+        /// <param name="n">Order.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Rademacher(Complex32 z, int n)
         {
             return (Complex32)RademacherValue((Complex)z, n);
@@ -317,9 +317,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Heaviside delta function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="k">Smoothing factor</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="k">Smoothing factor.</param>
+        /// <returns>Value.</returns>
         public static float Heaviside(float x, float k)
         {
             return (float)LogisticValue(2 * (Complex)k * (Complex)x).Real;
@@ -327,9 +327,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Heaviside delta function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="k">Smoothing factor</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="k">Smoothing factor.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Heaviside(Complex32 x, Complex32 k)
         {
             return (Complex32)LogisticValue(2 * (Complex)k * (Complex)x);
@@ -340,9 +340,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Mahler function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="t">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="t">Value.</param>
+        /// <returns>Value.</returns>
         public static float Mahler(float x, float t)
         {
             return Maths.Exp(x * (1.0f + t - Maths.Pow(Maths.E, t)));
@@ -350,9 +350,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Mahler function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="t">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="t">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Mahler(Complex32 x, Complex32 t)
         {
             return Maths.Exp(x * (1.0f + t - Maths.Pow(Maths.E, t)));
@@ -363,11 +363,11 @@ namespace UMapx.Core
         /// <summary>
         /// Gets the value of the Gompertz function.
         /// </summary>
-        /// <param name="t">Value</param>
-        /// <param name="a">Upper asymptote</param>
-        /// <param name="b">Growth parameter</param>
-        /// <param name="c">Growth rate</param>
-        /// <returns>Value</returns>
+        /// <param name="t">Value.</param>
+        /// <param name="a">Upper asymptote.</param>
+        /// <param name="b">Growth parameter.</param>
+        /// <param name="c">Growth rate.</param>
+        /// <returns>Value.</returns>
         public static float Gompertz(float t, float a, float b, float c)
         {
             return a * Maths.Exp(-b * Maths.Exp(-c * t));
@@ -375,11 +375,11 @@ namespace UMapx.Core
         /// <summary>
         /// Gets the value of the Gompertz function.
         /// </summary>
-        /// <param name="t">Value</param>
-        /// <param name="a">Upper asymptote</param>
-        /// <param name="b">Growth parameter</param>
-        /// <param name="c">Growth rate</param>
-        /// <returns>Value</returns>
+        /// <param name="t">Value.</param>
+        /// <param name="a">Upper asymptote.</param>
+        /// <param name="b">Growth parameter.</param>
+        /// <param name="c">Growth rate.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Gompertz(Complex32 t, Complex32 a, Complex32 b, Complex32 c)
         {
             return a * Maths.Exp(-b * Maths.Exp(-c * t));
@@ -390,9 +390,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Dirac delta function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Coefficient</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Coefficient.</param>
+        /// <returns>Value.</returns>
         public static float Dirac(float x, float a)
         {
             float s = Maths.Sqrt(Maths.Pi);
@@ -404,9 +404,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Dirac delta function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Coefficient</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Coefficient.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Dirac(Complex32 x, Complex32 a)
         {
             Complex32 s = Maths.Sqrt(Maths.Pi);
@@ -421,14 +421,14 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Lower asymptote</param>
-        /// <param name="k">Upper asymptote</param>
-        /// <param name="b">Growth rate</param>
-        /// <param name="v">Affect</param>
-        /// <param name="q">Central moment</param>
-        /// <param name="c">Offset</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Lower asymptote.</param>
+        /// <param name="k">Upper asymptote.</param>
+        /// <param name="b">Growth rate.</param>
+        /// <param name="v">Affect.</param>
+        /// <param name="q">Central moment.</param>
+        /// <param name="c">Offset.</param>
+        /// <returns>Value.</returns>
         public static float Logistic(float x, float a, float k, float b, float v, float q, float c)
         {
             return a + (k - a) / Maths.Pow(c + q * Maths.Exp(-b * x), 1.0f / v);
@@ -436,14 +436,14 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Lower asymptote</param>
-        /// <param name="k">Upper asymptote</param>
-        /// <param name="b">Growth rate</param>
-        /// <param name="v">Affect</param>
-        /// <param name="q">Central moment</param>
-        /// <param name="c">Offset</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Lower asymptote.</param>
+        /// <param name="k">Upper asymptote.</param>
+        /// <param name="b">Growth rate.</param>
+        /// <param name="v">Affect.</param>
+        /// <param name="q">Central moment.</param>
+        /// <param name="c">Offset.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Logistic(Complex32 x, Complex32 a, Complex32 k, Complex32 b, Complex32 v, Complex32 q, Complex32 c)
         {
             return a + (k - a) / Maths.Pow(c + q * Maths.Exp(-b * x), 1.0f / v);
@@ -451,11 +451,11 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Lower asymptote</param>
-        /// <param name="k">Upper asymptote</param>
-        /// <param name="b">Growth rate</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Lower asymptote.</param>
+        /// <param name="k">Upper asymptote.</param>
+        /// <param name="b">Growth rate.</param>
+        /// <returns>Value.</returns>
         public static float Logistic(float x, float a, float k, float b)
         {
             return (float)((Complex)a + ((Complex)k - (Complex)a) * LogisticValue((Complex)b * (Complex)x)).Real;
@@ -463,11 +463,11 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Lower asymptote</param>
-        /// <param name="k">Upper asymptote</param>
-        /// <param name="b">Growth rate</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Lower asymptote.</param>
+        /// <param name="k">Upper asymptote.</param>
+        /// <param name="b">Growth rate.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Logistic(Complex32 x, Complex32 a, Complex32 k, Complex32 b)
         {
             return (Complex32)((Complex)a + ((Complex)k - (Complex)a) * LogisticValue((Complex)b * (Complex)x));
@@ -475,8 +475,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Logistic(float x)
         {
             return (float)LogisticValue((Complex)x).Real;
@@ -484,8 +484,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Logistic(Complex32 x)
         {
             return (Complex32)LogisticValue((Complex)x);
@@ -496,10 +496,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Erlang C-function.
         /// </summary>
-        /// <param name="y">First parameter</param>
-        /// <param name="v">Second parameter</param>
-        /// <param name="t">Time parameter</param>
-        /// <returns>Value</returns>
+        /// <param name="y">First parameter.</param>
+        /// <param name="v">Second parameter.</param>
+        /// <param name="t">Time parameter.</param>
+        /// <returns>Value.</returns>
         public static float Erlang(float y, int v, float t)
         {
             Complex traffic = (Complex)y, blocking = ErlangBlocking(traffic, v);
@@ -508,10 +508,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Erlang C-function.
         /// </summary>
-        /// <param name="y">First parameter</param>
-        /// <param name="v">Second parameter</param>
-        /// <param name="t">Time parameter</param>
-        /// <returns>Value</returns>
+        /// <param name="y">First parameter.</param>
+        /// <param name="v">Second parameter.</param>
+        /// <param name="t">Time parameter.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Erlang(Complex32 y, int v, Complex32 t)
         {
             Complex traffic = (Complex)y, blocking = ErlangBlocking(traffic, v);
@@ -520,9 +520,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Erlang B-function.
         /// </summary>
-        /// <param name="y">First parameter</param>
-        /// <param name="v">Second parameter</param>
-        /// <returns>Value</returns>
+        /// <param name="y">First parameter.</param>
+        /// <param name="v">Second parameter.</param>
+        /// <returns>Value.</returns>
         public static float Erlang(float y, int v)
         {
             return (float)ErlangBlocking((Complex)y, v).Real;
@@ -530,9 +530,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Erlang B-function.
         /// </summary>
-        /// <param name="y">First parameter</param>
-        /// <param name="v">Second parameter</param>
-        /// <returns>Value</returns>
+        /// <param name="y">First parameter.</param>
+        /// <param name="v">Second parameter.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Erlang(Complex32 y, int v)
         {
             return (Complex32)ErlangBlocking((Complex)y, v);
@@ -543,9 +543,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Lambert W-function.
         /// </summary>
-        /// <param name="x">Value [-1/e,+inf)</param>
-        /// <param name="k">Branch</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value [-1/e,+inf).</param>
+        /// <param name="k">Branch.</param>
+        /// <returns>Value.</returns>
         public static float LambertW(float x, int k = 0)
         {
             if ((k != 0 && k != -1) || x < -0.36787944117144233f || (k == -1 && x >= 0)) return float.NaN;
@@ -556,9 +556,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Lambert W-function.
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <param name="k">Branch</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Value.</param>
+        /// <param name="k">Branch.</param>
+        /// <returns>Value.</returns>
         public static Complex32 LambertW(Complex32 z, int k = 0)
         {
             return (Complex32)LambertValue((Complex)z, k);
@@ -566,9 +566,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the square super-root.
         /// </summary>
-        /// <param name="x">Value [1,+inf)</param>
-        /// <param name="k">Branch</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value [1,+inf).</param>
+        /// <param name="k">Branch.</param>
+        /// <returns>Value.</returns>
         public static float Ssqrt(float x, int k = 0)
         {
             if (x <= 0 || (k != 0 && k != -1)) return float.NaN;
@@ -579,9 +579,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the square super-root.
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <param name="k">Branch</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Value.</param>
+        /// <param name="k">Branch.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Ssqrt(Complex32 z, int k = 0)
         {
             if (z == 1 && k == 0) return 1;
@@ -593,8 +593,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Fresnel integral C(x).
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Fresnelc(float x)
         {
             return (float)FresnelValue((Complex)x, false).Real;
@@ -602,8 +602,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Fresnel integral C(x).
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Fresnelc(Complex32 z)
         {
             return (Complex32)FresnelValue((Complex)z, false);
@@ -611,8 +611,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Fresnel integral S(x).
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Fresnels(float x)
         {
             return (float)FresnelValue((Complex)x, true).Real;
@@ -620,8 +620,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Fresnel integral S(x).
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Fresnels(Complex32 z)
         {
             return (Complex32)FresnelValue((Complex)z, true);
@@ -632,9 +632,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Owen T function.
         /// </summary>
-        /// <param name="h">First value</param>
-        /// <param name="a">Second value</param>
-        /// <returns>Value</returns>
+        /// <param name="h">First value.</param>
+        /// <param name="a">Second value.</param>
+        /// <returns>Value.</returns>
         public static float Owen(float h, float a)
         {
             return (float)OwenValue((Complex)h, (Complex)a).Real;
@@ -642,9 +642,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Owen T function.
         /// </summary>
-        /// <param name="h">First value</param>
-        /// <param name="a">Second value</param>
-        /// <returns>Value</returns>
+        /// <param name="h">First value.</param>
+        /// <param name="a">Second value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Owen(Complex32 h, Complex32 a)
         {
             return (Complex32)OwenValue((Complex)h, (Complex)a);
@@ -656,8 +656,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Riemann zeta ζ(s) on the principal branch (real s).
         /// </summary>
-        /// <param name="s">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="s">Value.</param>
+        /// <returns>Value.</returns>
         public static float Zeta(float s)
         {
             if (s == 1) return float.PositiveInfinity;
@@ -667,8 +667,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Riemann zeta ζ(s) on the principal branch (complex s).
         /// </summary>
-        /// <param name="s">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="s">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Zeta(Complex32 s)
         {
             return (Complex32)ZetaValue((Complex)s);
@@ -685,8 +685,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Euler Gamma function: Gamma(z).
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Gamma(float x)
         {
             return (float)GammaValue((double)x);
@@ -694,8 +694,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Euler Gamma function: Gamma(z).
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Gamma(Complex32 x)
         {
             return (Complex32)GammaValue((Complex)x);
@@ -704,8 +704,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns log(abs(Gamma(x))) for real arguments. Gamma poles return NaN.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float LogGamma(float x)
         {
             return (float)GammaLog((double)x);
@@ -714,8 +714,8 @@ namespace UMapx.Core
         /// Returns analytic log-gamma with its cut on the negative real axis.
         /// Its imaginary part is not reduced modulo 2*pi; the upper side is used on the cut.
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 LogGamma(Complex32 z)
         {
             return (Complex32)GammaLog((Complex)z);
@@ -724,8 +724,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Digamma function: ψ(z).
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float DiGamma(float x)
         {
             if (float.IsPositiveInfinity(x)) return float.PositiveInfinity;
@@ -734,8 +734,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Digamma function: ψ(z).
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 DiGamma(Complex32 x)
         {
             return (Complex32)Polygamma((Complex)x, false);
@@ -744,8 +744,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Trigamma function: ψ1(z).
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float TriGamma(float x)
         {
             if (float.IsPositiveInfinity(x)) return 0;
@@ -754,8 +754,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Trigamma function: ψ1(z).
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 TriGamma(Complex32 x)
         {
             return (Complex32)Polygamma((Complex)x, true);
@@ -764,9 +764,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the incomplete upper Gamma function: Q(s, x) = Γ(s, x) / Γ(s).
         /// </summary>
-        /// <param name="s">Value</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="s">Value.</param>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float GammaQ(float s, float x)
         {
             return (float)IncompleteGamma((double)s, (double)x, true, true);
@@ -774,9 +774,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the incomplete upper Gamma function: Q(s, x) = Γ(s, x) / Γ(s).
         /// </summary>
-        /// <param name="s">Value</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="s">Value.</param>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 GammaQ(Complex32 s, Complex32 x)
         {
             return (Complex32)IncompleteGamma((Complex)s, (Complex)x, true, true);
@@ -785,9 +785,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of an incomplete lower Gamma function: P(s, x) = γ(s, x) / Γ(s).
         /// </summary>
-        /// <param name="s">Value</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="s">Value.</param>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float GammaP(float s, float x)
         {
             return (float)IncompleteGamma((double)s, (double)x, false, true);
@@ -795,9 +795,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of an incomplete lower Gamma function: P(s, x) = γ(s, x) / Γ(s).
         /// </summary>
-        /// <param name="s">Value</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="s">Value.</param>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 GammaP(Complex32 s, Complex32 x)
         {
             return (Complex32)IncompleteGamma((Complex)s, (Complex)x, false, true);
@@ -806,9 +806,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of an incomplete Gamma function: γ(s, x).
         /// </summary>
-        /// <param name="s">Value</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="s">Value.</param>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float GammaIncomplete(float s, float x)
         {
             return (float)IncompleteGamma((double)s, (double)x, false, false);
@@ -816,9 +816,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of an incomplete Gamma function: γ(s, x).
         /// </summary>
-        /// <param name="s">Value</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="s">Value.</param>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 GammaIncomplete(Complex32 s, Complex32 x)
         {
             return (Complex32)IncompleteGamma((Complex)s, (Complex)x, false, false);
@@ -827,9 +827,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of an incomplete Gamma function: γ(s, x) (complemented).
         /// </summary>
-        /// <param name="s">Value</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="s">Value.</param>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float GammaIncompleteComplemented(float s, float x)
         {
             return (float)IncompleteGamma((double)s, (double)x, true, false);
@@ -837,9 +837,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of an incomplete Gamma function: γ(s, x) (complemented).
         /// </summary>
-        /// <param name="s">Value</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="s">Value.</param>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 GammaIncompleteComplemented(Complex32 s, Complex32 x)
         {
             return (Complex32)IncompleteGamma((Complex)s, (Complex)x, true, false);
@@ -853,9 +853,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns n!/sqrt(pi) times the integral of exp(-t^n) from zero to x.
         /// </summary>
-        /// <param name="x">Real integration endpoint</param>
-        /// <param name="n">Order [0, +inf)</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Real integration endpoint.</param>
+        /// <param name="n">Order [0, +inf).</param>
+        /// <returns>Value.</returns>
         public static float Gerf(float x, int n)
         {
             return (float)GeneralizedErf((Complex)x, n).Real;
@@ -863,9 +863,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the entire continuation of n!/sqrt(pi) times the integral of exp(-t^n).
         /// </summary>
-        /// <param name="x">Complex integration endpoint</param>
-        /// <param name="n">Order [0, +inf)</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Complex integration endpoint.</param>
+        /// <param name="n">Order [0, +inf).</param>
+        /// <returns>Value.</returns>
         public static Complex32 Gerf(Complex32 x, int n)
         {
             return (Complex32)GeneralizedErf((Complex)x, n);
@@ -873,8 +873,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the generalized error function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Gerf(float x)
         {
             return Gerf(x, 2);
@@ -882,8 +882,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the generalized error function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Gerf(Complex32 x) => Gerf(x, 2);
         #endregion
 
@@ -891,8 +891,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the natural logarithm of the factorial of a number log(n!).
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Value.</param>
+        /// <returns>Value.</returns>
         public static float LogFactorial(float n)
         {
             return (float)GammaLog((double)n + 1);
@@ -900,8 +900,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the natural logarithm of the factorial of a number log(n!).
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 LogFactorial(Complex32 z)
         {
             return (Complex32)GammaLog((Complex)z + 1);
@@ -909,8 +909,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the factorial of a number.
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Value.</param>
+        /// <returns>Value.</returns>
         public static double Factorial(float n)
         {
             if (n >= 0 && n <= 170 && n == Math.Floor(n)) return A000142[(int)n];
@@ -919,8 +919,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the factorial of a number.
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Factorial(Complex32 z)
         {
             return (Complex32)GammaValue((Complex)z + 1);
@@ -928,9 +928,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the decreasing factorial of a number.
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <param name="k">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Value.</param>
+        /// <param name="k">Value.</param>
+        /// <returns>Value.</returns>
         public static double FactorialDown(float n, float k)
         {
             return FactorialProduct((Complex)n, (Complex)k, false).Real;
@@ -938,9 +938,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the decreasing factorial of a number.
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <param name="k">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Value.</param>
+        /// <param name="k">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 FactorialDown(Complex32 z, Complex32 k)
         {
             return (Complex32)FactorialProduct((Complex)z, (Complex)k, false);
@@ -948,9 +948,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the increasing factorial of a number (Pochhammer symbol).
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <param name="k">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Value.</param>
+        /// <param name="k">Value.</param>
+        /// <returns>Value.</returns>
         public static float FactorialUp(float n, float k)
         {
             return (float)FactorialProduct((Complex)n, (Complex)k, true).Real;
@@ -958,9 +958,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the increasing factorial of a number (Pochhammer symbol).
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <param name="k">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Value.</param>
+        /// <param name="k">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 FactorialUp(Complex32 z, Complex32 k)
         {
             return (Complex32)FactorialProduct((Complex)z, (Complex)k, true);
@@ -971,9 +971,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! for k > 0.
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <param name="k">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Value.</param>
+        /// <param name="k">Value.</param>
+        /// <returns>Value.</returns>
         public static double Binomial(float n, float k)
         {
             return BinomialValue((Complex)n, (Complex)k).Real;
@@ -981,9 +981,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of binomial coefficients: C(n, k) = n! / k! / (n-k)! for k > 0.
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <param name="k">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Value.</param>
+        /// <param name="k">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Binomial(Complex32 n, Complex32 k)
         {
             return (Complex32)BinomialValue((Complex)n, (Complex)k);
@@ -991,9 +991,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the natural logarithm of binomial coefficients: log(C(n, k)) = log(n!) - log(k!) - log(n-k!).
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <param name="k">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Value.</param>
+        /// <param name="k">Value.</param>
+        /// <returns>Value.</returns>
         public static float LogBinomial(float n, float k)
         {
             if (k < 0 || (n >= 0 && n == Math.Floor(n) && k > n)) return float.NegativeInfinity;
@@ -1002,9 +1002,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the natural logarithm of binomial coefficients: log(C(n, k)) = log(n!) - log(k!) - log(n-k!).
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <param name="k">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Value.</param>
+        /// <param name="k">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 LogBinomial(Complex32 n, Complex32 k)
         {
             return (Complex32)(GammaLog((Complex)n + 1) - GammaLog((Complex)k + 1) - GammaLog((Complex)n - (Complex)k + 1));
@@ -1015,9 +1015,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Laplace integral (error function).
         /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <param name="inverse">Reverse function or not</param>
-        /// <returns>Value</returns>
+        /// <param name="x">The value of the upper limit of the integral.</param>
+        /// <param name="inverse">Reverse function or not.</param>
+        /// <returns>Value.</returns>
         public static float Erf(float x, bool inverse)
         {
             return (float)(inverse ? InverseErf((double)x) : ErfValue((double)x));
@@ -1025,9 +1025,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Laplace integral (error function).
         /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <param name="inverse">Reverse function or not</param>
-        /// <returns>Value</returns>
+        /// <param name="x">The value of the upper limit of the integral.</param>
+        /// <param name="inverse">Reverse function or not.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Erf(Complex32 x, bool inverse)
         {
             return (Complex32)(inverse ? InverseErf((Complex)x) : ErfValue((Complex)x));
@@ -1035,8 +1035,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the imaginary error function.
         /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <returns>Value</returns>
+        /// <param name="x">The value of the upper limit of the integral.</param>
+        /// <returns>Value.</returns>
         public static float Erfi(float x)
         {
             if (Math.Abs(x) > 27) return x < 0 ? float.NegativeInfinity : float.PositiveInfinity;
@@ -1045,8 +1045,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the imaginary error function.
         /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <returns>Value</returns>
+        /// <param name="x">The value of the upper limit of the integral.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Erfi(Complex32 x)
         {
             return (Complex32)(-Complex.ImaginaryOne * ErfValue(Complex.ImaginaryOne * (Complex)x));
@@ -1054,8 +1054,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Laplace integral (error function).
         /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <returns>Value</returns>
+        /// <param name="x">The value of the upper limit of the integral.</param>
+        /// <returns>Value.</returns>
         public static float Erf(float x)
         {
             return Erf(x, false);
@@ -1063,8 +1063,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Laplace integral (error function).
         /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <returns>Value</returns>
+        /// <param name="x">The value of the upper limit of the integral.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Erf(Complex32 x)
         {
             return Erf(x, false);
@@ -1072,10 +1072,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Laplace integral (error function).
         /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <param name="a">The lower boundary of the normalization</param>
-        /// <param name="b">The upper limit of the normalization</param>
-        /// <returns>Value</returns>
+        /// <param name="x">The value of the upper limit of the integral.</param>
+        /// <param name="a">The lower boundary of the normalization.</param>
+        /// <param name="b">The upper limit of the normalization.</param>
+        /// <returns>Value.</returns>
         public static float Erf(float x, float a, float b)
         {
             return (float)ErfValue(((double)x - (double)a) / (double)b);
@@ -1083,10 +1083,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Laplace integral (error function).
         /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <param name="a">The lower boundary of the normalization</param>
-        /// <param name="b">The upper limit of the normalization</param>
-        /// <returns>Value</returns>
+        /// <param name="x">The value of the upper limit of the integral.</param>
+        /// <param name="a">The lower boundary of the normalization.</param>
+        /// <param name="b">The upper limit of the normalization.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Erf(Complex32 x, Complex32 a, Complex32 b)
         {
             return (Complex32)ErfValue(((Complex)x - (Complex)a) / (Complex)b);
@@ -1094,8 +1094,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Laplace integral (an additional error function).
         /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <returns>Value</returns>
+        /// <param name="x">The value of the upper limit of the integral.</param>
+        /// <returns>Value.</returns>
         public static float Erfc(float x)
         {
             return (float)ErfcValue((double)x);
@@ -1103,8 +1103,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Laplace integral (an additional error function).
         /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <returns>Value</returns>
+        /// <param name="x">The value of the upper limit of the integral.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Erfc(Complex32 x)
         {
             return (Complex32)ErfcValue((Complex)x);
@@ -1112,10 +1112,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Laplace integral (an additional error function).
         /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <param name="a">The lower boundary of the normalization</param>
-        /// <param name="b">The upper limit of the normalization</param>
-        /// <returns>Value</returns>
+        /// <param name="x">The value of the upper limit of the integral.</param>
+        /// <param name="a">The lower boundary of the normalization.</param>
+        /// <param name="b">The upper limit of the normalization.</param>
+        /// <returns>Value.</returns>
         public static float Erfc(float x, float a, float b)
         {
             return (float)ErfcValue(((double)x - (double)a) / (double)b);
@@ -1123,10 +1123,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Laplace integral (an additional error function).
         /// </summary>
-        /// <param name="x">The value of the upper limit of the integral</param>
-        /// <param name="a">The lower boundary of the normalization</param>
-        /// <param name="b">The upper limit of the normalization</param>
-        /// <returns>Value</returns>
+        /// <param name="x">The value of the upper limit of the integral.</param>
+        /// <param name="a">The lower boundary of the normalization.</param>
+        /// <param name="b">The upper limit of the normalization.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Erfc(Complex32 x, Complex32 a, Complex32 b)
         {
             return (Complex32)ErfcValue(((Complex)x - (Complex)a) / (Complex)b);
@@ -1140,9 +1140,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the D- / D + Dawson function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="positive">D- or D+</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="positive">D- or D+.</param>
+        /// <returns>Value.</returns>
         public static float Dawson(float x, bool positive)
         {
             if (!positive && Math.Abs(x) > 27) return x < 0 ? float.NegativeInfinity : float.PositiveInfinity;
@@ -1151,9 +1151,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the D- / D + Dawson function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="positive">D- or D+</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="positive">D- or D+.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Dawson(Complex32 x, bool positive)
         {
             return (Complex32)(positive ? DawsonValue((Complex)x) : -Complex.ImaginaryOne * DawsonValue(Complex.ImaginaryOne * (Complex)x));
@@ -1164,8 +1164,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Faddeeva function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Faddeeva(float x)
         {
             return (Complex32)FaddeevaValue((Complex)x);
@@ -1173,8 +1173,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Faddeeva function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Faddeeva(Complex32 x)
         {
             return (Complex32)FaddeevaValue((Complex)x);
@@ -1185,9 +1185,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a Q function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="inverse">Inverse function or not</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="inverse">Inverse function or not.</param>
+        /// <returns>Value.</returns>
         public static float Q(float x, bool inverse = false)
         {
             return (float)(inverse ? Math.Sqrt(2) * InverseErfc(2.0 * x) : 0.5 * ErfcValue((double)x / Math.Sqrt(2)));
@@ -1195,9 +1195,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a Q function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="inverse">Inverse function or not</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="inverse">Inverse function or not.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Q(Complex32 x, bool inverse = false)
         {
             if (inverse && x.Imag == 0 && x.Real >= 0 && x.Real <= 1) return new Complex32((float)(Math.Sqrt(2) * InverseErfc(2.0 * x.Real)), 0);
@@ -1212,13 +1212,13 @@ namespace UMapx.Core
         /// <remarks>
         /// This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
         /// More information can be found on the website:
-        /// https://en.wikipedia.org/wiki/Hypergeometric_function
+        /// <see href="https://en.wikipedia.org/wiki/Hypergeometric_function"/>.
         /// </remarks>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <param name="c">Value</param>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <param name="c">Value.</param>
+        /// <param name="z">Value.</param>
+        /// <returns>Value.</returns>
         public static float Hypergeom(float a, float b, float c, float z)
         {
             Complex value = Hypergeometric2F1((Complex)a, (Complex)b, (Complex)c, (Complex)z);
@@ -1230,13 +1230,13 @@ namespace UMapx.Core
         /// <remarks>
         /// This version of the hypergeometric function is found in the Russian literature and is indicated: F(a,b,c,z).
         /// More information can be found on the website:
-        /// https://en.wikipedia.org/wiki/Hypergeometric_function
+        /// <see href="https://en.wikipedia.org/wiki/Hypergeometric_function"/>.
         /// </remarks>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <param name="c">Value</param>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <param name="c">Value.</param>
+        /// <param name="z">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 c, Complex32 z)
         {
             return (Complex32)Hypergeometric2F1((Complex)a, (Complex)b, (Complex)c, (Complex)z);
@@ -1249,12 +1249,12 @@ namespace UMapx.Core
         /// F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
         /// Instead of the “~” sign, use the float.NaN value.
         /// More information can be found on the website:
-        /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
+        /// <see href="https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2"/>.
         /// </remarks>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <param name="z">Value.</param>
+        /// <returns>Value.</returns>
         public static float Hypergeom(float a, float b, float z)
         {
             return (float)Hypergeometric1F1((Complex)a, (Complex)b, (Complex)z).Real;
@@ -1267,12 +1267,12 @@ namespace UMapx.Core
         /// F(a,b,z); F(a,~,z); F(~,b,z); F(~,~,z).
         /// Instead of the “~” sign, use the float.NaN value.
         /// More information can be found on the website:
-        /// https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2
+        /// <see href="https://www.mathworks.com/help/symbolic/hypergeom.html#bt1nkmw-2"/>.
         /// </remarks>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <param name="z">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Hypergeom(Complex32 a, Complex32 b, Complex32 z)
         {
             return (Complex32)Hypergeometric1F1((Complex)a, (Complex)b, (Complex)z);
@@ -1283,9 +1283,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the beta function: B(a, b) = Gamma(a) * Gamma(b) / Gamma(a + b).
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <returns>Value.</returns>
         public static float Beta(float a, float b)
         {
             return (float)BetaValue((double)a, (double)b);
@@ -1293,9 +1293,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the beta function: B(a, b) = Gamma(a) * Gamma(b) / Gamma(a + b).
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Beta(Complex32 a, Complex32 b)
         {
             return (Complex32)Complex.Exp(BetaLog((Complex)a, (Complex)b));
@@ -1303,9 +1303,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the beta function: B(m, n) = (m - 1)! * (n - 1)! / (m + n - 1)!.
         /// </summary>
-        /// <param name="m">Integer number</param>
-        /// <param name="n">Integer number</param>
-        /// <returns>Value</returns>
+        /// <param name="m">Integer number.</param>
+        /// <param name="n">Integer number.</param>
+        /// <returns>Value.</returns>
         public static double Beta(int m, int n)
         {
             return BetaValue((double)m, (double)n);
@@ -1313,9 +1313,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a derivative beta function: B'(a, b).
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <returns>Value.</returns>
         public static float BetaDerivative(float a, float b)
         {
             return (float)(Complex.Exp(BetaLog((Complex)a, (Complex)b)) * (Polygamma((Complex)a, false) - Polygamma((Complex)a + (Complex)b, false))).Real;
@@ -1323,9 +1323,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a derivative beta function: B'(a, b).
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 BetaDerivative(Complex32 a, Complex32 b)
         {
             return (Complex32)(Complex.Exp(BetaLog((Complex)a, (Complex)b)) * (Polygamma((Complex)a, false) - Polygamma((Complex)a + (Complex)b, false)));
@@ -1333,10 +1333,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of an incomplete beta function: Bx(a, b).
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float BetaIncomplete(float a, float b, float x)
         {
             return (float)IncompleteBeta(a, b, x, false);
@@ -1344,10 +1344,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of an incomplete beta function: Bx(a, b).
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 BetaIncomplete(Complex32 a, Complex32 b, Complex32 x)
         {
             Complex aa = (Complex)a, bb = (Complex)b, z = (Complex)x;
@@ -1358,10 +1358,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a regularized incomplete beta function: Ix(a, b).
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float BetaIncompleteRegularized(float a, float b, float x)
         {
             return (float)IncompleteBeta(a, b, x, true);
@@ -1369,9 +1369,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a log-beta function.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <returns>Value.</returns>
         public static float LogBeta(float a, float b)
         {
             return (float)BetaLog((double)a, (double)b);
@@ -1379,9 +1379,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a log-beta function.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 LogBeta(Complex32 a, Complex32 b)
         {
             return (Complex32)BetaLog((Complex)a, (Complex)b);
@@ -1392,8 +1392,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the integral cosine.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Ci(float x)
         {
             if (x < 0) return float.NaN;
@@ -1403,8 +1403,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the integral cosine.
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Ci(Complex32 z)
         {
             return (Complex32)TrigonometricIntegral((Complex)z, false);
@@ -1412,8 +1412,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the integral sine.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Si(float x)
         {
             if (float.IsInfinity(x)) return (float)(Math.Sign(x) * Math.PI / 2);
@@ -1422,8 +1422,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the integral sine.
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Si(Complex32 z)
         {
             return (Complex32)TrigonometricIntegral((Complex)z, true);
@@ -1431,8 +1431,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of an integral exponential function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Ei(float x)
         {
             if (float.IsNegativeInfinity(x)) return 0;
@@ -1442,8 +1442,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of an integral exponential function.
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Ei(Complex32 z)
         {
             return (Complex32)ExponentialIntegral((Complex)z);
@@ -1451,8 +1451,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the integral logarithm.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Li(float x)
         {
             if (x < 0) return float.NaN;
@@ -1462,8 +1462,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the integral logarithm.
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Li(Complex32 z)
         {
             if (z == 0) return Complex32.Zero;
@@ -1476,9 +1476,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a Bessel function of the first kind.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float J(float x, int a)
         {
             return (float)BesselJ((Complex)x, a).Real;
@@ -1486,9 +1486,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a Bessel function of the first kind.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 J(Complex32 x, int a)
         {
             return (Complex32)BesselJ((Complex)x, a);
@@ -1497,9 +1497,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a Bessel function of the second kind.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Y(float x, int a)
         {
             if (x < 0) return float.NaN;
@@ -1508,9 +1508,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a Bessel function of the second kind.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Y(Complex32 x, int a)
         {
             return (Complex32)BesselY((Complex)x, a);
@@ -1519,9 +1519,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the modified Bessel function of the first kind.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float I(float x, int a)
         {
             return (float)BesselI((Complex)x, a).Real;
@@ -1529,9 +1529,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the modified Bessel function of the first kind.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 I(Complex32 x, int a)
         {
             return (Complex32)BesselI((Complex)x, a);
@@ -1540,9 +1540,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the modified Bessel function of the second kind.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float K(float x, int a)
         {
             if (x < 0) return float.NaN;
@@ -1551,9 +1551,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the modified Bessel function of the second kind.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 K(Complex32 x, int a)
         {
             return (Complex32)BesselK((Complex)x, a);
@@ -1567,9 +1567,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Struve function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float H(float x, int a)
         {
             return (float)StruveValue((Complex)x, a, false).Real;
@@ -1577,9 +1577,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Struve function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 H(Complex32 x, int a)
         {
             return (Complex32)StruveValue((Complex)x, a, false);
@@ -1587,9 +1587,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the modified Struve function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="v">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="v">Value.</param>
+        /// <returns>Value.</returns>
         public static float L(float x, int v)
         {
             return (float)StruveValue((Complex)x, v, true).Real;
@@ -1597,9 +1597,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the modified Struve function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="v">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="v">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 L(Complex32 x, int v)
         {
             return (Complex32)StruveValue((Complex)x, v, true);
@@ -1610,8 +1610,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Fibonacci number.
         /// </summary>
-        /// <param name="n">Integer number</param>
-        /// <returns>Integer number</returns>
+        /// <param name="n">Integer number.</param>
+        /// <returns>Integer number.</returns>
         public static int Fibonacci(int n)
         {
             return FibonacciValue(n, false);
@@ -1619,8 +1619,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Luca number.
         /// </summary>
-        /// <param name="n">Integer number</param>
-        /// <returns>Integer number</returns>
+        /// <param name="n">Integer number.</param>
+        /// <returns>Integer number.</returns>
         public static int Lucas(int n)
         {
             return FibonacciValue(n, true);
@@ -1631,8 +1631,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the harmonic number.
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Value.</param>
+        /// <returns>Value.</returns>
         public static float Harm(int n)
         {
             if (n < 0) return float.NaN;
@@ -1642,9 +1642,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the harmonic number.
         /// </summary>
-        /// <param name="n">Order</param>
-        /// <param name="m">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Order.</param>
+        /// <param name="m">Value.</param>
+        /// <returns>Value.</returns>
         public static float Harm(int n, float m)
         {
             if (n < 0) return float.NaN;
@@ -1658,8 +1658,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the Euler number.
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Value.</param>
+        /// <returns>Value.</returns>
         public static double Euler(int n)
         {
             // special cases:
@@ -1684,9 +1684,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Euler polynomial.
         /// </summary>
-        /// <param name="n">Order</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Order.</param>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static double Euler(int n, float x)
         {
             return NumberPolynomial(n, x, true);
@@ -1697,8 +1697,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the Bernoulli number.
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Value.</param>
+        /// <returns>Value.</returns>
         public static double Bernoulli(int n)
         {
             // special cases:
@@ -1725,9 +1725,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Bernoulli polynomial.
         /// </summary>
-        /// <param name="n">Order</param>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Order.</param>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static double Bernoulli(int n, float x)
         {
             return NumberPolynomial(n, x, false);
@@ -1738,8 +1738,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Minkowski function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Minkowski(long x)
         {
             // The question-mark function fixes every integer.

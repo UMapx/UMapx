@@ -28,8 +28,8 @@ namespace UMapx.Analysis
         #region Class components
         /// <summary>
         /// Initializes the Pade approximant.
-        /// <param name="m">The degree of the numerator of a rational function</param>
-        /// <param name="n">The degree of the denominator of a rational function</param>
+        /// <param name="m">The degree of the numerator of a rational function.</param>
+        /// <param name="n">The degree of the denominator of a rational function.</param>
         /// </summary>
         public Pade(int m = 2, int n = 2)
         {
@@ -54,7 +54,7 @@ namespace UMapx.Analysis
             }
         }
         /// <summary>
-        /// Gets or sets the degree of the denominator of a rational function
+        /// Gets or sets the degree of the denominator of a rational function.
         /// </summary>
         public int N
         {
@@ -73,9 +73,9 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the Pade approximant.
         /// </summary>
-        /// <param name="taylorCoeffs">Taylor series coefficients</param>
-        /// <exception cref="ArgumentException">Exception</exception>
-        /// <returns>Coeffs</returns>
+        /// <param name="taylorCoeffs">Taylor series coefficients.</param>
+        /// <exception cref="ArgumentException">Exception.</exception>
+        /// <returns>Coeffs.</returns>
         public (float[] NumeratorCoeffs, float[] DenominatorCoeffs) Compute(float[] taylorCoeffs)
         {
             if (taylorCoeffs.Length < m + n + 1)
@@ -123,9 +123,9 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the Pade approximant.
         /// </summary>
-        /// <param name="taylorCoeffs">Taylor series coefficients</param>
-        /// <exception cref="ArgumentException">Exception</exception>
-        /// <returns>Coeffs</returns>
+        /// <param name="taylorCoeffs">Taylor series coefficients.</param>
+        /// <exception cref="ArgumentException">Exception.</exception>
+        /// <returns>Coeffs.</returns>
         public (Complex32[] NumeratorCoeffs, Complex32[] DenominatorCoeffs) Compute(Complex32[] taylorCoeffs)
         {
             if (taylorCoeffs.Length < m + n + 1)
@@ -173,10 +173,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Evaluates a function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="numeratorCoeffs">Numerator coeffs</param>
-        /// <param name="denominatorCoeffs">Denominator coeffs</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="numeratorCoeffs">Numerator coeffs.</param>
+        /// <param name="denominatorCoeffs">Denominator coeffs.</param>
+        /// <returns>Value.</returns>
         public float Compute(float x, float[] numeratorCoeffs, float[] denominatorCoeffs)
         {
             float num = 0;
@@ -197,10 +197,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Evaluates a function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="numeratorCoeffs">Numerator coeffs</param>
-        /// <param name="denominatorCoeffs">Denominator coeffs</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="numeratorCoeffs">Numerator coeffs.</param>
+        /// <param name="denominatorCoeffs">Denominator coeffs.</param>
+        /// <returns>Value.</returns>
         public Complex32 Compute(Complex32 x, float[] numeratorCoeffs, float[] denominatorCoeffs)
         {
             Complex32 num = 0;
@@ -221,10 +221,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Evaluates a function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="numeratorCoeffs">Numerator coeffs</param>
-        /// <param name="denominatorCoeffs">Denominator coeffs</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="numeratorCoeffs">Numerator coeffs.</param>
+        /// <param name="denominatorCoeffs">Denominator coeffs.</param>
+        /// <returns>Value.</returns>
         public Complex32 Compute(float x, Complex32[] numeratorCoeffs, Complex32[] denominatorCoeffs)
         {
             Complex32 num = 0;
@@ -245,10 +245,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Evaluates a function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="numeratorCoeffs">Numerator coeffs</param>
-        /// <param name="denominatorCoeffs">Denominator coeffs</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="numeratorCoeffs">Numerator coeffs.</param>
+        /// <param name="denominatorCoeffs">Denominator coeffs.</param>
+        /// <returns>Value.</returns>
         public Complex32 Compute(Complex32 x, Complex32[] numeratorCoeffs, Complex32[] denominatorCoeffs)
         {
             Complex32 num = 0;
@@ -269,11 +269,11 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the equation of a Pade approximant represented as a string.
         /// </summary>
-        /// <param name="numeratorCoeffs">Numerator coeffs</param>
-        /// <param name="denominatorCoeffs">Denominator coeffs</param>
+        /// <param name="numeratorCoeffs">Numerator coeffs.</param>
+        /// <param name="denominatorCoeffs">Denominator coeffs.</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException">Exception</exception>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <exception cref="ArgumentNullException">Exception.</exception>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public string Equation(float[] numeratorCoeffs, float[] denominatorCoeffs)
         {
             if (numeratorCoeffs == null || denominatorCoeffs == null)
@@ -292,10 +292,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Formats polynomial c0 + c1*x + ... + cK*x^K as a readable string.
         /// </summary>
-        /// <param name="c">Polynomial</param>
-        /// <param name="var">Variable</param>
-        /// <param name="eps">Epsilon</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <param name="c">Polynomial.</param>
+        /// <param name="var">Variable.</param>
+        /// <param name="eps">Epsilon.</param>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         private static string FormatPolynomial(float[] c, string var, float eps)
         {
             var sb = new StringBuilder();
@@ -343,11 +343,11 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the equation of a Pade approximant represented as a string.
         /// </summary>
-        /// <param name="numeratorCoeffs">Numerator coeffs</param>
-        /// <param name="denominatorCoeffs">Denominator coeffs</param>
+        /// <param name="numeratorCoeffs">Numerator coeffs.</param>
+        /// <param name="denominatorCoeffs">Denominator coeffs.</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException">Exception</exception>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <exception cref="ArgumentNullException">Exception.</exception>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public string Equation(Complex32[] numeratorCoeffs, Complex32[] denominatorCoeffs)
         {
             if (numeratorCoeffs == null || denominatorCoeffs == null)
@@ -366,10 +366,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Formats polynomial c0 + c1*x + ... + cK*x^K as a readable string.
         /// </summary>
-        /// <param name="c">Polynomial</param>
-        /// <param name="var">Variable</param>
-        /// <param name="eps">Epsilon</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <param name="c">Polynomial.</param>
+        /// <param name="var">Variable.</param>
+        /// <param name="eps">Epsilon.</param>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         private static string FormatPolynomial(Complex32[] c, string var, float eps)
         {
             var sb = new StringBuilder();
@@ -459,9 +459,9 @@ namespace UMapx.Analysis
         /// <summary>
         /// Formats a complex number.
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <param name="eps">Epsilon</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <param name="z">Value.</param>
+        /// <param name="eps">Epsilon.</param>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         private static string FormatComplex(Complex32 z, float eps)
         {
             float re = z.Real;
@@ -487,16 +487,16 @@ namespace UMapx.Analysis
         /// <summary>
         /// True if |z|≈0 (both parts small).
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <param name="eps">Epsilon</param>
-        /// <returns>Boolean</returns>
+        /// <param name="z">Value.</param>
+        /// <param name="eps">Epsilon.</param>
+        /// <returns>Boolean.</returns>
         private static bool IsZero(Complex32 z, float eps) => Math.Abs(z.Real) <= eps && Math.Abs(z.Imag) <= eps;
         /// <summary>
         /// True if |x - 1| ≤ eps.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="eps">Epsilon</param>
-        /// <returns>Boolean</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="eps">Epsilon.</param>
+        /// <returns>Boolean.</returns>
         private static bool NearlyOne(float x, float eps) => Math.Abs(x - 1f) <= eps;
         #endregion
     }

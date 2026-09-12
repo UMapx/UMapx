@@ -13,9 +13,9 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the polynomial value.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="c">Approximation coefficients</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="c">Approximation coefficients.</param>
+        /// <returns>Value.</returns>
         public static float Polynomial(float x, float[] c)
         {
             int n = c.Length, i;
@@ -30,9 +30,9 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns an array of polynomial values.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="c">Approximation coefficients</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="c">Approximation coefficients.</param>
+        /// <returns>Array.</returns>
         public static float[] Polynomial(float[] x, float[] c)
         {
             int n = x.Length, i;
@@ -47,10 +47,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns an array of polynomial values.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="y">Function</param>
-        /// <param name="iterations">Number of iterations</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="y">Function.</param>
+        /// <param name="iterations">Number of iterations.</param>
+        /// <returns>Array.</returns>
         public static float[] Coefficients(float[] x, float[] y, int iterations)
         {
             int i, j;
@@ -71,9 +71,9 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the value of the expression: s += v(i) ^ pow.
         /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="pow">Power</param>
-        /// <returns>Value</returns>
+        /// <param name="v">Array.</param>
+        /// <param name="pow">Power.</param>
+        /// <returns>Value.</returns>
         public static float SummaryPow(float[] v, float pow)
         {
             float sum = 0;
@@ -88,11 +88,11 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the value of the expression: s += {x(i) ^ powx} * {y(i) ^ powy}.
         /// </summary>
-        /// <param name="x">Array</param>
-        /// <param name="y">Array</param>
-        /// <param name="powx">Power of x</param>
-        /// <param name="powy">Power of y</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Array.</param>
+        /// <param name="y">Array.</param>
+        /// <param name="powx">Power of x.</param>
+        /// <param name="powy">Power of y.</param>
+        /// <returns>Value.</returns>
         public static float SummaryPow(float[] x, float[] y, float powx, float powy)
         {
             float sum = 0;
@@ -107,9 +107,9 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the approximation error of the function.
         /// </summary>
-        /// <param name="a">Approximation</param>
-        /// <param name="b">Function</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Approximation.</param>
+        /// <param name="b">Function.</param>
+        /// <returns>Value.</returns>
         public static float Error(float[] a, float[] b)
         {
             float vara = Matrice.Var(a);
@@ -124,17 +124,17 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the equation of a polynomial represented as a string (uses " * X^" for powers).
         /// </summary>
-        /// <param name="p">Polynomial coefficients</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <param name="p">Polynomial coefficients.</param>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public static string Equation(float[] p) => Equation(p, " * X^");
 
         /// <summary>
         /// Returns the equation of a polynomial represented as a string.
         /// The <paramref name="function"/> string is appended for i>0 before the power index (e.g. " * X^").
         /// </summary>
-        /// <param name="p">Polynomial coefficients</param>
-        /// <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^")</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <param name="p">Polynomial coefficients.</param>
+        /// <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^").</param>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public static string Equation(float[] p, string function)
         {
             if (p == null) throw new ArgumentNullException(nameof(p));
@@ -163,9 +163,9 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the polynomial value.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="c">Approximation coefficients</param>
-        /// <returns>Complex number</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="c">Approximation coefficients.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Polynomial(Complex32 x, Complex32[] c)
         {
             int n = c.Length, i;
@@ -180,9 +180,9 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns an array of polynomial values.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="c">Approximation coefficients</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="c">Approximation coefficients.</param>
+        /// <returns>Array.</returns>
         public static Complex32[] Polynomial(Complex32[] x, Complex32[] c)
         {
             int n = x.Length, i;
@@ -197,10 +197,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns an array of polynomial values.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="y">Function</param>
-        /// <param name="iterations">Number of iterations</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="y">Function.</param>
+        /// <param name="iterations">Number of iterations.</param>
+        /// <returns>Array.</returns>
         public static Complex32[] Coefficients(Complex32[] x, Complex32[] y, int iterations)
         {
             int i, j;
@@ -221,9 +221,9 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the value of the expression: s += v(i) ^ pow.
         /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="pow">Power</param>
-        /// <returns>Value</returns>
+        /// <param name="v">Array.</param>
+        /// <param name="pow">Power.</param>
+        /// <returns>Value.</returns>
         public static Complex32 SummaryPow(Complex32[] v, float pow)
         {
             Complex32 sum = 0;
@@ -238,11 +238,11 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the value of the expression: s += {x(i) ^ powx} * {y(i) ^ powy}.
         /// </summary>
-        /// <param name="x">Array</param>
-        /// <param name="y">Array</param>
-        /// <param name="powx">Power of x</param>
-        /// <param name="powy">Power of y</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Array.</param>
+        /// <param name="y">Array.</param>
+        /// <param name="powx">Power of x.</param>
+        /// <param name="powy">Power of y.</param>
+        /// <returns>Value.</returns>
         public static Complex32 SummaryPow(Complex32[] x, Complex32[] y, float powx, float powy)
         {
             Complex32 sum = 0;
@@ -257,9 +257,9 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the approximation error of the function.
         /// </summary>
-        /// <param name="a">Approximation</param>
-        /// <param name="b">Function</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Approximation.</param>
+        /// <param name="b">Function.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Error(Complex32[] a, Complex32[] b)
         {
             Complex32 vara = Matrice.Var(a);
@@ -274,17 +274,17 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the equation of a polynomial represented as a string (uses " * X^" for powers).
         /// </summary>
-        /// <param name="p">Polynomial coefficients</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <param name="p">Polynomial coefficients.</param>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public static string Equation(Complex32[] p) => Equation(p, " * X^");
 
         /// <summary>
         /// Returns the equation of a polynomial represented as a string.
         /// The <paramref name="function"/> string is appended for i>0 before the power index (e.g. " * X^").
         /// </summary>
-        /// <param name="p">Polynomial coefficients</param>
-        /// <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^")</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <param name="p">Polynomial coefficients.</param>
+        /// <param name="function">Token placed before the power index for i&gt;0 (e.g. " * X^").</param>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public static string Equation(Complex32[] p, string function)
         {
             if (p == null) throw new ArgumentNullException(nameof(p));

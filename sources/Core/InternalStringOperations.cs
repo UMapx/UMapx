@@ -32,10 +32,10 @@ namespace UMapx.Core
         /// <summary>
         /// The function of converting an array of numbers to a string.
         /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="format">Format string</param>
-        /// <param name="symbol">String array</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <param name="v">Array.</param>
+        /// <param name="format">Format string.</param>
+        /// <param name="symbol">String array.</param>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public static string Disp(float[] v, string format, string[] symbol)
         {
             int length = v.Length, i;
@@ -63,13 +63,13 @@ namespace UMapx.Core
             return "0";
         }
         /// <summary>
-        /// The function of converting number to a string
+        /// The function of converting number to a string.
         /// </summary>
-        /// <param name="v">Value</param>
-        /// <param name="format">Format string</param>
-        /// <param name="s">First in a row or not</param>
-        /// <param name="symbol">Symbol</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <param name="v">Value.</param>
+        /// <param name="format">Format string.</param>
+        /// <param name="s">First in a row or not.</param>
+        /// <param name="symbol">Symbol.</param>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public static string Disp(double v, string format, bool s, string symbol)
         {
             if (v == 0)
@@ -85,8 +85,8 @@ namespace UMapx.Core
         /// <summary>
         /// Defines a general method for casting the original row to the matrix form.
         /// </summary>
-        /// <param name="s">Input string</param>
-        /// <returns>String array</returns>
+        /// <param name="s">Input string.</param>
+        /// <returns>String array.</returns>
         public static string[] Matpar(string s)
         {
             // example: s = "[1 2 3 4]".
@@ -108,8 +108,8 @@ namespace UMapx.Core
         /// <remarks>
         /// Example: "1 + 2i", "0.321 + 11i", ".1i".
         /// </remarks>
-        /// <param name="s">Input string</param>
-        /// <returns>Complex32 value</returns>
+        /// <param name="s">Input string.</param>
+        /// <returns>Complex32 value.</returns>
         public static Complex32 Compar(string s)
         {
             string u = s.Replace(" ", "");

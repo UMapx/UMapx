@@ -16,9 +16,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a Bitmap to an RGB structure with or without alpha-channel.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="alpha">Alpha-channel</param>
-        /// <returns>RGBA structure array</returns>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="alpha">Alpha-channel.</param>
+        /// <returns>RGBA structure array.</returns>
         public static float[][,] ToRGB(this Bitmap Data, bool alpha = false)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -29,9 +29,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a Bitmap to an RGB structure with or without alpha-channel.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="alpha">Alpha-channel</param>
-        /// <returns>RGBA structure array</returns>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="alpha">Alpha-channel.</param>
+        /// <returns>RGBA structure array.</returns>
         public unsafe static float[][,] ToRGB(BitmapData bmData, bool alpha = false)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -93,8 +93,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts an RGB structure to a color image.
         /// </summary>
-        /// <param name="array">RGBA structure array</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="array">RGBA structure array.</param>
+        /// <returns>Bitmap.</returns>
         public unsafe static Bitmap FromRGB(this float[][,] array)
         {
             // matrices
@@ -160,8 +160,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts an RGB structure to a color image.
         /// </summary>
-        /// <param name="array">RGBA structure array</param>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="array">RGBA structure array.</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe static void FromRGB(this float[][,] array, BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -224,8 +224,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts an RGB structure to a color image.
         /// </summary>
-        /// <param name="array">RGBA structure array</param>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="array">RGBA structure array.</param>
+        /// <param name="Data">Bitmap.</param>
         public static void FromRGB(this float[][,] array, Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -238,9 +238,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a Bitmap to an HSB structure with or without alpha-channel.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="alpha">Alpha-channel</param>
-        /// <returns>HSB structure array</returns>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="alpha">Alpha-channel.</param>
+        /// <returns>HSB structure array.</returns>
         public static float[][,] ToHSB(this Bitmap Data, bool alpha = false)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -251,9 +251,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a Bitmap to an HSB structure with or without alpha-channel.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="alpha">Alpha-channel</param>
-        /// <returns>HSB structure array</returns>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="alpha">Alpha-channel.</param>
+        /// <returns>HSB structure array.</returns>
         public unsafe static float[][,] ToHSB(this BitmapData bmData, bool alpha = false)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -319,8 +319,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts an HSB structure to a color image.
         /// </summary>
-        /// <param name="array">HSB structure array</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="array">HSB structure array.</param>
+        /// <returns>Bitmap.</returns>
         public unsafe static Bitmap FromHSB(this float[][,] array)
         {
             // matrices
@@ -393,8 +393,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts an HSB structure to a color image.
         /// </summary>
-        /// <param name="array">HSB structure array</param>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="array">HSB structure array.</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe static void FromHSB(this float[][,] array, BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -467,8 +467,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts an HSB structure to a color image.
         /// </summary>
-        /// <param name="array">HSB structure array</param>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="array">HSB structure array.</param>
+        /// <param name="Data">Bitmap.</param>
         public static void FromHSB(this float[][,] array, Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -481,9 +481,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a Bitmap to an HSL structure with or without alpha-channel.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="alpha">Alpha-channel</param>
-        /// <returns>HSL structure array</returns>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="alpha">Alpha-channel.</param>
+        /// <returns>HSL structure array.</returns>
         public static float[][,] ToHSL(this Bitmap Data, bool alpha = false)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -494,9 +494,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a Bitmap to an HSL structure with or without alpha-channel.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="alpha">Alpha-channel</param>
-        /// <returns>HSL structure array</returns>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="alpha">Alpha-channel.</param>
+        /// <returns>HSL structure array.</returns>
         public unsafe static float[][,] ToHSL(this BitmapData bmData, bool alpha = false)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -562,8 +562,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts an HSL structure to a color image.
         /// </summary>
-        /// <param name="array">HSL structure array</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="array">HSL structure array.</param>
+        /// <returns>Bitmap.</returns>
         public unsafe static Bitmap FromHSL(this float[][,] array)
         {
             // matrices
@@ -636,8 +636,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts an HSL structure to a color image.
         /// </summary>
-        /// <param name="array">HSL structure array</param>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="array">HSL structure array.</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe static void FromHSL(this float[][,] array, BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -708,8 +708,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts an HSL structure to a color image.
         /// </summary>
-        /// <param name="array">HSL structure array</param>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="array">HSL structure array.</param>
+        /// <param name="Data">Bitmap.</param>
         public static void FromHSL(this float[][,] array, Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -722,9 +722,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a Bitmap to an YCbCr structure with or without alpha-channel.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="alpha">Alpha-channel</param>
-        /// <returns>YCbCr structure array</returns>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="alpha">Alpha-channel.</param>
+        /// <returns>YCbCr structure array.</returns>
         public static float[][,] ToYCbCr(this Bitmap Data, bool alpha = false)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -735,9 +735,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a Bitmap to an YCbCr structure with or without alpha-channel.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="alpha">Alpha-channel</param>
-        /// <returns>YCbCr structure array</returns>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="alpha">Alpha-channel.</param>
+        /// <returns>YCbCr structure array.</returns>
         public unsafe static float[][,] ToYCbCr(this BitmapData bmData, bool alpha = false)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -803,8 +803,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts an YCbCr structure to a color image.
         /// </summary>
-        /// <param name="array">YCbCr structure array</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="array">YCbCr structure array.</param>
+        /// <returns>Bitmap.</returns>
         public unsafe static Bitmap FromYCbCr(this float[][,] array)
         {
             // matrices
@@ -877,8 +877,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts an YCbCr structure to a color image.
         /// </summary>
-        /// <param name="array">YCbCr structure array</param>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="array">YCbCr structure array.</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe static void FromYCbCr(this float[][,] array, BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -949,8 +949,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts an YCbCr structure to a color image.
         /// </summary>
-        /// <param name="array">YCbCr structure array</param>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="array">YCbCr structure array.</param>
+        /// <param name="Data">Bitmap.</param>
         public static void FromYCbCr(this float[][,] array, Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -963,8 +963,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts Bitmap to averaged channel value matrix.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <returns>Matrix</returns>
+        /// <param name="Data">Bitmap.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] ToGrayscale(this Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -975,8 +975,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts Bitmap to averaged channel value matrix.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <returns>Matrix</returns>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <returns>Matrix.</returns>
         public unsafe static float[,] ToGrayscale(this BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -1002,8 +1002,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a matrix of channel values to a monochrome Bitmap.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="m">Matrix.</param>
+        /// <returns>Bitmap.</returns>
         public unsafe static Bitmap FromGrayscale(this float[,] m)
         {
             int width = m.GetLength(1), height = m.GetLength(0);
@@ -1030,8 +1030,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a matrix of channel values to a monochrome Bitmap.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="m">Matrix.</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe static void FromGrayscale(this float[,] m, BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -1056,8 +1056,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a matrix of channel values to a monochrome Bitmap.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="m">Matrix.</param>
+        /// <param name="Data">Bitmap.</param>
         public static void FromGrayscale(this float[,] m, Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);

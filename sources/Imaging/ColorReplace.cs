@@ -20,8 +20,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the color replacement filter.
         /// </summary>
-        /// <param name="input">Input color</param>
-        /// <param name="output">Output color</param>
+        /// <param name="input">Input color.</param>
+        /// <param name="output">Output color.</param>
         public ColorReplace(Color input, Color output)
         {
             Input = input;
@@ -62,7 +62,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -94,7 +94,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);

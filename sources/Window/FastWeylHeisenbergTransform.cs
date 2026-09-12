@@ -22,9 +22,9 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes fast Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="window">Windows function</param>
-        /// <param name="m">Number of frequency shifts [4, N/2]</param>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="window">Windows function.</param>
+        /// <param name="m">Number of frequency shifts [4, N/2].</param>
+        /// <param name="direction">Processing direction.</param>
         public FastWeylHeisenbergTransform(IWindow window, int m = 8, Direction direction = Direction.Vertical) : base(window, m, direction) { }
         #endregion
 
@@ -32,8 +32,8 @@ namespace UMapx.Window
         /// <summary>
         /// Forward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="A">Array.</param>
+        /// <returns>Array.</returns>
         public override Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
@@ -43,8 +43,8 @@ namespace UMapx.Window
         /// <summary>
         /// Backward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="B">Array.</param>
+        /// <returns>Array.</returns>
         public override Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length / 2;
@@ -54,8 +54,8 @@ namespace UMapx.Window
         /// <summary>
         /// Forward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="A">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public override Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0); // rows
@@ -181,8 +181,8 @@ namespace UMapx.Window
         /// <summary>
         /// Backward Weyl-Heisenberg transform.
         /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="B">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public override Complex32[,] Backward(Complex32[,] B)
         {
             int N2 = B.GetLength(0); // possibly 2N

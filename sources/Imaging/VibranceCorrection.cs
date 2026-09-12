@@ -20,7 +20,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the vibrance correction filter.
         /// </summary>
-        /// <param name="vibrance">Vibrance [-100, 100]</param>
+        /// <param name="vibrance">Vibrance [-100, 100].</param>
         public VibranceCorrection(float vibrance)
         {
             Vibrance = vibrance;
@@ -46,7 +46,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -80,7 +80,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);

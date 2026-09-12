@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Triangular_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Triangular_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Triangular : IDistribution
@@ -27,9 +27,9 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the triangular distribution.
         /// </summary>
-        /// <param name="a">Parameter a ∈ (-inf, +inf)</param>
-        /// <param name="b">Parameter b ∈ (-inf, +inf)</param>
-        /// <param name="c">Parameter c ∈ (-inf, +inf)</param>
+        /// <param name="a">Parameter a ∈ (-inf, +inf).</param>
+        /// <param name="b">Parameter b ∈ (-inf, +inf).</param>
+        /// <param name="c">Parameter c ∈ (-inf, +inf).</param>
         public Triangular(float a, float b, float c)
         {
             A = a; B = b; C = c;
@@ -171,8 +171,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x < a)
@@ -189,8 +189,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x < a)

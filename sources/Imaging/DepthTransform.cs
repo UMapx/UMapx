@@ -13,9 +13,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Rotates depth by rotation value.
         /// </summary>
-        /// <param name="depth">Matrix</param>
-        /// <param name="rotation">Rotation</param>
-        /// <returns>Matrix</returns>
+        /// <param name="depth">Matrix.</param>
+        /// <param name="rotation">Rotation.</param>
+        /// <returns>Matrix.</returns>
         public static ushort[,] Rotate(this ushort[,] depth, RotationMode rotation)
         {
             switch (rotation)
@@ -37,8 +37,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Rotates the depth by 90 degrees.
         /// </summary>
-        /// <param name="input">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="input">Matrix.</param>
+        /// <returns>Matrix.</returns>
         private static ushort[,] Rotate90(ushort[,] input)
         {
             int h = input.GetLength(0);
@@ -59,8 +59,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Rotates the depth by 180 degrees.
         /// </summary>
-        /// <param name="input">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="input">Matrix.</param>
+        /// <returns>Matrix.</returns>
         private static ushort[,] Rotate180(ushort[,] input)
         {
             int h = input.GetLength(0);
@@ -81,8 +81,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Rotates the depth by 270 degrees.
         /// </summary>
-        /// <param name="input">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="input">Matrix.</param>
+        /// <returns>Matrix.</returns>
         private static ushort[,] Rotate270(ushort[,] input)
         {
             int h = input.GetLength(0);
@@ -105,9 +105,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Rotates depth by angle.
         /// </summary>
-        /// <param name="depth">Matrix</param>
-        /// <param name="angle">Angle</param>
-        /// <returns>Matrix</returns>
+        /// <param name="depth">Matrix.</param>
+        /// <param name="angle">Angle.</param>
+        /// <returns>Matrix.</returns>
         public static ushort[,] Rotate(this ushort[,] depth, float angle)
         {
             return Rotate(depth, angle, 0);
@@ -115,10 +115,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Rotates depth by angle.
         /// </summary>
-        /// <param name="depth">Matrix</param>
-        /// <param name="angle">Angle</param>
-        /// <param name="color">Background color</param>
-        /// <returns>Matrix</returns>
+        /// <param name="depth">Matrix.</param>
+        /// <param name="angle">Angle.</param>
+        /// <param name="color">Background color.</param>
+        /// <returns>Matrix.</returns>
         public static ushort[,] Rotate(this ushort[,] depth, float angle, ushort color)
         {
             // get source image size
@@ -220,9 +220,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Flips depth by direction.
         /// </summary>
-        /// <param name="depth">Matrix</param>
-        /// <param name="direction">Direction</param>
-        /// <returns>Matrix</returns>
+        /// <param name="depth">Matrix.</param>
+        /// <param name="direction">Direction.</param>
+        /// <returns>Matrix.</returns>
         public static ushort[,] Flip(this ushort[,] depth, Direction direction)
         {
             switch (direction)
@@ -242,8 +242,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Flips depth by X axis.
         /// </summary>
-        /// <param name="depth">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="depth">Matrix.</param>
+        /// <returns>Matrix.</returns>
         private static ushort[,] FlipX(ushort[,] depth)
         {
             int h = depth.GetLength(0);
@@ -264,8 +264,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Flips depth by Y axis.
         /// </summary>
-        /// <param name="depth">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="depth">Matrix.</param>
+        /// <returns>Matrix.</returns>
         private static ushort[,] FlipY(ushort[,] depth)
         {
             int h = depth.GetLength(0);
@@ -286,8 +286,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Flips depth by XY axis.
         /// </summary>
-        /// <param name="depth">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="depth">Matrix.</param>
+        /// <returns>Matrix.</returns>
         private static ushort[,] FlipXY(ushort[,] depth)
         {
             int h = depth.GetLength(0);
@@ -312,8 +312,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Crops the depth.
         /// </summary>
-        /// <param name="depth">Depth</param>
-        /// <param name="rectangle">Rectangle</param>
+        /// <param name="depth">Depth.</param>
+        /// <param name="rectangle">Rectangle.</param>
         /// <returns></returns>
         public static ushort[,] Crop(this ushort[,] depth, Rectangle rectangle)
         {
@@ -352,9 +352,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Resizes the depth.
         /// </summary>
-        /// <param name="input">Matrix</param>
-        /// <param name="size">Size</param>
-        /// <returns>Matrix</returns>
+        /// <param name="input">Matrix.</param>
+        /// <param name="size">Size.</param>
+        /// <returns>Matrix.</returns>
         public static ushort[,] Resize(this ushort[,] input, Size size)
         {
             // get source size
@@ -435,10 +435,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Shifts the depth.
         /// </summary>
-        /// <param name="a">Matrix</param>
-        /// <param name="h">The number of positions to which a shift in height occurs</param>
-        /// <param name="w">The number of positions by which the shift occurs in width</param>
-        /// <returns>Matrix</returns>
+        /// <param name="a">Matrix.</param>
+        /// <param name="h">The number of positions to which a shift in height occurs.</param>
+        /// <param name="w">The number of positions by which the shift occurs in width.</param>
+        /// <returns>Matrix.</returns>
         public static ushort[,] Shift(this ushort[,] a, int w, int h)
         {
             int l0 = a.GetLength(0), l1 = a.GetLength(1);
@@ -460,8 +460,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Copies a depth map into the top-left corner of another depth map, clipping at its edges.
         /// </summary>
-        /// <param name="a">Matrix</param>
-        /// <param name="b">Matrix</param>
+        /// <param name="a">Matrix.</param>
+        /// <param name="b">Matrix.</param>
         public static void Merge(this ushort[,] a, ushort[,] b)
         {
             var rectangle = new Rectangle(0, 0, b.GetLength(1), b.GetLength(0));

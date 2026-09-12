@@ -8,7 +8,7 @@ namespace UMapx.Transform
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
+    /// <see href="http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf"/>.
     /// </remarks>
     [Serializable]
     public class LaplacianPyramidFilter : IFilter
@@ -22,8 +22,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the Laplace pyramid filter.
         /// </summary>
-        /// <param name="lap">Laplacian pyramid</param>
-        /// <param name="factor">Factor [-1, 1]</param>
+        /// <param name="lap">Laplacian pyramid.</param>
+        /// <param name="factor">Factor [-1, 1].</param>
         public LaplacianPyramidFilter(LaplacianPyramidTransform lap, float factor = -1.0f)
         {
             this.LaplacianPyramid = lap;
@@ -63,7 +63,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(float[,] data)
         {
             // forward pyramid transform
@@ -91,7 +91,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(Complex32[,] data)
         {
             // forward pyramid transform
@@ -119,7 +119,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(float[] data)
         {
             // forward pyramid transform
@@ -144,7 +144,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(Complex32[] data)
         {
             // forward pyramid transform

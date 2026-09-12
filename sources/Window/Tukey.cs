@@ -17,8 +17,8 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes the Tukey window function.
         /// </summary>
-        /// <param name="frameSize">Window size</param>
-        /// <param name="a">Form parameter [0, 1]</param>
+        /// <param name="frameSize">Window size.</param>
+        /// <param name="a">Form parameter [0, 1].</param>
         public Tukey(int frameSize, float a = 1)
         {
             this.FrameSize = frameSize;
@@ -41,9 +41,9 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Value.</returns>
         public override float Function(float x, int frameSize)
         {
             // Tukey window:
@@ -70,7 +70,7 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the window function.
         /// </summary>
-        /// <returns>Array</returns>
+        /// <returns>Array.</returns>
         public override float[] GetWindow(int frameSize)
         {
             float t = (frameSize - 1);

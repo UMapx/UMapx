@@ -13,8 +13,8 @@ namespace UMapx.Core
         /// <summary>
         /// Save data to the file.
         /// </summary>
-        /// <param name="stream">Stream</param>
-        /// <param name="o">Object</param>
+        /// <param name="stream">Stream.</param>
+        /// <param name="o">Object.</param>
         public static void Save(Stream stream, object o)
         {
             XmlSerializer xml = new XmlSerializer(o.GetType());
@@ -23,8 +23,8 @@ namespace UMapx.Core
         /// <summary>
         /// Save data to the file.
         /// </summary>
-        /// <param name="fileName">File name</param>
-        /// <param name="o">Object</param>
+        /// <param name="fileName">File name.</param>
+        /// <param name="o">Object.</param>
         public static void Save(string fileName, object o)
         {
             using var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
@@ -34,8 +34,8 @@ namespace UMapx.Core
         /// <summary>
         /// Load data from the file.
         /// </summary>
-        /// <param name="stream">Stream</param>
-        /// <param name="type">Type</param>
+        /// <param name="stream">Stream.</param>
+        /// <param name="type">Type.</param>
         public static object Open(Stream stream, Type type)
         {
             XmlSerializer xml = new XmlSerializer(type);
@@ -44,8 +44,8 @@ namespace UMapx.Core
         /// <summary>
         /// Load data from the file.
         /// </summary>
-        /// <param name="fileName">File name</param>
-        /// <param name="type">Type</param>
+        /// <param name="fileName">File name.</param>
+        /// <param name="type">Type.</param>
         public static object Open(string fileName, Type type)
         {
             using var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);

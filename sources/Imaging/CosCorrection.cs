@@ -16,8 +16,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the cosine correction filter.
         /// </summary>
-        /// <param name="delta">Delta [-1, 1]</param>
-        /// <param name="space">Color space</param>
+        /// <param name="delta">Delta [-1, 1].</param>
+        /// <param name="space">Color space.</param>
         public CosCorrection(float delta, Space space)
         {
             Delta = delta; this.Space = space;

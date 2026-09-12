@@ -9,7 +9,7 @@ namespace UMapx.Wavelet
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Wavelet
+    /// <see href="https://en.wikipedia.org/wiki/Wavelet"/>.
     /// </remarks>
     [Serializable]
     public partial class WaveletPacket : ICloneable, ISerializable
@@ -25,10 +25,10 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Initializes the discrete wavelet.
         /// </summary>
-        /// <param name="lp">Scaling function of forward transform</param>
-        /// <param name="hp">Wavelet function of forward transform</param>
-        /// <param name="ilp">Scaling function of backward transform</param>
-        /// <param name="ihp">Wavelet function of backward transform</param>
+        /// <param name="lp">Scaling function of forward transform.</param>
+        /// <param name="hp">Wavelet function of forward transform.</param>
+        /// <param name="ilp">Scaling function of backward transform.</param>
+        /// <param name="ihp">Wavelet function of backward transform.</param>
         public WaveletPacket(float[] lp, float[] hp, float[] ilp, float[] ihp)
         {
             this.lp = lp; this.hp = hp; this.ilp = ilp; this.ihp = ihp;
@@ -99,8 +99,8 @@ namespace UMapx.Wavelet
         /// For a paraunitary (orthonormal) 2-channel bank this must be combined with a
         /// properly normalized low-pass (e.g., sum(h0)=√2 and H0(π)=0).
         /// </summary>
-        /// <param name="v">Scaling function</param>
-        /// <returns>Wavelet function</returns>
+        /// <param name="v">Scaling function.</param>
+        /// <returns>Wavelet function.</returns>
         public static float[] CQF(float[] v)
         {
             // High-pass by CQF:
@@ -121,8 +121,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Creates the discrete wavelet.
         /// </summary>
-        /// <param name="scaling">Scaling function</param>
-        /// <returns>Discrete wavelet</returns>
+        /// <param name="scaling">Scaling function.</param>
+        /// <returns>Discrete wavelet.</returns>
         public static WaveletPacket Create(float[] scaling)
         {
             float[] lp = scaling;
@@ -135,9 +135,9 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Creates an orthogonal bank by reversing its analysis filters for synthesis.
         /// </summary>
-        /// <param name="scaling">Scaling function</param>
-        /// <param name="wavelet">Wavelet function</param>
-        /// <returns>Discrete wavelet</returns>
+        /// <param name="scaling">Scaling function.</param>
+        /// <param name="wavelet">Wavelet function.</param>
+        /// <returns>Discrete wavelet.</returns>
         /// <remarks>For a general biorthogonal bank, supply all four filters to the constructor.</remarks>
         public static WaveletPacket Create(float[] scaling, float[] wavelet)
         {
@@ -193,7 +193,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Creates a copy of the discrete wavelet.
         /// </summary>
-        /// <returns>Discrete wavelet</returns>
+        /// <returns>Discrete wavelet.</returns>
         object ICloneable.Clone()
         {
             return new WaveletPacket(
@@ -205,7 +205,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Creates a copy of the discrete wavelet.
         /// </summary>
-        /// <returns>Discrete wavelet</returns>
+        /// <returns>Discrete wavelet.</returns>
         public WaveletPacket Clone()
         {
             return new WaveletPacket(
@@ -220,8 +220,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Gets information about the object.
         /// </summary>
-        /// <param name="info">Data needed for serialization and deserialization</param>
-        /// <param name="context">Source and destination of a given stream</param>
+        /// <param name="info">Data needed for serialization and deserialization.</param>
+        /// <param name="context">Source and destination of a given stream.</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Scaling function of forward transform", this.lp);

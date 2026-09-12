@@ -17,9 +17,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the logarithmic correction filter.
         /// </summary>
-        /// <param name="nbase">Logarithm base</param>
-        /// <param name="delta">Delta [-1, 1]</param>
-        /// <param name="space">Color space</param>
+        /// <param name="nbase">Logarithm base.</param>
+        /// <param name="delta">Delta [-1, 1].</param>
+        /// <param name="space">Color space.</param>
         public LogCorrection(float nbase, float delta, Space space)
         {
             Base = nbase; Delta = delta; this.Space = space;

@@ -53,8 +53,8 @@ namespace UMapx.Core
         /// <summary>
         /// Converts a value to a Byte type.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Byte</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Byte.</returns>
         public static byte Byte(float x)
         {
             return (byte)((x > 255) ? 255 : ((x < 0) ? 0 : x));
@@ -62,8 +62,8 @@ namespace UMapx.Core
         /// <summary>
         /// Converts a value to a Byte type.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Byte</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Byte.</returns>
         public static byte Byte(int x)
         {
             return (byte)((x > 255) ? 255 : ((x < 0) ? 0 : x));
@@ -72,8 +72,8 @@ namespace UMapx.Core
         /// <summary>
         /// Converts a value to an <see cref="sbyte"/> type and clamps it to the range [-128, 127].
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>sbyte</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>sbyte.</returns>
         public static sbyte sByte(float x)
         {
             return (sbyte)((x > 127) ? 127 : ((x < -128) ? -128 : x));
@@ -81,8 +81,8 @@ namespace UMapx.Core
         /// <summary>
         /// Converts a value to an <see cref="sbyte"/> type and clamps it to the range [-128, 127].
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>sbyte</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>sbyte.</returns>
         public static sbyte sByte(int x)
         {
             return (sbyte)((x > 127) ? 127 : ((x < -128) ? -128 : x));
@@ -91,8 +91,8 @@ namespace UMapx.Core
         /// <summary>
         /// Converts a value to a type float.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Float(float x)
         {
             return (x > 1.0f) ? 1.0f : ((x < 0) ? 0 : x);
@@ -100,10 +100,10 @@ namespace UMapx.Core
         /// <summary>
         /// Checks if value is in the specified range.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="xmin">Minimum value</param>
-        /// <param name="xmax">Maximum value</param>
-        /// <returns>Boolean</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="xmin">Minimum value.</param>
+        /// <param name="xmax">Maximum value.</param>
+        /// <returns>Boolean.</returns>
         public static bool IsRange(float x, float xmin, float xmax)
         {
             if (x <= xmax && x >= xmin)
@@ -115,10 +115,10 @@ namespace UMapx.Core
         /// <summary>
         /// Checks if value is in the specified range.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="xmin">Minimum value</param>
-        /// <param name="xmax">Maximum value</param>
-        /// <returns>Boolean</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="xmin">Minimum value.</param>
+        /// <param name="xmax">Maximum value.</param>
+        /// <returns>Boolean.</returns>
         public static bool IsRange(int x, int xmin, int xmax)
         {
             if (x <= xmax && x >= xmin)
@@ -130,10 +130,10 @@ namespace UMapx.Core
         /// <summary>
         /// Crops value in the specified range.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="xmin">Minimum value</param>
-        /// <param name="xmax">Maximum value</param>
-        /// <returns>float</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="xmin">Minimum value.</param>
+        /// <param name="xmax">Maximum value.</param>
+        /// <returns>float.</returns>
         public static float Range(float x, float xmin, float xmax)
         {
             if (x > xmax)
@@ -149,10 +149,10 @@ namespace UMapx.Core
         /// <summary>
         /// Crops value in the specified range.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="xmin">Minimum value</param>
-        /// <param name="xmax">Maximum value</param>
-        /// <returns>int</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="xmin">Minimum value.</param>
+        /// <param name="xmax">Maximum value.</param>
+        /// <returns>int.</returns>
         public static int Range(int x, int xmin, int xmax)
         {
             if (x > xmax)
@@ -168,10 +168,10 @@ namespace UMapx.Core
         /// <summary>
         /// Wraps a value into the specified range by cyclically adjusting it.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="xmin">Lower bound of the target interval</param>
-        /// <param name="xmax">Period used for cyclic adjustment and upper bound of the interval</param>
-        /// <returns>float</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="xmin">Lower bound of the target interval.</param>
+        /// <param name="xmax">Period used for cyclic adjustment and upper bound of the interval.</param>
+        /// <returns>float.</returns>
         public static float Scale(float x, float xmin, float xmax)
         {
             float h = x;
@@ -193,10 +193,10 @@ namespace UMapx.Core
         /// <summary>
         /// Wraps a value into the specified range by cyclically adjusting it.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="xmin">Lower bound of the target interval</param>
-        /// <param name="xmax">Period used for cyclic adjustment and upper bound of the interval</param>
-        /// <returns>int</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="xmin">Lower bound of the target interval.</param>
+        /// <param name="xmax">Period used for cyclic adjustment and upper bound of the interval.</param>
+        /// <returns>int.</returns>
         public static int Scale(int x, int xmin, int xmax)
         {
             int h = x;
@@ -221,8 +221,8 @@ namespace UMapx.Core
         /// <summary>
         /// Checks a number for an exception.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Boolean</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Boolean.</returns>
         public static bool IsSingular(float a)
         {
             if (float.IsNaN(a))
@@ -238,8 +238,8 @@ namespace UMapx.Core
         /// <summary>
         /// Checks a number for an exception.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Boolean</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Boolean.</returns>
         public static bool IsSingular(Complex32 a)
         {
             if (IsSingular(a.Real) || IsSingular(a.Imag))
@@ -255,8 +255,8 @@ namespace UMapx.Core
         /// <summary>
         /// Checks if a number is a full square.
         /// </summary>
-        /// <param name="n">Integer number</param>
-        /// <returns>Boolean</returns>
+        /// <param name="n">Integer number.</param>
+        /// <returns>Boolean.</returns>
         public static bool IsSquare(float n)
         {
             if (n < 0 || float.IsNaN(n) || float.IsInfinity(n)) return false;
@@ -269,9 +269,9 @@ namespace UMapx.Core
         /// <summary>
         /// Checks whether a number is a power of another number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Boolean</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <returns>Boolean.</returns>
         public static bool IsPower(float a, float b)
         {
             float log = Maths.Log(a, b);
@@ -284,8 +284,8 @@ namespace UMapx.Core
         /// <summary>
         /// Checks whether a number is an integer.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Boolean</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Boolean.</returns>
         public static bool IsInteger(float a)
         {
             if (a == Maths.Round(a))
@@ -297,8 +297,8 @@ namespace UMapx.Core
         /// <summary>
         /// Checks whether a number is even.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Boolean</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Boolean.</returns>
         public static bool IsEven(float a)
         {
             if (a % 2 == 0)
@@ -310,8 +310,8 @@ namespace UMapx.Core
         /// <summary>
         /// Checks whether a number is odd.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Boolean</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Boolean.</returns>
         public static bool IsNotEven(float a)
         {
             return !IsEven(a);
@@ -319,8 +319,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the number raised to the second power.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Pow(float a)
         {
             return (float)Math.Pow(a, 2);
@@ -328,9 +328,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the number raised to the power.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Power</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Power.</param>
+        /// <returns>Value.</returns>
         public static float Pow(float a, float b)
         {
             return (float)Math.Pow(a, b);
@@ -338,8 +338,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the exponent raised to the power.
         /// </summary>
-        /// <param name="a">Power</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Power.</param>
+        /// <returns>Value.</returns>
         public static float Exp(float a)
         {
             return (float)Math.Pow(E, a);
@@ -347,8 +347,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the natural logarithm of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Log(float a)
         {
             return (float)Math.Log(a);
@@ -356,8 +356,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the decimal logarithm of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Log10(float a)
         {
             return (float)Math.Log(a, 10.0f);
@@ -365,8 +365,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the binary logarithm of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Log2(float a)
         {
             return (float)Math.Log(a, 2);
@@ -374,9 +374,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the logarithm of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Base</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Base.</param>
+        /// <returns>Value.</returns>
         public static float Log(float a, float b)
         {
             return (float)Math.Log(a, b);
@@ -384,8 +384,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the square root of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Sqrt(float a)
         {
             return (float)Math.Sqrt(a);
@@ -393,9 +393,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the root of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Power</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Power.</param>
+        /// <returns>Value.</returns>
         public static float Sqrt(float a, float b)
         {
             return (float)Math.Pow(a, 1.0f / b);
@@ -403,8 +403,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the modulus of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Abs(float a)
         {
             if (a < 0.0)
@@ -416,9 +416,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the largest of two numbers.
         /// </summary>
-        /// <param name="a">First number</param>
-        /// <param name="b">Second number</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First number.</param>
+        /// <param name="b">Second number.</param>
+        /// <returns>Value.</returns>
         public static float Max(float a, float b)
         {
             if (a < b)
@@ -430,10 +430,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the largest of three numbers.
         /// </summary>
-        /// <param name="a">First number</param>
-        /// <param name="b">Second number</param>
-        /// <param name="c">Third number</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First number.</param>
+        /// <param name="b">Second number.</param>
+        /// <param name="c">Third number.</param>
+        /// <returns>Value.</returns>
         public static float Max(float a, float b, float c)
         {
             return Max(a, Max(b, c));
@@ -441,9 +441,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the smallest of two numbers.
         /// </summary>
-        /// <param name="a">First number</param>
-        /// <param name="b">Second number</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First number.</param>
+        /// <param name="b">Second number.</param>
+        /// <returns>Value.</returns>
         public static float Min(float a, float b)
         {
             if (a < b)
@@ -455,10 +455,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the smallest of three numbers.
         /// </summary>
-        /// <param name="a">First number</param>
-        /// <param name="b">Second number</param>
-        /// <param name="c">Third number</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First number.</param>
+        /// <param name="b">Second number.</param>
+        /// <param name="c">Third number.</param>
+        /// <returns>Value.</returns>
         public static float Min(float a, float b, float c)
         {
             return Min(a, Min(b, c));
@@ -466,8 +466,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the sign of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static int Sign(float a)
         {
             if (a < 0)
@@ -483,8 +483,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the rounded number down.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Floor(float a)
         {
             return (float)Math.Floor(a);
@@ -492,8 +492,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the rounded number up.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Ceil(float a)
         {
             return (float)Math.Ceiling(a);
@@ -501,8 +501,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the rounded number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Round(float a)
         {
             return (float)Math.Round(a, 0);
@@ -510,9 +510,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the rounded number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="dig">Digits</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="dig">Digits.</param>
+        /// <returns>Value.</returns>
         public static float Round(float a, int dig)
         {
             return (float)Math.Round(a, dig);
@@ -523,8 +523,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the modulus of a complex number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Value.</returns>
         public static float Abs(Complex32 a)
         {
             return a.Abs;
@@ -532,8 +532,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the angle of a complex number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Value.</returns>
         public static float Angle(Complex32 a)
         {
             return a.Angle;
@@ -541,8 +541,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the natural logarithm of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Log(Complex32 a)
         {
             return Complex.Log(a);
@@ -550,8 +550,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the decimal logarithm of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Log10(Complex32 a)
         {
             return Log(a, 10.0f);
@@ -559,8 +559,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the binary logarithm of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Log2(Complex32 a)
         {
             return Log(a, 2.0f);
@@ -568,9 +568,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the logarithm of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <param name="b">Base</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <param name="b">Base.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Log(Complex32 a, float b)
         {
             return Maths.Log(a) / Maths.Log(b);
@@ -578,8 +578,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the exponent raised to a complex degree.
         /// </summary>
-        /// <param name="a">Power</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Power.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Exp(Complex32 a)
         {
             float ex = Maths.Exp(a.Real);
@@ -589,9 +589,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the number raised to a complex power.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <param name="b">Power</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <param name="b">Power.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Pow(float a, Complex32 b)
         {
             return Complex.Pow(new Complex(a, 0), b);
@@ -599,9 +599,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the number raised to the power.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <param name="b">Power</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <param name="b">Power.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Pow(Complex32 a, float b)
         {
             float r = Maths.Pow(a.Abs, b);
@@ -612,9 +612,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the number raised to the power.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <param name="b">Power</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <param name="b">Power.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Pow(Complex32 a, Complex32 b)
         {
             return Maths.Exp(b * Maths.Log(a));
@@ -622,8 +622,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the square root of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Sqrt(Complex32 a)
         {
             return Maths.Sqrt(a, 2);
@@ -631,9 +631,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the root of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <param name="b">Power</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <param name="b">Power.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Sqrt(Complex32 a, float b)
         {
             return Maths.FromPolar(Maths.Pow(a.Abs, 1f / b), a.Angle / b);
@@ -641,9 +641,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the root of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <param name="b">Power</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <param name="b">Power.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Sqrt(Complex32 a, Complex32 b)
         {
             return Maths.Exp(Maths.Log(a) / b);
@@ -651,9 +651,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns complex number.
         /// </summary>
-        /// <param name="abs">Modulus</param>
-        /// <param name="angle">Angle</param>
-        /// <returns>Complex number</returns>
+        /// <param name="abs">Modulus.</param>
+        /// <param name="angle">Angle.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 FromPolar(float abs, float angle)
         {
             return new Complex32(abs * Maths.Cos(angle), abs * Maths.Sin(angle));
@@ -661,8 +661,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the rounded number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Round(Complex32 a)
         {
             return Maths.Round(a, 0);
@@ -670,9 +670,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the rounded number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <param name="dig">Digits</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <param name="dig">Digits.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Round(Complex32 a, int dig)
         {
             return new Complex32(Maths.Round(a.Real, dig), Maths.Round(a.Imag, dig));
@@ -685,8 +685,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the cosine of an angle.
         /// </summary>
-        /// <param name="a">Angle in radians</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Angle in radians.</param>
+        /// <returns>Value.</returns>
         public static float Cos(float a)
         {
             return (float)Math.Cos(a);
@@ -694,8 +694,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the sine of an angle.
         /// </summary>
-        /// <param name="a">Angle in radians</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Angle in radians.</param>
+        /// <returns>Value.</returns>
         public static float Sin(float a)
         {
             return (float)Math.Sin(a);
@@ -703,8 +703,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the tangent of an angle.
         /// </summary>
-        /// <param name="a">Angle in radians</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Angle in radians.</param>
+        /// <returns>Value.</returns>
         public static float Tan(float a)
         {
             return Maths.Sin(a) / Maths.Cos(a);
@@ -712,8 +712,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the cotangent of an angle.
         /// </summary>
-        /// <param name="a">Angle in radians</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Angle in radians.</param>
+        /// <returns>Value.</returns>
         public static float Ctan(float a)
         {
             return Maths.Cos(a) / Maths.Sin(a);
@@ -721,8 +721,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the secant of an angle.
         /// </summary>
-        /// <param name="a">Angle in radians</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Angle in radians.</param>
+        /// <returns>Value.</returns>
         public static float Sec(float a)
         {
             return 1.0f / Maths.Cos(a);
@@ -730,8 +730,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the cosecant of an angle.
         /// </summary>
-        /// <param name="a">Angle in radians</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Angle in radians.</param>
+        /// <returns>Value.</returns>
         public static float Cosc(float a)
         {
             return 1.0f / Maths.Sin(a);
@@ -739,8 +739,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the arcsine of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Asin(float a)
         {
             return (float)Math.Asin(a);
@@ -748,8 +748,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the arccosine of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Acos(float a)
         {
             return (float)Math.Acos(a);
@@ -757,8 +757,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the arctangent of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Atan(float a)
         {
             return (float)Math.Atan(a);
@@ -766,9 +766,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the arctangent2 of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <returns>Value.</returns>
         public static float Atan2(float a, float b)
         {
             return (float)Math.Atan2(a, b);
@@ -776,8 +776,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the arccotangent of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Actan(float a)
         {
             return (float)Math.Atan2(1.0, a);
@@ -785,8 +785,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the arcsecant of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Asec(float a)
         {
             return (float)Math.Acos(1.0 / a);
@@ -794,8 +794,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the arccosecant of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Acosc(float a)
         {
             return (float)Math.Asin(1.0 / a);
@@ -806,8 +806,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the cosine of an angle.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Cos(Complex32 a)
         {
             return new Complex32(Maths.Cos(a.Real) * Maths.Cosh(a.Imag), -(Maths.Sin(a.Real) * Maths.Sinh(a.Imag)));
@@ -815,8 +815,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the sine of an angle.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Sin(Complex32 a)
         {
             return new Complex32(Maths.Sin(a.Real) * Maths.Cosh(a.Imag), Maths.Cos(a.Real) * Maths.Sinh(a.Imag));
@@ -824,8 +824,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the tangent of an angle.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Tan(Complex32 a)
         {
             return Maths.Sin(a) / Maths.Cos(a);
@@ -833,8 +833,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the cotangent of an angle.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Ctan(Complex32 a)
         {
             return Maths.Cos(a) / Maths.Sin(a);
@@ -842,8 +842,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the secant of an angle.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Sec(Complex32 a)
         {
             return 1.0 / Maths.Cos(a);
@@ -851,8 +851,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the cosecant of an angle.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Cosc(Complex32 a)
         {
             return 1.0 / Maths.Sin(a);
@@ -860,8 +860,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the arccosine of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Acos(Complex32 a)
         {
             return -I * Maths.Log(a + I * Maths.Sqrt(1.0 - a * a));
@@ -869,8 +869,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the arcsine of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Asin(Complex32 a)
         {
             return -I * Maths.Log(I * a + Maths.Sqrt(1.0 - a * a));
@@ -878,8 +878,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the arctangent of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Atan(Complex32 a)
         {
             return I / 2.0 * (Maths.Log(1.0 - I * a) - Maths.Log(1.0 + I * a));
@@ -887,9 +887,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the arctangent2 of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Atan2(Complex32 a, Complex32 b)
         {
             float re = b.Real - a.Imag;
@@ -901,10 +901,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the arccotangent of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
+        /// <param name="a">Complex number.</param>
         /// <remarks>Uses principal atan(1/a), with value pi/2 at zero. On the imaginary cuts,
         /// the real part has the sign of Im(1/a). The real overload uses the interval (0, pi).</remarks>
-        /// <returns>Complex number</returns>
+        /// <returns>Complex number.</returns>
         public static Complex32 Actan(Complex32 a)
         {
             // Principal atan(1/z); use the continuous real-axis value at zero.
@@ -914,8 +914,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the arcsecant of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Asec(Complex32 a)
         {
             return Maths.Acos(1.0 / a);
@@ -923,8 +923,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the arccosecant of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Acosc(Complex32 a)
         {
             return Maths.Asin(1.0 / a);
@@ -937,8 +937,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic sine of an angle.
         /// </summary>
-        /// <param name="a">Angle in radians</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Angle in radians.</param>
+        /// <returns>Value.</returns>
         public static float Sinh(float a)
         {
             return (float)Math.Sinh(a);
@@ -946,8 +946,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic cosine of an angle.
         /// </summary>
-        /// <param name="a">Angle in radians</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Angle in radians.</param>
+        /// <returns>Value.</returns>
         public static float Cosh(float a)
         {
             return (float)Math.Cosh(a);
@@ -955,8 +955,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic tangent of an angle.
         /// </summary>
-        /// <param name="a">Angle in radians</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Angle in radians.</param>
+        /// <returns>Value.</returns>
         public static float Tanh(float a)
         {
             return (float)Math.Tanh(a);
@@ -964,8 +964,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic cotangent of an angle.
         /// </summary>
-        /// <param name="a">Angle in radians</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Angle in radians.</param>
+        /// <returns>Value.</returns>
         public static float Ctanh(float a)
         {
             return (float)(1.0 / Math.Tanh(a));
@@ -973,8 +973,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic secant of an angle.
         /// </summary>
-        /// <param name="a">Angle in radians</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Angle in radians.</param>
+        /// <returns>Value.</returns>
         public static float Sech(float a)
         {
             return (float)(1.0 / Math.Cosh(a));
@@ -982,8 +982,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic cosecant of an angle.
         /// </summary>
-        /// <param name="a">Angle in radians</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Angle in radians.</param>
+        /// <returns>Value.</returns>
         public static float Cosch(float a)
         {
             return (float)(1.0 / Math.Sinh(a));
@@ -991,8 +991,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic arcsine of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Asinh(float a)
         {
             return (float)RealAsinh(a);
@@ -1000,8 +1000,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic arccosine of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Acosh(float a)
         {
             return (float)RealAcosh(a);
@@ -1009,8 +1009,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic arctangent of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Atanh(float a)
         {
             return (float)RealAtanh(a);
@@ -1018,8 +1018,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic arccotangent of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Actanh(float a)
         {
             return (float)RealAtanh(1.0 / a);
@@ -1027,8 +1027,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic arcsecant of a number.
         /// </summary>
-        /// <param name="a">Angle in radians</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Angle in radians.</param>
+        /// <returns>Value.</returns>
         public static float Asech(float a)
         {
             return (float)RealAcosh(1.0 / a);
@@ -1036,8 +1036,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic arccosecant of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Acosch(float a)
         {
             return (float)RealAsinh(1.0 / a);
@@ -1048,8 +1048,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic sine of an angle.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Sinh(Complex32 a)
         {
             return new Complex32(Maths.Sinh(a.Real) * Maths.Cos(a.Imag), Maths.Cosh(a.Real) * Maths.Sin(a.Imag));
@@ -1057,8 +1057,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic cosine of an angle.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Cosh(Complex32 a)
         {
             return new Complex32(Maths.Cosh(a.Real) * Maths.Cos(a.Imag), Maths.Sinh(a.Real) * Maths.Sin(a.Imag));
@@ -1066,8 +1066,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic tangent of an angle.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Tanh(Complex32 a)
         {
             if (Math.Abs(a.Real) > 100 && !float.IsNaN(a.Imag) && !float.IsInfinity(a.Imag))
@@ -1077,8 +1077,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic cotangent of an angle.
         /// </summary>
-        /// <param name="a">Angle in radians</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Angle in radians.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Ctanh(Complex32 a)
         {
             if (Math.Abs(a.Real) > 100 && !float.IsNaN(a.Imag) && !float.IsInfinity(a.Imag))
@@ -1088,8 +1088,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic secant of an angle.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Sech(Complex32 a)
         {
             if (Math.Abs(a.Real) > 105 && !float.IsNaN(a.Imag) && !float.IsInfinity(a.Imag)) return new Complex32(0, 0);
@@ -1098,8 +1098,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic cosecant of an angle.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Cosch(Complex32 a)
         {
             if (Math.Abs(a.Real) > 105 && !float.IsNaN(a.Imag) && !float.IsInfinity(a.Imag)) return new Complex32(0, 0);
@@ -1108,8 +1108,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic arcsine of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Asinh(Complex32 a)
         {
             if (a.Real < 0 || (a.Real == 0 && a.Imag < 0)) return -Asinh(-a);
@@ -1120,8 +1120,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic arccosine of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Acosh(Complex32 a)
         {
             Complex z = a;
@@ -1133,8 +1133,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic arctangent of a number.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Atanh(Complex32 a)
         {
             return 1.0 / 2.0 * Maths.Log((1.0 + a) / (1.0 - a));
@@ -1142,8 +1142,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic arccotangent of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Actanh(Complex32 a)
         {
             return 1.0 / 2.0 * Maths.Log((a + 1.0) / (a - 1.0));
@@ -1151,8 +1151,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic arcsecant of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Asech(Complex32 a)
         {
             var inv = 1.0f / a;
@@ -1161,8 +1161,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hyperbolic arccosecant of a number.
         /// </summary>
-        /// <param name="a">Complex number</param>
-        /// <returns>Complex number</returns>
+        /// <param name="a">Complex number.</param>
+        /// <returns>Complex number.</returns>
         public static Complex32 Acosch(Complex32 a)
         {
             var inv = 1.0f / a;
@@ -1178,8 +1178,8 @@ namespace UMapx.Core
         /// <remarks>
         /// Uses deterministic Miller-Rabin tests over the full signed integer range.
         /// </remarks>
-        /// <param name="p">Value</param>
-        /// <returns>Boolean</returns>
+        /// <param name="p">Value.</param>
+        /// <returns>Boolean.</returns>
         public static bool IsPrime(int p)
         {
             return p >= 2 && IsPrimeUnsigned((ulong)p);
@@ -1190,8 +1190,8 @@ namespace UMapx.Core
         /// <remarks>
         /// Uses deterministic Miller-Rabin tests over the full signed integer range.
         /// </remarks>
-        /// <param name="p">Value</param>
-        /// <returns>Boolean</returns>
+        /// <param name="p">Value.</param>
+        /// <returns>Boolean.</returns>
         public static bool IsPrime(long p)
         {
             return p >= 2 && IsPrimeUnsigned((ulong)p);
@@ -1200,9 +1200,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns coprime number.
         /// </summary>
-        /// <param name="a">Integer number</param>
-        /// <param name="increment">Inclusive starting value for the coprime search</param>
-        /// <returns>Integer number</returns>
+        /// <param name="a">Integer number.</param>
+        /// <param name="increment">Inclusive starting value for the coprime search.</param>
+        /// <returns>Integer number.</returns>
         public static int Coprime(int a, int increment = 1)
         {
             if (a == 0)
@@ -1218,9 +1218,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns coprime number.
         /// </summary>
-        /// <param name="a">Integer number</param>
-        /// <param name="increment">Inclusive starting value for the coprime search</param>
-        /// <returns>Integer number</returns>
+        /// <param name="a">Integer number.</param>
+        /// <param name="increment">Inclusive starting value for the coprime search.</param>
+        /// <returns>Integer number.</returns>
         public static long Coprime(long a, long increment = 1)
         {
             if (a == 0)
@@ -1237,9 +1237,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the remainder of dividing one number by another.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="n">Modulo</param>
-        /// <returns>Integer number</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="n">Modulo.</param>
+        /// <returns>Integer number.</returns>
         public static int Mod(int a, int n)
         {
             return (int)Mod((long)a, n);
@@ -1247,9 +1247,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the remainder of dividing one number by another.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="n">Modulo</param>
-        /// <returns>Integer number</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="n">Modulo.</param>
+        /// <returns>Integer number.</returns>
         public static long Mod(long a, long n)
         {
             if (n == -1) return 0; // Includes long.MinValue without signed division overflow.
@@ -1259,9 +1259,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the remainder of dividing one number by another.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="n">Modulo</param>
-        /// <returns>float</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="n">Modulo.</param>
+        /// <returns>float.</returns>
         public static float Mod(float a, float n)
         {
             if (n < 0)
@@ -1274,11 +1274,11 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the result of raising the number "a" to the power of "x" modulo p.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="x">Power</param>
-        /// <param name="p">Modulo</param>
-        /// <param name="modified">Use modified algorithm or not</param>
-        /// <returns>Integer number</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="x">Power.</param>
+        /// <param name="p">Modulo.</param>
+        /// <param name="modified">Use modified algorithm or not.</param>
+        /// <returns>Integer number.</returns>
         public static int ModPow(int a, int x, int p, bool modified = true)
         {
             return (int)ModPow((long)a, x, p, modified);
@@ -1286,11 +1286,11 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the result of raising the number "a" to the power of "x" modulo p.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="x">Power</param>
-        /// <param name="p">Modulo</param>
-        /// <param name="modified">Use modified algorithm or not</param>
-        /// <returns>Integer number</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="x">Power.</param>
+        /// <param name="p">Modulo.</param>
+        /// <param name="modified">Use modified algorithm or not.</param>
+        /// <returns>Integer number.</returns>
         public static long ModPow(long a, long x, long p, bool modified = true)
         {
             if (x < 0) throw new ArgumentOutOfRangeException(nameof(x), "The exponent must be nonnegative.");
@@ -1300,10 +1300,10 @@ namespace UMapx.Core
         /// <summary>
         /// Computes modular exponentiation using the left-to-right binary method.
         /// </summary>
-        /// <param name="a">Base value</param>
-        /// <param name="x">Exponent</param>
-        /// <param name="p">Modulus</param>
-        /// <returns>Result of a^x mod p</returns>
+        /// <param name="a">Base value.</param>
+        /// <param name="x">Exponent.</param>
+        /// <param name="p">Modulus.</param>
+        /// <returns>Result of a^x mod p.</returns>
         private static long Leftmodexp(long a, long x, long p)
         {
             ulong modulus = UnsignedMagnitude(p);
@@ -1318,10 +1318,10 @@ namespace UMapx.Core
         /// <summary>
         /// Computes modular exponentiation using the right-to-left binary method.
         /// </summary>
-        /// <param name="a">Base value</param>
-        /// <param name="x">Exponent</param>
-        /// <param name="p">Modulus</param>
-        /// <returns>Result of a^x mod p</returns>
+        /// <param name="a">Base value.</param>
+        /// <param name="x">Exponent.</param>
+        /// <param name="p">Modulus.</param>
+        /// <returns>Result of a^x mod p.</returns>
         private static long Rightmodexp(long a, long x, long p)
         {
             ulong modulus = UnsignedMagnitude(p);
@@ -1338,9 +1338,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the inverse number modulo.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="n">Modulo</param>
-        /// <returns>Integer number</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="n">Modulo.</param>
+        /// <returns>Integer number.</returns>
         public static int ModInv(int a, int n)
         {
             if (n == 0) throw new DivideByZeroException();
@@ -1352,9 +1352,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the inverse number modulo.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="n">Modulo</param>
-        /// <returns>Integer number</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="n">Modulo.</param>
+        /// <returns>Integer number.</returns>
         public static long ModInv(long a, long n)
         {
             if (n == 0) throw new DivideByZeroException();
@@ -1367,9 +1367,9 @@ namespace UMapx.Core
         /// <summary>
         /// Implements a generalized Euclidean algorithm.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="n">Modulo</param>
-        /// <returns>Array</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="n">Modulo.</param>
+        /// <returns>Array.</returns>
         public static int[] Euclidean(int a, int n)
         {
             BigInteger[] result = ExtendedGcd(a, n);
@@ -1378,9 +1378,9 @@ namespace UMapx.Core
         /// <summary>
         /// Implements a generalized Euclidean algorithm.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="n">Modulo</param>
-        /// <returns>Array</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="n">Modulo.</param>
+        /// <returns>Array.</returns>
         public static long[] Euclidean(long a, long n)
         {
             BigInteger[] result = ExtendedGcd(a, n);
@@ -1390,10 +1390,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the greatest common divisor of two numbers.
         /// </summary>
-        /// <param name="a">Integer number</param>
-        /// <param name="b">Integer number</param>
+        /// <param name="a">Integer number.</param>
+        /// <param name="b">Integer number.</param>
         /// <exception cref="OverflowException">The nonnegative GCD does not fit in Int32.</exception>
-        /// <returns>Integer number</returns>
+        /// <returns>Integer number.</returns>
         public static int Gcd(int a, int b)
         {
             return checked((int)UnsignedGcd(UnsignedMagnitude(a), UnsignedMagnitude(b)));
@@ -1401,10 +1401,10 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the greatest common divisor of two numbers.
         /// </summary>
-        /// <param name="a">Integer number</param>
-        /// <param name="b">Integer number</param>
+        /// <param name="a">Integer number.</param>
+        /// <param name="b">Integer number.</param>
         /// <exception cref="OverflowException">The nonnegative GCD does not fit in Int64.</exception>
-        /// <returns>Integer number</returns>
+        /// <returns>Integer number.</returns>
         public static long Gcd(long a, long b)
         {
             return checked((long)UnsignedGcd(UnsignedMagnitude(a), UnsignedMagnitude(b)));
@@ -1413,11 +1413,11 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the least common multiple of two numbers.
         /// </summary>
-        /// <param name="a">Integer number</param>
-        /// <param name="b">Integer number</param>
+        /// <param name="a">Integer number.</param>
+        /// <param name="b">Integer number.</param>
         /// <remarks>Returns zero if either input is zero.</remarks>
         /// <exception cref="OverflowException">The nonnegative LCM does not fit in Int32.</exception>
-        /// <returns>Integer number</returns>
+        /// <returns>Integer number.</returns>
         public static int Lcm(int a, int b)
         {
             if (a == 0 || b == 0) return 0;
@@ -1427,11 +1427,11 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the least common multiple of two numbers.
         /// </summary>
-        /// <param name="a">Integer number</param>
-        /// <param name="b">Integer number</param>
+        /// <param name="a">Integer number.</param>
+        /// <param name="b">Integer number.</param>
         /// <remarks>Returns zero if either input is zero.</remarks>
         /// <exception cref="OverflowException">The nonnegative LCM does not fit in Int64.</exception>
-        /// <returns>Integer number</returns>
+        /// <returns>Integer number.</returns>
         public static long Lcm(long a, long b)
         {
             if (a == 0 || b == 0) return 0;
@@ -1442,9 +1442,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns an array of factors that number consists of.
         /// </summary>
-        /// <param name="n">Integer number</param>
-        /// <param name="onlyPrimes">Return distinct prime factors when true; include multiplicities otherwise</param>
-        /// <returns>Array</returns>
+        /// <param name="n">Integer number.</param>
+        /// <param name="onlyPrimes">Return distinct prime factors when true; include multiplicities otherwise.</param>
+        /// <returns>Array.</returns>
         public static int[] Itf(int n, bool onlyPrimes = false)
         {
             if (n < 1) throw new ArgumentOutOfRangeException(nameof(n), "Factorization requires a positive integer.");
@@ -1456,9 +1456,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns an array of factors that number consists of.
         /// </summary>
-        /// <param name="n">Integer number</param>
-        /// <param name="onlyPrimes">Return distinct prime factors when true; include multiplicities otherwise</param>
-        /// <returns>Array</returns>
+        /// <param name="n">Integer number.</param>
+        /// <param name="onlyPrimes">Return distinct prime factors when true; include multiplicities otherwise.</param>
+        /// <returns>Array.</returns>
         public static long[] Itf(long n, bool onlyPrimes = false)
         {
             if (n < 1) throw new ArgumentOutOfRangeException(nameof(n), "Factorization requires a positive integer.");
@@ -1471,8 +1471,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns a proper divisor of a composite positive integer, or the input for a prime or one.
         /// </summary>
-        /// <param name="n">Integer number</param>
-        /// <returns>Integer number</returns>
+        /// <param name="n">Integer number.</param>
+        /// <returns>Integer number.</returns>
         public static int Pollard(int n)
         {
             if (n < 1) throw new ArgumentOutOfRangeException(nameof(n), "Factorization requires a positive integer.");
@@ -1482,8 +1482,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns a proper divisor of a composite positive integer, or the input for a prime or one.
         /// </summary>
-        /// <param name="n">Integer number</param>
-        /// <returns>Integer number</returns>
+        /// <param name="n">Integer number.</param>
+        /// <returns>Integer number.</returns>
         public static long Pollard(long n)
         {
             if (n < 1) throw new ArgumentOutOfRangeException(nameof(n), "Factorization requires a positive integer.");
@@ -1494,8 +1494,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Euler function.
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Value.</param>
+        /// <returns>Value.</returns>
         public static int Etf(int n)
         {
             int result = n;
@@ -1505,8 +1505,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Euler function.
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Value.</param>
+        /// <returns>Value.</returns>
         public static long Etf(long n)
         {
             long result = n;
@@ -1521,8 +1521,8 @@ namespace UMapx.Core
         /// Recursive implementation of a memory-optimized segmented sieve of Eratosthenes. 
         /// The operational complexity of the O(N* logN) algorithm.The memory complexity is O(Δ), where Δ = sqrt(N).
         /// </remarks>
-        /// <param name="limit">Value</param>
-        /// <returns>Array</returns>
+        /// <param name="limit">Value.</param>
+        /// <returns>Array.</returns>
         public static int[] Sieve(int limit)
         {
             if (limit < 2) return Array.Empty<int>();
@@ -1605,8 +1605,8 @@ namespace UMapx.Core
         /// <summary>
         /// Odd-only sieve up to n (inclusive). Returns base primes incl. 2.
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <returns>Array</returns>
+        /// <param name="n">Value.</param>
+        /// <returns>Array.</returns>
         private static int[] BuildBasePrimes(int n)
         {
             if (n < 2) return Array.Empty<int>();
@@ -1643,8 +1643,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the radical of an integer.
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <returns>Integer number</returns>
+        /// <param name="n">Value.</param>
+        /// <returns>Integer number.</returns>
         public static int Radical(int n)
         {
             // factorization
@@ -1663,8 +1663,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the radical of an integer.
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <returns>Integer number</returns>
+        /// <param name="n">Value.</param>
+        /// <returns>Integer number.</returns>
         public static long Radical(long n)
         {
             // factorization
@@ -1693,9 +1693,9 @@ namespace UMapx.Core
         /// <remarks>
         /// Least-significant digit first: 10 in base 2 is {0,1,0,1}. Negative values are not supported.
         /// </remarks>
-        /// <param name="x">Byte</param>
-        /// <param name="newbase">Base</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Byte.</param>
+        /// <param name="newbase">Base.</param>
+        /// <returns>Array.</returns>
         public static int[] Decimal2Base(long x, int newbase)
         {
             if (x < 0) throw new ArgumentOutOfRangeException(nameof(x), "Digit arrays represent nonnegative integers.");
@@ -1714,9 +1714,9 @@ namespace UMapx.Core
         /// <remarks>
         /// Least-significant digit first: {0,1,0,1} in base 2 represents 10. Overflow throws OverflowException.
         /// </remarks>
-        /// <param name="x">Array</param>
-        /// <param name="thisbase">Base</param>
-        /// <returns>Integer number</returns>
+        /// <param name="x">Array.</param>
+        /// <param name="thisbase">Base.</param>
+        /// <returns>Integer number.</returns>
         public static long Base2Decimal(int[] x, int thisbase)
         {
             return AccumulateDigits(x, thisbase, true);
@@ -1727,8 +1727,8 @@ namespace UMapx.Core
         /// <remarks>
         /// Most-significant digit first: {1,0,1,0} represents 1010. Overflow throws OverflowException.
         /// </remarks>
-        /// <param name="x">Array</param>
-        /// <returns>Integer number</returns>
+        /// <param name="x">Array.</param>
+        /// <returns>Integer number.</returns>
         public static long Vector2Numeral(int[] x)
         {
             return AccumulateDigits(x, base10, false);
@@ -1739,8 +1739,8 @@ namespace UMapx.Core
         /// <remarks>
         /// Most-significant digit first: 1010 becomes {1,0,1,0}. Negative values are not supported.
         /// </remarks>
-        /// <param name="x">Value</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Array.</returns>
         public static int[] Numeral2Vector(long x)
         {
             int[] digits = Decimal2Base(x, base10);
@@ -1750,9 +1750,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the digit count of the magnitude of an integer; zero has one digit.
         /// </summary>
-        /// <param name="x">Byte</param>
-        /// <param name="numbase">Base</param>
-        /// <returns>Integer number</returns>
+        /// <param name="x">Byte.</param>
+        /// <param name="numbase">Base.</param>
+        /// <returns>Integer number.</returns>
         public static int NumLength(long x, int numbase)
         {
             if (numbase < 2) throw new ArgumentOutOfRangeException(nameof(numbase));
@@ -1767,9 +1767,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the hypotenuse.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <returns>Value.</returns>
         public static float Hypotenuse(float a, float b)
         {
             float r = 0.0f;
@@ -1792,18 +1792,18 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the hypotenuse.
         /// </summary>
-        /// <param name="z">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Hypotenuse(Complex32 z) => Maths.Hypotenuse(z.Real, z.Imag);
 
         /// <summary>
         /// Implements the solution of a cubic equation of the form:
         /// x^3 + a*x^2 + b*x + c = 0.
         /// </summary>
-        /// <param name="a">Coefficient "a"</param>
-        /// <param name="b">Coefficient "b"</param>
-        /// <param name="c">Coefficient "c"</param>
-        /// <returns>Array</returns>
+        /// <param name="a">Coefficient "a".</param>
+        /// <param name="b">Coefficient "b".</param>
+        /// <param name="c">Coefficient "c".</param>
+        /// <returns>Array.</returns>
         public static Complex32[] Cubic(float a, float b, float c)
         {
             if (c == 0)
@@ -1851,10 +1851,10 @@ namespace UMapx.Core
         /// Implements a solution to a quadratic equation of the form: 
         /// a*x^2 + b*x + c = 0.
         /// </summary>
-        /// <param name="a">Coefficient "a"</param>
-        /// <param name="b">Coefficient "b"</param>
-        /// <param name="c">Coefficient "c"</param>
-        /// <returns>Array</returns>
+        /// <param name="a">Coefficient "a".</param>
+        /// <param name="b">Coefficient "b".</param>
+        /// <param name="c">Coefficient "c".</param>
+        /// <returns>Array.</returns>
         public static Complex32[] Quadratic(float a, float b, float c)
         {
             if (a == 0) throw new ArgumentOutOfRangeException(nameof(a), "The quadratic coefficient must be nonzero.");
@@ -1873,10 +1873,10 @@ namespace UMapx.Core
         /// Implements the solution of a biquadratic equation of the form:
         /// a*x^4 + b*x^2 + c = 0.
         /// </summary>
-        /// <param name="a">Coefficient "a"</param>
-        /// <param name="b">Coefficient "b"</param>
-        /// <param name="c">Coefficient "c"</param>
-        /// <returns>Array</returns>
+        /// <param name="a">Coefficient "a".</param>
+        /// <param name="b">Coefficient "b".</param>
+        /// <param name="c">Coefficient "c".</param>
+        /// <returns>Array.</returns>
         public static Complex32[] BiQuadratic(float a, float b, float c)
         {
             var s = Quadratic(a, b, c);
@@ -1891,9 +1891,9 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the Givens rotation matrix for a pair of real numbers.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Matrix</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] Rotation(float a, float b)
         {
             // MATLAB version of
@@ -1919,9 +1919,9 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the Givens rotation matrix for a pair of real numbers.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="b">Value</param>
-        /// <returns>Matrix</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="b">Value.</param>
+        /// <returns>Matrix.</returns>
         public static Complex32[,] Rotation(Complex32 a, Complex32 b)
         {
             // MATLAB version of
@@ -1950,9 +1950,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of <c>|a|</c> with the sign of <paramref name="sign"/> (copysign).
         /// </summary>
-        /// <param name="magnitude">Value providing the magnitude</param>
-        /// <param name="sign">Value providing the sign</param>
-        /// <returns>Value</returns>
+        /// <param name="magnitude">Value providing the magnitude.</param>
+        /// <param name="sign">Value providing the sign.</param>
+        /// <returns>Value.</returns>
         public static float Sign(float magnitude, float sign)
         {
             return (sign >= 0.0) ? Math.Abs(magnitude) : -Math.Abs(magnitude);
@@ -1960,8 +1960,8 @@ namespace UMapx.Core
         /// <summary>
         /// Complex signum: returns z / |z| (unit complex) or 0 for z == 0.
         /// </summary>
-        /// <param name="z">Complex value</param>
-        /// <returns>Value</returns>
+        /// <param name="z">Complex value.</param>
+        /// <returns>Value.</returns>
         public static Complex32 Sign(Complex32 z)
         {
             float re = z.Real, im = z.Imag;
@@ -1973,9 +1973,9 @@ namespace UMapx.Core
         /// <summary>
         /// Copies sign.
         /// </summary>
-        /// <param name="magnitude">Value providing the magnitude</param>
-        /// <param name="sign">Value providing the sign</param>
-        /// <returns>Value</returns>
+        /// <param name="magnitude">Value providing the magnitude.</param>
+        /// <param name="sign">Value providing the sign.</param>
+        /// <returns>Value.</returns>
         public static float CopySign(float magnitude, float sign)
         {
             return Math.Abs(magnitude) * Math.Sign(sign);
@@ -1984,9 +1984,9 @@ namespace UMapx.Core
         /// Copy phase from 'sign' to a real magnitude |magnitude|.
         /// If sign == 0, returns +|magnitude| on the real axis.
         /// </summary>
-        /// <param name="magnitude">Value providing the magnitude</param>
-        /// <param name="sign">Value providing the sign</param>
-        /// <returns>Value</returns>
+        /// <param name="magnitude">Value providing the magnitude.</param>
+        /// <param name="sign">Value providing the sign.</param>
+        /// <returns>Value.</returns>
         public static Complex32 CopySign(float magnitude, Complex32 sign)
         {
             float mag = Math.Abs(magnitude);
@@ -2000,9 +2000,9 @@ namespace UMapx.Core
         /// Copy phase from 'sign' to the magnitude |magnitude| of a complex number.
         /// If sign == 0, returns +|magnitude| on the real axis.
         /// </summary>
-        /// <param name="magnitude">Value providing the magnitude</param>
-        /// <param name="sign">Value providing the sign</param>
-        /// <returns>Value</returns>
+        /// <param name="magnitude">Value providing the magnitude.</param>
+        /// <param name="sign">Value providing the sign.</param>
+        /// <returns>Value.</returns>
         public static Complex32 CopySign(Complex32 magnitude, Complex32 sign)
         {
             float mag = Maths.Sqrt(magnitude.Real * magnitude.Real + magnitude.Imag * magnitude.Imag);
@@ -2016,9 +2016,9 @@ namespace UMapx.Core
         /// Copy phase from 'sign' to the magnitude |magnitude| of a complex number.
         /// If sign == 0, returns +|magnitude| on the real axis.
         /// </summary>
-        /// <param name="magnitude">Value providing the magnitude</param>
-        /// <param name="sign">Value providing the sign</param>
-        /// <returns>Value</returns>
+        /// <param name="magnitude">Value providing the magnitude.</param>
+        /// <param name="sign">Value providing the sign.</param>
+        /// <returns>Value.</returns>
         public static Complex32 CopySign(Complex32 magnitude, float sign)
         {
             if (float.IsNaN(sign))
@@ -2033,10 +2033,10 @@ namespace UMapx.Core
         /// <summary>
         /// Normalizes a variable relative to the {min, max} range.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="min">Minimum value</param>
-        /// <param name="max">Maximum value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="min">Minimum value.</param>
+        /// <param name="max">Maximum value.</param>
+        /// <returns>Value.</returns>
         public static int Normalize(int x, int min, int max)
         {
             int a = max - min;
@@ -2047,10 +2047,10 @@ namespace UMapx.Core
         /// <summary>
         /// Normalizes a variable relative to the {min, max} range.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="min">Minimum value</param>
-        /// <param name="max">Maximum value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="min">Minimum value.</param>
+        /// <param name="max">Maximum value.</param>
+        /// <returns>Value.</returns>
         public static float Normalize(float x, float min, float max)
         {
             float a = max - min;

@@ -17,8 +17,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the shift correction filter.
         /// </summary>
-        /// <param name="offset">Offset (-0.5, 0.5)</param>
-        /// <param name="space">Color space</param>
+        /// <param name="offset">Offset (-0.5, 0.5).</param>
+        /// <param name="space">Color space.</param>
         public ShiftCorrection(float offset, Space space)
         {
             Offset = offset; Space = space;

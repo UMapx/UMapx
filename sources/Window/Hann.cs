@@ -13,7 +13,7 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes the Hann window function (Hanning).
         /// </summary>
-        /// <param name="frameSize">Window size</param>
+        /// <param name="frameSize">Window size.</param>
         public Hann(int frameSize)
         {
             this.FrameSize = frameSize;
@@ -21,9 +21,9 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Value.</returns>
         public override float Function(float x, int frameSize)
         {
             return Maths.Pow(Sine.Sinefunc(x, frameSize), 2);
@@ -31,8 +31,8 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Array</returns>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Array.</returns>
         public override float[] GetWindow(int frameSize)
         {
             float t = frameSize - 1;

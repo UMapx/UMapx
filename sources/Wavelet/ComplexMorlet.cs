@@ -18,8 +18,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Initializes the continuous complex Morlet wavelet.
         /// </summary>
-        /// <param name="fb">Bandwidth</param>
-        /// <param name="fc">Center frequency</param>
+        /// <param name="fb">Bandwidth.</param>
+        /// <param name="fc">Center frequency.</param>
         public ComplexMorlet(float fb = 0.5f, float fc = 1)
         {
             Fb = fb; Fc = fc;
@@ -55,8 +55,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public Complex32 Scaling(float x)
         {
             throw new NotSupportedException();
@@ -64,8 +64,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the normalized wavelet function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public Complex32 Wavelet(float x)
         {
             // Validate (optional but recommended)

@@ -12,8 +12,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Implements the construction of the transform matrix.
         /// </summary>
-        /// <param name="n">Size</param>
-        /// <returns>Matrix</returns>
+        /// <param name="n">Size.</param>
+        /// <returns>Matrix.</returns>
         protected abstract Complex32[,] TransformationMatrix(int n);
         #endregion
 
@@ -21,8 +21,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="A">Array.</param>
+        /// <returns>Array.</returns>
         public virtual Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
@@ -40,8 +40,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward transform.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="B">Array.</param>
+        /// <returns>Array.</returns>
         public virtual Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
@@ -59,8 +59,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="A">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public virtual Complex32[,] Forward(Complex32[,] A)
         {
             int N = A.GetLength(0), M = A.GetLength(1);
@@ -92,8 +92,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward transform.
         /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="B">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public virtual Complex32[,] Backward(Complex32[,] B)
         {
             int N = B.GetLength(0), M = B.GetLength(1);
@@ -125,8 +125,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="A">Array.</param>
+        /// <returns>Array.</returns>
         public virtual float[] Forward(float[] A)
         {
             throw new NotSupportedException();
@@ -134,8 +134,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward transform.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="B">Array.</param>
+        /// <returns>Array.</returns>
         public virtual float[] Backward(float[] B)
         {
             throw new NotSupportedException();
@@ -143,8 +143,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="A">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public virtual float[,] Forward(float[,] A)
         {
             throw new NotSupportedException();
@@ -152,8 +152,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward transform.
         /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="B">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public virtual float[,] Backward(float[,] B)
         {
             throw new NotSupportedException();

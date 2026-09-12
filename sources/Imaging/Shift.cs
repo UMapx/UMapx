@@ -20,8 +20,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the shift filter.
         /// </summary>
-        /// <param name="x">Offset value of axis X</param>
-        /// <param name="y">Offset value of axis Y</param>
+        /// <param name="x">Offset value of axis X.</param>
+        /// <param name="y">Offset value of axis Y.</param>
         public Shift(int x, int y)
         {
             X = x;
@@ -30,7 +30,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the shift filter.
         /// </summary>
-        /// <param name="point">A pair of integers representing an ordered pair of X and Y coordinates</param>
+        /// <param name="point">A pair of integers representing an ordered pair of X and Y coordinates.</param>
         public Shift(PointInt point)
         {
             X = point.X;
@@ -71,8 +71,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb || bmSrc.PixelFormat != PixelFormat.Format32bppArgb)
@@ -124,8 +124,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="Src">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="Src">Bitmap.</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -137,7 +137,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public void Apply(BitmapData bmData)
         {
             Bitmap Src = BitmapFormat.ToBitmap(bmData);
@@ -149,7 +149,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             var Src = (Bitmap)Data.Clone();

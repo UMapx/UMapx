@@ -7,7 +7,7 @@ namespace UMapx.Core
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Kernel_(statistics)
+    /// <see href="https://en.wikipedia.org/wiki/Kernel_(statistics)"/>.
     /// </remarks>
     public static partial class Kernel
     {
@@ -15,8 +15,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a bicubic function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Bicubic(float x)
         {
             if (x < 0)
@@ -43,9 +43,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a Gaussian function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="sigma">Standard deviation (0, +inf)</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="sigma">Standard deviation (0, +inf).</param>
+        /// <returns>Value.</returns>
         public static float Gaussian(float x, float sigma)
         {
             float t = x * x;
@@ -55,8 +55,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a Gaussian function σ = 1.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Gaussian(float x)
         {
             return Maths.Exp(-x * x / 2);
@@ -67,9 +67,9 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Lanczos function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Parameter</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Parameter.</param>
+        /// <returns>Value.</returns>
         public static float Lanczos(float x, float a)
         {
             if (x == 0)
@@ -86,8 +86,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Lanczos function, with a = 1.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Lanczos(float x)
         {
             return Lanczos(x, 1);
@@ -98,8 +98,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a uniform function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Uniform(float x)
         {
             float abs = Math.Abs(x);
@@ -115,8 +115,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a triangular function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Triangular(float x)
         {
             float abs = Math.Abs(x);
@@ -132,8 +132,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the trapezoid function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Trapezoid(float x)
         {
             float abs = Math.Abs(x);
@@ -153,8 +153,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Epanechnikov function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Epanechnikov(float x)
         {
             float abs = Math.Abs(x);
@@ -170,8 +170,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a Q function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Quartic(float x)
         {
             float abs = Math.Abs(x);
@@ -187,8 +187,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a T-function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Triweight(float x)
         {
             float abs = Math.Abs(x);
@@ -204,8 +204,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a tricubic function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Tricube(float x)
         {
             float abs = Math.Abs(x);
@@ -221,8 +221,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the cosine function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Cosine(float x)
         {
             float abs = Maths.Abs(x);
@@ -239,8 +239,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a logistic function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Logistic(float x)
         {
             return 1.0f / (float)(Math.Exp(x) + 2 + Math.Exp(-x));
@@ -251,8 +251,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of a sigmoid function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Sigmoid(float x)
         {
             return 2.0f / Maths.Pi / (float)(Math.Exp(x) + Math.Exp(-x));
@@ -263,8 +263,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the value of the Silverman function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Silverman(float x)
         {
             float abs = Math.Abs(x);

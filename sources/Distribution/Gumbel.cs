@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Gumbel_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Gumbel_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Gumbel : IDistribution
@@ -22,8 +22,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the Gumbel distribution.
         /// </summary>
-        /// <param name="mu">Shear rate μ ∈ (-inf, +inf)</param>
-        /// <param name="beta">Scale factor β ∈ (0, +inf)</param>
+        /// <param name="mu">Shear rate μ ∈ (-inf, +inf).</param>
+        /// <param name="beta">Scale factor β ∈ (0, +inf).</param>
         public Gumbel(float mu, float beta)
         {
             Mu = mu; Beta = beta;
@@ -139,8 +139,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             float z = (x - mu) / beta;
@@ -149,8 +149,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             float z = (x - mu) / beta;

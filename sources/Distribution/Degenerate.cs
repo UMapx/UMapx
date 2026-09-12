@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Degenerate_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Degenerate_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Degenerate : IDistribution
@@ -27,7 +27,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the degenerate distribution.
         /// </summary>
-        /// <param name="value">Single supported value</param>
+        /// <param name="value">Single supported value.</param>
         public Degenerate(int value)
         {
             Value = value;
@@ -119,8 +119,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability mass function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             int k = (int)Maths.Floor(x);
@@ -133,8 +133,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             int k = (int)Maths.Floor(x);

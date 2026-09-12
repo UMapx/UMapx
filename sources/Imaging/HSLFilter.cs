@@ -23,9 +23,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the HSL filter.
         /// </summary>
-        /// <param name="hue">Hue [-180, 180]</param>
-        /// <param name="saturation">Saturation [-1, 1]</param>
-        /// <param name="lightness">Lightness [-1, 1]</param>
+        /// <param name="hue">Hue [-180, 180].</param>
+        /// <param name="saturation">Saturation [-1, 1].</param>
+        /// <param name="lightness">Lightness [-1, 1].</param>
         public HSLFilter(float hue, float saturation, float lightness)
         {
             Hue = hue;
@@ -84,7 +84,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap</param>
+        /// <param name="bmData">Bitmap.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -118,7 +118,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);

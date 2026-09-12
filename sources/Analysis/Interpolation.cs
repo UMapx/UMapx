@@ -20,7 +20,7 @@ namespace UMapx.Analysis
         /// <summary>
         /// Initializes a class that implements interpolation.
         /// </summary>
-        /// <param name="method">Interpolation method</param>
+        /// <param name="method">Interpolation method.</param>
         public Interpolation(InterpolationMethod method = InterpolationMethod.Lagrange)
         {
             this.method = method;
@@ -45,12 +45,12 @@ namespace UMapx.Analysis
         /// <remarks>
         /// In this case, only bilinear interpolation is used.
         /// </remarks>
-        /// <param name="x">Array of values of the first argument</param>
-        /// <param name="y">Array of values of the second argument</param>
-        /// <param name="z">Function matrix</param>
-        /// <param name="xl">The value of the first argument to calculate</param>
-        /// <param name="yl">The value of the second argument to calculate</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Array of values of the first argument.</param>
+        /// <param name="y">Array of values of the second argument.</param>
+        /// <param name="z">Function matrix.</param>
+        /// <param name="xl">The value of the first argument to calculate.</param>
+        /// <param name="yl">The value of the second argument to calculate.</param>
+        /// <returns>Value.</returns>
         public float Compute(float[] x, float[] y, float[,] z, float xl, float yl)
         {
             return Bilinear(x, y, z, xl, yl);
@@ -58,10 +58,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the value of a function at a point.
         /// </summary>
-        /// <param name="x">Array of values of the argument</param>
-        /// <param name="y">Array of values of the function</param>
-        /// <param name="xl">The value of the argument to calculate</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Array of values of the argument.</param>
+        /// <param name="y">Array of values of the function.</param>
+        /// <param name="xl">The value of the argument to calculate.</param>
+        /// <returns>Value.</returns>
         public float Compute(float[] x, float[] y, float xl)
         {
             // choose method of interpolation
@@ -84,10 +84,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the value of a function at a point.
         /// </summary>
-        /// <param name="x">Array of values of the argument</param>
-        /// <param name="y">Array of values of the function</param>
-        /// <param name="xl">The value of the argument to calculate</param>
-        /// <returns>Complex number</returns>
+        /// <param name="x">Array of values of the argument.</param>
+        /// <param name="y">Array of values of the function.</param>
+        /// <param name="xl">The value of the argument to calculate.</param>
+        /// <returns>Complex number.</returns>
         public Complex32 Compute(Complex32[] x, Complex32[] y, Complex32 xl)
         {
             // choose method of interpolation
@@ -118,11 +118,11 @@ namespace UMapx.Analysis
         /// - Returns endpoint values for out-of-range <paramref name="xl"/> (clamped extrapolation).<br/>
         /// - Time complexity: O(log n) due to binary search.
         /// </remarks>
-        /// <param name="x">Sorted grid nodes x[0..n-1], strictly increasing</param>
-        /// <param name="y">Function samples y[i] = f(x[i]) of the same length as x</param>
-        /// <param name="xl">Query point</param>
-        /// <returns>Interpolated value at xl (clamped to the nearest endpoint if outside [x0, x_{n-1}])</returns>
-        /// <exception cref="ArgumentException">Thrown if arrays are null, lengths mismatch, or empty</exception>
+        /// <param name="x">Sorted grid nodes x[0..n-1], strictly increasing.</param>
+        /// <param name="y">Function samples y[i] = f(x[i]) of the same length as x.</param>
+        /// <param name="xl">Query point.</param>
+        /// <returns>Interpolated value at xl (clamped to the nearest endpoint if outside [x0, x_{n-1}]).</returns>
+        /// <exception cref="ArgumentException">Thrown if arrays are null, lengths mismatch, or empty.</exception>
         private static float Linear(float[] x, float[] y, float xl)
         {
             int n = x?.Length ?? 0;
@@ -149,13 +149,13 @@ namespace UMapx.Analysis
         ///   boundary cell is returned (clamped).<br/>
         /// - Time complexity: O(log nx + log ny) due to binary searches.
         /// </remarks>
-        /// <param name="x">X-grid nodes (length nx), strictly increasing</param>
-        /// <param name="y">Y-grid nodes (length ny), strictly increasing</param>
-        /// <param name="z">Function values, shape [nx, ny]</param>
-        /// <param name="xval">Query x-coordinate</param>
-        /// <param name="yval">Query y-coordinate</param>
-        /// <returns>Interpolated value at (xval, yval)</returns>
-        /// <exception cref="ArgumentException">Thrown if grid sizes are invalid or inconsistent</exception>
+        /// <param name="x">X-grid nodes (length nx), strictly increasing.</param>
+        /// <param name="y">Y-grid nodes (length ny), strictly increasing.</param>
+        /// <param name="z">Function values, shape [nx, ny].</param>
+        /// <param name="xval">Query x-coordinate.</param>
+        /// <param name="yval">Query y-coordinate.</param>
+        /// <returns>Interpolated value at (xval, yval).</returns>
+        /// <exception cref="ArgumentException">Thrown if grid sizes are invalid or inconsistent.</exception>
 
         private static float Bilinear(float[] x, float[] y, float[,] z, float xval, float yval)
         {
@@ -199,10 +199,10 @@ namespace UMapx.Analysis
         /// - Expects pairwise distinct nodes <paramref name="x"/> (not necessarily uniform).<br/>
         /// - Numerically unstable for large n; prefer barycentric form for better stability.
         /// </remarks>
-        /// <param name="x">Interpolation nodes x[0..n-1]</param>
-        /// <param name="y">Function samples y[i] = f(x[i])</param>
-        /// <param name="xval">Query point</param>
-        /// <returns>Interpolated value at xval</returns>
+        /// <param name="x">Interpolation nodes x[0..n-1].</param>
+        /// <param name="y">Function samples y[i] = f(x[i]).</param>
+        /// <param name="xval">Query point.</param>
+        /// <returns>Interpolated value at xval.</returns>
         private static float Lagra(float[] x, float[] y, float xval)
         {
             float yval = 0.0f;
@@ -230,10 +230,10 @@ namespace UMapx.Analysis
         /// - Builds the divided-difference table in-place (O(n²)), then evaluates in O(n).<br/>
         /// - More numerically stable than the naïve Lagrange form; nodes need not be uniform.
         /// </remarks>
-        /// <param name="x">Interpolation nodes x[0..n-1] (distinct)</param>
-        /// <param name="y">Function samples y[i] = f(x[i])</param>
-        /// <param name="xval">Query point</param>
-        /// <returns>Interpolated value at xval</returns>
+        /// <param name="x">Interpolation nodes x[0..n-1] (distinct).</param>
+        /// <param name="y">Function samples y[i] = f(x[i]).</param>
+        /// <param name="xval">Query point.</param>
+        /// <returns>Interpolated value at xval.</returns>
         private static float Newto(float[] x, float[] y, float xval)
         {
             int n = x.Length;
@@ -254,11 +254,11 @@ namespace UMapx.Analysis
         /// - Requires pairwise distinct nodes; throws if duplicates are detected.<br/>
         /// - More numerically robust than naïve Lagrange; for repeated queries, cache weights <c>w[i]</c>.
         /// </remarks>
-        /// <param name="x">Interpolation nodes (distinct)</param>
-        /// <param name="y">Function samples at nodes</param>
-        /// <param name="xval">Query point; if equal to a node, returns the corresponding sample exactly</param>
-        /// <returns>Interpolated value at xval</returns>
-        /// <exception cref="ArgumentException">Thrown when duplicate nodes are detected</exception>
+        /// <param name="x">Interpolation nodes (distinct).</param>
+        /// <param name="y">Function samples at nodes.</param>
+        /// <param name="xval">Query point; if equal to a node, returns the corresponding sample exactly.</param>
+        /// <returns>Interpolated value at xval.</returns>
+        /// <exception cref="ArgumentException">Thrown when duplicate nodes are detected.</exception>
         private static float Baryc(float[] x, float[] y, float xval)
         {
             int n = x.Length;
@@ -289,10 +289,10 @@ namespace UMapx.Analysis
         /// - Expects pairwise distinct nodes <paramref name="x"/> (not necessarily uniform).<br/>
         /// - Numerically unstable for large n; prefer barycentric form for better stability.
         /// </remarks>
-        /// <param name="x">Interpolation nodes x[0..n-1]</param>
-        /// <param name="y">Function samples y[i] = f(x[i])</param>
-        /// <param name="xval">Query point</param>
-        /// <returns>Interpolated value at xval</returns>
+        /// <param name="x">Interpolation nodes x[0..n-1].</param>
+        /// <param name="y">Function samples y[i] = f(x[i]).</param>
+        /// <param name="xval">Query point.</param>
+        /// <returns>Interpolated value at xval.</returns>
         private static Complex32 Lagra(Complex32[] x, Complex32[] y, Complex32 xval)
         {
             Complex32 yval = 0.0;
@@ -320,10 +320,10 @@ namespace UMapx.Analysis
         /// - Builds the divided-difference table in-place (O(n²)), then evaluates in O(n).<br/>
         /// - More numerically stable than the naïve Lagrange form; nodes need not be uniform.
         /// </remarks>
-        /// <param name="x">Interpolation nodes x[0..n-1] (distinct)</param>
-        /// <param name="y">Function samples y[i] = f(x[i])</param>
-        /// <param name="xval">Query point</param>
-        /// <returns>Interpolated value at xval</returns>
+        /// <param name="x">Interpolation nodes x[0..n-1] (distinct).</param>
+        /// <param name="y">Function samples y[i] = f(x[i]).</param>
+        /// <param name="xval">Query point.</param>
+        /// <returns>Interpolated value at xval.</returns>
         private static Complex32 Newto(Complex32[] x, Complex32[] y, Complex32 xval)
         {
             int n = x.Length;
@@ -344,11 +344,11 @@ namespace UMapx.Analysis
         /// - Requires pairwise distinct nodes; throws if duplicates are detected.<br/>
         /// - More numerically robust than naïve Lagrange; for repeated queries, cache weights <c>w[i]</c>.
         /// </remarks>
-        /// <param name="x">Interpolation nodes (distinct)</param>
-        /// <param name="y">Function samples at nodes</param>
-        /// <param name="xval">Query point; if equal to a node, returns the corresponding sample exactly</param>
-        /// <returns>Interpolated value at xval</returns>
-        /// <exception cref="ArgumentException">Thrown when duplicate nodes are detected</exception>
+        /// <param name="x">Interpolation nodes (distinct).</param>
+        /// <param name="y">Function samples at nodes.</param>
+        /// <param name="xval">Query point; if equal to a node, returns the corresponding sample exactly.</param>
+        /// <returns>Interpolated value at xval.</returns>
+        /// <exception cref="ArgumentException">Thrown when duplicate nodes are detected.</exception>
         private static Complex32 Baryc(Complex32[] x, Complex32[] y, Complex32 xval)
         {
             int n = x.Length;

@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Laplace_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Laplace_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Laplace : IDistribution
@@ -26,8 +26,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the Laplace distribution.
         /// </summary>
-        /// <param name="alfa">Scale factor (0, + inf)</param>
-        /// <param name="beta">Shift coefficient</param>
+        /// <param name="alfa">Scale factor (0, + inf).</param>
+        /// <param name="beta">Shift coefficient.</param>
         public Laplace(float alfa, float beta)
         {
             Alfa = alfa;
@@ -140,8 +140,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             return a / 2.0f * Maths.Exp(-a * Maths.Abs(x - b));
@@ -149,8 +149,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x <= b)
@@ -162,7 +162,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy H = 1 - ln(a / 2).
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get

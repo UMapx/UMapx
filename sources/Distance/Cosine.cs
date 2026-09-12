@@ -11,7 +11,7 @@ namespace UMapx.Distance
         /// <summary>
         /// Initializes cosine distance.
         /// </summary>
-        /// <param name="similarity">Use similarity formula or not</param>
+        /// <param name="similarity">Use similarity formula or not.</param>
         public Cosine(bool similarity = false) 
         {
             Similarity = similarity;
@@ -26,9 +26,9 @@ namespace UMapx.Distance
         /// <summary>
         /// Returns distance value.
         /// </summary>
-        /// <param name="p">Vector</param>
-        /// <param name="b">Vector</param>
-        /// <returns>Value; when either vector has zero magnitude, returns 0 if <see cref="Similarity"/> is true; otherwise returns 1</returns>
+        /// <param name="p">Vector.</param>
+        /// <param name="b">Vector.</param>
+        /// <returns>Value; when either vector has zero magnitude, returns 0 if <see cref="Similarity"/> is true; otherwise returns 1.</returns>
         public override float Compute(float[] p, float[] b)
         {
             int length = p.Length;
@@ -48,9 +48,9 @@ namespace UMapx.Distance
         /// <summary>
         /// Returns distance value.
         /// </summary>
-        /// <param name="p">Vector</param>
-        /// <param name="b">Vector</param>
-        /// <returns>Value; when either vector has zero magnitude, returns 0 if <see cref="Similarity"/> is true; otherwise returns 1</returns>
+        /// <param name="p">Vector.</param>
+        /// <param name="b">Vector.</param>
+        /// <returns>Value; when either vector has zero magnitude, returns 0 if <see cref="Similarity"/> is true; otherwise returns 1.</returns>
         public override Complex32 Compute(Complex32[] p, Complex32[] b)
         {
             int length = p.Length;

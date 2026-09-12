@@ -20,9 +20,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the resize filter.
         /// </summary>
-        /// <param name="width">Width</param>
-        /// <param name="height">Height</param>
-        /// <param name="interpolationMode">Interpolation mode</param>
+        /// <param name="width">Width.</param>
+        /// <param name="height">Height.</param>
+        /// <param name="interpolationMode">Interpolation mode.</param>
         public Resize(int width = 512, int height = 512, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
         {
             Size = new SizeInt(width, height);
@@ -31,8 +31,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the resize filter.
         /// </summary>
-        /// <param name="size">Size</param>
-        /// <param name="interpolationMode">Interpolation mode</param>
+        /// <param name="size">Size.</param>
+        /// <param name="interpolationMode">Interpolation mode.</param>
         public Resize(SizeInt size, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
         {
             Size = size;
@@ -60,8 +60,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb || bmSrc.PixelFormat != PixelFormat.Format32bppArgb)
@@ -87,8 +87,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="Src">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="Src">Bitmap.</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -104,8 +104,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         private unsafe void ApplyNearestNeighbor(BitmapData bmData, BitmapData bmSrc)
         {
             // get source image size
@@ -144,8 +144,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         private unsafe void ApplyBilinear(BitmapData bmData, BitmapData bmSrc)
         {
             // get source image size
@@ -211,8 +211,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         private unsafe void ApplyBicubic(BitmapData bmData, BitmapData bmSrc)
         {
             // get source image size

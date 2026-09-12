@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Poisson_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Poisson_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Poisson : IDistribution
@@ -25,7 +25,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the Poisson distribution.
         /// </summary>
-        /// <param name="lambda">Parameter λ (0, +inf)</param>
+        /// <param name="lambda">Parameter λ (0, +inf).</param>
         public Poisson(float lambda)
         {
             Lambda = lambda;
@@ -142,8 +142,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (float.IsNaN(x)) return float.NaN;
@@ -153,8 +153,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability mass cumulative function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (float.IsNaN(x)) return float.NaN;
@@ -165,7 +165,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get

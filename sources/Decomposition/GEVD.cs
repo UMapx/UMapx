@@ -10,11 +10,11 @@ namespace UMapx.Decomposition
     /// <remarks>
     /// It is the task of finding a vector of values of V such that the representation: A * V = B * V * D.
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix#Generalized_eigenvalue_problem
+    /// <see href="https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix#Generalized_eigenvalue_problem"/>.
     /// </remarks>
     public static class GEVD
     {
-        /// <summary>Computes the real GEVD decomposition without modifying the inputs</summary>
+        /// <summary>Computes the real GEVD decomposition without modifying the inputs.</summary>
         /// <param name="a">Finite nonempty input matrix.</param>
         /// <param name="b">Finite nonempty input matrix.</param>
         /// <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
             return (work.V, work.Alpha, work.Beta);
         }
 
-        /// <summary>Computes complex generalized right eigenvectors and homogeneous eigenvalues</summary>
+        /// <summary>Computes complex generalized right eigenvectors and homogeneous eigenvalues.</summary>
         /// <param name="a">Finite nonempty square first matrix.</param>
         /// <param name="b">Finite square second matrix of the same order; it may be singular.</param>
         /// <param name="eps">Relative QZ deflation tolerance with a roundoff floor.</param>
@@ -49,7 +49,7 @@ namespace UMapx.Decomposition
             return (InternalMatrixMath.Single(vectors), numerators, denominators);
         }
 
-        /// <summary>Forms eigenvalue quotients from an existing homogeneous spectrum</summary>
+        /// <summary>Forms eigenvalue quotients from an existing homogeneous spectrum.</summary>
         /// <param name="alpha">Complex numerators.</param>
         /// <param name="beta">Real denominators of the same length.</param>
         /// <returns>Alpha/Beta; nonzero/zero maps to positive infinity, and zero/zero to complex NaN.</returns>
@@ -65,21 +65,21 @@ namespace UMapx.Decomposition
             return values;
         }
 
-        /// <summary>Builds the real block eigenvalue matrix for real generalized eigenvector storage</summary>
+        /// <summary>Builds the real block eigenvalue matrix for real generalized eigenvector storage.</summary>
         /// <param name="alpha">Numerators ordered in real blocks or adjacent conjugate pairs.</param>
         /// <param name="beta">Real denominators in the same order.</param>
         /// <returns>The real block matrix D in A V = B V D for finite eigenvalues.</returns>
         public static float[,] RealEigenvalueMatrix(Complex32[] alpha, float[] beta)
             => EVD.RealEigenvalueMatrix(Eigenvalues(alpha, beta));
 
-        /// <summary>Builds a complex diagonal matrix of generalized eigenvalue quotients</summary>
+        /// <summary>Builds a complex diagonal matrix of generalized eigenvalue quotients.</summary>
         /// <param name="alpha">Numerators.</param>
         /// <param name="beta">Denominators in the same order.</param>
         /// <returns>diag(Alpha/Beta), without another decomposition.</returns>
         public static Complex32[,] EigenvalueMatrix(Complex32[] alpha, float[] beta)
             => EVD.EigenvalueMatrix(Eigenvalues(alpha, beta));
 
-        /// <summary>Detects zero denominators in a homogeneous generalized spectrum</summary>
+        /// <summary>Detects zero denominators in a homogeneous generalized spectrum.</summary>
         /// <param name="beta">Existing denominator vector.</param>
         /// <returns>True for any infinite or indeterminate eigenvalue pair; this does not test whether A itself is singular.</returns>
         public static bool IsSingular(float[] beta)
@@ -89,7 +89,7 @@ namespace UMapx.Decomposition
             return false;
         }
 
-        /// <summary>Checks compatible homogeneous spectrum lengths</summary>
+        /// <summary>Checks compatible homogeneous spectrum lengths.</summary>
         /// <param name="alpha">Numerator vector.</param>
         /// <param name="beta">Denominator vector.</param>
         private static void ValidateSpectrum(Complex32[] alpha, float[] beta)
@@ -99,7 +99,7 @@ namespace UMapx.Decomposition
             if (alpha.Length != beta.Length) throw new ArgumentException("Spectrum vectors must have equal lengths.");
         }
 
-        /// <summary>Exposes the existing real QZ kernel to the static QZ entry point</summary>
+        /// <summary>Exposes the existing real QZ kernel to the static QZ entry point.</summary>
         /// <param name="a">First matrix overwritten by its quasi-triangular form.</param>
         /// <param name="b">Second matrix overwritten by its triangular form.</param>
         /// <param name="eps">Relative convergence tolerance.</param>
@@ -108,7 +108,7 @@ namespace UMapx.Decomposition
         internal static void ReduceRealPencil(float[][] a, float[][] b, float eps, float[][] z, ref int error)
             => RealWorkspace.qzdecomp(a, b, eps, z, ref error);
 
-        /// <summary>Owns the real algorithm work buffers for one call only</summary>
+        /// <summary>Owns the real algorithm work buffers for one call only.</summary>
         private sealed class RealWorkspace
         {
             #region Private data
@@ -234,11 +234,11 @@ namespace UMapx.Decomposition
             /// <summary>
             /// Performs the QZ reduction of matrices A and B.
             /// </summary>
-            /// <param name="a">Matrix A (will be overwritten by the quasi-triangular form S)</param>
-            /// <param name="b">Matrix B (will be overwritten by the upper triangular form T)</param>
-            /// <param name="eps">Epsilon [0, 1]</param>
-            /// <param name="z">Matrix that accumulates the right orthogonal transformations</param>
-            /// <param name="ierr">Convergence flag</param>
+            /// <param name="a">Matrix A (will be overwritten by the quasi-triangular form S).</param>
+            /// <param name="b">Matrix B (will be overwritten by the upper triangular form T).</param>
+            /// <param name="eps">Epsilon [0, 1].</param>
+            /// <param name="z">Matrix that accumulates the right orthogonal transformations.</param>
+            /// <param name="ierr">Convergence flag.</param>
             internal static void qzdecomp(float[][] a, float[][] b, float eps, float[][] z, ref int ierr)
             {
                 int n = a.Length;
@@ -268,14 +268,14 @@ namespace UMapx.Decomposition
             /// the left factor need not equal the transpose of the right factor.</para>
             /// <para>All operations are in place; input matrices are overwritten.</para>
             /// </remarks>
-            /// <param name="n">Matrix order (rows = cols = n)</param>
-            /// <param name="a">Input A; overwritten with its upper-Hessenberg form. Modified in place</param>
-            /// <param name="b">Input B; overwritten with its upper-triangular form. Modified in place</param>
+            /// <param name="n">Matrix order (rows = cols = n).</param>
+            /// <param name="a">Input A; overwritten with its upper-Hessenberg form. Modified in place.</param>
+            /// <param name="b">Input B; overwritten with its upper-triangular form. Modified in place.</param>
             /// <param name="matz">
-            /// If true, right orthogonal transformations are accumulated into <paramref name="z"/>; otherwise Z is ignored
+            /// If true, right orthogonal transformations are accumulated into <paramref name="z"/>; otherwise Z is ignored.
             /// </param>
             /// <param name="z">
-            /// Right transformation accumulator Z (n×n). If <paramref name="matz"/> is true, updated as Z ← ZG; otherwise unused
+            /// Right transformation accumulator Z (n×n). If <paramref name="matz"/> is true, updated as Z ← ZG; otherwise unused.
             /// </param>
             private static void qzhes(int n, double[][] a, double[][] b, bool matz, double[][] z)
             {
@@ -424,16 +424,16 @@ namespace UMapx.Decomposition
             /// <para>Overwrites A, B, and (optionally) Z in place. <paramref name="ierr"/> is set if the iteration cap (≈ 30·n)
             /// is exceeded.</para>
             /// </remarks>
-            /// <param name="n">Matrix order</param>
-            /// <param name="a">On entry: upper-Hessenberg from <see cref="qzhes"/>; on exit: quasi-triangular S. Modified in place</param>
-            /// <param name="b">On entry: upper-triangular from <see cref="qzhes"/>; on exit: upper-triangular T. Modified in place</param>
+            /// <param name="n">Matrix order.</param>
+            /// <param name="a">On entry: upper-Hessenberg from <see cref="qzhes"/>; on exit: quasi-triangular S. Modified in place.</param>
+            /// <param name="b">On entry: upper-triangular from <see cref="qzhes"/>; on exit: upper-triangular T. Modified in place.</param>
             /// <param name="eps1">
-            /// Relative convergence tolerance. If zero, machine roundoff is used (via <see cref="InternalMatrixMath.Roundoff"/>)
+            /// Relative convergence tolerance. If zero, machine roundoff is used (via <see cref="InternalMatrixMath.Roundoff"/>).
             /// </param>
-            /// <param name="matz">If true, accumulate right transformations into <paramref name="z"/></param>
-            /// <param name="z">Right orthogonal accumulator Z (updated if <paramref name="matz"/> is true)</param>
+            /// <param name="matz">If true, accumulate right transformations into <paramref name="z"/>.</param>
+            /// <param name="z">Right orthogonal accumulator Z (updated if <paramref name="matz"/> is true).</param>
             /// <param name="ierr">
-            /// Output status: 0 if all subdiagonals converged; otherwise set to <c>en+1</c> at failure as in EISPACK
+            /// Output status: 0 if all subdiagonals converged; otherwise set to <c>en+1</c> at failure as in EISPACK.
             /// </param>
             private static void qzit(int n, double[][] a, double[][] b, double eps1, bool matz, double[][] z, ref int ierr)
             {
@@ -824,14 +824,14 @@ namespace UMapx.Decomposition
             /// If <paramref name="matz"/> is true, right transformations are accumulated into Z for later use by <see cref="qzvec"/>.
             /// </para>
             /// </remarks>
-            /// <param name="n">Matrix order</param>
-            /// <param name="a">On entry: S from <see cref="qzit"/>; may be locally modified. On exit: still quasi-triangular</param>
-            /// <param name="b">On entry: T from <see cref="qzit"/>; may be locally modified. On exit: still upper triangular</param>
-            /// <param name="alfr">Real parts of α_j (numerators) for generalized λ_j = α_j / β_j. Length n. Written by the routine</param>
-            /// <param name="alfi">Imag parts of α_j. Length n. Written by the routine (zero for real eigenvalues)</param>
-            /// <param name="beta">Denominators β_j (nonnegative). Length n. Written by the routine</param>
-            /// <param name="matz">If true, accumulate right transformations into <paramref name="z"/></param>
-            /// <param name="z">Right transformation accumulator Z (updated if <paramref name="matz"/> is true)</param>
+            /// <param name="n">Matrix order.</param>
+            /// <param name="a">On entry: S from <see cref="qzit"/>; may be locally modified. On exit: still quasi-triangular.</param>
+            /// <param name="b">On entry: T from <see cref="qzit"/>; may be locally modified. On exit: still upper triangular.</param>
+            /// <param name="alfr">Real parts of α_j (numerators) for generalized λ_j = α_j / β_j. Length n. Written by the routine.</param>
+            /// <param name="alfi">Imag parts of α_j. Length n. Written by the routine (zero for real eigenvalues).</param>
+            /// <param name="beta">Denominators β_j (nonnegative). Length n. Written by the routine.</param>
+            /// <param name="matz">If true, accumulate right transformations into <paramref name="z"/>.</param>
+            /// <param name="z">Right transformation accumulator Z (updated if <paramref name="matz"/> is true).</param>
             private static void qzval(int n, double[][] a, double[][] b, double[] alfr, double[] alfi, double[] beta, bool matz, double[][] z)
             {
                 int i, j;
@@ -1134,15 +1134,15 @@ namespace UMapx.Decomposition
             /// (real columns for real λ; 2 columns for each complex-conjugate pair).
             /// </para>
             /// </remarks>
-            /// <param name="n">Matrix order</param>
-            /// <param name="a">Quasi-triangular S (read-only here). Notation follows EISPACK; may be referenced</param>
+            /// <param name="n">Matrix order.</param>
+            /// <param name="a">Quasi-triangular S (read-only here). Notation follows EISPACK; may be referenced.</param>
             /// <param name="b">Upper triangular T, overwritten by triangular eigenvector workspace during back-substitution.</param>
-            /// <param name="alfr">Real parts of α_j from <see cref="qzval"/></param>
-            /// <param name="alfi">Imag parts of α_j from <see cref="qzval"/></param>
-            /// <param name="beta">β_j from <see cref="qzval"/></param>
+            /// <param name="alfr">Real parts of α_j from <see cref="qzval"/>.</param>
+            /// <param name="alfi">Imag parts of α_j from <see cref="qzval"/>.</param>
+            /// <param name="beta">β_j from <see cref="qzval"/>.</param>
             /// <param name="z">
             /// On entry: right transformation accumulator from prior stages. On exit: columns replaced by the (right)
-            /// generalized eigenvectors in the original coordinate system. Modified in place
+            /// generalized eigenvectors in the original coordinate system. Modified in place.
             /// </param>
             private static void qzvec(int n, double[][] a, double[][] b, double[] alfr, double[] alfi, double[] beta, double[][] z)
             {

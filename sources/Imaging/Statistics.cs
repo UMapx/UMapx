@@ -15,8 +15,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets a histogram of the image.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <returns>Array</returns>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <returns>Array.</returns>
         public unsafe static int[] Histogram(this BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -40,9 +40,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets a histogram of the image.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="channel">Channel of RGBA model</param>
-        /// <returns>Array</returns>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="channel">Channel of RGBA model.</param>
+        /// <returns>Array.</returns>
         public unsafe static int[] Histogram(this BitmapData bmData, RGBA channel)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -97,8 +97,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets a histogram of the image.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <returns>Array</returns>
+        /// <param name="Data">Bitmap.</param>
+        /// <returns>Array.</returns>
         public static int[] Histogram(this Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -109,9 +109,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets a histogram of the image.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="channel">Channel of RGBA model</param>
-        /// <returns>Array</returns>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="channel">Channel of RGBA model.</param>
+        /// <returns>Array.</returns>
         public static int[] Histogram(this Bitmap Data, RGBA channel)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -125,8 +125,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets an array of values of the density function.
         /// </summary>
-        /// <param name="H">Histogram</param>
-        /// <returns>Array</returns>
+        /// <param name="H">Histogram.</param>
+        /// <returns>Array.</returns>
         public static int[] CDF(int[] H)
         {
             int length = H.Length;
@@ -145,8 +145,8 @@ namespace UMapx.Imaging
         /// <remarks>
         /// Returns a zero-filled lookup table when the histogram is degenerate and cannot be normalized.
         /// </remarks>
-        /// <param name="H">Histogram</param>
-        /// <returns>Array</returns>
+        /// <param name="H">Histogram.</param>
+        /// <returns>Array.</returns>
         public static float[] Equalize(int[] H)
         {
             // CDF calculating
@@ -181,8 +181,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Calculates the optimal threshold using the Otsu method for the original bitmap.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <returns>Integer number</returns>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <returns>Integer number.</returns>
         public static int OtsuThreshold(this BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -206,8 +206,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Calculates the optimal threshold using the Otsu method for the original bitmap.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <returns>Integer number</returns>
+        /// <param name="Data">Bitmap.</param>
+        /// <returns>Integer number.</returns>
         public static int OtsuThreshold(this Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -221,8 +221,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Calculates the optimal threshold for the original bitmap.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <returns>Integer number</returns>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <returns>Integer number.</returns>
         public unsafe static int SISThreshold(this BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -273,8 +273,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Calculates the optimal threshold for the original bitmap.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <returns>Integer number</returns>
+        /// <param name="Data">Bitmap.</param>
+        /// <returns>Integer number.</returns>
         public static int SISThreshold(this Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -288,10 +288,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Omega.
         /// </summary>
-        /// <param name="init">Init</param>
-        /// <param name="end">End</param>
-        /// <param name="h">Histogram</param>
-        /// <returns>Value</returns>
+        /// <param name="init">Init.</param>
+        /// <param name="end">End.</param>
+        /// <param name="h">Histogram.</param>
+        /// <returns>Value.</returns>
         private static int Omega(int init, int end, int[] h)
         {
             int sum = 0, i;
@@ -306,10 +306,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Mu.
         /// </summary>
-        /// <param name="init">Init</param>
-        /// <param name="end">End</param>
-        /// <param name="h">Histogram</param>
-        /// <returns>Value</returns>
+        /// <param name="init">Init.</param>
+        /// <param name="end">End.</param>
+        /// <param name="h">Histogram.</param>
+        /// <returns>Value.</returns>
         private static int Mu(int init, int end, int[] h)
         {
             int sum = 0, i;
@@ -327,8 +327,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets the maximum value of the array.
         /// </summary>
-        /// <param name="data">Array</param>
-        /// <returns>Maximum value</returns>
+        /// <param name="data">Array.</param>
+        /// <returns>Maximum value.</returns>
         public static int Max(int[] data)
         {
             return Max(data, out _);
@@ -336,9 +336,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets the maximum value of the array and outputs the index of that value.
         /// </summary>
-        /// <param name="data">Array</param>
-        /// <param name="index">Outputs the index of the maximum element</param>
-        /// <returns>Maximum value</returns>
+        /// <param name="data">Array.</param>
+        /// <param name="index">Outputs the index of the maximum element.</param>
+        /// <returns>Maximum value.</returns>
         public static int Max(int[] data, out int index)
         {
             index = 0;
@@ -359,8 +359,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets the minimum value of the array.
         /// </summary>
-        /// <param name="data">Array</param>
-        /// <returns>Minimum value</returns>
+        /// <param name="data">Array.</param>
+        /// <returns>Minimum value.</returns>
         public static int Min(int[] data)
         {
             return Min(data, out _);
@@ -368,9 +368,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Gets the minimum value of the array and outputs the index of that value.
         /// </summary>
-        /// <param name="data">Array</param>
-        /// <param name="index">Outputs the index of the minimum element</param>
-        /// <returns>Minimum value</returns>
+        /// <param name="data">Array.</param>
+        /// <param name="index">Outputs the index of the minimum element.</param>
+        /// <returns>Minimum value.</returns>
         public static int Min(int[] data, out int index)
         {
             index = 0;
@@ -391,8 +391,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the summary of a histogram.
         /// </summary>
-        /// <param name="values">Histogram</param>
-        /// <returns>Value</returns>
+        /// <param name="values">Histogram.</param>
+        /// <returns>Value.</returns>
         public static float Sum(int[] values)
         {
             int length = values.Length;
@@ -408,8 +408,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the mean of a histogram.
         /// </summary>
-        /// <param name="values">Histogram</param>
-        /// <returns>Value</returns>
+        /// <param name="values">Histogram.</param>
+        /// <returns>Value.</returns>
         public static float Mean(int[] values)
         {
             int hits;
@@ -431,8 +431,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the standard deviation of a histogram.
         /// </summary>
-        /// <param name="values">Histogram</param>
-        /// <returns>Value</returns>
+        /// <param name="values">Histogram.</param>
+        /// <returns>Value.</returns>
         public static float StdDev(int[] values)
         {
             return StdDev(values, Mean(values));
@@ -440,9 +440,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the standard deviation of a histogram.
         /// </summary>
-        /// <param name="values">Histogram</param>
-        /// <param name="mean">Mean</param>
-        /// <returns>Value</returns>
+        /// <param name="values">Histogram.</param>
+        /// <param name="mean">Mean.</param>
+        /// <returns>Value.</returns>
         public static float StdDev(int[] values, float mean)
         {
             float stddev = 0;
@@ -504,9 +504,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns range of a histogram.
         /// </summary>
-        /// <param name="values">Histogram</param>
-        /// <param name="percent">Percent</param>
-        /// <returns>Value</returns>
+        /// <param name="values">Histogram.</param>
+        /// <param name="percent">Percent.</param>
+        /// <returns>Value.</returns>
         public static RangeInt GetRange(int[] values, float percent)
         {
             int total = 0, n = values.Length;
@@ -540,8 +540,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns entropy of a histogram.
         /// </summary>
-        /// <param name="values">Histogram</param>
-        /// <returns>Value</returns>
+        /// <param name="values">Histogram.</param>
+        /// <returns>Value.</returns>
         public static float Entropy(int[] values)
         {
             int n = values.Length;
@@ -572,8 +572,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns mode of a histogram.
         /// </summary>
-        /// <param name="values">Histogram</param>
-        /// <returns>Value</returns>
+        /// <param name="values">Histogram.</param>
+        /// <returns>Value.</returns>
         public static int Mode(int[] values)
         {
             int length = values.Length;

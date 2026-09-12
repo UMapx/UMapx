@@ -12,7 +12,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// http://www.academia.edu/7629047/Image_enhancement_by_local_histogram_stretching
+    /// <see href="http://www.academia.edu/7629047/Image_enhancement_by_local_histogram_stretching"/>.
     /// </remarks>
     [Serializable]
     public class LocalHistogramStretch : IBitmapFilter
@@ -30,10 +30,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the local histogram stretch filter.
         /// </summary>
-        /// <param name="radius">Radius</param>
-        /// <param name="space">Color space</param>
-        /// <param name="contrast">Contrast [0, 1]</param>
-        /// <param name="smoothing">Smoothing</param>
+        /// <param name="radius">Radius.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="contrast">Contrast [0, 1].</param>
+        /// <param name="smoothing">Smoothing.</param>
         public LocalHistogramStretch(int radius, Space space, float contrast = 0.5f, bool smoothing = true)
         {
             Size = new SizeInt(radius, radius);
@@ -44,11 +44,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the local histogram stretch filter.
         /// </summary>
-        /// <param name="width">Filter width</param>
-        /// <param name="height">Filter height</param>
-        /// <param name="space">Color space</param>
-        /// <param name="contrast">Contrast [0, 1]</param>
-        /// <param name="smoothing">Smoothing</param>
+        /// <param name="width">Filter width.</param>
+        /// <param name="height">Filter height.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="contrast">Contrast [0, 1].</param>
+        /// <param name="smoothing">Smoothing.</param>
         public LocalHistogramStretch(int width, int height, Space space, float contrast = 0.5f, bool smoothing = true)
         {
             Size = new SizeInt(width, height);
@@ -59,10 +59,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the local histogram stretch filter.
         /// </summary>
-        /// <param name="size">Radius</param>
-        /// <param name="space">Color space</param>
-        /// <param name="contrast">Contrast [0, 1]</param>
-        /// <param name="smoothing">Smoothing</param>
+        /// <param name="size">Radius.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="contrast">Contrast [0, 1].</param>
+        /// <param name="smoothing">Smoothing.</param>
         public LocalHistogramStretch(SizeInt size, Space space, float contrast = 0.5f, bool smoothing = true)
         {
             Size = size;
@@ -134,7 +134,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -163,7 +163,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             Bitmap Max = (Bitmap)Data.Clone();
@@ -194,9 +194,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmMax">Bitmap data</param>
-        /// <param name="bmMin">Bitmap data</param> 
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmMax">Bitmap data.</param>
+        /// <param name="bmMin">Bitmap data.</param>
         private unsafe void Apply(BitmapData bmData, BitmapData bmMax, BitmapData bmMin)
         {
             // filter
@@ -222,9 +222,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmMax">Bitmap data</param>
-        /// <param name="bmMin">Bitmap data</param> 
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmMax">Bitmap data.</param>
+        /// <param name="bmMin">Bitmap data.</param>
         private unsafe void ApplyRGB(BitmapData bmData, BitmapData bmMax, BitmapData bmMin)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -277,9 +277,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmMax">Bitmap data</param>
-        /// <param name="bmMin">Bitmap data</param> 
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmMax">Bitmap data.</param>
+        /// <param name="bmMin">Bitmap data.</param>
         private unsafe void ApplyHSB(BitmapData bmData, BitmapData bmMax, BitmapData bmMin)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -333,9 +333,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmMax">Bitmap data</param>
-        /// <param name="bmMin">Bitmap data</param> 
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmMax">Bitmap data.</param>
+        /// <param name="bmMin">Bitmap data.</param>
         private unsafe void ApplyHSL(BitmapData bmData, BitmapData bmMax, BitmapData bmMin)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -389,9 +389,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmMax">Bitmap data</param>
-        /// <param name="bmMin">Bitmap data</param> 
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmMax">Bitmap data.</param>
+        /// <param name="bmMin">Bitmap data.</param>
         private unsafe void ApplyYCbCr(BitmapData bmData, BitmapData bmMax, BitmapData bmMin)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -445,9 +445,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmMax">Bitmap data</param>
-        /// <param name="bmMin">Bitmap data</param> 
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmMax">Bitmap data.</param>
+        /// <param name="bmMin">Bitmap data.</param>
         private unsafe void ApplyGrayscale(BitmapData bmData, BitmapData bmMax, BitmapData bmMin)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();

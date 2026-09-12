@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/U-quadratic_distribution
+    /// <see href="https://en.wikipedia.org/wiki/U-quadratic_distribution"/>.
     /// </remarks>
     [Serializable]
     public class UQuadratic : IDistribution
@@ -33,8 +33,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the U-quadratic distribution.
         /// </summary>
-        /// <param name="a">Parameter a ∈ (0, +inf)</param>
-        /// <param name="b">Parameter b ∈ (a, +inf)</param>
+        /// <param name="a">Parameter a ∈ (0, +inf).</param>
+        /// <param name="b">Parameter b ∈ (a, +inf).</param>
         public UQuadratic(float a, float b)
         {
             A = a; B = b;
@@ -147,8 +147,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x < a)
@@ -162,8 +162,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x < a)

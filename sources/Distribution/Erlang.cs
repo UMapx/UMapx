@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Erlang_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Erlang_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Erlang : IDistribution
@@ -22,8 +22,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the distribution of Erlang.
         /// </summary>
-        /// <param name="k">Form parameter k ∈ (0, +inf)</param>
-        /// <param name="lambda">λ-parameter λ ∈ (0, +inf)</param>
+        /// <param name="k">Form parameter k ∈ (0, +inf).</param>
+        /// <param name="lambda">λ-parameter λ ∈ (0, +inf).</param>
         public Erlang(int k, float lambda)
         {
             K = k; Lambda = lambda;
@@ -138,7 +138,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get
@@ -149,8 +149,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x < 0)
@@ -162,8 +162,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x < 0)

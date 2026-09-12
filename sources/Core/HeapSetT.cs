@@ -6,7 +6,7 @@ namespace UMapx.Core
     /// <summary>
     /// Defines a heap set.
     /// </summary>
-    /// <typeparam name="T">Type</typeparam>
+    /// <typeparam name="T">Type.</typeparam>
     [Serializable]
     public class HeapSet<T>
     {
@@ -20,7 +20,7 @@ namespace UMapx.Core
         /// <summary>
         /// Initializes the heap set.
         /// </summary>
-        /// <param name="comparer">Comparer</param>
+        /// <param name="comparer">Comparer.</param>
         public HeapSet(IComparer<T> comparer)
         {
             this.comparer = comparer;
@@ -38,7 +38,7 @@ namespace UMapx.Core
         /// <summary>
         /// Adds an item to the heap set.
         /// </summary>
-        /// <param name="item">Item</param>
+        /// <param name="item">Item.</param>
         public void Add(T item)
         {
             if (low.Count == 0 || comparer.Compare(item, low.Peek()) <= 0)
@@ -50,7 +50,7 @@ namespace UMapx.Core
         /// <summary>
         /// Balances the heap set.
         /// </summary>
-        /// <param name="targetLowSize">Target low size</param>
+        /// <param name="targetLowSize">Target low size.</param>
         public void Balance(int targetLowSize)
         {
             while (low.Count > targetLowSize)
@@ -63,7 +63,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the rank.
         /// </summary>
-        /// <returns>Element</returns>
+        /// <returns>Element.</returns>
         public T GetRank() => low.Peek();
         #endregion
     }

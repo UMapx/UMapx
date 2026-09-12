@@ -17,8 +17,8 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes the Planck window function.
         /// </summary>
-        /// <param name="frameSize">Window size</param>
-        /// <param name="a">Form parameter [0, 0.5]</param>
+        /// <param name="frameSize">Window size.</param>
+        /// <param name="a">Form parameter [0, 0.5].</param>
         public Planck(int frameSize, float a = 0.15f)
         {
             this.FrameSize = frameSize;
@@ -41,10 +41,10 @@ namespace UMapx.Window
         /// <summary>
         /// Function Z+-(x, a).
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="p">Sign</param>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="p">Sign.</param>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Value.</returns>
         private float Z(float x, bool p, int frameSize)
         {
             // params:
@@ -59,9 +59,9 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Value.</returns>
         public override float Function(float x, int frameSize)
         {
             // Planck taper window:
@@ -87,7 +87,7 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the window function.
         /// </summary>
-        /// <returns>Array</returns>
+        /// <returns>Array.</returns>
         public override float[] GetWindow(int frameSize)
         {
             float t = (frameSize - 1);

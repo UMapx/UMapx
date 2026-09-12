@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Shifted_log-logistic_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Shifted_log-logistic_distribution"/>.
     /// </remarks>
     [Serializable]
     public class ShiftedLogLogistic : IDistribution
@@ -32,7 +32,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the shifted log-logistic distribution with the given location parameter.
         /// </summary>
-        /// <param name="location">Location parameter</param>
+        /// <param name="location">Location parameter.</param>
         public ShiftedLogLogistic(float location)
         {
             this.mu = location;
@@ -42,8 +42,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the shifted log-logistic distribution with the given location and scale parameters.
         /// </summary>
-        /// <param name="location">Location parameter</param>
-        /// <param name="scale">Scale parameter (must be greater than zero)</param>
+        /// <param name="location">Location parameter.</param>
+        /// <param name="scale">Scale parameter (must be greater than zero).</param>
         public ShiftedLogLogistic(float location, float scale)
         {
             this.mu = location;
@@ -53,9 +53,9 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the shifted log-logistic distribution with the given parameters.
         /// </summary>
-        /// <param name="location">Location parameter</param>
-        /// <param name="scale">Scale parameter (must be greater than zero)</param>
-        /// <param name="shape">Shape parameter</param>
+        /// <param name="location">Location parameter.</param>
+        /// <param name="scale">Scale parameter (must be greater than zero).</param>
+        /// <param name="shape">Shape parameter.</param>
         public ShiftedLogLogistic(float location, float scale, float shape)
         {
             this.mu = location;
@@ -230,8 +230,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (Maths.Abs(ksi) < 1e-6f)
@@ -259,8 +259,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (Maths.Abs(ksi) < 1e-6f)

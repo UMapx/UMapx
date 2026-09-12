@@ -18,8 +18,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Initializes the wavelet filter.
         /// </summary>
-        /// <param name="waveletDecomposition">Discrete wavelet decomposition</param>
-        /// <param name="factor">Factor [-1, 1]</param>
+        /// <param name="waveletDecomposition">Discrete wavelet decomposition.</param>
+        /// <param name="factor">Factor [-1, 1].</param>
         public WaveletFilter(WaveletDecomposition waveletDecomposition, float factor = -1.0f)
         {
             WaveletDecomposition = waveletDecomposition;
@@ -39,7 +39,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Implements a wavelet filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(float[,] data)
         {
             var B = WaveletDecomposition.Forward(data);
@@ -87,7 +87,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Implements a wavelet filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(float[] data)
         {
             var B = WaveletDecomposition.Forward(data);
@@ -126,7 +126,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Implements a wavelet filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(Complex32[,] data)
         {
             var B = WaveletDecomposition.Forward(data);
@@ -174,7 +174,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Implements a wavelet filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(Complex32[] data)
         {
             var B = WaveletDecomposition.Forward(data);

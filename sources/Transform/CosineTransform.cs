@@ -8,7 +8,7 @@ namespace UMapx.Transform
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Discrete_cosine_transform
+    /// <see href="https://en.wikipedia.org/wiki/Discrete_cosine_transform"/>.
     /// </remarks>
     [Serializable]
     public class CosineTransform : TransformBaseMatrixFloat, ITransform
@@ -17,7 +17,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the cosine transform.
         /// </summary>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="direction">Processing direction.</param>
         public CosineTransform(Direction direction = Direction.Vertical)
         {
             this.Direction = direction;
@@ -28,8 +28,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Implements the construction of the cosine transform matrix.
         /// </summary>
-        /// <param name="n">Size</param>
-        /// <returns>Matrix</returns>
+        /// <param name="n">Size.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] Matrix(int n)
         {
             int j, i;

@@ -23,9 +23,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the color photo filter.
         /// </summary>
-        /// <param name="blendf">Blend function</param>
-        /// <param name="color">Color</param>
-        /// <param name="strength">Strength [0, 1]</param>
+        /// <param name="blendf">Blend function.</param>
+        /// <param name="color">Color.</param>
+        /// <param name="strength">Strength [0, 1].</param>
         public PhotoFilter(IMeshFloat blendf, Color color, float strength = 0.5f)
         {
             BlendFunction = blendf;
@@ -35,8 +35,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the color photo filter.
         /// </summary>
-        /// <param name="color">Color</param>
-        /// <param name="strength">Strength [0, 1]</param>
+        /// <param name="color">Color.</param>
+        /// <param name="strength">Strength [0, 1].</param>
         public PhotoFilter(Color color, float strength = 0.5f)
         {
             BlendFunction = BlendMode.Pegtop;
@@ -97,7 +97,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -147,7 +147,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);

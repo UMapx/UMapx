@@ -16,7 +16,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the mask color filter.
         /// </summary>
-        /// <param name="color">Mask color</param>
+        /// <param name="color">Mask color.</param>
         public MaskColorFilter(Color color)
         {
             Color = color;
@@ -30,8 +30,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (bmData.Width != bmSrc.Width || bmData.Height != bmSrc.Height)
@@ -63,8 +63,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="Src">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="Src">Bitmap.</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);

@@ -6,7 +6,7 @@ namespace UMapx.Core
     /// <summary>
     /// Defines a heap.
     /// </summary>
-    /// <typeparam name="T">Type</typeparam>
+    /// <typeparam name="T">Type.</typeparam>
     [Serializable]
     public class Heap<T>
     {
@@ -19,7 +19,7 @@ namespace UMapx.Core
         /// <summary>
         /// Initializes the heap.
         /// </summary>
-        /// <param name="comparer">Comparer</param>
+        /// <param name="comparer">Comparer.</param>
         public Heap(IComparer<T> comparer) => this.comparer = comparer;
         #endregion
 
@@ -32,7 +32,7 @@ namespace UMapx.Core
         /// <summary>
         /// Adds an item to the heap.
         /// </summary>
-        /// <param name="item">Item</param>
+        /// <param name="item">Item.</param>
         public void Add(T item)
         {
             data.Add(item);
@@ -50,7 +50,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the element at the top of the heap without removing it.
         /// </summary>
-        /// <returns>Element at the top of the heap</returns>
+        /// <returns>Element at the top of the heap.</returns>
         public T Peek()
         {
             if (Count == 0)
@@ -61,7 +61,7 @@ namespace UMapx.Core
         /// <summary>
         /// Extracts an item from the heap.
         /// </summary>
-        /// <returns>The removed root element</returns>
+        /// <returns>The removed root element.</returns>
         public T Extract()
         {
             if (Count == 0)

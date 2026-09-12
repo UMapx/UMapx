@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Geometric_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Geometric_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Geometric : IDistribution
@@ -26,7 +26,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the geometric distribution.
         /// </summary>
-        /// <param name="p">Probability of "success" (0, 1]</param>
+        /// <param name="p">Probability of "success" (0, 1].</param>
         public Geometric(float p)
         {
             P = p;
@@ -127,8 +127,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x < 0)
@@ -146,8 +146,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability mass cumulative function.
         /// </summary>
-        /// <param name="x">Number of failures before the first success</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Number of failures before the first success.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x < 0)
@@ -161,7 +161,7 @@ namespace UMapx.Distribution
         /// Returns the value of differential entropy.
         /// When <c>p = 1</c>, the distribution is degenerate and the entropy equals zero.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get

@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Nakagami_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Nakagami_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Nakagami : IDistribution
@@ -23,8 +23,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Configures distribution parameters and precomputes constants.
         /// </summary>
-        /// <param name="mu">Shape factor (μ ≥ 0.5)</param>
-        /// <param name="omega">Spread coefficient</param>
+        /// <param name="mu">Shape factor (μ ≥ 0.5).</param>
+        /// <param name="omega">Spread coefficient.</param>
         private void Initialize(float mu, float omega)
         {
             float twoMuMu = 2.0f * Maths.Pow(mu, mu);
@@ -49,8 +49,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the distribution of Nakagami.
         /// </summary>
-        /// <param name="mu">Shape factor (μ ≥ 0.5)</param>
-        /// <param name="omega">Spread rate</param>
+        /// <param name="mu">Shape factor (μ ≥ 0.5).</param>
+        /// <param name="omega">Spread rate.</param>
         public Nakagami(float mu, float omega)
         {
             Mu = mu;
@@ -175,8 +175,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x <= 0)
@@ -189,8 +189,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x <= 0)

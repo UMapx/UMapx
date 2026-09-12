@@ -11,11 +11,11 @@ namespace UMapx.Decomposition
     /// Represents a rectangular matrix as A = U * diag(S) * V^H for complex inputs,
     /// or A = U * diag(S) * V^T for real inputs. S contains nonnegative singular values.
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Singular_value_decomposition
+    /// <see href="https://en.wikipedia.org/wiki/Singular_value_decomposition"/>.
     /// </remarks>
     public static class SVD
     {
-        /// <summary>Computes the economy real SVD, A = U diag(S) V^T, without modifying the input</summary>
+        /// <summary>Computes the economy real SVD, A = U diag(S) V^T, without modifying the input.</summary>
         /// <param name="matrix">Finite nonempty m by n matrix.</param>
         /// <param name="iterations">Positive maximum QR sweeps per singular value.</param>
         /// <returns>U of size m by k, descending nonnegative S of length k, and V of size n by k, where k=min(m,n).</returns>
@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
             return (work.U, work.S, work.V);
         }
 
-        /// <summary>Computes the economy complex SVD, A = U diag(S) V^H, using one-sided Jacobi sweeps</summary>
+        /// <summary>Computes the economy complex SVD, A = U diag(S) V^H, using one-sided Jacobi sweeps.</summary>
         /// <param name="matrix">Finite nonempty m by n complex matrix, not modified.</param>
         /// <param name="iterations">Positive maximum number of cyclic Jacobi sweeps.</param>
         /// <returns>U of size m by k, descending nonnegative S of length k, and V of size n by k, where k=min(m,n).</returns>
@@ -36,7 +36,7 @@ namespace UMapx.Decomposition
             return (InternalMatrixMath.Single(d.U), InternalMatrixMath.Single(d.S), InternalMatrixMath.Single(d.V));
         }
 
-        /// <summary>Constructs the Moore-Penrose inverse from existing real economy SVD factors</summary>
+        /// <summary>Constructs the Moore-Penrose inverse from existing real economy SVD factors.</summary>
         /// <param name="u">Left singular vectors, m by k.</param>
         /// <param name="s">Nonnegative singular values of length k.</param>
         /// <param name="v">Right singular vectors, n by k.</param>
@@ -45,7 +45,7 @@ namespace UMapx.Decomposition
         public static float[,] PseudoInverse(float[,] u, float[] s, float[,] v, float tolerance = -1)
             => InternalMatrixMath.Real(Inverse(InternalMatrixMath.Copy(u), s, InternalMatrixMath.Copy(v), tolerance));
 
-        /// <summary>Constructs the Moore-Penrose inverse from existing complex economy SVD factors</summary>
+        /// <summary>Constructs the Moore-Penrose inverse from existing complex economy SVD factors.</summary>
         /// <param name="u">Left singular vectors, m by k.</param>
         /// <param name="s">Nonnegative singular values of length k.</param>
         /// <param name="v">Right singular vectors, n by k.</param>
@@ -54,7 +54,7 @@ namespace UMapx.Decomposition
         public static Complex32[,] PseudoInverse(Complex32[,] u, float[] s, Complex32[,] v, float tolerance = -1)
             => InternalMatrixMath.Single(Inverse(InternalMatrixMath.Copy(u), s, InternalMatrixMath.Copy(v), tolerance));
 
-        /// <summary>Counts singular values exceeding a relative cutoff</summary>
+        /// <summary>Counts singular values exceeding a relative cutoff.</summary>
         /// <param name="s">Finite nonnegative singular values.</param>
         /// <param name="tolerance">Relative cutoff; -1 uses length(S)*2^-23. Supply max(m,n)*2^-23 for rectangular inputs.</param>
         /// <returns>The numerical rank.</returns>
@@ -67,12 +67,12 @@ namespace UMapx.Decomposition
             return rank;
         }
 
-        /// <summary>Returns the spectral norm from existing singular values</summary>
+        /// <summary>Returns the spectral norm from existing singular values.</summary>
         /// <param name="s">Finite nonnegative singular values.</param>
         /// <returns>The largest singular value, or zero for an empty sequence.</returns>
         public static float Norm(float[] s) => (float)ValidateValues(s);
 
-        /// <summary>Returns the spectral condition number from existing singular values</summary>
+        /// <summary>Returns the spectral condition number from existing singular values.</summary>
         /// <param name="s">Finite nonnegative singular values.</param>
         /// <returns>max(S)/min(S), or positive infinity if the sequence is empty or contains zero.</returns>
         public static float ConditionNumber(float[] s)
@@ -82,7 +82,7 @@ namespace UMapx.Decomposition
             return s.Length == 0 || smallest == 0 ? float.PositiveInfinity : (float)(largest / smallest);
         }
 
-        /// <summary>Validates a relative rank cutoff and selects the single-precision default</summary>
+        /// <summary>Validates a relative rank cutoff and selects the single-precision default.</summary>
         /// <param name="tolerance">Nonnegative relative cutoff, or -1 for the default.</param>
         /// <param name="dimension">Dimension used for the default error scale.</param>
         /// <returns>A nonnegative relative cutoff.</returns>
@@ -93,7 +93,7 @@ namespace UMapx.Decomposition
             return tolerance == -1 ? dimension * InternalMatrixMath.SingleRoundoff : tolerance;
         }
 
-        /// <summary>Validates finite nonnegative singular values without requiring sorted order</summary>
+        /// <summary>Validates finite nonnegative singular values without requiring sorted order.</summary>
         /// <param name="s">Singular-value vector.</param>
         /// <returns>The largest value, or zero for an empty vector.</returns>
         private static double ValidateValues(float[] s)
@@ -109,7 +109,7 @@ namespace UMapx.Decomposition
             return largest;
         }
 
-        /// <summary>Accumulates a truncated pseudoinverse with conjugation and double-precision division</summary>
+        /// <summary>Accumulates a truncated pseudoinverse with conjugation and double-precision division.</summary>
         /// <param name="u">Left factors.</param>
         /// <param name="s">Singular values.</param>
         /// <param name="v">Right factors.</param>
@@ -131,7 +131,7 @@ namespace UMapx.Decomposition
             return result;
         }
 
-        /// <summary>Orthogonalizes complex columns using unitary plane rotations without forming A^H A</summary>
+        /// <summary>Orthogonalizes complex columns using unitary plane rotations without forming A^H A.</summary>
         /// <param name="a">Private work matrix.</param>
         /// <param name="iterations">Maximum positive sweep count.</param>
         /// <returns>Double-precision economy singular factors and descending singular values.</returns>
@@ -201,7 +201,7 @@ namespace UMapx.Decomposition
             return (u, singular, v);
         }
 
-        /// <summary>Owns the real algorithm work buffers for one call only</summary>
+        /// <summary>Owns the real algorithm work buffers for one call only.</summary>
         private sealed class RealWorkspace
         {
             #region Private data
@@ -289,7 +289,7 @@ namespace UMapx.Decomposition
             /// </summary>
             /// <param name="A">
             /// Input matrix of size n×m. Assumes n ≥ m when called (the caller transposes
-            /// beforehand if needed). The method works on an internal copy (jagged buffers)
+            /// beforehand if needed). The method works on an internal copy (jagged buffers).
             /// </param>
             /// <remarks>
             /// Uses jagged arrays for speed. Columns of U and V are orthonormal. The number

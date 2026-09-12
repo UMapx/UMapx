@@ -8,7 +8,7 @@ namespace UMapx.Transform
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
+    /// <see href="http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf"/>.
     /// </remarks>
     [Serializable]
     public class LaplacianPyramidTransform : IPyramidTransform
@@ -30,8 +30,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the Laplacian pyramid transform.
         /// </summary>
-        /// <param name="levels">Number of levels</param>
-        /// <param name="radius">Radius</param>
+        /// <param name="levels">Number of levels.</param>
+        /// <param name="radius">Radius.</param>
         public LaplacianPyramidTransform(int levels, int radius = 2)
         {
             this.Radius = radius;
@@ -83,8 +83,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Matrix</param>
-        /// <returns>Pyramid</returns>
+        /// <param name="data">Matrix.</param>
+        /// <returns>Pyramid.</returns>
         public float[][,] Forward(float[,] data)
         {
             int r = data.GetLength(0), c = data.GetLength(1);
@@ -105,8 +105,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Array</param>
-        /// <returns>Pyramid</returns>
+        /// <param name="data">Array.</param>
+        /// <returns>Pyramid.</returns>
         public float[][] Forward(float[] data)
         {
             int r = data.Length;
@@ -128,8 +128,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Pyramid</param>
-        /// <returns>Matrix</returns>
+        /// <param name="pyramid">Pyramid.</param>
+        /// <returns>Matrix.</returns>
         public float[,] Backward(float[][,] pyramid)
         {
             int nlev = pyramid.Length - 1;
@@ -145,8 +145,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Pyramid</param>
-        /// <returns>Array</returns>
+        /// <param name="pyramid">Pyramid.</param>
+        /// <returns>Array.</returns>
         public float[] Backward(float[][] pyramid)
         {
             int nlev = pyramid.Length - 1;
@@ -162,8 +162,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Matrix</param>
-        /// <returns>Pyramid</returns>
+        /// <param name="data">Matrix.</param>
+        /// <returns>Pyramid.</returns>
         public Complex32[][,] Forward(Complex32[,] data)
         {
             int r = data.GetLength(0), c = data.GetLength(1);
@@ -184,8 +184,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Array</param>
-        /// <returns>Pyramid</returns>
+        /// <param name="data">Array.</param>
+        /// <returns>Pyramid.</returns>
         public Complex32[][] Forward(Complex32[] data)
         {
             int r = data.Length;
@@ -207,8 +207,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Pyramid</param>
-        /// <returns>Matrix</returns>
+        /// <param name="pyramid">Pyramid.</param>
+        /// <returns>Matrix.</returns>
         public Complex32[,] Backward(Complex32[][,] pyramid)
         {
             int nlev = pyramid.Length - 1;
@@ -224,8 +224,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Pyramid</param>
-        /// <returns>Array</returns>
+        /// <param name="pyramid">Pyramid.</param>
+        /// <returns>Array.</returns>
         public Complex32[] Backward(Complex32[][] pyramid)
         {
             int nlev = pyramid.Length - 1;
@@ -244,8 +244,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Gaussian pyramid</param>
-        /// <returns>Pyramid</returns>
+        /// <param name="data">Gaussian pyramid.</param>
+        /// <returns>Pyramid.</returns>
         public float[][,] Forward(float[][,] data)
         {
             int nlev = data.Length;
@@ -262,8 +262,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Gaussian pyramid</param>
-        /// <returns>Pyramid</returns>
+        /// <param name="data">Gaussian pyramid.</param>
+        /// <returns>Pyramid.</returns>
         public float[][] Forward(float[][] data)
         {
             int nlev = data.Length;
@@ -280,8 +280,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Gaussian pyramid</param>
-        /// <returns>Pyramid</returns>
+        /// <param name="data">Gaussian pyramid.</param>
+        /// <returns>Pyramid.</returns>
         public Complex32[][,] Forward(Complex32[][,] data)
         {
             int nlev = data.Length;
@@ -298,8 +298,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward Laplacian pyramid transform.
         /// </summary>
-        /// <param name="data">Gaussian pyramid</param>
-        /// <returns>Pyramid</returns>
+        /// <param name="data">Gaussian pyramid.</param>
+        /// <returns>Pyramid.</returns>
         public Complex32[][] Forward(Complex32[][] data)
         {
             int nlev = data.Length;

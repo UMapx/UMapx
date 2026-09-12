@@ -8,7 +8,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// http://www.scs.carleton.ca/~roth/iit-publications-iti/docs/gerh-50002.pdf
+    /// <see href="http://www.scs.carleton.ca/~roth/iit-publications-iti/docs/gerh-50002.pdf"/>.
     /// </remarks>
     [Serializable]
     public class LocalThreshold : LocalCorrection, IBitmapFilter2
@@ -21,9 +21,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Bradley local threshold filter.
         /// </summary>
-        /// <param name="radius">Radius</param>
-        /// <param name="space">Color space</param>
-        /// <param name="difference">Difference [0, 1]</param>
+        /// <param name="radius">Radius.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="difference">Difference [0, 1].</param>
         public LocalThreshold(int radius, Space space, float difference = 0.15f)
         {
             gb = new BoxBlur(radius);
@@ -33,10 +33,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Bradley local threshold filter.
         /// </summary>
-        /// <param name="width">Filter width</param>
-        /// <param name="height">Filter height</param>
-        /// <param name="space">Color space</param>
-        /// <param name="difference">Difference [0, 1]</param>
+        /// <param name="width">Filter width.</param>
+        /// <param name="height">Filter height.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="difference">Difference [0, 1].</param>
         public LocalThreshold(int width, int height, Space space, float difference = 0.15f)
         {
             gb = new BoxBlur(width, height);
@@ -46,9 +46,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Bradley local threshold filter.
         /// </summary>
-        /// <param name="size">Radius</param>
-        /// <param name="space">Color space</param>
-        /// <param name="difference">Difference [0, 1]</param>
+        /// <param name="size">Radius.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="difference">Difference [0, 1].</param>
         public LocalThreshold(SizeInt size, Space space, float difference = 0.15f)
         {
             gb = new BoxBlur(size);

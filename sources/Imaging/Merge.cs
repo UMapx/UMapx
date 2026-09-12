@@ -21,7 +21,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the merge filter.
         /// </summary>
-        /// <param name="transparency">Transparency [0, 255]</param>
+        /// <param name="transparency">Transparency [0, 255].</param>
         public Merge(int transparency = 255)
         {
             Transparency = transparency;
@@ -29,8 +29,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the merge filter.
         /// </summary>
-        /// <param name="point">A pair of integers representing an ordered pair of X and Y coordinates</param>
-        /// <param name="transparency">Transparency [0, 255]</param>
+        /// <param name="point">A pair of integers representing an ordered pair of X and Y coordinates.</param>
+        /// <param name="transparency">Transparency [0, 255].</param>
         public Merge(PointInt point, int transparency = 255)
         {
             Point = point;
@@ -39,9 +39,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the merge filter.
         /// </summary>
-        /// <param name="x">Coordinate X</param>
-        /// <param name="y">Coordinate Y</param>
-        /// <param name="transparency">Transparency [0, 255]</param>
+        /// <param name="x">Coordinate X.</param>
+        /// <param name="y">Coordinate Y.</param>
+        /// <param name="transparency">Transparency [0, 255].</param>
         public Merge(int x, int y, int transparency = 255)
         {
             Point = new PointInt(x, y);
@@ -78,8 +78,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb || bmSrc.PixelFormat != PixelFormat.Format32bppArgb)
@@ -129,8 +129,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="Src">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="Src">Bitmap.</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);

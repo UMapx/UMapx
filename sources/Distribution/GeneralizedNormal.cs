@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Generalized_normal_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Generalized_normal_distribution"/>.
     /// </remarks>
     [Serializable]
     public class GeneralizedNormal : IDistribution
@@ -27,9 +27,9 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the generalized normal distribution.
         /// </summary>
-        /// <param name="mu">Location parameter</param>
-        /// <param name="alpha">Scale parameter (0, +inf)</param>
-        /// <param name="beta">Shape parameter (0, +inf)</param>
+        /// <param name="mu">Location parameter.</param>
+        /// <param name="alpha">Scale parameter (0, +inf).</param>
+        /// <param name="beta">Shape parameter (0, +inf).</param>
         public GeneralizedNormal(float mu, float alpha, float beta)
         {
             Mu = mu;
@@ -138,8 +138,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             float z = Maths.Abs((x - mu) / alpha);
@@ -149,8 +149,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             float z = x - mu;
@@ -165,7 +165,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get

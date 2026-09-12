@@ -11,23 +11,23 @@ namespace UMapx.Distance
         /// <summary>
         /// Returns distance value.
         /// </summary>
-        /// <param name="p">Array</param>
-        /// <param name="q">Array</param>
-        /// <returns>Value</returns>
+        /// <param name="p">Array.</param>
+        /// <param name="q">Array.</param>
+        /// <returns>Value.</returns>
         public abstract float Compute(float[] p, float[] q);
         /// <summary>
         /// Returns distance value.
         /// </summary>
-        /// <param name="p">Array</param>
-        /// <param name="q">Array</param>
-        /// <returns>Value</returns>
+        /// <param name="p">Array.</param>
+        /// <param name="q">Array.</param>
+        /// <returns>Value.</returns>
         public abstract Complex32 Compute(Complex32[] p, Complex32[] q);
         /// <summary>
         /// Returns distance values.
         /// </summary>
-        /// <param name="p">Matrix</param>
-        /// <param name="q">Matrix</param>
-        /// <returns>Vector</returns>
+        /// <param name="p">Matrix.</param>
+        /// <param name="q">Matrix.</param>
+        /// <returns>Vector.</returns>
         public virtual float[] Compute(float[,] p, float[,] q)
         {
             int r = p.GetLength(0);
@@ -53,9 +53,9 @@ namespace UMapx.Distance
         /// <summary>
         /// Returns distance values.
         /// </summary>
-        /// <param name="p">Matrix</param>
-        /// <param name="q">Matrix</param>
-        /// <returns>Vector</returns>
+        /// <param name="p">Matrix.</param>
+        /// <param name="q">Matrix.</param>
+        /// <returns>Vector.</returns>
         public virtual Complex32[] Compute(Complex32[,] p, Complex32[,] q)
         {
             int r = p.GetLength(0);

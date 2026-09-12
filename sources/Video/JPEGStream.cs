@@ -13,7 +13,7 @@ namespace UMapx.Video
     /// 
     /// <remarks><para>The video source constantly downloads JPEG files from the specified URL.</para>
     /// 
-    /// <para>Sample usage:</para>
+    /// <para>Sample usage.</para>
     /// <code>
     /// // create JPEG video source
     /// JPEGStream stream = new JPEGStream( "some url" );
@@ -307,7 +307,7 @@ namespace UMapx.Video
         /// Initializes a new instance of the <see cref="JPEGStream"/> class.
         /// </summary>
         /// 
-        /// <param name="source">URL, which provides JPEG files</param>
+        /// <param name="source">URL, which provides JPEG files.</param>
         /// 
         public JPEGStream( string source )
         {

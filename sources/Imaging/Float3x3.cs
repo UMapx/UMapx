@@ -59,13 +59,13 @@ namespace UMapx.Imaging
         /// the source by translating to the rectangle origin and scaling
         /// into [0,1]×[0,1] prior to the warp.
         /// </summary>
-        /// <param name="rectangle">Source rectangle in input coordinates</param>
-        /// <param name="t1">Destination corner corresponding to source (0,0)</param>
-        /// <param name="t2">Destination corner corresponding to source (1,0)</param>
-        /// <param name="t3">Destination corner corresponding to source (1,1)</param>
-        /// <param name="t4">Destination corner corresponding to source (0,1)</param>
+        /// <param name="rectangle">Source rectangle in input coordinates.</param>
+        /// <param name="t1">Destination corner corresponding to source (0,0).</param>
+        /// <param name="t2">Destination corner corresponding to source (1,0).</param>
+        /// <param name="t3">Destination corner corresponding to source (1,1).</param>
+        /// <param name="t4">Destination corner corresponding to source (0,1).</param>
         /// <returns>
-        /// Homography matrix H such that dest ≈ H · norm(src), with a perspective divide
+        /// Homography matrix H such that dest ≈ H · norm(src), with a perspective divide.
         /// </returns>
         /// <remarks>
         /// If the destination quad is (nearly) affine, a simplified affine mapping is used.
@@ -146,7 +146,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Computes the determinant of the 3×3 matrix.
         /// </summary>
-        /// <returns>Determinant value</returns>
+        /// <returns>Determinant value.</returns>
         /// <remarks>
         /// Implementation expands along the first column.
         /// </remarks>
@@ -166,7 +166,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the inverse matrix using the classical adjugate / determinant formula.
         /// </summary>
-        /// <returns>Inverse matrix</returns>
+        /// <returns>Inverse matrix.</returns>
         /// <remarks>
         /// <para>
         /// Numerical note: if the matrix is singular or nearly singular (|det| ≈ 0),
@@ -223,8 +223,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Applies the homography to a 2D point (with a perspective divide).
         /// </summary>
-        /// <param name="point">Input point</param>
-        /// <returns>Transformed point after perspective division</returns>
+        /// <param name="point">Input point.</param>
+        /// <returns>Transformed point after perspective division.</returns>
         /// <remarks>
         /// If the homogeneous w becomes (near) zero, the result is undefined.
         /// This implementation guards only against exact zero; consider using an epsilon.
@@ -254,9 +254,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Post-multiplies the current matrix by a translation T(x, y).
         /// </summary>
-        /// <param name="x">Translation along X</param>
-        /// <param name="y">Translation along Y</param>
-        /// <returns>New matrix equal to <c>this * T(x,y)</c></returns>
+        /// <param name="x">Translation along X.</param>
+        /// <param name="y">Translation along Y.</param>
+        /// <returns>New matrix equal to <c>this * T(x,y)</c>.</returns>
         public Float3x3 Translate(float x, float y)
         {
             var matrix = Copy();
@@ -275,9 +275,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Post-multiplies the current matrix by a non-uniform scale S(x, y).
         /// </summary>
-        /// <param name="x">Scale on X</param>
-        /// <param name="y">Scale on Y</param>
-        /// <returns>New matrix equal to <c>this * S(x,y)</c></returns>
+        /// <param name="x">Scale on X.</param>
+        /// <param name="y">Scale on Y.</param>
+        /// <returns>New matrix equal to <c>this * S(x,y)</c>.</returns>
         public Float3x3 Scale(float x, float y)
         {
             var matrix = Copy();
@@ -295,7 +295,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Deep copy of the matrix.
         /// </summary>
-        /// <returns>Cloned matrix</returns>
+        /// <returns>Cloned matrix.</returns>
         public Float3x3 Copy()
         {
             var r = new Float3x3();
@@ -312,8 +312,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Matrix product: <c>this * other</c>.
         /// </summary>
-        /// <param name="other">Right-hand matrix</param>
-        /// <returns>Product matrix</returns>
+        /// <param name="other">Right-hand matrix.</param>
+        /// <returns>Product matrix.</returns>
         public Float3x3 Multiply(Float3x3 other)
         {
             var tmp = new Float3x3();
@@ -344,10 +344,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Absolute-ε equality check for floats: |f - other| ≤ ε.
         /// </summary>
-        /// <param name="f">First value</param>
-        /// <param name="other">Second value</param>
-        /// <param name="epsilon">Tolerance</param>
-        /// <returns>True if within epsilon</returns>
+        /// <param name="f">First value.</param>
+        /// <param name="other">Second value.</param>
+        /// <param name="epsilon">Tolerance.</param>
+        /// <returns>True if within epsilon.</returns>
         internal static bool EpsilonEquals(float f, float other, float epsilon)
         {
             return Math.Abs(f - other) <= epsilon;

@@ -32,8 +32,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the mask correction filter.
         /// </summary>
-        /// <param name="values">Mask array</param>
-        /// <param name="space">Color space</param>
+        /// <param name="values">Mask array.</param>
+        /// <param name="space">Color space.</param>
         public Correction(float[] values, Space space)
         {
             Values = values;
@@ -81,7 +81,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -116,7 +116,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -129,7 +129,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         private unsafe void ApplyRGB(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -159,7 +159,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         private unsafe void ApplyHSL(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -186,7 +186,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         private unsafe void ApplyHSB(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -213,7 +213,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         private unsafe void ApplyYCbCr(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -240,7 +240,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         private unsafe void ApplyGrayscale(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();

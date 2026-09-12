@@ -13,7 +13,7 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes the Blackman-Harris window function.
         /// </summary>
-        /// <param name="frameSize">Window size</param>
+        /// <param name="frameSize">Window size.</param>
         public BlackmanHarris(int frameSize)
         {
             this.FrameSize = frameSize;
@@ -21,9 +21,9 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Value.</returns>
         public override float Function(float x, int frameSize)
         {
             return 0.35875f - 0.48829f * Cosine.Cosinefunc(2 * x, frameSize) + 0.14128f * Cosine.Cosinefunc(4 * x, frameSize) - 0.01168f * Cosine.Cosinefunc(6 * x, frameSize);
@@ -31,7 +31,7 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the window function.
         /// </summary>
-        /// <returns>Array</returns>
+        /// <returns>Array.</returns>
         public override float[] GetWindow(int frameSize)
         {
             float t = frameSize - 1;

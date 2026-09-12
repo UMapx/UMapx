@@ -17,7 +17,7 @@ namespace UMapx.Analysis
         /// <summary>
         /// Initializes a class that implements numerical differentiation.
         /// </summary>
-        /// <param name="points">Number of interpolation points</param>
+        /// <param name="points">Number of interpolation points.</param>
         public Differentiation(int points)
         {
             this.Points = points;
@@ -42,11 +42,11 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the value of a derivative.
         /// </summary>
-        /// <param name="function">Continuous function delegate</param>
-        /// <param name="x">Argument value</param>
-        /// <param name="h">Step</param>
-        /// <param name="order">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="function">Continuous function delegate.</param>
+        /// <param name="x">Argument value.</param>
+        /// <param name="h">Step.</param>
+        /// <param name="order">Order.</param>
+        /// <returns>Value.</returns>
         public float Compute(IFloat function, float x, float h, int order)
         {
             // exception
@@ -73,11 +73,11 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the value of a derivative.
         /// </summary>
-        /// <param name="y">Function vector</param>
-        /// <param name="index">Index of argument</param>
-        /// <param name="h">Step</param>
-        /// <param name="order">Order</param>
-        /// <returns>Value</returns>
+        /// <param name="y">Function vector.</param>
+        /// <param name="index">Index of argument.</param>
+        /// <param name="h">Step.</param>
+        /// <param name="order">Order.</param>
+        /// <returns>Value.</returns>
         public float Compute(float[] y, int index, float h, int order)
         {
             // exception
@@ -104,11 +104,11 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the value of a derivative.
         /// </summary>
-        /// <param name="function">Continuous function delegate</param>
-        /// <param name="x">Argument value</param>
-        /// <param name="h">Step</param>
-        /// <param name="order">Order</param>
-        /// <returns>Complex number</returns>
+        /// <param name="function">Continuous function delegate.</param>
+        /// <param name="x">Argument value.</param>
+        /// <param name="h">Step.</param>
+        /// <param name="order">Order.</param>
+        /// <returns>Complex number.</returns>
         public Complex32 Compute(IComplex32 function, Complex32 x, Complex32 h, int order)
         {
             // exception
@@ -135,11 +135,11 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the value of a derivative.
         /// </summary>
-        /// <param name="y">Function vector</param>
-        /// <param name="index">Index of argument</param>
-        /// <param name="h">Step</param>
-        /// <param name="order">Order</param>
-        /// <returns>Complex number</returns>
+        /// <param name="y">Function vector.</param>
+        /// <param name="index">Index of argument.</param>
+        /// <param name="h">Step.</param>
+        /// <param name="order">Order.</param>
+        /// <returns>Complex number.</returns>
         public Complex32 Compute(Complex32[] y, int index, float h, int order)
         {
             // exception
@@ -169,8 +169,8 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the matrix of interpolation coefficients.
         /// </summary>
-        /// <param name="points">Number of points</param>
-        /// <returns>Matrix</returns>
+        /// <param name="points">Number of points.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] GetCoefficients(int points)
         {
             // Compute difference coefficient table

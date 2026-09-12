@@ -19,9 +19,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates an instance of the AHSL structure.
         /// </summary>
-        /// <param name="h">Hue [0, 359]</param>
-        /// <param name="s">Saturation [0, 255]</param>
-        /// <param name="l">Lightness [-100, 100]</param>
+        /// <param name="h">Hue [0, 359].</param>
+        /// <param name="s">Saturation [0, 255].</param>
+        /// <param name="l">Lightness [-100, 100].</param>
         public AHSL(float h, float s, float l)
         {
             this.h = (h > 359) ? 359 : ((h < 0) ? 0 : h);
@@ -76,9 +76,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">AHSL structure</param>
-        /// <param name="item2">AHSL structure</param>
-        /// <returns>Boolean</returns>
+        /// <param name="item1">AHSL structure.</param>
+        /// <param name="item2">AHSL structure.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator ==(AHSL item1, AHSL item2)
         {
             return (
@@ -90,9 +90,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">AHSL structure</param>
-        /// <param name="item2">AHSL structure</param>
-        /// <returns>Boolean</returns>
+        /// <param name="item1">AHSL structure.</param>
+        /// <param name="item2">AHSL structure.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator !=(AHSL item1, AHSL item2)
         {
             return !(item1 == item2);
@@ -103,8 +103,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Element</param>
-        /// <returns>Boolean</returns>
+        /// <param name="obj">Element.</param>
+        /// <returns>Boolean.</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -114,7 +114,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Integer number</returns>
+        /// <returns>Integer number.</returns>
         public override int GetHashCode()
         {
             return h.GetHashCode() ^ s.GetHashCode() ^ l.GetHashCode();
@@ -122,7 +122,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public override string ToString()
         {
             return $"{h}{Environment.NewLine}{s}{Environment.NewLine}{l}";
@@ -133,7 +133,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Structure</returns>
+        /// <returns>Structure.</returns>
         object ICloneable.Clone()
         {
             return new AHSL(this.h, this.s, this.l);
@@ -141,7 +141,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Structure</returns>
+        /// <returns>Structure.</returns>
         public AHSL Clone()
         {
             return new AHSL(this.h, this.s, this.l);
@@ -152,10 +152,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from RGB to AHSL.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="green">Green [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>AHSL structure</returns>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="green">Green [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
+        /// <returns>AHSL structure.</returns>
         public static AHSL FromRGB(int red, int green, int blue)
         {
             float s = 0, l = 0, h = 0;
@@ -211,8 +211,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from RGB to AHSL.
         /// </summary>
-        /// <param name="rgb">RGB structure</param>
-        /// <returns>AHSL structure</returns>
+        /// <param name="rgb">RGB structure.</param>
+        /// <returns>AHSL structure.</returns>
         public static AHSL FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -223,7 +223,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from AHSL to RGB.
         /// </summary>
-        /// <returns>RGB structure</returns>
+        /// <returns>RGB structure.</returns>
         public RGB ToRGB
         {
             get

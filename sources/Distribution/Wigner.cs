@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Wigner_semicircle_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Wigner_semicircle_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Wigner : IDistribution
@@ -21,7 +21,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the Wigner semicircular distribution.
         /// </summary>
-        /// <param name="r">Radius</param>
+        /// <param name="r">Radius.</param>
         public Wigner(float r)
         {
             R = r;
@@ -119,8 +119,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x <= -r || x >= r) return 0f;
@@ -133,8 +133,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x <= -r) return 0f;
@@ -149,7 +149,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get

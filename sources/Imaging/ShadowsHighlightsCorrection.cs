@@ -23,10 +23,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the shadows and lights correction filter.
         /// </summary>
-        /// <param name="radius">Radius</param>
-        /// <param name="space">Color space</param>
-        /// <param name="shadows">Shadows [0, 1]</param>
-        /// <param name="highlights">Highlights [0, 1]</param>
+        /// <param name="radius">Radius.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="shadows">Shadows [0, 1].</param>
+        /// <param name="highlights">Highlights [0, 1].</param>
         public ShadowsHighlightsCorrection(int radius, Space space, float shadows = 0.4f, float highlights = 0.4f)
         {
             gb = new BoxBlur(radius);
@@ -35,11 +35,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the shadows and lights correction filter.
         /// </summary>
-        /// <param name="width">Filter width</param>
-        /// <param name="height">Filter height</param>
-        /// <param name="space">Color space</param>
-        /// <param name="shadows">Shadows [0, 1]</param>
-        /// <param name="highlights">Highlights [0, 1]</param>
+        /// <param name="width">Filter width.</param>
+        /// <param name="height">Filter height.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="shadows">Shadows [0, 1].</param>
+        /// <param name="highlights">Highlights [0, 1].</param>
         public ShadowsHighlightsCorrection(int width, int height, Space space, float shadows = 0.4f, float highlights = 0.4f)
         {
             gb = new BoxBlur(width, height);
@@ -48,10 +48,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the shadows and lights correction filter.
         /// </summary>
-        /// <param name="size">Radius</param>
-        /// <param name="space">Color space</param>
-        /// <param name="shadows">Shadows [0, 1]</param>
-        /// <param name="highlights">Highlights [0, 1]</param>
+        /// <param name="size">Radius.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="shadows">Shadows [0, 1].</param>
+        /// <param name="highlights">Highlights [0, 1].</param>
         public ShadowsHighlightsCorrection(SizeInt size, Space space, float shadows = 0.4f, float highlights = 0.4f)
         {
             gb = new BoxBlur(size);
@@ -102,8 +102,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts an intensity value to its gamma-adjusted counterpart.
         /// </summary>
-        /// <param name="v">Input intensity value</param>
-        /// <returns>Gamma-corrected value</returns>
+        /// <param name="v">Input intensity value.</param>
+        /// <returns>Gamma-corrected value.</returns>
         private float value2gamma(float v)
         {
             return (v - Intensity.logEpsilon) / 2.0f;

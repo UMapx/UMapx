@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Inverse-chi-squared_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Inverse-chi-squared_distribution"/>.
     /// </remarks>
     [Serializable]
     public class InverseChiSquare : IDistribution
@@ -25,7 +25,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the inverse chi-square distribution.
         /// </summary>
-        /// <param name="degreesOfFreedom">Degrees of freedom (positive integer)</param>
+        /// <param name="degreesOfFreedom">Degrees of freedom (positive integer).</param>
         public InverseChiSquare(int degreesOfFreedom)
         {
             V = degreesOfFreedom;
@@ -115,8 +115,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x <= 0f)
@@ -132,8 +132,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x <= 0f)
@@ -144,7 +144,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get

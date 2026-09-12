@@ -7,7 +7,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// http://en.wikipedia.org/wiki/Posterization
+    /// <see href="http://en.wikipedia.org/wiki/Posterization"/>.
     /// </remarks>
     [Serializable]
     public class Quantization : Correction, IBitmapFilter
@@ -20,8 +20,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the quantization filter.
         /// </summary>
-        /// <param name="levels">Number of levels</param>
-        /// <param name="space">Color space</param>
+        /// <param name="levels">Number of levels.</param>
+        /// <param name="space">Color space.</param>
         public Quantization(int levels, Space space)
         {
             Levels = levels; Space = space;

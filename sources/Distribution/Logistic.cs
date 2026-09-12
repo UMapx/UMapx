@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Logistic_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Logistic_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Logistic : IDistribution
@@ -22,8 +22,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the logistic distribution.
         /// </summary>
-        /// <param name="mu">Parameter μ</param>
-        /// <param name="s">Parameter s (0, +inf]</param>
+        /// <param name="mu">Parameter μ.</param>
+        /// <param name="s">Parameter s (0, +inf].</param>
         public Logistic(float mu, float s)
         {
             Mu = mu; S = s;
@@ -143,8 +143,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             float z = (x - mu) / s;
@@ -153,8 +153,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             float z = (x - mu) / s;

@@ -11,7 +11,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Kuwahara_filter
+    /// <see href="https://en.wikipedia.org/wiki/Kuwahara_filter"/>.
     /// </remarks>
     [Serializable]
     public class Kuwahara : IBitmapFilter2, IBitmapFilter
@@ -26,8 +26,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Kuwahara filter.
         /// </summary>
-        /// <param name="radius">Radius</param>
-        /// <param name="windows">Number of windows (4 or 8)</param>
+        /// <param name="radius">Radius.</param>
+        /// <param name="windows">Number of windows (4 or 8).</param>
         public Kuwahara(int radius = 4, int windows = 4)
         {
             Size = new SizeInt(radius, radius);
@@ -36,9 +36,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Kuwahara filter.
         /// </summary>
-        /// <param name="width">Filter width</param>
-        /// <param name="height">Filter height</param>
-        /// <param name="windows">Number of windows (4 or 8)</param>
+        /// <param name="width">Filter width.</param>
+        /// <param name="height">Filter height.</param>
+        /// <param name="windows">Number of windows (4 or 8).</param>
         public Kuwahara(int width, int height, int windows = 4)
         {
             Size = new SizeInt(width, height);
@@ -47,8 +47,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Kuwahara filter.
         /// </summary>
-        /// <param name="size">Filter size</param>
-        /// <param name="windows">Number of windows (4 or 8)</param>
+        /// <param name="size">Filter size.</param>
+        /// <param name="windows">Number of windows (4 or 8).</param>
         public Kuwahara(SizeInt size, int windows = 4)
         {
             Size = size;
@@ -80,8 +80,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (bmData.Width != bmSrc.Width || bmData.Height != bmSrc.Height)
@@ -171,8 +171,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="Src">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="Src">Bitmap.</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -184,7 +184,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public void Apply(BitmapData bmData)
         {
             Bitmap Src = BitmapFormat.ToBitmap(bmData);
@@ -196,7 +196,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             var Src = (Bitmap)Data.Clone();

@@ -8,7 +8,7 @@ namespace UMapx.Transform
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Laplace_transform
+    /// <see href="https://en.wikipedia.org/wiki/Laplace_transform"/>.
     /// </remarks>
     [Serializable]
     public class LaplaceTransform : TransformBaseComplex32, ITransform
@@ -28,9 +28,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the Laplace transform.
         /// </summary>
-        /// <param name="sigma">Non-negative damping factor</param>
-        /// <param name="normalized">Normalized transform or not</param>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="sigma">Non-negative damping factor.</param>
+        /// <param name="normalized">Normalized transform or not.</param>
+        /// <param name="direction">Processing direction.</param>
         public LaplaceTransform(float sigma = 0.0005f, bool normalized = true, Direction direction = Direction.Vertical)
         {
             this.DFT = new FourierTransform(normalized, Direction.Vertical);
@@ -77,8 +77,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="A">Array.</param>
+        /// <returns>Array.</returns>
         public override Complex32[] Forward(Complex32[] A)
         {
             // Apply Laplace damping before Fourier transform:
@@ -91,8 +91,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward transform.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="B">Array.</param>
+        /// <returns>Array.</returns>
         public override Complex32[] Backward(Complex32[] B)
         {
             // Fourier transform:
@@ -108,8 +108,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Applies Laplace transform operator.
         /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="sigma">Sigma</param>
+        /// <param name="v">Array.</param>
+        /// <param name="sigma">Sigma.</param>
         internal static void ApplyLaplaceOperator(Complex32[] v, float sigma = 0.003f)
         {
             // forward laplacian transform
@@ -124,8 +124,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Applies inverse Laplace transform operator.
         /// </summary>
-        /// <param name="v">Array</param>
-        /// <param name="sigma">Sigma</param>
+        /// <param name="v">Array.</param>
+        /// <param name="sigma">Sigma.</param>
         internal static void ApplyLaplaceInverseOperator(Complex32[] v, float sigma = 0.003f)
         {
             // inverse laplacian transform

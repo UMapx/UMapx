@@ -25,7 +25,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the grayscale filter based on the HSB structure.
         /// </summary>
-        /// <param name="hue">Hue range [0, 359]</param>
+        /// <param name="hue">Hue range [0, 359].</param>
         public HSBGrayscale(RangeInt hue)
         {
             Hue = hue;
@@ -33,8 +33,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the grayscale filter based on the HSB structure.
         /// </summary>
-        /// <param name="min">Lower bound [0, 359]</param>
-        /// <param name="max">Upper bound [0, 359]</param>
+        /// <param name="min">Lower bound [0, 359].</param>
+        /// <param name="max">Upper bound [0, 359].</param>
         public HSBGrayscale(int min, int max)
         {
             this.min = min;
@@ -58,7 +58,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -112,7 +112,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);

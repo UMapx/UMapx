@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Log-logistic_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Log-logistic_distribution"/>.
     /// </remarks>
     [Serializable]
     public class LogLogistic : IDistribution
@@ -26,8 +26,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the log-logistic distribution.
         /// </summary>
-        /// <param name="a">Parameter a</param>
-        /// <param name="b">Parameter b</param>
+        /// <param name="a">Parameter a.</param>
+        /// <param name="b">Parameter b.</param>
         public LogLogistic(float a, float b)
         {
             A = a; B = b;
@@ -131,8 +131,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x <= 0)
@@ -145,8 +145,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x <= 0)
@@ -159,7 +159,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get { throw new NotSupportedException(); }

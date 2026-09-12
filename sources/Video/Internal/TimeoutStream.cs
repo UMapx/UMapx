@@ -8,7 +8,7 @@
     /// <summary>
     /// Wrapper that enables streams which do not support read and write timeouts to timeout
     /// Requires .NET 4.5 or above
-    /// Used for .NET Standard 2.0
+    /// Used for .NET Standard 2.0.
     /// </summary>
     public class TimeoutStream : Stream
     {
@@ -24,9 +24,9 @@
         private int _writeTimeout = DEFAULT_TIMEOUT_WRITE;
 
         /// <summary>
-        /// Creates an instance of a TimeoutStream wrapper
+        /// Creates an instance of a TimeoutStream wrapper.
         /// </summary>
-        /// <param name="stream">Stream which may not support read or write timeouts</param>
+        /// <param name="stream">Stream which may not support read or write timeouts.</param>
         public TimeoutStream(Stream stream)
         {
             _baseStream = stream;
@@ -38,7 +38,7 @@
         }
 
         /// <summary>
-        /// Stream wrapped by TimeoutStream wrapper
+        /// Stream wrapped by TimeoutStream wrapper.
         /// </summary>
         public Stream BaseStream {
             get
@@ -48,7 +48,7 @@
         }
 
         /// <summary>
-        /// Pass-through property
+        /// Pass-through property.
         /// </summary>
         public override bool CanRead {
             get
@@ -68,7 +68,7 @@
         }
 
         /// <summary>
-        /// Pass-through property
+        /// Pass-through property.
         /// </summary>
         public override bool CanWrite {
             get
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// Pass-through property
+        /// Pass-through property.
         /// </summary>
         public override long Length {
             get
@@ -88,7 +88,7 @@
         }
 
         /// <summary>
-        /// Pass-through property
+        /// Pass-through property.
         /// </summary>
         public override bool CanTimeout {
             get
@@ -98,7 +98,7 @@
         }
 
         /// <summary>
-        /// Value of TimeoutStream's read timeout
+        /// Value of TimeoutStream's read timeout.
         /// </summary>
         public override int ReadTimeout
         {
@@ -114,7 +114,7 @@
         }
 
         /// <summary>
-        /// Value of TimeoutStream's write timeout
+        /// Value of TimeoutStream's write timeout.
         /// </summary>
         public override int WriteTimeout
         {
@@ -130,7 +130,7 @@
         }
 
         /// <summary>
-        /// Pass-through property
+        /// Pass-through property.
         /// </summary>
         public override long Position
         {
@@ -139,7 +139,7 @@
         }
 
         /// <summary>
-        /// Pass-through method
+        /// Pass-through method.
         /// </summary>
         public override void Flush()
         {
@@ -147,11 +147,11 @@
         }
 
         /// <summary>
-        /// Reads from base stream using a timeout
+        /// Reads from base stream using a timeout.
         /// </summary>
-        /// <param name="buffer">Buffer byte array</param>
-        /// <param name="offset">Offset</param>
-        /// <param name="count">Number of bytes to read</param>
+        /// <param name="buffer">Buffer byte array.</param>
+        /// <param name="offset">Offset.</param>
+        /// <param name="count">Number of bytes to read.</param>
         /// <returns></returns>
         public override int Read(byte[] buffer, int offset, int count)
         {
@@ -185,7 +185,7 @@
         }
 
         /// <summary>
-        /// Pass-through method
+        /// Pass-through method.
         /// </summary>
         /// <param name="offset"></param>
         /// <param name="origin"></param>
@@ -196,7 +196,7 @@
         }
 
         /// <summary>
-        /// Pass-through method
+        /// Pass-through method.
         /// </summary>
         /// <param name="value"></param>
         public override void SetLength(long value)
@@ -205,11 +205,11 @@
         }
 
         /// <summary>
-        /// Write to base stream using a timeout
+        /// Write to base stream using a timeout.
         /// </summary>
-        /// <param name="buffer">Buffer byte array</param>
-        /// <param name="offset">Offset</param>
-        /// <param name="count">Number of bytes to write</param>
+        /// <param name="buffer">Buffer byte array.</param>
+        /// <param name="offset">Offset.</param>
+        /// <param name="count">Number of bytes to write.</param>
         public override void Write(byte[] buffer, int offset, int count)
         {
 #if !NET35 && !NET40

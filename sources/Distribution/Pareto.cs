@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Pareto_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Pareto_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Pareto : IDistribution
@@ -26,8 +26,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the Pareto distribution.
         /// </summary>
-        /// <param name="xm">Scale factor θ (0, +inf)</param>
-        /// <param name="k">Parameter k (0, +inf)</param>
+        /// <param name="xm">Scale factor θ (0, +inf).</param>
+        /// <param name="k">Parameter k (0, +inf).</param>
         public Pareto(float xm, float k)
         {
             Xm = xm; K = k;
@@ -147,7 +147,7 @@ namespace UMapx.Distribution
         /// </summary>
         /// <remarks>
         /// Full kurtosis equals 3 plus this value. Requires k > 4 for a finite result.
-        /// Formula: 6 * (k^3 + k^2 - 6k - 2) / (k * (k - 3) * (k - 4))
+        /// Formula: 6 * (k^3 + k^2 - 6k - 2) / (k * (k - 3) * (k - 4)).
         /// </remarks>
         public float Excess
         {
@@ -170,8 +170,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x < xm)
@@ -183,8 +183,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x < xm)
@@ -196,7 +196,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get

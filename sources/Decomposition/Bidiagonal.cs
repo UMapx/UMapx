@@ -4,10 +4,10 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides real and complex bidiagonal reduction</summary>
+    /// <summary>Provides real and complex bidiagonal reduction.</summary>
     public static class Bidiagonal
     {
-        /// <summary>Computes A = U B V^T by two-sided Householder reduction</summary>
+        /// <summary>Computes A = U B V^T by two-sided Householder reduction.</summary>
         /// <param name="matrix">Finite nonempty rectangular matrix.</param>
         /// <returns>Full square U and V and upper bidiagonal B with the same dimensions as the input.</returns>
         public static (float[,] U, float[,] B, float[,] V) Decompose(float[,] matrix)
@@ -16,7 +16,7 @@ namespace UMapx.Decomposition
             return (InternalMatrixMath.Real(d.U), InternalMatrixMath.Real(d.B), InternalMatrixMath.Real(d.V));
         }
 
-        /// <summary>Computes A = U B V^H by two-sided Householder reduction</summary>
+        /// <summary>Computes A = U B V^H by two-sided Householder reduction.</summary>
         /// <param name="matrix">Finite nonempty rectangular matrix.</param>
         /// <returns>Full square U and V and upper bidiagonal B with the same dimensions as the input.</returns>
         public static (Complex32[,] U, Complex32[,] B, Complex32[,] V) Decompose(Complex32[,] matrix)
@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
             return (InternalMatrixMath.Single(d.U), InternalMatrixMath.Single(d.B), InternalMatrixMath.Single(d.V));
         }
 
-        /// <summary>Alternates left and right reflections to obtain upper bidiagonal form</summary>
+        /// <summary>Alternates left and right reflections to obtain upper bidiagonal form.</summary>
         /// <param name="a">Private rectangular input buffer, overwritten by B.</param>
         /// <returns>Accumulated unitary factors and the bidiagonal buffer.</returns>
         internal static (C[,] U, C[,] B, C[,] V) Factor(C[,] a)

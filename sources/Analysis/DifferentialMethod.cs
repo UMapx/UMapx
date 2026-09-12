@@ -3,7 +3,7 @@
 namespace UMapx.Analysis
 {
     /// <summary>
-    /// Differentiation method
+    /// Differentiation method.
     /// </summary>
     [Serializable]
     public enum DifferentialMethod

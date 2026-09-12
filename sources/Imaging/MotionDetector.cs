@@ -24,8 +24,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes motion detector.
         /// </summary>
-        /// <param name="threshold">Threshold [0, 255]</param>
-        /// <param name="useFilter">Use bitmap filter or not</param>
+        /// <param name="threshold">Threshold [0, 255].</param>
+        /// <param name="useFilter">Use bitmap filter or not.</param>
         public MotionDetector(byte threshold = 15, bool useFilter = false)
         {
             Threshold = threshold;
@@ -57,8 +57,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Applies the filter and returns motion level in range [0, 1].
         /// </summary>
-        /// <param name="bitmap">Bitmap</param>
-        /// <returns>Motion level</returns>
+        /// <param name="bitmap">Bitmap.</param>
+        /// <returns>Motion level.</returns>
 		public float Apply(Bitmap bitmap)
         {
             // synchronize
@@ -97,8 +97,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Applies the filter and returns motion level in range [0, 1].
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <returns>Motion level</returns>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <returns>Motion level.</returns>
         public float Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -174,8 +174,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Process frame.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         private unsafe float ProcessFrameWithoutFilter(BitmapData bmData, BitmapData bmSrc)
         {
             byte* dst = (byte*)bmData.Scan0.ToPointer();
@@ -211,8 +211,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Process frame.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         private unsafe float ProcessFrameWithFilter(BitmapData bmData, BitmapData bmSrc)
         {
             byte* dst = (byte*)bmData.Scan0.ToPointer();

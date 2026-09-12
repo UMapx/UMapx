@@ -17,7 +17,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Initializes the continuous Poisson wavelet.
         /// </summary>
-        /// <param name="n">Order [1, +inf)</param>
+        /// <param name="n">Order [1, +inf).</param>
         public Poisson(int n = 1)
         {
             N = n;
@@ -42,8 +42,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public float Scaling(float x)
         {
             throw new NotSupportedException();
@@ -51,8 +51,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public float Wavelet(float x)
         {
             if (x < 0)

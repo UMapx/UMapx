@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Hypergeometric_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Hypergeometric_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Hypergeometric : IDistribution
@@ -27,9 +27,9 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the hypergeometric distribution.
         /// </summary>
-        /// <param name="n">Parameter N (0, +inf]</param>
-        /// <param name="k">Parameter K [0, N]</param>
-        /// <param name="d">Parameter D [0, N]</param>
+        /// <param name="n">Parameter N (0, +inf].</param>
+        /// <param name="k">Parameter K [0, N].</param>
+        /// <param name="d">Parameter D [0, N].</param>
         public Hypergeometric(float n, float k, float d)
         {
             N = n; K = k; D = d;
@@ -223,8 +223,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         /// <remarks>
         /// The function is defined only for integer values of <paramref name="x"/>.
         /// </remarks>
@@ -249,8 +249,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability mass cumulative function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             var support = Support;
@@ -280,7 +280,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get { throw new NotSupportedException(); }

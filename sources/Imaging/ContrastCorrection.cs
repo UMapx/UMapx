@@ -7,7 +7,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// http://esate.ru/uroki/OpenGL/image_processing/_p4106/
+    /// <see href="http://esate.ru/uroki/OpenGL/image_processing/_p4106/"/>.
     /// </remarks>
     [Serializable]
     public class ContrastCorrection : Correction, IBitmapFilter
@@ -20,8 +20,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the contrast correction filter.
         /// </summary>
-        /// <param name="value">Contrast [-1, 1]</param>
-        /// <param name="space">Color space</param>
+        /// <param name="value">Contrast [-1, 1].</param>
+        /// <param name="space">Color space.</param>
         public ContrastCorrection(float value, Space space)
         {
             Contrast = value; this.Space = space;

@@ -3,27 +3,27 @@
     /// <summary>
     /// Defines the delegate of a continuous function that depends on a single argument.
     /// </summary>
-    /// <param name="x">Value</param>
-    /// <returns>Value</returns>
+    /// <param name="x">Value.</param>
+    /// <returns>Value.</returns>
     public delegate float IFloat(float x);
     /// <summary>
     /// Defines the delegate of a continuous function that depends on a single argument.
     /// </summary>
-    /// <param name="x">Value</param>
-    /// <returns>Complex number</returns>
+    /// <param name="x">Value.</param>
+    /// <returns>Complex number.</returns>
     public delegate Complex32 IComplex32(Complex32 x);
     /// <summary>
     /// Defines the delegate of a continuous function that depends on two arguments.
     /// </summary>
-    /// <param name="x">First argument</param>
-    /// <param name="y">Second argument</param>
-    /// <returns>Value</returns>
+    /// <param name="x">First argument.</param>
+    /// <param name="y">Second argument.</param>
+    /// <returns>Value.</returns>
     public delegate float IMeshFloat(float x, float y);
     /// <summary>
     /// Defines the delegate of a continuous function that depends on two arguments.
     /// </summary>
-    /// <param name="x">First argument</param>
-    /// <param name="y">Second argument</param>
-    /// <returns>Complex number</returns>
+    /// <param name="x">First argument.</param>
+    /// <param name="y">Second argument.</param>
+    /// <returns>Complex number.</returns>
     public delegate Complex32 IMeshComplex32(Complex32 x, Complex32 y);
 }

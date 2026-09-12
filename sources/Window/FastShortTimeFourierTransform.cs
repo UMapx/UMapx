@@ -9,7 +9,7 @@ namespace UMapx.Window
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Short-time_Fourier_transform
+    /// <see href="https://en.wikipedia.org/wiki/Short-time_Fourier_transform"/>.
     /// </remarks>
     [Serializable]
     public class FastShortTimeFourierTransform : TransformBaseComplex32, IWindowTransform, ITransform
@@ -24,9 +24,9 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes fast short-time Fourier transform.
         /// </summary>
-        /// <param name="function">Window function</param>
-        /// <param name="normalized">Normalized transform or not</param>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="function">Window function.</param>
+        /// <param name="normalized">Normalized transform or not.</param>
+        /// <param name="direction">Processing direction.</param>
         public FastShortTimeFourierTransform(IWindow function, bool normalized = true, Direction direction = Direction.Vertical)
         {
             // fourier transform initialization:
@@ -69,8 +69,8 @@ namespace UMapx.Window
         /// <summary>
         /// Forward short-time Fourier Transform.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="A">Array.</param>
+        /// <returns>Array.</returns>
         public override Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length, frame = coefs.Length;
@@ -97,8 +97,8 @@ namespace UMapx.Window
         /// <summary>
         /// Backward short-time Fourier Transform.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="B">Array.</param>
+        /// <returns>Array.</returns>
         public override Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length, frame = coefs.Length;

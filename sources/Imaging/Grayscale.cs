@@ -21,9 +21,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the grayscale filter.
         /// </summary>
-        /// <param name="cr">Red</param>
-        /// <param name="cg">Green</param>
-        /// <param name="cb">Blue</param>
+        /// <param name="cr">Red.</param>
+        /// <param name="cg">Green.</param>
+        /// <param name="cb">Blue.</param>
         public Grayscale(float cr, float cg, float cb)
         {
             Cr = cr;
@@ -84,7 +84,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -106,7 +106,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -149,7 +149,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// The image is grayscale or not.
         /// </summary>
-        /// <param name="data">Bitmap</param>
+        /// <param name="data">Bitmap.</param>
         public static bool IsGrayscale(Bitmap data)
         {
             var bmData = data.Lock32bpp();
@@ -160,7 +160,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// The image is grayscale or not.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe static bool IsGrayscale(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)

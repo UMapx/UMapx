@@ -11,7 +11,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://www.codeproject.com/articles/471994/oilpainteffect
+    /// <see href="https://www.codeproject.com/articles/471994/oilpainteffect"/>.
     /// </remarks>
     [Serializable]
     public class OilPainting : IBitmapFilter2, IBitmapFilter
@@ -28,8 +28,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the oil painting filter.
         /// </summary>
-        /// <param name="radius">Radius</param>
-        /// <param name="depth">Value [0, 1]</param>
+        /// <param name="radius">Radius.</param>
+        /// <param name="depth">Value [0, 1].</param>
         public OilPainting(int radius = 3, double depth = 1.0)
         {
             Size = new SizeInt(radius, radius);
@@ -38,9 +38,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the oil painting filter.
         /// </summary>
-        /// <param name="height">Filter height</param>
-        /// <param name="width">Filter width</param>
-        /// <param name="depth">Value [0, 1]</param>
+        /// <param name="height">Filter height.</param>
+        /// <param name="width">Filter width.</param>
+        /// <param name="depth">Value [0, 1].</param>
         public OilPainting(int width, int height, double depth = 1.0)
         {
             Size = new SizeInt(width, height);
@@ -49,8 +49,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the oil painting filter.
         /// </summary>
-        /// <param name="size">Radius</param>
-        /// <param name="depth">Value [0, 1]</param>
+        /// <param name="size">Radius.</param>
+        /// <param name="depth">Value [0, 1].</param>
         public OilPainting(SizeInt size, double depth = 1.0)
         {
             Size = size;
@@ -90,8 +90,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (bmData.Width != bmSrc.Width || bmData.Height != bmSrc.Height)
@@ -192,8 +192,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="Src">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="Src">Bitmap.</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -205,7 +205,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public void Apply(BitmapData bmData)
         {
             Bitmap Src = BitmapFormat.ToBitmap(bmData);
@@ -217,7 +217,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             var Src = (Bitmap)Data.Clone();

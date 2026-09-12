@@ -18,9 +18,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates an instance of the structure YIQ.
         /// </summary>
-        /// <param name="y">Y [0, 1]</param>
-        /// <param name="i">I [-0.5957, 0.5957]</param>
-        /// <param name="q">Q [-0.5226, 0.5226]</param>
+        /// <param name="y">Y [0, 1].</param>
+        /// <param name="i">I [-0.5957, 0.5957].</param>
+        /// <param name="q">Q [-0.5226, 0.5226].</param>
         public YIQ(float y, float i, float q)
         {
             this.y = (y > 1) ? 1 : ((y < 0) ? 0 : y);
@@ -75,9 +75,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">YIQ structure</param>
-        /// <param name="item2">YIQ structure</param>
-        /// <returns>Boolean</returns>
+        /// <param name="item1">YIQ structure.</param>
+        /// <param name="item2">YIQ structure.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator ==(YIQ item1, YIQ item2)
         {
             return (
@@ -89,9 +89,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">YIQ structure</param>
-        /// <param name="item2">YIQ structure</param>
-        /// <returns>Boolean</returns>
+        /// <param name="item1">YIQ structure.</param>
+        /// <param name="item2">YIQ structure.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator !=(YIQ item1, YIQ item2)
         {
             return !(item1 == item2);
@@ -102,8 +102,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Element</param>
-        /// <returns>Boolean</returns>
+        /// <param name="obj">Element.</param>
+        /// <returns>Boolean.</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -113,7 +113,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Integer number</returns>
+        /// <returns>Integer number.</returns>
         public override int GetHashCode()
         {
             return y.GetHashCode() ^ i.GetHashCode() ^ q.GetHashCode();
@@ -121,7 +121,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public override string ToString()
         {
             return $"{y}{Environment.NewLine}{i}{Environment.NewLine}{q}";
@@ -132,7 +132,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Structure</returns>
+        /// <returns>Structure.</returns>
         object ICloneable.Clone()
         {
             return new YIQ(this.y, this.i, this.q);
@@ -140,7 +140,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Structure</returns>
+        /// <returns>Structure.</returns>
         public YIQ Clone()
         {
             return new YIQ(this.y, this.i, this.q);
@@ -151,10 +151,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from RGB to YIQ.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="green">Green [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>YIQ structure</returns>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="green">Green [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
+        /// <returns>YIQ structure.</returns>
         public static YIQ FromRGB(int red, int green, int blue)
         {
             float r = red / 255.0f;
@@ -170,8 +170,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from RGB to YIQ.
         /// </summary>
-        /// <param name="rgb">RGB structure</param>
-        /// <returns>YIQ structure</returns>
+        /// <param name="rgb">RGB structure.</param>
+        /// <returns>YIQ structure.</returns>
         public static YIQ FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -182,7 +182,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from YIQ to RGB.
         /// </summary>
-        /// <returns>RGB structure</returns>
+        /// <returns>RGB structure.</returns>
         public RGB ToRGB
         {
             get

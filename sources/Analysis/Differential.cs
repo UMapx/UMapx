@@ -20,7 +20,7 @@ namespace UMapx.Analysis
         /// <summary>
         /// Initializes a class that implements the solution of a differential equation.
         /// </summary>
-        /// <param name="method">Differentiation method</param>
+        /// <param name="method">Differentiation method.</param>
         public Differential(DifferentialMethod method = DifferentialMethod.RungeKutta4)
         {
             this.method = method;
@@ -42,10 +42,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the value of a differential equation.
         /// </summary>
-        /// <param name="function">The delegate of a continuous function depending on two variables</param>
-        /// <param name="x">Array of values argument</param>
-        /// <param name="y0">Value</param>
-        /// <returns>Array of function values</returns>
+        /// <param name="function">The delegate of a continuous function depending on two variables.</param>
+        /// <param name="x">Array of values argument.</param>
+        /// <param name="y0">Value.</param>
+        /// <returns>Array of function values.</returns>
         public float[] Compute(IMeshFloat function, float[] x, float y0)
         {
             // choose method of differentiation
@@ -67,10 +67,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the value of a differential equation.
         /// </summary>
-        /// <param name="function">The delegate of a continuous function depending on two variables</param>
-        /// <param name="x">Array of values argument</param>
-        /// <param name="y0">Value</param>
-        /// <returns>Array of function values</returns>
+        /// <param name="function">The delegate of a continuous function depending on two variables.</param>
+        /// <param name="x">Array of values argument.</param>
+        /// <param name="y0">Value.</param>
+        /// <returns>Array of function values.</returns>
         public Complex32[] Compute(IMeshComplex32 function, Complex32[] x, Complex32 y0)
         {
             // choose method of differentiation
@@ -95,11 +95,11 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the value of a differential equation calculated by the Adams-Bashforth method.
         /// </summary>
-        /// <param name="function">The delegate of a continuous function depending on two variables</param>
-        /// <param name="x">Array of values argument</param>
-        /// <param name="y0">Value</param>
-        /// <param name="order">Order</param>
-        /// <returns>Array of function values</returns>
+        /// <param name="function">The delegate of a continuous function depending on two variables.</param>
+        /// <param name="x">Array of values argument.</param>
+        /// <param name="y0">Value.</param>
+        /// <param name="order">Order.</param>
+        /// <returns>Array of function values.</returns>
         public float[] Compute(IMeshFloat function, float[] x, float y0, int order = 2)
         {
             int n = x.Length - 1;
@@ -149,11 +149,11 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the value of a differential equation calculated by the Adams-Bashforth method.
         /// </summary>
-        /// <param name="function">The delegate of a continuous function depending on two variables</param>
-        /// <param name="x">Array of values argument</param>
-        /// <param name="y0">Value</param>
-        /// <param name="order">Order</param>
-        /// <returns>Array of function values</returns>
+        /// <param name="function">The delegate of a continuous function depending on two variables.</param>
+        /// <param name="x">Array of values argument.</param>
+        /// <param name="y0">Value.</param>
+        /// <param name="order">Order.</param>
+        /// <returns>Array of function values.</returns>
         public Complex32[] Compute(IMeshComplex32 function, Complex32[] x, Complex32 y0, int order = 2)
         {
             int n = x.Length - 1;
@@ -206,8 +206,8 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns an array of coefficient values for the Adams-Bashforth formula.
         /// </summary>
-        /// <param name="order">Order</param>
-        /// <returns>Array</returns>
+        /// <param name="order">Order.</param>
+        /// <returns>Array.</returns>
         public static float[] GetCoefficients(int order)
         {
             float[,] A = new float[order, order];
@@ -235,10 +235,10 @@ namespace UMapx.Analysis
         /// Works with nonuniform grids. The returned array has length n = x.Length - 1
         /// and contains y at x[1], x[2], ..., x[n]. The initial value y0 (at x[0]) is not included.
         /// </remarks>
-        /// <param name="f">Right-hand side f(x, y)</param>
-        /// <param name="x">Monotone grid points</param>
-        /// <param name="y0">Initial value y(x[0])</param>
-        /// <returns>Solution values at x[1..n]</returns>
+        /// <param name="f">Right-hand side f(x, y).</param>
+        /// <param name="x">Monotone grid points.</param>
+        /// <param name="y0">Initial value y(x[0]).</param>
+        /// <returns>Solution values at x[1..n].</returns>
         private static float[] Euler(IMeshFloat f, float[] x, float y0)
         {
             int n = x.Length - 1;
@@ -260,10 +260,10 @@ namespace UMapx.Analysis
         /// <remarks>
         /// Works with nonuniform grids. Returns y at x[1..n]; y0 is not included.
         /// </remarks>
-        /// <param name="f">Right-hand side f(x, y)</param>
-        /// <param name="x">Grid points</param>
-        /// <param name="y0">Initial value y(x[0])</param>
-        /// <returns>Solution values at x[1..n]</returns>
+        /// <param name="f">Right-hand side f(x, y).</param>
+        /// <param name="x">Grid points.</param>
+        /// <param name="y0">Initial value y(x[0]).</param>
+        /// <returns>Solution values at x[1..n].</returns>
         private static float[] RungeKutta2(IMeshFloat f, float[] x, float y0)
         {
             int n = x.Length - 1;
@@ -288,10 +288,10 @@ namespace UMapx.Analysis
         /// <remarks>
         /// Works with nonuniform grids. Returns y at x[1..n]; y0 is not included.
         /// </remarks>
-        /// <param name="f">Right-hand side f(x, y)</param>
-        /// <param name="x">Grid points</param>
-        /// <param name="y0">Initial value y(x[0])</param>
-        /// <returns>Solution values at x[1..n]</returns>
+        /// <param name="f">Right-hand side f(x, y).</param>
+        /// <param name="x">Grid points.</param>
+        /// <param name="y0">Initial value y(x[0]).</param>
+        /// <returns>Solution values at x[1..n].</returns>
         private static float[] RungeKutta4(IMeshFloat f, float[] x, float y0)
         {
             int n = x.Length - 1;
@@ -319,10 +319,10 @@ namespace UMapx.Analysis
         /// Uses the embedded Runge–Kutta-Fehlberg coefficients on a fixed step.
         /// No local error return or adaptive control. Returns y at x[1..n]; y0 is not included.
         /// </remarks>
-        /// <param name="f">Right-hand side f(x, y)</param>
-        /// <param name="x">Grid points</param>
-        /// <param name="y0">Initial value y(x[0])</param>
-        /// <returns>Solution values at x[1..n]</returns>
+        /// <param name="f">Right-hand side f(x, y).</param>
+        /// <param name="x">Grid points.</param>
+        /// <param name="y0">Initial value y(x[0]).</param>
+        /// <returns>Solution values at x[1..n].</returns>
         private static float[] Fehlberg(IMeshFloat f, float[] x, float y0)
         {
             int n = x.Length - 1;
@@ -352,10 +352,10 @@ namespace UMapx.Analysis
         /// Works with nonuniform grids. The returned array has length n = x.Length - 1
         /// and contains y at x[1], x[2], ..., x[n]. The initial value y0 (at x[0]) is not included.
         /// </remarks>
-        /// <param name="f">Right-hand side f(x, y)</param>
-        /// <param name="x">Monotone grid points</param>
-        /// <param name="y0">Initial value y(x[0])</param>
-        /// <returns>Solution values at x[1..n]</returns>
+        /// <param name="f">Right-hand side f(x, y).</param>
+        /// <param name="x">Monotone grid points.</param>
+        /// <param name="y0">Initial value y(x[0]).</param>
+        /// <returns>Solution values at x[1..n].</returns>
         private static Complex32[] Euler(IMeshComplex32 f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;
@@ -377,10 +377,10 @@ namespace UMapx.Analysis
         /// <remarks>
         /// Works with nonuniform grids. Returns y at x[1..n]; y0 is not included.
         /// </remarks>
-        /// <param name="f">Right-hand side f(x, y)</param>
-        /// <param name="x">Grid points</param>
-        /// <param name="y0">Initial value y(x[0])</param>
-        /// <returns>Solution values at x[1..n]</returns>
+        /// <param name="f">Right-hand side f(x, y).</param>
+        /// <param name="x">Grid points.</param>
+        /// <param name="y0">Initial value y(x[0]).</param>
+        /// <returns>Solution values at x[1..n].</returns>
         private static Complex32[] RungeKutta2(IMeshComplex32 f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;
@@ -405,10 +405,10 @@ namespace UMapx.Analysis
         /// <remarks>
         /// Works with nonuniform grids. Returns y at x[1..n]; y0 is not included.
         /// </remarks>
-        /// <param name="f">Right-hand side f(x, y)</param>
-        /// <param name="x">Grid points</param>
-        /// <param name="y0">Initial value y(x[0])</param>
-        /// <returns>Solution values at x[1..n]</returns>
+        /// <param name="f">Right-hand side f(x, y).</param>
+        /// <param name="x">Grid points.</param>
+        /// <param name="y0">Initial value y(x[0]).</param>
+        /// <returns>Solution values at x[1..n].</returns>
         private static Complex32[] RungeKutta4(IMeshComplex32 f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;
@@ -436,10 +436,10 @@ namespace UMapx.Analysis
         /// Uses the embedded Runge–Kutta-Fehlberg coefficients on a fixed step.
         /// No local error return or adaptive control. Returns y at x[1..n]; y0 is not included.
         /// </remarks>
-        /// <param name="f">Right-hand side f(x, y)</param>
-        /// <param name="x">Grid points</param>
-        /// <param name="y0">Initial value y(x[0])</param>
-        /// <returns>Solution values at x[1..n]</returns>
+        /// <param name="f">Right-hand side f(x, y).</param>
+        /// <param name="x">Grid points.</param>
+        /// <param name="y0">Initial value y(x[0]).</param>
+        /// <returns>Solution values at x[1..n].</returns>
         private static Complex32[] Fehlberg(IMeshComplex32 f, Complex32[] x, Complex32 y0)
         {
             int n = x.Length - 1;

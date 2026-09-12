@@ -21,8 +21,8 @@ namespace UMapx.Analysis
         /// <summary>
         /// Initializes a class that implements the solution of a nonlinear equation.
         /// </summary>
-        /// <param name="eps">Epsilon [0, 1]</param>
-        /// <param name="method">Method for solving a nonlinear equation</param>
+        /// <param name="eps">Epsilon [0, 1].</param>
+        /// <param name="method">Method for solving a nonlinear equation.</param>
         public Nonlinear(float eps = 1e-8f, NonlinearMethod method = NonlinearMethod.Secant)
         {
             this.method = method;
@@ -59,10 +59,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Gets the root value of a nonlinear equation.
         /// </summary>
-        /// <param name="function">Continuous function delegate</param>
-        /// <param name="a">Start of line</param>
-        /// <param name="b">End of line</param>
-        /// <returns>Value</returns>
+        /// <param name="function">Continuous function delegate.</param>
+        /// <param name="a">Start of line.</param>
+        /// <param name="b">End of line.</param>
+        /// <returns>Value.</returns>
         public float Compute(IFloat function, float a, float b)
         {
             // choose method of nonlinear
@@ -81,10 +81,10 @@ namespace UMapx.Analysis
         /// <summary>
         /// Gets the root value of a nonlinear equation.
         /// </summary>
-        /// <param name="function">Continuous function delegate</param>
-        /// <param name="a">Start of line</param>
-        /// <param name="b">End of line</param>
-        /// <returns>Value</returns>
+        /// <param name="function">Continuous function delegate.</param>
+        /// <param name="a">Start of line.</param>
+        /// <param name="b">End of line.</param>
+        /// <returns>Value.</returns>
         public Complex32 Compute(IComplex32 function, Complex32 a, Complex32 b)
         {
             // choose method of nonlinear
@@ -112,12 +112,12 @@ namespace UMapx.Analysis
         /// - Stops when the interval width or |f(mid)| is below <paramref name="eps"/>, or on iteration cap.
         /// - Returns the final midpoint or a short secant refinement if available.
         /// </remarks>
-        /// <param name="f">Scalar continuous function</param>
-        /// <param name="a">Left endpoint of the initial bracket</param>
-        /// <param name="b">Right endpoint of the initial bracket</param>
-        /// <param name="eps">Absolute tolerance for both x-interval and residual checks</param>
-        /// <returns>Approximate root in [a, b]</returns>
-        /// <exception cref="ArgumentException">If f(a) and f(b) have the same strict sign</exception>
+        /// <param name="f">Scalar continuous function.</param>
+        /// <param name="a">Left endpoint of the initial bracket.</param>
+        /// <param name="b">Right endpoint of the initial bracket.</param>
+        /// <param name="eps">Absolute tolerance for both x-interval and residual checks.</param>
+        /// <returns>Approximate root in [a, b].</returns>
+        /// <exception cref="ArgumentException">If f(a) and f(b) have the same strict sign.</exception>
         private static float Bisec(IFloat f, float a, float b, float eps = 1e-8f)
         {
             float x1 = a, x2 = b;
@@ -148,11 +148,11 @@ namespace UMapx.Analysis
         /// - Superlinear convergence near a simple root; sensitive to starting points.<br/>
         /// - Stops on small residual |f(x)|, small step |Δx|, or iteration cap; returns the last iterate.
         /// </remarks>
-        /// <param name="f">Scalar continuous function</param>
-        /// <param name="a">First initial guess</param>
-        /// <param name="b">Second initial guess</param>
-        /// <param name="eps">Absolute tolerance for residual and step size</param>
-        /// <returns>Approximate root</returns>
+        /// <param name="f">Scalar continuous function.</param>
+        /// <param name="a">First initial guess.</param>
+        /// <param name="b">Second initial guess.</param>
+        /// <param name="eps">Absolute tolerance for residual and step size.</param>
+        /// <returns>Approximate root.</returns>
         private static float Secan(IFloat f, float a, float b, float eps = 1e-8f)
         {
             float x1 = a, x2 = b;
@@ -178,12 +178,12 @@ namespace UMapx.Analysis
         /// - Can stagnate if one endpoint changes very slowly; convergence is at least linear.<br/>
         /// - Stops on small residual |f(x)|, small step |Δx|, or iteration cap; returns the last secant point.
         /// </remarks>
-        /// <param name="f">Scalar continuous function</param>
-        /// <param name="a">Left endpoint of the initial bracket</param>
-        /// <param name="b">Right endpoint of the initial bracket</param>
-        /// <param name="eps">Absolute tolerance for residual and step size</param>
-        /// <returns>Approximate root in [a, b]</returns>
-        /// <exception cref="ArgumentException">If f(a) and f(b) have the same strict sign</exception>
+        /// <param name="f">Scalar continuous function.</param>
+        /// <param name="a">Left endpoint of the initial bracket.</param>
+        /// <param name="b">Right endpoint of the initial bracket.</param>
+        /// <param name="eps">Absolute tolerance for residual and step size.</param>
+        /// <returns>Approximate root in [a, b].</returns>
+        /// <exception cref="ArgumentException">If f(a) and f(b) have the same strict sign.</exception>
         private static float Falpo(IFloat f, float a, float b, float eps = 1e-8f)
         {
             float x1 = a, x2 = b;
@@ -215,11 +215,11 @@ namespace UMapx.Analysis
         /// - Does not enforce bracketing; convergence is problem-dependent and may be slow or fail.<br/>
         /// - Stops on small residual |f(x)|, small step |Δx|, or iteration cap.
         /// </remarks>
-        /// <param name="f">Scalar continuous function</param>
-        /// <param name="a">Fixed endpoint used in each chord</param>
-        /// <param name="b">Second endpoint used only to initialize the first iterate</param>
-        /// <param name="eps">Absolute tolerance for residual and step size</param>
-        /// <returns>Approximate root</returns>
+        /// <param name="f">Scalar continuous function.</param>
+        /// <param name="a">Fixed endpoint used in each chord.</param>
+        /// <param name="b">Second endpoint used only to initialize the first iterate.</param>
+        /// <param name="eps">Absolute tolerance for residual and step size.</param>
+        /// <returns>Approximate root.</returns>
         private static float Chord(IFloat f, float a, float b, float eps = 1e-8f)
         {
             float x0 = 0.5f * (a + b);
@@ -248,11 +248,11 @@ namespace UMapx.Analysis
         /// - Does not enforce bracketing; convergence is problem-dependent and may be slow or fail.<br/>
         /// - Stops on small residual |f(x)|, small step |Δx|, or iteration cap.
         /// </remarks>
-        /// <param name="f">Scalar continuous function</param>
-        /// <param name="a">Fixed endpoint used in each chord</param>
-        /// <param name="b">Second endpoint used only to initialize the first iterate</param>
-        /// <param name="eps">Absolute tolerance for residual and step size</param>
-        /// <returns>Approximate root</returns>
+        /// <param name="f">Scalar continuous function.</param>
+        /// <param name="a">Fixed endpoint used in each chord.</param>
+        /// <param name="b">Second endpoint used only to initialize the first iterate.</param>
+        /// <param name="eps">Absolute tolerance for residual and step size.</param>
+        /// <returns>Approximate root.</returns>
         private static Complex32 Chord(IComplex32 f, Complex32 a, Complex32 b, float eps = 1e-8f)
         {
             Complex32 x0 = 0.5f * (a + b);
@@ -281,11 +281,11 @@ namespace UMapx.Analysis
         /// - Superlinear convergence near a simple root; sensitive to starting points.<br/>
         /// - Stops on small residual |f(x)|, small step |Δx|, or iteration cap; returns the last iterate.
         /// </remarks>
-        /// <param name="f">Scalar continuous function</param>
-        /// <param name="a">First initial guess</param>
-        /// <param name="b">Second initial guess</param>
-        /// <param name="eps">Absolute tolerance for residual and step size</param>
-        /// <returns>Approximate root</returns>
+        /// <param name="f">Scalar continuous function.</param>
+        /// <param name="a">First initial guess.</param>
+        /// <param name="b">Second initial guess.</param>
+        /// <param name="eps">Absolute tolerance for residual and step size.</param>
+        /// <returns>Approximate root.</returns>
         private static Complex32 Secan(IComplex32 f, Complex32 a, Complex32 b, float eps = 1e-8f)
         {
             Complex32 x1 = a, x2 = b;

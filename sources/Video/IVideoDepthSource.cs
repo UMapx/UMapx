@@ -6,7 +6,7 @@
     public interface IVideoDepthSource : IVideoSource
     {
         /// <summary>
-        /// Handler of received frames
+        /// Handler of received frames.
         /// </summary>
         public event NewDepthEventHandler NewDepth;
     }

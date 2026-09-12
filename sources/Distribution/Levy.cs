@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/L%C3%A9vy_distribution
+    /// <see href="https://en.wikipedia.org/wiki/L%C3%A9vy_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Levy : IDistribution
@@ -22,8 +22,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the Levy distribution.
         /// </summary>
-        /// <param name="mu">Shear rate μ</param>
-        /// <param name="c">Scale factor (>0)</param>
+        /// <param name="mu">Shear rate μ.</param>
+        /// <param name="c">Scale factor (>0).</param>
         public Levy(float mu, float c)
         {
             Mu = mu; C = c;
@@ -136,8 +136,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x < mu)
@@ -150,8 +150,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x < mu)

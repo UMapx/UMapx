@@ -14,9 +14,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a Bitmap to an BGR tensor arrays.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="rgb">RGB or BGR</param>
-        /// <returns>RGB tensor arrays</returns>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="rgb">RGB or BGR.</param>
+        /// <returns>RGB tensor arrays.</returns>
         public static byte[][] ToByteTensor(this Bitmap Data, bool rgb = false)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -27,9 +27,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a Bitmap to an BGR tensor arrays.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="rgb">RGB or BGR</param>
-        /// <returns>RGB tensor arrays</returns>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="rgb">RGB or BGR.</param>
+        /// <returns>RGB tensor arrays.</returns>
         public unsafe static byte[][] ToByteTensor(this BitmapData bmData, bool rgb = false)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -84,9 +84,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a Bitmap to an BGR tensor arrays.
         /// </summary>
-        /// <param name="bmData">Bitmap data in BGR terms</param>
-        /// <param name="rgb">RGB or BGR</param>
-        /// <returns>RGB tensor arrays</returns>
+        /// <param name="bmData">Bitmap data in BGR terms.</param>
+        /// <param name="rgb">RGB or BGR.</param>
+        /// <returns>RGB tensor arrays.</returns>
         public unsafe static byte[][] ToByteTensor(this float[][,] bmData, bool rgb = false)
         {
             // params
@@ -131,9 +131,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a Bitmap to an BGR tensor arrays.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="rgb">RGB or BGR</param>
-        /// <returns>RGB tensor arrays</returns>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="rgb">RGB or BGR.</param>
+        /// <returns>RGB tensor arrays.</returns>
         public static float[][] ToFloatTensor(this Bitmap Data, bool rgb = false)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -144,9 +144,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a Bitmap to an BGR tensor arrays.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="rgb">RGB or BGR</param>
-        /// <returns>RGB tensor arrays</returns>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="rgb">RGB or BGR.</param>
+        /// <returns>RGB tensor arrays.</returns>
         public unsafe static float[][] ToFloatTensor(this BitmapData bmData, bool rgb = false)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -201,9 +201,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts a Bitmap to an BGR tensor arrays.
         /// </summary>
-        /// <param name="bmData">Bitmap data in BGR terms</param>
-        /// <param name="rgb">RGB or BGR</param>
-        /// <returns>RGB tensor arrays</returns>
+        /// <param name="bmData">Bitmap data in BGR terms.</param>
+        /// <param name="rgb">RGB or BGR.</param>
+        /// <returns>RGB tensor arrays.</returns>
         public unsafe static float[][] ToFloatTensor(this float[][,] bmData, bool rgb = false)
         {
             // params
@@ -248,11 +248,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts three BGR or RGB byte planes to an opaque bitmap.
         /// </summary>
-        /// <param name="tensor">Tensor arrays</param>
-        /// <param name="width">Width</param>
-        /// <param name="height">Height</param>
-        /// <param name="rgb">RGB or BGR</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="tensor">Tensor arrays.</param>
+        /// <param name="width">Width.</param>
+        /// <param name="height">Height.</param>
+        /// <param name="rgb">RGB or BGR.</param>
+        /// <returns>Bitmap.</returns>
         public unsafe static Bitmap FromByteTensor(this byte[][] tensor, int width, int height, bool rgb = false)
         {
             // params
@@ -306,11 +306,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Converts three BGR or RGB float planes to an opaque bitmap.
         /// </summary>
-        /// <param name="tensor">Tensor arrays</param>
-        /// <param name="width">Width</param>
-        /// <param name="height">Height</param>
-        /// <param name="rgb">RGB or BGR</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="tensor">Tensor arrays.</param>
+        /// <param name="width">Width.</param>
+        /// <param name="height">Height.</param>
+        /// <param name="rgb">RGB or BGR.</param>
+        /// <returns>Bitmap.</returns>
         public unsafe static Bitmap FromFloatTensor(this float[][] tensor, int width, int height, bool rgb = false)
         {
             // params

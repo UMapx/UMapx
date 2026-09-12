@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Cone-shape_distribution_function
+    /// <see href="https://en.wikipedia.org/wiki/Cone-shape_distribution_function"/>.
     /// </remarks>
     [Serializable]
     public class ConeShape : IDistribution
@@ -21,7 +21,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the distribution of the conical shape.
         /// </summary>
-        /// <param name="a">Coefficient</param>
+        /// <param name="a">Coefficient.</param>
         public ConeShape(float a = 0.001f)
         {
             A = a;
@@ -105,9 +105,9 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the kernel density function.
         /// </summary>
-        /// <param name="eta">Value</param>
-        /// <param name="tau">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="eta">Value.</param>
+        /// <param name="tau">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float eta, float tau)
         {
             float ksi = Maths.Pi * eta * tau;
@@ -117,8 +117,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the kernel distribution function.
         /// </summary>
-        /// <param name="t">Value</param>
-        /// <param name="tau">Value</param>
+        /// <param name="t">Value.</param>
+        /// <param name="tau">Value.</param>
         /// <returns>
         /// Value. When <paramref name="tau"/> equals zero the method
         /// returns <c>1</c> for <paramref name="t"/> equal to zero and throws

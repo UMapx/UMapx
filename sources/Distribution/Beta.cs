@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Beta_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Beta_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Beta : IDistribution
@@ -26,8 +26,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes beta distribution.
         /// </summary>
-        /// <param name="a">Parameter a</param>
-        /// <param name="b">Parameter b</param>
+        /// <param name="a">Parameter a.</param>
+        /// <param name="b">Parameter b.</param>
         public Beta(float a, float b)
         {
             A = a; B = b;
@@ -177,8 +177,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x > 1)
@@ -195,8 +195,8 @@ namespace UMapx.Distribution
         /// Returns the value of the cumulative distribution function.
         /// Uses the regularized incomplete beta function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         /// <example>
         /// Beta beta = new Beta(2f, 3f);
         /// float cdf = beta.Distribution(0.5f);
@@ -216,7 +216,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get { throw new NotSupportedException(); }

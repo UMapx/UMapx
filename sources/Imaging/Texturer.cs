@@ -21,7 +21,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the texturing filter.
         /// </summary>
-        /// <param name="texture">Matrix</param>
+        /// <param name="texture">Matrix.</param>
         public Texturer(float[,] texture)
         {
             Texture = texture;
@@ -29,8 +29,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the texturing filter.
         /// </summary>
-        /// <param name="texture">Matrix</param>
-        /// <param name="depth">Depth [0, 1]</param>
+        /// <param name="texture">Matrix.</param>
+        /// <param name="depth">Depth [0, 1].</param>
         public Texturer(float[,] texture, float depth = 1.0f)
         {
             Texture = texture; Depth = depth;
@@ -54,7 +54,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -89,7 +89,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -105,10 +105,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the construction of a wood texture.
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <param name="rings">Rings</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <param name="rings">Rings.</param>
+        /// <returns>Matrix.</returns>
         public static Texturer Wood(int m, int l, double rings = 12)
         {
             PerlinNoise noise = new PerlinNoise(8, 0.5f, 1.0f / 32, 0.05f); r = rand.Next(5000);
@@ -135,9 +135,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the construction of a textile texture.
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <returns>Matrix.</returns>
         public static Texturer Textile(int m, int l)
         {
             PerlinNoise noise = new PerlinNoise(3, 0.65f, 1.0f / 8, 1.0f); r = rand.Next(5000);
@@ -160,11 +160,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the construction of a marble texture.
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <param name="yPeriod">Y-period</param>
-        /// <param name="xPeriod">X-period</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <param name="yPeriod">Y-period.</param>
+        /// <param name="xPeriod">X-period.</param>
+        /// <returns>Matrix.</returns>
         public static Texturer Marble(int m, int l, float yPeriod = 10.0f, float xPeriod = 5.0f)
         {
             PerlinNoise noise = new PerlinNoise(2, 0.65f, 1.0f / 32, 1.0f); r = rand.Next(5000);
@@ -188,9 +188,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the construction of a labyrinth texture.
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <returns>Matrix.</returns>
         public static Texturer Labyrinth(int m, int l)
         {
             PerlinNoise noise = new PerlinNoise(1, 0.65f, 1.0f / 16, 1.0f); r = rand.Next(5000);
@@ -213,9 +213,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the construction of a clouds texture.
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <returns>Matrix.</returns>
         public static Texturer Clouds(int m, int l)
         {
             PerlinNoise noise = new PerlinNoise(8, 0.5f, 1.0f / 32, 1.0f); r = rand.Next(5000);

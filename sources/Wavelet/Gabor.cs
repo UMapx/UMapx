@@ -20,9 +20,9 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Initializes the continuous complex Gabor wavelet.
         /// </summary>
-        /// <param name="x0">Initial value</param>
-        /// <param name="k0">Modulation factor</param>
-        /// <param name="a">Factor</param>
+        /// <param name="x0">Initial value.</param>
+        /// <param name="k0">Modulation factor.</param>
+        /// <param name="a">Factor.</param>
         public Gabor(float x0 = 0, float k0 = 1, float a = 2)
         {
             X0 = x0; K0 = k0; A = a;
@@ -73,8 +73,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public Complex32 Scaling(float x)
         {
             throw new NotSupportedException();
@@ -82,8 +82,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public Complex32 Wavelet(float x)
         {
             float d = x - x0;
@@ -92,8 +92,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public float WaveletReal(float x)
         {
             return Wavelet(x).Real;

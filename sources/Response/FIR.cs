@@ -27,7 +27,7 @@ namespace UMapx.Response
         /// <summary>
         /// Initializes a filter with a finite impulse response.
         /// </summary>
-        /// <param name="b">Array of signal coefficients</param>
+        /// <param name="b">Array of signal coefficients.</param>
         public FIR(float[] b)
         {
             B = b;
@@ -43,8 +43,8 @@ namespace UMapx.Response
         /// <summary>
         /// Returns an array of filter response values when a discrete function is supplied.
         /// </summary>
-        /// <param name="u">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="u">Array.</param>
+        /// <returns>Array.</returns>
         public float[] Reaction(float[] u)
         {
             int length = u.Length;
@@ -70,8 +70,8 @@ namespace UMapx.Response
         /// <summary>
         /// Returns an array of filter response values when a discrete function is supplied.
         /// </summary>
-        /// <param name="u">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="u">Array.</param>
+        /// <returns>Array.</returns>
         public Complex32[] Reaction(Complex32[] u)
         {
             int length = u.Length;
@@ -97,8 +97,8 @@ namespace UMapx.Response
         /// <summary>
         /// Returns the frequency response of the filter.
         /// </summary>
-        /// <param name="w">Array of frequencies (rad / sample)</param>
-        /// <returns>Array</returns>
+        /// <param name="w">Array of frequencies (rad / sample).</param>
+        /// <returns>Array.</returns>
         public float[] Amplitude(float[] w)
         {
             int length = b.Length;
@@ -118,8 +118,8 @@ namespace UMapx.Response
         /// <summary>
         /// Returns the frequency response of the filter.
         /// </summary>
-        /// <param name="w">Array of frequencies (rad / sample)</param>
-        /// <returns>Array</returns>
+        /// <param name="w">Array of frequencies (rad / sample).</param>
+        /// <returns>Array.</returns>
         public Complex32[] Amplitude(Complex32[] w)
         {
             int length = b.Length;
@@ -139,8 +139,8 @@ namespace UMapx.Response
         /// <summary>
         /// Returns the phase-frequency response of a filter.
         /// </summary>
-        /// <param name="w">Array of frequencies (rad / sample)</param>
-        /// <returns>Array</returns>
+        /// <param name="w">Array of frequencies (rad / sample).</param>
+        /// <returns>Array.</returns>
         public float[] Phase(float[] w)
         {
             int length = b.Length;
@@ -160,8 +160,8 @@ namespace UMapx.Response
         /// <summary>
         /// Returns the phase-frequency response of a filter.
         /// </summary>
-        /// <param name="w">Array of frequencies (rad / sample)</param>
-        /// <returns>Array</returns>
+        /// <param name="w">Array of frequencies (rad / sample).</param>
+        /// <returns>Array.</returns>
         public Complex32[] Phase(Complex32[] w)
         {
             int length = b.Length;
@@ -181,8 +181,8 @@ namespace UMapx.Response
         /// <summary>
         /// Returns the amplitude value at the given frequency.
         /// </summary>
-        /// <param name="w">Frequency (rad / sample)</param>
-        /// <returns>Value</returns>
+        /// <param name="w">Frequency (rad / sample).</param>
+        /// <returns>Value.</returns>
         public float Amplitude(float w)
         {
             Complex32 K1 = Complex32.Zero;
@@ -197,8 +197,8 @@ namespace UMapx.Response
         /// <summary>
         /// Returns the amplitude value at the given frequency.
         /// </summary>
-        /// <param name="w">Frequency (rad / sample)</param>
-        /// <returns>Value</returns>
+        /// <param name="w">Frequency (rad / sample).</param>
+        /// <returns>Value.</returns>
         public Complex32 Amplitude(Complex32 w)
         {
             Complex32 K1 = Complex32.Zero;
@@ -213,8 +213,8 @@ namespace UMapx.Response
         /// <summary>
         /// Returns the phase value at the given frequency.
         /// </summary>
-        /// <param name="w">Frequency (rad / sample)</param>
-        /// <returns>Value</returns>
+        /// <param name="w">Frequency (rad / sample).</param>
+        /// <returns>Value.</returns>
         public float Phase(float w)
         {
             Complex32 K1 = Complex32.Zero;
@@ -229,8 +229,8 @@ namespace UMapx.Response
         /// <summary>
         /// Returns the phase value at the given frequency.
         /// </summary>
-        /// <param name="w">Frequency (rad / sample)</param>
-        /// <returns>Value</returns>
+        /// <param name="w">Frequency (rad / sample).</param>
+        /// <returns>Value.</returns>
         public Complex32 Phase(Complex32 w)
         {
             Complex32 K1 = Complex32.Zero;

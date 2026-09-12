@@ -7,7 +7,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Perlin_noise
+    /// <see href="https://en.wikipedia.org/wiki/Perlin_noise"/>.
     /// </remarks>
     public class PerlinNoise
     {
@@ -22,10 +22,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Perlin noise.   
         /// </summary>
-        /// <param name="octaves">Octaves[1, 32]</param>
-        /// <param name="persistence">Persistence</param>
-        /// <param name="frequency">Frequency</param>
-        /// <param name="amplitude">Amplitude</param>
+        /// <param name="octaves">Octaves[1, 32].</param>
+        /// <param name="persistence">Persistence.</param>
+        /// <param name="frequency">Frequency.</param>
+        /// <param name="amplitude">Amplitude.</param>
         public PerlinNoise(int octaves = 4, float persistence = 0.65f, float frequency = 1, float amplitude = 1)
         {
             Octaves = octaves; Persistence = persistence; Frequency = frequency; Amplitude = amplitude;
@@ -65,8 +65,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// One-dimensional Perlin noise function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             float frequency = initFrequency;
@@ -86,9 +86,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Two-dimensional Perlin noise function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="y">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="y">Value.</param>
+        /// <returns>Value.</returns>
         public float Function2D(float x, float y)
         {
             float frequency = initFrequency;
@@ -111,8 +111,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Generates a deterministic pseudo-random noise value for one dimension.
         /// </summary>
-        /// <param name="x">Input coordinate</param>
-        /// <returns>Noise value in the range [-1, 1]</returns>
+        /// <param name="x">Input coordinate.</param>
+        /// <returns>Noise value in the range [-1, 1].</returns>
         private static float Noise(int x)
         {
             int n = (x << 13) ^ x;
@@ -122,9 +122,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Generates a deterministic pseudo-random noise value for two dimensions.
         /// </summary>
-        /// <param name="x">X coordinate</param>
-        /// <param name="y">Y coordinate</param>
-        /// <returns>Noise value in the range [-1, 1]</returns>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        /// <returns>Noise value in the range [-1, 1].</returns>
         private static float Noise(int x, int y)
         {
             int n = x + y * 57;
@@ -135,8 +135,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Computes smoothed 1D noise using cosine interpolation.
         /// </summary>
-        /// <param name="x">Input coordinate</param>
-        /// <returns>Smoothed noise value</returns>
+        /// <param name="x">Input coordinate.</param>
+        /// <returns>Smoothed noise value.</returns>
         private static float SmoothedNoise(float x)
         {
             int xInt = (int)x;
@@ -147,9 +147,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Computes smoothed 2D noise using cosine interpolation.
         /// </summary>
-        /// <param name="x">X coordinate</param>
-        /// <param name="y">Y coordinate</param>
-        /// <returns>Smoothed noise value</returns>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        /// <returns>Smoothed noise value.</returns>
         private static float SmoothedNoise(float x, float y)
         {
             // params
@@ -174,10 +174,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Performs cosine interpolation between two values.
         /// </summary>
-        /// <param name="x1">First value</param>
-        /// <param name="x2">Second value</param>
-        /// <param name="a">Interpolation factor</param>
-        /// <returns>Interpolated value</returns>
+        /// <param name="x1">First value.</param>
+        /// <param name="x2">Second value.</param>
+        /// <param name="a">Interpolation factor.</param>
+        /// <returns>Interpolated value.</returns>
         private static float CosineInterpolate(float x1, float x2, float a)
         {
             float f = (1 - Maths.Cos(a * Maths.Pi)) * 0.5f;

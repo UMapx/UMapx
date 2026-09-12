@@ -13,7 +13,7 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes the Blackman-Nuttall window function.
         /// </summary>
-        /// <param name="frameSize">Window size</param>
+        /// <param name="frameSize">Window size.</param>
         public BlackmanNuttall(int frameSize)
         {
             this.FrameSize = frameSize;
@@ -21,9 +21,9 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Value.</returns>
         public override float Function(float x, int frameSize)
         {
             return 0.3635819f - 0.4891775f * Cosine.Cosinefunc(2 * x, frameSize) + 0.1365995f * Cosine.Cosinefunc(4 * x, frameSize) - 0.0106411f * Cosine.Cosinefunc(6 * x, frameSize);
@@ -31,8 +31,8 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Array</returns>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Array.</returns>
         public override float[] GetWindow(int frameSize)
         {
             // window function on a discrete time:

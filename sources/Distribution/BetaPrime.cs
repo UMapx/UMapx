@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Beta_prime_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Beta_prime_distribution"/>.
     /// </remarks>
     [Serializable]
     public class BetaPrime : IDistribution
@@ -22,8 +22,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes beta distribution of the second kind.
         /// </summary>
-        /// <param name="alpha">Parameter α (0, +inf)</param>
-        /// <param name="beta">Parameter β (0, +inf)</param>
+        /// <param name="alpha">Parameter α (0, +inf).</param>
+        /// <param name="beta">Parameter β (0, +inf).</param>
         public BetaPrime(float alpha, float beta)
         {
             Alpha = alpha; Beta = beta;
@@ -171,8 +171,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x <= 0)
@@ -184,8 +184,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x <= 0)

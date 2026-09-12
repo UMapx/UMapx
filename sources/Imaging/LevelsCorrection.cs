@@ -8,7 +8,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// Filter usage example:
-    /// https://digital-photography-school.com/using-levels-photoshop-image-correct-color-contrast/
+    /// <see href="https://digital-photography-school.com/using-levels-photoshop-image-correct-color-contrast/"/>.
     /// </remarks>
     [Serializable]
     public class LevelsCorrection : Correction, IBitmapFilter
@@ -22,9 +22,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the levels correction filter.
         /// </summary>
-        /// <param name="input">Input channel values</param>
-        /// <param name="output">Output channel values</param>
-        /// <param name="space">Color space</param>
+        /// <param name="input">Input channel values.</param>
+        /// <param name="output">Output channel values.</param>
+        /// <param name="space">Color space.</param>
         public LevelsCorrection(RangeFloat input, RangeFloat output, Space space)
         {
             Input = input; Output = output; this.Space = space;

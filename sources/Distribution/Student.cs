@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Student%27s_t-distribution
+    /// <see href="https://en.wikipedia.org/wiki/Student%27s_t-distribution"/>.
     /// </remarks>
     [Serializable]
     public class Student : IDistribution
@@ -21,7 +21,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the Student's distribution.
         /// </summary>
-        /// <param name="n">Degrees of freedom n ∈ (0, +inf)</param>
+        /// <param name="n">Degrees of freedom n ∈ (0, +inf).</param>
         public Student(float n)
         {
             this.N = n;
@@ -149,8 +149,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             float v = degrees;
@@ -160,8 +160,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             return Maths.Exp(LogFunction(x));
@@ -169,8 +169,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Computes the natural logarithm of the probability density function.
         /// </summary>
-        /// <param name="x">Input value</param>
-        /// <returns>Logarithm of the density</returns>
+        /// <param name="x">Input value.</param>
+        /// <returns>Logarithm of the density.</returns>
         private float LogFunction(float x)
         {
             float num = Special.LogGamma((this.degrees + 1) / 2.0f);

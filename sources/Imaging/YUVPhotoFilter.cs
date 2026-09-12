@@ -22,8 +22,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the color filter based on the YUV structure.
         /// </summary>
-        /// <param name="color">Color</param>
-        /// <param name="strength">Strength [0, 1]</param>
+        /// <param name="color">Color.</param>
+        /// <param name="strength">Strength [0, 1].</param>
         public YUVPhotoFilter(Color color, float strength = 0.5f)
         {
             Color = color; Strength = strength;
@@ -66,7 +66,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -105,7 +105,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -115,8 +115,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Checks if the color is a shade of gray.
         /// </summary>
-        /// <param name="color">Color</param>
-        /// <returns>Boolean</returns>
+        /// <param name="color">Color.</param>
+        /// <returns>Boolean.</returns>
         public static bool IsGrayColor(Color color)
         {
             if (color.R == color.G && color.G == color.B)
@@ -128,9 +128,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Blend two colors in YUV space.
         /// </summary>
-        /// <param name="yuv1">First color</param>
-        /// <param name="yuv2">Second color</param>
-        /// <returns>YUV</returns>
+        /// <param name="yuv1">First color.</param>
+        /// <param name="yuv2">Second color.</param>
+        /// <returns>YUV.</returns>
         public static YUV AddColor(YUV yuv1, YUV yuv2)
         {
             return new YUV(yuv1.Y, yuv1.U + yuv2.U, yuv1.V + yuv2.V);

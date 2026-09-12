@@ -9,7 +9,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// Filter usage example:
-    /// https://en.wikipedia.org/wiki/Dither
+    /// <see href="https://en.wikipedia.org/wiki/Dither"/>.
     /// </remarks>
     [Serializable]
     public class ToneDiffusionDithering : IBitmapFilter
@@ -33,7 +33,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the tone diffusion dithering filter.
         /// </summary>
-        /// <param name="matrix">Matrix</param>
+        /// <param name="matrix">Matrix.</param>
         public ToneDiffusionDithering(double[,] matrix)
         {
             Matrix = matrix;
@@ -55,7 +55,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -80,7 +80,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -98,10 +98,10 @@ namespace UMapx.Imaging
         /// More information can be found on the website:
         /// http://en.wikipedia.org/wiki/Ordered_dithering
         /// Filter usage example:
-        /// https://en.wikipedia.org/wiki/Dither
+        /// <see href="https://en.wikipedia.org/wiki/Dither"/>.
         /// </remarks>
-        /// <param name="radius">Radius [0, 255]</param>
-        /// <returns>Tone diffusion dithering filter</returns>
+        /// <param name="radius">Radius [0, 255].</param>
+        /// <returns>Tone diffusion dithering filter.</returns>
         public static ToneDiffusionDithering Order(int radius)
         {
             byte c = (byte)(256 / radius / radius + 1), d = 0;
@@ -121,8 +121,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the random dithering filter.
         /// </summary>
-        /// <param name="radius">Radius [0, 255]</param>
-        /// <returns>Tone diffusion dithering filter</returns>
+        /// <param name="radius">Radius [0, 255].</param>
+        /// <returns>Tone diffusion dithering filter.</returns>
         public static ToneDiffusionDithering Random(int radius)
         {
             double[,] table = new double[radius, radius];
@@ -141,7 +141,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the classic dithering filter.
         /// </summary>
-        /// <returns>Tone diffusion dithering filter</returns>
+        /// <returns>Tone diffusion dithering filter.</returns>
         public static ToneDiffusionDithering Basic()
         {
             return new ToneDiffusionDithering(new double[4, 4] {
@@ -153,7 +153,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Bayer dithering filter.
         /// </summary>
-        /// <returns>Tone diffusion dithering filter</returns>
+        /// <returns>Tone diffusion dithering filter.</returns>
         public static ToneDiffusionDithering Bayer()
         {
             return new ToneDiffusionDithering(new double[,] {

@@ -8,7 +8,7 @@ namespace UMapx.Transform
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// http://www.mathworks.com/matlabcentral/fileexchange/6879-fast-walsh-hadamard-transform
+    /// <see href="http://www.mathworks.com/matlabcentral/fileexchange/6879-fast-walsh-hadamard-transform"/>.
     /// </remarks>
     [Serializable]
     public class FastWalshHadamardTransform : TransformBaseFloat, ITransform
@@ -17,8 +17,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the fast Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="normalized">Normalized transform or not</param>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="normalized">Normalized transform or not.</param>
+        /// <param name="direction">Processing direction.</param>
         public FastWalshHadamardTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
             this.Normalized = normalized; this.Direction = direction;
@@ -29,8 +29,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="A">Array.</param>
+        /// <returns>Array.</returns>
         public override float[] Forward(float[] A)
         {
             int N = A.Length;
@@ -49,8 +49,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward transform.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="B">Array.</param>
+        /// <returns>Array.</returns>
         public override float[] Backward(float[] B)
         {
             int N = B.Length;
@@ -72,7 +72,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Fast Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         private void FWHT(float[] data)
         {
             int N = data.Length;

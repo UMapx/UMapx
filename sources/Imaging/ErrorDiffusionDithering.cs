@@ -10,7 +10,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// Filter usage example:
-    /// https://en.wikipedia.org/wiki/Dither
+    /// <see href="https://en.wikipedia.org/wiki/Dither"/>.
     /// </remarks>
     [Serializable]
     public class ErrorDiffusionDithering : Rebuilder, IBitmapFilter
@@ -31,8 +31,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the error diffusion dithering filter.
         /// </summary>
-        /// <param name="levels">Number of levels</param>
-        /// <param name="matrix">Matrix</param>
+        /// <param name="levels">Number of levels.</param>
+        /// <param name="matrix">Matrix.</param>
         public ErrorDiffusionDithering(int levels, float[][] matrix)
         {
             this.Levels = levels;
@@ -85,7 +85,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -133,7 +133,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -153,10 +153,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Propagates quantization error to adjacent pixels.
         /// </summary>
-        /// <param name="rError">Red channel error</param>
-        /// <param name="gError">Green channel error</param>
-        /// <param name="bError">Blue channel error</param>
-        /// <param name="ptr">Pointer to the current pixel</param>
+        /// <param name="rError">Red channel error.</param>
+        /// <param name="gError">Green channel error.</param>
+        /// <param name="bError">Blue channel error.</param>
+        /// <param name="ptr">Pointer to the current pixel.</param>
         protected unsafe void Diffuse(int rError, int gError, int bError, byte* ptr)
         {
             float edR;	// error diffusion
@@ -219,11 +219,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Maps quantized channel values through a lookup table to a color.
         /// </summary>
-        /// <param name="red">Red channel index</param>
-        /// <param name="green">Green channel index</param>
-        /// <param name="blue">Blue channel index</param>
-        /// <param name="table">Lookup table</param>
-        /// <returns>Quantized color</returns>
+        /// <param name="red">Red channel index.</param>
+        /// <param name="green">Green channel index.</param>
+        /// <param name="blue">Blue channel index.</param>
+        /// <param name="table">Lookup table.</param>
+        /// <returns>Quantized color.</returns>
         private Color GetColor(int red, int green, int blue, float[] table)
         {
             byte r = Maths.Byte(table[red]);
@@ -237,7 +237,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Atkinson dithering filter.
         /// </summary>
-        /// <returns>Error diffusion dithering filter</returns>
+        /// <returns>Error diffusion dithering filter.</returns>
         public static ErrorDiffusionDithering Atkinson
         {
             get
@@ -252,7 +252,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Burkes dithering filter.
         /// </summary>
-        /// <returns>Error diffusion dithering filter</returns>
+        /// <returns>Error diffusion dithering filter.</returns>
         public static ErrorDiffusionDithering Burkes
         {
             get
@@ -266,7 +266,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Fan dithering filter.
         /// </summary>
-        /// <returns>Error diffusion dithering filter</returns>
+        /// <returns>Error diffusion dithering filter.</returns>
         public static ErrorDiffusionDithering Fan
         {
             get
@@ -280,7 +280,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Sierra lite dithering filter.
         /// </summary>
-        /// <returns>Error diffusion dithering filter</returns>
+        /// <returns>Error diffusion dithering filter.</returns>
         public static ErrorDiffusionDithering SierraLite
         {
             get
@@ -294,7 +294,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Sierra dithering filter.
         /// </summary>
-        /// <returns>Error diffusion dithering filter</returns>
+        /// <returns>Error diffusion dithering filter.</returns>
         public static ErrorDiffusionDithering Sierra
         {
             get
@@ -309,7 +309,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Sierra Two Rows dithering filter.
         /// </summary>
-        /// <returns>Error diffusion dithering filter</returns>
+        /// <returns>Error diffusion dithering filter.</returns>
         public static ErrorDiffusionDithering SierraTwoRows
         {
             get
@@ -323,7 +323,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Floyd-Steinberg dithering filter.
         /// </summary>
-        /// <returns>Error diffusion dithering filter</returns>
+        /// <returns>Error diffusion dithering filter.</returns>
         public static ErrorDiffusionDithering FloydSteinberg
         {
             get
@@ -337,7 +337,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Jarvis-Judice-Ninke dithering filter.
         /// </summary>
-        /// <returns>Error diffusion dithering filter</returns>
+        /// <returns>Error diffusion dithering filter.</returns>
         public static ErrorDiffusionDithering JarvisJudiceNinke
         {
             get
@@ -352,7 +352,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Stevenson dithering filter.
         /// </summary>
-        /// <returns>Error diffusion dithering filter</returns>
+        /// <returns>Error diffusion dithering filter.</returns>
         public static ErrorDiffusionDithering Stevenson
         {
             get
@@ -367,7 +367,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Shiau dithering filter.
         /// </summary>
-        /// <returns>Error diffusion dithering filter</returns>
+        /// <returns>Error diffusion dithering filter.</returns>
         public static ErrorDiffusionDithering Shiau
         {
             get
@@ -381,7 +381,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Stucki dithering filter.
         /// </summary>
-        /// <returns>Error diffusion dithering filter</returns>
+        /// <returns>Error diffusion dithering filter.</returns>
         public static ErrorDiffusionDithering Stucki
         {
             get

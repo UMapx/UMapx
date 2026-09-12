@@ -16,8 +16,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public float Scaling(float x)
         {
             if (0 <= x && x < 1)
@@ -29,8 +29,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the wavelet function defined on [0,1).
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public float Wavelet(float x)
         {
             if (0 <= x && x < 0.5f) return 1f;

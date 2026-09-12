@@ -10,7 +10,7 @@ namespace UMapx.Window
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://ieeexplore.ieee.org/document/8711969/
+    /// <see href="https://ieeexplore.ieee.org/document/8711969/"/>.
     /// </remarks>
     [Serializable]
     public class WeylHeisenbergTransform : TransformBaseMatrixComplex32, IWindowTransform, ITransform
@@ -30,9 +30,9 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes a group of orthogonal bases and Weyl-Heisenberg transformations.
         /// </summary>
-        /// <param name="window">Windows function</param>
-        /// <param name="m">Number of frequency shifts [1, N]</param>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="window">Windows function.</param>
+        /// <param name="m">Number of frequency shifts [1, N].</param>
+        /// <param name="direction">Processing direction.</param>
         public WeylHeisenbergTransform(IWindow window, int m = 8, Direction direction = Direction.Vertical)
         {
             Window = window; M = m; Direction = direction; Normalized = true;
@@ -71,9 +71,9 @@ namespace UMapx.Window
         /// <remarks>
         /// Matrix dimension [N, 2N], where N = M * L.
         /// </remarks>
-        /// <param name="g0">Function</param>
-        /// <param name="M">Number of frequency shifts</param>
-        /// <returns>Matrix</returns>
+        /// <param name="g0">Function.</param>
+        /// <param name="M">Number of frequency shifts.</param>
+        /// <returns>Matrix.</returns>
         public static Complex32[,] Matrix(float[] g0, int M)
         {
             int N = g0.Length, L = N / M;
@@ -118,11 +118,11 @@ namespace UMapx.Window
         /// <remarks>
         /// Matrix dimension [N, 2N], where N = M * L.
         /// </remarks>
-        /// <param name="window">Windows function</param>
-        /// <param name="N">Number of samples</param>
-        /// <param name="M">Number of frequency shifts</param>
-        /// <param name="orthogonalize">Orthogonalized matrix or not</param>
-        /// <returns>Matrix</returns>
+        /// <param name="window">Windows function.</param>
+        /// <param name="N">Number of samples.</param>
+        /// <param name="M">Number of frequency shifts.</param>
+        /// <param name="orthogonalize">Orthogonalized matrix or not.</param>
+        /// <returns>Matrix.</returns>
         public static Complex32[,] Matrix(IWindow window, int N, int M, bool orthogonalize = true)
         {
             return WeylHeisenbergTransform.Matrix(WeylHeisenbergTransform.Packet(window, N), M, orthogonalize);
@@ -133,10 +133,10 @@ namespace UMapx.Window
         /// <remarks>
         /// Matrix dimension [N, 2N], where N = M * L.
         /// </remarks>
-        /// <param name="g0">Function</param>
-        /// <param name="M">Number of frequency shifts</param>
-        /// <param name="orthogonalize">Orthogonalized matrix or not</param>
-        /// <returns>Matrix</returns>
+        /// <param name="g0">Function.</param>
+        /// <param name="M">Number of frequency shifts.</param>
+        /// <param name="orthogonalize">Orthogonalized matrix or not.</param>
+        /// <returns>Matrix.</returns>
         public static Complex32[,] Matrix(float[] g0, int M, bool orthogonalize = true)
         {
             if (orthogonalize)
@@ -151,9 +151,9 @@ namespace UMapx.Window
         /// <summary>
         /// Returns a vector of window function values.
         /// </summary>
-        /// <param name="window">Windows function</param>
-        /// <param name="length">Number of samples</param>
-        /// <returns>Array</returns>
+        /// <param name="window">Windows function.</param>
+        /// <param name="length">Number of samples.</param>
+        /// <returns>Array.</returns>
         public static float[] Packet(IWindow window, int length)
         {
             // exeption by length
@@ -184,9 +184,9 @@ namespace UMapx.Window
         /// <summary>
         /// Returns a vector of values of a window function that satisfies the N-1 symmetry condition.
         /// </summary>
-        /// <param name="window">Windows function</param>
-        /// <param name="length">Number of samples</param>
-        /// <returns>Array</returns>
+        /// <param name="window">Windows function.</param>
+        /// <param name="length">Number of samples.</param>
+        /// <returns>Array.</returns>
         public static float[] Symmetry(IWindow window, int length)
         {
             // creating window function

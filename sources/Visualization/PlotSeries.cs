@@ -14,13 +14,13 @@ namespace UMapx.Visualization
         /// <summary>
         /// Initializes the plot series.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="y">Function</param>
-        /// <param name="depth">Depth</param>
-        /// <param name="color">Color</param>
-        /// <param name="shapeType">Shape type</param>
-        /// <param name="label">Label</param>
-        /// <param name="seriesType">Series type</param>
+        /// <param name="x">Value.</param>
+        /// <param name="y">Function.</param>
+        /// <param name="depth">Depth.</param>
+        /// <param name="color">Color.</param>
+        /// <param name="shapeType">Shape type.</param>
+        /// <param name="label">Label.</param>
+        /// <param name="seriesType">Series type.</param>
         public PlotSeries(float[] x, float[] y, float depth, Color color, SeriesType seriesType, ShapeType shapeType, string label)
         {
             X = x;
@@ -34,12 +34,12 @@ namespace UMapx.Visualization
         /// <summary>
         /// Initializes the plot series.
         /// </summary>
-        /// <param name="y">Function</param>
-        /// <param name="depth">Depth</param>
-        /// <param name="color">Color</param>
-        /// <param name="shapeType">Shape type</param>
-        /// <param name="label">Label</param>
-        /// <param name="seriesType">Series type</param>
+        /// <param name="y">Function.</param>
+        /// <param name="depth">Depth.</param>
+        /// <param name="color">Color.</param>
+        /// <param name="shapeType">Shape type.</param>
+        /// <param name="label">Label.</param>
+        /// <param name="seriesType">Series type.</param>
         public PlotSeries(float[] y, float depth, Color color, SeriesType seriesType, ShapeType shapeType, string label)
         {
             X = Matrice.Compute(0, y.Length - 1, 1);

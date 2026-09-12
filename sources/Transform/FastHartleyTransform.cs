@@ -8,7 +8,7 @@ namespace UMapx.Transform
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Discrete_Hartley_transform
+    /// <see href="https://en.wikipedia.org/wiki/Discrete_Hartley_transform"/>.
     /// </remarks>
     [Serializable]
     public class FastHartleyTransform : TransformBaseFloat, ITransform
@@ -24,9 +24,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the fast Hartley transform.
         /// </summary>
-        /// <param name="normalized">Normalized transform or not</param>
-        /// <param name="spectrumType">Spectrum type</param>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="normalized">Normalized transform or not.</param>
+        /// <param name="spectrumType">Spectrum type.</param>
+        /// <param name="direction">Processing direction.</param>
         public FastHartleyTransform(bool normalized = true, SpectrumType spectrumType = SpectrumType.Fourier, Direction direction = Direction.Vertical)
         {
             this.FFT = new FastFourierTransform(normalized, direction);
@@ -70,8 +70,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="A">Array.</param>
+        /// <returns>Array.</returns>
         public override float[] Forward(float[] A)
         {
             if (SpectrumType == SpectrumType.Fourier)
@@ -106,8 +106,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward transform.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="B">Array.</param>
+        /// <returns>Array.</returns>
         public override float[] Backward(float[] B)
         {
             if (SpectrumType == SpectrumType.Fourier)
@@ -148,7 +148,7 @@ namespace UMapx.Transform
         /// Optimizations:
         ///  • Fast bases for n=2 and n=4 (no recursion, no trig)
         ///  • Trigonometric recurrences for twiddles (one sin/cos per call, O(1) per k)
-        ///  • Single-precision math (MathF) to reduce casts and overhead
+        ///  • Single-precision math (MathF) to reduce casts and overhead.
         /// </summary>
         private static void FHT(float[] src, int sOff, int sStride, int n, float[] dst, int dOff)
         {

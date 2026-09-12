@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Inverse-gamma_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Inverse-gamma_distribution"/>.
     /// </remarks>
     [Serializable]
     public class InverseGamma : IDistribution
@@ -30,8 +30,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the inverse gamma distribution.
         /// </summary>
-        /// <param name="alpha">Shape parameter α (0, +inf)</param>
-        /// <param name="beta">Scale parameter β (0, +inf)</param>
+        /// <param name="alpha">Shape parameter α (0, +inf).</param>
+        /// <param name="beta">Scale parameter β (0, +inf).</param>
         public InverseGamma(float alpha, float beta)
         {
             Alpha = alpha;
@@ -153,8 +153,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x <= 0f)
@@ -165,8 +165,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x <= 0f)
@@ -177,7 +177,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get { return alpha + Maths.Log(beta) + Special.LogGamma(alpha) - (1f + alpha) * Special.DiGamma(alpha); }

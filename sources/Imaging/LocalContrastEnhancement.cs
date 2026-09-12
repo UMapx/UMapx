@@ -11,7 +11,7 @@ namespace UMapx.Imaging
     /// More information can be found on the website:
     /// http://www.cambridgeincolour.com/tutorials/local-contrast-enhancement.htm
     /// Filter usage example:
-    /// http://www.knowhowtransfer.com/photoshop-professional-plugins/alce-local-contrast-enhancer/
+    /// <see href="http://www.knowhowtransfer.com/photoshop-professional-plugins/alce-local-contrast-enhancer/"/>.
     /// </remarks>
     [Serializable]
     public class LocalContrastEnhancement : LocalCorrection, IBitmapFilter2
@@ -24,9 +24,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the local contrast enhancement filter.
         /// </summary>
-        /// <param name="radius">Radius</param>
-        /// <param name="space">Color space</param>
-        /// <param name="contrast">Contrast [-1, 1]</param>
+        /// <param name="radius">Radius.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="contrast">Contrast [-1, 1].</param>
         public LocalContrastEnhancement(int radius, Space space, float contrast = 0.75f)
         {
             gb = new BoxBlur(radius);
@@ -35,10 +35,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the local contrast enhancement filter.
         /// </summary>
-        /// <param name="width">Filter width</param>
-        /// <param name="height">Filter height</param>
-        /// <param name="space">Color space</param>
-        /// <param name="contrast">Contrast [-1, 1]</param>
+        /// <param name="width">Filter width.</param>
+        /// <param name="height">Filter height.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="contrast">Contrast [-1, 1].</param>
         public LocalContrastEnhancement(int width, int height, Space space, float contrast = 0.75f)
         {
             gb = new BoxBlur(width, height);
@@ -47,9 +47,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the local contrast enhancement filter.
         /// </summary>
-        /// <param name="size">Filter size</param>
-        /// <param name="space">Color space</param>
-        /// <param name="contrast">Contrast [-1, 1]</param>
+        /// <param name="size">Filter size.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="contrast">Contrast [-1, 1].</param>
         public LocalContrastEnhancement(SizeInt size, Space space, float contrast = 0.75f)
         {
             gb = new BoxBlur(size);

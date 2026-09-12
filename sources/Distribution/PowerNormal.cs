@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://www.itl.nist.gov/div898/handbook/eda/section3/eda366d.htm
+    /// <see href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda366d.htm"/>.
     /// </remarks>
     [Serializable]
     public class PowerNormal : IDistribution
@@ -21,7 +21,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the power normal distribution with the given shape parameter.
         /// </summary>
-        /// <param name="power">Shape parameter (must be greater than zero)</param>
+        /// <param name="power">Shape parameter (must be greater than zero).</param>
         public PowerNormal(float power)
         {
             Power = power;
@@ -107,8 +107,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function f(x) = power · φ(x) · Φ(-x)^(power - 1).
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             return (float)(DistributionNumerics.PowerNormalDensity(x, power));
@@ -116,8 +116,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function F(x) = 1 - Φ(-x)^power.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             return (float)-Special.DistributionExpm1(power * DistributionNumerics.LogNormalSurvival(x));

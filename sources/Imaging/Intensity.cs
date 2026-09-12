@@ -12,12 +12,12 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the Single Scale Retinex algorithm.
         /// </summary>
-        /// <param name="x">Brightness</param>
-        /// <param name="xlow">Filter brightness</param>
-        /// <param name="nbase">Logarithm base</param>
-        /// <param name="a">Factor [-1, 1]</param>
-        /// <param name="b">Offset (0, 1]</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Brightness.</param>
+        /// <param name="xlow">Filter brightness.</param>
+        /// <param name="nbase">Logarithm base.</param>
+        /// <param name="a">Factor [-1, 1].</param>
+        /// <param name="b">Offset (0, 1].</param>
+        /// <returns>Value.</returns>
         public static float SingleScaleRetinex(float x, float xlow, float nbase, float a, float b)
         {
             // Single scale retinex modified algorithm
@@ -28,11 +28,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="nbase">Logarithm base</param>
-        /// <param name="a">Factor (0, 1]</param>
-        /// <param name="b">Offset (0, 1]</param>
-        /// <param name="length">Length</param>
-        /// <returns>Matrix</returns>
+        /// <param name="nbase">Logarithm base.</param>
+        /// <param name="a">Factor (0, 1].</param>
+        /// <param name="b">Offset (0, 1].</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] SingleScaleRetinex(float nbase, float a, float b, int length)
         {
             float[,] table = new float[length, length];
@@ -56,11 +56,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the local contrast inversion algorithm.
         /// </summary>
-        /// <param name="x">Brightness</param>
-        /// <param name="xlow">Filter brightness</param>
-        /// <param name="a">Factor (0, 1]</param>
-        /// <param name="b">Offset (0, 1]</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Brightness.</param>
+        /// <param name="xlow">Filter brightness.</param>
+        /// <param name="a">Factor (0, 1].</param>
+        /// <param name="b">Offset (0, 1].</param>
+        /// <returns>Value.</returns>
         public static float LocalContrastInversion(float x, float xlow, float a, float b)
         {
             return a * x / (xlow + b);
@@ -68,10 +68,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="a">Factor (0, 1]</param>
-        /// <param name="b">Offset (0, 1]</param>
-        /// <param name="length">Length</param>
-        /// <returns>Matrix</returns>
+        /// <param name="a">Factor (0, 1].</param>
+        /// <param name="b">Offset (0, 1].</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] LocalContrastInversion(float a, float b, int length)
         {
             float[,] table = new float[length, length];
@@ -95,10 +95,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the local contrast enhancement algorithm.
         /// </summary>
-        /// <param name="x">Brightness</param>
-        /// <param name="xlow">Filter brightness</param>
-        /// <param name="a">Factor [-1, 1]</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Brightness.</param>
+        /// <param name="xlow">Filter brightness.</param>
+        /// <param name="a">Factor [-1, 1].</param>
+        /// <returns>Value.</returns>
         public static float LocalContrastEnhancement(float x, float xlow, float a)
         {
             return x + a * (x - xlow);
@@ -108,9 +108,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="a">Factor [-1, 1]</param>
-        /// <param name="length">Length</param>
-        /// <returns>Matrix</returns>
+        /// <param name="a">Factor [-1, 1].</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] LocalContrastEnhancement(float a, int length)
         {
             float[,] table = new float[length, length];
@@ -134,11 +134,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the homomorphic enhancement algorithm.
         /// </summary>
-        /// <param name="x">Brightness</param>
-        /// <param name="mu">Filter brightness</param>
-        /// <param name="a">Contrast [-1, 1]</param>
-        /// <param name="b">Offset (0, 1]</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Brightness.</param>
+        /// <param name="mu">Filter brightness.</param>
+        /// <param name="a">Contrast [-1, 1].</param>
+        /// <param name="b">Offset (0, 1].</param>
+        /// <returns>Value.</returns>
         public static float HomomorphicEnhancement(float x, float mu, float a, float b)
         {
             return Maths.Exp(Maths.Log(x) - a * Maths.Log(mu + b));
@@ -146,10 +146,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="a">Contrast [-1, 1]</param>
-        /// <param name="b">Offset (0, 1]</param>
-        /// <param name="length">Length</param>
-        /// <returns>Matrix</returns>
+        /// <param name="a">Contrast [-1, 1].</param>
+        /// <param name="b">Offset (0, 1].</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] HomomorphicEnhancement(float a, float b, int length)
         {
             float[,] table = new float[length, length];
@@ -173,11 +173,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the ξ-contrast enhancement algorithm.
         /// </summary>
-        /// <param name="x">Brightness</param>
-        /// <param name="mu">Filter brightness</param>
-        /// <param name="a">Contrast [-1, 1]</param>
-        /// <param name="b">Offset [-1, 1]</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Brightness.</param>
+        /// <param name="mu">Filter brightness.</param>
+        /// <param name="a">Contrast [-1, 1].</param>
+        /// <param name="b">Offset [-1, 1].</param>
+        /// <returns>Value.</returns>
         public static float KsiContrastEnhancement(float x, float mu, float a, float b)
         {
             // x ∈ [0, 1], μ ∈ [0, 1] - mean of x.
@@ -195,10 +195,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="a">Contrast [-1, 1]</param>
-        /// <param name="b">Offset [-1, 1]</param>
-        /// <param name="length">Length</param>
-        /// <returns>Matrix</returns>
+        /// <param name="a">Contrast [-1, 1].</param>
+        /// <param name="b">Offset [-1, 1].</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] KsiContrastEnhancement(float a, float b, int length)
         {
             float[,] table = new float[length, length];
@@ -222,10 +222,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the SAUCE algorithm.
         /// </summary>
-        /// <param name="x">Brightness</param>
-        /// <param name="mu">Filter brightness</param>
-        /// <param name="d">Degree of difference [0, 1]</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Brightness.</param>
+        /// <param name="mu">Filter brightness.</param>
+        /// <param name="d">Degree of difference [0, 1].</param>
+        /// <returns>Value.</returns>
         public static float SAUCE(float x, float mu, float d)
         {
             // Ravimal Bandara algorithm
@@ -247,9 +247,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="a">Factor [-1, 1]</param>
-        /// <param name="length">Length</param>
-        /// <returns>Matrix</returns>
+        /// <param name="a">Factor [-1, 1].</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] SAUCE(float a, int length)
         {
             float[,] table = new float[length, length];
@@ -273,10 +273,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the Bradley threshold correction.
         /// </summary>
-        /// <param name="x">Brightness</param>
-        /// <param name="xlow">Filter brightness</param>
-        /// <param name="difference">Difference [0, 1]</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Brightness.</param>
+        /// <param name="xlow">Filter brightness.</param>
+        /// <param name="difference">Difference [0, 1].</param>
+        /// <returns>Value.</returns>
         public static float Bradley(float x, float xlow, float difference = 0.15f)
         {
             // Bradley local threshold void.
@@ -289,9 +289,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="difference">Difference [0, 1]</param>
-        /// <param name="length">Length</param>
-        /// <returns>Matrix</returns>
+        /// <param name="difference">Difference [0, 1].</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] Bradley(float difference, int length)
         {
             float[,] table = new float[length, length];
@@ -326,11 +326,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the logarithmic stretch algorithm.
         /// </summary>
-        /// <param name="x">Brightness</param>
-        /// <param name="mu">Filter brightness</param>
-        /// <param name="s">Shadows</param>
-        /// <param name="l">Highlights</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Brightness.</param>
+        /// <param name="mu">Filter brightness.</param>
+        /// <param name="s">Shadows.</param>
+        /// <param name="l">Highlights.</param>
+        /// <returns>Value.</returns>
         public static float LogStretch(float x, float mu, float s, float l)
         {
             return Intensity.LogPow(x, Maths.Range(Intensity.log05 / Maths.Log(mu), s, l));
@@ -338,10 +338,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="s">Shadows</param>
-        /// <param name="l">Highlights</param>
-        /// <param name="length">Length</param>
-        /// <returns>Matrix</returns>
+        /// <param name="s">Shadows.</param>
+        /// <param name="l">Highlights.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] LogStretch(float s, float l, int length)
         {
             float[,] table = new float[length, length];
@@ -365,9 +365,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the number raised to the logarithmic power.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <param name="power">Power</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <param name="power">Power.</param>
+        /// <returns>Value.</returns>
         public static float LogPow(float a, float power)
         {
             return Maths.Exp(Maths.Log(a) * power);
@@ -393,9 +393,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="g">Gamma</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="g">Gamma.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Gamma(float g, int length)
         {
             float[] table = new float[length];
@@ -409,9 +409,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the gamma correction.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="g">Gamma</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="g">Gamma.</param>
+        /// <returns>Value.</returns>
         public static float Gamma(float x, float g)
         {
             return Maths.Pow(x, g);
@@ -419,9 +419,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="b">Offset (-0.5, 0.5)</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="b">Offset (-0.5, 0.5).</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Shift(float b, int length)
         {
             float[] table = new float[length];
@@ -435,9 +435,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the shift correction.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="b">Offset (-0.5, 0.5)</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="b">Offset (-0.5, 0.5).</param>
+        /// <returns>Value.</returns>
         public static float Shift(float x, float b)
         {
             // Preserve the identity exactly instead of taking an unnecessary log/exp round trip.
@@ -448,9 +448,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="threshold">Threshold [0, 1]</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="threshold">Threshold [0, 1].</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Bin(float threshold, int length)
         {
             float[] table = new float[length];
@@ -464,9 +464,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the threshold correction.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="threshold">Threshold [0, 1]</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="threshold">Threshold [0, 1].</param>
+        /// <returns>Value.</returns>
         public static float Bin(float x, float threshold)
         {
             return (x > threshold) ? 1 : 0;
@@ -474,9 +474,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="average">Average</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="average">Average.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Exposure(float average, int length)
         {
             float[] table = new float[length];
@@ -490,9 +490,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the exposure correction.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="average">Average</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="average">Average.</param>
+        /// <returns>Value.</returns>
         public static float Exposure(float x, float average)
         {
             float T = 255.0f / average;
@@ -501,9 +501,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="delta">Delta</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="delta">Delta.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Sin(float delta, int length)
         {
             float[] table = new float[length];
@@ -517,9 +517,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the sine correction.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="delta">Delta</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="delta">Delta.</param>
+        /// <returns>Value.</returns>
         public static float Sin(float x, float delta)
         {
             return 0.5f * Maths.Sin((Maths.Pi * x) - (Maths.Pi / 2)) + 0.5f + delta;
@@ -527,9 +527,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="delta">Delta</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="delta">Delta.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Cos(float delta, int length)
         {
             float[] table = new float[length];
@@ -543,9 +543,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the cosine correction.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="delta">Delta</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="delta">Delta.</param>
+        /// <returns>Value.</returns>
         public static float Cos(float x, float delta)
         {
             return 0.5f * Maths.Cos((Maths.Pi * x) - Maths.Pi) + 0.5f + delta;
@@ -553,10 +553,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="a">Logarithm base</param>
-        /// <param name="delta">Delta</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="a">Logarithm base.</param>
+        /// <param name="delta">Delta.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Log(float a, float delta, int length)
         {
             float[] table = new float[length];
@@ -570,10 +570,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the logarithmic correction.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="a">Logarithm base</param>
-        /// <param name="delta">Delta</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="a">Logarithm base.</param>
+        /// <param name="delta">Delta.</param>
+        /// <returns>Value.</returns>
         public static float Log(float x, float a, float delta)
         {
             return Maths.Log(1.0f + (x + delta) / 0.5f, a);
@@ -581,9 +581,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask for formula: Y = (X + V).
         /// </summary>
-        /// <param name="value">Value</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="value">Value.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Add(float value, int length)
         {
             float[] table = new float[length];
@@ -596,9 +596,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="value">Value</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="value">Value.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Contrast(float value, int length)
         {
             float[] table = new float[length];
@@ -612,9 +612,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the contrast correction.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="value">Contrast</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="value">Contrast.</param>
+        /// <returns>Value.</returns>
         public static float Contrast(float x, float value)
         {
             // This equivalent form preserves x exactly at neutral contrast.
@@ -623,9 +623,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="power">Value</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="power">Value.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] LogContrast(float power, int length)
         {
             float[] table = new float[length];
@@ -639,9 +639,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the log-contrast correction.
         /// </summary>
-        /// <param name="x">Brightness</param>
-        /// <param name="power">Power</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Brightness.</param>
+        /// <param name="power">Power.</param>
+        /// <returns>Value.</returns>
         public static float LogContrast(float x, float power)
         {
             if (x <= 0.5)
@@ -653,8 +653,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Invert(int length)
         {
             float[] table = new float[length];
@@ -670,8 +670,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Negates the value.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public static float Invert(float x)
         {
             return 1.0f - x;
@@ -679,10 +679,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Equalizes a value relative to the {min, max} range.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="max">Maximum value</param>
-        /// <param name="min">Minimum value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="max">Maximum value.</param>
+        /// <param name="min">Minimum value.</param>
+        /// <returns>Value.</returns>
         public static float Equalize(float x, float min, float max)
         {
             float a = max - min;
@@ -693,10 +693,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="max">Maximum value</param>
-        /// <param name="min">Minimum value</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="max">Maximum value.</param>
+        /// <param name="min">Minimum value.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Equalize(float min, float max, int length)
         {
             float[] table = new float[length];
@@ -710,10 +710,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="range">Pair of numbers max and min</param>
-        /// <param name="delta">Delta</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="range">Pair of numbers max and min.</param>
+        /// <param name="delta">Delta.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Linear(RangeFloat range, float delta, int length)
         {
             return Intensity.Linear(range.Max, range.Min, delta, length);
@@ -721,11 +721,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="xmax">Maximum value</param>
-        /// <param name="xmin">Minimum value</param>
-        /// <param name="delta">Delta</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="xmax">Maximum value.</param>
+        /// <param name="xmin">Minimum value.</param>
+        /// <param name="delta">Delta.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Linear(float xmax, float xmin, float delta, int length)
         {
             float[] table = new float[length];
@@ -739,11 +739,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the linear correction.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="xmax">Maximum value</param>
-        /// <param name="xmin">Minimum value</param>
-        /// <param name="delta">Delta</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="xmax">Maximum value.</param>
+        /// <param name="xmin">Minimum value.</param>
+        /// <param name="delta">Delta.</param>
+        /// <returns>Value.</returns>
         public static float Linear(float x, float xmax, float xmin, float delta)
         {
             return (x - xmin) / (xmax - xmin) + delta;
@@ -751,12 +751,12 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="xmin">Minimum value of the input range</param>
-        /// <param name="xmax">Maximum value of the input range</param>
-        /// <param name="ymin">Minimum value of the output range</param>
-        /// <param name="ymax">Maximum value of the output range</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="xmin">Minimum value of the input range.</param>
+        /// <param name="xmax">Maximum value of the input range.</param>
+        /// <param name="ymin">Minimum value of the output range.</param>
+        /// <param name="ymax">Maximum value of the output range.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Levels(float xmin, float xmax, float ymin, float ymax, int length)
         {
             float[] table = new float[length];
@@ -787,10 +787,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="input">Input values</param>
-        /// <param name="output">Output values</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="input">Input values.</param>
+        /// <param name="output">Output values.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Levels(RangeFloat input, RangeFloat output, int length)
         {
             return Intensity.Levels(input.Min, input.Max, output.Min, output.Max, length);
@@ -798,9 +798,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the correction mask.
         /// </summary>
-        /// <param name="levels">Number of levels</param>
-        /// <param name="length">Length</param>
-        /// <returns>Array</returns>
+        /// <param name="levels">Number of levels.</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Array.</returns>
         public static float[] Quantize(int levels, int length)
         {
             if (levels > length)

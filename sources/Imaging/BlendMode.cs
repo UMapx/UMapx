@@ -8,7 +8,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// http://www.pegtop.net/delphi/articles/blendmodes/index.htm
+    /// <see href="http://www.pegtop.net/delphi/articles/blendmodes/index.htm"/>.
     /// </remarks>
     public static partial class BlendMode
     {
@@ -16,9 +16,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the averaging function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Average(float a, float b)
         {
             return (a + b) / 2.0f;
@@ -26,9 +26,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the screening function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Screen(float a, float b)
         {
             return 1 - (1 - a) * (1 - b);
@@ -36,9 +36,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the difference function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Difference(float a, float b)
         {
             return Math.Abs(a - b);
@@ -46,9 +46,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the negation function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Negation(float a, float b)
         {
             return 1 - Math.Abs(1 - a - b);
@@ -56,9 +56,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the exclusion function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Exclusion(float a, float b)
         {
             return a + b - 2 * a * b;
@@ -66,9 +66,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the overlaying function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Overlay(float a, float b)
         {
             if (a < 0.5)
@@ -80,9 +80,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the "hard light" function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float HardLight(float a, float b)
         {
             if (b < 0.5)
@@ -94,9 +94,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the "dodge" function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Dodge(float a, float b)
         {
             return a / (1 - b);
@@ -104,9 +104,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the "soft dodge" function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float SoftDodge(float a, float b)
         {
             if (a + b < 1)
@@ -118,9 +118,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the "burn" function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Burn(float a, float b)
         {
             return 1 - (1 - a) / b;
@@ -128,9 +128,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the "soft burn" function".
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float SoftBurn(float a, float b)
         {
             if (a + b < 1)
@@ -142,9 +142,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the reflection function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Reflect(float a, float b)
         {
             return a * a / (1 - b);
@@ -152,9 +152,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the glow function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Glow(float a, float b)
         {
             return b * b / (1 - a);
@@ -162,9 +162,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the stamp function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Stamp(float a, float b)
         {
             return a + 2 * b - 1;
@@ -172,9 +172,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the "freeze" function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Freeze(float a, float b)
         {
             float x = 1 - a;
@@ -183,9 +183,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the "heat" function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Heat(float a, float b)
         {
             float x = 1 - b;
@@ -194,9 +194,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the interpolation function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Interpolation(float a, float b)
         {
             return 0.5f - 0.25f * Maths.Cos(Maths.Pi * a) - 0.25f * Maths.Cos(Maths.Pi * b);
@@ -204,9 +204,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the function of "soft light" (Adobe Photoshop).
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Photoshop(float a, float b)
         {
             if (b < 0.5)
@@ -218,9 +218,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the function of "soft light" (Illusions.hu).
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Illusions(float a, float b)
         {
             float x = 2 * (0.5f - b);
@@ -230,9 +230,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the function of "soft light" (Pegtop).
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Pegtop(float a, float b)
         {
             return (1 - 2 * b) * a * a + 2 * b * a;
@@ -240,9 +240,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the "Cairo" function.
         /// </summary>
-        /// <param name="a">First layer</param>
-        /// <param name="b">Second layer</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First layer.</param>
+        /// <param name="b">Second layer.</param>
+        /// <returns>Value.</returns>
         public static float Fw3c(float a, float b)
         {
             if (b <= 0.5)
@@ -254,8 +254,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements the "Cairo" function.
         /// </summary>
-        /// <param name="a">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="a">Value.</param>
+        /// <returns>Value.</returns>
         public static float Gw3c(float a)
         {
             if (a <= 0.25)

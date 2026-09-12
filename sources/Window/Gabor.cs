@@ -17,8 +17,8 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes the Gabor window function.
         /// </summary>
-        /// <param name="frameSize">Window size</param>
-        /// <param name="sigma">Scale parameter</param>
+        /// <param name="frameSize">Window size.</param>
+        /// <param name="sigma">Scale parameter.</param>
         public Gabor(int frameSize, float sigma = 1)
         {
             this.FrameSize = frameSize;
@@ -44,9 +44,9 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Value.</returns>
         public override float Function(float x, int frameSize)
         {
             // Gabor window function
@@ -57,8 +57,8 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Array</returns>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Array.</returns>
         public override float[] GetWindow(int frameSize)
         {
             float t = (frameSize - 1) / 2.0f;
@@ -71,8 +71,8 @@ namespace UMapx.Window
         /// <summary>
         /// Returns Gabor window function defined without sigma. Scaled function version.
         /// </summary>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Gabor window function</returns>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Gabor window function.</returns>
         public static Gabor Scaled(int frameSize)
         {
             var s = 1.0f / Maths.Sqrt(frameSize / 4.0f);

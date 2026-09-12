@@ -7,7 +7,7 @@ namespace UMapx.Window
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Window_function
+    /// <see href="https://en.wikipedia.org/wiki/Window_function"/>.
     /// </remarks>
     public abstract class WindowBase : IWindow
     {
@@ -39,8 +39,8 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             return this.Function(x, this.frameSize);
@@ -48,7 +48,7 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the window function.
         /// </summary>
-        /// <returns>Array</returns>
+        /// <returns>Array.</returns>
         public float[] GetWindow()
         {
             return this.GetWindow(this.frameSize);
@@ -56,9 +56,9 @@ namespace UMapx.Window
         /// <summary>
         /// Returns an array of window function values.
         /// </summary>
-        /// <param name="x">Array</param>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Array.</param>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Array.</returns>
         public float[] Function(float[] x, int frameSize)
         {
             int length = x.Length;
@@ -74,8 +74,8 @@ namespace UMapx.Window
         /// <summary>
         /// Returns an array of window function values.
         /// </summary>
-        /// <param name="x">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="x">Array.</param>
+        /// <returns>Array.</returns>
         public float[] Function(float[] x)
         {
             return this.Function(x, this.frameSize);
@@ -83,15 +83,15 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Value.</returns>
         public abstract float Function(float x, int frameSize);
         /// <summary>
         /// Returns the window function.
         /// </summary>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Array</returns>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Array.</returns>
         public abstract float[] GetWindow(int frameSize);
         #endregion
     }

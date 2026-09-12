@@ -27,9 +27,9 @@ namespace UMapx.Core
             /// <summary>
             /// Iterative calculation of the determinant.
             /// </summary>
-            /// <param name="element">Element</param>
-            /// <param name="n">Matrix size</param>
-            /// <returns>Value</returns>
+            /// <param name="element">Element.</param>
+            /// <param name="n">Matrix size.</param>
+            /// <returns>Value.</returns>
             public unsafe static float Determinant(float* element, int n)
             {
                 float* mtx_u_ii, mtx_ii_j;
@@ -74,9 +74,9 @@ namespace UMapx.Core
             /// <summary>
             /// Iterative calculation of the determinant.
             /// </summary>
-            /// <param name="element">Element</param>
-            /// <param name="n">Matrix size</param>
-            /// <returns>Complex number</returns>
+            /// <param name="element">Element.</param>
+            /// <param name="n">Matrix size.</param>
+            /// <returns>Complex number.</returns>
             public unsafe static Complex32 Determinant(Complex32* element, int n)
             {
                 Complex32* mtx_u_ii, mtx_ii_j;
@@ -125,8 +125,8 @@ namespace UMapx.Core
             /// <summary>
             /// Implements the matrix inversion operation.
             /// </summary>
-            /// <param name="working">Square matrix</param>
-            /// <returns>Matrix</returns>
+            /// <param name="working">Square matrix.</param>
+            /// <returns>Matrix.</returns>
             public static float[][] Invert(float[][] working)
             {
                 // There are faster ways to do this, but for simplicity
@@ -261,8 +261,8 @@ namespace UMapx.Core
             /// <summary>
             /// Implements the matrix inversion operation.
             /// </summary>
-            /// <param name="working">Square matrix</param>
-            /// <returns>Matrix</returns>
+            /// <param name="working">Square matrix.</param>
+            /// <returns>Matrix.</returns>
             public static Complex32[][] Invert(Complex32[][] working)
             {
                 // There are faster ways to do this, but for simplicity
@@ -400,10 +400,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements the multiplication of matrices presented in the form of jagged arrays.
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="useSIMD">Use SIMD or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="useSIMD">Use SIMD or not.</param>
+            /// <returns>Jagged array.</returns>
             public static float[][] Mul(float[][] A, float[][] B, bool useSIMD = true)
             {
                 if (A[0].GetLength(0) != B.GetLength(0))
@@ -434,10 +434,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements the multiplication of matrices presented in the form of jagged arrays.
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="useSIMD">Use SIMD or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="useSIMD">Use SIMD or not.</param>
+            /// <returns>Jagged array.</returns>
             public static Complex32[][] Mul(Complex32[][] A, Complex32[][] B, bool useSIMD = true)
             {
                 if (A[0].GetLength(0) != B.GetLength(0))
@@ -469,10 +469,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements the multiplication of matrices presented in the form of jagged arrays.
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="useSIMD">Use SIMD or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="useSIMD">Use SIMD or not.</param>
+            /// <returns>Jagged array.</returns>
             public static Complex32[][] Mul(Complex32[][] A, float[][] B, bool useSIMD = true)
             {
                 if (A[0].GetLength(0) != B.GetLength(0))
@@ -503,10 +503,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements the multiplication of matrices presented in the form of jagged arrays.
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="useSIMD">Use SIMD or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="useSIMD">Use SIMD or not.</param>
+            /// <returns>Jagged array.</returns>
             public static Complex32[][] Mul(float[][] A, Complex32[][] B, bool useSIMD = true)
             {
                 if (A[0].GetLength(0) != B.GetLength(0))
@@ -540,12 +540,12 @@ namespace UMapx.Core
             /// <summary>
             /// Implements matrix multiplication using modified Whittle optimization.
             /// </summary>
-            /// <param name="A">Row of A</param>
-            /// <param name="B">Matrix B</param>
-            /// <param name="C">Row of C</param>
-            /// <param name="length">Length</param>
-            /// <param name="width">Width</param>
-            /// <param name="i">Index</param>
+            /// <param name="A">Row of A.</param>
+            /// <param name="B">Matrix B.</param>
+            /// <param name="C">Row of C.</param>
+            /// <param name="length">Length.</param>
+            /// <param name="width">Width.</param>
+            /// <param name="i">Index.</param>
             private static void Whittle_Mul(float[][] A, float[][] B, float[][] C, int length, int width, int i)
             {
                 float[] iRowA = A[i];
@@ -566,12 +566,12 @@ namespace UMapx.Core
             /// <summary>
             /// Implements matrix multiplication using modified Whittle optimization.
             /// </summary>
-            /// <param name="A">Row of A</param>
-            /// <param name="B">Matrix B</param>
-            /// <param name="C">Row of C</param>
-            /// <param name="length">Length</param>
-            /// <param name="width">Width</param>
-            /// <param name="i">Index</param>
+            /// <param name="A">Row of A.</param>
+            /// <param name="B">Matrix B.</param>
+            /// <param name="C">Row of C.</param>
+            /// <param name="length">Length.</param>
+            /// <param name="width">Width.</param>
+            /// <param name="i">Index.</param>
             private static void Whittle_Mul(Complex32[][] A, Complex32[][] B, Complex32[][] C, int length, int width, int i)
             {
                 Complex32[] iRowA = A[i];
@@ -592,12 +592,12 @@ namespace UMapx.Core
             /// <summary>
             /// Implements matrix multiplication using modified Whittle optimization.
             /// </summary>
-            /// <param name="A">Row of A</param>
-            /// <param name="B">Matrix B</param>
-            /// <param name="C">Row of C</param>
-            /// <param name="length">Length</param>
-            /// <param name="width">Width</param>
-            /// <param name="i">Index</param>
+            /// <param name="A">Row of A.</param>
+            /// <param name="B">Matrix B.</param>
+            /// <param name="C">Row of C.</param>
+            /// <param name="length">Length.</param>
+            /// <param name="width">Width.</param>
+            /// <param name="i">Index.</param>
             private static void Whittle_Mul(Complex32[][] A, float[][] B, Complex32[][] C, int length, int width, int i)
             {
                 Complex32[] iRowA = A[i];
@@ -618,12 +618,12 @@ namespace UMapx.Core
             /// <summary>
             /// Implements matrix multiplication using modified Whittle optimization.
             /// </summary>
-            /// <param name="A">Row of A</param>
-            /// <param name="B">Matrix B</param>
-            /// <param name="C">Row of C</param>
-            /// <param name="length">Length</param>
-            /// <param name="width">Width</param>
-            /// <param name="i">Index</param>
+            /// <param name="A">Row of A.</param>
+            /// <param name="B">Matrix B.</param>
+            /// <param name="C">Row of C.</param>
+            /// <param name="length">Length.</param>
+            /// <param name="width">Width.</param>
+            /// <param name="i">Index.</param>
             private static void Whittle_Mul(float[][] A, Complex32[][] B, Complex32[][] C, int length, int width, int i)
             {
                 float[] iRowA = A[i];
@@ -647,12 +647,12 @@ namespace UMapx.Core
             /// <summary>
             /// Implements matrix multiplication using modified SIMD optimization.
             /// </summary>
-            /// <param name="A">Row of A</param>
-            /// <param name="B">Matrix B</param>
-            /// <param name="C">Row of C</param>
-            /// <param name="length">Length</param>
-            /// <param name="width">Width</param>
-            /// <param name="i">Index</param>
+            /// <param name="A">Row of A.</param>
+            /// <param name="B">Matrix B.</param>
+            /// <param name="C">Row of C.</param>
+            /// <param name="length">Length.</param>
+            /// <param name="width">Width.</param>
+            /// <param name="i">Index.</param>
             private static void SIMD_Mul(float[][] A, float[][] B, float[][] C, int length, int width, int i)
             {
                 float[] iRowA = A[i];
@@ -685,13 +685,13 @@ namespace UMapx.Core
             /// <summary>
             /// Implements matrix multiplication using modified SIMD optimization.
             /// </summary>
-            /// <param name="A">Row of A</param>
-            /// <param name="B_re">Real part of matrix B</param>
-            /// <param name="B_im">Imag part of matrix B</param>
-            /// <param name="C">Row of C</param>
-            /// <param name="length">Length</param>
-            /// <param name="width">Width</param>
-            /// <param name="i">Index</param>
+            /// <param name="A">Row of A.</param>
+            /// <param name="B_re">Real part of matrix B.</param>
+            /// <param name="B_im">Imag part of matrix B.</param>
+            /// <param name="C">Row of C.</param>
+            /// <param name="length">Length.</param>
+            /// <param name="width">Width.</param>
+            /// <param name="i">Index.</param>
             private static void SIMD_Mul(Complex32[][] A, float[][] B_re, float[][] B_im, Complex32[][] C, int length, int width, int i)
             {
                 var iRowA = A[i];
@@ -750,12 +750,12 @@ namespace UMapx.Core
             /// <summary>
             /// Implements matrix multiplication using modified SIMD optimization.
             /// </summary>
-            /// <param name="A">Row of A</param>
-            /// <param name="B">Matrix B</param>
-            /// <param name="C">Row of C</param>
-            /// <param name="length">Length</param>
-            /// <param name="width">Width</param>
-            /// <param name="i">Index</param>
+            /// <param name="A">Row of A.</param>
+            /// <param name="B">Matrix B.</param>
+            /// <param name="C">Row of C.</param>
+            /// <param name="length">Length.</param>
+            /// <param name="width">Width.</param>
+            /// <param name="i">Index.</param>
             private static void SIMD_Mul(Complex32[][] A, float[][] B, Complex32[][] C, int length, int width, int i)
             {
                 var iRowA = A[i];
@@ -811,13 +811,13 @@ namespace UMapx.Core
             /// <summary>
             /// Implements matrix multiplication using modified SIMD optimization.
             /// </summary>
-            /// <param name="A">Row of A</param>
-            /// <param name="B_re">Real part of matrix B</param>
-            /// <param name="B_im">Imag part of matrix B</param>
-            /// <param name="C">Row of C</param>
-            /// <param name="length">Length</param>
-            /// <param name="width">Width</param>
-            /// <param name="i">Index</param>
+            /// <param name="A">Row of A.</param>
+            /// <param name="B_re">Real part of matrix B.</param>
+            /// <param name="B_im">Imag part of matrix B.</param>
+            /// <param name="C">Row of C.</param>
+            /// <param name="length">Length.</param>
+            /// <param name="width">Width.</param>
+            /// <param name="i">Index.</param>
             private static void SIMD_Mul(float[][] A, float[][] B_re, float[][] B_im, Complex32[][] C, int length, int width, int i)
             {
                 var iRowA = A[i];
@@ -880,15 +880,15 @@ namespace UMapx.Core
             /// <param name="B">
             /// Source complex matrix of shape [length][width] in Array-of-Structures layout:
             /// B[k][j].Real / B[k][j].Imag.
-            /// Assumes rectangular jagged array (all rows have the same width)
+            /// Assumes rectangular jagged array (all rows have the same width).
             /// </param>
             /// <param name="Bre">
             /// Output: real-part matrix (SoA) with the same shape [length][width],
-            /// where Bre[k][j] = B[k][j].Real
+            /// where Bre[k][j] = B[k][j].Real.
             /// </param>
             /// <param name="Bim">
             /// Output: imag-part matrix (SoA) with the same shape [length][width],
-            /// where Bim[k][j] = B[k][j].Imag
+            /// where Bim[k][j] = B[k][j].Imag.
             /// </param>
             private static void PrecomputeSoA(Complex32[][] B, out float[][] Bre, out float[][] Bim)
             {
@@ -919,10 +919,10 @@ namespace UMapx.Core
             /// <summary>
             /// Copies matrix.
             /// </summary>
-            /// <param name="src">Source</param>
-            /// <param name="dst">Destination</param>
-            /// <param name="r0">R0</param>
-            /// <param name="c0">C0</param>
+            /// <param name="src">Source.</param>
+            /// <param name="dst">Destination.</param>
+            /// <param name="r0">R0.</param>
+            /// <param name="c0">C0.</param>
             public static void Copy(float[,] src, float[,] dst, int r0, int c0)
             {
                 int rows = src.GetLength(0), cols = src.GetLength(1);
@@ -933,10 +933,10 @@ namespace UMapx.Core
             /// <summary>
             /// Copies matrix.
             /// </summary>
-            /// <param name="src">Source</param>
-            /// <param name="dst">Destination</param>
-            /// <param name="r0">R0</param>
-            /// <param name="c0">C0</param>
+            /// <param name="src">Source.</param>
+            /// <param name="dst">Destination.</param>
+            /// <param name="r0">R0.</param>
+            /// <param name="c0">C0.</param>
             public static void Copy(Complex32[,] src, Complex32[,] dst, int r0, int c0)
             {
                 int rows = src.GetLength(0), cols = src.GetLength(1);
@@ -947,10 +947,10 @@ namespace UMapx.Core
             /// <summary>
             /// Copies matrix.
             /// </summary>
-            /// <param name="src">Source</param>
-            /// <param name="dst">Destination</param>
-            /// <param name="r0">R0</param>
-            /// <param name="c0">C0</param>
+            /// <param name="src">Source.</param>
+            /// <param name="dst">Destination.</param>
+            /// <param name="r0">R0.</param>
+            /// <param name="c0">C0.</param>
             public static void Copy(float[,] src, Complex32[,] dst, int r0, int c0)
             {
                 int rows = src.GetLength(0), cols = src.GetLength(1);
@@ -972,10 +972,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements discrete convolution of matrices.
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="normalize">Normalized convolution or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="normalize">Normalized convolution or not.</param>
+            /// <returns>Jagged array.</returns>
             public static float[,] Conv(float[,] A, float[,] B, bool normalize = true)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -1071,10 +1071,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements discrete convolution of matrices.
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="normalize">Normalized convolution or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="normalize">Normalized convolution or not.</param>
+            /// <returns>Jagged array.</returns>
             public static Complex32[,] Conv(Complex32[,] A, Complex32[,] B, bool normalize = true)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -1170,10 +1170,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements discrete convolution of matrices.
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="normalize">Normalized convolution or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="normalize">Normalized convolution or not.</param>
+            /// <returns>Jagged array.</returns>
             public static Complex32[,] Conv(float[,] A, Complex32[,] B, bool normalize = true)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -1269,10 +1269,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements discrete convolution of matrices.
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="normalize">Normalized convolution or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="normalize">Normalized convolution or not.</param>
+            /// <returns>Jagged array.</returns>
             public static Complex32[,] Conv(Complex32[,] A, float[,] B, bool normalize = true)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -1371,10 +1371,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements discrete convolution of matrices (horizontal).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="normalize">Normalized convolution or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="normalize">Normalized convolution or not.</param>
+            /// <returns>Jagged array.</returns>
             public static float[,] ConvHorizontal(float[,] A, float[] B, bool normalize = true)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -1460,10 +1460,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements discrete convolution of matrices (vertical).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="normalize">Normalized convolution or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="normalize">Normalized convolution or not.</param>
+            /// <returns>Jagged array.</returns>
             public static float[,] ConvVertical(float[,] A, float[] B, bool normalize = true)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -1550,10 +1550,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements discrete convolution of matrices (horizontal).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="normalize">Normalized convolution or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="normalize">Normalized convolution or not.</param>
+            /// <returns>Jagged array.</returns>
             public static Complex32[,] ConvHorizontal(float[,] A, Complex32[] B, bool normalize = true)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -1639,10 +1639,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements discrete convolution of matrices (vertical).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="normalize">Normalized convolution or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="normalize">Normalized convolution or not.</param>
+            /// <returns>Jagged array.</returns>
             public static Complex32[,] ConvVertical(float[,] A, Complex32[] B, bool normalize = true)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -1729,10 +1729,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements discrete convolution of matrices (horizontal).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="normalize">Normalized convolution or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="normalize">Normalized convolution or not.</param>
+            /// <returns>Jagged array.</returns>
             public static Complex32[,] ConvHorizontal(Complex32[,] A, Complex32[] B, bool normalize = true)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -1818,10 +1818,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements discrete convolution of matrices (vertical).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="normalize">Normalized convolution or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="normalize">Normalized convolution or not.</param>
+            /// <returns>Jagged array.</returns>
             public static Complex32[,] ConvVertical(Complex32[,] A, Complex32[] B, bool normalize = true)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -1908,10 +1908,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements discrete convolution of matrices (horizontal).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="normalize">Normalized convolution or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="normalize">Normalized convolution or not.</param>
+            /// <returns>Jagged array.</returns>
             public static Complex32[,] ConvHorizontal(Complex32[,] A, float[] B, bool normalize = true)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -1997,10 +1997,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements discrete convolution of matrices (vertical).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="B">Jagged array</param>
-            /// <param name="normalize">Normalized convolution or not</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="B">Jagged array.</param>
+            /// <param name="normalize">Normalized convolution or not.</param>
+            /// <returns>Jagged array.</returns>
             public static Complex32[,] ConvVertical(Complex32[,] A, float[] B, bool normalize = true)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -2129,8 +2129,8 @@ namespace UMapx.Core
             /// <summary>
             ///  Implements local average of vector.
             /// </summary>
-            /// <param name="v">Array</param>
-            /// <param name="r">Window length; clipped and renormalized at the boundaries</param>
+            /// <param name="v">Array.</param>
+            /// <param name="r">Window length; clipped and renormalized at the boundaries.</param>
             public static float[] Mean(float[] v, int r)
             {
                 int length = v.Length;
@@ -2142,8 +2142,8 @@ namespace UMapx.Core
             /// <summary>
             ///  Implements local average of vector.
             /// </summary>
-            /// <param name="v">Array</param>
-            /// <param name="r">Window length; clipped and renormalized at the boundaries</param>
+            /// <param name="v">Array.</param>
+            /// <param name="r">Window length; clipped and renormalized at the boundaries.</param>
             public static Complex32[] Mean(Complex32[] v, int r)
             {
                 int length = v.Length;
@@ -2156,9 +2156,9 @@ namespace UMapx.Core
             /// <summary>
             /// Implements local average of matrix (horizontal).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="r1">Size</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="r1">Size.</param>
+            /// <returns>Jagged array.</returns>
             public static float[,] MeanHorizontal(float[,] A, int r1)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -2172,9 +2172,9 @@ namespace UMapx.Core
             /// <summary>
             /// Implements local average of matrix (vertical).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="r0">Size</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="r0">Size.</param>
+            /// <returns>Jagged array.</returns>
             public static float[,] MeanVertical(float[,] A, int r0)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -2188,9 +2188,9 @@ namespace UMapx.Core
             /// <summary>
             /// Implements local average of matrix (horizontal).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="r1">Size</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="r1">Size.</param>
+            /// <returns>Jagged array.</returns>
             public static Complex32[,] MeanHorizontal(Complex32[,] A, int r1)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -2204,9 +2204,9 @@ namespace UMapx.Core
             /// <summary>
             /// Implements local average of matrix (vertical).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="r0">Size</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="r0">Size.</param>
+            /// <returns>Jagged array.</returns>
             public static Complex32[,] MeanVertical(Complex32[,] A, int r0)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -2221,10 +2221,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements weighted local average of vector.
             /// </summary>
-            /// <param name="values">Array of values</param>
-            /// <param name="weights">Array of weights (same length as values)</param>
-            /// <param name="r">Window length; clipped and renormalized at the boundaries</param>
-            /// <returns>Weighted blurred array</returns>
+            /// <param name="values">Array of values.</param>
+            /// <param name="weights">Array of weights (same length as values).</param>
+            /// <param name="r">Window length; clipped and renormalized at the boundaries.</param>
+            /// <returns>Weighted blurred array.</returns>
             public static float[] MeanWeighted(float[] values, float[] weights, int r)
             {
                 int length = values.Length;
@@ -2237,10 +2237,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements weighted local average of vector.
             /// </summary>
-            /// <param name="values">Array of values</param>
-            /// <param name="weights">Array of weights (same length as values)</param>
-            /// <param name="r">Window length; clipped and renormalized at the boundaries</param>
-            /// <returns>Weighted blurred array</returns>
+            /// <param name="values">Array of values.</param>
+            /// <param name="weights">Array of weights (same length as values).</param>
+            /// <param name="r">Window length; clipped and renormalized at the boundaries.</param>
+            /// <returns>Weighted blurred array.</returns>
             public static Complex32[] MeanWeighted(Complex32[] values, Complex32[] weights, int r)
             {
                 int length = values.Length;
@@ -2254,10 +2254,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements local weighted average of matrice (horizontal).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="weights">Weights</param>
-            /// <param name="r1">Size</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="weights">Weights.</param>
+            /// <param name="r1">Size.</param>
+            /// <returns>Jagged array.</returns>
             /// <returns></returns>
             public static float[,] MeanHorizontalWeighted(float[,] A, float[,] weights, int r1)
             {
@@ -2274,10 +2274,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements local weighted average of matrice (vertical).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="weights">Weights</param>
-            /// <param name="r0">Size</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="weights">Weights.</param>
+            /// <param name="r0">Size.</param>
+            /// <returns>Jagged array.</returns>
             public static float[,] MeanVerticalWeighted(float[,] A, float[,] weights, int r0)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -2293,10 +2293,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements local weighted average of matrice (horizontal).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="weights">Weights</param>
-            /// <param name="r1">Size</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="weights">Weights.</param>
+            /// <param name="r1">Size.</param>
+            /// <returns>Jagged array.</returns>
             /// <returns></returns>
             public static Complex32[,] MeanHorizontalWeighted(Complex32[,] A, Complex32[,] weights, int r1)
             {
@@ -2313,10 +2313,10 @@ namespace UMapx.Core
             /// <summary>
             /// Implements local weighted average of matrice (vertical).
             /// </summary>
-            /// <param name="A">Jagged array</param>
-            /// <param name="weights">Weights</param>
-            /// <param name="r0">Size</param>
-            /// <returns>Jagged array</returns>
+            /// <param name="A">Jagged array.</param>
+            /// <param name="weights">Weights.</param>
+            /// <param name="r0">Size.</param>
+            /// <returns>Jagged array.</returns>
             public static Complex32[,] MeanVerticalWeighted(Complex32[,] A, Complex32[,] weights, int r0)
             {
                 int height = A.GetLength(0), width = A.GetLength(1);
@@ -2342,11 +2342,11 @@ namespace UMapx.Core
             /// <summary>
             /// Applies morphology filter to 2D array.
             /// </summary>
-            /// <param name="data">Array</param>
-            /// <param name="r0">Radius</param>
-            /// <param name="r1">Radius</param>
-            /// <param name="mode">Mode</param>
-            /// <returns>Array</returns>
+            /// <param name="data">Array.</param>
+            /// <param name="r0">Radius.</param>
+            /// <param name="r1">Radius.</param>
+            /// <param name="mode">Mode.</param>
+            /// <returns>Array.</returns>
             public static float[,] Apply(float[,] data, int r0, int r1, MorphologyMode mode = MorphologyMode.Median)
             {
                 int height = data.GetLength(0);
@@ -2407,10 +2407,10 @@ namespace UMapx.Core
             /// <summary>
             /// Applies morphology filter to 1D array.
             /// </summary>
-            /// <param name="data">Array</param>
-            /// <param name="r">Radius</param>
-            /// <param name="mode">Mode</param>
-            /// <returns>Array</returns>
+            /// <param name="data">Array.</param>
+            /// <param name="r">Radius.</param>
+            /// <param name="mode">Mode.</param>
+            /// <returns>Array.</returns>
             public static float[] Apply(float[] data, int r, MorphologyMode mode = MorphologyMode.Median)
             {
                 if (data == null) throw new ArgumentNullException(nameof(data));
@@ -2458,9 +2458,9 @@ namespace UMapx.Core
             /// Removes one occurrence of x from a sorted array a of length K, shifting the elements left. 
             /// After the call, the first K-1 elements remain sorted; the last element can be overwritten.
             /// </summary>
-            /// <param name="a">Array</param>
-            /// <param name="K">Dimension</param>
-            /// <param name="x">Value</param>
+            /// <param name="a">Array.</param>
+            /// <param name="K">Dimension.</param>
+            /// <param name="x">Value.</param>
             public static void RemoveOneFromSorted(float[] a, int K, float x)
             {
                 int lo = 0, hi = K - 1, pos = K;
@@ -2490,8 +2490,8 @@ namespace UMapx.Core
             /// <summary>
             /// O(N) sort algorithm.
             /// </summary>
-            /// <param name="s">Array</param>
-            /// <param name="index">Index</param>
+            /// <param name="s">Array.</param>
+            /// <param name="index">Index.</param>
             public static void FastSort(ref float[] s, int index)
             {
                 int length = s.Length - 1;
@@ -2523,9 +2523,9 @@ namespace UMapx.Core
             /// <summary>
             /// Gets filter rank.
             /// </summary>
-            /// <param name="mode">Mode</param>
-            /// <param name="windowSize">Window size</param>
-            /// <returns>Value</returns>
+            /// <param name="mode">Mode.</param>
+            /// <param name="windowSize">Window size.</param>
+            /// <returns>Value.</returns>
             public static int GetFilterRank(MorphologyMode mode, int windowSize)
             {
                 return mode switch
@@ -2545,11 +2545,11 @@ namespace UMapx.Core
             /// <summary>
             /// Applies morphology filter to 2D array.
             /// </summary>
-            /// <param name="data">Array</param>
-            /// <param name="r0">Radius</param>
-            /// <param name="r1">Radius</param>
-            /// <param name="mode">Mode</param>
-            /// <returns>Array</returns>
+            /// <param name="data">Array.</param>
+            /// <param name="r0">Radius.</param>
+            /// <param name="r1">Radius.</param>
+            /// <param name="mode">Mode.</param>
+            /// <returns>Array.</returns>
             public static float[,] Apply(float[,] data, int r0, int r1, MorphologyMode mode = MorphologyMode.Median)
             {
                 int height = data.GetLength(0);
@@ -2589,10 +2589,10 @@ namespace UMapx.Core
             /// <summary>
             /// Applies morphology filter to 1D array.
             /// </summary>
-            /// <param name="data">Array</param>
-            /// <param name="r">Radius</param>
-            /// <param name="mode">Mode</param>
-            /// <returns>Array</returns>
+            /// <param name="data">Array.</param>
+            /// <param name="r">Radius.</param>
+            /// <param name="mode">Mode.</param>
+            /// <returns>Array.</returns>
             public static float[] Apply(float[] data, int r, MorphologyMode mode = MorphologyMode.Median)
             {
                 int N = data.Length;
@@ -2622,9 +2622,9 @@ namespace UMapx.Core
             /// <summary>
             /// Gets filter rank.
             /// </summary>
-            /// <param name="mode">Mode</param>
-            /// <param name="windowSize">Window size</param>
-            /// <returns>Value</returns>
+            /// <param name="mode">Mode.</param>
+            /// <param name="windowSize">Window size.</param>
+            /// <returns>Value.</returns>
             public static int GetFilterRank(MorphologyMode mode, int windowSize)
             {
                 return mode switch
@@ -2644,11 +2644,11 @@ namespace UMapx.Core
             /// <summary>
             /// Applies morphology filter to 2D array.
             /// </summary>
-            /// <param name="data">Array</param>
-            /// <param name="r0">Radius</param>
-            /// <param name="r1">Radius</param>
-            /// <param name="mode">Mode</param>
-            /// <returns>Array</returns>
+            /// <param name="data">Array.</param>
+            /// <param name="r0">Radius.</param>
+            /// <param name="r1">Radius.</param>
+            /// <param name="mode">Mode.</param>
+            /// <returns>Array.</returns>
             public static byte[,] Apply(byte[,] data, int r0, int r1, MorphologyMode mode = MorphologyMode.Median)
             {
                 int height = data.GetLength(0);
@@ -2702,10 +2702,10 @@ namespace UMapx.Core
             /// <summary>
             /// Applies morphology filter to 1D array.
             /// </summary>
-            /// <param name="data">Array</param>
-            /// <param name="r">Radius</param>
-            /// <param name="mode">Mode</param>
-            /// <returns>Array</returns>
+            /// <param name="data">Array.</param>
+            /// <param name="r">Radius.</param>
+            /// <param name="mode">Mode.</param>
+            /// <returns>Array.</returns>
             public static byte[] Apply(byte[] data, int r, MorphologyMode mode = MorphologyMode.Median)
             {
                 int length = data.Length;
@@ -2747,9 +2747,9 @@ namespace UMapx.Core
             /// <summary>
             /// Gets filter rank.
             /// </summary>
-            /// <param name="mode">Mode</param>
-            /// <param name="windowSize">Window size</param>
-            /// <returns>Value</returns>
+            /// <param name="mode">Mode.</param>
+            /// <param name="windowSize">Window size.</param>
+            /// <returns>Value.</returns>
             public static int GetFilterRank(MorphologyMode mode, int windowSize)
             {
                 return mode switch
@@ -2769,11 +2769,11 @@ namespace UMapx.Core
             /// <summary>
             /// Applies morphology filter to 2D array.
             /// </summary>
-            /// <param name="data">Array</param>
-            /// <param name="r0">Radius</param>
-            /// <param name="r1">Radius</param>
-            /// <param name="mode">Mode</param>
-            /// <returns>Array</returns>
+            /// <param name="data">Array.</param>
+            /// <param name="r0">Radius.</param>
+            /// <param name="r1">Radius.</param>
+            /// <param name="mode">Mode.</param>
+            /// <returns>Array.</returns>
             public static byte[,] Apply(byte[,] data, int r0, int r1, MorphologyMode mode = MorphologyMode.Median)
             {
                 int height = data.GetLength(0);
@@ -2828,10 +2828,10 @@ namespace UMapx.Core
             /// <summary>
             /// Applies morphology filter to 1D array.
             /// </summary>
-            /// <param name="data">Array</param>
-            /// <param name="r">Radius</param>
-            /// <param name="mode">Mode</param>
-            /// <returns>Array</returns>
+            /// <param name="data">Array.</param>
+            /// <param name="r">Radius.</param>
+            /// <param name="mode">Mode.</param>
+            /// <returns>Array.</returns>
             public static byte[] Apply(byte[] data, int r, MorphologyMode mode = MorphologyMode.Median)
             {
                 int length = data.Length;
@@ -2867,9 +2867,9 @@ namespace UMapx.Core
             /// <summary>
             /// Gets filter rank.
             /// </summary>
-            /// <param name="mode">Mode</param>
-            /// <param name="windowSize">Window size</param>
-            /// <returns>Value</returns>
+            /// <param name="mode">Mode.</param>
+            /// <param name="windowSize">Window size.</param>
+            /// <returns>Value.</returns>
             public static int GetFilterRank(MorphologyMode mode, int windowSize)
             {
                 return mode switch
@@ -2882,9 +2882,9 @@ namespace UMapx.Core
             /// <summary>
             /// Gets histogram rank.
             /// </summary>
-            /// <param name="histogram">Histogram</param>
-            /// <param name="rank">Rank</param>
-            /// <returns>Value</returns>
+            /// <param name="histogram">Histogram.</param>
+            /// <param name="rank">Rank.</param>
+            /// <returns>Value.</returns>
             public static byte GetHistogramRank(int[] histogram, int rank)
             {
                 int count = 0;

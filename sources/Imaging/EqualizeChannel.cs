@@ -18,7 +18,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the channel equalization filter.
         /// </summary>
-        /// <param name="channel">Channel of RGBA model</param>
+        /// <param name="channel">Channel of RGBA model.</param>
         public EqualizeChannel(RGBA channel)
         {
             Channel = channel;
@@ -44,7 +44,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -66,7 +66,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);

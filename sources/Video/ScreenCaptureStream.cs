@@ -11,7 +11,7 @@
     /// 
     /// <remarks><para>The video source constantly captures the desktop screen.</para>
     /// 
-    /// <para>Sample usage:</para>
+    /// <para>Sample usage.</para>
     /// <code>
     /// // get entire desktop area size
     /// Rectangle screenArea = Rectangle.Empty;
@@ -187,7 +187,7 @@
         /// Initializes a new instance of the <see cref="ScreenCaptureStream"/> class.
         /// </summary>
         /// 
-        /// <param name="region">Screen's rectangle to capture (the rectangle may cover multiple displays)</param>
+        /// <param name="region">Screen's rectangle to capture (the rectangle may cover multiple displays).</param>
         /// 
         public ScreenCaptureStream( Rectangle region )
         {
@@ -198,8 +198,8 @@
         /// Initializes a new instance of the <see cref="ScreenCaptureStream"/> class.
         /// </summary>
         /// 
-        /// <param name="region">Screen's rectangle to capture (the rectangle may cover multiple displays)</param>
-        /// <param name="frameInterval">Time interval between making screen shots, ms</param>
+        /// <param name="region">Screen's rectangle to capture (the rectangle may cover multiple displays).</param>
+        /// <param name="frameInterval">Time interval between making screen shots, ms.</param>
         /// 
         public ScreenCaptureStream( Rectangle region, int frameInterval )
         {
@@ -215,7 +215,7 @@
         /// object creates background thread and notifies about new frames with the
         /// help of <see cref="NewFrame"/> event.</remarks>
         /// 
-        /// <exception cref="ArgumentException">Video source is not specified</exception>
+        /// <exception cref="ArgumentException">Video source is not specified.</exception>
         /// 
         public void Start( )
         {

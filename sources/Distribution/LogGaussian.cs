@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Log-normal_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Log-normal_distribution"/>.
     /// </remarks>
     [Serializable]
     public class LogGaussian : IDistribution
@@ -26,8 +26,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the logarithmic Gaussian distribution.
         /// </summary>
-        /// <param name="sigma">Standard deviation (σ > 0)</param>
-        /// <param name="mu">Mathematical expectation</param>
+        /// <param name="sigma">Standard deviation (σ > 0).</param>
+        /// <param name="mu">Mathematical expectation.</param>
         public LogGaussian(float sigma, float mu)
         {
             Sigma = sigma;
@@ -140,8 +140,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x <= 0)
@@ -153,8 +153,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x <= 0)
@@ -166,7 +166,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get

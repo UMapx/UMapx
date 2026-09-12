@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Kumaraswamy_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Kumaraswamy_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Kumaraswamy : IDistribution
@@ -22,8 +22,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the distribution of Kumaraswamy.
         /// </summary>
-        /// <param name="a">Form parameter a > 0</param>
-        /// <param name="b">Form parameter b > 0</param>
+        /// <param name="a">Form parameter a > 0.</param>
+        /// <param name="b">Form parameter b > 0.</param>
         public Kumaraswamy(float a, float b)
         {
             this.A = a;
@@ -177,8 +177,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x > 1)
@@ -193,8 +193,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x > 1)
@@ -212,21 +212,21 @@ namespace UMapx.Distribution
         /// Computes <c>b · B(1 + n / a, b)</c>, where <c>B(·,·)</c> is the Euler Beta function.
         /// The result corresponds to the coefficient of the n-th raw moment <c>E[X^n]</c>.
         /// <para/>
-        /// Preconditions:
+        /// Preconditions.
         /// <list type="bullet">
         ///   <item><description><paramref name="n"/> ≥ 0 (integer).</description></item>
         ///   <item><description><paramref name="a"/> &gt; 0 and <paramref name="b"/> &gt; 0 so that the Beta function is defined.</description></item>
         /// </list>
-        /// Numerical notes:
+        /// Numerical notes.
         /// <list type="bullet">
         ///   <item><description>Large <paramref name="n"/> may overflow or lose precision due to Gamma/Beta evaluations.</description></item>
         ///   <item><description>Domain violations (e.g., nonpositive Beta arguments) may yield NaN/Inf from <c>Special.Beta</c>.</description></item>
         /// </list>
         /// </remarks>
-        /// <param name="n">Moment order (non-negative integer)</param>
-        /// <param name="a">Shape parameter (must be positive)</param>
-        /// <param name="b">Shape/scale parameter depending on context (must be positive)</param>
-        /// <returns>The value <c>b · B(1 + n / a, b)</c></returns>
+        /// <param name="n">Moment order (non-negative integer).</param>
+        /// <param name="a">Shape parameter (must be positive).</param>
+        /// <param name="b">Shape/scale parameter depending on context (must be positive).</param>
+        /// <returns>The value <c>b · B(1 + n / a, b)</c>.</returns>
         private static float RawMoment(int n, float a, float b)
         {
             return b * Special.Beta(1.0f + ((float)n) / a, b);

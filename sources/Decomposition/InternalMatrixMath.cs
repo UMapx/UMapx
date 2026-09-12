@@ -4,7 +4,7 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides shared double-precision work-buffer operations for matrix decompositions</summary>
+    /// <summary>Provides shared double-precision work-buffer operations for matrix decompositions.</summary>
     /// <remarks>
     /// Public entry points validate input contracts; internal primitives assume compatible dimensions
     /// unless documented otherwise. Mutating operations work only on buffers owned by the current call.
@@ -94,12 +94,12 @@ namespace UMapx.Decomposition
         /// Complex scalar division using a numerically stable branch (Smith’s method).
         /// Computes (xr + i·xi) / (yr + i·yi) and stores the real/imag parts in <paramref name="cdivr"/> / <paramref name="cdivi"/>.
         /// </summary>
-        /// <param name="xr">Real part of the numerator</param>
-        /// <param name="xi">Imag part of the numerator</param>
-        /// <param name="yr">Real part of the denominator</param>
-        /// <param name="yi">Imag part of the denominator</param>
-        /// <param name="cdivr">[out] Real part of the quotient</param>
-        /// <param name="cdivi">[out] Imag part of the quotient</param>
+        /// <param name="xr">Real part of the numerator.</param>
+        /// <param name="xi">Imag part of the numerator.</param>
+        /// <param name="yr">Real part of the denominator.</param>
+        /// <param name="yi">Imag part of the denominator.</param>
+        /// <param name="cdivr">[out] Real part of the quotient.</param>
+        /// <param name="cdivi">[out] Imag part of the quotient.</param>
         /// <remarks>
         /// Chooses the scaling branch by comparing |yr| and |yi| to avoid overflow/underflow.
         /// If both <paramref name="yr"/> and <paramref name="yi"/> are zero, the result follows IEEE-754 (Inf/NaN).
@@ -187,7 +187,7 @@ namespace UMapx.Decomposition
 
         #region Complex work buffers and conversions
 
-        /// <summary>Copies a finite, nonempty real matrix into complex double-precision storage</summary>
+        /// <summary>Copies a finite, nonempty real matrix into complex double-precision storage.</summary>
         /// <param name="a">Input matrix, which is not modified.</param>
         /// <param name="square">Whether equal dimensions are required.</param>
         /// <returns>An independent work buffer.</returns>
@@ -205,7 +205,7 @@ namespace UMapx.Decomposition
             return b;
         }
 
-        /// <summary>Copies a finite, nonempty complex matrix into double-precision storage</summary>
+        /// <summary>Copies a finite, nonempty complex matrix into double-precision storage.</summary>
         /// <param name="a">Input matrix, which is not modified.</param>
         /// <param name="square">Whether equal dimensions are required.</param>
         /// <returns>An independent work buffer.</returns>
@@ -224,7 +224,7 @@ namespace UMapx.Decomposition
             return b;
         }
 
-        /// <summary>Validates matrix dimensions before allocating numerical work buffers</summary>
+        /// <summary>Validates matrix dimensions before allocating numerical work buffers.</summary>
         /// <param name="a">A two-dimensional array.</param>
         /// <param name="square">Whether a square matrix is required.</param>
         internal static void CheckShape(Array a, bool square = false)
@@ -236,7 +236,7 @@ namespace UMapx.Decomposition
                 throw new ArgumentException("The matrix must be square.", nameof(a));
         }
 
-        /// <summary>Narrows a work matrix to complex single precision</summary>
+        /// <summary>Narrows a work matrix to complex single precision.</summary>
         /// <param name="a">Double-precision values.</param>
         /// <returns>A newly allocated complex matrix.</returns>
         internal static Complex32[,] Single(C[,] a)
@@ -247,7 +247,7 @@ namespace UMapx.Decomposition
             return b;
         }
 
-        /// <summary>Narrows a real-valued work matrix to single precision</summary>
+        /// <summary>Narrows a real-valued work matrix to single precision.</summary>
         /// <param name="a">Work buffer whose imaginary components are zero.</param>
         /// <returns>A newly allocated real matrix.</returns>
         internal static float[,] Real(C[,] a)
@@ -297,9 +297,9 @@ namespace UMapx.Decomposition
         /// Swaps two columns in a jagged matrix <paramref name="M"/> (double[rows][cols]).
         /// No operation is performed if <paramref name="c1"/> equals <paramref name="c2"/>.
         /// </summary>
-        /// <param name="M">Matrix represented as an array of row arrays (double[rows][cols])</param>
-        /// <param name="c1">Index of the first column</param>
-        /// <param name="c2">Index of the second column</param>
+        /// <param name="M">Matrix represented as an array of row arrays (double[rows][cols]).</param>
+        /// <param name="c1">Index of the first column.</param>
+        /// <param name="c2">Index of the second column.</param>
         internal static void SwapColumns(double[][] M, int c1, int c2)
         {
             if (c1 == c2) return;
@@ -313,7 +313,7 @@ namespace UMapx.Decomposition
             }
         }
 
-        /// <summary>Creates an identity matrix for accumulating unitary transformations</summary>
+        /// <summary>Creates an identity matrix for accumulating unitary transformations.</summary>
         /// <param name="n">Nonnegative order.</param>
         /// <returns>The identity of order n.</returns>
         internal static C[,] Eye(int n)
@@ -323,7 +323,7 @@ namespace UMapx.Decomposition
             return a;
         }
 
-        /// <summary>Computes conjugate transposition, including for real-valued work buffers</summary>
+        /// <summary>Computes conjugate transposition, including for real-valued work buffers.</summary>
         /// <param name="a">Input matrix.</param>
         /// <returns>The conjugate transpose.</returns>
         internal static C[,] Adjoint(C[,] a)
@@ -334,7 +334,7 @@ namespace UMapx.Decomposition
             return b;
         }
 
-        /// <summary>Multiplies compatible work matrices with complex double accumulation</summary>
+        /// <summary>Multiplies compatible work matrices with complex double accumulation.</summary>
         /// <param name="a">Left matrix.</param>
         /// <param name="b">Right matrix.</param>
         /// <returns>The matrix product.</returns>
@@ -423,7 +423,7 @@ namespace UMapx.Decomposition
             for (int i = 0; i < v.Length; i++) v[i] /= scale;
         }
 
-        /// <summary>Computes a scaled Euclidean norm without squaring large or tiny entries directly</summary>
+        /// <summary>Computes a scaled Euclidean norm without squaring large or tiny entries directly.</summary>
         /// <param name="v">Vector with finite entries.</param>
         /// <returns>The nonnegative Euclidean norm.</returns>
         internal static double Norm(C[] v)
@@ -467,7 +467,7 @@ namespace UMapx.Decomposition
             }
         }
 
-        /// <summary>Returns the largest entry magnitude, or zero for a zero matrix</summary>
+        /// <summary>Returns the largest entry magnitude, or zero for a zero matrix.</summary>
         /// <param name="a">Finite work matrix.</param>
         /// <returns>A nonnegative scale.</returns>
         internal static double Max(C[,] a)
@@ -477,14 +477,14 @@ namespace UMapx.Decomposition
             return scale;
         }
 
-        /// <summary>Checks the Hermitian condition with a relative single-precision tolerance</summary>
+        /// <summary>Checks the Hermitian condition with a relative single-precision tolerance.</summary>
         /// <param name="a">Square input matrix.</param>
         internal static void RequireHermitian(C[,] a)
         {
             if (!IsHermitian(a)) throw new ArgumentException("The matrix must be Hermitian (symmetric for real inputs).");
         }
 
-        /// <summary>Detects Hermitian structure with an optional relative tolerance</summary>
+        /// <summary>Detects Hermitian structure with an optional relative tolerance.</summary>
         /// <param name="a">Finite square work matrix.</param>
         /// <param name="relativeTolerance">Nonnegative fraction of the matrix scale; zero requires exact conjugate symmetry.</param>
         /// <returns>True when conjugate symmetry holds within the tolerance, defaulting to eight single-precision rounding units.</returns>
@@ -500,7 +500,7 @@ namespace UMapx.Decomposition
             return true;
         }
 
-        /// <summary>Copies a rectangular leading block or a block starting at specified offsets</summary>
+        /// <summary>Copies a rectangular leading block or a block starting at specified offsets.</summary>
         /// <param name="a">Source matrix.</param>
         /// <param name="rows">Number of rows.</param>
         /// <param name="columns">Number of columns.</param>
@@ -519,7 +519,7 @@ namespace UMapx.Decomposition
 
         #region Unitary transformations
 
-        /// <summary>Builds a unit Householder vector mapping x onto its first coordinate</summary>
+        /// <summary>Builds a unit Householder vector mapping x onto its first coordinate.</summary>
         /// <param name="x">Finite vector modified in place; a zero vector is returned unchanged.</param>
         /// <returns>The same array, containing a normalized vector v with H = I - 2 v v^H, or zero for identity.</returns>
         /// <remarks>The target is -phase(x[0])*norm(x), with phase(0)=1, to avoid cancellation.</remarks>
@@ -535,7 +535,7 @@ namespace UMapx.Decomposition
             return x;
         }
 
-        /// <summary>Applies I - 2 v v^H to selected rows from the left, in place</summary>
+        /// <summary>Applies I - 2 v v^H to selected rows from the left, in place.</summary>
         /// <param name="a">Work matrix to update.</param>
         /// <param name="v">Normalized reflection vector, or zero for identity.</param>
         /// <param name="row">First affected row.</param>
@@ -550,7 +550,7 @@ namespace UMapx.Decomposition
             }
         }
 
-        /// <summary>Applies I - 2 v v^H to selected columns from the right, in place</summary>
+        /// <summary>Applies I - 2 v v^H to selected columns from the right, in place.</summary>
         /// <param name="a">Work matrix to update.</param>
         /// <param name="v">Normalized reflection vector, or zero for identity.</param>
         /// <param name="column">First affected column.</param>
@@ -565,7 +565,7 @@ namespace UMapx.Decomposition
             }
         }
 
-        /// <summary>Constructs a complex Givens rotation annihilating the second component</summary>
+        /// <summary>Constructs a complex Givens rotation annihilating the second component.</summary>
         /// <param name="f">First component.</param>
         /// <param name="g">Second component.</param>
         /// <returns>Real cosine C and complex sine S defining [C,S;-conj(S),C].</returns>
@@ -646,7 +646,7 @@ namespace UMapx.Decomposition
 
         #region Orthogonalization
 
-        /// <summary>Completes an orthonormal basis after exact or numerical breakdown</summary>
+        /// <summary>Completes an orthonormal basis after exact or numerical breakdown.</summary>
         /// <param name="q">Matrix containing orthonormal columns before column k.</param>
         /// <param name="k">Column to complete.</param>
         /// <returns>A unit vector orthogonal to the preceding columns.</returns>
@@ -667,7 +667,7 @@ namespace UMapx.Decomposition
             return best;
         }
 
-        /// <summary>Applies modified Gram-Schmidt using the Hermitian inner product and optional coefficient accumulation</summary>
+        /// <summary>Applies modified Gram-Schmidt using the Hermitian inner product and optional coefficient accumulation.</summary>
         /// <param name="v">Vector modified in place.</param>
         /// <param name="q">Previously computed orthonormal columns.</param>
         /// <param name="columns">Number of columns to remove.</param>

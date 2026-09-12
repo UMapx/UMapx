@@ -9,7 +9,7 @@ namespace UMapx.Transform
     /// <remarks>
     /// More information can be found on the website:
     /// https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm
-    /// https://en.wikipedia.org/wiki/Chirp_Z-transform
+    /// <see href="https://en.wikipedia.org/wiki/Chirp_Z-transform"/>.
     /// </remarks>
     [Serializable]
     public class FastFourierTransform : TransformBaseComplex32, ITransform
@@ -18,8 +18,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the fast Fourier transform using the Cooley-Tukey and Bluestein algorithms.
         /// </summary>
-        /// <param name="normalized">Normalized transform or not</param>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="normalized">Normalized transform or not.</param>
+        /// <param name="direction">Processing direction.</param>
         public FastFourierTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
             this.Normalized = normalized;
@@ -31,8 +31,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="A">Array.</param>
+        /// <returns>Array.</returns>
         public override Complex32[] Forward(Complex32[] A)
         {
             int N = A.Length;
@@ -51,8 +51,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward transform.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="B">Array.</param>
+        /// <returns>Array.</returns>
         public override Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length;
@@ -74,8 +74,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Fast Fourier transform (Bluestein FFT).
         /// </summary>
-        /// <param name="data">Array</param>
-        /// <param name="inverse">Inverse or not</param>
+        /// <param name="data">Array.</param>
+        /// <param name="inverse">Inverse or not.</param>
         private static void BluesteinFFT(Complex32[] data, bool inverse)
         {
             if (data == null || data.Length <= 1) return;
@@ -87,8 +87,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Fast Fourier transform (Cooley-Tukey FFT).
         /// </summary>
-        /// <param name="data">Array</param>
-        /// <param name="inverse">Inverse or not</param>
+        /// <param name="data">Array.</param>
+        /// <param name="inverse">Inverse or not.</param>
         private static void CooleyTukeyFFT(Complex32[] data, bool inverse)
         {
             if (data == null || data.Length <= 1) return;
@@ -103,8 +103,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Radix-2 forward kernel (no scaling). Assumes length is a power of two.
         /// </summary>
-        /// <param name="data">Array</param>
-        /// <exception cref="ArgumentException">Exception</exception>
+        /// <param name="data">Array.</param>
+        /// <exception cref="ArgumentException">Exception.</exception>
         private static void TransformRadix2(Complex32[] data)
         {
             int n = data.Length;
@@ -156,7 +156,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Bluestein forward kernel (no scaling). Works for arbitrary lengths.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         private static void TransformBluestein(Complex32[] data)
         {
             int n = data.Length;
@@ -201,12 +201,12 @@ namespace UMapx.Transform
         /// <summary>
         /// Circular convolution using in-class FFT kernels. Applies final 1/n scaling.
         /// </summary>
-        /// <param name="xre">X.Re</param>
-        /// <param name="xim">X.Im</param>
-        /// <param name="yre">Y.Re</param>
-        /// <param name="yim">Y.Im</param>
-        /// <param name="ore">O.Re</param>
-        /// <param name="oim">O.Im</param>
+        /// <param name="xre">X.Re.</param>
+        /// <param name="xim">X.Im.</param>
+        /// <param name="yre">Y.Re.</param>
+        /// <param name="yim">Y.Im.</param>
+        /// <param name="ore">O.Re.</param>
+        /// <param name="oim">O.Im.</param>
         private static void Convolve(double[] xre, double[] xim, double[] yre, double[] yim, double[] ore, double[] oim)
         {
             int n = xre.Length;
@@ -258,7 +258,7 @@ namespace UMapx.Transform
         /// Swaps real and imaginary parts in-place.
         /// This is equivalent to applying the conjugation trick to switch between forward and inverse.
         /// </summary>
-        /// <param name="a">Array</param>
+        /// <param name="a">Array.</param>
         private static void SwapRealImagInPlace(Complex32[] a)
         {
             for (int i = 0; i < a.Length; i++)
@@ -270,8 +270,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Scales a complex vector by a scalar (in-place).
         /// </summary>
-        /// <param name="a">Array</param>
-        /// <param name="s">Scale param</param>
+        /// <param name="a">Array.</param>
+        /// <param name="s">Scale param.</param>
         private static void Scale(Complex32[] a, float s)
         {
             for (int i = 0; i < a.Length; i++)
@@ -286,8 +286,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Returns the highest one bit of <paramref name="i"/> (as a power-of-two integer).
         /// </summary>
-        /// <param name="i">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="i">Value.</param>
+        /// <returns>Value.</returns>
         private static int HighestOneBit(int i)
         {
             i |= (i >> 1);
@@ -300,8 +300,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Reverses the bits of a 32-bit integer.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         private static uint ReverseBits32(int x)
         {
             uint i = (uint)x;
@@ -314,8 +314,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Returns floor(log2(n)) for n &gt; 0.
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="n">Value.</param>
+        /// <returns>Value.</returns>
         private static int FloorLog2(int n)
         {
             int r = 0; while ((1 << r) < n) r++; return r - (((1 << r) == n) ? 0 : 1);
@@ -323,8 +323,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Half-period cosine table: cos(2πk/n) for k=0..n/2-1.
         /// </summary>
-        /// <param name="halfN">Value</param>
-        /// <returns>Array</returns>
+        /// <param name="halfN">Value.</param>
+        /// <returns>Array.</returns>
         private static double[] CosTable(int halfN)
         {
             var cosTable = new double[halfN];
@@ -334,8 +334,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Half-period sine table: sin(2πk/n) for k=0..n/2-1.
         /// </summary>
-        /// <param name="halfN">Value</param>
-        /// <returns>Array</returns>
+        /// <param name="halfN">Value.</param>
+        /// <returns>Array.</returns>
         private static double[] SinTable(int halfN)
         {
             var sinTable = new double[halfN];
@@ -345,8 +345,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Chirp cosine table: cos(π i² / n), i=0..n-1 (mod 2n to reduce overflow/rounding).
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <returns>Array</returns>
+        /// <param name="n">Value.</param>
+        /// <returns>Array.</returns>
         private static double[] ExpCosTable(int n)
         {
             var expCosTable = new double[n];
@@ -360,8 +360,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Chirp sine table: sin(π i² / n), i=0..n-1 (mod 2n to reduce overflow/rounding).
         /// </summary>
-        /// <param name="n">Value</param>
-        /// <returns>Array</returns>
+        /// <param name="n">Value.</param>
+        /// <returns>Array.</returns>
         private static double[] ExpSinTable(int n)
         {
             var expSinTable = new double[n];

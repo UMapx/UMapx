@@ -33,8 +33,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the threshold filter.
         /// </summary>
-        /// <param name="threshold">Threshold value</param>
-        /// <param name="mode">Threshold mode</param>
+        /// <param name="threshold">Threshold value.</param>
+        /// <param name="mode">Threshold mode.</param>
         public ThresholdFilter(float threshold, ThresholdMode mode = ThresholdMode.Abs)
         {
             this.Threshold = threshold;
@@ -71,7 +71,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(float[] data)
         {
             int length = data.Length;
@@ -111,7 +111,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(Complex32[] data)
         {
             int length = data.Length;
@@ -159,7 +159,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(float[,] data)
         {
             int width = data.GetLength(1);
@@ -209,7 +209,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(Complex32[,] data)
         {
             int width = data.GetLength(1);

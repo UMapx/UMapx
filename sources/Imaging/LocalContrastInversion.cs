@@ -21,10 +21,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the local contrast inversion filter.
         /// </summary>
-        /// <param name="radius">Radius</param>
-        /// <param name="space">Color space</param>
-        /// <param name="a">Contrast (0, 1]</param>
-        /// <param name="b">Offset (0, 1]</param>
+        /// <param name="radius">Radius.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="a">Contrast (0, 1].</param>
+        /// <param name="b">Offset (0, 1].</param>
         public LocalContrastInversion(int radius, Space space, float a = 0.75f, float b = 0.05f)
         {
             this.gb = new BoxBlur(radius);
@@ -35,11 +35,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the local contrast inversion filter.
         /// </summary>
-        /// <param name="width">Filter width</param>
-        /// <param name="height">Filter height</param>
-        /// <param name="space">Color space</param>
-        /// <param name="a">Contrast (0, 1]</param>
-        /// <param name="b">Offset (0, 1]</param>
+        /// <param name="width">Filter width.</param>
+        /// <param name="height">Filter height.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="a">Contrast (0, 1].</param>
+        /// <param name="b">Offset (0, 1].</param>
         public LocalContrastInversion(int width, int height, Space space, float a = 0.75f, float b = 0.05f)
         {
             this.gb = new BoxBlur(width, height);
@@ -50,10 +50,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the local contrast inversion filter.
         /// </summary>
-        /// <param name="size">Filter size</param>
-        /// <param name="space">Color space</param>
-        /// <param name="a">Contrast (0, 1]</param>
-        /// <param name="b">Offset (0, 1]</param>
+        /// <param name="size">Filter size.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="a">Contrast (0, 1].</param>
+        /// <param name="b">Offset (0, 1].</param>
         public LocalContrastInversion(SizeInt size, Space space, float a = 0.75f, float b = 0.05f)
         {
             this.gb = new BoxBlur(size);

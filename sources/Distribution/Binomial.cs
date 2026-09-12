@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Binomial_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Binomial_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Binomial : IDistribution
@@ -27,8 +27,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the binomial distribution.
         /// </summary>
-        /// <param name="n">Number of experiments (nonnegative)</param>
-        /// <param name="p">Probability of success [0, 1]</param>
+        /// <param name="n">Number of experiments (nonnegative).</param>
+        /// <param name="p">Probability of success [0, 1].</param>
         public Binomial(int n, float p)
         {
             N = n; P = p;
@@ -191,8 +191,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (float.IsNaN(x)) return float.NaN;
@@ -208,8 +208,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability mass cumulative function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (float.IsNaN(x)) return float.NaN;
@@ -223,7 +223,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get { throw new NotSupportedException(); }

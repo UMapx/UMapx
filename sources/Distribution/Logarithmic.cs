@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Logarithmic_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Logarithmic_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Logarithmic : IDistribution
@@ -21,7 +21,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the logarithmic distribution.
         /// </summary>
-        /// <param name="p">Parameter (0 &lt; p &lt; 1)</param>
+        /// <param name="p">Parameter (0 &lt; p &lt; 1).</param>
         public Logarithmic(float p)
         {
             P = p;
@@ -109,8 +109,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability mass cumulative function.
         /// </summary>
-        /// <param name="x">Value (x ≥ 1)</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value (x ≥ 1).</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x < 1)
@@ -132,8 +132,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability mass function.
         /// </summary>
-        /// <param name="x">Value (integer x ≥ 1)</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value (integer x ≥ 1).</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x < 1)

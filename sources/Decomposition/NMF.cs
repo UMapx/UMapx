@@ -4,10 +4,10 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides nonnegative factorization of real matrices; nonnegativity is not defined for general complex numbers</summary>
+    /// <summary>Provides nonnegative factorization of real matrices; nonnegativity is not defined for general complex numbers.</summary>
     public static class NMF
     {
-        /// <summary>Approximates a nonnegative matrix as A = W H using multiplicative least-squares updates</summary>
+        /// <summary>Approximates a nonnegative matrix as A = W H using multiplicative least-squares updates.</summary>
         /// <param name="matrix">Finite nonempty real matrix with nonnegative entries.</param>
         /// <param name="rank">Positive number of factor columns/rows, at most min(m,n).</param>
         /// <param name="iterations">Positive number of alternating updates.</param>

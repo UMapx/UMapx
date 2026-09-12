@@ -20,9 +20,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates an instance of the structure RGB.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="green">Green [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="green">Green [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
         public RGB(int red, int green, int blue)
         {
             this.r = (byte)((red > 255) ? 255 : ((red < 0) ? 0 : red));
@@ -32,9 +32,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates an instance of the structure RGB.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="green">Green [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="green">Green [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
         public RGB(float red, float green, float blue)
         {
             this.r = (byte)((red > 255) ? 255 : ((red < 0) ? 0 : red));
@@ -89,9 +89,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">RGB structure</param>
-        /// <param name="item2">RGB structure</param>
-        /// <returns>Boolean</returns>
+        /// <param name="item1">RGB structure.</param>
+        /// <param name="item2">RGB structure.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator ==(RGB item1, RGB item2)
         {
             return (
@@ -103,9 +103,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">RGB structure</param>
-        /// <param name="item2">RGB structure</param>
-        /// <returns>Boolean</returns>
+        /// <param name="item1">RGB structure.</param>
+        /// <param name="item2">RGB structure.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator !=(RGB item1, RGB item2)
         {
             return !(item1 == item2);
@@ -116,8 +116,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Element</param>
-        /// <returns>Boolean</returns>
+        /// <param name="obj">Element.</param>
+        /// <returns>Boolean.</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -127,7 +127,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Integer number</returns>
+        /// <returns>Integer number.</returns>
         public override int GetHashCode()
         {
             return r.GetHashCode() ^ g.GetHashCode() ^ b.GetHashCode();
@@ -135,7 +135,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public override string ToString()
         {
             return $"{r}{Environment.NewLine}{g}{Environment.NewLine}{b}";
@@ -146,7 +146,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Structure</returns>
+        /// <returns>Structure.</returns>
         object ICloneable.Clone()
         {
             return new RGB(this.r, this.g, this.b);
@@ -154,7 +154,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Structure</returns>
+        /// <returns>Structure.</returns>
         public RGB Clone()
         {
             return new RGB(this.r, this.g, this.b);
@@ -165,8 +165,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines an implicit conversion from RGB to System.Drawing.Color.
         /// </summary>
-        /// <param name="value">RGB structure</param>
-        /// <returns>Color in terms of red, green and blue</returns>
+        /// <param name="value">RGB structure.</param>
+        /// <returns>Color in terms of red, green and blue.</returns>
         public static implicit operator Color(RGB value)
         {
             return Color.FromArgb(value.Red, value.Green, value.Blue);
@@ -174,8 +174,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines an implicit conversion from System.Drawing.Color to RGB.
         /// </summary>
-        /// <param name="value">Color in terms of red, green and blue</param>
-        /// <returns>RGB structure</returns>
+        /// <param name="value">Color in terms of red, green and blue.</param>
+        /// <returns>RGB structure.</returns>
         public static implicit operator RGB(Color value)
         {
             return new RGB(value.R, value.G, value.B);
@@ -226,8 +226,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from HEX to RGB.
         /// </summary>
-        /// <param name="hexColor">HEX</param>
-        /// <returns>RGB structure</returns>
+        /// <param name="hexColor">HEX.</param>
+        /// <returns>RGB structure.</returns>
         public static RGB FromHEX(string hexColor)
         {
             if (string.IsNullOrWhiteSpace(hexColor))
@@ -287,10 +287,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from RGB to HEX.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="green">Green [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="green">Green [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public static string ToHEX(int red, int green, int blue)
         {
             return String.Format("#{0:x2}{1:x2}{2:x2}", red, green, blue);
@@ -298,8 +298,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from RGB to HEX.
         /// </summary>
-        /// <param name="rgb">RGB structure</param>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <param name="rgb">RGB structure.</param>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public static string ToHEX(RGB rgb)
         {
             return ToHEX(rgb.Red, rgb.Green, rgb.Blue);
@@ -310,10 +310,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the average brightness value.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="green">Green [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>Value</returns>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="green">Green [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
+        /// <returns>Value.</returns>
         public static int Average(int red, int green, int blue)
         {
             return (red + green + blue) / 3;
@@ -321,10 +321,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the average brightness value.
         /// </summary>
-        /// <param name="red">Red</param>
-        /// <param name="green">Green</param>
-        /// <param name="blue">Blue</param>
-        /// <returns>Value</returns>
+        /// <param name="red">Red.</param>
+        /// <param name="green">Green.</param>
+        /// <param name="blue">Blue.</param>
+        /// <returns>Value.</returns>
         public static float Average(float red, float green, float blue)
         {
             return (red + green + blue) / 3.0f;
@@ -332,8 +332,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the average brightness value.
         /// </summary>
-        /// <param name="rgb">RGB structure</param>
-        /// <returns>Value</returns>
+        /// <param name="rgb">RGB structure.</param>
+        /// <returns>Value.</returns>
         public static int Average(RGB rgb)
         {
             return Average(rgb.Red, rgb.Green, rgb.Blue);
@@ -341,8 +341,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the average brightness value.
         /// </summary>
-        /// <param name="rgb">sRGB structure</param>
-        /// <returns>Value</returns>
+        /// <param name="rgb">sRGB structure.</param>
+        /// <returns>Value.</returns>
         public static float Average(sRGB rgb)
         {
             return Average(rgb.Red, rgb.Green, rgb.Blue);
@@ -353,10 +353,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the brightness value in the standard (PAL/NTSC).
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="green">Green [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>Value</returns>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="green">Green [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
+        /// <returns>Value.</returns>
         public static int PAL(int red, int green, int blue)
         {
             return (int)(0.299 * red + 0.587 * green + 0.114 * blue);
@@ -364,10 +364,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the brightness value in the standard (PAL/NTSC).
         /// </summary>
-        /// <param name="red">Red</param>
-        /// <param name="green">Green</param>
-        /// <param name="blue">Blue</param>
-        /// <returns>Value</returns>
+        /// <param name="red">Red.</param>
+        /// <param name="green">Green.</param>
+        /// <param name="blue">Blue.</param>
+        /// <returns>Value.</returns>
         public static float PAL(float red, float green, float blue)
         {
             return 0.299f * red + 0.587f * green + 0.114f * blue;
@@ -375,8 +375,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the brightness value in the standard (PAL/NTSC).
         /// </summary>
-        /// <param name="rgb">RGB structure</param>
-        /// <returns>Value</returns>
+        /// <param name="rgb">RGB structure.</param>
+        /// <returns>Value.</returns>
         public static float PAL(RGB rgb)
         {
             return PAL(rgb.Red, rgb.Green, rgb.Blue);
@@ -384,8 +384,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the brightness value in the standard (PAL/NTSC).
         /// </summary>
-        /// <param name="rgb">sRGB structure</param>
-        /// <returns>Value</returns>
+        /// <param name="rgb">sRGB structure.</param>
+        /// <returns>Value.</returns>
         public static float PAL(sRGB rgb)
         {
             return PAL(rgb.Red, rgb.Green, rgb.Blue);
@@ -396,10 +396,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the brightness value in the standard HDTV.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="green">Green [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>Value</returns>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="green">Green [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
+        /// <returns>Value.</returns>
         public static int HDTV(int red, int green, int blue)
         {
             return (int)(0.2126 * red + 0.7152 * green + 0.0722 * blue);
@@ -407,10 +407,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the brightness value in the standard HDTV.
         /// </summary>
-        /// <param name="red">Red</param>
-        /// <param name="green">Green</param>
-        /// <param name="blue">Blue</param>
-        /// <returns>Value</returns>
+        /// <param name="red">Red.</param>
+        /// <param name="green">Green.</param>
+        /// <param name="blue">Blue.</param>
+        /// <returns>Value.</returns>
         public static float HDTV(float red, float green, float blue)
         {
             return 0.2126f * red + 0.7152f * green + 0.0722f * blue;
@@ -418,8 +418,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the brightness value in the standard HDTV.
         /// </summary>
-        /// <param name="rgb">RGB structure</param>
-        /// <returns>Value</returns>
+        /// <param name="rgb">RGB structure.</param>
+        /// <returns>Value.</returns>
         public static int HDTV(RGB rgb)
         {
             return HDTV(rgb.Red, rgb.Green, rgb.Blue);
@@ -427,8 +427,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the brightness value in the standard HDTV.
         /// </summary>
-        /// <param name="rgb">sRGB structure</param>
-        /// <returns>Value</returns>
+        /// <param name="rgb">sRGB structure.</param>
+        /// <returns>Value.</returns>
         public static float HDTV(sRGB rgb)
         {
             return HDTV(rgb.Red, rgb.Green, rgb.Blue);
@@ -439,10 +439,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the brightness value in the standard RYY.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="green">Green [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>Value</returns>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="green">Green [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
+        /// <returns>Value.</returns>
         public static int RYY(int red, int green, int blue)
         {
             return (int)(0.5 * red + 0.419 * green + 0.081 * blue);
@@ -450,10 +450,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the brightness value in the standard RYY.
         /// </summary>
-        /// <param name="red">Red</param>
-        /// <param name="green">Green</param>
-        /// <param name="blue">Blue</param>
-        /// <returns>Value</returns>
+        /// <param name="red">Red.</param>
+        /// <param name="green">Green.</param>
+        /// <param name="blue">Blue.</param>
+        /// <returns>Value.</returns>
         public static float RYY(float red, float green, float blue)
         {
             return 0.5f * red + 0.419f * green + 0.081f * blue;
@@ -461,8 +461,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the brightness value in the standard RYY.
         /// </summary>
-        /// <param name="rgb">RGB structure</param>
-        /// <returns>Value</returns>
+        /// <param name="rgb">RGB structure.</param>
+        /// <returns>Value.</returns>
         public static int RYY(RGB rgb)
         {
             return RYY(rgb.Red, rgb.Green, rgb.Blue);
@@ -470,8 +470,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Calculates the brightness value in the standard RYY.
         /// </summary>
-        /// <param name="rgb">sRGB structure</param>
-        /// <returns>Value</returns>
+        /// <param name="rgb">sRGB structure.</param>
+        /// <returns>Value.</returns>
         public static float RYY(sRGB rgb)
         {
             return RYY(rgb.Red, rgb.Green, rgb.Blue);
@@ -482,8 +482,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts temperature T (in kelvins) to color in terms of red, green, and blue channels.
         /// </summary>
-        /// <param name="temperature">Temperature [1000K, 10000K]</param>
-        /// <returns>RGB structure</returns>
+        /// <param name="temperature">Temperature [1000K, 10000K].</param>
+        /// <returns>RGB structure.</returns>
         public static RGB Temp2RGB(float temperature)
         {
             // Approximation of Planckian locus in RGB model
@@ -528,11 +528,11 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Corrects color saturation.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="green">Green [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
-        /// <param name="s">Saturation</param>
-        /// <returns>RGB structure</returns>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="green">Green [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
+        /// <param name="s">Saturation.</param>
+        /// <returns>RGB structure.</returns>
         public static RGB Saturation(int red, int green, int blue, float s)
         {
             float max = Maths.Max(red, green, blue);
@@ -546,9 +546,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Corrects color saturation.
         /// </summary>
-        /// <param name="rgb">RGB structure</param>
-        /// <param name="s">Saturation</param>
-        /// <returns>RGB structure</returns>
+        /// <param name="rgb">RGB structure.</param>
+        /// <param name="s">Saturation.</param>
+        /// <returns>RGB structure.</returns>
         public static RGB Saturation(RGB rgb, float s)
         {
             return Saturation(rgb.Red, rgb.Green, rgb.Blue, s);
@@ -559,11 +559,11 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Corrects color vibrance.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="green">Green [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
-        /// <param name="v">Vibrance</param>
-        /// <returns>RGB structure</returns>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="green">Green [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
+        /// <param name="v">Vibrance.</param>
+        /// <returns>RGB structure.</returns>
         public static RGB Vibrance(int red, int green, int blue, float v)
         {
             // Result color:
@@ -585,9 +585,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Corrects color vibrance.
         /// </summary>
-        /// <param name="rgb">RGB structure</param>
-        /// <param name="s">Vibrance</param>
-        /// <returns>RGB structure</returns>
+        /// <param name="rgb">RGB structure.</param>
+        /// <param name="s">Vibrance.</param>
+        /// <returns>RGB structure.</returns>
         public static RGB Vibrance(RGB rgb, float s)
         {
             return Vibrance(rgb.Red, rgb.Green, rgb.Blue, s);
@@ -611,9 +611,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Generates a color scheme.
         /// </summary>
-        /// <param name="hue">Hue [0, 360]</param>
-        /// <param name="length">Length</param>
-        /// <returns>Color scheme</returns>
+        /// <param name="hue">Hue [0, 360].</param>
+        /// <param name="length">Length.</param>
+        /// <returns>Color scheme.</returns>
         public static RGB[] SchemeFromHue(float hue, uint length)
         {
             RGB[] scheme = new RGB[length];

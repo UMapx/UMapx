@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Wrapped_Cauchy_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Wrapped_Cauchy_distribution"/>.
     /// </remarks>
     [Serializable]
     public class WrappedCauchy : IDistribution
@@ -22,8 +22,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the compact Cauchy distribution.
         /// </summary>
-        /// <param name="mu">Parameter μ</param>
-        /// <param name="gamma">Parameter γ > 0</param>
+        /// <param name="mu">Parameter μ.</param>
+        /// <param name="gamma">Parameter γ > 0.</param>
         public WrappedCauchy(float mu, float gamma)
         {
             this.mu = mu;
@@ -123,8 +123,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             throw new NotSupportedException();
@@ -132,8 +132,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             float constant = (float)(1.0 / (2 * Math.PI));

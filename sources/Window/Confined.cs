@@ -17,8 +17,8 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes the closed Gaussian window.
         /// </summary>
-        /// <param name="frameSize">Window size</param>
-        /// <param name="sigma">Standard deviation (0.14 * N)</param>
+        /// <param name="frameSize">Window size.</param>
+        /// <param name="sigma">Standard deviation (0.14 * N).</param>
         public Confined(int frameSize, float sigma = 1)
         {
             this.Sigma = sigma;
@@ -27,7 +27,7 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes a Gaussian window function closed.
         /// </summary>
-        /// <param name="frameSize">Window size</param>
+        /// <param name="frameSize">Window size.</param>
         public Confined(int frameSize)
         {
             this.Sigma = 0.14f * frameSize;
@@ -53,9 +53,9 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Value.</returns>
         public override float Function(float x, int frameSize)
         {
             if (frameSize == 1) return 1;
@@ -82,7 +82,7 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the window function.
         /// </summary>
-        /// <returns>Array</returns>
+        /// <returns>Array.</returns>
         public override float[] GetWindow(int frameSize)
         {
             // window function on a discrete time:

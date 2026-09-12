@@ -17,8 +17,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public float Scaling(float x)
         {
             throw new NotSupportedException();
@@ -26,8 +26,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public float Wavelet(float x)
         {
             float x2 = x * x;

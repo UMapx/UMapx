@@ -9,7 +9,7 @@ namespace UMapx.Wavelet
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Wavelet
+    /// <see href="https://en.wikipedia.org/wiki/Wavelet"/>.
     /// </remarks>
     public partial class WaveletPacket
     {

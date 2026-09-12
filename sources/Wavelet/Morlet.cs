@@ -17,7 +17,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Initializes the continuous Morlet wavelet.
         /// </summary>
-        /// <param name="omega0">Central frequency</param>
+        /// <param name="omega0">Central frequency.</param>
         public Morlet(float omega0)
         {
             this.Omega0 = omega0;
@@ -39,8 +39,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public float Scaling(float x)
         {
             throw new NotSupportedException();
@@ -48,8 +48,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the normalized wavelet function with zero mean.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public float Wavelet(float x)
         {
             float x2 = x * x;

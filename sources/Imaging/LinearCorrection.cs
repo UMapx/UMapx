@@ -18,9 +18,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the linear correction filter.
         /// </summary>
-        /// <param name="range">Range values</param>
-        /// <param name="delta">Delta [-1, 1]</param>
-        /// <param name="space">Color space</param>
+        /// <param name="range">Range values.</param>
+        /// <param name="delta">Delta [-1, 1].</param>
+        /// <param name="space">Color space.</param>
         public LinearCorrection(RangeFloat range, float delta, Space space)
         {
             Range = range; Delta = delta; this.Space = space;
@@ -28,8 +28,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the linear correction filter.
         /// </summary>
-        /// <param name="delta">Delta [-100, 100]</param>
-        /// <param name="space">Color space</param>
+        /// <param name="delta">Delta [-100, 100].</param>
+        /// <param name="space">Color space.</param>
         public LinearCorrection(float delta, Space space)
         {
             Range = new RangeFloat(0, 1); Delta = delta; this.Space = space;

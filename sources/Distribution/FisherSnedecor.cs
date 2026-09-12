@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/F-distribution
+    /// <see href="https://en.wikipedia.org/wiki/F-distribution"/>.
     /// </remarks>
     [Serializable]
     public class FisherSnedecor : IDistribution
@@ -22,8 +22,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the Fisher distribution.
         /// </summary>
-        /// <param name="d1">First degree of freedom</param>
-        /// <param name="d2">Second degree of freedom</param>
+        /// <param name="d1">First degree of freedom.</param>
+        /// <param name="d2">Second degree of freedom.</param>
         public FisherSnedecor(int d1 = 1, int d2 = 1)
         {
             this.D1 = d1;
@@ -186,8 +186,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x <= 0)
@@ -199,8 +199,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x <= 0)

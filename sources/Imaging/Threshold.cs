@@ -16,8 +16,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the threshold filter.
         /// </summary>
-        /// <param name="threshold">Threshold [0, 1]</param>
-        /// <param name="space">Color space</param>
+        /// <param name="threshold">Threshold [0, 1].</param>
+        /// <param name="space">Color space.</param>
         public Threshold(float threshold, Space space)
         {
             this.Value = threshold;

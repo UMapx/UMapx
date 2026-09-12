@@ -8,7 +8,7 @@ namespace UMapx.Transform
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Discrete_Hartley_transform
+    /// <see href="https://en.wikipedia.org/wiki/Discrete_Hartley_transform"/>.
     /// </remarks>
     [Serializable]
     public class HartleyTransform : TransformBaseMatrixFloat, ITransform
@@ -17,9 +17,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the Hartley transform.
         /// </summary>
-        /// <param name="normalized">Normalized transform or not</param>
-        /// <param name="spectrumType">Spectrum type</param>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="normalized">Normalized transform or not.</param>
+        /// <param name="spectrumType">Spectrum type.</param>
+        /// <param name="direction">Processing direction.</param>
         public HartleyTransform(bool normalized = true, SpectrumType spectrumType = SpectrumType.Fourier, Direction direction = Direction.Vertical)
         {
             this.Normalized = normalized; 
@@ -36,9 +36,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Implements the construction of the Hartley transform matrix.
         /// </summary>
-        /// <param name="n">Size</param>
-        /// <param name="spectrumType">Spectrum type</param>
-        /// <returns>Matrix</returns>
+        /// <param name="n">Size.</param>
+        /// <param name="spectrumType">Spectrum type.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] Matrix(int n, SpectrumType spectrumType = SpectrumType.Hartley)
         {
             if (spectrumType == SpectrumType.Fourier)

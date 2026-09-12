@@ -17,8 +17,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public float Scaling(float x)
         {
             // 2015, Victor Vermehren Valenzuela and H. M. de Oliveira gave 
@@ -38,8 +38,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public float Wavelet(float x)
         {
             // 2015, Victor Vermehren Valenzuela and H. M. de Oliveira gave 

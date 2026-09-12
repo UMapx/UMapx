@@ -7,7 +7,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
+    /// <see href="https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part"/>.
     /// </remarks>
     [Serializable]
     public class Grid : PointAddition, IBitmapFilter2
@@ -21,8 +21,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the grid filter.
         /// </summary>
-        /// <param name="value">Value [0, 100]</param>
-        /// <param name="thickness">Thickness (>0)</param>
+        /// <param name="value">Value [0, 100].</param>
+        /// <param name="thickness">Thickness (>0).</param>
         public Grid(int value, int thickness = 1)
         {
             Value = value;

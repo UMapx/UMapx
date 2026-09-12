@@ -9,7 +9,7 @@ namespace UMapx.Transform
     /// <remarks>
     /// This filter is a computationally effective analogue of a bilateral filter.
     /// More information can be found on the website:
-    /// http://kaiminghe.com/eccv10/index.html
+    /// <see href="http://kaiminghe.com/eccv10/index.html"/>.
     /// </remarks>
     [Serializable]
     public class GuidedFilter : IFilter
@@ -24,9 +24,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the guided filter.
         /// </summary>
-        /// <param name="radius">Radius (>1)</param>
-        /// <param name="eps">Epsilon (0, 1)</param>
-        /// <param name="factor">Factor [-1, 1]</param>
+        /// <param name="radius">Radius (>1).</param>
+        /// <param name="eps">Epsilon (0, 1).</param>
+        /// <param name="factor">Factor [-1, 1].</param>
         public GuidedFilter(int radius, float eps = 0.025f, float factor = -1.0f)
         {
             this.Radius = radius;
@@ -84,9 +84,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Creates a guided filter with the specified parameters for a bilateral filter.
         /// </summary>
-        /// <param name="r">σr</param>
-        /// <param name="s">σs</param>
-        /// <returns>Guided filter</returns>
+        /// <param name="r">σr.</param>
+        /// <param name="s">σs.</param>
+        /// <returns>Guided filter.</returns>
         public static GuidedFilter FromBilateral(int r, float s = 0.1f)
         {
             return new GuidedFilter(r, s * s);
@@ -97,7 +97,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(float[] data)
         {
             // enhancement or not?
@@ -119,7 +119,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(float[,] data)
         {
             // enhancement or not?
@@ -143,7 +143,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(Complex32[] data)
         {
             // enhancement or not?
@@ -165,7 +165,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(Complex32[,] data)
         {
             // enhancement or not?
@@ -199,9 +199,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Guided filer function.
         /// </summary>
-        /// <param name="input">Input signal</param>
-        /// <param name="r">Filter size</param>
-        /// <param name="eps">Epsilon (0, 1)</param>
+        /// <param name="input">Input signal.</param>
+        /// <param name="r">Filter size.</param>
+        /// <param name="eps">Epsilon (0, 1).</param>
         private static void Guidedfilter(float[,] input, int r, float eps)
         {
             // Input signal properties:
@@ -246,9 +246,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Guided filer function.
         /// </summary>
-        /// <param name="input">Input signal</param>
-        /// <param name="r">Filter size</param>
-        /// <param name="eps">Epsilon (0, 1)</param>
+        /// <param name="input">Input signal.</param>
+        /// <param name="r">Filter size.</param>
+        /// <param name="eps">Epsilon (0, 1).</param>
         private static void Guidedfilter(Complex32[,] input, int r, float eps)
         {
             // Input signal properties:
@@ -291,9 +291,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Guided filer function.
         /// </summary>
-        /// <param name="input">Input signal</param>
-        /// <param name="r">Filter size</param>
-        /// <param name="eps">Epsilon (0, 1)</param>
+        /// <param name="input">Input signal.</param>
+        /// <param name="r">Filter size.</param>
+        /// <param name="eps">Epsilon (0, 1).</param>
         private static void Guidedfilter(float[] input, int r, float eps)
         {
             // Input signal properties:
@@ -333,9 +333,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Guided filer function.
         /// </summary>
-        /// <param name="input">Input signal</param>
-        /// <param name="r">Filter size</param>
-        /// <param name="eps">Epsilon (0, 1)</param>
+        /// <param name="input">Input signal.</param>
+        /// <param name="r">Filter size.</param>
+        /// <param name="eps">Epsilon (0, 1).</param>
         private static void Guidedfilter(Complex32[] input, int r, float eps)
         {
             // Input signal properties:

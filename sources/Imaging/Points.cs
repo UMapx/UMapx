@@ -13,9 +13,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns processed points.
         /// </summary>
-        /// <param name="points">Points</param>
-        /// <param name="point">Point</param>
-        /// <returns>Points</returns>
+        /// <param name="points">Points.</param>
+        /// <param name="point">Point.</param>
+        /// <returns>Points.</returns>
         public static Point[] Add(this Point[] points, Point point)
         {
             var count = points.Length;
@@ -36,9 +36,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns processed points.
         /// </summary>
-        /// <param name="points">Points</param>
-        /// <param name="point">Point</param>
-        /// <returns>Points</returns>
+        /// <param name="points">Points.</param>
+        /// <param name="point">Point.</param>
+        /// <returns>Points.</returns>
         public static Point[] Sub(this Point[] points, Point point)
         {
             var count = points.Length;
@@ -63,10 +63,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Rotates points by angle.
         /// </summary>
-        /// <param name="points">Points</param>
-        /// <param name="centerPoint">Center point</param>
-        /// <param name="angle">Angle</param>
-        /// <returns>Points</returns>
+        /// <param name="points">Points.</param>
+        /// <param name="centerPoint">Center point.</param>
+        /// <param name="angle">Angle.</param>
+        /// <returns>Points.</returns>
         public static Point[] Rotate(this Point[] points, Point centerPoint, float angle)
         {
             int length = points.Length;
@@ -83,10 +83,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Rotates point by angle.
         /// </summary>
-        /// <param name="pointToRotate">The point to rotate</param>
-        /// <param name="centerPoint">The center point of rotation</param>
-        /// <param name="angleInDegrees">The rotation angle in degrees</param>
-        /// <returns>Rotated point</returns>
+        /// <param name="pointToRotate">The point to rotate.</param>
+        /// <param name="centerPoint">The center point of rotation.</param>
+        /// <param name="angleInDegrees">The rotation angle in degrees.</param>
+        /// <returns>Rotated point.</returns>
         public static Point Rotate(this Point pointToRotate, Point centerPoint, double angleInDegrees)
         {
             double angleInRadians = angleInDegrees * (Math.PI / 180);
@@ -109,8 +109,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns rectangle from points.
         /// </summary>
-        /// <param name="points">Points</param>
-        /// <returns>Rectangle</returns>
+        /// <param name="points">Points.</param>
+        /// <returns>Rectangle.</returns>
         public static Rectangle GetRectangle(this Point[] points)
         {
             int length = points.Length;
@@ -140,10 +140,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Return angle of the three points.
         /// </summary>
-        /// <param name="left">Left point</param>
-        /// <param name="right">Right point</param>
-        /// <param name="support">Supported point</param>
-        /// <returns>Angle</returns>
+        /// <param name="left">Left point.</param>
+        /// <param name="right">Right point.</param>
+        /// <param name="support">Supported point.</param>
+        /// <returns>Angle.</returns>
         public static float GetAngle(this Point left, Point right, Point support)
         {
             double kk = left.Y > right.Y ? 1 : -1;
@@ -166,9 +166,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns div result of two variables.
         /// </summary>
-        /// <param name="a">First</param>
-        /// <param name="b">Second</param>
-        /// <returns>Result</returns>
+        /// <param name="a">First.</param>
+        /// <param name="b">Second.</param>
+        /// <returns>Result.</returns>
         private static double Div(this double a, double b)
         {
             if (a == 0 && b == 0)
@@ -182,9 +182,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns supported point.
         /// </summary>
-        /// <param name="left">Left point</param>
-        /// <param name="right">Right point</param>
-        /// <returns>Point</returns>
+        /// <param name="left">Left point.</param>
+        /// <param name="right">Right point.</param>
+        /// <returns>Point.</returns>
         public static Point GetSupportedPoint(this Point left, Point right)
         {
             return new Point(right.X, left.Y);
@@ -193,8 +193,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns mean point.
         /// </summary>
-        /// <param name="points">Points</param>
-        /// <returns>Point</returns>
+        /// <param name="points">Points.</param>
+        /// <returns>Point.</returns>
         public static Point GetMeanPoint(params Point[] points)
         {
             var point = new Point(0, 0);

@@ -10,7 +10,7 @@ namespace UMapx.Transform
     /// <remarks>
     /// Optimized implementation.
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Bilateral_filter
+    /// <see href="https://en.wikipedia.org/wiki/Bilateral_filter"/>.
     /// </remarks>
     [Serializable]
     public class BilateralFilter : IFilter
@@ -26,10 +26,10 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the bilateral filter.
         /// </summary>
-        /// <param name="radius">Radius (>1)</param>
-        /// <param name="sigma">Range Gaussian sigma (>0)</param>
-        /// <param name="levels">Number of quantization levels for intensity</param>
-        /// <param name="factor">Factor [-1, 1]</param>
+        /// <param name="radius">Radius (>1).</param>
+        /// <param name="sigma">Range Gaussian sigma (>0).</param>
+        /// <param name="levels">Number of quantization levels for intensity.</param>
+        /// <param name="factor">Factor [-1, 1].</param>
         public BilateralFilter(int radius, float sigma = 0.1f, int levels = 32, float factor = -1.0f)
         {
             this.Radius = radius;
@@ -99,7 +99,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(float[] data)
         {
             // enhancement or not?
@@ -121,7 +121,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(float[,] data)
         {
             // enhancement or not?
@@ -145,7 +145,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(Complex32[] data)
         {
             // enhancement or not?
@@ -167,7 +167,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(Complex32[,] data)
         {
             // enhancement or not?
@@ -194,10 +194,10 @@ namespace UMapx.Transform
         /// <summary>
         /// Applies fast bilateral filter.
         /// </summary>
-        /// <param name="array">Input signal</param>
-        /// <param name="r">Radius</param>
-        /// <param name="s">Range Gaussian sigma</param>
-        /// <param name="samples">Number of quantization levels for intensity</param>
+        /// <param name="array">Input signal.</param>
+        /// <param name="r">Radius.</param>
+        /// <param name="s">Range Gaussian sigma.</param>
+        /// <param name="samples">Number of quantization levels for intensity.</param>
         private static void Bilateralfilter(float[,] array, int r, float s = 0.1f, int samples = 32)
         {
             int height = array.GetLength(0);
@@ -276,10 +276,10 @@ namespace UMapx.Transform
         /// <summary>
         /// Applies fast bilateral filter.
         /// </summary>
-        /// <param name="array">Input signal</param>
-        /// <param name="r">Radius</param>
-        /// <param name="s">Range Gaussian sigma</param>
-        /// <param name="samples">Number of quantization levels for intensity</param>
+        /// <param name="array">Input signal.</param>
+        /// <param name="r">Radius.</param>
+        /// <param name="s">Range Gaussian sigma.</param>
+        /// <param name="samples">Number of quantization levels for intensity.</param>
         private static void Bilateralfilter(Complex32[,] array, int r, float s = 0.1f, int samples = 32)
         {
             int height = array.GetLength(0);
@@ -358,10 +358,10 @@ namespace UMapx.Transform
         /// <summary>
         /// Applies fast bilateral filter.
         /// </summary>
-        /// <param name="input">Input signal</param>
-        /// <param name="r">Radius</param>
-        /// <param name="s">Range Gaussian sigma</param>
-        /// <param name="samples">Number of quantization levels for intensity</param>
+        /// <param name="input">Input signal.</param>
+        /// <param name="r">Radius.</param>
+        /// <param name="s">Range Gaussian sigma.</param>
+        /// <param name="samples">Number of quantization levels for intensity.</param>
         private static void Bilateralfilter(float[] input, int r, float s = 0.1f, int samples = 32)
         {
             int length = input.Length;
@@ -426,10 +426,10 @@ namespace UMapx.Transform
         /// <summary>
         /// Applies fast bilateral filter.
         /// </summary>
-        /// <param name="input">Input signal</param>
-        /// <param name="r">Radius</param>
-        /// <param name="s">Range Gaussian sigma</param>
-        /// <param name="samples">Number of quantization levels for intensity</param>
+        /// <param name="input">Input signal.</param>
+        /// <param name="r">Radius.</param>
+        /// <param name="s">Range Gaussian sigma.</param>
+        /// <param name="samples">Number of quantization levels for intensity.</param>
         private static void Bilateralfilter(Complex32[] input, int r, float s = 0.1f, int samples = 32)
         {
             int length = input.Length;

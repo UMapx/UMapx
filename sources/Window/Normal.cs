@@ -18,9 +18,9 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes a generalized window normal function.
         /// </summary>
-        /// <param name="frameSize">Window size</param>
-        /// <param name="sigma">Standard deviation (>0)</param>
-        /// <param name="pow">Power<remarks>For p = 2 - Gaussian window</remarks></param>
+        /// <param name="frameSize">Window size.</param>
+        /// <param name="sigma">Standard deviation (>0).</param>
+        /// <param name="pow">Power.<remarks>For p = 2 - Gaussian window.</remarks></param>
         public Normal(int frameSize, float sigma = 1, float pow = 2)
         {
             this.Sigma = sigma;
@@ -61,9 +61,9 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the value of a window function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="frameSize">Window size</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="frameSize">Window size.</param>
+        /// <returns>Value.</returns>
         public override float Function(float x, int frameSize)
         {
             if (frameSize == 1) return 1;
@@ -74,7 +74,7 @@ namespace UMapx.Window
         /// <summary>
         /// Returns the window function.
         /// </summary>
-        /// <returns>Array</returns>
+        /// <returns>Array.</returns>
         public override float[] GetWindow(int frameSize)
         {
             // window function on a discrete time:

@@ -20,8 +20,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the rotation filter.
         /// </summary>
-        /// <param name="angle">Angle</param>
-        /// <param name="interpolationMode">Interpolation mode</param>
+        /// <param name="angle">Angle.</param>
+        /// <param name="interpolationMode">Interpolation mode.</param>
         public Rotate(float angle, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
         {
             Angle = angle;
@@ -31,9 +31,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the rotation filter.
         /// </summary>
-        /// <param name="angle">Angle</param>
-        /// <param name="color">Background color</param>
-        /// <param name="interpolationMode">Interpolation mode</param>
+        /// <param name="angle">Angle.</param>
+        /// <param name="color">Background color.</param>
+        /// <param name="interpolationMode">Interpolation mode.</param>
         public Rotate(float angle, Color color, InterpolationMode interpolationMode = InterpolationMode.Bicubic)
         {
             Angle = angle;
@@ -75,8 +75,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb || bmSrc.PixelFormat != PixelFormat.Format32bppArgb)
@@ -102,8 +102,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="Src">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="Src">Bitmap.</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -115,7 +115,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public void Apply(BitmapData bmData)
         {
             Bitmap Src = BitmapFormat.ToBitmap(bmData);
@@ -127,7 +127,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             var Src = (Bitmap)Data.Clone();
@@ -141,8 +141,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         private unsafe void ApplyNearestNeighbor(BitmapData bmData, BitmapData bmSrc)
         {
             // get source image size
@@ -223,8 +223,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         private unsafe void ApplyBilinear(BitmapData bmData, BitmapData bmSrc)
         {
             // get source image size
@@ -352,8 +352,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         private unsafe void ApplyBicubic(BitmapData bmData, BitmapData bmSrc)
         {
             // get source image size

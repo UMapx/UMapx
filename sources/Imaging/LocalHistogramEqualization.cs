@@ -11,7 +11,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// http://angeljohnsy.blogspot.com/2011/06/local-histogram-equalization.html
+    /// <see href="http://angeljohnsy.blogspot.com/2011/06/local-histogram-equalization.html"/>.
     /// </remarks>
     [Serializable]
     public class LocalHistogramEqualization : IBitmapFilter2, IBitmapFilter
@@ -27,7 +27,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the local histogram equalization filter.
         /// </summary>
-        /// <param name="radius">Radius</param>
+        /// <param name="radius">Radius.</param>
         public LocalHistogramEqualization(int radius = 10)
         {
             Size = new SizeInt(radius, radius);
@@ -35,8 +35,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the local histogram equalization filter.
         /// </summary>
-        /// <param name="width">Filter width</param>
-        /// <param name="height">Filter height</param>
+        /// <param name="width">Filter width.</param>
+        /// <param name="height">Filter height.</param>
         public LocalHistogramEqualization(int width, int height)
         {
             Size = new SizeInt(width, height);
@@ -44,7 +44,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the local histogram equalization filter.
         /// </summary>
-        /// <param name="size">Radius</param>
+        /// <param name="size">Radius.</param>
         public LocalHistogramEqualization(SizeInt size)
         {
             Size = size;
@@ -66,7 +66,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Sets internal dimensions based on the processing window size.
         /// </summary>
-        /// <param name="size">Neighborhood size</param>
+        /// <param name="size">Neighborhood size.</param>
         private void Data(SizeInt size)
         {
             this.l0 = size.Width;
@@ -77,8 +77,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb || bmSrc.PixelFormat != PixelFormat.Format32bppArgb)
@@ -155,8 +155,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="Src">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="Src">Bitmap.</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -168,7 +168,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public void Apply(BitmapData bmData)
         {
             Bitmap Src = BitmapFormat.ToBitmap(bmData);
@@ -180,7 +180,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             var Src = (Bitmap)Data.Clone();

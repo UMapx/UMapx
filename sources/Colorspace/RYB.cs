@@ -19,9 +19,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates an instance of the structure RYB.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="yellow">Yellow [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="yellow">Yellow [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
         public RYB(int red, int yellow, int blue)
         {
             this.r = (byte)((red > 255) ? 255 : ((red < 0) ? 0 : red));
@@ -31,9 +31,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates an instance of the structure RYB.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="yellow">Yellow [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="yellow">Yellow [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
         public RYB(float red, float yellow, float blue)
         {
             this.r = (byte)((red > 255) ? 255 : ((red < 0) ? 0 : red));
@@ -88,9 +88,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">RYB structure</param>
-        /// <param name="item2">RYB structure</param>
-        /// <returns>Boolean</returns>
+        /// <param name="item1">RYB structure.</param>
+        /// <param name="item2">RYB structure.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator ==(RYB item1, RYB item2)
         {
             return (
@@ -102,9 +102,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">RYB structure</param>
-        /// <param name="item2">RYB structure</param>
-        /// <returns>Boolean</returns>
+        /// <param name="item1">RYB structure.</param>
+        /// <param name="item2">RYB structure.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator !=(RYB item1, RYB item2)
         {
             return !(item1 == item2);
@@ -115,8 +115,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Element</param>
-        /// <returns>Boolean</returns>
+        /// <param name="obj">Element.</param>
+        /// <returns>Boolean.</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -126,7 +126,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Integer number</returns>
+        /// <returns>Integer number.</returns>
         public override int GetHashCode()
         {
             return r.GetHashCode() ^ y.GetHashCode() ^ b.GetHashCode();
@@ -134,7 +134,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public override string ToString()
         {
             return $"{r}{Environment.NewLine}{y}{Environment.NewLine}{b}";
@@ -145,7 +145,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Structure</returns>
+        /// <returns>Structure.</returns>
         object ICloneable.Clone()
         {
             return new RYB(this.r, this.y, this.b);
@@ -153,7 +153,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Structure</returns>
+        /// <returns>Structure.</returns>
         public RYB Clone()
         {
             return new RYB(this.r, this.y, this.b);
@@ -164,10 +164,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from RGB to RYB.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="green">Green [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>RYB structure</returns>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="green">Green [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
+        /// <returns>RYB structure.</returns>
         public static RYB FromRGB(int red, int green, int blue)
         {
             // Arah J. Leonard
@@ -217,8 +217,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from RGB to RYB.
         /// </summary>
-        /// <param name="rgb">RGB structure</param>
-        /// <returns>RYB structure</returns>
+        /// <param name="rgb">RGB structure.</param>
+        /// <returns>RYB structure.</returns>
         public static RYB FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -229,7 +229,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from RYB to RGB.
         /// </summary>
-        /// <returns>RGB structure</returns>
+        /// <returns>RGB structure.</returns>
         public RGB ToRGB
         {
             get

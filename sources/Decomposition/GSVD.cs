@@ -4,10 +4,10 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides generalized singular value decomposition for tall matrix pairs</summary>
+    /// <summary>Provides generalized singular value decomposition for tall matrix pairs.</summary>
     public static class GSVD
     {
-        /// <summary>Computes A = U1 diag(S1) X and B = U2 diag(S2) X</summary>
+        /// <summary>Computes A = U1 diag(S1) X and B = U2 diag(S2) X.</summary>
         /// <param name="a">Finite m by n matrix with m >= n.</param>
         /// <param name="b">Finite p by n matrix with p >= n. The stacked pair must have full column rank.</param>
         /// <param name="iterations">Positive maximum Jacobi SVD sweeps.</param>
@@ -19,7 +19,7 @@ namespace UMapx.Decomposition
             return (InternalMatrixMath.Real(d.U1), d.S1, InternalMatrixMath.Real(d.U2), d.S2, InternalMatrixMath.Real(d.X));
         }
 
-        /// <summary>Computes A = U1 diag(S1) X and B = U2 diag(S2) X</summary>
+        /// <summary>Computes A = U1 diag(S1) X and B = U2 diag(S2) X.</summary>
         /// <param name="a">Finite m by n matrix with m >= n.</param>
         /// <param name="b">Finite p by n matrix with p >= n. The stacked pair must have full column rank.</param>
         /// <param name="iterations">Positive maximum Jacobi SVD sweeps.</param>
@@ -31,7 +31,7 @@ namespace UMapx.Decomposition
             return (InternalMatrixMath.Single(d.U1), d.S1, InternalMatrixMath.Single(d.U2), d.S2, InternalMatrixMath.Single(d.X));
         }
 
-        /// <summary>Computes generalized singular values from existing diagonal factors</summary>
+        /// <summary>Computes generalized singular values from existing diagonal factors.</summary>
         /// <param name="s1">Nonnegative first diagonal.</param>
         /// <param name="s2">Nonnegative second diagonal of the same length.</param>
         /// <returns>S1/S2, with positive infinity for positive/zero and NaN for zero/zero.</returns>
@@ -43,7 +43,7 @@ namespace UMapx.Decomposition
             return result;
         }
 
-        /// <summary>Evaluates the GSVD diagonal normalization identity</summary>
+        /// <summary>Evaluates the GSVD diagonal normalization identity.</summary>
         /// <param name="s1">First diagonal.</param>
         /// <param name="s2">Second diagonal of the same length.</param>
         /// <returns>The entries S1[i]^2 + S2[i]^2.</returns>
@@ -55,7 +55,7 @@ namespace UMapx.Decomposition
             return result;
         }
 
-        /// <summary>Validates the two real GSVD diagonal factors</summary>
+        /// <summary>Validates the two real GSVD diagonal factors.</summary>
         /// <param name="s1">First nonnegative diagonal.</param>
         /// <param name="s2">Second nonnegative diagonal.</param>
         private static void Validate(float[] s1, float[] s2)
@@ -64,7 +64,7 @@ namespace UMapx.Decomposition
             if (s1.Length != s2.Length) throw new ArgumentException("Diagonal lengths must agree.");
         }
 
-        /// <summary>Combines independently scaled stacked QR with an SVD of the upper orthonormal block</summary>
+        /// <summary>Combines independently scaled stacked QR with an SVD of the upper orthonormal block.</summary>
         /// <param name="a">Private tall first matrix.</param>
         /// <param name="b">Private tall second matrix with the same column count.</param>
         /// <param name="iterations">Jacobi sweep limit.</param>

@@ -9,7 +9,7 @@ namespace UMapx.Analysis
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://www.mathworks.com/help/matlab/ref/roots.html
+    /// <see href="https://www.mathworks.com/help/matlab/ref/roots.html"/>.
     /// </remarks>
     [Serializable]
     public class Roots
@@ -22,7 +22,7 @@ namespace UMapx.Analysis
         /// <summary>
         /// Initializes a class of equations using the spectral decomposition of a matrix.
         /// </summary>
-        /// <param name="eps">Epsilon [0, 1]</param>
+        /// <param name="eps">Epsilon [0, 1].</param>
         public Roots(float eps = 1e-16f)
         {
             this.Eps = eps;
@@ -44,8 +44,8 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns a column vector corresponding to the numerical solution of the polynomial: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
         /// </summary>
-        /// <param name="polynomial">Polynomial</param>
-        /// <returns>Array</returns>
+        /// <param name="polynomial">Polynomial.</param>
+        /// <returns>Array.</returns>
         public Complex32[] Compute(float[] polynomial)
         {
             // MATLAB roots method
@@ -95,8 +95,8 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns a column vector of polynomial coefficients: p(1)*x^n + ... + p(n)*x + p(n+1) = 0.
         /// </summary>
-        /// <param name="roots">Roots</param>
-        /// <returns>Array</returns>
+        /// <param name="roots">Roots.</param>
+        /// <returns>Array.</returns>
         public float[] Compute(Complex32[] roots)
         {
             // MATLAB roots method

@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Hyperbolic_secant_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Hyperbolic_secant_distribution"/>.
     /// </remarks>
     [Serializable]
     public class HyperbolicSecant : IDistribution
@@ -84,8 +84,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             float angle = Maths.Atan(Maths.Exp(x * Maths.Pi / 2.0f));
@@ -94,8 +94,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             return 0.5f * Maths.Sech(x * (Maths.Pi / 2.0f));

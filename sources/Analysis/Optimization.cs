@@ -20,7 +20,7 @@ namespace UMapx.Analysis
         /// <summary>
         /// Initializes a class that implements an extremum search.
         /// </summary>
-        /// <param name="eps">Epsilon [0, 1]</param>
+        /// <param name="eps">Epsilon [0, 1].</param>
         public Optimization(float eps = 1e-8f)
         {
             this.Eps = eps;
@@ -42,11 +42,11 @@ namespace UMapx.Analysis
         /// <summary>
         /// Returns the corresponding minimum of the function on the segment.
         /// </summary>
-        /// <param name="function">Continuous function delegate</param>
-        /// <param name="a">Start of line</param>
-        /// <param name="b">End of line</param>
-        /// <param name="max">Search maximum or minimum</param>
-        /// <returns>Value</returns>
+        /// <param name="function">Continuous function delegate.</param>
+        /// <param name="a">Start of line.</param>
+        /// <param name="b">End of line.</param>
+        /// <param name="max">Search maximum or minimum.</param>
+        /// <returns>Value.</returns>
         public float Compute(IFloat function, float a, float b, bool max = false)
         {
             // max or min
@@ -68,10 +68,10 @@ namespace UMapx.Analysis
         /// Note: This implementation recomputes f(x1) and f(x2) each iteration for clarity.
         /// It can be optimized to carry one evaluation forward per step.
         /// </remarks>
-        /// <param name="f">Continuous objective function to minimize</param>
-        /// <param name="a">Left endpoint of the search interval</param>
-        /// <param name="b">Right endpoint of the search interval</param>
-        /// <param name="eps">Absolute tolerance for the bracket length; stop when |b - a| &lt; eps</param>
+        /// <param name="f">Continuous objective function to minimize.</param>
+        /// <param name="a">Left endpoint of the search interval.</param>
+        /// <param name="b">Right endpoint of the search interval.</param>
+        /// <param name="eps">Absolute tolerance for the bracket length; stop when |b - a| &lt; eps.</param>
         /// <returns>
         /// Approximate minimizer x* ∈ [a, b] (the x-coordinate). To get the minimum value, evaluate f at the result.
         /// </returns>
@@ -102,10 +102,10 @@ namespace UMapx.Analysis
         /// - Terminates when |b - a| &lt; <paramref name="eps"/> or when the iteration cap is reached.
         /// - Returns the midpoint of the final bracket as the argmax approximation (not f at that point).
         /// </remarks>
-        /// <param name="f">Continuous objective function to maximize</param>
-        /// <param name="a">Left endpoint of the search interval</param>
-        /// <param name="b">Right endpoint of the search interval</param>
-        /// <param name="eps">Absolute tolerance for the bracket length; stop when |b - a| &lt; eps</param>
+        /// <param name="f">Continuous objective function to maximize.</param>
+        /// <param name="a">Left endpoint of the search interval.</param>
+        /// <param name="b">Right endpoint of the search interval.</param>
+        /// <param name="eps">Absolute tolerance for the bracket length; stop when |b - a| &lt; eps.</param>
         /// <returns>
         /// Approximate maximizer x* ∈ [a, b] (the x-coordinate). To get the maximum value, evaluate f at the result.
         /// </returns>

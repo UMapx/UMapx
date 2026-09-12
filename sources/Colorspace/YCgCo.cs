@@ -18,9 +18,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates an instance of the structure YCgCo.
         /// </summary>
-        /// <param name="y">Y [0, 1]</param>
-        /// <param name="cg">Cg [-0.5, 0.5]</param>
-        /// <param name="co">Co [-0.5, 0.5]</param>
+        /// <param name="y">Y [0, 1].</param>
+        /// <param name="cg">Cg [-0.5, 0.5].</param>
+        /// <param name="co">Co [-0.5, 0.5].</param>
         public YCgCo(float y, float cg, float co)
         {
             this.y = (y > 1) ? 1 : ((y < 0) ? 0 : y);
@@ -75,9 +75,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">YCgCo structure</param>
-        /// <param name="item2">YCgCo structure</param>
-        /// <returns>Boolean</returns>
+        /// <param name="item1">YCgCo structure.</param>
+        /// <param name="item2">YCgCo structure.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator ==(YCgCo item1, YCgCo item2)
         {
             return (
@@ -89,9 +89,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">YCgCo structure</param>
-        /// <param name="item2">YCgCo structure</param>
-        /// <returns>Boolean</returns>
+        /// <param name="item1">YCgCo structure.</param>
+        /// <param name="item2">YCgCo structure.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator !=(YCgCo item1, YCgCo item2)
         {
             return !(item1 == item2);
@@ -102,8 +102,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Element</param>
-        /// <returns>Boolean</returns>
+        /// <param name="obj">Element.</param>
+        /// <returns>Boolean.</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -113,7 +113,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Integer number</returns>
+        /// <returns>Integer number.</returns>
         public override int GetHashCode()
         {
             return y.GetHashCode() ^ cg.GetHashCode() ^ co.GetHashCode();
@@ -121,7 +121,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public override string ToString()
         {
             return $"{y}{Environment.NewLine}{cg}{Environment.NewLine}{co}";
@@ -132,7 +132,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Structure</returns>
+        /// <returns>Structure.</returns>
         object ICloneable.Clone()
         {
             return new YCgCo(this.y, this.cg, this.co);
@@ -140,7 +140,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Structure</returns>
+        /// <returns>Structure.</returns>
         public YCgCo Clone()
         {
             return new YCgCo(this.y, this.cg, this.co);
@@ -151,10 +151,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from RGB to YCgCo.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="green">Green [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>YCgCo structure</returns>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="green">Green [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
+        /// <returns>YCgCo structure.</returns>
         public static YCgCo FromRGB(int red, int green, int blue)
         {
             float r = red / 255.0f;
@@ -170,8 +170,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from RGB to YCgCo.
         /// </summary>
-        /// <param name="rgb">RGB structure</param>
-        /// <returns>YCgCo structure</returns>
+        /// <param name="rgb">RGB structure.</param>
+        /// <returns>YCgCo structure.</returns>
         public static YCgCo FromRGB(RGB rgb)
         {
             return FromRGB(rgb.Red, rgb.Green, rgb.Blue);
@@ -182,7 +182,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from YCgCo to RGB.
         /// </summary>
-        /// <returns>RGB structure</returns>
+        /// <returns>RGB structure.</returns>
         public RGB ToRGB
         {
             get

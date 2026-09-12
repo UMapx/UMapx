@@ -26,7 +26,7 @@ namespace UMapx.Video
         /// <summary>
         /// Initializes video image source.
         /// </summary>
-        /// <param name="image">Image</param>
+        /// <param name="image">Image.</param>
         public VideoImageSource(Bitmap image)
         {
             _image = image ?? throw new ArgumentNullException(nameof(image));
@@ -41,8 +41,8 @@ namespace UMapx.Video
         /// <summary>
         /// Elapsed frame timer.
         /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">e</param>
+        /// <param name="sender">sender.</param>
+        /// <param name="e">e.</param>
         private void OnElapsed(object sender, ElapsedEventArgs e)
         {
             lock (_locker)
@@ -60,7 +60,7 @@ namespace UMapx.Video
         /// <summary>
         /// Called when video source gets new frame.
         /// </summary>
-        /// <param name="frame">Frame</param>
+        /// <param name="frame">Frame.</param>
         private void OnNewFrame(Bitmap frame)
         {
             _framesReceived++;
@@ -233,7 +233,7 @@ namespace UMapx.Video
         /// Stop video source.
         /// </summary>
         /// 
-        /// <remarks>Not implemented</remarks>
+        /// <remarks>Not implemented.</remarks>
         /// 
         [Obsolete]
         public void Stop()
@@ -245,7 +245,7 @@ namespace UMapx.Video
         /// Wait for video source has stopped.
         /// </summary>
         /// 
-        /// <remarks>Not implemented</remarks>
+        /// <remarks>Not implemented.</remarks>
         [Obsolete]
         public void WaitForStop()
         {

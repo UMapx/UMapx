@@ -20,8 +20,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the bitmap filter.
         /// </summary>
-        /// <param name="filter">Filter</param>
-        /// <param name="space">Color space</param>
+        /// <param name="filter">Filter.</param>
+        /// <param name="space">Color space.</param>
         public BitmapFilter(IFilter filter, Space space = Space.RGB)
         {
             this.filter = filter;
@@ -58,7 +58,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public void Apply(BitmapData bmData)
         {
             // filter
@@ -84,7 +84,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -97,7 +97,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         private void ApplyRGB(BitmapData bmData)
         {
             float[][,] rgb = BitmapMatrix.ToRGB(bmData, true);
@@ -111,7 +111,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         private void ApplyHSB(BitmapData bmData)
         {
             float[][,] hsb = BitmapMatrix.ToHSB(bmData, true);
@@ -121,7 +121,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         private void ApplyHSL(BitmapData bmData)
         {
             float[][,] hsl = BitmapMatrix.ToHSL(bmData, true);
@@ -131,7 +131,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         private void ApplyYCbCr(BitmapData bmData)
         {
             float[][,] ycbcr = BitmapMatrix.ToYCbCr(bmData, true);
@@ -141,7 +141,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         private void ApplyGrayscale(BitmapData bmData)
         {
             float[,] y = BitmapMatrix.ToGrayscale(bmData);

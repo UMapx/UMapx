@@ -8,3 +8,6 @@
   Explain non-obvious numerical steps near the code.
 - Keep source code, comments, and project documentation in English; do not add
   Cyrillic characters.
+- End prose in XML documentation tags with a period, including summaries,
+  parameters, return values, and remarks. Keep code samples unchanged and put
+  sentence punctuation outside link targets.

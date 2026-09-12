@@ -12,7 +12,7 @@ namespace UMapx.Transform
     /// preserved. Zero width, zero sampling intervals, or no detail levels leave
     /// the input unchanged. Complex filtering is not supported.
     /// More information can be found on the website:
-    /// https://people.csail.mit.edu/sparis/publi/2011/siggraph/
+    /// <see href="https://people.csail.mit.edu/sparis/publi/2011/siggraph/"/>.
     /// </remarks>
     [Serializable]
     public class LocalLaplacianFilter : IFilter
@@ -44,11 +44,11 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the local Laplace pyramid filter.
         /// </summary>
-        /// <param name="radius">Radius</param>
-        /// <param name="sigma">σ-parameter</param>
-        /// <param name="n">Number of intensity sampling intervals; zero disables filtering</param>
-        /// <param name="levels">Number of levels</param>
-        /// <param name="factor">Factor [-1, 1]</param>
+        /// <param name="radius">Radius.</param>
+        /// <param name="sigma">σ-parameter.</param>
+        /// <param name="n">Number of intensity sampling intervals; zero disables filtering.</param>
+        /// <param name="levels">Number of levels.</param>
+        /// <param name="factor">Factor [-1, 1].</param>
         public LocalLaplacianFilter(int radius = 2, float sigma = 0.05f, int n = 10, int levels = 10, float factor = -1.0f)
         {
             this.Radius = radius;
@@ -133,7 +133,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(float[,] data)
         {
             Llfilter(data, this.radius, this.sigma, this.factor, this.n, this.levels);
@@ -141,7 +141,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(float[] data)
         {
             Llfilter(data, this.radius, this.sigma, this.factor, this.n, this.levels);
@@ -149,7 +149,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(Complex32[,] data)
         {
             throw new NotSupportedException();
@@ -157,7 +157,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(Complex32[] data)
         {
             throw new NotSupportedException();
@@ -182,12 +182,12 @@ namespace UMapx.Transform
         /// <summary>
         /// Local laplacian filter.
         /// </summary>
-        /// <param name="input">Input data</param>
-        /// <param name="radius">Radius</param>
-        /// <param name="sigma">Sigma</param>
-        /// <param name="factor">Factor</param>
-        /// <param name="n">Number of steps</param>
-        /// <param name="levels">Levels</param>
+        /// <param name="input">Input data.</param>
+        /// <param name="radius">Radius.</param>
+        /// <param name="sigma">Sigma.</param>
+        /// <param name="factor">Factor.</param>
+        /// <param name="n">Number of steps.</param>
+        /// <param name="levels">Levels.</param>
         private static void Llfilter(float[,] input, int radius, float sigma, float factor, int n, int levels)
         {
             // exception
@@ -270,12 +270,12 @@ namespace UMapx.Transform
         /// <summary>
         /// Local laplacian filter.
         /// </summary>
-        /// <param name="input">Input data</param>
-        /// <param name="radius">Radius</param>
-        /// <param name="sigma">Sigma</param>
-        /// <param name="factor">Factor</param>
-        /// <param name="n">Number of steps</param>
-        /// <param name="levels">Levels</param>
+        /// <param name="input">Input data.</param>
+        /// <param name="radius">Radius.</param>
+        /// <param name="sigma">Sigma.</param>
+        /// <param name="factor">Factor.</param>
+        /// <param name="n">Number of steps.</param>
+        /// <param name="levels">Levels.</param>
         private static void Llfilter(float[] input, int radius, float sigma, float factor, int n, int levels)
         {
             // exception
@@ -361,10 +361,10 @@ namespace UMapx.Transform
         /// <summary>
         /// Reconstruct function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="i">Increment</param>
-        /// <param name="step">Step</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="i">Increment.</param>
+        /// <param name="step">Step.</param>
+        /// <returns>Function.</returns>
         private static float Rec(float x, float i, float step)
         {
             float y = Math.Abs(x - i);
@@ -373,10 +373,10 @@ namespace UMapx.Transform
         /// <summary>
         /// Reconstruct function.
         /// </summary>
-        /// <param name="i">Increment</param>
-        /// <param name="step">Step</param>
-        /// <param name="length">Length of table</param>
-        /// <returns>Table</returns>
+        /// <param name="i">Increment.</param>
+        /// <param name="step">Step.</param>
+        /// <param name="length">Length of table.</param>
+        /// <returns>Table.</returns>
         private static float[] Rec(float i, float step, int length)
         {
             float[] table = new float[length];
@@ -390,11 +390,11 @@ namespace UMapx.Transform
         /// <summary>
         /// Remapping function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <param name="sigma">Sigma</param>
-        /// <param name="factor">Factor</param>
-        /// <param name="i">Increment</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <param name="sigma">Sigma.</param>
+        /// <param name="factor">Factor.</param>
+        /// <param name="i">Increment.</param>
+        /// <returns>Function.</returns>
         private static float Rem(float x, float sigma, float factor, float i)
         {
             float z = 2 * sigma * sigma;
@@ -404,11 +404,11 @@ namespace UMapx.Transform
         /// <summary>
         /// Remapping function.
         /// </summary>
-        /// <param name="sigma">Sigma</param>
-        /// <param name="factor">Factor</param>
-        /// <param name="i">Increment</param>
-        /// <param name="length">Length of table</param>
-        /// <returns>Table</returns>
+        /// <param name="sigma">Sigma.</param>
+        /// <param name="factor">Factor.</param>
+        /// <param name="i">Increment.</param>
+        /// <param name="length">Length of table.</param>
+        /// <returns>Table.</returns>
         private static float[] Rem(float sigma, float factor, float i, int length)
         {
             float[] table = new float[length];

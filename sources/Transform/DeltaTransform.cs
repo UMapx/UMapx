@@ -9,7 +9,7 @@ namespace UMapx.Transform
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Delta_encoding
+    /// <see href="https://en.wikipedia.org/wiki/Delta_encoding"/>.
     /// </remarks>
     [Serializable]
     public class DeltaTransform : TransformBase, ITransform
@@ -18,7 +18,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the delta transform.
         /// </summary>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="direction">Processing direction.</param>
         public DeltaTransform(Direction direction = Direction.Vertical)
         {
             Direction = direction;
@@ -29,8 +29,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="A">Array.</param>
+        /// <returns>Array.</returns>
         public float[] Forward(float[] A)
         {
             float[] B = (float[])A.Clone();
@@ -49,8 +49,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward transform.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="B">Array.</param>
+        /// <returns>Array.</returns>
         public float[] Backward(float[] B)
         {
             float[] A = (float[])B.Clone();
@@ -69,8 +69,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="A">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public float[,] Forward(float[,] A)
         {
             float[,] B = (float[,])A.Clone();
@@ -162,8 +162,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward transform.
         /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="B">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public float[,] Backward(float[,] B)
         {
             float[,] A = (float[,])B.Clone();
@@ -250,8 +250,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="A">Array.</param>
+        /// <returns>Array.</returns>
         public Complex32[] Forward(Complex32[] A)
         {
             Complex32[] B = (Complex32[])A.Clone();
@@ -270,8 +270,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward transform.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="B">Array.</param>
+        /// <returns>Array.</returns>
         public Complex32[] Backward(Complex32[] B)
         {
             Complex32[] A = (Complex32[])B.Clone();
@@ -290,8 +290,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="A">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public Complex32[,] Forward(Complex32[,] A)
         {
             Complex32[,] B = (Complex32[,])A.Clone();
@@ -383,8 +383,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward transform.
         /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="B">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public Complex32[,] Backward(Complex32[,] B)
         {
             Complex32[,] A = (Complex32[,])B.Clone();

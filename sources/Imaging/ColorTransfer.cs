@@ -21,9 +21,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the color transfer filter.
         /// </summary>
-        /// <param name="factor">Factor [0, 10]</param>
-        /// <param name="inverted">Inverted or not</param>
-        /// <param name="space">Color space</param>
+        /// <param name="factor">Factor [0, 10].</param>
+        /// <param name="inverted">Inverted or not.</param>
+        /// <param name="space">Color space.</param>
         public ColorTransfer(float factor = 0.0f, bool inverted = false, Space space = Space.RGB)
         {
             Factor = factor;
@@ -79,8 +79,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb || bmSrc.PixelFormat != PixelFormat.Format32bppArgb)
@@ -108,8 +108,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="Src">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="Src">Bitmap.</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -124,8 +124,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         private unsafe void ApplyRGB(BitmapData bmData, BitmapData bmSrc)
         {
             var target = BitmapMatrix.ToRGB(bmData);
@@ -136,8 +136,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         private unsafe void ApplyHSB(BitmapData bmData, BitmapData bmSrc)
         {
             var target = BitmapMatrix.ToHSB(bmData);
@@ -148,8 +148,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         private unsafe void ApplyHSL(BitmapData bmData, BitmapData bmSrc)
         {
             var target = BitmapMatrix.ToHSL(bmData);
@@ -160,8 +160,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         private unsafe void ApplyYCbCr(BitmapData bmData, BitmapData bmSrc)
         {
             var target = BitmapMatrix.ToYCbCr(bmData);

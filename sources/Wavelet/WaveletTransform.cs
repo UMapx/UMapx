@@ -11,7 +11,7 @@ namespace UMapx.Wavelet
     /// For the correct wavelet transform of a signal, it is necessary that its dimension be a power of 2.
     /// 
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Discrete_wavelet_transform
+    /// <see href="https://en.wikipedia.org/wiki/Discrete_wavelet_transform"/>.
     /// </remarks>
     [Serializable]
     public class WaveletTransform : IWaveletTransform, ITransform
@@ -24,7 +24,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Initializes the discrete wavelet transform.
         /// </summary>
-        /// <param name="waveletDecomposition">Discrete wavelet decomposition</param>
+        /// <param name="waveletDecomposition">Discrete wavelet decomposition.</param>
         public WaveletTransform(WaveletDecomposition waveletDecomposition)
         {
             WaveletDecomposition = waveletDecomposition;
@@ -49,8 +49,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Forward wavelet transform.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="A">Array.</param>
+        /// <returns>Array.</returns>
         public float[] Forward(float[] A)
         {
             var packs = waveletDecomposition.Forward(A);
@@ -69,8 +69,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Backward wavelet transform.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="B">Array.</param>
+        /// <returns>Array.</returns>
         public float[] Backward(float[] B)
         {
             int N = B.Length, L = Math.Min((int)Maths.Log2(N), waveletDecomposition.Levels);
@@ -90,8 +90,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Forward wavelet transform.
         /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="A">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public float[,] Forward(float[,] A)
         {
             var packs = waveletDecomposition.Forward(A); int L = (packs.Length - 1) / 3;
@@ -130,8 +130,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Backward wavelet transform.
         /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="B">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public float[,] Backward(float[,] B)
         {
             int R = B.GetLength(0), C = B.GetLength(1);
@@ -174,8 +174,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Forward wavelet transform.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="A">Array.</param>
+        /// <returns>Array.</returns>
         public Complex32[] Forward(Complex32[] A)
         {
             var packs = waveletDecomposition.Forward(A);
@@ -195,8 +195,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Backward wavelet transform.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="B">Array.</param>
+        /// <returns>Array.</returns>
         public Complex32[] Backward(Complex32[] B)
         {
             int N = B.Length, L = Math.Min((int)Maths.Log2(N), waveletDecomposition.Levels);
@@ -221,8 +221,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Forward wavelet transform.
         /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="A">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public Complex32[,] Forward(Complex32[,] A)
         {
             var packs = waveletDecomposition.Forward(A);
@@ -262,8 +262,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Backward wavelet transform.
         /// </summary>
-        /// <param name="B">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="B">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public Complex32[,] Backward(Complex32[,] B)
         {
             int R = B.GetLength(0), C = B.GetLength(1);

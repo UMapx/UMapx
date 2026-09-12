@@ -23,10 +23,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the CMYK filter.
         /// </summary>
-        /// <param name="cyan">Cyan [-1, 1]</param>
-        /// <param name="magenta">Magenta [-1, 1]</param>
-        /// <param name="yellow">Yellow [-1, 1]</param>
-        /// <param name="keycolor">Keycolor [-1, 1]</param>
+        /// <param name="cyan">Cyan [-1, 1].</param>
+        /// <param name="magenta">Magenta [-1, 1].</param>
+        /// <param name="yellow">Yellow [-1, 1].</param>
+        /// <param name="keycolor">Keycolor [-1, 1].</param>
         public CMYKFilter(float cyan, float magenta, float yellow, float keycolor)
         {
             Cyan = cyan;
@@ -100,7 +100,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap</param>
+        /// <param name="bmData">Bitmap.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -134,7 +134,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);

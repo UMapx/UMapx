@@ -9,7 +9,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// Filter usage example:
-    /// https://en.wikipedia.org/wiki/Salt-and-pepper_noise
+    /// <see href="https://en.wikipedia.org/wiki/Salt-and-pepper_noise"/>.
     /// </remarks>
     [Serializable]
     public class SaltAndPepper : IBitmapFilter
@@ -27,7 +27,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the salt and pepper noise filter.
         /// </summary>
-        /// <param name="amount">Amount [0, 100]</param>
+        /// <param name="amount">Amount [0, 100].</param>
         public SaltAndPepper(double amount)
         {
             Amount = amount;
@@ -49,7 +49,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -73,7 +73,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);

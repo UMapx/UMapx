@@ -19,9 +19,9 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Initializes the continuous complex frequency B-spline wavelet.
         /// </summary>
-        /// <param name="m">Order</param>
-        /// <param name="fb">Bandwidth</param>
-        /// <param name="fc">Center frequency</param>
+        /// <param name="m">Order.</param>
+        /// <param name="fb">Bandwidth.</param>
+        /// <param name="fc">Center frequency.</param>
         public Fbsp(float m = 3, float fb = 1, float fc = 2)
         {
             M = m; Fb = fb; Fc = fc;
@@ -74,8 +74,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the scaling function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public Complex32 Scaling(float x)
         {
             throw new NotSupportedException();
@@ -83,8 +83,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Returns the value of the wavelet function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Function</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Function.</returns>
         public Complex32 Wavelet(float x)
         {
             float a = Maths.Sqrt(fb);

@@ -9,7 +9,7 @@ namespace UMapx.Transform
     /// <remarks>
     /// This filter is a computationally effective analogue of a bilateral filter.
     /// More information can be found on the website:
-    /// http://www.inf.ufrgs.br/~eslgastal/DomainTransform/Gastal_Oliveira_SIGGRAPH2011_Domain_Transform.pdf
+    /// <see href="http://www.inf.ufrgs.br/~eslgastal/DomainTransform/Gastal_Oliveira_SIGGRAPH2011_Domain_Transform.pdf"/>.
     /// </remarks>
     [Serializable]
     public class DomainTransformFilter : IFilter
@@ -25,10 +25,10 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the domain transform filter.
         /// </summary>
-        /// <param name="sigma_s">σs</param>
-        /// <param name="sigma_r">σr</param>
-        /// <param name="iterations">Number of iterations</param>
-        /// <param name="factor">Factor [-1, 1]</param>
+        /// <param name="sigma_s">σs.</param>
+        /// <param name="sigma_r">σr.</param>
+        /// <param name="iterations">Number of iterations.</param>
+        /// <param name="factor">Factor [-1, 1].</param>
         public DomainTransformFilter(float sigma_s, float sigma_r, int iterations = 3, float factor = -1.0f)
         {
             SigmaS = sigma_s;
@@ -98,7 +98,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(float[] data)
         {
             // enhancement or not?
@@ -120,7 +120,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(float[,] data)
         {
             // enhancement or not?
@@ -144,7 +144,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(Complex32[] data)
         {
             // enhancement or not?
@@ -166,7 +166,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(Complex32[,] data)
         {
             // enhancement or not?
@@ -205,10 +205,10 @@ namespace UMapx.Transform
         /// <summary>
         /// Domain transform filter.
         /// </summary>
-        /// <param name="I">Input signal</param>
-        /// <param name="sigma_s">High sigma</param>
-        /// <param name="sigma_r">Low sigma</param>
-        /// <param name="iterations">Number of iterations</param>
+        /// <param name="I">Input signal.</param>
+        /// <param name="sigma_s">High sigma.</param>
+        /// <param name="sigma_r">Low sigma.</param>
+        /// <param name="iterations">Number of iterations.</param>
         private static void Domainfilter(float[,] I, float sigma_s, float sigma_r, int iterations = 3)
         {
             // params
@@ -256,10 +256,10 @@ namespace UMapx.Transform
         /// <summary>
         /// Domain transform filter.
         /// </summary>
-        /// <param name="I">Input signal</param>
-        /// <param name="sigma_s">High sigma</param>
-        /// <param name="sigma_r">Low sigma</param>
-        /// <param name="iterations">Number of iterations</param>
+        /// <param name="I">Input signal.</param>
+        /// <param name="sigma_s">High sigma.</param>
+        /// <param name="sigma_r">Low sigma.</param>
+        /// <param name="iterations">Number of iterations.</param>
         private static void Domainfilter(Complex32[,] I, float sigma_s, float sigma_r, int iterations = 3)
         {
             // params
@@ -307,10 +307,10 @@ namespace UMapx.Transform
         /// <summary>
         /// Domain transform filter.
         /// </summary>
-        /// <param name="I">Input signal</param>
-        /// <param name="sigma_s">High sigma</param>
-        /// <param name="sigma_r">Low sigma</param>
-        /// <param name="iterations">Number of iterations</param>
+        /// <param name="I">Input signal.</param>
+        /// <param name="sigma_s">High sigma.</param>
+        /// <param name="sigma_r">Low sigma.</param>
+        /// <param name="iterations">Number of iterations.</param>
         private static void Domainfilter(float[] I, float sigma_s, float sigma_r, int iterations = 3)
         {
             // params
@@ -345,10 +345,10 @@ namespace UMapx.Transform
         /// <summary>
         /// Domain transform filter.
         /// </summary>
-        /// <param name="I">Input signal</param>
-        /// <param name="sigma_s">High sigma</param>
-        /// <param name="sigma_r">Low sigma</param>
-        /// <param name="iterations">Number of iterations</param>
+        /// <param name="I">Input signal.</param>
+        /// <param name="sigma_s">High sigma.</param>
+        /// <param name="sigma_r">Low sigma.</param>
+        /// <param name="iterations">Number of iterations.</param>
         private static void Domainfilter(Complex32[] I, float sigma_s, float sigma_r, int iterations = 3)
         {
             // params
@@ -384,9 +384,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Transformed domain recursive filter (horizontal).
         /// </summary>
-        /// <param name="F">Input signal</param>
-        /// <param name="D">Difference</param>
-        /// <param name="sigma">Sigma</param>
+        /// <param name="F">Input signal.</param>
+        /// <param name="D">Difference.</param>
+        /// <param name="sigma">Sigma.</param>
         private static void Tdrf_h(float[,] F, float[,] D, float sigma)
         {
             // params
@@ -409,9 +409,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Transformed domain recursive filter (vertical).
         /// </summary>
-        /// <param name="F">Input signal</param>
-        /// <param name="D">Difference</param>
-        /// <param name="sigma">Sigma</param>
+        /// <param name="F">Input signal.</param>
+        /// <param name="D">Difference.</param>
+        /// <param name="sigma">Sigma.</param>
         private static void Tdrf_v(float[,] F, float[,] D, float sigma)
         {
             // params
@@ -434,9 +434,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Transformed domain recursive filter (horizontal).
         /// </summary>
-        /// <param name="F">Input signal</param>
-        /// <param name="D">Difference</param>
-        /// <param name="sigma">Sigma</param>
+        /// <param name="F">Input signal.</param>
+        /// <param name="D">Difference.</param>
+        /// <param name="sigma">Sigma.</param>
         private static void Tdrf_h(Complex32[,] F, Complex32[,] D, float sigma)
         {
             // params
@@ -459,9 +459,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Transformed domain recursive filter (vertical).
         /// </summary>
-        /// <param name="F">Input signal</param>
-        /// <param name="D">Difference</param>
-        /// <param name="sigma">Sigma</param>
+        /// <param name="F">Input signal.</param>
+        /// <param name="D">Difference.</param>
+        /// <param name="sigma">Sigma.</param>
         private static void Tdrf_v(Complex32[,] F, Complex32[,] D, float sigma)
         {
             // params
@@ -485,9 +485,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Transformed domain recursive filter.
         /// </summary>
-        /// <param name="F">Input signal</param>
-        /// <param name="D">Difference</param>
-        /// <param name="sigma">Sigma</param>
+        /// <param name="F">Input signal.</param>
+        /// <param name="D">Difference.</param>
+        /// <param name="sigma">Sigma.</param>
         private static void Tdrf(float[] F, float[] D, float sigma)
         {
             // params
@@ -507,9 +507,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Transformed domain recursive filter.
         /// </summary>
-        /// <param name="F">Input signal</param>
-        /// <param name="D">Difference</param>
-        /// <param name="sigma">Sigma</param>
+        /// <param name="F">Input signal.</param>
+        /// <param name="D">Difference.</param>
+        /// <param name="sigma">Sigma.</param>
         private static void Tdrf(Complex32[] F, Complex32[] D, float sigma)
         {
             // params

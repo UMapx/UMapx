@@ -35,7 +35,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the frequency filter.
         /// </summary>
-        /// <param name="frequencyRange">Frequency range</param>
+        /// <param name="frequencyRange">Frequency range.</param>
         public FrequencyFilter(RangeInt frequencyRange)
         {
             this.frequencyRange = frequencyRange;
@@ -43,8 +43,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the frequency filter.
         /// </summary>
-        /// <param name="min">Minimum frequency</param>
-        /// <param name="max">Maximum frequency</param>
+        /// <param name="min">Minimum frequency.</param>
+        /// <param name="max">Maximum frequency.</param>
         public FrequencyFilter(int min, int max)
         {
             this.FrequencyRange = new RangeInt(min, max);
@@ -52,7 +52,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(float[,] data)
         {
             int height = data.GetLength(0);
@@ -85,7 +85,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(float[] data)
         {
             int length = data.Length;
@@ -109,7 +109,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(Complex32[,] data)
         {
             int height = data.GetLength(0);
@@ -143,7 +143,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(Complex32[] data)
         {
             int length = data.Length;

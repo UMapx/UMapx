@@ -19,7 +19,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Creates canvas.
         /// </summary>
-        /// <returns>Bitmap</returns>
+        /// <returns>Bitmap.</returns>
         Bitmap Create();
         #endregion
     }

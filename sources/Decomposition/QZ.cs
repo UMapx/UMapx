@@ -4,10 +4,10 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides real and complex generalized Schur decomposition</summary>
+    /// <summary>Provides real and complex generalized Schur decomposition.</summary>
     public static class QZ
     {
-        /// <summary>Computes the real generalized Schur factors A = Q S Z^T and B = Q T Z^T</summary>
+        /// <summary>Computes the real generalized Schur factors A = Q S Z^T and B = Q T Z^T.</summary>
         /// <param name="a">Finite nonempty square matrix A.</param>
         /// <param name="b">Finite square matrix B of the same order.</param>
         /// <param name="eps">Relative deflation tolerance with a roundoff floor.</param>
@@ -31,7 +31,7 @@ namespace UMapx.Decomposition
             return (InternalMatrixMath.Real(q), ss, tt, zz);
         }
 
-        /// <summary>Computes the complex generalized Schur factors A = Q S Z^H and B = Q T Z^H</summary>
+        /// <summary>Computes the complex generalized Schur factors A = Q S Z^H and B = Q T Z^H.</summary>
         /// <param name="a">Finite nonempty square matrix A.</param>
         /// <param name="b">Finite square matrix B of the same order; it may be singular.</param>
         /// <param name="eps">Relative deflation tolerance with a roundoff floor.</param>
@@ -45,7 +45,7 @@ namespace UMapx.Decomposition
             return (InternalMatrixMath.Single(d.Q), InternalMatrixMath.Single(d.S), InternalMatrixMath.Single(d.T), InternalMatrixMath.Single(d.Z));
         }
 
-        /// <summary>Recovers the real left transformation from both transformed matrices, including singular B</summary>
+        /// <summary>Recovers the real left transformation from both transformed matrices, including singular B.</summary>
         /// <param name="a">Original first matrix.</param>
         /// <param name="b">Original second matrix.</param>
         /// <param name="s">First Schur form.</param>
@@ -91,7 +91,7 @@ namespace UMapx.Decomposition
             return InternalMatrixMath.Multiply(w, InternalMatrixMath.Adjoint(svd.U));
         }
 
-        /// <summary>Reduces a complex pencil by unitary Hessenberg-triangular reduction and implicit single-shift QZ</summary>
+        /// <summary>Reduces a complex pencil by unitary Hessenberg-triangular reduction and implicit single-shift QZ.</summary>
         /// <param name="a">Private first square matrix.</param>
         /// <param name="b">Private second square matrix of the same order.</param>
         /// <param name="eps">Relative deflation tolerance.</param>
@@ -212,7 +212,7 @@ namespace UMapx.Decomposition
             return (q, a, b, z);
         }
 
-        /// <summary>Tests a Hessenberg subdiagonal against a local relative scale</summary>
+        /// <summary>Tests a Hessenberg subdiagonal against a local relative scale.</summary>
         /// <param name="a">Hessenberg matrix.</param>
         /// <param name="i">Subdiagonal row, greater than zero.</param>
         /// <param name="tolerance">Relative deflation threshold.</param>
@@ -224,7 +224,7 @@ namespace UMapx.Decomposition
             return C.Abs(a[i, i - 1]) <= tolerance * scale;
         }
 
-        /// <summary>Applies a left plane rotation to both matrices and updates Q</summary>
+        /// <summary>Applies a left plane rotation to both matrices and updates Q.</summary>
         /// <param name="a">First work matrix.</param>
         /// <param name="b">Second work matrix.</param>
         /// <param name="q">Left accumulator.</param>
@@ -239,7 +239,7 @@ namespace UMapx.Decomposition
             InternalMatrixMath.RotateColumns(q, i, j, c, C.Conjugate(s));
         }
 
-        /// <summary>Applies a right rotation to both matrices and updates Z</summary>
+        /// <summary>Applies a right rotation to both matrices and updates Z.</summary>
         /// <param name="a">First work matrix.</param>
         /// <param name="b">Second work matrix.</param>
         /// <param name="z">Right accumulator.</param>

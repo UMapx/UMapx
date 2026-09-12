@@ -20,8 +20,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the temperature correction filter.
         /// </summary>
-        /// <param name="temperature">Temperature [1E3K, 1E4K]</param>
-        /// <param name="strength">Strength [0, 1]</param>
+        /// <param name="temperature">Temperature [1E3K, 1E4K].</param>
+        /// <param name="strength">Strength [0, 1].</param>
         public TemperatureCorrection(float temperature, float strength = 0.5f)
         {
             Temperature = temperature; Strength = strength;

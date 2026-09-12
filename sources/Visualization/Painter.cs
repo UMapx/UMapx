@@ -94,8 +94,8 @@ namespace UMapx.Visualization
         /// <summary>
         /// Draws tracking and recognition results.
         /// </summary>
-        /// <param name="graphics">Graphics</param>
-        /// <param name="paintData">Paint data</param>
+        /// <param name="graphics">Graphics.</param>
+        /// <param name="paintData">Paint data.</param>
         public void Draw(Graphics graphics, params PaintData[] paintData)
         {
             int length = paintData.Length;
@@ -136,9 +136,9 @@ namespace UMapx.Visualization
         /// <summary>
         /// Draws tracking and recognition results.
         /// </summary>
-        /// <param name="graphics">Graphics</param>
-        /// <param name="title">Title</param>
-        /// <param name="rectangles">Rectangles</param>
+        /// <param name="graphics">Graphics.</param>
+        /// <param name="title">Title.</param>
+        /// <param name="rectangles">Rectangles.</param>
         private void Draw(Graphics graphics, string title, params Rectangle[] rectangles)
         {
             using var textBrush = new SolidBrush(TextColor);
@@ -179,8 +179,8 @@ namespace UMapx.Visualization
         /// <summary>
         /// Draws tracking and recognition results.
         /// </summary>
-        /// <param name="graphics">Graphics</param>
-        /// <param name="points">Points</param>
+        /// <param name="graphics">Graphics.</param>
+        /// <param name="points">Points.</param>
         private void Draw(Graphics graphics, params Point[] points)
         {
             using var b = new SolidBrush(PointPen.Color);
@@ -204,9 +204,9 @@ namespace UMapx.Visualization
         /// <summary>
         /// Draws tracking and recognition results.
         /// </summary>
-        /// <param name="graphics">GraphicsBitmap</param>
-        /// <param name="rectangles">Rectangles</param>
-        /// <param name="labels">Labels</param>
+        /// <param name="graphics">GraphicsBitmap.</param>
+        /// <param name="rectangles">Rectangles.</param>
+        /// <param name="labels">Labels.</param>
         private void Draw(Graphics graphics, Rectangle[] rectangles, params string[][] labels)
         {
             if (rectangles.Length != labels.Length)
@@ -265,11 +265,11 @@ namespace UMapx.Visualization
         /// <summary>
         /// Returns label string.
         /// </summary>
-        /// <param name="g">Graphics</param>
-        /// <param name="font">Font</param>
-        /// <param name="rectangle">Rectangle</param>
-        /// <param name="unit">Unit string</param>
-        /// <returns>String</returns>
+        /// <param name="g">Graphics.</param>
+        /// <param name="font">Font.</param>
+        /// <param name="rectangle">Rectangle.</param>
+        /// <param name="unit">Unit string.</param>
+        /// <returns>String.</returns>
         private static string GetLabel(Graphics g, Font font, Rectangle rectangle, params string[] unit)
         {
             var label = string.Empty;

@@ -18,9 +18,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates an instance of the structure CIE Lab.
         /// </summary>
-        /// <param name="l">Component L [0, 100]</param>
-        /// <param name="a">Component a [-127, 127]</param>
-        /// <param name="b">Component b [-127, 127]</param>
+        /// <param name="l">Component L [0, 100].</param>
+        /// <param name="a">Component a [-127, 127].</param>
+        /// <param name="b">Component b [-127, 127].</param>
         public LAB(float l, float a, float b)
         {
             this.l = (l > 100.0) ? 100.0f : ((l < 0) ? 0 : l);
@@ -75,9 +75,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the equality of two class objects.
         /// </summary>
-        /// <param name="item1">CIE Lab structure</param>
-        /// <param name="item2">CIE Lab structure</param>
-        /// <returns>Boolean</returns>
+        /// <param name="item1">CIE Lab structure.</param>
+        /// <param name="item2">CIE Lab structure.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator ==(LAB item1, LAB item2)
         {
             return (
@@ -89,9 +89,9 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Checks the inequality of two class objects.
         /// </summary>
-        /// <param name="item1">CIE Lab structure</param>
-        /// <param name="item2">CIE Lab structure</param>
-        /// <returns>Boolean</returns>
+        /// <param name="item1">CIE Lab structure.</param>
+        /// <param name="item2">CIE Lab structure.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator !=(LAB item1, LAB item2)
         {
             return !(item1 == item2);
@@ -102,8 +102,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Defines whether the specified System.Object is equal to the current System.Object.
         /// </summary>
-        /// <param name="obj">Element</param>
-        /// <returns>Boolean</returns>
+        /// <param name="obj">Element.</param>
+        /// <returns>Boolean.</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -113,7 +113,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Plays the role of a hash function of a certain type.
         /// </summary>
-        /// <returns>Integer number</returns>
+        /// <returns>Integer number.</returns>
         public override int GetHashCode()
         {
             return l.GetHashCode() ^ a.GetHashCode() ^ b.GetHashCode();
@@ -121,7 +121,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Returns a System.String object that represents the current object.
         /// </summary>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public override string ToString()
         {
             return $"{l}{Environment.NewLine}{a}{Environment.NewLine}{b}";
@@ -132,7 +132,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Structure</returns>
+        /// <returns>Structure.</returns>
         object ICloneable.Clone()
         {
             return new LAB(this.l, this.a, this.b);
@@ -140,7 +140,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Creates a copy of the color model.
         /// </summary>
-        /// <returns>Structure</returns>
+        /// <returns>Structure.</returns>
         public LAB Clone()
         {
             return new LAB(this.l, this.a, this.b);
@@ -151,10 +151,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from CIE Lab to CIE XYZ.
         /// </summary>
-        /// <param name="l">Component L</param>
-        /// <param name="a">Component a</param>
-        /// <param name="b">Component b</param>
-        /// <returns>CIE XYZ structure</returns>
+        /// <param name="l">Component L.</param>
+        /// <param name="a">Component a.</param>
+        /// <param name="b">Component b.</param>
+        /// <returns>CIE XYZ structure.</returns>
         public static XYZ ToXYZ(float l, float a, float b)
         {
             float theta = 6.0f / 29.0f;
@@ -174,8 +174,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from CIE Lab to CIE XYZ.
         /// </summary>
-        /// <param name="lab">CIE Lab structure</param>
-        /// <returns>CIE XYZ structure</returns>
+        /// <param name="lab">CIE Lab structure.</param>
+        /// <returns>CIE XYZ structure.</returns>
         public static XYZ ToXYZ(LAB lab)
         {
             return LAB.ToXYZ(lab.L, lab.A, lab.B);
@@ -183,10 +183,10 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from RGB to CIE Lab.
         /// </summary>
-        /// <param name="red">Red [0, 255]</param>
-        /// <param name="green">Green [0, 255]</param>
-        /// <param name="blue">Blue [0, 255]</param>
-        /// <returns>CIE Lab structure</returns>
+        /// <param name="red">Red [0, 255].</param>
+        /// <param name="green">Green [0, 255].</param>
+        /// <param name="blue">Blue [0, 255].</param>
+        /// <returns>CIE Lab structure.</returns>
         public static LAB FromRGB(int red, int green, int blue)
         {
             return XYZ.ToLAB(XYZ.FromRGB(red, green, blue));
@@ -194,8 +194,8 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from RGB to CIE Lab.
         /// </summary>
-        /// <param name="rgb">RGB structure</param>
-        /// <returns>CIE Lab structure</returns>
+        /// <param name="rgb">RGB structure.</param>
+        /// <returns>CIE Lab structure.</returns>
         public static LAB FromRGB(RGB rgb)
         {
             return XYZ.ToLAB(XYZ.FromRGB(rgb.Red, rgb.Green, rgb.Blue));
@@ -206,7 +206,7 @@ namespace UMapx.Colorspace
         /// <summary>
         /// Converts from CIE Lab to RGB.
         /// </summary>
-        /// <returns>RGB structure</returns>
+        /// <returns>RGB structure.</returns>
         public RGB ToRGB
         {
             get

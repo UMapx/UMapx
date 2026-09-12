@@ -13,7 +13,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the multidimensional filter.
         /// </summary>
-        /// <param name="filter">IFilter</param>
+        /// <param name="filter">IFilter.</param>
         public MultidimensionalFilter(IFilter filter)
         {
             this.Filter = filter;
@@ -28,7 +28,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward multidimensional filter.
         /// </summary>
-        /// <param name="A">Jagged array</param>
+        /// <param name="A">Jagged array.</param>
         public void Apply(params float[][] A)
         {
             int count = A.Length;
@@ -41,7 +41,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward multidimensional filter.
         /// </summary>
-        /// <param name="A">Jagged matrix</param>
+        /// <param name="A">Jagged matrix.</param>
         public void Apply(params float[][,] A)
         {
             int count = A.Length;
@@ -54,7 +54,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward multidimensional filter.
         /// </summary>
-        /// <param name="A">Jagged array</param>
+        /// <param name="A">Jagged array.</param>
         public void Apply(params Complex32[][] A)
         {
             int count = A.Length;
@@ -67,7 +67,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward multidimensional filter.
         /// </summary>
-        /// <param name="A">Jagged matrix</param>
+        /// <param name="A">Jagged matrix.</param>
         public void Apply(params Complex32[][,] A)
         {
             int count = A.Length;

@@ -14,7 +14,7 @@ namespace UMapx.Video
     /// <remarks><para>The video source downloads JPEG images from the specified URL, which represents
     /// MJPEG stream.</para>
     /// 
-    /// <para>Sample usage:</para>
+    /// <para>Sample usage.</para>
     /// <code>
     /// // create MJPEG video source
     /// MJPEGStream stream = new MJPEGStream( "some url" );
@@ -265,7 +265,7 @@ namespace UMapx.Video
         /// <summary>
         /// Checks whether the worker thread is active.
         /// </summary>
-        /// <returns><c>true</c> if running; otherwise, false</returns>
+        /// <returns><c>true</c> if running; otherwise, false.</returns>
         private bool IsThreadRunning()
         {
             bool isRunning = false;
@@ -324,7 +324,7 @@ namespace UMapx.Video
         /// Initializes a new instance of the <see cref="MJPEGStream"/> class.
         /// </summary>
         /// 
-        /// <param name="source">URL, which provides MJPEG stream</param>
+        /// <param name="source">URL, which provides MJPEG stream.</param>
         /// 
         public MJPEGStream(string source)
         {
@@ -339,7 +339,7 @@ namespace UMapx.Video
         /// object creates background thread and notifies about new frames with the
         /// help of <see cref="NewFrame"/> event.</remarks>
         /// 
-        /// <exception cref="ArgumentException">Video source is not specified</exception>
+        /// <exception cref="ArgumentException">Video source is not specified.</exception>
         /// 
         public void Start()
         {

@@ -12,7 +12,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://uk.mathworks.com/help/visionhdl/ug/contrast-adaptive-histogram-equalization.html
+    /// <see href="https://uk.mathworks.com/help/visionhdl/ug/contrast-adaptive-histogram-equalization.html"/>.
     /// </remarks>
     [Serializable]
     public class CLAHE : IBitmapFilter
@@ -29,9 +29,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes CLAHE filter.
         /// </summary>
-        /// <param name="tilesX">Number of tiles horizontally (>=1)</param>
-        /// <param name="tilesY">Number of tiles vertically (>=1)</param>
-        /// <param name="clipLimit">Contrast limit factor (>=0). 0 disables clipping</param>
+        /// <param name="tilesX">Number of tiles horizontally (>=1).</param>
+        /// <param name="tilesY">Number of tiles vertically (>=1).</param>
+        /// <param name="clipLimit">Contrast limit factor (>=0). 0 disables clipping.</param>
         public CLAHE(int tilesX = 8, int tilesY = 8, float clipLimit = 2.0f)
         {
             TilesX = tilesX;
@@ -65,7 +65,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -162,7 +162,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             var bmData = BitmapFormat.Lock32bpp(Data);
@@ -178,9 +178,9 @@ namespace UMapx.Imaging
         /// Remainder pixels are distributed by adding +1 to the first <c>rem</c> tiles.
         /// Example: size=10, tiles=3 → breaks: [0, 4, 7, 10].
         /// </summary>
-        /// <param name="size">Axis length in pixels (width or height)</param>
-        /// <param name="tiles">Number of tiles along this axis (>= 1)</param>
-        /// <returns>Array of length <c>tiles+1</c> with cumulative borders; segment i is [br[i], br[i+1])</returns>
+        /// <param name="size">Axis length in pixels (width or height).</param>
+        /// <param name="tiles">Number of tiles along this axis (>= 1).</param>
+        /// <returns>Array of length <c>tiles+1</c> with cumulative borders; segment i is [br[i], br[i+1]).</returns>
         private static int[] MakeBreaks(int size, int tiles)
         {
             var br = new int[tiles + 1];
@@ -203,8 +203,8 @@ namespace UMapx.Imaging
         /// Center is computed as the midpoint between inclusive pixel indices:
         /// mid([a, b)) ≈ (a + b - 1) / 2.
         /// </summary>
-        /// <param name="br">Breaks as produced by <see cref="MakeBreaks"/></param>
-        /// <returns>Array of tile center positions (float) aligned to pixel coordinates</returns>
+        /// <param name="br">Breaks as produced by <see cref="MakeBreaks"/>.</param>
+        /// <returns>Array of tile center positions (float) aligned to pixel coordinates.</returns>
         private static float[] MakeCenters(int[] br)
         {
             int tiles = br.Length - 1;
@@ -221,15 +221,15 @@ namespace UMapx.Imaging
         /// tile centers and their interpolation weights. This is used for bilinear interpolation across tiles.
         /// Complexity: O(n), no per-pixel binary search required.
         /// </summary>
-        /// <param name="n">Axis length in pixels (width or height)</param>
-        /// <param name="centers">Tile center coordinates from <see cref="MakeCenters"/> (sorted ascending)</param>
+        /// <param name="n">Axis length in pixels (width or height).</param>
+        /// <param name="centers">Tile center coordinates from <see cref="MakeCenters"/> (sorted ascending).</param>
         /// <returns>
-        /// Tuple of:
+        /// Tuple of.
         /// <list type="bullet">
-        /// <item><description><c>i0[p]</c> – index of left tile center for pixel p</description></item>
-        /// <item><description><c>i1[p]</c> – index of right tile center for pixel p (i0 or i0+1)</description></item>
-        /// <item><description><c>w0[p]</c> – weight for left center</description></item>
-        /// <item><description><c>w1[p]</c> – weight for right center (1 - w0)</description></item>
+        /// <item><description><c>i0[p]</c> – index of left tile center for pixel p.</description></item>
+        /// <item><description><c>i1[p]</c> – index of right tile center for pixel p (i0 or i0+1).</description></item>
+        /// <item><description><c>w0[p]</c> – weight for left center.</description></item>
+        /// <item><description><c>w1[p]</c> – weight for right center (1 - w0).</description></item>
         /// </list>
         /// </returns>
         private static (int[] i0, int[] i1, float[] w0, float[] w1) PrecomputeAxis(int n, float[] centers)
@@ -275,17 +275,17 @@ namespace UMapx.Imaging
         /// 2) applies contrast limiting with excess redistribution,
         /// 3) converts clipped histogram to equalization LUT via CDF normalization.
         /// </summary>
-        /// <param name="basePtr">Pointer to the first byte of the bitmap data</param>
-        /// <param name="stride">Stride in bytes of the bitmap row (may be &gt; width*4)</param>
-        /// <param name="x0">Inclusive left bound of the tile</param>
-        /// <param name="x1">Exclusive right bound of the tile</param>
-        /// <param name="y0">Inclusive top bound of the tile</param>
-        /// <param name="y1">Exclusive bottom bound of the tile</param>
+        /// <param name="basePtr">Pointer to the first byte of the bitmap data.</param>
+        /// <param name="stride">Stride in bytes of the bitmap row (may be &gt; width*4).</param>
+        /// <param name="x0">Inclusive left bound of the tile.</param>
+        /// <param name="x1">Exclusive right bound of the tile.</param>
+        /// <param name="y0">Inclusive top bound of the tile.</param>
+        /// <param name="y1">Exclusive bottom bound of the tile.</param>
         /// <param name="clipLimitFactor">
         /// Relative clip limit factor. Absolute limit per bin is
         /// <c>clip = clipLimitFactor * (tileArea / Bins)</c>. Use 0 to disable clipping.
         /// </param>
-        /// <returns>Byte LUT of length 256 mapping input luminance → equalized luminance</returns>
+        /// <returns>Byte LUT of length 256 mapping input luminance → equalized luminance.</returns>
         private unsafe static byte[] BuildTileLUT(
             byte* basePtr, int stride,
             int x0, int x1, int y0, int y1,

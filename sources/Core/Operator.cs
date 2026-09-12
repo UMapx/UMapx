@@ -11,7 +11,7 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the Roberts operator [2 x 2].
         /// </summary>
-        /// <returns>Matrix</returns>
+        /// <returns>Matrix.</returns>
         public static float[,] Roberts()
         {
             return new float[2, 2] { { 1, 0 }, { 0, -1 } };
@@ -19,7 +19,7 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the Prewitt operator [3 x 3].
         /// </summary>
-        /// <returns>Matrix</returns>
+        /// <returns>Matrix.</returns>
         public static float[,] Prewitt()
         {
             return new float[3, 3] { { -1, -1, -1 }, { 0, 0, 0 }, { 1, 1, 1 } };
@@ -27,7 +27,7 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the Sobel operator [3 x 3].
         /// </summary>
-        /// <returns>Matrix</returns>
+        /// <returns>Matrix.</returns>
         public static float[,] Sobel()
         {
             return new float[3, 3] { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } };
@@ -35,7 +35,7 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the Scharr operator [3 x 3].
         /// </summary>
-        /// <returns>Matrix</returns>
+        /// <returns>Matrix.</returns>
         public static float[,] Scharr()
         {
             return new float[3, 3] { { 3, 10, 3 }, { 0, 0, 0 }, { -3, -10, -3 } };
@@ -43,7 +43,7 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the Laplacian operator [3 x 3].
         /// </summary>
-        /// <returns>Matrix</returns>
+        /// <returns>Matrix.</returns>
         public static float[,] Laplacian()
         {
             return new float[3, 3] { { 0, 1, 0 }, { 1, -4, 1 }, { 0, 1, 0 } };
@@ -51,7 +51,7 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the diagonal Laplacian operator [3 x 3].
         /// </summary>
-        /// <returns>Matrix</returns>
+        /// <returns>Matrix.</returns>
         public static float[,] LaplacianDiagonal()
         {
             return new float[3, 3] { { 1, 1, 1 }, { 1, -8, 1 }, { 1, 1, 1 } };
@@ -59,7 +59,7 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the inverted Laplacian operator [3 x 3].
         /// </summary>
-        /// <returns>Matrix</returns>
+        /// <returns>Matrix.</returns>
         public static float[,] LaplacianInvert()
         {
             return new float[3, 3] { { -1, 0, -1 }, { 0, 4, 0 }, { -1, 0, -1 } };
@@ -70,8 +70,8 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the Roberts operator [2 x 2].
         /// </summary>
-        /// <param name="direction">Gradient direction</param>
-        /// <returns>Matrix</returns>
+        /// <param name="direction">Gradient direction.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] Roberts(Gradient direction)
         {
             float[,] H = new float[2, 2];
@@ -106,8 +106,8 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the Kirsch operator [3 x 3].
         /// </summary>
-        /// <param name="direction">Gradient direction</param>
-        /// <returns>Matrix</returns>
+        /// <param name="direction">Gradient direction.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] Kirsch(Gradient direction)
         {
             float[,] H = new float[3, 3];
@@ -169,11 +169,11 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the Gaussian blur filter.
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <param name="sigmaX">Standard deviation X (>0)</param>
-        /// <param name="sigmaY">Standard deviation Y (>0)</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <param name="sigmaX">Standard deviation X (>0).</param>
+        /// <param name="sigmaY">Standard deviation Y (>0).</param>
+        /// <returns>Matrix.</returns>
         public static float[,] Gaussian(int m, int l, float sigmaY, float sigmaX)
         {
             int r1 = m / 2;
@@ -193,11 +193,11 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the "unsharp masking" filter.
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <param name="sigmaX">Standard deviation X (>0)</param>
-        /// <param name="sigmaY">Standard deviation Y (>0)</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <param name="sigmaX">Standard deviation X (>0).</param>
+        /// <param name="sigmaY">Standard deviation Y (>0).</param>
+        /// <returns>Matrix.</returns>
         public static float[,] Unsharp(int m, int l, float sigmaY, float sigmaX)
         {
             float[,] G = new float[m, l];
@@ -235,10 +235,10 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the high-pass filter.
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <param name="boost">Boost</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <param name="boost">Boost.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] HighPass(int m, int l, float boost)
         {
             int r1 = m / 2;
@@ -259,9 +259,9 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the low-pass filter.
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] LowPass(int m, int l)
         {
             return Operator.HighPass(m, l, 1);
@@ -269,8 +269,8 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of the emboss filter.
         /// </summary>
-        /// <param name="radius">Size</param>
-        /// <returns>Matrix</returns>
+        /// <param name="radius">Size.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] Emboss(int radius)
         {
             float[,] H = new float[radius, radius];
@@ -285,10 +285,10 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the motion blur filter.
         /// </summary>
-        /// <param name="radius">Size</param>
-        /// <param name="angle">Angle in degrees</param>
-        /// <param name="blur">Edge blur factor [0, 1]</param>
-        /// <returns>Matrix</returns>
+        /// <param name="radius">Size.</param>
+        /// <param name="angle">Angle in degrees.</param>
+        /// <param name="blur">Edge blur factor [0, 1].</param>
+        /// <returns>Matrix.</returns>
         public static float[,] MotionBlur(int radius, float angle, float blur)
         {
             if (radius < 1) radius = 1;

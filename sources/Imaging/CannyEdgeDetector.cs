@@ -12,7 +12,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Canny_edge_detector
+    /// <see href="https://en.wikipedia.org/wiki/Canny_edge_detector"/>.
     /// </remarks>
     [Serializable]
     public class CannyEdgeDetector : IBitmapFilter2, IBitmapFilter
@@ -27,9 +27,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Canny edge detector.
         /// </summary>
-        /// <param name="lowThreshold">Low threshold</param>
-        /// <param name="highThreshold">High threshold</param>
-        /// <param name="radius">Gaussian blur radius</param>
+        /// <param name="lowThreshold">Low threshold.</param>
+        /// <param name="highThreshold">High threshold.</param>
+        /// <param name="radius">Gaussian blur radius.</param>
         public CannyEdgeDetector(float lowThreshold = 20f, float highThreshold = 60f, int radius = 2)
         {
             LowThreshold = lowThreshold;
@@ -81,8 +81,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (bmData.Width != bmSrc.Width || bmData.Height != bmSrc.Height)
@@ -147,8 +147,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="Src">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="Src">Bitmap.</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -160,7 +160,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public void Apply(BitmapData bmData)
         {
             Bitmap Src = BitmapFormat.ToBitmap(bmData);
@@ -172,7 +172,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             var Src = (Bitmap)Data.Clone();
@@ -185,9 +185,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply Gaussian blur.
         /// </summary>
-        /// <param name="src">Source</param>
-        /// <param name="dst">Destination</param>
-        /// <param name="radius">Radius</param>
+        /// <param name="src">Source.</param>
+        /// <param name="dst">Destination.</param>
+        /// <param name="radius">Radius.</param>
         private void GaussianBlur(float[,] src, float[,] dst, int radius)
         {
             int size = 2 * radius + 1;
@@ -243,11 +243,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply Sobel filter.
         /// </summary>
-        /// <param name="blurred">Blurred source</param>
-        /// <param name="gx">Gx</param>
-        /// <param name="gy">Gy</param>
-        /// <param name="magnitude">Magnitude</param>
-        /// <param name="angle">Angle</param>
+        /// <param name="blurred">Blurred source.</param>
+        /// <param name="gx">Gx.</param>
+        /// <param name="gy">Gy.</param>
+        /// <param name="magnitude">Magnitude.</param>
+        /// <param name="angle">Angle.</param>
         private void ApplySobel(float[,] blurred, float[,] gx, float[,] gy, float[,] magnitude, float[,] angle)
         {
             int width = blurred.GetLength(1);
@@ -291,9 +291,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Non-max suppression.
         /// </summary>
-        /// <param name="mag">Magnitude</param>
-        /// <param name="dir">Dir</param>
-        /// <param name="output">Output</param>
+        /// <param name="mag">Magnitude.</param>
+        /// <param name="dir">Dir.</param>
+        /// <param name="output">Output.</param>
         private void NonMaximumSuppression(float[,] mag, float[,] dir, float[,] output)
         {
             int width = mag.GetLength(1);
@@ -338,10 +338,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Hysteresis.
         /// </summary>
-        /// <param name="nms">NMS</param>
-        /// <param name="edges">Edges</param>
-        /// <param name="low">Low</param>
-        /// <param name="high">High</param>
+        /// <param name="nms">NMS.</param>
+        /// <param name="edges">Edges.</param>
+        /// <param name="low">Low.</param>
+        /// <param name="high">High.</param>
         private void Hysteresis(float[,] nms, bool[,] edges, float low, float high)
         {
             int width = nms.GetLength(1);
@@ -364,12 +364,12 @@ namespace UMapx.Imaging
         /// <summary>
         /// Follow edge.
         /// </summary>
-        /// <param name="x">X</param>
-        /// <param name="y">Y</param>
-        /// <param name="nms">NMS</param>
-        /// <param name="edges">Edges</param>
-        /// <param name="visited">Visited</param>
-        /// <param name="low">Low</param>
+        /// <param name="x">X.</param>
+        /// <param name="y">Y.</param>
+        /// <param name="nms">NMS.</param>
+        /// <param name="edges">Edges.</param>
+        /// <param name="visited">Visited.</param>
+        /// <param name="low">Low.</param>
         private void FollowEdge(int x, int y, float[,] nms, bool[,] edges, bool[,] visited, float low)
         {
             if (x < 1 || y < 1 || x >= nms.GetLength(1) - 1 || y >= nms.GetLength(0) - 1)

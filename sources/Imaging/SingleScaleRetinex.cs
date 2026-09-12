@@ -8,7 +8,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://dragon.larc.nasa.gov/background/pubabs/papers/gspx1.pdf
+    /// <see href="https://dragon.larc.nasa.gov/background/pubabs/papers/gspx1.pdf"/>.
     /// </remarks>
     [Serializable]
     public class SingleScaleRetinex : LocalCorrection, IBitmapFilter2
@@ -23,11 +23,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Single Scale Retinex filter.
         /// </summary>
-        /// <param name="radius">Radius</param>
-        /// <param name="space">Color space</param>
-        /// <param name="a">Contrast [-1, 1]</param>
-        /// <param name="b">Offset (0, 1]</param>
-        /// <param name="nbase">Logarithm base</param>
+        /// <param name="radius">Radius.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="a">Contrast [-1, 1].</param>
+        /// <param name="b">Offset (0, 1].</param>
+        /// <param name="nbase">Logarithm base.</param>
         public SingleScaleRetinex(int radius, Space space, float a = 1, float b = 0, float nbase = Maths.Pi)
         {
             gb = new BoxBlur(radius);
@@ -36,12 +36,12 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Single Scale Retinex filter.
         /// </summary>
-        /// <param name="width">Filter width</param>
-        /// <param name="height">Filter height</param>
-        /// <param name="space">Color space</param>
-        /// <param name="a">Contrast [-1, 1]</param>
-        /// <param name="b">Offset (0, 1]</param>
-        /// <param name="nbase">Logarithm base</param>
+        /// <param name="width">Filter width.</param>
+        /// <param name="height">Filter height.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="a">Contrast [-1, 1].</param>
+        /// <param name="b">Offset (0, 1].</param>
+        /// <param name="nbase">Logarithm base.</param>
         public SingleScaleRetinex(int width, int height, Space space, float a = 1, float b = 0, float nbase = Maths.Pi)
         {
             gb = new BoxBlur(width, height);
@@ -50,11 +50,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the Single Scale Retinex filter.
         /// </summary>
-        /// <param name="size">Radius</param>
-        /// <param name="space">Color space</param>
-        /// <param name="a">Contrast [-1, 1]</param>
-        /// <param name="b">Offset (0, 1]</param>
-        /// <param name="nbase">Logarithm base</param>
+        /// <param name="size">Radius.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="a">Contrast [-1, 1].</param>
+        /// <param name="b">Offset (0, 1].</param>
+        /// <param name="nbase">Logarithm base.</param>
         public SingleScaleRetinex(SizeInt size, Space space, float a = 1, float b = 0, float nbase = Maths.Pi)
         {
             gb = new BoxBlur(size);

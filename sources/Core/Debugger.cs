@@ -29,7 +29,7 @@ namespace UMapx.Core
         /// <summary>
         /// Prints a value to console.
         /// </summary>
-        /// <param name="A">Value</param>
+        /// <param name="A">Value.</param>
         public static void Print(this object A)
         {
             Console.WriteLine(A);
@@ -38,8 +38,8 @@ namespace UMapx.Core
         /// <summary>
         /// Prints a vector to console.
         /// </summary>
-        /// <typeparam name="T">Type</typeparam>
-        /// <param name="A">Array</param>
+        /// <typeparam name="T">Type.</typeparam>
+        /// <param name="A">Array.</param>
         public static void Print<T>(this T[]A)
         {
             Debugger.Print<T>(A, false);
@@ -47,9 +47,9 @@ namespace UMapx.Core
         /// <summary>
         /// Prints a vector to console.
         /// </summary>
-        /// <typeparam name="T">Type</typeparam>
-        /// <param name="A">Array</param>
-        /// <param name="vertical">Vertical or not</param>
+        /// <typeparam name="T">Type.</typeparam>
+        /// <param name="A">Array.</param>
+        /// <param name="vertical">Vertical or not.</param>
         public static void Print<T>(this T[] A, bool vertical)
         {
             int n = A?.Length ?? 0;
@@ -148,8 +148,8 @@ namespace UMapx.Core
         /// <summary>
         /// Prints a matrix to console.
         /// </summary>
-        /// <typeparam name="T">Type</typeparam>
-        /// <param name="A">Matrix</param>
+        /// <typeparam name="T">Type.</typeparam>
+        /// <param name="A">Matrix.</param>
         public static void Print<T>(this T[,] A)
         {
             int m = A?.GetLength(0) ?? 0, n = A?.GetLength(1) ?? 0;
@@ -234,8 +234,8 @@ namespace UMapx.Core
         /// <summary>
         /// Prints jagged array to console.
         /// </summary>
-        /// <typeparam name="T">Type</typeparam>
-        /// <param name="A">Jagged array</param>
+        /// <typeparam name="T">Type.</typeparam>
+        /// <param name="A">Jagged array.</param>
         public static void Print<T>(this T[][] A)
         {
             int m = A?.GetLength(0) ?? 0, n = A?[0]?.GetLength(0) ?? 0;
@@ -324,7 +324,7 @@ namespace UMapx.Core
         /// Prints a simple reflection-based summary of an object's public properties and methods.
         /// </summary>
         /// <param name="T">
-        /// The target instance. (Note: parameter name is uppercase by design here; typically it's named <c>obj</c>.)
+        /// The target instance. (Note: parameter name is uppercase by design here; typically it's named <c>obj</c>.).
         /// </param>
         /// <param name="includeInherited">
         /// If <c>true</c>, include members inherited from base types; otherwise, only members declared on the object's exact type are included.

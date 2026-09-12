@@ -9,9 +9,9 @@
         /// <summary>
         /// Merges image tensors to single tensor.
         /// </summary>
-        /// <param name="image">RGB tensor arrays</param>
-        /// <param name="slice">Slice or not</param>
-        /// <returns>Byte array</returns>
+        /// <param name="image">RGB tensor arrays.</param>
+        /// <param name="slice">Slice or not.</param>
+        /// <returns>Byte array.</returns>
         public static byte[] Merge(this byte[][] image, bool slice = false)
         {
             int count = image.Length;
@@ -45,9 +45,9 @@
         /// <summary>
         /// Merges image tensors to single tensor.
         /// </summary>
-        /// <param name="image">RGB tensor arrays</param>
-        /// <param name="slice">Slice or not</param>
-        /// <returns>Float array</returns>
+        /// <param name="image">RGB tensor arrays.</param>
+        /// <param name="slice">Slice or not.</param>
+        /// <returns>Float array.</returns>
         public static float[] Merge(this float[][] image, bool slice = false)
         {
             int count = image.Length;
@@ -84,8 +84,8 @@
         /// <summary>
         /// Averages image tensors to single tensor.
         /// </summary>
-        /// <param name="image">RGB tensor arrays</param>
-        /// <returns>Byte array</returns>
+        /// <param name="image">RGB tensor arrays.</param>
+        /// <returns>Byte array.</returns>
         public static byte[] Average(this byte[][] image)
         {
             int count = image.Length;
@@ -110,8 +110,8 @@
         /// <summary>
         /// Averages image tensors to single tensor.
         /// </summary>
-        /// <param name="image">RGB tensor arrays</param>
-        /// <returns>Byte array</returns>
+        /// <param name="image">RGB tensor arrays.</param>
+        /// <returns>Byte array.</returns>
         public static float[] Average(this float[][] image)
         {
             int count = image.Length;
@@ -139,9 +139,9 @@
         /// <summary>
         /// Implements operator function.
         /// </summary>
-        /// <param name="image">RGB tensor arrays</param>
-        /// <param name="b">Vector</param>
-        /// <param name="tensorOperator">Operator</param>
+        /// <param name="image">RGB tensor arrays.</param>
+        /// <param name="b">Vector.</param>
+        /// <param name="tensorOperator">Operator.</param>
         public static void Compute(this float[][] image, float[] b, ITensorOperator tensorOperator)
         {
             int count = image.Length;
@@ -154,9 +154,9 @@
         /// <summary>
         /// Implements operator function.
         /// </summary>
-        /// <param name="image">RGB tensor arrays</param>
-        /// <param name="b">Value</param>
-        /// <param name="tensorOperator">Operator</param>
+        /// <param name="image">RGB tensor arrays.</param>
+        /// <param name="b">Value.</param>
+        /// <param name="tensorOperator">Operator.</param>
         public static void Compute(this float[][] image, float b, ITensorOperator tensorOperator)
         {
             int count = image.Length;
@@ -172,8 +172,8 @@
         /// <summary>
         /// Tensor operator.
         /// </summary>
-        /// <param name="a">Vector</param>
-        /// <param name="b">Value</param>
+        /// <param name="a">Vector.</param>
+        /// <param name="b">Value.</param>
         /// <returns></returns>
         public delegate float[] ITensorOperator(float[] a, float b);
         #endregion

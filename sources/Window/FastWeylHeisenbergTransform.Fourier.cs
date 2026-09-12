@@ -41,9 +41,9 @@ namespace UMapx.Window
         ///   O(M·L·log L) for the r-axis FFT/IFFT correlations + O(L·M·log M) for the n0→k assembly.
         ///   Memory uses O(L·M) only for two row-major workspaces C_main and C_half (no Xhat buffer).
         /// </summary>
-        /// <param name="A">Input signal A ∈ ℂ^N, N = M·L</param>
-        /// <param name="C">Polyphase cache holding S_hat and T_hat computed from the orthonormal window</param>
-        /// <returns>B ∈ ℂ^{2N}: main in B[0..N-1], half in B[N..2N-1], packed as u = l·M + k</returns>
+        /// <param name="A">Input signal A ∈ ℂ^N, N = M·L.</param>
+        /// <param name="C">Polyphase cache holding S_hat and T_hat computed from the orthonormal window.</param>
+        /// <returns>B ∈ ℂ^{2N}: main in B[0..N-1], half in B[N..2N-1], packed as u = l·M + k.</returns>
         internal static Complex32[] FWHT(Complex32[] A, PolyphaseCache C)
         {
             int N = A.Length;
@@ -173,10 +173,10 @@ namespace UMapx.Window
         /// Complexity:
         ///   O(L·M·log M) for IFFT_M over k + O(M·L·log L) for synthesis along the r-axis.
         /// </summary>
-        /// <param name="B">Input coefficients B ∈ ℂ^{2N}: main in [0..N-1], half in [N..2N-1]</param>
-        /// <param name="C">Polyphase cache with the same orthonormal window spectra S_hat/T_hat</param>
-        /// <param name="normalized">Normalized transform or not</param>
-        /// <returns>Reconstructed signal A ∈ ℂ^N</returns>
+        /// <param name="B">Input coefficients B ∈ ℂ^{2N}: main in [0..N-1], half in [N..2N-1].</param>
+        /// <param name="C">Polyphase cache with the same orthonormal window spectra S_hat/T_hat.</param>
+        /// <param name="normalized">Normalized transform or not.</param>
+        /// <returns>Reconstructed signal A ∈ ℂ^N.</returns>
         internal static Complex32[] IFWHT(Complex32[] B, PolyphaseCache C, bool normalized = true)
         {
             int N = C.N;
@@ -319,13 +319,13 @@ namespace UMapx.Window
         /// <para>
         /// Parameters:
         /// <list type="bullet">
-        /// <item><description><see cref="N"/> – total signal length</description></item>
-        /// <item><description><see cref="M"/> – number of frequency shifts (must be even)</description></item>
-        /// <item><description><see cref="L"/> – number of time shifts, L = N / M</description></item>
+        /// <item><description><see cref="N"/> – total signal length.</description></item>
+        /// <item><description><see cref="M"/> – number of frequency shifts (must be even).</description></item>
+        /// <item><description><see cref="L"/> – number of time shifts, L = N / M.</description></item>
         /// <item><description><see cref="S_hat"/> – FFT<sub>L</sub> of the main polyphase branch
-        /// s<sub>n0</sub>[r] = g[r*M + n0], dimensions [M, L]</description></item>
+        /// s<sub>n0</sub>[r] = g[r*M + n0], dimensions [M, L].</description></item>
         /// <item><description><see cref="T_hat"/> – FFT<sub>L</sub> of the half-shifted polyphase branch
-        /// t<sub>n0</sub>[r] = g[r*M + (n0 + M/2) mod M], dimensions [M, L]</description></item>
+        /// t<sub>n0</sub>[r] = g[r*M + (n0 + M/2) mod M], dimensions [M, L].</description></item>
         /// </list>
         /// </para>
         /// </summary>
@@ -365,11 +365,11 @@ namespace UMapx.Window
             /// <summary>
             /// Creates a new instance of the polyphase cache.
             /// </summary>
-            /// <param name="N">Total signal length</param>
-            /// <param name="M">Number of frequency shifts</param>
-            /// <param name="L">Number of time shifts</param>
-            /// <param name="S">FFT of the main branch polyphase components</param>
-            /// <param name="T">FFT of the half-shifted branch polyphase components</param>
+            /// <param name="N">Total signal length.</param>
+            /// <param name="M">Number of frequency shifts.</param>
+            /// <param name="L">Number of time shifts.</param>
+            /// <param name="S">FFT of the main branch polyphase components.</param>
+            /// <param name="T">FFT of the half-shifted branch polyphase components.</param>
             public PolyphaseCache(int N, int M, int L, Complex32[][] S, Complex32[][] T)
             {
                 this.N = N;
@@ -384,10 +384,10 @@ namespace UMapx.Window
             /// These cached arrays S_hat and T_hat are used in both Forward() and Backward()
             /// to avoid recomputing window FFTs for every transform call.
             /// </summary>
-            /// <param name="N">Total signal length</param>
-            /// <param name="Mloc">Number of frequency shifts M (must be even)</param>
-            /// <param name="window">Windows function</param>
-            /// <returns>Polyphase cache</returns>
+            /// <param name="N">Total signal length.</param>
+            /// <param name="Mloc">Number of frequency shifts M (must be even).</param>
+            /// <param name="window">Windows function.</param>
+            /// <returns>Polyphase cache.</returns>
             public static PolyphaseCache Build(int N, int Mloc, IWindow window)
             {
                 // If cache for the given N is already computed, reuse it
@@ -467,10 +467,10 @@ namespace UMapx.Window
         ///   0 →  1   (  0°)
         ///   1 → +j   (+90°)
         ///   2 → −1   (180°)
-        ///   3 → −j   (−90°)
+        ///   3 → −j   (−90°).
         /// </summary>
-        /// <param name="k">Frequency index (integer)</param>
-        /// <returns>Complex value of e^{+j * π * k / 2}</returns>
+        /// <param name="k">Frequency index (integer).</param>
+        /// <returns>Complex value of e^{+j * π * k / 2}.</returns>
         private static Complex32 PhasePlusPiOver2(int k)
         {
             // Fast k % 4 using bitwise AND with 3 (0b11).

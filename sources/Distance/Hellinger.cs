@@ -12,10 +12,10 @@ namespace UMapx.Distance
         /// <summary>
         /// Returns distance value.
         /// </summary>
-        /// <param name="p">Array of non-negative values</param>
-        /// <param name="q">Array of non-negative values</param>
-        /// <returns>Value</returns>
-        /// <exception cref="ArgumentException">Exception</exception>
+        /// <param name="p">Array of non-negative values.</param>
+        /// <param name="q">Array of non-negative values.</param>
+        /// <returns>Value.</returns>
+        /// <exception cref="ArgumentException">Exception.</exception>
         public override float Compute(float[] p, float[] q)
         {
             int n = p.Length;
@@ -35,10 +35,10 @@ namespace UMapx.Distance
         /// <summary>
         /// Returns distance value.
         /// </summary>
-        /// <param name="p">Array of complex numbers with non-negative real parts</param>
-        /// <param name="q">Array of complex numbers with non-negative real parts</param>
-        /// <returns>Value</returns>
-        /// <exception cref="ArgumentException">Exception</exception>
+        /// <param name="p">Array of complex numbers with non-negative real parts.</param>
+        /// <param name="q">Array of complex numbers with non-negative real parts.</param>
+        /// <returns>Value.</returns>
+        /// <exception cref="ArgumentException">Exception.</exception>
         public override Complex32 Compute(Complex32[] p, Complex32[] q)
         {
             int n = p.Length;

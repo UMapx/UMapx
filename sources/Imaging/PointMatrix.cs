@@ -13,9 +13,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Image width</param>
-        /// <param name="height">Image height</param>
-        /// <returns>Array of ordered pairs of X and Y</returns>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <returns>Array of ordered pairs of X and Y.</returns>
         public static PointInt[,] FlipY(int width, int height)
         {
             PointInt[,] matrix = new PointInt[width, height];
@@ -38,9 +38,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Image width</param>
-        /// <param name="height">Image height</param>
-        /// <returns>Array of ordered pairs of X and Y</returns>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <returns>Array of ordered pairs of X and Y.</returns>
         public static PointInt[,] FlipX(int width, int height)
         {
             PointInt[,] matrix = new PointInt[width, height];
@@ -63,10 +63,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Image width</param>
-        /// <param name="height">Image height</param>
-        /// <param name="value">Offset</param>
-        /// <returns>Array of ordered pairs of X and Y</returns>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="value">Offset.</param>
+        /// <returns>Array of ordered pairs of X and Y.</returns>
         public static PointInt[,] ShiftX(int width, int height, int value)
         {
             PointInt[,] matrix = new PointInt[width, height];
@@ -89,10 +89,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Image width</param>
-        /// <param name="height">Image height</param>
-        /// <param name="value">Offset</param>
-        /// <returns>Array of ordered pairs of X and Y</returns>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="value">Offset.</param>
+        /// <returns>Array of ordered pairs of X and Y.</returns>
         public static PointInt[,] ShiftY(int width, int height, int value)
         {
             PointInt[,] matrix = new PointInt[width, height];
@@ -115,10 +115,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Image width</param>
-        /// <param name="height">Image height</param>
-        /// <param name="value">Value [0, 100]</param>
-        /// <returns>Array of ordered pairs of X and Y</returns>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="value">Value [0, 100].</param>
+        /// <returns>Array of ordered pairs of X and Y.</returns>
         public static PointInt[,] Noise(int width, int height, int value)
         {
             PointInt[,] noise = new PointInt[width, height];
@@ -150,10 +150,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Image width</param>
-        /// <param name="height">Image height</param>
-        /// <param name="value">Value [0, 100]</param>
-        /// <returns>Array of ordered pairs of X and Y</returns>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="value">Value [0, 100].</param>
+        /// <returns>Array of ordered pairs of X and Y.</returns>
         public static PointInt[,] Pixelate(int width, int height, int value)
         {
             if (value < 1) value = 1;
@@ -181,11 +181,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Image width</param>
-        /// <param name="height">Image height</param>
-        /// <param name="value">Value [0, 100]</param>
-        /// <param name="thickness">Thickness (>0)</param>
-        /// <returns>Array of ordered pairs of X and Y</returns>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="value">Value [0, 100].</param>
+        /// <param name="thickness">Thickness (>0).</param>
+        /// <returns>Array of ordered pairs of X and Y.</returns>
         public static PointInt[,] Grid(int width, int height, int value, int thickness = 1)
         {
             if (width <= 0 || height <= 0)
@@ -227,10 +227,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the point matrix.
         /// </summary>
-        /// <param name="width">Image width</param>
-        /// <param name="height">Image height</param>
-        /// <param name="value">Value [0, 100]</param>
-        /// <returns>Array of ordered pairs of X and Y</returns>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="value">Value [0, 100].</param>
+        /// <returns>Array of ordered pairs of X and Y.</returns>
         public static PointInt[,] Water(int width, int height, int value)
         {
             PointInt[,] water = new PointInt[width, height];

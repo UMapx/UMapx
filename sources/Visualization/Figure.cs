@@ -27,7 +27,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Initializes the figure.
         /// </summary>
-        /// <param name="style">Figure style</param>
+        /// <param name="style">Figure style.</param>
         public Figure(FigureStyle style)
         {
             _style = style;
@@ -140,7 +140,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Draw figure to bitmap.
         /// </summary>
-        /// <param name="bitmap">Bitmap</param>
+        /// <param name="bitmap">Bitmap.</param>
         public void To(Bitmap bitmap)
         {
             using var graphics = Graphics.FromImage(bitmap);
@@ -149,7 +149,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Draw figure to graphics object.
         /// </summary>
-        /// <param name="graphics">Graphics</param>
+        /// <param name="graphics">Graphics.</param>
         public void To(Graphics graphics)
         {
             #region Figure
@@ -352,7 +352,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Show image at the figure.
         /// </summary>
-        /// <param name="bitmap">Bitmap</param>
+        /// <param name="bitmap">Bitmap.</param>
         public void Image(Bitmap bitmap)
         {
             _imagePane = bitmap;
@@ -360,7 +360,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Add the plot series to the figure.
         /// </summary>
-        /// <param name="plotSeries">Plot series</param>
+        /// <param name="plotSeries">Plot series.</param>
         public void Plot(PlotSeries plotSeries)
         {
             if (plotSeries.X.Length != plotSeries.Y.Length)
@@ -390,13 +390,13 @@ namespace UMapx.Visualization
         /// - Marker appearance depends on <paramref name="type"/>; filled variants use <paramref name="depth"/> as stroke width.<br/>
         /// - For <see cref="ShapeType.None"/> a short line sample with a small square is drawn.
         /// </remarks>
-        /// <param name="g">Target <see cref="Graphics"/> surface</param>
-        /// <param name="cx">Left X pixel of the marker box</param>
-        /// <param name="cy">Vertical center Y pixel of the marker box</param>
-        /// <param name="size">Marker box size (width and height)</param>
-        /// <param name="color">Marker color</param>
-        /// <param name="type">Graph marker type</param>
-        /// <param name="depth">Stroke thickness for outline</param>
+        /// <param name="g">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="cx">Left X pixel of the marker box.</param>
+        /// <param name="cy">Vertical center Y pixel of the marker box.</param>
+        /// <param name="size">Marker box size (width and height).</param>
+        /// <param name="color">Marker color.</param>
+        /// <param name="type">Graph marker type.</param>
+        /// <param name="depth">Stroke thickness for outline.</param>
         private void DrawLegendMarker(Graphics g, int cx, int cy, int size, Color color, ShapeType type, float depth)
         {
             int half = size / 2;
@@ -445,11 +445,11 @@ namespace UMapx.Visualization
         /// - Invalid or out-of-range points (NaN/Inf/±∞ or clipped by axes) are skipped and break the polyline into segments.<br/>
         /// - Uses <see cref="DrawPolylineSkipInvalid"/> for robust rendering.
         /// </remarks>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="x">X data in world coordinates</param>
-        /// <param name="y">Y data in world coordinates</param>
-        /// <param name="depth">Stroke thickness</param>
-        /// <param name="color">Stroke color</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="x">X data in world coordinates.</param>
+        /// <param name="y">Y data in world coordinates.</param>
+        /// <param name="depth">Stroke thickness.</param>
+        /// <param name="color">Stroke color.</param>
         private void PlotLine(Graphics graphics, float[] x, float[] y, float depth, Color color)
         {
             using var pen = new Pen(color, depth);
@@ -462,13 +462,13 @@ namespace UMapx.Visualization
         /// - Each point is clipped to the current axes; invalid points are skipped.<br/>
         /// - When <paramref name="fill"/> is true, filled discs are drawn; otherwise only outlines are drawn.
         /// </remarks>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="x">X data in world coordinates</param>
-        /// <param name="y">Y data in world coordinates</param>
-        /// <param name="depth">Stroke thickness for outlines and connecting line</param>
-        /// <param name="color">Marker and line color</param>
-        /// <param name="radius">Marker diameter in pixels</param>
-        /// <param name="fill">Whether to fill the markers</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="x">X data in world coordinates.</param>
+        /// <param name="y">Y data in world coordinates.</param>
+        /// <param name="depth">Stroke thickness for outlines and connecting line.</param>
+        /// <param name="color">Marker and line color.</param>
+        /// <param name="radius">Marker diameter in pixels.</param>
+        /// <param name="fill">Whether to fill the markers.</param>
         private void PlotCircle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill)
         {
             using var br = new SolidBrush(color);
@@ -498,13 +498,13 @@ namespace UMapx.Visualization
         /// - Each point is clipped to the current axes; invalid points are skipped.<br/>
         /// - When <paramref name="fill"/> is true, filled squares are drawn; otherwise only outlines are drawn.
         /// </remarks>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="x">X data in world coordinates</param>
-        /// <param name="y">Y data in world coordinates</param>
-        /// <param name="depth">Stroke thickness for outlines and connecting line</param>
-        /// <param name="color">Marker and line color</param>
-        /// <param name="radius">Marker side length in pixels</param>
-        /// <param name="fill">Whether to fill the markers</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="x">X data in world coordinates.</param>
+        /// <param name="y">Y data in world coordinates.</param>
+        /// <param name="depth">Stroke thickness for outlines and connecting line.</param>
+        /// <param name="color">Marker and line color.</param>
+        /// <param name="radius">Marker side length in pixels.</param>
+        /// <param name="fill">Whether to fill the markers.</param>
         private void PlotRectangle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill)
         {
             using var br = new SolidBrush(color);
@@ -534,10 +534,10 @@ namespace UMapx.Visualization
         /// - Converts world coordinates to device pixels via <c>Points.X2Point</c> and <c>Points.Y2Point</c>.<br/>
         /// - Accumulates a segment until an invalid point is encountered, then draws and starts a new segment.
         /// </remarks>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="pen">Pen to draw with</param>
-        /// <param name="x">X data in world coordinates</param>
-        /// <param name="y">Y data in world coordinates</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="pen">Pen to draw with.</param>
+        /// <param name="x">X data in world coordinates.</param>
+        /// <param name="y">Y data in world coordinates.</param>
         private void DrawPolylineSkipInvalid(Graphics graphics, Pen pen, float[] x, float[] y)
         {
             var seg = new List<Point>(Math.Min(x.Length, y.Length));
@@ -571,11 +571,11 @@ namespace UMapx.Visualization
         /// - Uses the current Y-axis transform to locate the zero baseline.<br/>
         /// - Invalid/clipped points are skipped.
         /// </remarks>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="x">X data in world coordinates</param>
-        /// <param name="y">Y data in world coordinates</param>
-        /// <param name="depth">Stem thickness</param>
-        /// <param name="color">Stem color</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="x">X data in world coordinates.</param>
+        /// <param name="y">Y data in world coordinates.</param>
+        /// <param name="depth">Stem thickness.</param>
+        /// <param name="color">Stem color.</param>
         private void StemLine(Graphics graphics, float[] x, float[] y, float depth, Color color)
         {
             using var pen = new Pen(color, depth);
@@ -603,13 +603,13 @@ namespace UMapx.Visualization
         /// - Draws each marker (filled or outlined) and a vertical stem to y = 0.<br/>
         /// - Invalid/clipped points are skipped.
         /// </remarks>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="x">X data in world coordinates</param>
-        /// <param name="y">Y data in world coordinates</param>
-        /// <param name="depth">Stem/outline thickness</param>
-        /// <param name="color">Marker and stem color</param>
-        /// <param name="radius">Marker diameter in pixels</param>
-        /// <param name="fill">Whether to fill the marker</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="x">X data in world coordinates.</param>
+        /// <param name="y">Y data in world coordinates.</param>
+        /// <param name="depth">Stem/outline thickness.</param>
+        /// <param name="color">Marker and stem color.</param>
+        /// <param name="radius">Marker diameter in pixels.</param>
+        /// <param name="fill">Whether to fill the marker.</param>
         private void StemCircle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill)
         {
             using var br = new SolidBrush(color);
@@ -642,13 +642,13 @@ namespace UMapx.Visualization
         /// - Draws each marker (filled or outlined) and a vertical stem to y = 0.<br/>
         /// - Invalid/clipped points are skipped.
         /// </remarks>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="x">X data in world coordinates</param>
-        /// <param name="y">Y data in world coordinates</param>
-        /// <param name="depth">Stem/outline thickness</param>
-        /// <param name="color">Marker and stem color</param>
-        /// <param name="radius">Marker side length in pixels</param>
-        /// <param name="fill">Whether to fill the marker</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="x">X data in world coordinates.</param>
+        /// <param name="y">Y data in world coordinates.</param>
+        /// <param name="depth">Stem/outline thickness.</param>
+        /// <param name="color">Marker and stem color.</param>
+        /// <param name="radius">Marker side length in pixels.</param>
+        /// <param name="fill">Whether to fill the marker.</param>
         private void StemRectangle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill = false)
         {
             using var br = new SolidBrush(color);
@@ -683,11 +683,11 @@ namespace UMapx.Visualization
         /// <remarks>
         /// - Delegates to <see cref="DrawPolylineSkipInvalid"/> to handle invalid/clipped points.
         /// </remarks>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="x">X data in world coordinates</param>
-        /// <param name="y">Y data in world coordinates</param>
-        /// <param name="depth">Stroke thickness</param>
-        /// <param name="color">Stroke color</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="x">X data in world coordinates.</param>
+        /// <param name="y">Y data in world coordinates.</param>
+        /// <param name="depth">Stroke thickness.</param>
+        /// <param name="color">Stroke color.</param>
         private void ScatterLine(Graphics graphics, float[] x, float[] y, float depth, Color color)
         {
             using var pen = new Pen(color, depth);
@@ -699,13 +699,13 @@ namespace UMapx.Visualization
         /// <remarks>
         /// - Invalid/clipped points are skipped. No connecting line is drawn.
         /// </remarks>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="x">X data in world coordinates</param>
-        /// <param name="y">Y data in world coordinates</param>
-        /// <param name="depth">Outline thickness when <paramref name="fill"/> is false</param>
-        /// <param name="color">Marker color</param>
-        /// <param name="radius">Marker diameter in pixels</param>
-        /// <param name="fill">Whether to fill the markers</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="x">X data in world coordinates.</param>
+        /// <param name="y">Y data in world coordinates.</param>
+        /// <param name="depth">Outline thickness when <paramref name="fill"/> is false.</param>
+        /// <param name="color">Marker color.</param>
+        /// <param name="radius">Marker diameter in pixels.</param>
+        /// <param name="fill">Whether to fill the markers.</param>
         private void ScatterCircle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill)
         {
             using var br = new SolidBrush(color);
@@ -733,13 +733,13 @@ namespace UMapx.Visualization
         /// <remarks>
         /// - Invalid/clipped points are skipped. No connecting line is drawn.
         /// </remarks>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="x">X data in world coordinates</param>
-        /// <param name="y">Y data in world coordinates</param>
-        /// <param name="depth">Outline thickness when <paramref name="fill"/> is false</param>
-        /// <param name="color">Marker color</param>
-        /// <param name="radius">Marker side length in pixels</param>
-        /// <param name="fill">Whether to fill the markers</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="x">X data in world coordinates.</param>
+        /// <param name="y">Y data in world coordinates.</param>
+        /// <param name="depth">Outline thickness when <paramref name="fill"/> is false.</param>
+        /// <param name="color">Marker color.</param>
+        /// <param name="radius">Marker side length in pixels.</param>
+        /// <param name="fill">Whether to fill the markers.</param>
         private void ScatterRectangle(Graphics graphics, float[] x, float[] y, float depth, Color color, float radius, bool fill = false)
         {
             using var br = new SolidBrush(color);
@@ -774,11 +774,11 @@ namespace UMapx.Visualization
         ///   offset <paramref name="dh"/>; Y labels are drawn to the left of the plot area, right-aligned to avoid overlap.
         /// - Singular values (NaN/Inf) are converted to empty strings by <c>GetNumString</c>.
         /// </remarks>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="X">X-axis tick positions in world coordinates</param>
-        /// <param name="Y">Y-axis tick positions in world coordinates</param>
-        /// <param name="dw">Left/right drawable-area offset (margin/padding) in pixels</param>
-        /// <param name="dh">Top/bottom drawable-area offset (margin/padding) in pixels</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="X">X-axis tick positions in world coordinates.</param>
+        /// <param name="Y">Y-axis tick positions in world coordinates.</param>
+        /// <param name="dw">Left/right drawable-area offset (margin/padding) in pixels.</param>
+        /// <param name="dh">Top/bottom drawable-area offset (margin/padding) in pixels.</param>
         private void Paint_Numerics(Graphics graphics, float[] X, float[] Y, int dw, int dh)
         {
             if (X.Length == 0) return; if (Y.Length == 0) return;
@@ -818,11 +818,11 @@ namespace UMapx.Visualization
         /// - The tick length is derived from the minimum of <paramref name="dx"/> and <paramref name="dy"/> (1/8 of that value).<br/>
         /// - Finally, draws a 1-pixel border rectangle enclosing the drawable plot area.
         /// </remarks>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="X">X-axis tick positions in world coordinates</param>
-        /// <param name="Y">Y-axis tick positions in world coordinates</param>
-        /// <param name="dx">Horizontal padding/margin in pixels affecting tick sizing</param>
-        /// <param name="dy">Vertical padding/margin in pixels affecting tick sizing</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="X">X-axis tick positions in world coordinates.</param>
+        /// <param name="Y">Y-axis tick positions in world coordinates.</param>
+        /// <param name="dx">Horizontal padding/margin in pixels affecting tick sizing.</param>
+        /// <param name="dy">Vertical padding/margin in pixels affecting tick sizing.</param>
         private void Paint_Shapes(Graphics graphics, float[] X, float[] Y, int dx, int dy)
         {
             if (X.Length == 0) return; if (Y.Length == 0) return;
@@ -859,9 +859,9 @@ namespace UMapx.Visualization
         /// - Applies <see cref="Grid.Style"/>: solid, dashed with custom dash/gap lengths, or dotted with rounded caps.<br/>
         /// - For each X tick draws a full-height vertical grid line; for each Y tick draws a full-width horizontal line.
         /// </remarks>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="X">X-axis tick positions in world coordinates</param>
-        /// <param name="Y">Y-axis tick positions in world coordinates</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="X">X-axis tick positions in world coordinates.</param>
+        /// <param name="Y">Y-axis tick positions in world coordinates.</param>
         private void Paint_Grid(Graphics graphics, float[] X, float[] Y)
         {
             if (X.Length == 0) return; if (Y.Length == 0) return;
@@ -904,7 +904,7 @@ namespace UMapx.Visualization
         /// - Computes content size from labels and marker size, positions the box by <see cref="Legend.Anchor"/>.<br/>
         /// - Applies background opacity and optional border based on legend style settings.
         /// </remarks>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
         private void Paint_Legend(Graphics graphics)
         {
             if (_plotSeries.Count == 0) return;
@@ -974,12 +974,12 @@ namespace UMapx.Visualization
         /// <summary>
         /// Draws the plot title centered at the top inside the drawable area.
         /// </summary>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="title">Title text</param>
-        /// <param name="sizeX">Total canvas width in pixels</param>
-        /// <param name="sizeY">Total canvas height in pixels</param>
-        /// <param name="dw">Horizontal padding/margin used by the layout</param>
-        /// <param name="dh">Vertical padding/margin used by the layout</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="title">Title text.</param>
+        /// <param name="sizeX">Total canvas width in pixels.</param>
+        /// <param name="sizeY">Total canvas height in pixels.</param>
+        /// <param name="dw">Horizontal padding/margin used by the layout.</param>
+        /// <param name="dh">Vertical padding/margin used by the layout.</param>
         private void Paint_Title(Graphics graphics, string title, int sizeX, int sizeY, int dw, int dh)
         {
             using var format = new StringFormat
@@ -994,12 +994,12 @@ namespace UMapx.Visualization
         /// <summary>
         /// Draws the X-axis label centered below the plot area.
         /// </summary>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="xlabel">X-axis label text</param>
-        /// <param name="sizeX">Total canvas width in pixels</param>
-        /// <param name="sizeY">Total canvas height in pixels</param>
-        /// <param name="dw">Horizontal padding/margin used by the layout</param>
-        /// <param name="dh">Vertical padding/margin used by the layout</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="xlabel">X-axis label text.</param>
+        /// <param name="sizeX">Total canvas width in pixels.</param>
+        /// <param name="sizeY">Total canvas height in pixels.</param>
+        /// <param name="dw">Horizontal padding/margin used by the layout.</param>
+        /// <param name="dh">Vertical padding/margin used by the layout.</param>
         private void Paint_LabelX(Graphics graphics, string xlabel, int sizeX, int sizeY, int dw, int dh)
         {
             using var format = new StringFormat
@@ -1015,12 +1015,12 @@ namespace UMapx.Visualization
         /// <summary>
         /// Draws the Y-axis label centered at the left, rotated 90°.
         /// </summary>
-        /// <param name="graphics">Target <see cref="Graphics"/> surface</param>
-        /// <param name="ylabel">Y-axis label text</param>
-        /// <param name="sizeX">Total canvas width in pixels</param>
-        /// <param name="sizeY">Total canvas height in pixels</param>
-        /// <param name="dw">Horizontal padding/margin used by the layout</param>
-        /// <param name="dh">Vertical padding/margin used by the layout</param>
+        /// <param name="graphics">Target <see cref="Graphics"/> surface.</param>
+        /// <param name="ylabel">Y-axis label text.</param>
+        /// <param name="sizeX">Total canvas width in pixels.</param>
+        /// <param name="sizeY">Total canvas height in pixels.</param>
+        /// <param name="dw">Horizontal padding/margin used by the layout.</param>
+        /// <param name="dh">Vertical padding/margin used by the layout.</param>
         private void Paint_LabelY(Graphics graphics, string ylabel, int sizeX, int sizeY, int dw, int dh)
         {
             using var fmt = new StringFormat
@@ -1068,8 +1068,8 @@ namespace UMapx.Visualization
         /// - Uses scientific notation for large magnitudes (≥ 1e4) or tiny nonzero magnitudes (&lt; 1e-3).<br/>
         /// - Otherwise prints up to three decimals.
         /// </remarks>
-        /// <param name="v">Value to format</param>
-        /// <returns>Formatted string for <paramref name="v"/>; empty for singular values</returns>
+        /// <param name="v">Value to format.</param>
+        /// <returns>Formatted string for <paramref name="v"/>; empty for singular values.</returns>
         private string GetNumString(float v)
         {
             if (Points.IsSingularPoint(v))

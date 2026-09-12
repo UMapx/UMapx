@@ -9,7 +9,7 @@ namespace UMapx.Wavelet
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://www.cs.huji.ac.il/w~raananf/projects/eaw/
+    /// <see href="https://www.cs.huji.ac.il/w~raananf/projects/eaw/"/>.
     /// </remarks>
     [Serializable]
     public class EdgeAvoidingWaveletFilter : IFilter
@@ -23,8 +23,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Initializes the edge-avoiding wavelet filter.
         /// </summary>
-        /// <param name="waveletDecomposition">Edge-avoiding wavelet decomposition</param>
-        /// <param name="factor">Factor [-1, 1]</param>
+        /// <param name="waveletDecomposition">Edge-avoiding wavelet decomposition.</param>
+        /// <param name="factor">Factor [-1, 1].</param>
         public EdgeAvoidingWaveletFilter(EdgeAvoidingWaveletDecomposition waveletDecomposition, float factor = -1.0f)
         {
             WaveletDecomposition = waveletDecomposition;
@@ -64,7 +64,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Applies edge-avoiding wavelet filter.
         /// </summary>
-        /// <param name="input">Input</param>
+        /// <param name="input">Input.</param>
         public void Apply(float[] input)
         {
             var dcmp = waveletDecomposition.Forward(input);
@@ -83,7 +83,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Applies edge-avoiding wavelet filter.
         /// </summary>
-        /// <param name="input">Input</param>
+        /// <param name="input">Input.</param>
         public void Apply(float[,] input)
         {
             var dcmp = waveletDecomposition.Forward(input);
@@ -103,7 +103,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Applies edge-avoiding wavelet filter.
         /// </summary>
-        /// <param name="input">Input</param>
+        /// <param name="input">Input.</param>
         public void Apply(Complex32[] input)
         {
             var dcmp = waveletDecomposition.Forward(input);
@@ -122,7 +122,7 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Applies edge-avoiding wavelet filter.
         /// </summary>
-        /// <param name="input">Input</param>
+        /// <param name="input">Input.</param>
         public void Apply(Complex32[,] input)
         {
             var dcmp = waveletDecomposition.Forward(input);

@@ -19,7 +19,7 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes the fast Zak transform.
         /// </summary>
-        /// <param name="m">Number of frequency shifts [4, N/2]</param>
+        /// <param name="m">Number of frequency shifts [4, N/2].</param>
         public FastZakTransform(int m)
         {
             M = m;
@@ -50,9 +50,9 @@ namespace UMapx.Window
         /// <summary>
         /// Forward Zak transform.
         /// </summary>
-        /// <param name="input">Array</param>
-        /// <returns>Matrix</returns>
-        /// <exception cref="ArgumentException">Exception</exception>
+        /// <param name="input">Array.</param>
+        /// <returns>Matrix.</returns>
+        /// <exception cref="ArgumentException">Exception.</exception>
         public Complex32[,] Forward(Complex32[] input)
         {
             int N = input.Length;
@@ -86,9 +86,9 @@ namespace UMapx.Window
         /// <summary>
         /// Forward Zak transform.
         /// </summary>
-        /// <param name="input">Array</param>
-        /// <returns>Matrix</returns>
-        /// <exception cref="ArgumentException">Exception</exception>
+        /// <param name="input">Array.</param>
+        /// <returns>Matrix.</returns>
+        /// <exception cref="ArgumentException">Exception.</exception>
         public Complex32[,] Forward(float[] input)
         {
             int N = input.Length;
@@ -123,9 +123,9 @@ namespace UMapx.Window
         /// <summary>
         /// Backward Zak transform.
         /// </summary>
-        /// <param name="matrix">Matrix</param>
-        /// <returns>Array</returns>
-        /// <exception cref="ArgumentException">Exception</exception>
+        /// <param name="matrix">Matrix.</param>
+        /// <returns>Array.</returns>
+        /// <exception cref="ArgumentException">Exception.</exception>
         public Complex32[] Backward(Complex32[,] matrix)
         {
             int N = matrix.GetLength(0);
@@ -154,8 +154,8 @@ namespace UMapx.Window
         /// <summary>
         /// Zak orthogonalization.
         /// </summary>
-        /// <param name="input">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="input">Array.</param>
+        /// <returns>Array.</returns>
         public float[] Orthogonalize(float[] input)
         {
             int N = input.Length;
@@ -216,8 +216,8 @@ namespace UMapx.Window
         /// <summary>
         /// Zak orthogonalization.
         /// </summary>
-        /// <param name="input">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="input">Array.</param>
+        /// <returns>Array.</returns>
         public Complex32[] Orthogonalize(Complex32[] input)
         {
             int N = input.Length;

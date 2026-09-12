@@ -22,9 +22,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the color canvas class.
         /// </summary>
-        /// <param name="width">Canvas width</param>
-        /// <param name="height">Canvas height</param>
-        /// <param name="color">Color</param>
+        /// <param name="width">Canvas width.</param>
+        /// <param name="height">Canvas height.</param>
+        /// <param name="color">Color.</param>
         public CanvasColor(int width, int height, Color color)
         {
             Width = width; Height = height; Color = color;
@@ -74,7 +74,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Creates canvas.
         /// </summary>
-        /// <returns>Bitmap</returns>
+        /// <returns>Bitmap.</returns>
         public Bitmap Create()
         {
             var bitmap = new Bitmap(width, height);

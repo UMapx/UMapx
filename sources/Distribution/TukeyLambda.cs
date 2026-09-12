@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Tukey_lambda_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Tukey_lambda_distribution"/>.
     /// </remarks>
     [Serializable]
     public class TukeyLambda : IDistribution
@@ -21,7 +21,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the Tukey-Lambda distribution with the specified shape parameter.
         /// </summary>
-        /// <param name="lambda">Shape parameter</param>
+        /// <param name="lambda">Shape parameter.</param>
         public TukeyLambda(float lambda = 0f)
         {
             this.lambda = lambda;
@@ -101,8 +101,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (lambda > 0f)
@@ -122,8 +122,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (lambda > 0f)

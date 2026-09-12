@@ -9,7 +9,7 @@ namespace UMapx.Wavelet
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://www.cs.huji.ac.il/w~raananf/projects/eaw/
+    /// <see href="https://www.cs.huji.ac.il/w~raananf/projects/eaw/"/>.
     /// </remarks>
     [Serializable]
     public class EdgeAvoidingWaveletDecomposition : IPyramidTransform
@@ -24,9 +24,9 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Initializes the edge-avoiding wavelet decomposition.
         /// </summary>
-        /// <param name="sigmaSpatial">Spatial smoothing factor</param>
-        /// <param name="sigmaRange">Range smoothing factor</param>
-        /// <param name="levels">Number of pyramid levels (>=1), including the base level</param>
+        /// <param name="sigmaSpatial">Spatial smoothing factor.</param>
+        /// <param name="sigmaRange">Range smoothing factor.</param>
+        /// <param name="levels">Number of pyramid levels (>=1), including the base level.</param>
         public EdgeAvoidingWaveletDecomposition(float sigmaSpatial = 4f, float sigmaRange = 0.1f, int levels = 3)
         {
             SigmaSpatial = sigmaSpatial;
@@ -84,8 +84,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Decomposes array into base and detail layers.
         /// </summary>
-        /// <param name="input">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="input">Array.</param>
+        /// <returns>Array.</returns>
         public float[][] Forward(float[] input)
         {
             var current = (float[])input.Clone();
@@ -111,8 +111,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Reconstructs array from base and detail layers.
         /// </summary>
-        /// <param name="input">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="input">Array.</param>
+        /// <returns>Array.</returns>
         public float[] Backward(float[][] input)
         {
             var result = (float[])input[0].Clone();
@@ -123,8 +123,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Decomposes matrix into base and detail layers.
         /// </summary>
-        /// <param name="input">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="input">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public float[][,] Forward(float[,] input)
         {
             var current = (float[,])input.Clone();
@@ -150,8 +150,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Reconstructs matrix from base and detail layers.
         /// </summary>
-        /// <param name="input">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="input">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public float[,] Backward(float[][,] input)
         {
             var result = (float[,])input[0].Clone();
@@ -162,8 +162,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Decomposes array into base and detail layers.
         /// </summary>
-        /// <param name="input">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="input">Array.</param>
+        /// <returns>Array.</returns>
         public Complex32[][] Forward(Complex32[] input)
         {
             var current = (Complex32[])input.Clone();
@@ -189,8 +189,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Reconstructs array from base and detail layers.
         /// </summary>
-        /// <param name="input">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="input">Array.</param>
+        /// <returns>Array.</returns>
         public Complex32[] Backward(Complex32[][] input)
         {
             var result = (Complex32[])input[0].Clone();
@@ -201,8 +201,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Decomposes matrix into base and detail layers.
         /// </summary>
-        /// <param name="input">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="input">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public Complex32[][,] Forward(Complex32[,] input)
         {
             var current = (Complex32[,])input.Clone();
@@ -228,8 +228,8 @@ namespace UMapx.Wavelet
         /// <summary>
         /// Reconstructs matrix from base and detail layers.
         /// </summary>
-        /// <param name="input">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="input">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public Complex32[,] Backward(Complex32[][,] input)
         {
             var result = (Complex32[,])input[0].Clone();

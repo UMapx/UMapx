@@ -16,8 +16,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the global contrast enhancement filter.
         /// </summary>
-        /// <param name="contrast">Contrast [-1, 1]</param>
-        /// <param name="space">Color space</param>
+        /// <param name="contrast">Contrast [-1, 1].</param>
+        /// <param name="space">Color space.</param>
         public ContrastEnhancement(float contrast, Space space)
         {
             Space = space; Contrast = contrast;

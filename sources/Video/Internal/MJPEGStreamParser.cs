@@ -5,7 +5,7 @@
     using System.IO;
 
     /// <summary>
-    /// Handles functionality related to parsing a MJPEG stream
+    /// Handles functionality related to parsing a MJPEG stream.
     /// </summary>
     public class MJPEGStreamParser
     {
@@ -24,7 +24,7 @@
         private readonly Boundary _boundary;
 
         /// <summary>
-        /// Creates instance of MJPEG stream parser using a boundary and a JPEG magic header
+        /// Creates instance of MJPEG stream parser using a boundary and a JPEG magic header.
         /// </summary>
         /// <param name="boundary"></param>
         /// <param name="header"></param>
@@ -38,7 +38,7 @@
         }
 
         /// <summary>
-        /// Content of byte array buffer
+        /// Content of byte array buffer.
         /// </summary>
         public byte[] Content
         {
@@ -61,7 +61,7 @@
         }
 
         /// <summary>
-        /// True if frame is detected using DetectFrame and not removed using RemoveFrame
+        /// True if frame is detected using DetectFrame and not removed using RemoveFrame.
         /// </summary>
         public bool HasFrame
         {
@@ -71,8 +71,8 @@
         /// <summary>
         /// Appends new data into the internal buffer.
         /// </summary>
-        /// <param name="content">Source byte array</param>
-        /// <param name="readBytes">Number of bytes read</param>
+        /// <param name="content">Source byte array.</param>
+        /// <param name="readBytes">Number of bytes read.</param>
         private void Add(byte[] content, int readBytes)
         {
             Array.Copy(content, 0, _buffer, _totalReadBytes, readBytes);
@@ -80,7 +80,7 @@
         }
 
         /// <summary>
-        /// Reads byte content to internal buffer from a stream
+        /// Reads byte content to internal buffer from a stream.
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
@@ -115,7 +115,7 @@
         }
 
         /// <summary>
-        /// Detects if a frame is present in the internal buffer
+        /// Detects if a frame is present in the internal buffer.
         /// </summary>
         public void DetectFrame()
         {
@@ -145,7 +145,7 @@
         }
 
         /// <summary>
-        /// Retrieves the frame from the internal buffer
+        /// Retrieves the frame from the internal buffer.
         /// </summary>
         /// <returns></returns>
         public Bitmap GetFrame()
@@ -165,7 +165,7 @@
         }
 
         /// <summary>
-        /// Removes current frame from buffer
+        /// Removes current frame from buffer.
         /// </summary>
         public void RemoveFrame()
         {
@@ -199,7 +199,7 @@
         /// <summary>
         /// Searches for the JPEG frame header within the buffer.
         /// </summary>
-        /// <returns>Index of the header or -1</returns>
+        /// <returns>Index of the header or -1.</returns>
         private int FindHeader()
         {
             return ByteArrayUtils.Find(_buffer, _header, _position, RemainingBytes);
@@ -208,7 +208,7 @@
         /// <summary>
         /// Searches for the boundary marker in the buffer.
         /// </summary>
-        /// <returns>Index of boundary or -1</returns>
+        /// <returns>Index of boundary or -1.</returns>
         private int FindBoundary()
         {
             byte[] imageDelimiter;

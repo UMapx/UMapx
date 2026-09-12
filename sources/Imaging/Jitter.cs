@@ -7,7 +7,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
+    /// <see href="https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part"/>.
     /// </remarks>
     [Serializable]
     public class Jitter : PointAddition, IBitmapFilter2
@@ -20,7 +20,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the jitter filter.
         /// </summary>
-        /// <param name="value">Value [0, 100]</param>
+        /// <param name="value">Value [0, 100].</param>
         public Jitter(int value)
         {
             Value = value;

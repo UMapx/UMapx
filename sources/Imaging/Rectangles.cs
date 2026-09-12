@@ -13,9 +13,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns processed rectangle.
         /// </summary>
-        /// <param name="rectangle">Rectangle</param>
-        /// <param name="point">Point</param>
-        /// <returns>Rectangle</returns>
+        /// <param name="rectangle">Rectangle.</param>
+        /// <param name="point">Point.</param>
+        /// <returns>Rectangle.</returns>
         public static Rectangle Add(this Rectangle rectangle, Point point)
         {
             return new Rectangle
@@ -30,9 +30,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns processed rectangle.
         /// </summary>
-        /// <param name="rectangle">Rectangle</param>
-        /// <param name="point">Point</param>
-        /// <returns>Rectangle</returns>
+        /// <param name="rectangle">Rectangle.</param>
+        /// <param name="point">Point.</param>
+        /// <returns>Rectangle.</returns>
         public static Rectangle Sub(this Rectangle rectangle, Point point)
         {
             return new Rectangle
@@ -47,9 +47,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns processed rectangles.
         /// </summary>
-        /// <param name="rectangles">Rectangles</param>
-        /// <param name="point">Point</param>
-        /// <returns>Rectangles</returns>
+        /// <param name="rectangles">Rectangles.</param>
+        /// <param name="point">Point.</param>
+        /// <returns>Rectangles.</returns>
         public static Rectangle[] Add(this Rectangle[] rectangles, Point point)
         {
             var count = rectangles.Length;
@@ -66,9 +66,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns processed rectangles.
         /// </summary>
-        /// <param name="rectangles">Rectangles</param>
-        /// <param name="point">Point</param>
-        /// <returns>Rectangles</returns>
+        /// <param name="rectangles">Rectangles.</param>
+        /// <param name="point">Point.</param>
+        /// <returns>Rectangles.</returns>
         public static Rectangle[] Sub(this Rectangle[] rectangles, Point point)
         {
             var count = rectangles.Length;
@@ -89,8 +89,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns four points from rectangle.
         /// </summary>
-        /// <param name="rectangle">Rectangle</param>
-        /// <returns>Points</returns>
+        /// <param name="rectangle">Rectangle.</param>
+        /// <returns>Points.</returns>
         public static Point[] ToPoints(this Rectangle rectangle)
         {
             return new Point[]
@@ -122,8 +122,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns point from rectangle.
         /// </summary>
-        /// <param name="rectangle">Rectangle</param>
-        /// <returns>Point</returns>
+        /// <param name="rectangle">Rectangle.</param>
+        /// <returns>Point.</returns>
         public static Point GetPoint(this Rectangle rectangle)
         {
             return new Point
@@ -136,8 +136,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns size area.
         /// </summary>
-        /// <param name="size">Size</param>
-        /// <returns>Area</returns>
+        /// <param name="size">Size.</param>
+        /// <returns>Area.</returns>
         public static int Area(this Size size)
         {
             return size.Width * size.Height;
@@ -146,8 +146,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns rectangle area.
         /// </summary>
-        /// <param name="rectangle">Rectangle</param>
-        /// <returns>Area</returns>
+        /// <param name="rectangle">Rectangle.</param>
+        /// <returns>Area.</returns>
         public static int Area(this Rectangle rectangle)
         {
             return rectangle.Width * rectangle.Height;
@@ -156,8 +156,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the maximum rectangle.
         /// </summary>
-        /// <param name="rectangles">Rectangles</param>
-        /// <returns>Rectangle</returns>
+        /// <param name="rectangles">Rectangles.</param>
+        /// <returns>Rectangle.</returns>
         public static Rectangle Max(params Rectangle[] rectangles)
         {
             // params
@@ -190,8 +190,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns the minimum rectangle.
         /// </summary>
-        /// <param name="rectangles">Rectangles</param>
-        /// <returns>Rectangle</returns>
+        /// <param name="rectangles">Rectangles.</param>
+        /// <returns>Rectangle.</returns>
         public static Rectangle Min(params Rectangle[] rectangles)
         {
             // params
@@ -224,8 +224,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns rectangle scaled to box.
         /// </summary>
-        /// <param name="rectangle">Rectangle</param>
-        /// <returns>Rectangle</returns>
+        /// <param name="rectangle">Rectangle.</param>
+        /// <returns>Rectangle.</returns>
         public static Rectangle ToBox(this Rectangle rectangle)
         {
             var max = Math.Max(rectangle.Width, rectangle.Height);
@@ -244,9 +244,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns rectangle scaled to box.
         /// </summary>
-        /// <param name="rectangle">Rectangle</param>
-        /// <param name="scale">Factor</param>
-        /// <returns>Rectangle</returns>
+        /// <param name="rectangle">Rectangle.</param>
+        /// <param name="scale">Factor.</param>
+        /// <returns>Rectangle.</returns>
         public static Rectangle ToBox(this Rectangle rectangle, float scale)
         {
             float gainX = rectangle.Width * scale;
@@ -263,8 +263,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns rectangle scaled to box.
         /// </summary>
-        /// <param name="rectangles">Rectangle</param>
-        /// <returns>Rectangle</returns>
+        /// <param name="rectangles">Rectangle.</param>
+        /// <returns>Rectangle.</returns>
         public static Rectangle[] ToBox(params Rectangle[] rectangles)
         {
             int length = rectangles.Length;
@@ -281,9 +281,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns rectangle scaled to box with image size.
         /// </summary>
-        /// <param name="rectangles">Rectangles</param>
-        /// <param name="factor">Factor</param>
-        /// <returns>Rectangle</returns>
+        /// <param name="rectangles">Rectangles.</param>
+        /// <param name="factor">Factor.</param>
+        /// <returns>Rectangle.</returns>
         public static Rectangle[] ToBox(float factor, params Rectangle[] rectangles)
         {
             int length = rectangles.Length;
@@ -300,9 +300,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements IoU operator.
         /// </summary>
-        /// <param name="a">First rectangle</param>
-        /// <param name="b">Second rectangle</param>
-        /// <returns>Value</returns>
+        /// <param name="a">First rectangle.</param>
+        /// <param name="b">Second rectangle.</param>
+        /// <returns>Value.</returns>
         public static float IoU(this Rectangle a, Rectangle b)
         {
             var xA = Math.Max(a.Left, b.Left);
@@ -325,9 +325,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements scale operator.
         /// </summary>
-        /// <param name="rectangle">Rectangle</param>
-        /// <param name="kx">Factor for x axis</param>
-        /// <param name="ky">Factor for y axis</param>
+        /// <param name="rectangle">Rectangle.</param>
+        /// <param name="kx">Factor for x axis.</param>
+        /// <param name="ky">Factor for y axis.</param>
         /// <returns></returns>
         public static Rectangle Scale(this Rectangle rectangle, float kx = 0.0f, float ky = 0.0f)
         {
@@ -351,8 +351,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements scale operator.
         /// </summary>
-        /// <param name="rectangle">Rectangle</param>
-        /// <returns>Rectangle</returns>
+        /// <param name="rectangle">Rectangle.</param>
+        /// <returns>Rectangle.</returns>
         public static Rectangle Scale(this Rectangle rectangle)
         {
             var r = (int)Math.Sqrt(rectangle.Width * rectangle.Width + rectangle.Height * rectangle.Height);
@@ -376,9 +376,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements clamp operator.
         /// </summary>
-        /// <param name="first">Rectangle</param>
-        /// <param name="second">Rectangle</param>
-        /// <returns>Rectangle</returns>
+        /// <param name="first">Rectangle.</param>
+        /// <param name="second">Rectangle.</param>
+        /// <returns>Rectangle.</returns>
         public static Rectangle Clamp(this Rectangle first, Rectangle second)
         {
             if (first.Width < 0) { first.X += first.Width; first.Width = -first.Width; }

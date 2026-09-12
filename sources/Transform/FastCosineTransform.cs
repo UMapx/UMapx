@@ -8,7 +8,7 @@ namespace UMapx.Transform
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Discrete_cosine_transform
+    /// <see href="https://en.wikipedia.org/wiki/Discrete_cosine_transform"/>.
     /// </remarks>
     [Serializable]
     public class FastCosineTransform : TransformBaseFloat, ITransform
@@ -24,7 +24,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the fast cosine transform.
         /// </summary>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="direction">Processing direction.</param>
         public FastCosineTransform(Direction direction = Direction.Vertical)
         {
             this.FFT = new FastFourierTransform(false, Direction.Both);
@@ -36,8 +36,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward transform.
         /// </summary>
-        /// <param name="A">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="A">Array.</param>
+        /// <returns>Array.</returns>
         public override float[] Forward(float[] A)
         {
             int N = A.Length;
@@ -96,8 +96,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward transform.
         /// </summary>
-        /// <param name="B">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="B">Array.</param>
+        /// <returns>Array.</returns>
         public override float[] Backward(float[] B)
         {
             int N = B.Length;

@@ -9,7 +9,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// http://www.3dtv.at/Knowhow/AnaglyphComparison_en.aspx
+    /// <see href="http://www.3dtv.at/Knowhow/AnaglyphComparison_en.aspx"/>.
     /// </remarks>
     [Serializable]
     public class StereoAnaglyph : IBitmapFilter2
@@ -22,7 +22,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the stereo effect filter for a pair of images.
         /// </summary>
-        /// <param name="algorithm">Algorithm</param>
+        /// <param name="algorithm">Algorithm.</param>
         public StereoAnaglyph(AnaglyphMode algorithm)
         {
             this.algorithm = algorithm;
@@ -38,8 +38,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (bmData.Width != bmSrc.Width || bmData.Height != bmSrc.Height)
@@ -129,8 +129,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="Src">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="Src">Bitmap.</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);

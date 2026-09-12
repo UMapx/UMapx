@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)
+    /// <see href="https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)"/>.
     /// </remarks>
     [Serializable]
     public class Uniform : IDistribution
@@ -26,8 +26,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the uniform distribution.
         /// </summary>
-        /// <param name="a">Shift parameter a</param>
-        /// <param name="b">Shift parameter b</param>
+        /// <param name="a">Shift parameter a.</param>
+        /// <param name="b">Shift parameter b.</param>
         public Uniform(float a, float b)
         {
             A = a; B = b;
@@ -137,8 +137,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x < a)
@@ -154,8 +154,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x < a)
@@ -171,7 +171,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get

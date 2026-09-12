@@ -17,8 +17,8 @@ namespace UMapx.Core
         /// <summary>
         /// Initializes a pair of integer numbers representing a line segment.
         /// </summary>
-        /// <param name="min">Lower bound of the segment</param>
-        /// <param name="max">Upper bound of the segment</param>
+        /// <param name="min">Lower bound of the segment.</param>
+        /// <param name="max">Upper bound of the segment.</param>
         public RangeInt(int min, int max)
         {
             this.min = min;
@@ -55,8 +55,8 @@ namespace UMapx.Core
         /// <summary>
         /// Checks if the value is in the specified interval.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Boolean</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Boolean.</returns>
         public readonly bool IsOnRange(int x)
         {
             if ((x >= this.min) && (x <= this.max))
@@ -71,7 +71,7 @@ namespace UMapx.Core
         /// <summary>
         /// Returns the hash code for this object.
         /// </summary>
-        /// <returns>Integer number</returns>
+        /// <returns>Integer number.</returns>
         public override int GetHashCode()
         {
             return min.GetHashCode() ^ max.GetHashCode();
@@ -79,7 +79,7 @@ namespace UMapx.Core
         /// <summary>
         /// Converts RangeInt to its corresponding string representation.
         /// </summary>
-        /// <returns>Text as a sequence of Unicode characters</returns>
+        /// <returns>Text as a sequence of Unicode characters.</returns>
         public override string ToString()
         {
             return string.Format("({0}, {1})", min, max);
@@ -87,8 +87,8 @@ namespace UMapx.Core
         /// <summary>
         /// Gets a value indicating whether this instance is equal to the specified value of type RangeInt.
         /// </summary>
-        /// <param name="obj">Object</param>
-        /// <returns>Boolean</returns>
+        /// <param name="obj">Object.</param>
+        /// <returns>Boolean.</returns>
         public override bool Equals(object obj)
         {
             return (obj is RangeInt) ? (this == (RangeInt)obj) : false;
@@ -99,9 +99,9 @@ namespace UMapx.Core
         /// <summary>
         /// Checks if two RangeInt objects are equal.
         /// </summary>
-        /// <param name="a">Pair of numbers</param>
-        /// <param name="b">Pair of numbers</param>
-        /// <returns>Boolean</returns>
+        /// <param name="a">Pair of numbers.</param>
+        /// <param name="b">Pair of numbers.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator ==(RangeInt a, RangeInt b)
         {
             return (a.Max == b.Max && a.Min == b.Min);
@@ -109,9 +109,9 @@ namespace UMapx.Core
         /// <summary>
         /// Checks if two RangeInt objects are not equal.
         /// </summary>
-        /// <param name="a">Pair of numbers</param>
-        /// <param name="b">Pair of numbers</param>
-        /// <returns>Boolean</returns>
+        /// <param name="a">Pair of numbers.</param>
+        /// <param name="b">Pair of numbers.</param>
+        /// <returns>Boolean.</returns>
         public static bool operator !=(RangeInt a, RangeInt b)
         {
             return !(a == b);
@@ -122,7 +122,7 @@ namespace UMapx.Core
         /// <summary>
         /// Creates a copy of RangeInt.
         /// </summary>
-        /// <returns>Pair of numbers</returns>
+        /// <returns>Pair of numbers.</returns>
         object ICloneable.Clone()
         {
             return new RangeInt(min, max);
@@ -130,7 +130,7 @@ namespace UMapx.Core
         /// <summary>
         /// Creates a copy of RangeInt.
         /// </summary>
-        /// <returns>Pair of numbers</returns>
+        /// <returns>Pair of numbers.</returns>
         public RangeInt Clone()
         {
             return new RangeInt(min, max);

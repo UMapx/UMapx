@@ -8,7 +8,7 @@ namespace UMapx.Transform
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf
+    /// <see href="http://www.cs.toronto.edu/~jepson/csc320/notes/pyramids.pdf"/>.
     /// </remarks>
     [Serializable]
     public class GaussianPyramidTransform : IPyramidTransform
@@ -30,8 +30,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the Gaussian pyramid transform.
         /// </summary>
-        /// <param name="levels">Number of levels</param>
-        /// <param name="radius">Radius</param>
+        /// <param name="levels">Number of levels.</param>
+        /// <param name="radius">Radius.</param>
         public GaussianPyramidTransform(int levels, int radius = 2)
         {
             this.Levels = levels;
@@ -83,8 +83,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="data">Matrix</param>
-        /// <returns>Pyramid</returns>
+        /// <param name="data">Matrix.</param>
+        /// <returns>Pyramid.</returns>
         public float[][,] Forward(float[,] data)
         {
             int r = data.GetLength(0), c = data.GetLength(1);
@@ -105,8 +105,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="data">Array</param>
-        /// <returns>Pyramid</returns>
+        /// <param name="data">Array.</param>
+        /// <returns>Pyramid.</returns>
         public float[][] Forward(float[] data)
         {
             int r = data.Length;
@@ -126,8 +126,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Pyramid</param>
-        /// <returns>Matrix</returns>
+        /// <param name="pyramid">Pyramid.</param>
+        /// <returns>Matrix.</returns>
         public float[,] Backward(float[][,] pyramid)
         {
             throw new NotSupportedException();
@@ -135,8 +135,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Pyramid</param>
-        /// <returns>Array</returns>
+        /// <param name="pyramid">Pyramid.</param>
+        /// <returns>Array.</returns>
         public float[] Backward(float[][] pyramid)
         {
             throw new NotSupportedException();
@@ -144,8 +144,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="data">Matrix</param>
-        /// <returns>Pyramid</returns>
+        /// <param name="data">Matrix.</param>
+        /// <returns>Pyramid.</returns>
         public Complex32[][,] Forward(Complex32[,] data)
         {
             int r = data.GetLength(0), c = data.GetLength(1);
@@ -166,8 +166,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Forward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="data">Array</param>
-        /// <returns>Pyramid</returns>
+        /// <param name="data">Array.</param>
+        /// <returns>Pyramid.</returns>
         public Complex32[][] Forward(Complex32[] data)
         {
             int r = data.Length;
@@ -187,8 +187,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Pyramid</param>
-        /// <returns>Matrix</returns>
+        /// <param name="pyramid">Pyramid.</param>
+        /// <returns>Matrix.</returns>
         public Complex32[,] Backward(Complex32[][,] pyramid)
         {
             throw new NotSupportedException();
@@ -196,8 +196,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Backward Gaussian pyramid transform.
         /// </summary>
-        /// <param name="pyramid">Pyramid</param>
-        /// <returns>Array</returns>
+        /// <param name="pyramid">Pyramid.</param>
+        /// <returns>Array.</returns>
         public Complex32[] Backward(Complex32[][] pyramid)
         {
             throw new NotSupportedException();
@@ -208,9 +208,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Upsample the input signal.
         /// </summary>
-        /// <param name="u">Matrix</param>
-        /// <param name="radius">Radius</param>
-        /// <returns>Matrix</returns>
+        /// <param name="u">Matrix.</param>
+        /// <param name="radius">Radius.</param>
+        /// <returns>Matrix.</returns>
         internal static float[,] Upsample(float[,] u, int radius)
         {
             int r = u.GetLength(0), c = u.GetLength(1);
@@ -234,9 +234,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Upsample the input signal.
         /// </summary>
-        /// <param name="u">Array</param>
-        /// <param name="radius">Radius</param>
-        /// <returns>Array</returns>
+        /// <param name="u">Array.</param>
+        /// <param name="radius">Radius.</param>
+        /// <returns>Array.</returns>
         internal static float[] Upsample(float[] u, int radius)
         {
             int r = u.GetLength(0);
@@ -255,9 +255,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Downsample the input signal.
         /// </summary>
-        /// <param name="u">Matrix</param>
-        /// <param name="radius">Radius</param>
-        /// <returns>Matrix</returns>
+        /// <param name="u">Matrix.</param>
+        /// <param name="radius">Radius.</param>
+        /// <returns>Matrix.</returns>
         internal static float[,] Downsample(float[,] u, int radius)
         {
             int r = u.GetLength(0);
@@ -279,9 +279,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Downsample the input signal.
         /// </summary>
-        /// <param name="u">Matrix</param>
-        /// <param name="radius">Radius</param>
-        /// <returns>Matrix</returns>
+        /// <param name="u">Matrix.</param>
+        /// <param name="radius">Radius.</param>
+        /// <returns>Matrix.</returns>
         internal static float[] Downsample(float[] u, int radius)
         {
             int r = u.Length;
@@ -299,9 +299,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Add two matrices.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <param name="n">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Matrix.</param>
+        /// <param name="n">Matrix.</param>
+        /// <returns>Matrix.</returns>
         internal static float[,] Add(float[,] m, float[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
@@ -321,9 +321,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Add two arrays.
         /// </summary>
-        /// <param name="m">Array</param>
-        /// <param name="n">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="m">Array.</param>
+        /// <param name="n">Array.</param>
+        /// <returns>Array.</returns>
         internal static float[] Add(float[] m, float[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
@@ -339,9 +339,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Sub two matrices.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <param name="n">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Matrix.</param>
+        /// <param name="n">Matrix.</param>
+        /// <returns>Matrix.</returns>
         internal static float[,] Sub(float[,] m, float[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
@@ -361,9 +361,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Sub two arrays.
         /// </summary>
-        /// <param name="m">Array</param>
-        /// <param name="n">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="m">Array.</param>
+        /// <param name="n">Array.</param>
+        /// <returns>Array.</returns>
         internal static float[] Sub(float[] m, float[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
@@ -379,9 +379,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Upsample the input signal.
         /// </summary>
-        /// <param name="u">Matrix</param>
-        /// <param name="radius">Radius</param>
-        /// <returns>Matrix</returns>
+        /// <param name="u">Matrix.</param>
+        /// <param name="radius">Radius.</param>
+        /// <returns>Matrix.</returns>
         internal static Complex32[,] Upsample(Complex32[,] u, int radius)
         {
             int r = u.GetLength(0), c = u.GetLength(1);
@@ -405,9 +405,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Upsample the input signal.
         /// </summary>
-        /// <param name="u">Array</param>
-        /// <param name="radius">Radius</param>
-        /// <returns>Array</returns>
+        /// <param name="u">Array.</param>
+        /// <param name="radius">Radius.</param>
+        /// <returns>Array.</returns>
         internal static Complex32[] Upsample(Complex32[] u, int radius)
         {
             int r = u.GetLength(0);
@@ -426,9 +426,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Downsample the input signal.
         /// </summary>
-        /// <param name="u">Matrix</param>
-        /// <param name="radius">Radius</param>
-        /// <returns>Matrix</returns>
+        /// <param name="u">Matrix.</param>
+        /// <param name="radius">Radius.</param>
+        /// <returns>Matrix.</returns>
         internal static Complex32[,] Downsample(Complex32[,] u, int radius)
         {
             int r = u.GetLength(0);
@@ -450,9 +450,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Downsample the input signal.
         /// </summary>
-        /// <param name="u">Matrix</param>
-        /// <param name="radius">Radius</param>
-        /// <returns>Matrix</returns>
+        /// <param name="u">Matrix.</param>
+        /// <param name="radius">Radius.</param>
+        /// <returns>Matrix.</returns>
         internal static Complex32[] Downsample(Complex32[] u, int radius)
         {
             int r = u.Length;
@@ -470,9 +470,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Add two matrices.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <param name="n">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Matrix.</param>
+        /// <param name="n">Matrix.</param>
+        /// <returns>Matrix.</returns>
         internal static Complex32[,] Add(Complex32[,] m, Complex32[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
@@ -492,9 +492,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Add two arrays.
         /// </summary>
-        /// <param name="m">Array</param>
-        /// <param name="n">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="m">Array.</param>
+        /// <param name="n">Array.</param>
+        /// <returns>Array.</returns>
         internal static Complex32[] Add(Complex32[] m, Complex32[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
@@ -510,9 +510,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Sub two matrices.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <param name="n">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Matrix.</param>
+        /// <param name="n">Matrix.</param>
+        /// <returns>Matrix.</returns>
         internal static Complex32[,] Sub(Complex32[,] m, Complex32[,] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));
@@ -532,9 +532,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Sub two arrays.
         /// </summary>
-        /// <param name="m">Array</param>
-        /// <param name="n">Array</param>
-        /// <returns>Array</returns>
+        /// <param name="m">Array.</param>
+        /// <param name="n">Array.</param>
+        /// <returns>Array.</returns>
         internal static Complex32[] Sub(Complex32[] m, Complex32[] n)
         {
             int ml = (int)Math.Min(m.GetLength(0), n.GetLength(0));

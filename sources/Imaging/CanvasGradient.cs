@@ -25,11 +25,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the gradient canvas class.
         /// </summary>
-        /// <param name="width">Canvas width</param>
-        /// <param name="height">Canvas height</param>
-        /// <param name="angle">Angle</param>
-        /// <param name="color1">First color</param>
-        /// <param name="color2">Second color</param>
+        /// <param name="width">Canvas width.</param>
+        /// <param name="height">Canvas height.</param>
+        /// <param name="angle">Angle.</param>
+        /// <param name="color1">First color.</param>
+        /// <param name="color2">Second color.</param>
         public CanvasGradient(int width, int height, double angle, Color color1, Color color2)
         {
             Width = width; Height = height; Angle = angle; Color1 = color1; Color2 = color2;
@@ -107,7 +107,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Creates canvas.
         /// </summary>
-        /// <returns>Bitmap</returns>
+        /// <returns>Bitmap.</returns>
         public Bitmap Create()
         {
             var bitmap = new Bitmap(width, height);

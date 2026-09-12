@@ -8,7 +8,7 @@ namespace UMapx.Transform
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Discrete_Fourier_transform
+    /// <see href="https://en.wikipedia.org/wiki/Discrete_Fourier_transform"/>.
     /// </remarks>
     [Serializable]
     public class FourierTransform : TransformBaseMatrixComplex32, ITransform
@@ -17,8 +17,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the Fourier transform.
         /// </summary>
-        /// <param name="normalized">Normalized transform or not</param>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="normalized">Normalized transform or not.</param>
+        /// <param name="direction">Processing direction.</param>
         public FourierTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
             this.Normalized = normalized;
@@ -30,8 +30,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Implements the construction of the Fourier matrix.
         /// </summary>
-        /// <param name="n">Size</param>
-        /// <returns>Matrix</returns>
+        /// <param name="n">Size.</param>
+        /// <returns>Matrix.</returns>
         public static Complex32[,] Matrix(int n)
         {
             Complex32[,] H = new Complex32[n, n];

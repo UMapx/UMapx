@@ -11,7 +11,7 @@ namespace UMapx.Transform
     /// There is no fast O(N log N) algorithm for this transform.
     /// 
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Hankel_transform
+    /// <see href="https://en.wikipedia.org/wiki/Hankel_transform"/>.
     /// </remarks>
     [Serializable]
     public class HankelTransform : TransformBaseMatrixFloat, ITransform
@@ -27,8 +27,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the Hankel transform.
         /// </summary>
-        /// <param name="a">Param</param>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="a">Param.</param>
+        /// <param name="direction">Processing direction.</param>
         public HankelTransform(int a = 0, Direction direction = Direction.Vertical)
         {
             this.Direction = direction;
@@ -54,10 +54,10 @@ namespace UMapx.Transform
         /// <summary>
         /// Implements the construction of the Hankel transform matrix.
         /// </summary>
-        /// <param name="N">Size</param>
-        /// <param name="a">Param</param>
-        /// <returns>Matrix</returns>
-        /// <exception cref="ArgumentException">Exception</exception>
+        /// <param name="N">Size.</param>
+        /// <param name="a">Param.</param>
+        /// <returns>Matrix.</returns>
+        /// <exception cref="ArgumentException">Exception.</exception>
         public static float[,] Matrix(int N, int a)
         {
             if (N <= 0 || a < 0) throw new ArgumentException("Arguments could not be negative");

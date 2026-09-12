@@ -12,7 +12,7 @@ namespace UMapx.Transform
     /// magnitudes select range bins; real and imaginary components are averaged
     /// with the same weights, preserving constant phase rotations.
     /// More information can be found on the website:
-    /// https://www.researchgate.net/publication/220184523_Real-time_edge-aware_image_processing_with_the_bilateral_grid
+    /// <see href="https://www.researchgate.net/publication/220184523_Real-time_edge-aware_image_processing_with_the_bilateral_grid"/>.
     /// </remarks>
     [Serializable]
     public class BilateralGridFilter : IFilter
@@ -27,9 +27,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the bilateral grid filter.
         /// </summary>
-        /// <param name="sigmaSpatial">Spatial smoothing factor</param>
-        /// <param name="sigmaRange">Range smoothing factor</param>
-        /// <param name="factor">Factor [-1, 1]</param>
+        /// <param name="sigmaSpatial">Spatial smoothing factor.</param>
+        /// <param name="sigmaRange">Range smoothing factor.</param>
+        /// <param name="factor">Factor [-1, 1].</param>
         public BilateralGridFilter(float sigmaSpatial = 4f, float sigmaRange = 0.1f, float factor = -1.0f)
         {
             this.SigmaSpatial = sigmaSpatial;
@@ -86,7 +86,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(float[] data)
         {
             // enhancement or not?
@@ -108,7 +108,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(float[,] data)
         {
             // enhancement or not?
@@ -132,7 +132,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Array</param>
+        /// <param name="data">Array.</param>
         public void Apply(Complex32[] data)
         {
             // enhancement or not?
@@ -154,7 +154,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="data">Matrix</param>
+        /// <param name="data">Matrix.</param>
         public void Apply(Complex32[,] data)
         {
             // enhancement or not?
@@ -181,9 +181,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Applies bilateral grid filter.
         /// </summary>
-        /// <param name="input">Input</param>
-        /// <param name="sigmaSpatial">Spatial smoothing factor</param>
-        /// <param name="sigmaRange">Range smoothing factor</param>
+        /// <param name="input">Input.</param>
+        /// <param name="sigmaSpatial">Spatial smoothing factor.</param>
+        /// <param name="sigmaRange">Range smoothing factor.</param>
         internal static void Bilateralgridfilter(float[] input, float sigmaSpatial = 4f, float sigmaRange = 0.1f)
         {
             int length = input.Length;
@@ -244,9 +244,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Applies bilateral grid filter.
         /// </summary>
-        /// <param name="input">Input</param>
-        /// <param name="sigmaSpatial">Spatial smoothing factor</param>
-        /// <param name="sigmaRange">Range smoothing factor</param>
+        /// <param name="input">Input.</param>
+        /// <param name="sigmaSpatial">Spatial smoothing factor.</param>
+        /// <param name="sigmaRange">Range smoothing factor.</param>
         internal static void Bilateralgridfilter(float[,] input, float sigmaSpatial = 4f, float sigmaRange = 0.1f)
         {
             int height = input.GetLength(0);
@@ -326,9 +326,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Applies bilateral grid filter.
         /// </summary>
-        /// <param name="input">Input</param>
-        /// <param name="sigmaSpatial">Spatial smoothing factor</param>
-        /// <param name="sigmaRange">Range smoothing factor</param>
+        /// <param name="input">Input.</param>
+        /// <param name="sigmaSpatial">Spatial smoothing factor.</param>
+        /// <param name="sigmaRange">Range smoothing factor.</param>
         internal static void Bilateralgridfilter(Complex32[] input, float sigmaSpatial = 4f, float sigmaRange = 0.1f)
         {
             int length = input.Length;
@@ -390,9 +390,9 @@ namespace UMapx.Transform
         /// <summary>
         /// Applies bilateral grid filter.
         /// </summary>
-        /// <param name="input">Input</param>
-        /// <param name="sigmaSpatial">Spatial smoothing factor</param>
-        /// <param name="sigmaRange">Range smoothing factor</param>
+        /// <param name="input">Input.</param>
+        /// <param name="sigmaSpatial">Spatial smoothing factor.</param>
+        /// <param name="sigmaRange">Range smoothing factor.</param>
         internal static void Bilateralgridfilter(Complex32[,] input, float sigmaSpatial = 4f, float sigmaRange = 0.1f)
         {
             int height = input.GetLength(0);
@@ -474,8 +474,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Implements 2D box blur filter.
         /// </summary>
-        /// <param name="grid">Grid</param>
-        /// <param name="radius">Radius</param>
+        /// <param name="grid">Grid.</param>
+        /// <param name="radius">Radius.</param>
         private static void Boxblur2d(float[,] grid, int radius)
         {
             int depth = grid.GetLength(0);
@@ -509,8 +509,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Implements 3D box blur filter.
         /// </summary>
-        /// <param name="grid">Grid</param>
-        /// <param name="radius">Radius</param>
+        /// <param name="grid">Grid.</param>
+        /// <param name="radius">Radius.</param>
         private static void Boxblur3d(float[,,] grid, int radius)
         {
             int depth = grid.GetLength(0);
@@ -552,8 +552,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Implements 2D box blur filter.
         /// </summary>
-        /// <param name="grid">Grid</param>
-        /// <param name="radius">Radius</param>
+        /// <param name="grid">Grid.</param>
+        /// <param name="radius">Radius.</param>
         private static void Boxblur2d(Complex32[,] grid, int radius)
         {
             int depth = grid.GetLength(0);
@@ -587,8 +587,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Implements 3D box blur filter.
         /// </summary>
-        /// <param name="grid">Grid</param>
-        /// <param name="radius">Radius</param>
+        /// <param name="grid">Grid.</param>
+        /// <param name="radius">Radius.</param>
         private static void Boxblur3d(Complex32[,,] grid, int radius)
         {
             int depth = grid.GetLength(0);

@@ -21,9 +21,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the RGB filter.
         /// </summary>
-        /// <param name="red">Red [-255, 255]</param>
-        /// <param name="green">Green [-255, 255]</param>
-        /// <param name="blue">Blue [-255, 255]</param>
+        /// <param name="red">Red [-255, 255].</param>
+        /// <param name="green">Green [-255, 255].</param>
+        /// <param name="blue">Blue [-255, 255].</param>
         public RGBFilter(int red, int green, int blue)
         {
             Red = red;
@@ -82,7 +82,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap</param>
+        /// <param name="bmData">Bitmap.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -106,7 +106,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);

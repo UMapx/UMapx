@@ -17,9 +17,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the global histogram stretch filter.
         /// </summary>
-        /// <param name="min">Minimum intensity [0, 1]</param>
-        /// <param name="max">Maximum intensity [0, 1]</param>
-        /// <param name="space">Color space</param>
+        /// <param name="min">Minimum intensity [0, 1].</param>
+        /// <param name="max">Maximum intensity [0, 1].</param>
+        /// <param name="space">Color space.</param>
         public HistogramStretch(float min, float max, Space space)
         {
             Range = new RangeFloat(min, max);
@@ -28,8 +28,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the global histogram stretch filter.
         /// </summary>
-        /// <param name="range">Intensity range</param>
-        /// <param name="space">Color space</param>
+        /// <param name="range">Intensity range.</param>
+        /// <param name="space">Color space.</param>
         public HistogramStretch(RangeFloat range, Space space)
         {
             Range = range;

@@ -7,7 +7,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part
+    /// <see href="https://www.codeproject.com/Articles/2122/Image-Processing-for-Dummies-with-C-and-GDI-Part"/>.
     /// </remarks>
     [Serializable]
     public class Water : PointMultiplication, IBitmapFilter2
@@ -20,7 +20,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the water filter.
         /// </summary>
-        /// <param name="value">Value [0, 100]</param>
+        /// <param name="value">Value [0, 100].</param>
         public Water(int value)
         {
             Value = value;

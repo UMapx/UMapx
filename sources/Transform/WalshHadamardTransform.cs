@@ -8,7 +8,7 @@ namespace UMapx.Transform
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// http://kibia.ru/teachers/kreindelin/pdf/2.pdf
+    /// <see href="http://kibia.ru/teachers/kreindelin/pdf/2.pdf"/>.
     /// </remarks>
     [Serializable]
     public class WalshHadamardTransform : TransformBaseMatrixFloat, ITransform
@@ -17,8 +17,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Initializes the Walsh-Hadamard transform.
         /// </summary>
-        /// <param name="normalized">Normalized transform or not</param>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="normalized">Normalized transform or not.</param>
+        /// <param name="direction">Processing direction.</param>
         public WalshHadamardTransform(bool normalized = true, Direction direction = Direction.Vertical)
         {
             this.Normalized = normalized; 
@@ -30,8 +30,8 @@ namespace UMapx.Transform
         /// <summary>
         /// Implements the construction of the Walsh-Hadamard matrix.
         /// </summary>
-        /// <param name="powOf2">Power of 2</param>
-        /// <returns>Matrix</returns>
+        /// <param name="powOf2">Power of 2.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] Matrix(int powOf2)
         {
             if (powOf2 < 0)
@@ -59,7 +59,7 @@ namespace UMapx.Transform
         /// <summary>
         /// Implements the construction of the Walsh-Hadamard matrix [2 x 2].
         /// </summary>
-        /// <returns>Matrix</returns>
+        /// <returns>Matrix.</returns>
         public static float[,] Matrix()
         {
             return new float[2, 2] { { 1, 1 }, { 1, -1 } };

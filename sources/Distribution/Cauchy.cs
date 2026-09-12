@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Cauchy_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Cauchy_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Cauchy : IDistribution
@@ -26,8 +26,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the Cauchy distribution.
         /// </summary>
-        /// <param name="gamma">Scale factor (0, + inf)</param>
-        /// <param name="x0">Shift coefficient</param>
+        /// <param name="gamma">Scale factor (0, + inf).</param>
+        /// <param name="x0">Shift coefficient.</param>
         public Cauchy(float gamma, float x0)
         {
             Gamma = gamma;
@@ -128,8 +128,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             return 1.0f / (Maths.Pi * g * (1.0f + Maths.Pow((x - x0) / g)));
@@ -137,8 +137,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             return 1.0f / Maths.Pi * Maths.Atan((x - x0) / g) + 0.5f;
@@ -146,7 +146,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get

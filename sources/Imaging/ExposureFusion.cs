@@ -11,7 +11,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://web.stanford.edu/class/cs231m/project-1/exposure-fusion.pdf
+    /// <see href="https://web.stanford.edu/class/cs231m/project-1/exposure-fusion.pdf"/>.
     /// </remarks>
     [Serializable]
     public class ExposureFusion
@@ -26,8 +26,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the exposure fusion filter.
         /// </summary>
-        /// <param name="levels">Number of levels</param>
-        /// <param name="sigma">Sigma (0, 1)</param>
+        /// <param name="levels">Number of levels.</param>
+        /// <param name="sigma">Sigma (0, 1).</param>
         public ExposureFusion(int levels, float sigma = 0.2f)
         {
             this.lap = new LaplacianPyramidTransform(levels);
@@ -66,8 +66,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="images">Bitmap array</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="images">Bitmap array.</param>
+        /// <returns>Bitmap.</returns>
         public Bitmap Apply(params Bitmap[] images)
         {
             if (images == null || images.Length == 0)
@@ -161,8 +161,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="images">BitmapData array</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="images">BitmapData array.</param>
+        /// <returns>Bitmap.</returns>
         public Bitmap Apply(params BitmapData[] images)
         {
             if (images == null || images.Length == 0)
@@ -259,9 +259,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Exponent filter.
         /// </summary>
-        /// <param name="I">Input data</param>
-        /// <param name="sigma">Sigma</param>
-        /// <returns>Output data</returns>
+        /// <param name="I">Input data.</param>
+        /// <param name="sigma">Sigma.</param>
+        /// <returns>Output data.</returns>
         private static float[][,] Exp(float[][][,] I, float sigma)
         {
             // params
@@ -302,9 +302,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Implements matrix array multiplication.
         /// </summary>
-        /// <param name="A">Matrix array</param>
-        /// <param name="B">Matrix array</param>
-        /// <returns>Matrix array</returns>
+        /// <param name="A">Matrix array.</param>
+        /// <param name="B">Matrix array.</param>
+        /// <returns>Matrix array.</returns>
         private static float[][,] Mul(float[][,] A, float[][,] B)
         {
             int length = A.GetLength(0);

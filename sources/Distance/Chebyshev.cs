@@ -12,9 +12,9 @@ namespace UMapx.Distance
         /// <summary>
         /// Returns distance value. 
         /// </summary>
-        /// <param name="p">Array</param>
-        /// <param name="q">Array</param>
-        /// <returns>Value</returns>
+        /// <param name="p">Array.</param>
+        /// <param name="q">Array.</param>
+        /// <returns>Value.</returns>
         public override float Compute(float[] p, float[] q)
         {
             int n = p.Length;
@@ -32,9 +32,9 @@ namespace UMapx.Distance
         /// <summary>
         /// Returns distance value. 
         /// </summary>
-        /// <param name="p">Array</param>
-        /// <param name="q">Array</param>
-        /// <returns>Value</returns>
+        /// <param name="p">Array.</param>
+        /// <param name="q">Array.</param>
+        /// <returns>Value.</returns>
         public override Complex32 Compute(Complex32[] p, Complex32[] q)
         {
             int n = p.Length;

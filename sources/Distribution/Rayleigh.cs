@@ -10,7 +10,7 @@ namespace UMapx.Distribution
     /// The Rayleigh distribution is a continuous probability distribution for non-negative values,
     /// often used to model the magnitude of a two-dimensional vector with independent Gaussian components.
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Rayleigh_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Rayleigh_distribution"/>.
     /// </remarks>
     [Serializable]
     public class Rayleigh : IDistribution
@@ -27,7 +27,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the Rayleigh distribution with a specified scale parameter.
         /// </summary>
-        /// <param name="sigma">Scale parameter</param>
+        /// <param name="sigma">Scale parameter.</param>
         public Rayleigh(float sigma)
         {
             Sigma = sigma;
@@ -125,8 +125,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x < 0)
@@ -138,8 +138,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x < 0)
@@ -151,7 +151,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of differential entropy.
         /// </summary>
-        /// <returns>Value</returns>
+        /// <returns>Value.</returns>
         public float Entropy
         {
             get

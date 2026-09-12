@@ -4,10 +4,10 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides pivoted LDU decomposition</summary>
+    /// <summary>Provides pivoted LDU decomposition.</summary>
     public static class LDU
     {
-        /// <summary>Computes A[P,:] = L diag(D) U with unit triangular factors</summary>
+        /// <summary>Computes A[P,:] = L diag(D) U with unit triangular factors.</summary>
         /// <param name="matrix">Finite nonempty square matrix with nonzero LU pivots.</param>
         /// <returns>L, diagonal D, U, and the row permutation P.</returns>
         public static (float[,] L, float[] D, float[,] U, int[] P) Decompose(float[,] matrix)
@@ -24,7 +24,7 @@ namespace UMapx.Decomposition
             return (lu.L, d, lu.U, lu.P);
         }
 
-        /// <summary>Computes A[P,:] = L diag(D) U with unit triangular factors</summary>
+        /// <summary>Computes A[P,:] = L diag(D) U with unit triangular factors.</summary>
         /// <param name="matrix">Finite nonempty square matrix with nonzero LU pivots.</param>
         /// <returns>L, diagonal D, U, and the row permutation P.</returns>
         public static (Complex32[,] L, Complex32[] D, Complex32[,] U, int[] P) Decompose(Complex32[,] matrix)

@@ -8,7 +8,7 @@ namespace UMapx.Distribution
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Chi-squared_distribution
+    /// <see href="https://en.wikipedia.org/wiki/Chi-squared_distribution"/>.
     /// </remarks>
     [Serializable]
     public class ChiSquare : IDistribution
@@ -21,7 +21,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Initializes the chi-square distribution.
         /// </summary>
-        /// <param name="k">Degrees of freedom (0, +inf)</param>
+        /// <param name="k">Degrees of freedom (0, +inf).</param>
         public ChiSquare(int k)
         {
             K = k;
@@ -145,8 +145,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the cumulative distribution function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Distribution(float x)
         {
             if (x <= 0)
@@ -158,8 +158,8 @@ namespace UMapx.Distribution
         /// <summary>
         /// Returns the value of the probability density function.
         /// </summary>
-        /// <param name="x">Value</param>
-        /// <returns>Value</returns>
+        /// <param name="x">Value.</param>
+        /// <returns>Value.</returns>
         public float Function(float x)
         {
             if (x <= 0) return 0;

@@ -11,8 +11,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns jagged array.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Jagged array</returns>
+        /// <param name="m">Matrix.</param>
+        /// <returns>Jagged array.</returns>
         public static float[][] ToJagged(this float[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -34,8 +34,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns matrix.
         /// </summary>
-        /// <param name="jagged">Jagged array</param>
-        /// <returns>Matrix</returns>
+        /// <param name="jagged">Jagged array.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] FromJagged(this float[][] jagged)
         {
             int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
@@ -54,8 +54,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns jagged array.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Jagged array</returns>
+        /// <param name="m">Matrix.</param>
+        /// <returns>Jagged array.</returns>
         public static Complex32[][] ToJagged(this Complex32[,] m)
         {
             int ml = m.GetLength(0), mr = m.GetLength(1);
@@ -77,8 +77,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns matrix.
         /// </summary>
-        /// <param name="jagged">Jagged array</param>
-        /// <returns>Matrix</returns>
+        /// <param name="jagged">Jagged array.</param>
+        /// <returns>Matrix.</returns>
         public static Complex32[,] FromJagged(this Complex32[][] jagged)
         {
             int ml = jagged.GetLength(0), mr = jagged[0].GetLength(0);
@@ -104,9 +104,9 @@ namespace UMapx.Core
         /// <summary>
         /// Constructs a matrix of random numbers with values uniformly distributed in the interval [0, 1).
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <returns>Matrix.</returns>
         public static float[][] Rand(int m, int l)
         {
             float[][] H = new float[m][];
@@ -127,9 +127,9 @@ namespace UMapx.Core
         /// <summary>
         /// Constructs a complex matrix of random numbers whose real and imaginary parts are uniformly distributed in the interval [0, 1).
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <returns>Matrix.</returns>
         public static Complex32[][] Randc(int m, int l)
         {
             Complex32[][] H = new Complex32[m][];
@@ -150,9 +150,9 @@ namespace UMapx.Core
         /// <summary>
         /// Constructs a matrix of integer random numbers uniformly distributed between 1 and l (inclusive).
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <returns>Matrix.</returns>
         public static float[][] Randi(int m, int l)
         {
             return Randi(m, l, 1, l + 1);
@@ -160,11 +160,11 @@ namespace UMapx.Core
         /// <summary>
         /// Constructs a matrix of integer random numbers uniformly distributed in the interval [<paramref name="a"/>, <paramref name="b"/>).
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <param name="a">Lower bound</param>
-        /// <param name="b">Upper bound (exclusive)</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <param name="a">Lower bound.</param>
+        /// <param name="b">Upper bound (exclusive).</param>
+        /// <returns>Matrix.</returns>
         public static float[][] Randi(int m, int l, int a, int b)
         {
             float[][] H = new float[m][];
@@ -185,9 +185,9 @@ namespace UMapx.Core
         /// <summary>
         /// Constructs a complex matrix of integer random numbers whose real and imaginary parts are uniformly distributed between 1 and l (inclusive).
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <returns>Matrix.</returns>
         public static Complex32[][] Randic(int m, int l)
         {
             return Randic(m, l, 1, l + 1);
@@ -195,11 +195,11 @@ namespace UMapx.Core
         /// <summary>
         /// Constructs a complex matrix of integer random numbers whose real and imaginary parts are uniformly distributed in the interval [<paramref name="a"/>, <paramref name="b"/>).
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <param name="a">Lower bound</param>
-        /// <param name="b">Upper bound (exclusive)</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <param name="a">Lower bound.</param>
+        /// <param name="b">Upper bound (exclusive).</param>
+        /// <returns>Matrix.</returns>
         public static Complex32[][] Randic(int m, int l, int a, int b)
         {
             Complex32[][] H = new Complex32[m][];
@@ -221,9 +221,9 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of a zero matrix.
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <returns>Matrix.</returns>
         public static float[][] Zero(int m, int l)
         {
             float[][] H = new float[m][];
@@ -239,9 +239,9 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of a matrix of ones.
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <returns>Matrix.</returns>
         public static float[][] One(int m, int l)
         {
             float[][] H = new float[m][];
@@ -262,9 +262,9 @@ namespace UMapx.Core
         /// <summary>
         /// Implements the construction of a eye matrix.
         /// </summary>
-        /// <param name="m">Height</param>
-        /// <param name="l">Width</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Height.</param>
+        /// <param name="l">Width.</param>
+        /// <returns>Matrix.</returns>
         public static float[][] Eye(int m, int l)
         {
             float[][] H = new float[m][];
@@ -287,8 +287,8 @@ namespace UMapx.Core
         /// <summary>
         /// Negates all matrix elements.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public static float[][] Negate(this float[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -313,8 +313,8 @@ namespace UMapx.Core
         /// <summary>
         /// Negates all matrix elements.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public static Complex32[][] Negate(this Complex32[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -339,8 +339,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns a complex matrix.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public static Complex32[][] ToComplex(this float[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -365,8 +365,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns a matrix whose values belong to the interval [0, 255].
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public static float[][] ToByte(this float[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -391,8 +391,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns a matrix whose values belong to the interval [0, 1].
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public static float[][] ToFloat(this float[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -435,8 +435,8 @@ namespace UMapx.Core
         /// <summary>
         /// Calculates the modulus for all matrix elements.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public static float[][] Abs(this float[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -461,8 +461,8 @@ namespace UMapx.Core
         /// <summary>
         /// Calculates the modulus for all matrix elements.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public static float[][] Abs(this Complex32[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -487,8 +487,8 @@ namespace UMapx.Core
         /// <summary>
         /// Takes an angle for all matrix elements.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public static float[][] Angle(this Complex32[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -513,8 +513,8 @@ namespace UMapx.Core
         /// <summary>
         /// Takes the real part for all elements of the matrix.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public static float[][] Real(this Complex32[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -539,8 +539,8 @@ namespace UMapx.Core
         /// <summary>
         /// Takes the imaginary part for all elements of the matrix.
         /// </summary>
-        /// <param name="m">Matrix</param>
-        /// <returns>Matrix</returns>
+        /// <param name="m">Matrix.</param>
+        /// <returns>Matrix.</returns>
         public static float[][] Imag(this Complex32[][] m)
         {
             int r0 = m.GetLength(0), r1;
@@ -568,8 +568,8 @@ namespace UMapx.Core
         /// <summary>
         /// Returns a copy of the input jagged array.
         /// </summary>
-        /// <param name="m">Jagged array</param>
-        /// <returns>Jagged array</returns>
+        /// <param name="m">Jagged array.</param>
+        /// <returns>Jagged array.</returns>
         public static float[][] Copy(this float[][] m)
         {
             int r0 = m.GetLength(0), r1;

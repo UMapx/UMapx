@@ -16,9 +16,9 @@ namespace UMapx.Visualization
         /// <param name="a">
         /// Pixel position along X (0 at the left edge, increasing to the right).
         /// </param>
-        /// <param name="amin">Data-space minimum (left bound) of the X axis</param>
-        /// <param name="amax">Data-space maximum (right bound) of the X axis</param>
-        /// <param name="width">Total drawable width in pixels (must be &gt; 0)</param>
+        /// <param name="amin">Data-space minimum (left bound) of the X axis.</param>
+        /// <param name="amax">Data-space maximum (right bound) of the X axis.</param>
+        /// <param name="width">Total drawable width in pixels (must be &gt; 0).</param>
         /// <returns>
         /// The data-space value X that corresponds to pixel <paramref name="a"/>.
         /// </returns>
@@ -37,9 +37,9 @@ namespace UMapx.Visualization
         /// <param name="a">
         /// Pixel position along Y (0 at the top edge, increasing downward — screen coordinates).
         /// </param>
-        /// <param name="amin">Data-space minimum (bottom bound) of the Y axis</param>
-        /// <param name="amax">Data-space maximum (top bound) of the Y axis</param>
-        /// <param name="height">Total drawable height in pixels (must be &gt; 0)</param>
+        /// <param name="amin">Data-space minimum (bottom bound) of the Y axis.</param>
+        /// <param name="amax">Data-space maximum (top bound) of the Y axis.</param>
+        /// <param name="height">Total drawable height in pixels (must be &gt; 0).</param>
         /// <returns>
         /// The data-space value Y that corresponds to pixel <paramref name="a"/>.
         /// </returns>
@@ -56,10 +56,10 @@ namespace UMapx.Visualization
         /// <summary>
         /// Maps a data-space X value to the corresponding horizontal pixel coordinate.
         /// </summary>
-        /// <param name="a">Data-space X value to convert</param>
-        /// <param name="amin">Data-space minimum (left bound) of the X axis</param>
-        /// <param name="amax">Data-space maximum (right bound) of the X axis</param>
-        /// <param name="width">Total drawable width in pixels (must be &gt; 0)</param>
+        /// <param name="a">Data-space X value to convert.</param>
+        /// <param name="amin">Data-space minimum (left bound) of the X axis.</param>
+        /// <param name="amax">Data-space maximum (right bound) of the X axis.</param>
+        /// <param name="width">Total drawable width in pixels (must be &gt; 0).</param>
         /// <returns>
         /// Pixel position along X in the range [0, <paramref name="width"/>].
         /// </returns>
@@ -71,10 +71,10 @@ namespace UMapx.Visualization
         /// <summary>
         /// Maps a data-space Y value to the corresponding vertical pixel coordinate.
         /// </summary>
-        /// <param name="a">Data-space Y value to convert</param>
-        /// <param name="amin">Data-space minimum (bottom bound) of the Y axis</param>
-        /// <param name="amax">Data-space maximum (top bound) of the Y axis</param>
-        /// <param name="height">Total drawable height in pixels (must be &gt; 0)</param>
+        /// <param name="a">Data-space Y value to convert.</param>
+        /// <param name="amin">Data-space minimum (bottom bound) of the Y axis.</param>
+        /// <param name="amax">Data-space maximum (top bound) of the Y axis.</param>
+        /// <param name="height">Total drawable height in pixels (must be &gt; 0).</param>
         /// <returns>
         /// Pixel position along Y in the range [0, <paramref name="height"/>],
         /// where 0 is the top edge.
@@ -90,7 +90,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Tests whether a scalar value is singular (not a finite real number).
         /// </summary>
-        /// <param name="a">Value to test</param>
+        /// <param name="a">Value to test.</param>
         /// <returns>
         /// <see langword="true"/> if <paramref name="a"/> is <see cref="float.NaN"/>,
         /// <see cref="float.PositiveInfinity"/>, or <see cref="float.NegativeInfinity"/>;
@@ -106,9 +106,9 @@ namespace UMapx.Visualization
         /// <summary>
         /// Clips a value to a half-open range, returning a sentinel just outside if out of bounds.
         /// </summary>
-        /// <param name="a">Value to clip</param>
-        /// <param name="amin">Inclusive lower bound</param>
-        /// <param name="amax">Inclusive upper bound</param>
+        /// <param name="a">Value to clip.</param>
+        /// <param name="amin">Inclusive lower bound.</param>
+        /// <param name="amax">Inclusive upper bound.</param>
         /// <returns>
         /// <para>
         /// If <paramref name="a"/> is within [<paramref name="amin"/>, <paramref name="amax"/>],
@@ -135,7 +135,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Returns the minimum finite value in an array, ignoring singular entries.
         /// </summary>
-        /// <param name="v">Input array</param>
+        /// <param name="v">Input array.</param>
         /// <returns>
         /// The minimum finite value if present; otherwise <see langword="null"/> when all
         /// entries are singular (<see cref="float.NaN"/> or infinities) or the array is empty.
@@ -152,7 +152,7 @@ namespace UMapx.Visualization
         /// <summary>
         /// Returns the maximum finite value in an array, ignoring singular entries.
         /// </summary>
-        /// <param name="v">Input array</param>
+        /// <param name="v">Input array.</param>
         /// <returns>
         /// The maximum finite value if present; otherwise <see langword="null"/> when all
         /// entries are singular (<see cref="float.NaN"/> or infinities) or the array is empty.
@@ -169,8 +169,8 @@ namespace UMapx.Visualization
         /// <summary>
         /// Generates evenly spaced tick marks between <paramref name="min"/> and <paramref name="max"/> (inclusive).
         /// </summary>
-        /// <param name="min">Lower bound of the axis</param>
-        /// <param name="max">Upper bound of the axis</param>
+        /// <param name="min">Lower bound of the axis.</param>
+        /// <param name="max">Upper bound of the axis.</param>
         /// <param name="points">
         /// Number of intervals to split the range into. The resulting array has length <c>points + 1</c>.
         /// </param>

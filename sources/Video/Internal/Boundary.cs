@@ -6,7 +6,7 @@
     using System.Net.Http.Headers;
 
     /// <summary>
-    /// Container for MJPEG stream boundaries
+    /// Container for MJPEG stream boundaries.
     /// </summary>
     public class Boundary
     {
@@ -17,7 +17,7 @@
         private bool _isChecked = false;
 
         /// <summary>
-        /// Creates an empty boundary for e.g. octet streams
+        /// Creates an empty boundary for e.g. octet streams.
         /// </summary>
         public Boundary()
         {
@@ -25,16 +25,16 @@
         }
 
         /// <summary>
-        /// Creates instance using a string as boundary for e.g. multipart streams
+        /// Creates instance using a string as boundary for e.g. multipart streams.
         /// </summary>
-        /// <param name="boundary">Boundary string</param>
+        /// <param name="boundary">Boundary string.</param>
         public Boundary(string boundary)
         {
             _builder = new StringBuilder(boundary);
         }
 
         /// <summary>
-        /// Boundary string content
+        /// Boundary string content.
         /// </summary>
         public string Content
         {
@@ -42,7 +42,7 @@
         }
 
         /// <summary>
-        /// Length of boundary string
+        /// Length of boundary string.
         /// </summary>
         public int Length
         {
@@ -50,7 +50,7 @@
         }
 
         /// <summary>
-        /// True if boundary string length is non-zero
+        /// True if boundary string length is non-zero.
         /// </summary>
         public bool HasValue
         {
@@ -58,7 +58,7 @@
         }
 
         /// <summary>
-        /// True if FixMalformedBoundary has been run
+        /// True if FixMalformedBoundary has been run.
         /// </summary>
         public bool IsChecked
         {
@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// True if IsChecked is true and HasValue is true, or if HasValue is false
+        /// True if IsChecked is true and HasValue is true, or if HasValue is false.
         /// </summary>
         public bool IsValid
         {
@@ -75,7 +75,7 @@
         }
 
         /// <summary>
-        /// Adds character before boundary content
+        /// Adds character before boundary content.
         /// </summary>
         /// <param name="c"></param>
         public void Prepend(char c)
@@ -113,10 +113,10 @@
         }
 
         /// <summary>
-        /// Creates boundary from WebResponse
+        /// Creates boundary from WebResponse.
         /// </summary>
-        /// <param name="response">Source of boundary string</param>
-        /// <returns>Boundary with string content</returns>
+        /// <param name="response">Source of boundary string.</param>
+        /// <returns>Boundary with string content.</returns>
         public static Boundary FromResponse(WebResponse response)
         {
             if (response == null) throw new ArgumentNullException(nameof(response));
@@ -148,8 +148,8 @@
         /// <summary>
         /// Removes HTTP quoting and quoted-pair escapes from a parsed boundary value.
         /// </summary>
-        /// <param name="value">Token or quoted string validated by the header parser</param>
-        /// <returns>Boundary string with its original case preserved</returns>
+        /// <param name="value">Token or quoted string validated by the header parser.</param>
+        /// <returns>Boundary string with its original case preserved.</returns>
         private static string UnquoteBoundary(string value)
         {
             if (value.Length == 0 || value[0] != '"') return value;
@@ -163,9 +163,9 @@
         }
 
         /// <summary>
-        /// Converts boundary to string
+        /// Converts boundary to string.
         /// </summary>
-        /// <param name="boundary">Boundary string content</param>
+        /// <param name="boundary">Boundary string content.</param>
         public static explicit operator string(Boundary boundary)
         {
             string content = null;
@@ -179,9 +179,9 @@
         }
 
         /// <summary>
-        /// Converts boundary to byte array
+        /// Converts boundary to byte array.
         /// </summary>
-        /// <param name="boundary">Boundary byte content</param>
+        /// <param name="boundary">Boundary byte content.</param>
         public static explicit operator byte[] (Boundary boundary)
         {
             byte[] content = null;

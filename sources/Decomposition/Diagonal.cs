@@ -4,10 +4,10 @@ using C = System.Numerics.Complex;
 
 namespace UMapx.Decomposition
 {
-    /// <summary>Provides diagonal extraction factorization</summary>
+    /// <summary>Provides diagonal extraction factorization.</summary>
     public static class Diagonal
     {
-        /// <summary>Computes A = B diag(D) by extracting and dividing by the diagonal</summary>
+        /// <summary>Computes A = B diag(D) by extracting and dividing by the diagonal.</summary>
         /// <param name="matrix">Finite nonempty square matrix with nonzero diagonal entries.</param>
         /// <returns>A column-normalized B and the original diagonal D.</returns>
         public static (float[,] B, float[] D) Decompose(float[,] matrix)
@@ -25,7 +25,7 @@ namespace UMapx.Decomposition
             return (b, d);
         }
 
-        /// <summary>Computes A = B diag(D) by extracting and dividing by the diagonal</summary>
+        /// <summary>Computes A = B diag(D) by extracting and dividing by the diagonal.</summary>
         /// <param name="matrix">Finite nonempty square matrix with nonzero diagonal entries.</param>
         /// <returns>A column-normalized B and the original diagonal D.</returns>
         public static (Complex32[,] B, Complex32[] D) Decompose(Complex32[,] matrix)

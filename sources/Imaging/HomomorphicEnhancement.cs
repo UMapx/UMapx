@@ -11,7 +11,7 @@ namespace UMapx.Imaging
     /// It simultaneously normalizes the brightness of the image and increases the contrast.
     /// 
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Homomorphic_filtering
+    /// <see href="https://en.wikipedia.org/wiki/Homomorphic_filtering"/>.
     /// </remarks>
     [Serializable]
     public class HomomorphicEnhancement : LocalCorrection, IBitmapFilter2
@@ -25,10 +25,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the filter for homomorphic processing.
         /// </summary>
-        /// <param name="radius">Radius</param>
-        /// <param name="space">Color space</param>
-        /// <param name="a">Contrast [-1, 1]</param>
-        /// <param name="b">Offset (0, 1]</param>
+        /// <param name="radius">Radius.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="a">Contrast [-1, 1].</param>
+        /// <param name="b">Offset (0, 1].</param>
         public HomomorphicEnhancement(int radius, Space space, float a = 0.5f, float b = 0.05f)
         {
             gb = new BoxBlur(radius);
@@ -37,11 +37,11 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the filter for homomorphic processing.
         /// </summary>
-        /// <param name="width">Filter width</param>
-        /// <param name="height">Filter height</param>
-        /// <param name="space">Color space</param>
-        /// <param name="a">Contrast [-1, 1]</param>
-        /// <param name="b">Offset (0, 1]</param>
+        /// <param name="width">Filter width.</param>
+        /// <param name="height">Filter height.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="a">Contrast [-1, 1].</param>
+        /// <param name="b">Offset (0, 1].</param>
         public HomomorphicEnhancement(int width, int height, Space space, float a = 0.5f, float b = 0.05f)
         {
             gb = new BoxBlur(width, height);
@@ -50,10 +50,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the filter for homomorphic processing.
         /// </summary>
-        /// <param name="size">Radius</param>
-        /// <param name="space">Color space</param>
-        /// <param name="a">Contrast [-1, 1]</param>
-        /// <param name="b">Offset (0, 1]</param>
+        /// <param name="size">Radius.</param>
+        /// <param name="space">Color space.</param>
+        /// <param name="a">Contrast [-1, 1].</param>
+        /// <param name="b">Offset (0, 1].</param>
         public HomomorphicEnhancement(SizeInt size, Space space, float a = 0.5f, float b = 0.05f)
         {
             gb = new BoxBlur(size);

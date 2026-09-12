@@ -10,7 +10,7 @@ namespace UMapx.Window
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://ieeexplore.ieee.org/document/8711969/
+    /// <see href="https://ieeexplore.ieee.org/document/8711969/"/>.
     /// </remarks>
     [Serializable]
     public class RealWeylHeisenbergTransform : TransformBaseMatrixFloat, IWindowTransform, ITransform
@@ -30,10 +30,10 @@ namespace UMapx.Window
         /// <summary>
         /// Initializes a group of real orthogonal bases and Weyl-Heisenberg transformations.
         /// </summary>
-        /// <param name="window">Windows function</param>
-        /// <param name="m">Number of frequency shifts [2, N/2]</param>
-        /// <param name="spectrumType">Spectrum type</param>
-        /// <param name="direction">Processing direction</param>
+        /// <param name="window">Windows function.</param>
+        /// <param name="m">Number of frequency shifts [2, N/2].</param>
+        /// <param name="spectrumType">Spectrum type.</param>
+        /// <param name="direction">Processing direction.</param>
         public RealWeylHeisenbergTransform(IWindow window, int m = 8, SpectrumType spectrumType = SpectrumType.Fourier, Direction direction = Direction.Vertical)
         {
             Window = window; M = m; SpectrumType = spectrumType; Direction = direction;
@@ -76,10 +76,10 @@ namespace UMapx.Window
         /// <remarks>
         /// Matrix dimension [2N, 2N], where N = M * L.
         /// </remarks>
-        /// <param name="g0">Function</param>
-        /// <param name="M">Number of frequency shifts [2, N/2]</param>
-        /// <param name="spectrumType">Spectrum type</param>
-        /// <returns>Matrix</returns>
+        /// <param name="g0">Function.</param>
+        /// <param name="M">Number of frequency shifts [2, N/2].</param>
+        /// <param name="spectrumType">Spectrum type.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] Matrix(float[] g0, int M, SpectrumType spectrumType = SpectrumType.Fourier)
         {
             int N = g0.Length, L = N / M;
@@ -178,12 +178,12 @@ namespace UMapx.Window
         /// <remarks>
         /// Matrix dimension [2N, 2N], where N = M * L.
         /// </remarks>
-        /// <param name="window">Windows function</param>
-        /// <param name="N">Number of samples</param>
-        /// <param name="M">Number of frequency shifts [2, N/2]</param>
-        /// <param name="spectrumType">Spectrum type</param>
-        /// <param name="orthogonalize">Orthogonalized matrix or not</param>
-        /// <returns>Matrix</returns>
+        /// <param name="window">Windows function.</param>
+        /// <param name="N">Number of samples.</param>
+        /// <param name="M">Number of frequency shifts [2, N/2].</param>
+        /// <param name="spectrumType">Spectrum type.</param>
+        /// <param name="orthogonalize">Orthogonalized matrix or not.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] Matrix(IWindow window, int N, int M, SpectrumType spectrumType = SpectrumType.Fourier, bool orthogonalize = true)
         {
             return RealWeylHeisenbergTransform.Matrix(WeylHeisenbergTransform.Packet(window, N), M, spectrumType, orthogonalize);
@@ -194,11 +194,11 @@ namespace UMapx.Window
         /// <remarks>
         /// Matrix dimension [2N, 2N], where N = M * L.
         /// </remarks>
-        /// <param name="g0">Function</param>
-        /// <param name="M">Number of frequency shifts [2, N/2]</param>
-        /// <param name="spectrumType">Spectrum type</param>
-        /// <param name="orthogonalize">Orthogonalized matrix or not</param>
-        /// <returns>Matrix</returns>
+        /// <param name="g0">Function.</param>
+        /// <param name="M">Number of frequency shifts [2, N/2].</param>
+        /// <param name="spectrumType">Spectrum type.</param>
+        /// <param name="orthogonalize">Orthogonalized matrix or not.</param>
+        /// <returns>Matrix.</returns>
         public static float[,] Matrix(float[] g0, int M, SpectrumType spectrumType = SpectrumType.Fourier, bool orthogonalize = true)
         {
             if (orthogonalize)

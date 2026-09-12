@@ -20,7 +20,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the transparency correction filter.
         /// </summary>
-        /// <param name="transparency">Transparency [-1, 1]</param>
+        /// <param name="transparency">Transparency [-1, 1].</param>
         public TransparencyCorrection(float transparency)
         {
             Transparency = transparency;
@@ -57,7 +57,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb)
@@ -86,7 +86,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);

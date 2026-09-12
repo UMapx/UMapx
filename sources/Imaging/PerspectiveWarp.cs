@@ -20,10 +20,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes a perspective warp filter.
         /// </summary>
-        /// <param name="topLeft">Top left point</param>
-        /// <param name="topRight">Top right point</param>
-        /// <param name="bottomLeft">Bottom left point</param>
-        /// <param name="bottomRight">Bottom right point</param>
+        /// <param name="topLeft">Top left point.</param>
+        /// <param name="topRight">Top right point.</param>
+        /// <param name="bottomLeft">Bottom left point.</param>
+        /// <param name="bottomRight">Bottom right point.</param>
         public PerspectiveWarp(PointFloat topLeft, PointFloat topRight, PointFloat bottomLeft, PointFloat bottomRight) 
         {
             TopLeft = topLeft;
@@ -60,8 +60,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="Src">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="Src">Bitmap.</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -73,7 +73,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public void Apply(BitmapData bmData)
         {
             Bitmap Src = BitmapFormat.ToBitmap(bmData);
@@ -85,7 +85,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             var Src = (Bitmap)Data.Clone();
@@ -95,8 +95,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         public unsafe void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             if (bmData.PixelFormat != PixelFormat.Format32bppArgb || bmSrc.PixelFormat != PixelFormat.Format32bppArgb)

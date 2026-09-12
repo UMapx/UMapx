@@ -14,8 +14,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Rotates bitmap by rotation value.
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <param name="rotation">Rotation</param>
+        /// <param name="b">Bitmap.</param>
+        /// <param name="rotation">Rotation.</param>
         /// <returns></returns>
         public static Bitmap Rotate(this Bitmap b, RotationMode rotation)
         {
@@ -41,9 +41,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Rotates the bitmap by the specified angle. 
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <param name="angle">Angle</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="b">Bitmap.</param>
+        /// <param name="angle">Angle.</param>
+        /// <returns>Bitmap.</returns>
         public static Bitmap Rotate(this Bitmap b, float angle)
         {
             return Rotate(b, new PointFloat(b.Width / 2.0f, b.Height / 2.0f), angle);
@@ -53,10 +53,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Rotates the bitmap by the specified angle. 
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <param name="point">Float point</param>
-        /// <param name="angle">Angle in degrees</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="b">Bitmap.</param>
+        /// <param name="point">Float point.</param>
+        /// <param name="angle">Angle in degrees.</param>
+        /// <returns>Bitmap.</returns>
         private static Bitmap Rotate(this Bitmap b, PointFloat point, float angle)
         {
             Bitmap bmp = new Bitmap(b.Width, b.Height);
@@ -75,10 +75,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns rotated image.
         /// </summary>
-        /// <param name="image">Bitmap</param>
-        /// <param name="angle">Angle</param>
-        /// <param name="color">Background color</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="image">Bitmap.</param>
+        /// <param name="angle">Angle.</param>
+        /// <param name="color">Background color.</param>
+        /// <returns>Bitmap.</returns>
         public static Bitmap Rotate(this Bitmap image, float angle, Color color)
         {
             // create an empty Bitmap image
@@ -111,9 +111,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Flips bitmap by direction.
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <param name="direction">Direction</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="b">Bitmap.</param>
+        /// <param name="direction">Direction.</param>
+        /// <returns>Bitmap.</returns>
         public static Bitmap Flip(this Bitmap b, Direction direction)
         {
             var clone = (Bitmap)b.Clone();
@@ -140,10 +140,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns cropped image.
         /// </summary>
-        /// <param name="image">Bitmap</param>
-        /// <param name="rectangle">Rectangle</param>
-        /// <param name="clamp">Clamp crop or not</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="image">Bitmap.</param>
+        /// <param name="rectangle">Rectangle.</param>
+        /// <param name="clamp">Clamp crop or not.</param>
+        /// <returns>Bitmap.</returns>
         public static Bitmap Crop(this Bitmap image, Rectangle rectangle, bool clamp = true)
         {
             // image params
@@ -177,9 +177,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns resized image.
         /// </summary>
-        /// <param name="image">Bitmap</param>
-        /// <param name="size">Size</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="image">Bitmap.</param>
+        /// <param name="size">Size.</param>
+        /// <returns>Bitmap.</returns>
         public static Bitmap Resize(this Bitmap image, Size size)
         {
             return new Bitmap(image, size.Width, size.Height);
@@ -188,10 +188,10 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns resized image with preserved proportions.
         /// </summary>
-        /// <param name="image">Bitmap</param>
-        /// <param name="size">Size</param>
-        /// <param name="color">Border color</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="image">Bitmap.</param>
+        /// <param name="size">Size.</param>
+        /// <param name="color">Border color.</param>
+        /// <returns>Bitmap.</returns>
         public static Bitmap ResizePreserved(this Bitmap image, Size size, Color color)
         {
             // size
@@ -219,9 +219,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Returns resized image with preserved proportions.
         /// </summary>
-        /// <param name="image">Bitmap</param>
-        /// <param name="size">Size</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="image">Bitmap.</param>
+        /// <param name="size">Size.</param>
+        /// <returns>Bitmap.</returns>
         public static Bitmap ResizePreserved(this Bitmap image, Size size)
         {
             // size
@@ -247,9 +247,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Shifts the bitmap.
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <param name="h">The number of positions to which a shift in height occurs</param>
-        /// <param name="w">The number of positions by which the shift occurs in width</param>
+        /// <param name="b">Bitmap.</param>
+        /// <param name="h">The number of positions to which a shift in height occurs.</param>
+        /// <param name="w">The number of positions by which the shift occurs in width.</param>
         /// <returns></returns>
         public static Bitmap Shift(this Bitmap b, int w, int h)
         {
@@ -279,9 +279,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Shifts bitmap by X axis.
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <param name="value">Shift value</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="b">Bitmap.</param>
+        /// <param name="value">Shift value.</param>
+        /// <returns>Bitmap.</returns>
         private static Bitmap ShiftX(Bitmap b, int value)
         {
             var bmp = (Bitmap)b.Clone();
@@ -293,9 +293,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Shifts bitmap by Y axis.
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <param name="value">Shift value</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="b">Bitmap.</param>
+        /// <param name="value">Shift value.</param>
+        /// <returns>Bitmap.</returns>
         private static Bitmap ShiftY(Bitmap b, int value)
         {
             var bmp = (Bitmap)b.Clone();
@@ -311,8 +311,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Merges two bitmaps.
         /// </summary>s
-        /// <param name="background">Background bitmap</param>
-        /// <param name="foreground">Foreground bitmap</param>
+        /// <param name="background">Background bitmap.</param>
+        /// <param name="foreground">Foreground bitmap.</param>
         public static void Merge(this Bitmap background, Bitmap foreground)
         {
             var rectangle = new Rectangle(0, 0, foreground.Width, foreground.Height);
@@ -321,9 +321,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Merges two bitmaps.
         /// </summary>
-        /// <param name="background">Background image</param>
-        /// <param name="foreground">Foreground image</param>
-        /// <param name="rectangle">Rectangle</param>
+        /// <param name="background">Background image.</param>
+        /// <param name="foreground">Foreground image.</param>
+        /// <param name="rectangle">Rectangle.</param>
         public static void Merge(this Bitmap background, Bitmap foreground, Rectangle rectangle)
         {
             using var graphics = Graphics.FromImage(background);
@@ -335,9 +335,9 @@ namespace UMapx.Imaging
         /// <summary>
         /// Sets the transparency of the bitmap. 
         /// </summary>
-        /// <param name="b">Bitmap</param>
-        /// <param name="value">Transparency [0, 255]</param>
-        /// <returns>Bitmap</returns>
+        /// <param name="b">Bitmap.</param>
+        /// <param name="value">Transparency [0, 255].</param>
+        /// <returns>Bitmap.</returns>
         public static Bitmap Transparency(this Bitmap b, int value)
         {
             int width = b.Width, height = b.Height;

@@ -11,7 +11,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// http://imagej.net/Image_Intensity_Processing
+    /// <see href="http://imagej.net/Image_Intensity_Processing"/>.
     /// </remarks>
     [Serializable]
     public class FlatFieldCorrection : IBitmapFilter2, IBitmapFilter
@@ -27,7 +27,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the flat-field correction filter.
         /// </summary>
-        /// <param name="radius">Radius</param>
+        /// <param name="radius">Radius.</param>
         public FlatFieldCorrection(int radius = 15)
         {
             gb = new BoxBlur(radius);
@@ -35,8 +35,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the flat-field correction filter.
         /// </summary>
-        /// <param name="width">Filter width</param>
-        /// <param name="height">Filter height</param>
+        /// <param name="width">Filter width.</param>
+        /// <param name="height">Filter height.</param>
         public FlatFieldCorrection(int width, int height)
         {
             gb = new BoxBlur(width, height);
@@ -44,7 +44,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the flat-field correction filter.
         /// </summary>
-        /// <param name="size">Radius</param>
+        /// <param name="size">Radius.</param>
         public FlatFieldCorrection(SizeInt size)
         {
             gb = new BoxBlur(size);
@@ -66,8 +66,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         public void Apply(BitmapData bmData, BitmapData bmSrc)
         {
             gb.Apply(bmSrc);
@@ -76,8 +76,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
-        /// <param name="Src">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
+        /// <param name="Src">Bitmap.</param>
         public void Apply(Bitmap Data, Bitmap Src)
         {
             BitmapData bmData = BitmapFormat.Lock32bpp(Data);
@@ -89,7 +89,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         public void Apply(BitmapData bmData)
         {
             Bitmap Src = BitmapFormat.ToBitmap(bmData);
@@ -101,7 +101,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Apply filter.
         /// </summary>
-        /// <param name="Data">Bitmap</param>
+        /// <param name="Data">Bitmap.</param>
         public void Apply(Bitmap Data)
         {
             var Src = (Bitmap)Data.Clone();
@@ -114,8 +114,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Flat-field filter.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
-        /// <param name="bmSrc">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
+        /// <param name="bmSrc">Bitmap data.</param>
         private unsafe void FlatField(BitmapData bmData, BitmapData bmSrc)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();
@@ -151,7 +151,7 @@ namespace UMapx.Imaging
         /// <summary>
         /// Computes global channel means and stores them in <see cref="mR"/>, <see cref="mG"/> and <see cref="mB"/>.
         /// </summary>
-        /// <param name="bmData">Bitmap data</param>
+        /// <param name="bmData">Bitmap data.</param>
         private unsafe void GlobalMeans(BitmapData bmData)
         {
             byte* p = (byte*)bmData.Scan0.ToPointer();

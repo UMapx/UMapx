@@ -7,7 +7,7 @@ namespace UMapx.Imaging
     /// </summary>
     /// <remarks>
     /// More information can be found on the website:
-    /// https://en.wikipedia.org/wiki/Gamma_correction
+    /// <see href="https://en.wikipedia.org/wiki/Gamma_correction"/>.
     /// </remarks>
     [Serializable]
     public class GammaCorrection : Correction, IBitmapFilter
@@ -20,8 +20,8 @@ namespace UMapx.Imaging
         /// <summary>
         /// Initializes the gamma correction filter.
         /// </summary>
-        /// <param name="g">Gamma [0, 20]</param>
-        /// <param name="space">Color space</param>
+        /// <param name="g">Gamma [0, 20].</param>
+        /// <param name="space">Color space.</param>
         public GammaCorrection(float g, Space space)
         {
             Gamma = g; Space = space;

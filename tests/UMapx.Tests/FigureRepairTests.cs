@@ -87,7 +87,7 @@ public class FigureRepairTests
         Assert.Equal((-5f, 5f), (figure.RangeY.Min, figure.RangeY.Max));
     }
 
-    /// <summary>Checks finite, nonzero axis extent and inclusion of every supplied finite sample</summary>
+    /// <summary>Checks finite, nonzero axis extent and inclusion of every supplied finite sample.</summary>
     /// <param name="range">Computed axis range.</param><param name="samples">Finite data values.</param>
     private static void AssertRange(RangeFloat range, float[] samples)
     {
@@ -96,7 +96,7 @@ public class FigureRepairTests
         foreach (float value in samples) Assert.InRange(value, range.Min, range.Max);
     }
 
-    /// <summary>Counts series-colored pixels independently of the figure's coordinate mapping</summary>
+    /// <summary>Counts series-colored pixels independently of the figure's coordinate mapping.</summary>
     /// <param name="bitmap">Rendered figure with its legend disabled.</param><returns>The number of red pixels.</returns>
     private static int CountRed(Bitmap bitmap)
     {
