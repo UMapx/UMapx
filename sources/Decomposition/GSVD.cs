@@ -104,7 +104,9 @@ namespace UMapx.Decomposition
             {
                 var column = InternalMatrixMath.Column(w, j);
                 double sine = InternalMatrixMath.Norm(column);
-                if (sine <= 64 * InternalMatrixMath.Roundoff) { sine = 0; zero[j] = true; }
+                if (sine <= 64 * InternalMatrixMath.Roundoff &&
+                    sine <= 64 * InternalMatrixMath.Roundoff * InternalMatrixMath.LowerProductScale(qr.Q, m, svd.V, j))
+                { sine = 0; zero[j] = true; }
                 else
                 {
                     InternalMatrixMath.Divide(column, sine);
@@ -225,7 +227,9 @@ namespace UMapx.Decomposition
             {
                 var column = InternalMatrixMath.Column(w, j);
                 double sine = InternalMatrixMath.Norm(column);
-                if (sine <= 64 * InternalMatrixMath.Roundoff) { sine = 0; zero[j] = true; }
+                if (sine <= 64 * InternalMatrixMath.Roundoff &&
+                    sine <= 64 * InternalMatrixMath.Roundoff * InternalMatrixMath.LowerProductScale(qr.Q, m, svd.V, j))
+                { sine = 0; zero[j] = true; }
                 else
                 {
                     InternalMatrixMath.Divide(column, sine);

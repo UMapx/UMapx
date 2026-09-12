@@ -38,7 +38,7 @@ public class ComplexDecompositionTests
 
     public static IEnumerable<object[]> GsvdSmallBlockCases()
     {
-        foreach (float small in new[] { 1e-4f, 1e-6f, 1e-8f, 1e-10f })
+        foreach (float small in new[] { 1e-4f, 1e-6f, 1e-8f, 1e-10f, 1e-20f, 1e-30f })
         foreach (bool real in new[] { false, true })
         foreach (bool swap in new[] { false, true })
             yield return new object[] { small, real, swap };

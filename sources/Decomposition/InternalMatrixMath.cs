@@ -408,6 +408,24 @@ namespace UMapx.Decomposition
             return scale * Math.Sqrt(sum);
         }
 
+        /// <summary>Computes the norm of a lower-block product column using the magnitudes of its terms.</summary>
+        /// <param name="q">Left work matrix.</param>
+        /// <param name="offset">First row of the lower block.</param>
+        /// <param name="v">Compatible right work matrix.</param>
+        /// <param name="column">Column of the right matrix.</param>
+        /// <returns>The Euclidean norm of the row sums of absolute product terms.</returns>
+        public static double LowerProductScale(double[][] q, int offset, double[][] v, int column)
+        {
+            double norm = 0;
+            for (int i = offset; i < q.Length; i++)
+            {
+                double sum = 0;
+                for (int k = 0; k < v.Length; k++) sum += Math.Abs(q[i][k]) * Math.Abs(v[k][column]);
+                norm = Hypotenuse(norm, sum);
+            }
+            return norm;
+        }
+
         /// <summary>Accumulates a real inner product with SIMD, retaining double precision.</summary>
         public static double Dot(double[] a, double[] b, int length, int offsetA = 0, int offsetB = 0)
         {
@@ -623,6 +641,24 @@ namespace UMapx.Decomposition
             for (int i = 0; i < a.GetLength(0); i++)
                 AccumulateNorm(C.Abs(a[i, column]), ref scale, ref sum);
             return scale == 0 ? 0 : scale * Math.Sqrt(sum);
+        }
+
+        /// <summary>Computes the norm of a lower-block product column using the magnitudes of its terms.</summary>
+        /// <param name="q">Left work matrix.</param>
+        /// <param name="offset">First row of the lower block.</param>
+        /// <param name="v">Compatible right work matrix.</param>
+        /// <param name="column">Column of the right matrix.</param>
+        /// <returns>The Euclidean norm of the row sums of absolute product terms.</returns>
+        public static double LowerProductScale(C[,] q, int offset, C[,] v, int column)
+        {
+            double norm = 0;
+            for (int i = offset; i < q.GetLength(0); i++)
+            {
+                double sum = 0;
+                for (int k = 0; k < v.GetLength(0); k++) sum += C.Abs(q[i, k]) * C.Abs(v[k, column]);
+                norm = Hypotenuse(norm, sum);
+            }
+            return norm;
         }
 
         /// <summary>Accumulates a sum of squared magnitudes using the largest magnitude as a scale.</summary>

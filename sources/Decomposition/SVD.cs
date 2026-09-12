@@ -313,10 +313,10 @@ namespace UMapx.Decomposition
                 double[] rv1 = new double[m];
 
                 int flag, i, its, j, jj, k, l = 0, nm = 0;
-                double anorm, c, f, g, h, e, scale, x, y, z;
+                double c, f, g, h, e, scale, x, y, z;
 
                 // householder reduction to bidiagonal form
-                g = scale = anorm = 0.0f;
+                g = scale = 0.0f;
 
                 for (i = 0; i < m; i++)
                 {
@@ -418,7 +418,6 @@ namespace UMapx.Decomposition
                             }
                         }
                     }
-                    anorm = Math.Max(anorm, (Math.Abs(Sr[i]) + Math.Abs(rv1[i])));
                 }
 
                 // accumulation of right-hand transformations
@@ -519,13 +518,17 @@ namespace UMapx.Decomposition
                             // test for splitting
                             nm = l - 1;
 
-                            if (Math.Abs(rv1[l]) + anorm == anorm)
+                            // Use adjacent bidiagonal entries, not a global norm: an
+                            // unrelated large block must not erase a small block's coupling.
+                            if (l == 0 || Math.Abs(rv1[l]) <= InternalMatrixMath.Roundoff *
+                                (Math.Abs(Sr[nm]) + Math.Abs(Sr[l])))
                             {
                                 flag = 0;
                                 break;
                             }
 
-                            if (Math.Abs(Sr[nm]) + anorm == anorm)
+                            if (Math.Abs(Sr[nm]) <= InternalMatrixMath.Roundoff *
+                                (Math.Abs(rv1[nm]) + Math.Abs(rv1[l])))
                                 break;
                         }
 
@@ -538,7 +541,7 @@ namespace UMapx.Decomposition
                                 f = e * rv1[i];
                                 rv1[i] *= c;
 
-                                if (Math.Abs(f) + anorm == anorm) break;
+                                if (Math.Abs(f) <= InternalMatrixMath.Roundoff * Math.Abs(Sr[i])) break;
                                 g = Sr[i];
                                 h = InternalMatrixMath.Hypotenuse(f, g);
                                 Sr[i] = h;

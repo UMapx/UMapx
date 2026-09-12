@@ -188,6 +188,7 @@ namespace UMapx.Decomposition
                 // without Hessenberg form.
                 if (Matrice.IsSymmetric(A))
                 {
+                    if (FactorIndependentSymmetricBlocks(A)) return;
                     hessenberg = InternalMatrixMath.CreateJagged(n, n);
                     matrices = InternalMatrixMath.CopyJagged(A);
 
@@ -239,6 +240,49 @@ namespace UMapx.Decomposition
             #endregion
 
             #region Private voids
+            /// <summary>Factors disconnected symmetric components without mixing their numerical scales.</summary>
+            private bool FactorIndependentSymmetricBlocks(float[,] a)
+            {
+                if (n == 1) return false;
+                var visited = new bool[n];
+                var order = new int[n];
+                var starts = new int[n + 1];
+                int count = 0, components = 0;
+                for (int seed = 0; seed < n; seed++)
+                {
+                    if (visited[seed]) continue;
+                    int start = count;
+                    starts[components++] = start;
+                    order[count++] = seed;
+                    visited[seed] = true;
+                    for (int head = start; head < count && count < n; head++)
+                        for (int j = 0; j < n; j++)
+                            if (!visited[j] && a[order[head], j] != 0)
+                            {
+                                visited[j] = true;
+                                order[count++] = j;
+                            }
+                }
+                if (components == 1) return false;
+                starts[components] = n;
+                matrices = InternalMatrixMath.CreateJagged(n, n);
+                for (int block = 0; block < components; block++)
+                {
+                    int start = starts[block], size = starts[block + 1] - start;
+                    var input = new float[size, size];
+                    for (int i = 0; i < size; i++)
+                        for (int j = 0; j < size; j++) input[i, j] = a[order[start + i], order[start + j]];
+                    var part = new RealWorkspace(input, eps);
+                    for (int j = 0; j < size; j++)
+                    {
+                        Re[start + j] = part.Re[j];
+                        for (int i = 0; i < size; i++) matrices[order[start + i]][start + j] = part.matrices[i][j];
+                    }
+                }
+                SortSymmetricEigenpairs();
+                return true;
+            }
+
             /// <summary>
             /// Symmetric Householder reduction to tridiagonal form.
             /// This is derived from the Algol procedures tred2 by Bowdler, Martin, Reinsch, and Wilkinson,
@@ -375,7 +419,8 @@ namespace UMapx.Decomposition
             {
                 double f = 0;
                 double tst1 = 0;
-                int i, l, j, k, iter, m;
+                int blockEnd = -1;
+                int i, l, k, iter, m;
                 double g, p, r, dl1, h;
                 double c, c2, c3, el1, s, s2;
 
@@ -386,6 +431,14 @@ namespace UMapx.Decomposition
 
                 for (l = 0; l < n; l++)
                 {
+                    // Independent tridiagonal blocks need independent shifts and scales.
+                    // Carrying either across an exact zero coupling can erase a small spectrum.
+                    if (l > blockEnd)
+                    {
+                        f = tst1 = 0;
+                        blockEnd = l;
+                        while (blockEnd < n - 1 && Im[blockEnd] != 0) blockEnd++;
+                    }
                     // Find small subdiagonal element.
                     tst1 = System.Math.Max(tst1, System.Math.Abs(Re[l]) + System.Math.Abs(Im[l]));
                     m = l;
@@ -417,7 +470,7 @@ namespace UMapx.Decomposition
                             Re[l + 1] = Im[l] * (p + r);
                             dl1 = Re[l + 1];
                             h = g - Re[l];
-                            for (i = l + 2; i < n; i++)
+                            for (i = l + 2; i <= blockEnd; i++)
                             {
                                 Re[i] -= h;
                             }
@@ -468,12 +521,17 @@ namespace UMapx.Decomposition
                     Im[l] = 0;
                 }
 
-                // Sort eigenvalues and corresponding Matrices.
-                for (i = 0; i < n - 1; i++)
+                SortSymmetricEigenpairs();
+            }
+
+            /// <summary>Sorts a real symmetric spectrum and permutes its eigenvectors together.</summary>
+            private void SortSymmetricEigenpairs()
+            {
+                for (int i = 0; i < n - 1; i++)
                 {
-                    k = i;
-                    p = Re[i];
-                    for (j = i + 1; j < n; j++)
+                    int k = i;
+                    double p = Re[i];
+                    for (int j = i + 1; j < n; j++)
                     {
                         if (Re[j] < p)
                         {
@@ -486,7 +544,7 @@ namespace UMapx.Decomposition
                     {
                         Re[k] = Re[i];
                         Re[i] = p;
-                        for (j = 0; j < n; j++)
+                        for (int j = 0; j < n; j++)
                         {
                             p = matrices[j][i];
                             matrices[j][i] = matrices[j][k];

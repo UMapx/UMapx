@@ -5,27 +5,6 @@ video parsing, and public API contracts. It includes independent reference
 values, mathematical identities, and regression cases for previously observed
 failures.
 
-## Latest recorded full run
-
-The September 12, 2026 run used Windows, .NET SDK 10.0.401, the .NET 8 test
-target, and the Release configuration.
-
-| Measure | Result |
-| --- | --- |
-| Test cases | 17,740 passed; 0 failed; 0 skipped. |
-| Line coverage | 28,449 / 33,925 lines (83.86%). |
-| Branch coverage | 11,229 / 14,452 branches (77.70%). |
-
-Percentages are rounded from the coverage counts. These are recorded results,
-not values automatically refreshed when tests change. The local evidence is
-`artifacts/release-readiness/final/release-final.trx` and its accompanying
-`coverage.cobertura.xml`; generated artifacts are not tracked in Git.
-
-Coverage measures executed code, not numerical correctness. A passing run
-validates the included cases; it does not establish that every supported input
-is correct. Contract tests for unsupported operations do not establish that
-those operations are implemented.
-
 ## Run the tests
 
 Requirements for the complete suite:
@@ -47,13 +26,19 @@ only when dependencies have already been restored.
 To collect coverage and a TRX results file:
 
 ```powershell
-dotnet test UMapx.sln -c Release -p:GeneratePackageOnBuild=false -p:DebugType=portable -p:DebugSymbols=true --collect "XPlat Code Coverage" --settings tests/UMapx.Tests/coverage.runsettings --logger "trx;LogFileName=full-audit.trx" --results-directory artifacts/math-audit/run
+dotnet test UMapx.sln -c Release -p:GeneratePackageOnBuild=false -p:DebugType=portable -p:DebugSymbols=true --collect "XPlat Code Coverage" --settings tests/UMapx.Tests/coverage.runsettings --logger "trx;LogFileName=tests.trx" --results-directory artifacts/tests/coverage
 ```
 
 Both PDB settings are required: the library's normal Release configuration
 disables debug symbols. [coverage.runsettings](coverage.runsettings) collects
 Cobertura and JSON coverage for the UMapx assembly, excluding the test assembly
-and generated `obj` files.
+and generated `obj` files. Results are written to `artifacts/tests/coverage`;
+generated artifacts are not tracked in Git.
+
+Coverage measures executed code, not numerical correctness. A passing run
+validates the included cases; it does not establish that every supported input
+is correct. Contract tests for unsupported operations do not establish that
+those operations are implemented.
 
 To select an area, a test class, or a specific regression:
 
@@ -74,7 +59,7 @@ For example, [ApproximationRepairTests.cs](ApproximationRepairTests.cs) contains
 bitmap tests under `Category=Analysis`. Excluding `Imaging`, `Geometry`,
 `Video`, and `Contract` therefore does not produce a guaranteed portable suite.
 `SupportedOSPlatform` attributes document restrictions; they do not
-automatically skip tests. No full Linux/macOS run is recorded here.
+automatically skip tests.
 
 ## Projects and coverage areas
 
@@ -92,16 +77,6 @@ is a separate executable for operations whose termination must be bounded.
 | `ColorSpace`, `Imaging`, `Geometry` | Color conversions, pixel equations, bitmap composition, stride and padding, depth maps, tensors, and rendering. |
 | `Video` | MIME boundaries, partial reads, JPEG framing, synthetic video sources, stream deadlines, and exception propagation. |
 | `Contract` | Public API behavior, invalid inputs, and explicitly unsupported operations. |
-
-The latest release regressions add 40 cases to the preceding 17,700-case run:
-
-- [ComplexDecompositionTests.cs](ComplexDecompositionTests.cs): 26 cases for
-  eigenvectors in independently scaled blocks and GSVD bases, including
-  orthogonality, small-block reconstruction, independent singular values,
-  swapped inputs, and zero subspaces.
-- [TimeoutStreamRepairTests.cs](TimeoutStreamRepairTests.cs): 14 cases for
-  operation deadlines, idle intervals, timeout recovery, native stream
-  settings, exception propagation, cancellation, and argument validation.
 
 Video tests use synthetic streams and generated images. They do not exercise
 live cameras, external MJPEG servers, or screen capture.

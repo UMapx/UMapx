@@ -49,11 +49,18 @@ namespace UMapx.Decomposition
             int m = a.GetLength(0), n = a.GetLength(1), kmax = Math.Min(m, n);
             C[,] q = null;
             var h = new C[m, kmax];
+            var leading = vectors ? new double[kmax] : null;
             for (int k = 0; k < kmax; k++)
             {
                 var v = InternalMatrixMath.Column(a, k, k);
+                if (vectors) leading[k] = C.Abs(v[0]);
                 v = InternalMatrixMath.HouseholderVector(v);
                 InternalMatrixMath.ReflectLeft(a, v, k, k);
+                if (vectors)
+                {
+                    double norm = C.Abs(a[k, k]);
+                    leading[k] = norm == 0 ? 1 : -leading[k] / norm;
+                }
                 InternalMatrixMath.SetColumn(h, k, v, k);
                 for (int i = k + 1; i < m; i++) a[i, k] = 0;
             }
@@ -67,6 +74,9 @@ namespace UMapx.Decomposition
                 {
                     var v = InternalMatrixMath.Column(h, k, k);
                     InternalMatrixMath.ReflectLeft(q, v, k, 0);
+                    // Column k is still e_k before this reflection. Avoid cancellation
+                    // in 1 - 2*|v[0]|^2 when the original leading component is tiny.
+                    q[k, k] = leading[k];
                 }
             }
             return (q, a, h);
@@ -83,11 +93,18 @@ namespace UMapx.Decomposition
             double[][] q = null;
             var scratch = new double[Math.Max(m, n)];
             var h = InternalMatrixMath.CreateJagged(m, kmax);
+            var leading = vectors ? new double[kmax] : null;
             for (int k = 0; k < kmax; k++)
             {
                 var v = InternalMatrixMath.Column(a, k, k);
+                if (vectors) leading[k] = Math.Abs(v[0]);
                 v = InternalMatrixMath.HouseholderVector(v);
                 InternalMatrixMath.ReflectLeft(a, v, k, k, scratch);
+                if (vectors)
+                {
+                    double norm = Math.Abs(a[k][k]);
+                    leading[k] = norm == 0 ? 1 : -leading[k] / norm;
+                }
                 InternalMatrixMath.SetColumn(h, k, v, k);
                 for (int i = k + 1; i < m; i++) a[i][k] = 0;
             }
@@ -101,6 +118,8 @@ namespace UMapx.Decomposition
                 {
                     var v = InternalMatrixMath.Column(h, k, k);
                     InternalMatrixMath.ReflectLeft(q, v, k, k, scratch);
+                    // Column k is e_k here; use the original component-to-norm ratio.
+                    q[k][k] = leading[k];
                 }
             }
             return (q, a, h);
