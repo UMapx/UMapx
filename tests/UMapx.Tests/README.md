@@ -5,6 +5,9 @@ video parsing, and public API contracts. It includes independent reference
 values, mathematical identities, and regression cases for previously observed
 failures.
 
+The suite contains **18,087 test cases**. The verified Windows Release result
+is **18,087 passed, 0 failed, and 0 skipped**.
+
 ## Run the tests
 
 Requirements for the complete suite:
@@ -74,12 +77,35 @@ is a separate executable for operations whose termination must be bounded.
 | `Decomposition` | Real and complex factorizations, reconstruction, orthogonality, eigenvector equations, pseudoinverses, rank, scaling, and convergence contracts. |
 | `Distribution` | Densities, CDFs, support, moments, entropy, medians, modes, and parameter boundaries. |
 | `Transform`, `Wavelet`, `Window`, `WindowTransform`, `Response` | Direct transform references, reconstruction, window formulas, wavelet coefficients, framed transforms, and filter responses. |
-| `ColorSpace`, `Imaging`, `Geometry` | Color conversions, pixel equations, bitmap composition, stride and padding, depth maps, tensors, and rendering. |
-| `Video` | MIME boundaries, partial reads, JPEG framing, synthetic video sources, stream deadlines, and exception propagation. |
+| `ColorSpace`, `Imaging`, `Geometry` | Color conversions, pixel equations, bitmap composition, stride and padding, depth maps, tensors, rendering, bitmap locks, and resource ownership on failure. |
+| `Video` | MIME boundaries, partial reads, JPEG framing, buffer growth, frame ordering, synthetic video sources, stream deadlines, shutdown, restart, and exception propagation. |
 | `Contract` | Public API behavior, invalid inputs, and explicitly unsupported operations. |
 
-Video tests use synthetic streams and generated images. They do not exercise
-live cameras, external MJPEG servers, or screen capture.
+Video tests use synthetic streams, generated images, and local HTTP servers
+on the loopback interface. They do not exercise live cameras, external MJPEG
+servers, or screen capture.
+
+## Resource and streaming checks
+
+[ImagingResourceTests.cs](ImagingResourceTests.cs) verifies that failures release
+bitmap locks acquired by the operation while preserving caller-owned locks and
+images. Cases include a busy or disposed second bitmap, aliased inputs,
+validation failures, and exceptions from user filters. The checks cover the
+concrete `IBitmapFilter2` implementations as well as bitmap conversion, rebuild,
+stereo disparity, and motion detection paths.
+
+[VideoStreamingTests.cs](VideoStreamingTests.cs) checks delivery of every buffered
+MJPEG frame in order, operation without subscribers, and stopping from a frame
+callback. JPEG and MJPEG sources decode generated JPEGs larger than 3 MiB with
+and without `Content-Length`. Parser tests verify that buffer growth preserves
+partial markers and unread frames.
+
+[VideoLifecycleTests.cs](VideoLifecycleTests.cs) covers disposal, concurrent stop
+calls, callback-triggered shutdown, restart, and rejection of starts after
+disposal. Stalled-response tests send an incomplete frame body with an infinite
+read timeout and require the source to stop before the local server is released.
+They verify worker termination, a single stop notification per run, and no
+spurious source error or incomplete frame delivery.
 
 ## Numerical checks and reproducibility
 
@@ -116,7 +142,7 @@ and the `SIMD audit` collection in
 execution while changing the global SIMD setting.
 
 [AuditProcess.cs](AuditProcess.cs) runs selected primality, factorization,
-Schur, and eigenvalue termination checks in the probe process with a
+Schur, eigenvalue, and video lifecycle checks in the probe process with a
 five-second deadline and process-tree termination. Child-process execution is
 not included in the parent test host's coverage totals.
 
