@@ -112,20 +112,26 @@ namespace UMapx.Decomposition
         {
             int n = s.GetLength(0);
             var vectors = new C[n, n];
-            double normS = InternalMatrixMath.Max(s), normT = InternalMatrixMath.Max(t);
             for (int k = 0; k < n; k++)
             {
                 // Normalize coefficients before multiplication; homogeneous pairs may span very different units.
                 double pairScale = Math.Max(C.Abs(alpha[k]), Math.Abs(beta[k]));
                 C numerator = pairScale == 0 ? C.Zero : alpha[k] / pairScale;
                 double denominator = pairScale == 0 ? 0 : beta[k] / pairScale;
-                double floor = Math.Max(1e-300, 16 * InternalMatrixMath.Roundoff *
-                    (Math.Abs(denominator) * normS + C.Abs(numerator) * normT));
                 var y = new C[n]; y[k] = 1;
                 for (int i = k - 1; i >= 0; i--)
                 {
                     C sum = 0;
-                    for (int j = i + 1; j <= k; j++) sum += (denominator * s[i, j] - numerator * t[i, j]) * y[j];
+                    double local = C.Abs(denominator * s[i, i]) + C.Abs(numerator * t[i, i]);
+                    for (int j = i + 1; j <= k; j++)
+                    {
+                        C coefficient = denominator * s[i, j] - numerator * t[i, j];
+                        sum += coefficient * y[j];
+                        if (y[j] != C.Zero) local = Math.Max(local, C.Abs(coefficient));
+                    }
+                    // Only the active row determines a near-repeated-root safeguard.
+                    // A large eigenvalue in an independent block must not perturb this equation.
+                    double floor = Math.Max(1e-300, 16 * InternalMatrixMath.Roundoff * local);
                     C diagonal = denominator * s[i, i] - numerator * t[i, i];
                     if (C.Abs(diagonal) < floor)
                     {

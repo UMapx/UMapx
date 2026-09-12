@@ -64,7 +64,7 @@ namespace UMapx.Decomposition
             if (s1.Length != s2.Length) throw new ArgumentException("Diagonal lengths must agree.");
         }
 
-        /// <summary>Combines independently scaled stacked QR with an SVD of the upper orthonormal block.</summary>
+        /// <summary>Combines independently scaled stacked QR with complementary block SVDs.</summary>
         /// <param name="a">Private tall first matrix.</param>
         /// <param name="b">Private tall second matrix with the same column count.</param>
         /// <param name="iterations">Jacobi sweep limit.</param>
@@ -92,6 +92,7 @@ namespace UMapx.Decomposition
                 if (C.Abs(r[i, i]) <= threshold) throw new ArgumentException("The stacked matrix must have full column rank.");
             var svd = SVD.Factor(InternalMatrixMath.Block(qr.Q, m, n), iterations);
             var w = InternalMatrixMath.Multiply(InternalMatrixMath.Block(qr.Q, p, n, m), svd.V);
+            RefineComplement(svd.U, svd.S, svd.V, w, iterations);
             var x = InternalMatrixMath.Multiply(InternalMatrixMath.Adjoint(svd.V), r);
             var s1 = new float[n];
             var s2 = new float[n];
@@ -129,6 +130,59 @@ namespace UMapx.Decomposition
                     count++;
                 }
             return (svd.U, s1, u2, s2, x);
+        }
+
+        /// <summary>Resolves small sine values through the lower block instead of subtracting nearly equal cosines.</summary>
+        /// <param name="u">Upper left singular vectors, updated within the large-cosine subspace.</param>
+        /// <param name="cosines">Descending upper singular values, updated after the common rotation.</param>
+        /// <param name="v">Common right singular vectors, updated in place.</param>
+        /// <param name="lower">Lower orthonormal block multiplied by v, updated by the same rotation.</param>
+        /// <param name="iterations">Positive maximum number of Jacobi sweeps for the complementary SVD.</param>
+        /// <remarks>
+        /// For cosines above sqrt(1/2), the upper vectors remain well conditioned under rotation.
+        /// The lower block supplies accurate directions even when the corresponding cosines round to one.
+        /// Projections onto the remaining lower columns remove only stacked-QR roundoff.
+        /// </remarks>
+        private static void RefineComplement(C[,] u, double[] cosines, C[,] v, C[,] lower, int iterations)
+        {
+            int n = cosines.Length, count = 0;
+            while (count < n && cosines[count] > Math.Sqrt(0.5)) count++;
+            if (count == 0) return;
+
+            int rows = lower.GetLength(0);
+            var basis = new C[rows, n - count];
+            for (int j = count; j < n; j++)
+            {
+                var column = InternalMatrixMath.Column(lower, j);
+                InternalMatrixMath.Orthogonalize(column, basis, j - count);
+                InternalMatrixMath.Divide(column, InternalMatrixMath.Norm(column));
+                InternalMatrixMath.SetColumn(basis, j - count, column);
+            }
+            var small = new C[rows, count];
+            for (int j = 0; j < count; j++)
+            {
+                var column = InternalMatrixMath.Column(lower, j);
+                InternalMatrixMath.Orthogonalize(column, basis, n - count);
+                InternalMatrixMath.SetColumn(small, j, column);
+            }
+            var complement = SVD.Factor(small, iterations);
+            // Reverse the sine order to retain descending cosines within this subspace.
+            var rotation = new C[count, count];
+            for (int i = 0; i < count; i++)
+                for (int j = 0; j < count; j++) rotation[i, j] = complement.V[i, count - 1 - j];
+            var upper = InternalMatrixMath.Block(u, u.GetLength(0), count);
+            for (int i = 0; i < upper.GetLength(0); i++)
+                for (int j = 0; j < count; j++) upper[i, j] *= cosines[j];
+            upper = InternalMatrixMath.Multiply(upper, rotation);
+            var right = InternalMatrixMath.Multiply(InternalMatrixMath.Block(v, n, count), rotation);
+            for (int j = 0; j < count; j++)
+            {
+                cosines[j] = InternalMatrixMath.ColumnNorm(upper, j);
+                for (int i = 0; i < u.GetLength(0); i++) u[i, j] = upper[i, j] / cosines[j];
+                for (int i = 0; i < n; i++) v[i, j] = right[i, j];
+                for (int i = 0; i < rows; i++)
+                    lower[i, j] = complement.U[i, count - 1 - j] * complement.S[count - 1 - j];
+            }
         }
     }
 }

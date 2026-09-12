@@ -13833,11 +13833,24 @@
             <param name="s2">Second nonnegative diagonal.</param>
         </member>
         <member name="M:UMapx.Decomposition.GSVD.Factor(System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Int32)">
-            <summary>Combines independently scaled stacked QR with an SVD of the upper orthonormal block.</summary>
+            <summary>Combines independently scaled stacked QR with complementary block SVDs.</summary>
             <param name="a">Private tall first matrix.</param>
             <param name="b">Private tall second matrix with the same column count.</param>
             <param name="iterations">Jacobi sweep limit.</param>
             <returns>Economy GSVD factors, with completed orthonormal columns for zero sine values.</returns>
+        </member>
+        <member name="M:UMapx.Decomposition.GSVD.RefineComplement(System.Numerics.Complex[0:,0:],System.Double[],System.Numerics.Complex[0:,0:],System.Numerics.Complex[0:,0:],System.Int32)">
+            <summary>Resolves small sine values through the lower block instead of subtracting nearly equal cosines.</summary>
+            <param name="u">Upper left singular vectors, updated within the large-cosine subspace.</param>
+            <param name="cosines">Descending upper singular values, updated after the common rotation.</param>
+            <param name="v">Common right singular vectors, updated in place.</param>
+            <param name="lower">Lower orthonormal block multiplied by v, updated by the same rotation.</param>
+            <param name="iterations">Positive maximum number of Jacobi sweeps for the complementary SVD.</param>
+            <remarks>
+            For cosines above sqrt(1/2), the upper vectors remain well conditioned under rotation.
+            The lower block supplies accurate directions even when the corresponding cosines round to one.
+            Projections onto the remaining lower columns remove only stacked-QR roundoff.
+            </remarks>
         </member>
         <member name="T:UMapx.Decomposition.Hessenberg">
             <summary>Provides orthogonal and unitary Hessenberg reductions.</summary>
@@ -30910,9 +30923,8 @@
         </member>
         <member name="T:UMapx.Video.TimeoutStream">
             <summary>
-            Wrapper that enables streams which do not support read and write timeouts to timeout
-            Requires .NET 4.5 or above
-            Used for .NET Standard 2.0.
+            Adds read and write deadlines to streams through cooperative asynchronous cancellation.
+            Streams with native timeout support use their own synchronous timeout implementation.
             </summary>
         </member>
         <member name="M:UMapx.Video.TimeoutStream.#ctor(System.IO.Stream)">
@@ -30953,12 +30965,12 @@
         </member>
         <member name="P:UMapx.Video.TimeoutStream.ReadTimeout">
             <summary>
-            Value of TimeoutStream's read timeout.
+            Gets or sets the read deadline in milliseconds, or -1 for no deadline.
             </summary>
         </member>
         <member name="P:UMapx.Video.TimeoutStream.WriteTimeout">
             <summary>
-            Value of TimeoutStream's write timeout.
+            Gets or sets the write deadline in milliseconds, or -1 for no deadline.
             </summary>
         </member>
         <member name="P:UMapx.Video.TimeoutStream.Position">
@@ -30978,7 +30990,7 @@
             <param name="buffer">Buffer byte array.</param>
             <param name="offset">Offset.</param>
             <param name="count">Number of bytes to read.</param>
-            <returns></returns>
+            <returns>The number of bytes read, or zero at the end of the stream.</returns>
         </member>
         <member name="M:UMapx.Video.TimeoutStream.Seek(System.Int64,System.IO.SeekOrigin)">
             <summary>

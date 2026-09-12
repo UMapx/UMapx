@@ -1,24 +1,19 @@
-﻿namespace UMapx.Video
+namespace UMapx.Video
 {
     using System;
     using System.IO;
     using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
-    /// Wrapper that enables streams which do not support read and write timeouts to timeout
-    /// Requires .NET 4.5 or above
-    /// Used for .NET Standard 2.0.
+    /// Adds read and write deadlines to streams through cooperative asynchronous cancellation.
+    /// Streams with native timeout support use their own synchronous timeout implementation.
     /// </summary>
     public class TimeoutStream : Stream
     {
         private const int DEFAULT_TIMEOUT_READ = 30000;
         private const int DEFAULT_TIMEOUT_WRITE = 30000;
 
-        private Stream _baseStream;
-#if !NET35 && !NET40
-        private CancellationTokenSource _source;
-#endif
+        private readonly Stream _baseStream;
 
         private int _readTimeout = DEFAULT_TIMEOUT_READ;
         private int _writeTimeout = DEFAULT_TIMEOUT_WRITE;
@@ -29,10 +24,8 @@
         /// <param name="stream">Stream which may not support read or write timeouts.</param>
         public TimeoutStream(Stream stream)
         {
-            _baseStream = stream;
-#if !NET35 && !NET40
-            _source = new CancellationTokenSource();
-#else
+            _baseStream = stream ?? throw new ArgumentNullException(nameof(stream));
+#if NET35 || NET40
             throw new NotSupportedException();
 #endif
         }
@@ -98,7 +91,7 @@
         }
 
         /// <summary>
-        /// Value of TimeoutStream's read timeout.
+        /// Gets or sets the read deadline in milliseconds, or -1 for no deadline.
         /// </summary>
         public override int ReadTimeout
         {
@@ -109,12 +102,13 @@
 
             set
             {
+                if (value <= 0 && value != Timeout.Infinite) throw new ArgumentOutOfRangeException(nameof(value));
                 _readTimeout = value;
             }
         }
 
         /// <summary>
-        /// Value of TimeoutStream's write timeout.
+        /// Gets or sets the write deadline in milliseconds, or -1 for no deadline.
         /// </summary>
         public override int WriteTimeout
         {
@@ -125,6 +119,7 @@
 
             set
             {
+                if (value <= 0 && value != Timeout.Infinite) throw new ArgumentOutOfRangeException(nameof(value));
                 _writeTimeout = value;
             }
         }
@@ -152,33 +147,27 @@
         /// <param name="buffer">Buffer byte array.</param>
         /// <param name="offset">Offset.</param>
         /// <param name="count">Number of bytes to read.</param>
-        /// <returns></returns>
+        /// <returns>The number of bytes read, or zero at the end of the stream.</returns>
         public override int Read(byte[] buffer, int offset, int count)
         {
 #if !NET35 && !NET40
-            int result;
-
             if (_baseStream.CanRead && !_baseStream.CanTimeout)
             {
+                // A deadline belongs to one operation. Disposing its timer prevents an idle
+                // interval from cancelling the next read or a simultaneous write.
+                using var source = new CancellationTokenSource();
+                source.CancelAfter(_readTimeout);
                 try
                 {
-                    _source.CancelAfter(_readTimeout);
-                    Task<int> task = _baseStream.ReadAsync(buffer, offset, count,
-                        _source.Token);
-                    result = task.Result;
+                    return _baseStream.ReadAsync(buffer, offset, count, source.Token).GetAwaiter().GetResult();
                 }
-                catch (AggregateException)
+                catch (OperationCanceledException exception) when (source.IsCancellationRequested)
                 {
-                    _source = new CancellationTokenSource();
-                    throw new TimeoutException("The operation timed out");
+                    throw new TimeoutException("The operation timed out.", exception);
                 }
             }
-            else
-            {
-                result = _baseStream.Read(buffer, offset, count);
-            }
-
-            return result;
+            if (_baseStream.CanTimeout) _baseStream.ReadTimeout = _readTimeout;
+            return _baseStream.Read(buffer, offset, count);
 #else
             throw new NotSupportedException();
 #endif
@@ -215,21 +204,20 @@
 #if !NET35 && !NET40
             if (_baseStream.CanWrite && !_baseStream.CanTimeout)
             {
+                using var source = new CancellationTokenSource();
+                source.CancelAfter(_writeTimeout);
                 try
                 {
-                    _source.CancelAfter(_readTimeout);
-                    Task task = _baseStream.WriteAsync(buffer, offset, count, _source.Token);
-                    task.Wait();
+                    _baseStream.WriteAsync(buffer, offset, count, source.Token).GetAwaiter().GetResult();
                 }
-                catch (AggregateException)
+                catch (OperationCanceledException exception) when (source.IsCancellationRequested)
                 {
-                    _source?.Dispose();
-                    _source = new CancellationTokenSource();
-                    throw new TimeoutException("The operation timed out");
+                    throw new TimeoutException("The operation timed out.", exception);
                 }
             }
             else
             {
+                if (_baseStream.CanTimeout) _baseStream.WriteTimeout = _writeTimeout;
                 _baseStream.Write(buffer, offset, count);
             }
 #else

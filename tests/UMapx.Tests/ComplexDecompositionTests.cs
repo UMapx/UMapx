@@ -9,6 +9,103 @@ namespace UMapx.Tests;
 public class ComplexDecompositionTests
 {
     [Theory]
+    [InlineData(1e10f)] [InlineData(1e20f)] [InlineData(1e30f)]
+    public void IsolatedLargeEigenvalueDoesNotCorruptSmallBlockEigenvectors(float large)
+    {
+        var a = new Complex32[,] { { large, 0, 0 }, { 0, 1, 1 }, { 0, 0, 2 } };
+        var eigen = EVD.Decompose(a);
+        var generalized = GEVD.Decompose(a, new Complex32[,] { { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 } });
+        foreach (var (v, values) in new[] { (eigen.V, eigen.D), (generalized.V, GEVD.Eigenvalues(generalized.Alpha, generalized.Beta)) })
+        {
+            int column = Array.FindIndex(values, value => Math.Abs(value.Real - 2) < 1e-5);
+            Assert.True(column >= 0);
+            // The independent 2 by 2 block has eigenvector (1, 1) for eigenvalue 2.
+            NumericAssert.Close(Complex.One, (Complex)v[1, column] / (Complex)v[2, column], 1e-5);
+        }
+    }
+
+    [Theory]
+    [InlineData(1e-3f)] [InlineData(1e-4f)] [InlineData(1e-6f)] [InlineData(1e-8f)]
+    public void GsvdRetainsOrthonormalBasesForUnequalColumnScales(float small)
+    {
+        var a = new Complex32[,] { { 1, 0 }, { 0, 1 } };
+        var b = new Complex32[,] { { 1, 1 }, { 0, small } };
+        var d = GSVD.Decompose(a, b, 100);
+        Relative(Work(a), Product(Product(Work(d.U1), Diagonal(d.S1)), Work(d.X)));
+        Relative(Work(b), Product(Product(Work(d.U2), Diagonal(d.S2)), Work(d.X)));
+        Orthonormal(d.U1); Orthonormal(d.U2);
+    }
+
+    public static IEnumerable<object[]> GsvdSmallBlockCases()
+    {
+        foreach (float small in new[] { 1e-4f, 1e-6f, 1e-8f, 1e-10f })
+        foreach (bool real in new[] { false, true })
+        foreach (bool swap in new[] { false, true })
+            yield return new object[] { small, real, swap };
+    }
+
+    [Theory, MemberData(nameof(GsvdSmallBlockCases))]
+    public void GsvdResolvesSmallCoupledBlocksBesideLargeSingularValues(float small, bool real, bool swap)
+    {
+        var a = new Complex32[,] { { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 } };
+        var b = new Complex32[,] { { 1, 0, 0 }, { 0, small, new(small, real ? 0 : small) }, { 0, 0, 2 * small } };
+        if (swap) (a, b) = (b, a);
+        (Complex[,] u1, float[] s1, Complex[,] u2, float[] s2, Complex[,] x) factors;
+        if (real)
+        {
+            var ra = new float[3, 3]; var rb = new float[3, 3];
+            for (int i = 0; i < 3; i++) for (int j = 0; j < 3; j++) { ra[i, j] = a[i, j].Real; rb[i, j] = b[i, j].Real; }
+            var d = GSVD.Decompose(ra, rb, 100);
+            factors = (Work(d.U1), d.S1, Work(d.U2), d.S2, Work(d.X));
+        }
+        else
+        {
+            var d = GSVD.Decompose(a, b, 100);
+            factors = (Work(d.U1), d.S1, Work(d.U2), d.S2, Work(d.X));
+        }
+        var (u1, s1, u2, s2, x) = factors;
+        var reconstructedA = Product(Product(u1, Diagonal(s1)), x);
+        var reconstructedB = Product(Product(u2, Diagonal(s2)), x);
+        Relative(Work(a), reconstructedA);
+        Relative(Work(b), reconstructedB);
+        // Verify the small block on its own so the unrelated unit entry cannot mask its error.
+        var smallInput = swap ? a : b;
+        var smallOutput = swap ? reconstructedA : reconstructedB;
+        for (int i = 1; i < 3; i++) for (int j = 1; j < 3; j++)
+            Assert.True(Complex.Abs((Complex)smallInput[i, j] - smallOutput[i, j]) <= 3e-5 * small);
+        var identity = Diagonal(new[] { 1f, 1f, 1f });
+        Relative(identity, Product(Adjoint(u1), u1));
+        Relative(identity, Product(Adjoint(u2), u2));
+        Assert.All(GSVD.Identity(s1, s2), value => NumericAssert.Close(1, value, 1e-6, 0));
+        // Eigenvalues of the explicit 2 by 2 B^H B block provide independent singular values.
+        double center = real ? 3 : 3.5, root = real ? Math.Sqrt(5) : Math.Sqrt(33) / 2;
+        double[] singular = { 1, small * Math.Sqrt(center - root), small * Math.Sqrt(center + root) };
+        var expected = singular.Select(value => swap ? value : 1 / value).OrderBy(value => value).ToArray();
+        var actual = GSVD.GeneralizedSingularValues(s1, s2).OrderBy(value => value).ToArray();
+        for (int i = 0; i < 3; i++) NumericAssert.Close(expected[i], actual[i], 0, 2e-5);
+    }
+
+    [Theory]
+    [InlineData(3)] [InlineData(6)] [InlineData(12)]
+    public void GsvdComplementaryRefinementPreservesDensePairsAndZeroSubspaces(int n)
+    {
+        foreach (bool zero in new[] { false, true })
+        foreach (bool swap in new[] { false, true })
+        {
+            var a = Sample(n + 2, n, "Dense", 1, 11);
+            var b = Sample(n + 3, n, "Dense", 1, 71);
+            for (int i = 0; i < a.GetLength(0); i++) a[i, 0] = 0;
+            for (int i = 0; i < b.GetLength(0); i++)
+                for (int j = 1; j < n; j++) b[i, j] *= zero ? 0 : 1e-8f;
+            if (swap) (a, b) = (b, a);
+            var d = GSVD.Decompose(a, b, 100);
+            Relative(Work(a), Product(Product(Work(d.U1), Diagonal(d.S1)), Work(d.X)));
+            Relative(Work(b), Product(Product(Work(d.U2), Diagonal(d.S2)), Work(d.X)));
+            Orthonormal(d.U1); Orthonormal(d.U2);
+        }
+    }
+
+    [Theory]
     [InlineData(1e-4f)] [InlineData(1e-10f)] [InlineData(1e-20f)]
     [InlineData(1e-30f)] [InlineData(1e10f)] [InlineData(1e20f)] [InlineData(1e30f)]
     public void GsvdPreservesSmallInputsAndBothOrthonormalBases(float scale)
