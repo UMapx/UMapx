@@ -37,7 +37,11 @@ public class SpecialFunctionReferenceTests
         Assert.NotNull(method);
         object? result = method.Invoke(null, args);
         Complex32 actual = result is Complex32 z ? z : new Complex32(Convert.ToSingle(result), 0);
-        // A mixed absolute/relative bound, deliberately looser than float rounding.
-        NumericAssert.Close(new Complex(expectedReal, expectedImaginary), actual, 2e-4, 2e-4);
+        var expected = new Complex(expectedReal, expectedImaginary);
+        // Small representable values need relative accuracy; half a subnormal ULP permits rounding, not zeroing.
+        // Keep the absolute budget at analytic zeros represented by negligible reference noise.
+        double absolute = ((float)expectedReal != 0 || (float)expectedImaginary != 0)
+            && expected.Magnitude <= 2e-4 / (1 - 2e-4) ? .5 * float.Epsilon : 2e-4;
+        NumericAssert.Close(expected, actual, absolute, 2e-4);
     }
 }

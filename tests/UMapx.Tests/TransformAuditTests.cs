@@ -176,5 +176,32 @@ public class TransformAuditTests
         else if(matrix){d.Apply(a);Assert.All(a.Cast<float>(),v=>Close(.375,v,.001));}
         else if(complex){d.Apply(z);Assert.All(z,v=>Close(new Complex(.375,.125),v,.001));}
         else{d.Apply(x);Assert.All(x,v=>Close(.375,v,.001));}
+
+        if(name is "Guided" or "Bilateral" or "Domain")
+        {
+            // A small interior impulse must spread and lose height under smoothing.
+            // Constant preservation alone would also accept an identity implementation.
+            int center=matrix?4*12+6:8;
+            x[8]+=.05f;z[8]+=new Complex32(.05f,.025f);
+            a[4,6]+=.05f;c[4,6]+=new Complex32(.05f,.025f);
+            Complex32[] response;
+            if(matrix&&complex){d.Apply(c);response=c.Cast<Complex32>().ToArray();}
+            else if(matrix){d.Apply(a);response=a.Cast<float>().Select(v=>new Complex32(v,0)).ToArray();}
+            else if(complex){d.Apply(z);response=z;}
+            else{d.Apply(x);response=x.Select(v=>new Complex32(v,0)).ToArray();}
+            Assert.All(response,v=>
+            {
+                Assert.True(float.IsFinite(v.Real)&&float.IsFinite(v.Imag));
+                Assert.InRange(v.Real,.375f-2e-6f,.425f+2e-6f);
+                if(complex)Assert.InRange(v.Imag,.125f-2e-6f,.15f+2e-6f);
+            });
+            Assert.InRange(response[center].Real,.375f+1e-5f,.425f-1e-5f);
+            Assert.Contains(Enumerable.Range(0,response.Length),i=>i!=center&&response[i].Real>.375f+1e-5f);
+            if(complex)
+            {
+                Assert.InRange(response[center].Imag,.125f+1e-5f,.15f-1e-5f);
+                Assert.Contains(Enumerable.Range(0,response.Length),i=>i!=center&&response[i].Imag>.125f+1e-5f);
+            }
+        }
     }
 }

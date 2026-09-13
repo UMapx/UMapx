@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UMapx.Core;
 
 namespace UMapx.Distribution
@@ -153,7 +153,8 @@ namespace UMapx.Distribution
         /// <returns>Value.</returns>
         public float Distribution(float x)
         {
-            return 0.5f + 0.5f * Special.Erf((x - mu) / Maths.Sqrt(2.0f * sigma * sigma));
+            // Evaluate the lower tail directly and round only the final probability.
+            return (float)(0.5 * Special.DistributionErfc((mu - (double)x) / (Math.Sqrt(2) * sigma)));
         }
         /// <summary>
         /// Returns the value of differential entropy.

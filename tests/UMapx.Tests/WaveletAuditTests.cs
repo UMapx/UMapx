@@ -119,8 +119,11 @@ public class WaveletAuditTests
         Close((GaussianDerivative(n,x,0)*scale).Real,new Gaussian(n).Wavelet(x),2e-5);
         var complex=new ComplexGaussian(n);
         // Complex Gaussian normalization conventions differ; test the derivative shape up to its constant multiplier.
-        Complex anchor=complex.Wavelet(.25f),normalizer=anchor/GaussianDerivative(n,.25,Complex.ImaginaryOne);
-        Close(GaussianDerivative(n,x,Complex.ImaginaryOne)*normalizer,complex.Wavelet(x),1e-4);
+        Complex anchor=complex.Wavelet(.25f);
+        Assert.True(double.IsFinite(anchor.Magnitude) && anchor.Magnitude > 0,
+            "The derivative-shape reference requires a finite, nonzero normalization anchor.");
+        Complex expectedShape=GaussianDerivative(n,x,Complex.ImaginaryOne)/GaussianDerivative(n,.25,Complex.ImaginaryOne);
+        Close(expectedShape,(Complex)complex.Wavelet(x)/anchor,1e-4);
         Assert.Throws<NotSupportedException>(()=>new Gaussian(n).Scaling(x));Assert.Throws<NotSupportedException>(()=>complex.Scaling(x));
     }
 

@@ -331,6 +331,8 @@ public class ComplexDecompositionTests
                 var (v, d) = EVD.Decompose(a);
                 actual = Product(Work(v), Diagonal(d)); expected = Product(expected, Work(v));
                 Assert.All(v.Cast<Complex32>(), z => Assert.True(float.IsFinite(z.Real) && float.IsFinite(z.Imag)));
+                for (int j = 0; j < n; j++)
+                    Assert.Contains(Enumerable.Range(0, n), i => v[i, j].Real != 0 || v[i, j].Imag != 0);
                 break;
             }
         }
@@ -415,6 +417,7 @@ public class ComplexDecompositionTests
                 reference += ((Complex)v[i, j]).Magnitude * ((Complex)v[i, j]).Magnitude;
             }
             double bound = (Math.Abs(beta[j]) * normA + ((Complex)alpha[j]).Magnitude * normB) * Math.Sqrt(reference);
+            Assert.True(double.IsFinite(reference) && reference > 0, $"Eigenvector {j} must be finite and nonzero.");
             Assert.True(Math.Sqrt(residual) <= 1e-4 * bound + 1e-290, $"Homogeneous residual {Math.Sqrt(residual)} exceeds {bound} for column {j}.");
         }
         Assert.Equal(originalA.Cast<Complex32>(), a.Cast<Complex32>());

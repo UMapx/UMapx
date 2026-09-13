@@ -164,8 +164,11 @@ public class DecompositionRepairTests
         Assert.Equal(1, decomposition.Beta.Count(x => x == 0));
         var v = decomposition.V;
         for (int j = 0; j < 3; j++)
+        {
+            Assert.Contains(Enumerable.Range(0, 3), i => v[i, j] != 0);
             for (int i = 0; i < 3; i++)
                 NumericAssert.Close(decomposition.Beta[j] * a[i, i] * v[i, j], decomposition.Alpha[j].Real * b[i, i] * v[i, j]);
+        }
         Assert.All(v.Cast<float>(), x => Assert.True(float.IsFinite(x)));
     }
 

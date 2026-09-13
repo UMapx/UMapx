@@ -52,6 +52,13 @@ public class DistributionReferenceTests
                 case "-Infinity": Assert.True(double.IsNegativeInfinity(actual), $"Expected negative infinity; actual {actual}."); return;
             }
         }
-        NumericAssert.Close(expectedElement.GetDouble(), actual, value.GetProperty("tolerance").GetDouble(), value.GetProperty("tolerance").GetDouble());
+        double expected = expectedElement.GetDouble(), tolerance = value.GetProperty("tolerance").GetDouble();
+        // Preserve relative accuracy in positive tails, including rounding at the subnormal boundary.
+        // Moment references can contain quadrature noise around an exact zero.
+        double absolute = (member is "Function" or "Distribution") && expected > 0
+            && expected <= tolerance / (1 - tolerance) ? .5 * float.Epsilon : tolerance;
+        NumericAssert.Close(expected, actual, absolute, tolerance);
+        if (instance is TukeyLambda tukey && member == "Function")
+            NumericAssert.Close(expected, tukey.Function(-value.GetProperty("x").GetSingle()), absolute, tolerance);
     }
 }

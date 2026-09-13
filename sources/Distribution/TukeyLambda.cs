@@ -105,6 +105,8 @@ namespace UMapx.Distribution
         /// <returns>Value.</returns>
         public float Function(float x)
         {
+            if (float.IsNaN(x)) return float.NaN;
+            if (float.IsInfinity(x)) return 0f;
             if (lambda > 0f)
             {
                 float bound = 1f / lambda;
@@ -114,8 +116,15 @@ namespace UMapx.Distribution
                 }
             }
 
-            double p = DistributionInternal(x);
-            p = Maths.Range((float)p, 1e-10f, 1f - 1e-10f);
+            if (Math.Abs(lambda) < 1e-12)
+            {
+                // The logistic limit avoids recovering a small density from a CDF near one.
+                double e = Math.Exp(-Math.Abs((double)x));
+                return (float)(e / ((1 + e) * (1 + e)));
+            }
+
+            // The density is symmetric: use the smaller tail without float rounding or clipping.
+            double p = DistributionInternal(-Math.Abs((double)x));
             double density = 1.0 / QuantileDensity(p);
             return (float)density;
         }

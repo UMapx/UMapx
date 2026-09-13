@@ -153,14 +153,14 @@ namespace UMapx.Distribution
         /// <returns>Value.</returns>
         public float Distribution(float x)
         {
-            float z = x - mu;
-            if (z == 0f)
+            double z = (double)x - mu;
+            if (z == 0)
                 return 0.5f;
 
-            float sign = z > 0 ? 1f : -1f;
-            float u = Maths.Pow(Maths.Abs(z) / alpha, beta);
-            float p = Special.GammaP(1f / beta, u);
-            return 0.5f + 0.5f * sign * p;
+            // Q preserves the small tail that would be lost in 1 - P.
+            double u = Math.Pow(Math.Abs(z) / alpha, beta);
+            double tail = 0.5 * Special.DistributionGamma(1.0 / beta, u, true);
+            return (float)(z < 0 ? tail : 1 - tail);
         }
         /// <summary>
         /// Returns the value of differential entropy.

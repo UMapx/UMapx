@@ -41,6 +41,7 @@ public class DistributionShapeAuditTests
         else
         {
             float[] modes=d.Mode;
+            Assert.NotEmpty(modes);
             foreach(float mode in modes)
             {
                 if(float.IsNaN(mode))

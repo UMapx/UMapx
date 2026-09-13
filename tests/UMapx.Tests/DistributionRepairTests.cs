@@ -117,7 +117,8 @@ public class DistributionRepairTests
     [Fact]
     public void RepairedProbabilityLawsHaveDefinedEndpointsAndPropagateNaN()
     {
-        IDistribution[] laws = { new Poisson(.9f), new Binomial(5, .3f), new PowerNormal(.1f), new PowerLognormal(.1f, .7f), new FisherZ(4, 12) };
+        IDistribution[] laws = { new Poisson(.9f), new Binomial(5, .3f), new PowerNormal(.1f), new PowerLognormal(.1f, .7f), new FisherZ(4, 12),
+            new Gaussian(1.25f, .5f), new GeneralizedNormal(.5f, 1.5f, 2.5f) };
         foreach (dynamic law in laws)
         {
             Assert.Equal(0, law.Distribution(float.NegativeInfinity));
@@ -129,5 +130,9 @@ public class DistributionRepairTests
         }
         Assert.Equal(0, new PowerLognormal(.1f, .7f).Function(0));
         Assert.Equal(0, new PowerLognormal(.1f, .7f).Distribution(0));
+        var tukey = new TukeyLambda();
+        Assert.Equal(0, tukey.Function(float.NegativeInfinity));
+        Assert.Equal(0, tukey.Function(float.PositiveInfinity));
+        Assert.True(float.IsNaN(tukey.Function(float.NaN)));
     }
 }

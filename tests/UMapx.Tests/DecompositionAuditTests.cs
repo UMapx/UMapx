@@ -68,7 +68,13 @@ public class DecompositionAuditTests
             case "Polar": {var d=Polar.Decompose(a,100);actual=Product(d.U,d.P);Close(d.P,Transpose(d.P));break;}
             case "Hessenberg": {var d=Hessenberg.Decompose(a);actual=Product(Product(d.P,d.H),Transpose(d.P));Orthonormal(d.P);Band(d.H,1,n);break;}
             case "Schur": {var d=Schur.Decompose(a,1e-7f);actual=Product(Product(d.Q,d.T),Transpose(d.Q));Orthonormal(d.Q);Band(d.T,1,n);break;}
-            case "EVD": {var d=EVD.Decompose(a,1e-7f);Close(Product(a,d.V),Product(d.V,EVD.RealEigenvalueMatrix(d.D)),.003f);Close(Enumerable.Range(0,n).Sum(i=>a[i,i]),d.D.Sum(z=>z.Real),.003);return;}
+            case "EVD":
+            {
+                var d=EVD.Decompose(a,1e-7f);
+                for(int j=0;j<n;j++)Assert.Contains(Enumerable.Range(0,n),i=>d.V[i,j]!=0);
+                Close(Product(a,d.V),Product(d.V,EVD.RealEigenvalueMatrix(d.D)),.003f);
+                Close(Enumerable.Range(0,n).Sum(i=>a[i,i]),d.D.Sum(z=>z.Real),.003);Close(original,a);return;
+            }
             case "Arnoldi": {var d=Arnoldi.Decompose(a);actual=Product(Product(d.Q,d.H),Transpose(d.Q));Orthonormal(d.Q);Band(d.H,1,n);break;}
             case "GramSchmidt": {var d=GramSchmidt.Decompose(a);Orthonormal(d.Q);actual=Product(d.Q,Product(Transpose(d.Q),a));Band(Product(Transpose(d.Q),a),0,n);break;}
             case "Cholesky": {var l=Cholesky.Decompose(a);var u=Cholesky.UpperFactor(l);actual=Product(l,u);Close(u,Transpose(l));Band(l,n,0);break;}
@@ -117,6 +123,7 @@ public class DecompositionAuditTests
         Close(b,Product(Product(qz.Q,qz.T),Transpose(qz.Z)),.002f);Band(qz.T,0,n);Band(qz.S,1,n);
         var e=GEVD.Decompose(a,b,1e-7f);Assert.False(GEVD.IsSingular(e.Beta));
         Assert.True(e.V.Cast<float>().All(float.IsFinite),"GEVD returned nonfinite eigenvectors for a finite nonsingular matrix pair.");
+        for(int j=0;j<n;j++)Assert.Contains(Enumerable.Range(0,n),i=>e.V[i,j]!=0);
         Close(Product(a,e.V),Product(Product(b,e.V),GEVD.RealEigenvalueMatrix(e.Alpha,e.Beta)),.003f);
         for(int i=0;i<n;i++)Close((System.Numerics.Complex)e.Alpha[i]/e.Beta[i],GEVD.Eigenvalues(e.Alpha,e.Beta)[i],.001);
     }

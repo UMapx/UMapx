@@ -70,7 +70,7 @@ public class GeometryAndRenderingAuditTests
     [Theory] [MemberData(nameof(RenderCases))]
     public void FiguresRenderFiniteConstantAndDiscontinuousSeries(SeriesType series,ShapeType shape,string kind)
     {
-        using var style=FigureStyle.Standard;var figure=new Figure(style){Title="Audit",LabelX="x",LabelY="y"};figure.Grid.Show=true;
+        using var style=FigureStyle.Standard;var figure=new Figure(style){Title="Audit",LabelX="x",LabelY="y"};figure.Grid.Show=true;figure.Legend.Show=false;
         var x=new[]{-1f,0f,1f,2f,3f};var y=kind=="constant"?new[]{2f,2f,2f,2f,2f}:kind=="singular"?new[]{-1f,float.NaN,1f,float.PositiveInfinity,2f}:new[]{-1f,2f,0f,3f,1f};
         figure.Plot(new PlotSeries(x,y,2,Color.Red,series,shape,"samples"));using var bitmap=new Bitmap(480,320);figure.To(bitmap);
         Assert.True(float.IsFinite(figure.RangeX.Min)&&float.IsFinite(figure.RangeX.Max));Assert.True(float.IsFinite(figure.RangeY.Min)&&float.IsFinite(figure.RangeY.Max));
