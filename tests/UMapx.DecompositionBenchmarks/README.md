@@ -59,6 +59,5 @@ subspaces, and adaptive Lanczos reorthogonalization. NMF has a deterministic
 allocation test: iteration count must not increase workspace allocations.
 Wall-clock thresholds are deliberately kept out of unit tests.
 
-Debug builds once again have optimization enabled, matching 7.5.1.5. For
-diagnostic builds that require unoptimized stepping, explicitly pass
-`-p:Optimize=false`; use Release for production performance comparisons.
+Debug builds have optimization disabled by default for easier debugging.
+Use Release for production performance comparisons.
