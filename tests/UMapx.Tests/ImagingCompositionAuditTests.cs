@@ -1,4 +1,6 @@
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Reflection;
 using System.Runtime.Versioning;
 using UMapx.Core;
 using UMapx.Imaging;
@@ -69,6 +71,247 @@ public class ImagingCompositionAuditTests
         using var first=new Bitmap(16,12);using(var g=Graphics.FromImage(first))g.Clear(Color.Black);using var second=(Bitmap)first.Clone();using(var g=Graphics.FromImage(second))g.FillRectangle(Brushes.White,0,0,8,12);
         using var detector=new MotionDetector(15,filtered);Close(0,detector.Apply(first));Close(0,detector.Apply(first));Close(.5,detector.Apply(second));detector.Reset();Close(0,detector.Apply(first));
     }
+
+    [Fact]
+    public void DefaultDetectorReportsTheEndOnTheThirdQuietFrame()
+    {
+        using var first = CreateFrame();
+        using var second = CreateFrame(255);
+        using var detector = new MotionEventDetector();
+
+        Assert.Equal((byte)15, detector.Threshold);
+        Assert.Equal(.01f, detector.Alarm);
+        Assert.Equal(3, detector.QuietFrames);
+        AssertTrace(detector,
+            new[] { first, second, second, second, second, second },
+            new[] { false, false, false, false, true, false });
+    }
+
+    [Fact]
+    public void QuietFramesBeforeAnyMotionDoNotEmitEvents()
+    {
+        using var frame = CreateFrame();
+        using var detector = new MotionEventDetector();
+
+        for (int i = 0; i < 12; i++) Assert.False(detector.Detect(frame));
+    }
+
+    [Fact]
+    public void ContinuousMotionDoesNotEmitAnEndEvent()
+    {
+        using var first = CreateFrame();
+        using var second = CreateFrame(255);
+        using var detector = new MotionEventDetector(quietFrames: 1);
+
+        for (int i = 0; i < 12; i++)
+            Assert.False(detector.Detect(i % 2 == 0 ? first : second));
+    }
+
+    [Theory]
+    [InlineData(1)]
+    [InlineData(3)]
+    [InlineData(7)]
+    public void ReportsExactlyOnceOnTheRequestedQuietFrame(int quietFrames)
+    {
+        using var first = CreateFrame();
+        using var second = CreateFrame(255);
+        using var detector = new MotionEventDetector(quietFrames: quietFrames);
+
+        Assert.False(detector.Detect(first));
+        Assert.False(detector.Detect(second));
+        for (int i = 1; i < quietFrames; i++) Assert.False(detector.Detect(second));
+        Assert.True(detector.Detect(second));
+        for (int i = 0; i < quietFrames + 1; i++) Assert.False(detector.Detect(second));
+    }
+
+    [Fact]
+    public void NewMotionRestartsTheQuietFrameCount()
+    {
+        using var first = CreateFrame();
+        using var second = CreateFrame(255);
+        using var detector = new MotionEventDetector(quietFrames: 3);
+
+        // Two quiet frames are interrupted by another change; three new quiet frames are required.
+        AssertTrace(detector,
+            new[] { first, second, second, second, first, first, first, first, first },
+            new[] { false, false, false, false, false, false, false, true, false });
+    }
+
+    [Fact]
+    public void ACompletedEpisodeCanBeFollowedByAnotherEpisode()
+    {
+        using var first = CreateFrame();
+        using var second = CreateFrame(255);
+        using var detector = new MotionEventDetector(quietFrames: 2);
+
+        AssertTrace(detector,
+            new[] { first, second, second, second, second, first, first, first, first },
+            new[] { false, false, false, true, false, false, false, true, false });
+    }
+
+    [Theory]
+    [InlineData(15, .25f, 15, false)]
+    [InlineData(15, .25f, 16, true)]
+    [InlineData(15, .5f, 16, false)]
+    [InlineData(255, 0f, 255, false)]
+    [InlineData(0, 0f, 1, true)]
+    public void PixelAndMotionThresholdsUseStrictComparisons(int threshold, float alarm, int intensity, bool ends)
+    {
+        using var first = CreateFrame();
+        using var second = CreateFrame(intensity);
+        using var detector = new MotionEventDetector((byte)threshold, alarm, 1);
+
+        // Half the pixels change by exactly intensity in every color channel.
+        Assert.False(detector.Detect(first));
+        Assert.False(detector.Detect(second));
+        Assert.Equal(ends, detector.Detect(second));
+        Assert.False(detector.Detect(second));
+    }
+
+    [Fact]
+    public void SettingsCanBeChangedBetweenEpisodes()
+    {
+        using var first = CreateFrame();
+        using var second = CreateFrame(255);
+        using var detector = new MotionEventDetector(255, 1f, 3);
+
+        AssertTrace(detector, new[] { first, second, second }, new[] { false, false, false });
+        detector.Threshold = 0;
+        detector.Alarm = 0;
+        detector.QuietFrames = 1;
+        AssertTrace(detector, new[] { first, first, first }, new[] { false, true, false });
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(2)]
+    public void ResetClearsTheReferenceFrameAndPendingEpisode(int quietBeforeReset)
+    {
+        using var first = CreateFrame();
+        using var second = CreateFrame(255);
+        using var detector = new MotionEventDetector(quietFrames: 3);
+
+        Assert.False(detector.Detect(first));
+        Assert.False(detector.Detect(second));
+        for (int i = 0; i < quietBeforeReset; i++) Assert.False(detector.Detect(second));
+        detector.Reset();
+
+        // A different first image after Reset establishes a background without starting an episode.
+        for (int i = 0; i < 4; i++) Assert.False(detector.Detect(first));
+        AssertTrace(detector,
+            new[] { second, second, second, second },
+            new[] { false, false, false, true });
+    }
+
+    [Fact]
+    public void ResetAllowsAStreamWithDifferentFrameDimensions()
+    {
+        using var original = CreateFrame();
+        using var first = CreateFrame(width: 8, height: 6);
+        using var second = CreateFrame(255, 8, 6);
+        using var detector = new MotionEventDetector(quietFrames: 1);
+
+        Assert.False(detector.Detect(original));
+        detector.Reset();
+        AssertTrace(detector,
+            new[] { first, first, second, second },
+            new[] { false, false, false, true });
+    }
+
+    [Fact]
+    public void DetectPreservesThePixelsAndAlphaOfInputFrames()
+    {
+        using var first = ImagingAuditTests.Pattern();
+        using var second = CreateFrame(255, first.Width, first.Height);
+        using var originalFirst = (Bitmap)first.Clone();
+        using var originalSecond = (Bitmap)second.Clone();
+        using var detector = new MotionEventDetector(quietFrames: 1);
+
+        AssertTrace(detector,
+            new[] { first, second, second, first, first },
+            new[] { false, false, true, false, true });
+        ImagingAuditTests.Same(originalFirst, first);
+        ImagingAuditTests.Same(originalSecond, second);
+    }
+
+    [Fact]
+    public void FailedFrameProcessingDoesNotAdvanceTheQuietCount()
+    {
+        using var first = CreateFrame();
+        using var second = CreateFrame(255);
+        using var detector = new MotionEventDetector(quietFrames: 3);
+        AssertTrace(detector, new[] { first, second, second }, new[] { false, false, false });
+
+        var background = StoredFrame(detector);
+        var held = BitmapFormat.Lock32bpp(background);
+        try
+        {
+            Assert.Throws<InvalidOperationException>(() => detector.Detect(second));
+            Assert.Same(background, StoredFrame(detector));
+        }
+        finally { BitmapFormat.Unlock(background, held); }
+
+        AssertTrace(detector, new[] { second, second, second }, new[] { false, true, false });
+    }
+
+    [Fact]
+    public void ConcurrentQuietFramesProduceOnlyOneEndEvent()
+    {
+        using var first = CreateFrame();
+        using var second = CreateFrame(255);
+        using var detector = new MotionEventDetector(quietFrames: 3);
+        Assert.False(detector.Detect(first));
+        Assert.False(detector.Detect(second));
+
+        var results = new bool[16];
+        Parallel.For(0, results.Length, i => results[i] = detector.Detect(second));
+        Assert.Single(results, ended => ended);
+        Assert.False(detector.Detect(second));
+    }
+
+    [Fact]
+    public void DisposeReleasesItsBackgroundAndLeavesCallerFramesUsable()
+    {
+        using var first = CreateFrame();
+        using var second = CreateFrame(255);
+        using var detector = new MotionEventDetector();
+        Assert.False(detector.Detect(first));
+        Assert.False(detector.Detect(second));
+        var background = StoredFrame(detector);
+
+        detector.Dispose();
+        detector.Dispose();
+
+        Assert.Throws<ArgumentException>(() => background.GetPixel(0, 0));
+        ImagingAuditTests.Pixel(Color.Black, first.GetPixel(0, 0));
+        ImagingAuditTests.Pixel(Color.White, second.GetPixel(0, 0));
+        var data = BitmapFormat.Lock32bpp(second);
+        try { Assert.Equal(second.Width, data.Width); }
+        finally { BitmapFormat.Unlock(second, data); }
+    }
+
+    private static Bitmap CreateFrame(int intensity = 0, int width = 16, int height = 12)
+    {
+        var frame = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+        using var graphics = Graphics.FromImage(frame);
+        using var brush = new SolidBrush(Color.FromArgb(intensity, intensity, intensity));
+        graphics.Clear(Color.Black);
+        graphics.FillRectangle(brush, 0, 0, width / 2, height);
+        return frame;
+    }
+
+    private static void AssertTrace(MotionEventDetector detector, Bitmap[] frames, bool[] expected)
+    {
+        Assert.Equal(expected, frames.Select(detector.Detect).ToArray());
+    }
+
+    private static Bitmap StoredFrame(MotionEventDetector detector)
+    {
+        const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+        var inner = (MotionDetector)typeof(MotionEventDetector).GetField("detector", flags)!.GetValue(detector)!;
+        return (Bitmap)typeof(MotionDetector).GetField("Frame", flags)!.GetValue(inner)!;
+    }
+
     [Fact]
     public void CanvasesAndColorReplacementProduceRequestedColors()
     {

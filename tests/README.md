@@ -5,8 +5,8 @@ video parsing, and public API contracts. It includes independent reference
 values, mathematical identities, and regression cases for previously observed
 failures.
 
-The suite contains **18,087 test cases**. The verified Windows Release result
-is **18,087 passed, 0 failed, and 0 skipped**.
+The suite contains **18,108 test cases**. The verified Windows Release result
+is **18,108 passed, 0 failed, and 0 skipped**.
 
 ## Run the tests
 
@@ -93,6 +93,12 @@ images. Cases include a busy or disposed second bitmap, aliased inputs,
 validation failures, and exceptions from user filters. The checks cover the
 concrete `IBitmapFilter2` implementations as well as bitmap conversion, rebuild,
 stereo disparity, and motion detection paths.
+
+[ImagingCompositionAuditTests.cs](UMapx.Tests/ImagingCompositionAuditTests.cs) checks motion
+episode completion on the requested quiet frame, resumed motion, repeated
+episodes, threshold boundaries, settings changes, and reset across streams.
+Generated bitmaps also exercise input preservation, recovery after failed frame
+processing, concurrent detection, and disposal of the stored background.
 
 [VideoStreamingTests.cs](UMapx.Tests/VideoStreamingTests.cs) checks delivery of every buffered
 MJPEG frame in order, operation without subscribers, and stopping from a frame
