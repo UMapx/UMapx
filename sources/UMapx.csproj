@@ -43,7 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\readme.md" Pack="true" PackagePath="README.md" />
     <None Include="LICENSE.md">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
