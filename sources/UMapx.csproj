@@ -21,7 +21,6 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageIcon>umapxnet.png</PackageIcon>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>umapxnet.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
