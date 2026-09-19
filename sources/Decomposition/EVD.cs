@@ -8,21 +8,19 @@ namespace UMapx.Decomposition
     /// Defines eigenvalue decomposition.
     /// </summary>
     /// <remarks>
-    /// The eigenvalue decomposition is the representation of the square matrix A in the form of the product of three matrices A = V * D * inv(V),
-    /// where V is the matrix of spectral vectors and D is the diagonal (generally complex) matrix of eigenvalues.
-    /// The matrix A can also be represented as the product of three matrices: A = V * R * inv(V), where R is a real almost diagonal eigenvalue matrix.
-    /// Not all matrices can be represented in this form, but only those that have a complete set of eigenvectors.
-    /// Eigenvalue decomposition can be used to find the eigenvalues ​​and eigenvectors of the matrix, solve linear systems of equations,
-    /// invert the matrix, find the determinant of the matrix, and calculate the analytic functions of the matrices.
+    /// Computes right eigenvectors satisfying A * V = V * D. For complex inputs, D is diagonal.
+    /// For real inputs with complex-conjugate eigenvalues, V stores the real and imaginary parts
+    /// in adjacent columns and D contains the corresponding real 2-by-2 blocks.
+    /// Defective matrices need not have a complete set of independent eigenvectors.
     /// More information can be found on the website:
     /// <see href="https://en.wikipedia.org/wiki/Eigendecomposition_of_a_matrix"/>.
     /// </remarks>
     public static class EVD
     {
         /// <summary>Computes the real EVD decomposition without modifying the inputs.</summary>
-        /// <param name="matrix">Finite nonempty input matrix.</param>
+        /// <param name="matrix">Finite nonempty real square matrix.</param>
         /// <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
-        /// <returns>The primary factors (V, D).</returns>
+        /// <returns>Right eigenvectors V and eigenvalues D. Symmetric inputs have orthogonal V and ascending real D; other inputs use adjacent real columns for complex-conjugate eigenvectors.</returns>
         /// <exception cref="InvalidOperationException">The QR or QL iteration limit is reached before convergence.</exception>
         public static (float[,] V, Complex32[] D) Decompose(float[,] matrix, float eps = 1e-16f)
         {
@@ -37,7 +35,7 @@ namespace UMapx.Decomposition
         /// <summary>Computes right eigenvectors and eigenvalues of a complex square matrix.</summary>
         /// <param name="matrix">Finite nonempty square matrix, not modified.</param>
         /// <param name="eps">Relative QR/QL convergence tolerance, with a double-roundoff floor.</param>
-        /// <returns>V and D satisfying A V = V diag(D). Hermitian inputs have unitary V and real D. Defective inputs need not have independent eigenvectors.</returns>
+        /// <returns>V and D satisfying A V = V diag(D). Exactly Hermitian inputs have unitary V and ascending real D. Defective inputs need not have independent eigenvectors.</returns>
         public static (Complex32[,] V, Complex32[] D) Decompose(Complex32[,] matrix, float eps = 1e-16f)
         {
             if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));

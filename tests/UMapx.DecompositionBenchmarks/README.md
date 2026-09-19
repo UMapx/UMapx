@@ -1,12 +1,12 @@
-# Decomposition performance comparison
+# Decomposition benchmarks
 
-This standalone .NET 8 runner compares built UMapx assemblies, including the
-constructor/property API of 7.5.1.5 and the static tuple API of 8.0.0.1.
-No reference to the current library is compiled into the runner. Each operation
-loads one assembly in a separate process; versions never benchmark concurrently.
+This standalone .NET 8 runner compares Release builds of UMapx. It loads one
+assembly per process and has no compiled dependency on the current library.
+Use PowerShell 7 and run commands from the repository root.
 
-Build the library versions in **Release**, then run from the repository root
-with PowerShell 7:
+## Run a comparison
+
+Build both library versions in Release, then build the runner:
 
 ```powershell
 dotnet build tests/UMapx.DecompositionBenchmarks -c Release
@@ -16,74 +16,60 @@ dotnet build tests/UMapx.DecompositionBenchmarks -c Release
   -OutputFile artifacts/decomposition-comparison.jsonl
 ```
 
-Use a new output filename for each run. `-Sizes 256 -Names QR,Cholesky,SVD`
-selects a subset; `-Sizes 32 -Rows 512 -Names QR,SVD` tests a tall matrix.
-`Lanczos-Full` selects the explicit second reorthogonalization pass. Check any
-error records before interpreting a ratio. Earlier releases can fail to produce
-finite factors on otherwise valid inputs.
+Use a new output filename for every run. Check JSON `error` records and reported
+residuals before interpreting timings. Each operation has a 60-second process
+timeout; older versions may fail on inputs accepted by the current library.
 
-## What is measured
+| Option | Meaning |
+| --- | --- |
+| `-Sizes 32,128` | Column counts; matrices are square unless `-Rows` is set. |
+| `-Rows 257 -Sizes 17 -Names SVD` | A tall 257-by-17 SVD case. Reverse the dimensions for a wide case. |
+| `-Names QR,Cholesky,SVD` | Select algorithms instead of the default set. |
+| `-Names Lanczos-Full` | Enable the explicit second reorthogonalization pass. |
+| `-Domain real` or `-Domain complex` | Compare static APIs in the selected scalar domain. Also supply a supported `-Names` list. |
 
-- Seeded real matrices, with symmetric positive definite inputs where required;
-  generation and reconstruction checks are outside the timed region.
-- The full public operation: construction and retrieval of the primary factors
-  for old versions, or `Decompose` for current versions. A compiled delegate
-  adapts both APIs; reflection is outside the timed region. Both adapters create
-  a small array of references to retain results.
-- At least 250 ms and three calls of warmup, then seven measurement batches
-  targeting 80 ms each. The JSON contains the median, all samples, and allocated
-  bytes per operation across all threads. Garbage collection during a batch is
-  included; forced collections between batches are excluded.
-- Tiered compilation and ReadyToRun are disabled in each child process to avoid
-  JIT tier transitions. These are controlled comparisons; actual application
-  timings depend on runtime settings, CPU, sizes, and input spectra.
-- SVD/GSVD have an explicit limit of 100; Power/NMF perform 100 iterations, with
-  NMF rank 8. The inputs use the same seed for both versions. Legacy methods
-  with internal random initialization retain their original behavior.
-
-GramSchmidt now also produces R; LU/LDU use pivoting; Power additionally computes
-a Rayleigh quotient. These are comparisons of public operations, not identical
-arithmetic. The default Power iteration count changed from 10 to 100 between
-releases; this runner deliberately supplies the same count to both.
-
-Reconstruction checks cover the factorizations implemented in the runner's
-`Residual` method and are reported independently of timing. The runner is not
-a substitute for the correctness suite. In particular, the old default Lanczos
-mode can produce inaccurate factors on the clustered spectrum used here.
-
-## Regression coverage
-
-`DecompositionPerformanceRepairTests` verifies large real kernels, rectangular
-factors, independently scaled and singular QZ pencils, complementary GSVD
-subspaces, and adaptive Lanczos reorthogonalization. NMF has a deterministic
-allocation test: iteration count must not increase workspace allocations.
-Wall-clock thresholds are deliberately kept out of unit tests.
-
-Debug builds have optimization disabled by default for easier debugging.
-Use Release for production performance comparisons.
-
-## Real/complex algorithm comparison
-
-Add `-Domain real` or `-Domain complex` to compare the static APIs in both
-scalar domains. This mode supports `SVD`, `Polar`, `GSVD`, `Householder`, `QR`,
-`Schur`, `EVD`, `EVD-SPD`, `QZ`, and `GEVD`. `EVD-SPD` builds an exactly symmetric
-or Hermitian positive definite input. It validates reconstruction/eigenvector
-residuals and orthogonality before timing, and reports both errors in the JSON.
-Reflection and conversion of matrix entries are outside the timed region.
+Without `-Domain`, the runner compares real inputs and supports both the legacy
+constructor/property API and the current static tuple API. With `-Domain`, both
+assemblies must expose the static API. Supported names in that mode are `SVD`,
+`Polar`, `GSVD`, `Householder`, `QR`, `Schur`, `EVD`, `EVD-SPD`, `QZ` and `GEVD`:
 
 ```powershell
 ./tests/UMapx.DecompositionBenchmarks/Compare.ps1 `
   -PreviousAssembly path/to/previous/UMapx.dll `
   -CurrentAssembly sources/bin/Release/netstandard2.0/UMapx.dll `
   -OutputFile artifacts/complex-comparison.jsonl `
-  -Domain complex -Sizes 32,128 -Names SVD,Householder,EVD-SPD,EVD,Schur,QZ,GEVD,GSVD
+  -Domain complex -Sizes 32,128 -Names SVD,EVD-SPD,EVD,Schur,QZ,GEVD
 ```
 
-For rectangular SVD comparisons, use `-Sizes 17 -Rows 257 -Names SVD` and then
-`-Sizes 257 -Rows 17 -Names SVD`, with distinct output files. Both input dimensions
-and domains are included in the results. Timings compare each version on the
-same seeded input within a domain; real and complex random matrices have
-different spectra, so a cross-domain ratio is not an arithmetic-cost estimate.
+`EVD-SPD` uses an exactly symmetric or Hermitian positive definite input.
+Domain mode checks reconstruction or eigenvector residuals and orthogonality
+before timing, and reports both errors in the JSON.
 
-See [algorithm unification](UNIFICATION.md) for the implementation boundaries,
-validation coverage, and measured results.
+## Measurement method
+
+- Both versions receive the same seeded input within a domain. Generation,
+  conversion, validation and reflection are outside the timed region. Real and
+  complex inputs have different spectra, so their timing ratio is not a direct
+  measure of scalar arithmetic cost.
+- The timed operation includes construction and retrieval of primary factors
+  for legacy APIs, or `Decompose` for static APIs. Compiled adapters retain the
+  results in a small reference array included in the allocation measurement.
+- Warmup lasts at least 250 ms and three calls. Seven subsequent batches target
+  80 ms each. JSON records the median time, individual samples and allocated
+  bytes per call across all threads. Allocation is not peak live memory.
+- Garbage collection during a batch is included; forced collection between
+  batches is excluded. Versions run sequentially, with tiered compilation and
+  ReadyToRun disabled to avoid JIT tier transitions.
+- SVD, Polar and GSVD use an iteration limit of 100. In the default real mode,
+  Power and NMF use 100 iterations and NMF uses rank `min(columns, 8)`. Legacy
+  random initialization is left unchanged.
+
+API differences can change the work being measured: current GramSchmidt also
+returns R, LU/LDU use pivoting, and Power also computes a Rayleigh quotient.
+Default-mode residuals cover only the operations implemented in `Residual`;
+a missing residual is not a correctness check. Use the
+[test suite](../README.md) for broader validation.
+
+Timings depend on the runtime, machine, matrix shape and spectrum. Inspect sample
+variation and repeat uncertain comparisons before claiming a speedup or
+regression. Keep raw results under the ignored `artifacts` directory.

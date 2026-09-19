@@ -15,10 +15,11 @@ namespace UMapx.Decomposition
     public static class GEVD
     {
         /// <summary>Computes the real GEVD decomposition without modifying the inputs.</summary>
-        /// <param name="a">Finite nonempty input matrix.</param>
-        /// <param name="b">Finite nonempty input matrix.</param>
+        /// <param name="a">Finite nonempty real square first matrix.</param>
+        /// <param name="b">Finite real square second matrix of the same order; it may be singular.</param>
         /// <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
-        /// <returns>The primary factors (V, Alpha, Beta).</returns>
+        /// <returns>Right eigenvectors V in real block storage and homogeneous eigenvalue numerators Alpha and denominators Beta.</returns>
+        /// <remarks>Conjugate eigenvectors occupy adjacent real columns of V. A zero Beta can represent an infinite or indeterminate eigenvalue.</remarks>
         /// <exception cref="ArgumentException">The matrices are empty, nonfinite, nonsquare, or have different orders.</exception>
         /// <exception cref="InvalidOperationException">QZ iteration fails to converge.</exception>
         public static (float[,] V, Complex32[] Alpha, float[] Beta) Decompose(float[,] a, float[,] b, float eps = 1e-16f)

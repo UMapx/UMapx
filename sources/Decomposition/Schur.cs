@@ -16,9 +16,9 @@ namespace UMapx.Decomposition
     public static class Schur
     {
         /// <summary>Computes the real Schur decomposition without modifying the inputs.</summary>
-        /// <param name="matrix">Finite nonempty input matrix.</param>
+        /// <param name="matrix">Finite nonempty real square matrix.</param>
         /// <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
-        /// <returns>The primary factors (Q, T).</returns>
+        /// <returns>Orthogonal Q and quasi-upper-triangular T satisfying A = Q T Q^T.</returns>
         public static (float[,] Q, float[,] T) Decompose(float[,] matrix, float eps = 1e-16f)
             => Factor(matrix, eps);
 
