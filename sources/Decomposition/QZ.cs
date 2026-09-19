@@ -58,7 +58,7 @@ namespace UMapx.Decomposition
             double scaleA = scales.A, scaleB = scales.B;
             var q = InternalMatrixMath.Eye(n);
             var z = InternalMatrixMath.Eye(n);
-            // Same qzhes stages as GEVD.RealWorkspace: triangularize B while
+            // Same stages as GEVD.qzhes: triangularize B while
             // applying each reflector directly to A, then reduce A with paired rotations.
             for (int k = 0; k < n - 1; k++)
             {

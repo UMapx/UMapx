@@ -8,10 +8,10 @@ operate through column-transformation callbacks, outside elementwise loops.
 
 | Area | Implementation after unification |
 | --- | --- |
-| SVD | The original `RealWorkspace.svdcmp` Golub–Kahan QR iteration is extracted into `DiagonalizeBidiagonal`, used by both domains. Complex input is reduced by Householder transformations, with diagonal phases making the bidiagonal problem real. Reflectors reuse the private input buffer, and only economy factors are constructed. |
-| Symmetric/Hermitian EVD | `RealWorkspace.tql2` supplies the shared `DiagonalizeTridiagonal` QL iteration. The complex Hermitian path uses rank-two Householder reduction and phase normalization to a real symmetric tridiagonal problem. Both domains share the disconnected-component partition and ascending spectrum ordering. |
+| SVD | The original real Golub–Kahan QR iteration is extracted into `DiagonalizeBidiagonal`, used by both domains. Complex input is reduced by Householder transformations, with diagonal phases making the bidiagonal problem real. Reflectors reuse the private input buffer, and only economy factors are constructed. |
+| Symmetric/Hermitian EVD | The original real `tql2` algorithm supplies the shared `DiagonalizeTridiagonal` QL iteration. The complex Hermitian path uses rank-two Householder reduction and phase normalization to a real symmetric tridiagonal problem. Both domains share the disconnected-component partition and ascending spectrum ordering. |
 | Householder | The complex tridiagonal reduction uses the Hermitian counterpart of the real symmetric rank-two update. Its matrix-vector work buffer is reused. |
-| Schur / general complex EVD | Complex Schur uses implicit single-shift QR with direct accumulation of two-row rotations, following the real workspace's Hessenberg/implicit-QR strategy. The real double-shift kernel and its 2-by-2 blocks remain specialized. General complex EVD obtains eigenvectors by triangular back-substitution. |
+| Schur / general complex EVD | Complex Schur uses implicit single-shift QR with direct accumulation of two-row rotations, following the real Hessenberg/implicit-QR strategy. The real double-shift kernel and its 2-by-2 blocks remain specialized. General complex EVD obtains eigenvectors by triangular back-substitution. |
 | QZ / GEVD | Complex Hessenberg-triangular reduction follows the real `qzhes` stages, applying each reflector directly to both inputs. Both QZ domains and real/complex GEVD normalize A and B independently and restore their separate units. Existing real single/double-shift and complex single-shift iteration/back-substitution specializations are retained. |
 | Basis completion | Complex completion uses the real helper's first sufficiently large candidate and positive-norm failure criterion. |
 | Polar / GSVD | Both use the shared SVD iteration, including GSVD's complementary-subspace refinement. |
@@ -133,7 +133,7 @@ current relative residual was 6.74e-08; the maximum reported
 orthogonality error was 3.88e-08.
 
 Complex SVD has higher total allocations than Jacobi on these cases (about 14%
-at 128 x 128 and 28�38% for the rectangular cases), despite reusing the matrix
+at 128 x 128 and 28–38% for the rectangular cases), despite reusing the matrix
 buffer; temporary reflector vectors account for the remaining tradeoff.
 Complex Schur and Hermitian EVD substantially reduce both time and allocations.
 QZ and GEVD retain their specialized iteration kernels; their main measured
@@ -143,3 +143,55 @@ Raw results for this local run are in
 `artifacts/decomposition-unification/results-final.json`. Use `Compare.ps1` to
 reproduce comparisons with saved before/after assemblies.
 
+## Subsequent workspace removal
+
+The structural refactoring uses commit `3b735b0` (the completed algorithm
+unification) as its baseline. The measurements above describe the earlier
+algorithm change; the measurements below describe only workspace removal.
+
+The four nested `RealWorkspace` classes in SVD, EVD, Schur and GEVD have been
+removed. Real and complex entry points and factorization drivers sit alongside
+each other, followed by their numerical helpers. Temporary arrays belong to
+each call and are passed explicitly to static helpers. The shared SVD QR and
+symmetric/Hermitian EVD QL iterations are retained. Schur and GEVD write directly
+to the result arrays, and symmetric EVD no longer allocates an unused Hessenberg
+matrix. No public signatures, defaults, numerical recurrences or ordering rules
+changed in this refactoring.
+
+Validation on .NET 8.0.31, Release:
+
+- All **18,174 tests passed**, with no failures or skipped tests.
+- A direct comparison against the baseline covered **798 calls** to real and
+  complex SVD, EVD, Schur, GEVD, QZ, Polar and GSVD: 658 successful calls produced
+  bitwise-identical factors/spectra; 140 exception outcomes matched in type,
+  message and parameter name. Inputs were unchanged in both versions.
+- Cases included dense, symmetric/Hermitian, diagonal, zero, rank-deficient,
+  independently scaled block and rectangular matrices, invalid arguments and
+  the 48 existing NumPy/LAPACK fixtures. Public decomposition API signatures,
+  parameter names and defaults also matched.
+- Source comparison confirmed that 18 numerical kernels were unchanged after
+  accounting for movement, comments and explicit local-buffer declarations.
+
+All 18 benchmark scenarios passed reconstruction and orthogonality checks:
+six real methods at sizes 32 and 128, and six complex controls at size 128.
+The real 128-by-128 results were:
+
+| Method | Before, ms | After, ms | Bytes before | Bytes after |
+| --- | ---: | ---: | ---: | ---: |
+| SVD | 6.897 | 6.791 | 404,568 | 404,512 |
+| EVD-SPD | 3.060 | 3.010 | 406,352 | 271,096 |
+| EVD | 17.739 | 13.190 | 405,840 | 405,768 |
+| Schur | 11.898 | 11.892 | 544,088 | 404,720 |
+| GEVD | 23.812 | 23.719 | 546,712 | 475,928 |
+| QZ | 23.892 | 25.163 | 1,005,312 | 1,005,312 |
+
+The general real EVD improvement repeated at 17.742 to 13.215 ms. QZ repeated
+at 23.771 to 25.225 ms, but a control comparing the baseline assembly with
+itself also varied from 25.200 to 23.821 ms. These short QZ timings therefore
+do not isolate a refactoring effect. Complex timings differed by at most 1.4%
+and allocations were identical in all six controls. Allocation reductions in
+real EVD-SPD, Schur and GEVD were approximately 33%, 26% and 13%, respectively.
+
+Local comparison inputs, audit runner, logs and raw timings are preserved in
+`artifacts/decomposition-layout/`. The existing `Compare.ps1` reproduces timing
+comparisons using `before.dll` from that directory and the current Release DLL.

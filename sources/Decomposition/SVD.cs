@@ -131,7 +131,234 @@ namespace UMapx.Decomposition
             return result;
         }
 
-        /// <summary>Reduces a complex matrix to real bidiagonal form and uses the same QR iteration as the real workspace.</summary>
+        /// <summary>Reduces a real matrix to bidiagonal form and applies the shared Golub-Kahan QR iteration.</summary>
+        /// <param name="A">Private real work matrix, consumed in place.</param>
+        /// <param name="iterations">Positive maximum QR sweeps per singular value.</param>
+        /// <returns>Economy singular factors and descending nonnegative singular values.</returns>
+        internal static (double[][] U, double[] S, double[][] V) Factor(double[][] A, int iterations = 50)
+        {
+            if (A == null) throw new ArgumentNullException(nameof(A));
+            if (A.Length == 0 || A[0].Length == 0)
+                throw new ArgumentException("The matrix must be nonempty.", nameof(A));
+            if (iterations < 1) throw new ArgumentOutOfRangeException(nameof(iterations), "The iteration limit must be positive.");
+            int n = A.Length, m = A[0].Length;
+            if (n < m)
+            {
+                var wide = Factor(InternalMatrixMath.Transpose(A), iterations);
+                return (wide.V, wide.S, wide.U);
+            }
+            double inputScale = InternalMatrixMath.Max(A);
+            if (inputScale == 0) inputScale = 1;
+            InternalMatrixMath.Divide(A, inputScale);
+            var Ur = A;
+            var Sr = new double[m];
+            var Vr = InternalMatrixMath.CreateJagged(m, m);
+            double[] rv1 = new double[m];
+
+            int i, j, k, l = 0;
+            double f, g, h, e, scale;
+
+            // householder reduction to bidiagonal form
+            g = scale = 0.0f;
+
+            for (i = 0; i < m; i++)
+            {
+                l = i + 1;
+                rv1[i] = scale * g;
+                g = e = scale = 0;
+
+                if (i < n)
+                {
+                    for (k = i; k < n; k++)
+                    {
+                        scale += Math.Abs(Ur[k][i]);
+                    }
+
+                    if (scale != 0.0)
+                    {
+                        for (k = i; k < n; k++)
+                        {
+                            Ur[k][i] /= scale;
+                            e += Ur[k][i] * Ur[k][i];
+                        }
+
+                        f = Ur[i][i];
+                        g = -InternalMatrixMath.CopySign(Math.Sqrt(e), f);
+                        h = f * g - e;
+                        Ur[i][i] = f - g;
+
+                        if (i != m - 1)
+                        {
+                            for (j = l; j < m; j++)
+                            {
+                                for (e = 0.0f, k = i; k < n; k++)
+                                {
+                                    e += Ur[k][i] * Ur[k][j];
+                                }
+
+                                f = e / h;
+
+                                for (k = i; k < n; k++)
+                                {
+                                    Ur[k][j] += f * Ur[k][i];
+                                }
+                            }
+                        }
+
+                        for (k = i; k < n; k++)
+                        {
+                            Ur[k][i] *= scale;
+                        }
+                    }
+                }
+
+                Sr[i] = scale * g;
+                g = e = scale = 0.0f;
+
+                if ((i < n) && (i != m - 1))
+                {
+                    for (k = l; k < m; k++)
+                    {
+                        scale += Math.Abs(Ur[i][k]);
+                    }
+
+                    if (scale != 0.0)
+                    {
+                        for (k = l; k < m; k++)
+                        {
+                            Ur[i][k] /= scale;
+                            e += Ur[i][k] * Ur[i][k];
+                        }
+
+                        f = Ur[i][l];
+                        g = -InternalMatrixMath.CopySign(Math.Sqrt(e), f);
+                        h = f * g - e;
+                        Ur[i][l] = f - g;
+
+                        for (k = l; k < m; k++)
+                        {
+                            rv1[k] = Ur[i][k] / h;
+                        }
+
+                        if (i != n - 1)
+                        {
+                            for (j = l; j < n; j++)
+                            {
+                                for (e = 0.0f, k = l; k < m; k++)
+                                {
+                                    e += Ur[j][k] * Ur[i][k];
+                                }
+                                for (k = l; k < m; k++)
+                                {
+                                    Ur[j][k] += e * rv1[k];
+                                }
+                            }
+                        }
+
+                        for (k = l; k < m; k++)
+                        {
+                            Ur[i][k] *= scale;
+                        }
+                    }
+                }
+            }
+
+            // accumulation of right-hand transformations
+            for (i = m - 1; i >= 0; i--)
+            {
+                if (i < m - 1)
+                {
+                    if (g != 0.0)
+                    {
+                        for (j = l; j < m; j++)
+                        {
+                            Vr[j][i] = (Ur[i][j] / Ur[i][l]) / g;
+                        }
+
+                        for (j = l; j < m; j++)
+                        {
+                            for (e = 0, k = l; k < m; k++)
+                            {
+                                e += Ur[i][k] * Vr[k][j];
+                            }
+                            for (k = l; k < m; k++)
+                            {
+                                Vr[k][j] += e * Vr[k][i];
+                            }
+                        }
+                    }
+                    for (j = l; j < m; j++)
+                    {
+                        Vr[i][j] = Vr[j][i] = 0;
+                    }
+                }
+                Vr[i][i] = 1;
+                g = rv1[i];
+                l = i;
+            }
+
+            // accumulation of left-hand transformations
+            for (i = m - 1; i >= 0; i--)
+            {
+                l = i + 1;
+                g = Sr[i];
+
+                if (i < m - 1)
+                {
+                    for (j = l; j < m; j++)
+                    {
+                        Ur[i][j] = 0.0f;
+                    }
+                }
+
+                if (g != 0)
+                {
+                    g = 1.0f / g;
+
+                    if (i != m - 1)
+                    {
+                        for (j = l; j < m; j++)
+                        {
+                            for (e = 0, k = l; k < n; k++)
+                            {
+                                e += Ur[k][i] * Ur[k][j];
+                            }
+
+                            f = (e / Ur[i][i]) * g;
+
+                            for (k = i; k < n; k++)
+                            {
+                                Ur[k][j] += f * Ur[k][i];
+                            }
+                        }
+                    }
+
+                    for (j = i; j < n; j++)
+                    {
+                        Ur[j][i] *= g;
+                    }
+                }
+                else
+                {
+                    for (j = i; j < n; j++)
+                    {
+                        Ur[j][i] = 0;
+                    }
+                }
+                ++Ur[i][i];
+            }
+
+            DiagonalizeBidiagonal(Sr, rv1, iterations,
+                (left, right, cosine, sine) => InternalMatrixMath.RotateColumns(Ur, left, right, cosine, sine),
+                (left, right, cosine, sine) => InternalMatrixMath.RotateColumns(Vr, left, right, cosine, sine),
+                column => { for (int row = 0; row < m; row++) Vr[row][column] = -Vr[row][column]; },
+                (left, right) => { InternalMatrixMath.SwapColumns(Ur, left, right); InternalMatrixMath.SwapColumns(Vr, left, right); });
+            // Orthogonal factors do not depend on a positive common scale.
+            for (i = 0; i < m; i++) Sr[i] *= inputScale;
+            return (Ur, Sr, Vr);
+        }
+
+        /// <summary>Reduces a complex matrix to real bidiagonal form and uses the same QR iteration as the real overload.</summary>
         /// <param name="a">Private complex work matrix.</param>
         /// <param name="iterations">Positive maximum QR sweeps per singular value.</param>
         /// <returns>Economy singular factors and descending nonnegative singular values.</returns>
@@ -173,7 +400,7 @@ namespace UMapx.Decomposition
                     offDiagonal[k + 1] = C.Abs(a[k, k + 1]);
                     rightPhase = leftPhases[k] * C.Conjugate(InternalMatrixMath.Phase(a[k, k + 1]));
                 }
-                // Like the real workspace, keep reflectors in the input work buffer.
+                // Like the real overload, keep reflectors in the input work buffer.
                 // Later reductions touch only columns after k, so these entries are safe.
                 InternalMatrixMath.SetColumn(a, k, left, k);
             }
@@ -198,7 +425,7 @@ namespace UMapx.Decomposition
             return (u, singular, v);
         }
 
-        /// <summary>Diagonalizes a real bidiagonal matrix using the original real-workspace Golub-Kahan QR iteration.</summary>
+        /// <summary>Diagonalizes a real bidiagonal matrix using the original real Golub-Kahan QR iteration.</summary>
         /// <remarks>rv1[0] is zero; rv1[i] couples diagonal entries i-1 and i. Callbacks accumulate identical real rotations in either scalar domain.</remarks>
         private static void DiagonalizeBidiagonal(double[] Sr, double[] rv1, int iterations,
             Action<int, int, double, double> rotateLeft, Action<int, int, double, double> rotateRight,
@@ -346,326 +573,6 @@ namespace UMapx.Decomposition
                     swapColumns(i, maxIdx);
                 }
             }
-        }
-
-        /// <summary>Consumes a private real buffer without narrowing intermediate singular factors.</summary>
-        internal static (double[][] U, double[] S, double[][] V) Factor(double[][] a, int iterations = 50)
-        {
-            var work = new RealWorkspace(a, iterations);
-            return (work.U, work.S, work.V);
-        }
-
-        /// <summary>Owns the real algorithm work buffers for one call only.</summary>
-        private sealed class RealWorkspace
-        {
-            #region Private data
-            private int n, m;
-            private int iterations;
-            private double[][] Ur;
-            private double[][] Vr;
-            private double[] Sr;
-            private bool reversed;
-            #endregion
-
-            #region Initialize
-            /// <summary>
-            /// Initializes singular value decomposition.
-            /// </summary>
-            /// <param name="A">Nonempty rectangular matrix with finite real entries.</param>
-            /// <param name="iterations">Positive maximum number of QR sweeps per singular value.</param>
-            /// <exception cref="ArgumentException">The matrix is empty or contains nonfinite entries.</exception>
-            /// <exception cref="InvalidOperationException">The QR iteration limit is reached before convergence.</exception>
-            public RealWorkspace(double[][] A, int iterations = 10)
-            {
-                if (A == null) throw new ArgumentNullException(nameof(A));
-                if (A.Length == 0 || A[0].Length == 0)
-                    throw new ArgumentException("The matrix must be nonempty.", nameof(A));
-                if (iterations < 1) throw new ArgumentOutOfRangeException(nameof(iterations), "The iteration limit must be positive.");
-                // set:
-                this.iterations = iterations;
-                this.n = A.Length;
-                this.m = A[0].Length;
-
-                // options:
-                if (n < m)
-                {
-                    this.reversed = true;
-                    this.n = A[0].Length;
-                    this.m = A.Length;
-                    this.svdcmp(InternalMatrixMath.Transpose(A));
-                }
-                else
-                {
-                    this.reversed = false;
-                    this.svdcmp(A);
-                }
-            }
-            #endregion
-
-            #region Standard voids
-            /// <summary>
-            /// Gets the left vectors.
-            /// </summary>
-            public double[][] U
-            {
-                get
-                {
-                    return reversed ? Vr : Ur;
-                }
-            }
-            /// <summary>
-            /// Gets singular values.
-            /// </summary>
-            public double[] S
-            {
-                get { return Sr; }
-            }
-            /// <summary>
-            /// Gets the right vectors.
-            /// </summary>
-            public double[][] V
-            {
-                get
-                {
-                    return reversed ? Ur : Vr;
-                }
-            }
-
-            #endregion
-
-            #region Private voids
-            /// <summary>
-            /// Core SVD routine with double-precision work buffers for real single-precision inputs.
-            /// Performs Householder bidiagonalization followed by Golub–Kahan QR iterations
-            /// to compute singular values and left/right singular vectors.
-            /// Populates the private fields: <c>Ur</c> (left vectors), <c>Vr</c> (right vectors),
-            /// and <c>Sr</c> (non-negative singular values).
-            /// </summary>
-            /// <param name="A">
-            /// Input matrix of size n×m. Assumes n ≥ m when called (the caller transposes
-            /// beforehand if needed). The method works on an internal copy (jagged buffers).
-            /// </param>
-            /// <remarks>
-            /// Uses jagged arrays for speed. Columns of U and V are orthonormal. The number
-            /// of QR sweeps is limited by the instance field <see cref="iterations"/>.
-            /// </remarks>
-            private void svdcmp(double[][] A)
-            {
-                double inputScale = InternalMatrixMath.Max(A);
-                if (inputScale == 0) inputScale = 1;
-                InternalMatrixMath.Divide(A, inputScale);
-                var Ur = A;
-                var Sr = new double[m];
-                var Vr = InternalMatrixMath.CreateJagged(m, m);
-                double[] rv1 = new double[m];
-
-                int i, j, k, l = 0;
-                double f, g, h, e, scale;
-
-                // householder reduction to bidiagonal form
-                g = scale = 0.0f;
-
-                for (i = 0; i < m; i++)
-                {
-                    l = i + 1;
-                    rv1[i] = scale * g;
-                    g = e = scale = 0;
-
-                    if (i < n)
-                    {
-                        for (k = i; k < n; k++)
-                        {
-                            scale += Math.Abs(Ur[k][i]);
-                        }
-
-                        if (scale != 0.0)
-                        {
-                            for (k = i; k < n; k++)
-                            {
-                                Ur[k][i] /= scale;
-                                e += Ur[k][i] * Ur[k][i];
-                            }
-
-                            f = Ur[i][i];
-                            g = -InternalMatrixMath.CopySign(Math.Sqrt(e), f);
-                            h = f * g - e;
-                            Ur[i][i] = f - g;
-
-                            if (i != m - 1)
-                            {
-                                for (j = l; j < m; j++)
-                                {
-                                    for (e = 0.0f, k = i; k < n; k++)
-                                    {
-                                        e += Ur[k][i] * Ur[k][j];
-                                    }
-
-                                    f = e / h;
-
-                                    for (k = i; k < n; k++)
-                                    {
-                                        Ur[k][j] += f * Ur[k][i];
-                                    }
-                                }
-                            }
-
-                            for (k = i; k < n; k++)
-                            {
-                                Ur[k][i] *= scale;
-                            }
-                        }
-                    }
-
-                    Sr[i] = scale * g;
-                    g = e = scale = 0.0f;
-
-                    if ((i < n) && (i != m - 1))
-                    {
-                        for (k = l; k < m; k++)
-                        {
-                            scale += Math.Abs(Ur[i][k]);
-                        }
-
-                        if (scale != 0.0)
-                        {
-                            for (k = l; k < m; k++)
-                            {
-                                Ur[i][k] /= scale;
-                                e += Ur[i][k] * Ur[i][k];
-                            }
-
-                            f = Ur[i][l];
-                            g = -InternalMatrixMath.CopySign(Math.Sqrt(e), f);
-                            h = f * g - e;
-                            Ur[i][l] = f - g;
-
-                            for (k = l; k < m; k++)
-                            {
-                                rv1[k] = Ur[i][k] / h;
-                            }
-
-                            if (i != n - 1)
-                            {
-                                for (j = l; j < n; j++)
-                                {
-                                    for (e = 0.0f, k = l; k < m; k++)
-                                    {
-                                        e += Ur[j][k] * Ur[i][k];
-                                    }
-                                    for (k = l; k < m; k++)
-                                    {
-                                        Ur[j][k] += e * rv1[k];
-                                    }
-                                }
-                            }
-
-                            for (k = l; k < m; k++)
-                            {
-                                Ur[i][k] *= scale;
-                            }
-                        }
-                    }
-                }
-
-                // accumulation of right-hand transformations
-                for (i = m - 1; i >= 0; i--)
-                {
-                    if (i < m - 1)
-                    {
-                        if (g != 0.0)
-                        {
-                            for (j = l; j < m; j++)
-                            {
-                                Vr[j][i] = (Ur[i][j] / Ur[i][l]) / g;
-                            }
-
-                            for (j = l; j < m; j++)
-                            {
-                                for (e = 0, k = l; k < m; k++)
-                                {
-                                    e += Ur[i][k] * Vr[k][j];
-                                }
-                                for (k = l; k < m; k++)
-                                {
-                                    Vr[k][j] += e * Vr[k][i];
-                                }
-                            }
-                        }
-                        for (j = l; j < m; j++)
-                        {
-                            Vr[i][j] = Vr[j][i] = 0;
-                        }
-                    }
-                    Vr[i][i] = 1;
-                    g = rv1[i];
-                    l = i;
-                }
-
-                // accumulation of left-hand transformations
-                for (i = m - 1; i >= 0; i--)
-                {
-                    l = i + 1;
-                    g = Sr[i];
-
-                    if (i < m - 1)
-                    {
-                        for (j = l; j < m; j++)
-                        {
-                            Ur[i][j] = 0.0f;
-                        }
-                    }
-
-                    if (g != 0)
-                    {
-                        g = 1.0f / g;
-
-                        if (i != m - 1)
-                        {
-                            for (j = l; j < m; j++)
-                            {
-                                for (e = 0, k = l; k < n; k++)
-                                {
-                                    e += Ur[k][i] * Ur[k][j];
-                                }
-
-                                f = (e / Ur[i][i]) * g;
-
-                                for (k = i; k < n; k++)
-                                {
-                                    Ur[k][j] += f * Ur[k][i];
-                                }
-                            }
-                        }
-
-                        for (j = i; j < n; j++)
-                        {
-                            Ur[j][i] *= g;
-                        }
-                    }
-                    else
-                    {
-                        for (j = i; j < n; j++)
-                        {
-                            Ur[j][i] = 0;
-                        }
-                    }
-                    ++Ur[i][i];
-                }
-
-                DiagonalizeBidiagonal(Sr, rv1, iterations,
-                    (left, right, cosine, sine) => InternalMatrixMath.RotateColumns(Ur, left, right, cosine, sine),
-                    (left, right, cosine, sine) => InternalMatrixMath.RotateColumns(Vr, left, right, cosine, sine),
-                    column => { for (int row = 0; row < m; row++) Vr[row][column] = -Vr[row][column]; },
-                    (left, right) => { InternalMatrixMath.SwapColumns(Ur, left, right); InternalMatrixMath.SwapColumns(Vr, left, right); });
-                // Orthogonal factors do not depend on a positive common scale.
-                this.Ur = Ur;
-                this.Vr = Vr;
-                this.Sr = Sr;
-                for (i = 0; i < m; i++) Sr[i] *= inputScale;
-            }
-
-            #endregion
-
         }
     }
 }

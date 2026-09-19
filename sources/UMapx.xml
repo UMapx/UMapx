@@ -13560,64 +13560,41 @@
             <param name="beta">Real nonnegative eigenvalue denominators.</param>
             <returns>Right eigenvectors normalized to maximum component magnitude one; repeated roots may yield dependent columns.</returns>
         </member>
+        <member name="M:UMapx.Decomposition.EVD.Factor(System.Single[0:,0:],System.Double)">
+            <summary>Factors a real input with symmetric QL or nonsymmetric Hessenberg/QR iteration.</summary>
+            <remarks>All work buffers belong to this call; conjugate eigenvectors use adjacent real columns.</remarks>
+        </member>
+        <member name="M:UMapx.Decomposition.EVD.SymmetricFactor(System.Single[0:,0:],System.Double[],System.Double[],System.Double)">
+            <summary>Uses Householder tridiagonalization and shared QL iteration for symmetric real inputs.</summary>
+        </member>
         <member name="M:UMapx.Decomposition.EVD.HermitianFactor(System.Numerics.Complex[0:,0:],System.Double)">
-            <summary>Uses the real-workspace tridiagonal/QL strategy for exactly Hermitian complex inputs.</summary>
+            <summary>Uses the real tridiagonal/QL strategy for exactly Hermitian complex inputs.</summary>
         </member>
         <member name="M:UMapx.Decomposition.EVD.DiagonalizeTridiagonal(System.Double[],System.Double[],System.Double,System.Action{System.Int32,System.Int32,System.Double,System.Double},System.Action{System.Int32,System.Int32})">
-            <summary>Shared real tridiagonal QL iteration extracted from RealWorkspace.tql2.</summary>
-            <remarks>Im[0] is unused on entry; Im[i] is the subdiagonal at row i. Transformations are accumulated in the original scalar domain.</remarks>
+            <summary>Shared real tridiagonal QL iteration derived from EISPACK tql2.</summary>
+            <remarks>
+            Derived from tql2 by Bowdler, Martin, Reinsch, and Wilkinson, Handbook for Auto. Comp., Vol. II, Linear Algebra.
+            Im[0] is unused on entry; Im[i] is the subdiagonal at row i. Transformations are accumulated in the original scalar domain.
+            </remarks>
         </member>
         <member name="M:UMapx.Decomposition.EVD.SortSymmetricEigenpairs(System.Double[],System.Action{System.Int32,System.Int32})">
             <summary>Orders a symmetric or Hermitian spectrum and its eigenvectors together.</summary>
         </member>
-        <member name="T:UMapx.Decomposition.EVD.RealWorkspace">
-            <summary>Owns the real algorithm work buffers for one call only.</summary>
-        </member>
-        <member name="M:UMapx.Decomposition.EVD.RealWorkspace.#ctor(System.Single[0:,0:],System.Double)">
-            <summary>
-            Initializes eigenvalue decomposition.
-            </summary>
-            <param name="A">Square matrix.</param>
-            <param name="eps">Epsilon [0, 1].</param>
-        </member>
-        <member name="P:UMapx.Decomposition.EVD.RealWorkspace.V">
-            <summary>
-            Gets eigenvectors.
-            </summary>
-        </member>
-        <member name="P:UMapx.Decomposition.EVD.RealWorkspace.D">
-            <summary>
-            Gets eigenvalues.
-            </summary>
-        </member>
-        <member name="M:UMapx.Decomposition.EVD.RealWorkspace.FactorIndependentSymmetricBlocks(System.Single[0:,0:])">
-            <summary>Factors disconnected symmetric components without mixing their numerical scales.</summary>
-        </member>
-        <member name="M:UMapx.Decomposition.EVD.RealWorkspace.tred2">
+        <member name="M:UMapx.Decomposition.EVD.Tridiagonalize(System.Double[][],System.Double[],System.Double[])">
             <summary>
             Symmetric Householder reduction to tridiagonal form.
             This is derived from the Algol procedures tred2 by Bowdler, Martin, Reinsch, and Wilkinson,
             Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutine in EISPACK.
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.EVD.RealWorkspace.tql2">
-            <summary>
-            Symmetric tridiagonal QL algorithm.
-            This is derived from the Algol procedures tql2, by Bowdler, Martin, Reinsch, and Wilkinson,
-            Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutine in EISPACK.
-            </summary>
-        </member>
-        <member name="M:UMapx.Decomposition.EVD.RealWorkspace.SortSymmetricEigenpairs">
-            <summary>Sorts a real symmetric spectrum and permutes its eigenvectors together.</summary>
-        </member>
-        <member name="M:UMapx.Decomposition.EVD.RealWorkspace.orthes">
+        <member name="M:UMapx.Decomposition.EVD.ReduceToHessenberg(System.Double[][],System.Double[][])">
             <summary>
             Nonsymmetric reduction to Hessenberg form.
             This is derived from the Algol procedures orthes and ortran, by Martin and Wilkinson,
             Handbook for Auto. Comp., Vol.ii-Linear Algebra, and the corresponding Fortran subroutines in EISPACK.
             </summary>
         </member>
-        <member name="M:UMapx.Decomposition.EVD.RealWorkspace.hqr2">
+        <member name="M:UMapx.Decomposition.EVD.ReduceHessenbergToEigenvectors(System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double)">
             <summary>
             Nonsymmetric reduction from Hessenberg to real Schur form.
             This is derived from the Algol procedure hqr2, by Martin and Wilkinson, Handbook for Auto. Comp.,
@@ -13640,6 +13617,8 @@
             <param name="b">Finite nonempty input matrix.</param>
             <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
             <returns>The primary factors (V, Alpha, Beta).</returns>
+            <exception cref="T:System.ArgumentException">The matrices are empty, nonfinite, nonsquare, or have different orders.</exception>
+            <exception cref="T:System.InvalidOperationException">QZ iteration fails to converge.</exception>
         </member>
         <member name="M:UMapx.Decomposition.GEVD.Decompose(UMapx.Core.Complex32[0:,0:],UMapx.Core.Complex32[0:,0:],System.Single)">
             <summary>Computes complex generalized right eigenvectors and homogeneous eigenvalues.</summary>
@@ -13678,43 +13657,6 @@
             <param name="beta">Denominator vector.</param>
         </member>
         <member name="M:UMapx.Decomposition.GEVD.ReduceRealPencil(System.Double[][],System.Double[][],System.Single,System.Double[][],System.Double[][],System.Int32@)">
-            <summary>Exposes the existing real QZ kernel to the static QZ entry point.</summary>
-            <param name="a">First matrix overwritten by its quasi-triangular form.</param>
-            <param name="b">Second matrix overwritten by its triangular form.</param>
-            <param name="eps">Relative convergence tolerance.</param>
-            <param name="q">Transposed left transformation accumulator, initially the identity.</param>
-            <param name="z">Right transformation accumulator, initially the identity.</param>
-            <param name="error">Zero on success, otherwise an unconverged index.</param>
-        </member>
-        <member name="T:UMapx.Decomposition.GEVD.RealWorkspace">
-            <summary>Owns the real algorithm work buffers for one call only.</summary>
-        </member>
-        <member name="M:UMapx.Decomposition.GEVD.RealWorkspace.#ctor(System.Single[0:,0:],System.Single[0:,0:],System.Single)">
-            <summary>
-            Initializes generalized eigenvalue decomposition.
-            </summary>
-            <param name="a">Nonempty finite square matrix A.</param>
-            <param name="b">Finite square matrix B of the same order.</param>
-            <param name="eps">Relative deflation tolerance, clamped to [0, 1] with a double-roundoff floor.</param>
-            <exception cref="T:System.ArgumentException">The matrices are empty, nonfinite, nonsquare, or have different orders.</exception>
-            <exception cref="T:System.InvalidOperationException">QZ iteration fails to converge.</exception>
-        </member>
-        <member name="P:UMapx.Decomposition.GEVD.RealWorkspace.Alpha">
-            <summary>
-            Returns vector α.
-            </summary>
-        </member>
-        <member name="P:UMapx.Decomposition.GEVD.RealWorkspace.Beta">
-            <summary>
-            Returns vector β.
-            </summary>
-        </member>
-        <member name="P:UMapx.Decomposition.GEVD.RealWorkspace.V">
-            <summary>
-            Returns a matrix of values V.
-            </summary>
-        </member>
-        <member name="M:UMapx.Decomposition.GEVD.RealWorkspace.qzdecomp(System.Double[][],System.Double[][],System.Single,System.Double[][],System.Double[][],System.Int32@)">
             <summary>
             Performs the QZ reduction of matrices A and B.
             </summary>
@@ -13725,7 +13667,7 @@
             <param name="q">Transposed left orthogonal accumulator, initially the identity.</param>
             <param name="ierr">Convergence flag.</param>
         </member>
-        <member name="M:UMapx.Decomposition.GEVD.RealWorkspace.qzhes(System.Int32,System.Double[][],System.Double[][],System.Boolean,System.Double[][],System.Double[][])">
+        <member name="M:UMapx.Decomposition.GEVD.qzhes(System.Int32,System.Double[][],System.Double[][],System.Boolean,System.Double[][],System.Double[][])">
             <summary>
             First QZ stage: reduce B to upper triangular form and A to upper Hessenberg form using orthogonal transformations.
             </summary>
@@ -13747,7 +13689,7 @@
             </param>
             <param name="left">Optional transposed left orthogonal accumulator, initially the identity.</param>
         </member>
-        <member name="M:UMapx.Decomposition.GEVD.RealWorkspace.qzit(System.Int32,System.Double[][],System.Double[][],System.Double,System.Boolean,System.Double[][],System.Int32@,System.Double[][])">
+        <member name="M:UMapx.Decomposition.GEVD.qzit(System.Int32,System.Double[][],System.Double[][],System.Double,System.Boolean,System.Double[][],System.Int32@,System.Double[][])">
             <summary>
             Second QZ stage: iterative QZ step (bulge chasing) to drive A to quasi-triangular form while keeping B triangular.
             </summary>
@@ -13759,8 +13701,8 @@
             is exceeded.</para>
             </remarks>
             <param name="n">Matrix order.</param>
-            <param name="a">On entry: upper-Hessenberg from <see cref="M:UMapx.Decomposition.GEVD.RealWorkspace.qzhes(System.Int32,System.Double[][],System.Double[][],System.Boolean,System.Double[][],System.Double[][])"/>; on exit: quasi-triangular S. Modified in place.</param>
-            <param name="b">On entry: upper-triangular from <see cref="M:UMapx.Decomposition.GEVD.RealWorkspace.qzhes(System.Int32,System.Double[][],System.Double[][],System.Boolean,System.Double[][],System.Double[][])"/>; on exit: upper-triangular T. Modified in place.</param>
+            <param name="a">On entry: upper-Hessenberg from <see cref="M:UMapx.Decomposition.GEVD.qzhes(System.Int32,System.Double[][],System.Double[][],System.Boolean,System.Double[][],System.Double[][])"/>; on exit: quasi-triangular S. Modified in place.</param>
+            <param name="b">On entry: upper-triangular from <see cref="M:UMapx.Decomposition.GEVD.qzhes(System.Int32,System.Double[][],System.Double[][],System.Boolean,System.Double[][],System.Double[][])"/>; on exit: upper-triangular T. Modified in place.</param>
             <param name="eps1">
             Relative convergence tolerance. If zero, machine roundoff is used (via <see cref="F:UMapx.Decomposition.InternalMatrixMath.Roundoff"/>).
             </param>
@@ -13771,7 +13713,7 @@
             </param>
             <param name="left">Optional transposed left orthogonal accumulator from the Hessenberg reduction.</param>
         </member>
-        <member name="M:UMapx.Decomposition.GEVD.RealWorkspace.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])">
+        <member name="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])">
             <summary>
             Third QZ stage: extract generalized eigenvalue numerators/denominators from (S,T) after convergence.
             </summary>
@@ -13780,19 +13722,19 @@
             reduces any remaining 2×2 blocks in S consistently with T, and fills arrays such that
             λ_j = (alfr[j] + i·alfi[j]) / beta[j].
             <para>
-            If <paramref name="matz"/> is true, right transformations are accumulated into Z for later use by <see cref="M:UMapx.Decomposition.GEVD.RealWorkspace.qzvec(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Double[][])"/>.
+            If <paramref name="matz"/> is true, right transformations are accumulated into Z for later use by <see cref="M:UMapx.Decomposition.GEVD.qzvec(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Double[][])"/>.
             </para>
             </remarks>
             <param name="n">Matrix order.</param>
-            <param name="a">On entry: S from <see cref="M:UMapx.Decomposition.GEVD.RealWorkspace.qzit(System.Int32,System.Double[][],System.Double[][],System.Double,System.Boolean,System.Double[][],System.Int32@,System.Double[][])"/>; may be locally modified. On exit: still quasi-triangular.</param>
-            <param name="b">On entry: T from <see cref="M:UMapx.Decomposition.GEVD.RealWorkspace.qzit(System.Int32,System.Double[][],System.Double[][],System.Double,System.Boolean,System.Double[][],System.Int32@,System.Double[][])"/>; may be locally modified. On exit: still upper triangular.</param>
+            <param name="a">On entry: S from <see cref="M:UMapx.Decomposition.GEVD.qzit(System.Int32,System.Double[][],System.Double[][],System.Double,System.Boolean,System.Double[][],System.Int32@,System.Double[][])"/>; may be locally modified. On exit: still quasi-triangular.</param>
+            <param name="b">On entry: T from <see cref="M:UMapx.Decomposition.GEVD.qzit(System.Int32,System.Double[][],System.Double[][],System.Double,System.Boolean,System.Double[][],System.Int32@,System.Double[][])"/>; may be locally modified. On exit: still upper triangular.</param>
             <param name="alfr">Real parts of α_j (numerators) for generalized λ_j = α_j / β_j. Length n. Written by the routine.</param>
             <param name="alfi">Imag parts of α_j. Length n. Written by the routine (zero for real eigenvalues).</param>
             <param name="beta">Denominators β_j (nonnegative). Length n. Written by the routine.</param>
             <param name="matz">If true, accumulate right transformations into <paramref name="z"/>.</param>
             <param name="z">Right transformation accumulator Z (updated if <paramref name="matz"/> is true).</param>
         </member>
-        <member name="M:UMapx.Decomposition.GEVD.RealWorkspace.qzvec(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Double[][])">
+        <member name="M:UMapx.Decomposition.GEVD.qzvec(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Double[][])">
             <summary>
             Optional fourth QZ stage: compute (right) generalized eigenvectors and map them back via Z.
             </summary>
@@ -13801,16 +13743,16 @@
             performing back-substitution to obtain eigenvectors in the deflated coordinate system and then
             transforms them to the original coordinates via Z.
             <para>
-            On entry, (alfr, alfi, beta) must come from <see cref="M:UMapx.Decomposition.GEVD.RealWorkspace.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])"/>. On exit, Z contains eigenvectors
+            On entry, (alfr, alfi, beta) must come from <see cref="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])"/>. On exit, Z contains eigenvectors
             (real columns for real λ; 2 columns for each complex-conjugate pair).
             </para>
             </remarks>
             <param name="n">Matrix order.</param>
             <param name="a">Quasi-triangular S (read-only here). Notation follows EISPACK; may be referenced.</param>
             <param name="b">Upper triangular T, overwritten by triangular eigenvector workspace during back-substitution.</param>
-            <param name="alfr">Real parts of α_j from <see cref="M:UMapx.Decomposition.GEVD.RealWorkspace.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])"/>.</param>
-            <param name="alfi">Imag parts of α_j from <see cref="M:UMapx.Decomposition.GEVD.RealWorkspace.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])"/>.</param>
-            <param name="beta">β_j from <see cref="M:UMapx.Decomposition.GEVD.RealWorkspace.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])"/>.</param>
+            <param name="alfr">Real parts of α_j from <see cref="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])"/>.</param>
+            <param name="alfi">Imag parts of α_j from <see cref="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])"/>.</param>
+            <param name="beta">β_j from <see cref="M:UMapx.Decomposition.GEVD.qzval(System.Int32,System.Double[][],System.Double[][],System.Double[],System.Double[],System.Double[],System.Boolean,System.Double[][])"/>.</param>
             <param name="z">
             On entry: right transformation accumulator from prior stages. On exit: columns replaced by the (right)
             generalized eigenvectors in the original coordinate system. Modified in place.
@@ -14648,49 +14590,33 @@
             <param name="t">Finite square triangular Schur factor.</param>
             <returns>The diagonal entries, without repeating the decomposition.</returns>
         </member>
+        <member name="M:UMapx.Decomposition.Schur.Factor(System.Single[0:,0:],System.Single)">
+            <summary>Uses Householder reduction and implicit double-shift QR for a real Schur decomposition.</summary>
+            <param name="A">Real input, copied before reduction.</param>
+            <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
+            <returns>Orthogonal Q and real quasi-triangular T.</returns>
+        </member>
         <member name="M:UMapx.Decomposition.Schur.Factor(System.Numerics.Complex[0:,0:],System.Double,System.Int32)">
-            <summary>Uses implicit shifted QR on a complex Hessenberg matrix, matching the real workspace reduction strategy.</summary>
+            <summary>Uses implicit shifted QR on a complex Hessenberg matrix, matching the real reduction strategy.</summary>
             <param name="a">Private finite square buffer.</param>
             <param name="eps">Relative requested deflation tolerance.</param>
             <param name="iterations">Maximum steps before a deflation must occur.</param>
             <returns>Double-precision Schur factors; failure to converge causes an exception.</returns>
         </member>
-        <member name="T:UMapx.Decomposition.Schur.RealWorkspace">
-            <summary>Owns the real algorithm work buffers for one call only.</summary>
-        </member>
-        <member name="M:UMapx.Decomposition.Schur.RealWorkspace.#ctor(System.Single[0:,0:],System.Single)">
-            <summary>
-            Initializes Schur decomposition.
-            </summary>
-            <param name="A">Nonempty square matrix with finite real entries.</param>
-            <param name="eps">Relative deflation tolerance, clamped to [0, 1] with a double-roundoff floor.</param>
-            <exception cref="T:System.ArgumentException">The input is empty, nonsquare, or contains nonfinite entries.</exception>
-            <exception cref="T:System.InvalidOperationException">The QR iteration limit is reached before convergence.</exception>
-        </member>
-        <member name="P:UMapx.Decomposition.Schur.RealWorkspace.Q">
-            <summary>
-            Gets the unitary matrix Q.
-            </summary>
-        </member>
-        <member name="P:UMapx.Decomposition.Schur.RealWorkspace.T">
-            <summary>
-            Gets the quasi upper triangular matrix T.
-            </summary>
-        </member>
-        <member name="M:UMapx.Decomposition.Schur.RealWorkspace.ReduceToHessenberg(System.Double[][])">
+        <member name="M:UMapx.Decomposition.Schur.ReduceToHessenberg(System.Double[][])">
             <summary>
             Reduces a scaled square matrix to Hessenberg form by Householder similarities in double precision.
             </summary>
             <param name="hessenberg">Matrix overwritten by its upper Hessenberg form H.</param>
             <returns>The orthogonal accumulator Q satisfying A = Q*H*Q^T before QR iteration.</returns>
         </member>
-        <member name="M:UMapx.Decomposition.Schur.RealWorkspace.hqr2(System.Double[][],System.Double[][],System.Double)">
+        <member name="M:UMapx.Decomposition.Schur.ReduceToSchur(System.Double[][],System.Double[][],System.Double)">
             <summary>
             Reduces Hessenberg form to real Schur form using bounded double-shift QR iteration.
             </summary>
             <param name="hessenberg">Scaled Hessenberg matrix, overwritten by its Schur form.</param>
             <param name="matrices">Orthogonal reduction accumulator, overwritten by the Schur vectors.</param>
-            <param name="inputScale">Positive input scale restored when storing the single-precision Schur form.</param>
+            <param name="eps">Clamped relative tolerance, raised to the double-roundoff floor.</param>
         </member>
         <member name="T:UMapx.Decomposition.SVD">
             <summary>
@@ -14767,62 +14693,21 @@
             <param name="tolerance">Relative cutoff or -1 for the dimension-dependent default.</param>
             <returns>The pseudoinverse; inputs are not modified.</returns>
         </member>
+        <member name="M:UMapx.Decomposition.SVD.Factor(System.Double[][],System.Int32)">
+            <summary>Reduces a real matrix to bidiagonal form and applies the shared Golub-Kahan QR iteration.</summary>
+            <param name="A">Private real work matrix, consumed in place.</param>
+            <param name="iterations">Positive maximum QR sweeps per singular value.</param>
+            <returns>Economy singular factors and descending nonnegative singular values.</returns>
+        </member>
         <member name="M:UMapx.Decomposition.SVD.Factor(System.Numerics.Complex[0:,0:],System.Int32)">
-            <summary>Reduces a complex matrix to real bidiagonal form and uses the same QR iteration as the real workspace.</summary>
+            <summary>Reduces a complex matrix to real bidiagonal form and uses the same QR iteration as the real overload.</summary>
             <param name="a">Private complex work matrix.</param>
             <param name="iterations">Positive maximum QR sweeps per singular value.</param>
             <returns>Economy singular factors and descending nonnegative singular values.</returns>
         </member>
         <member name="M:UMapx.Decomposition.SVD.DiagonalizeBidiagonal(System.Double[],System.Double[],System.Int32,System.Action{System.Int32,System.Int32,System.Double,System.Double},System.Action{System.Int32,System.Int32,System.Double,System.Double},System.Action{System.Int32},System.Action{System.Int32,System.Int32})">
-            <summary>Diagonalizes a real bidiagonal matrix using the original real-workspace Golub-Kahan QR iteration.</summary>
+            <summary>Diagonalizes a real bidiagonal matrix using the original real Golub-Kahan QR iteration.</summary>
             <remarks>rv1[0] is zero; rv1[i] couples diagonal entries i-1 and i. Callbacks accumulate identical real rotations in either scalar domain.</remarks>
-        </member>
-        <member name="M:UMapx.Decomposition.SVD.Factor(System.Double[][],System.Int32)">
-            <summary>Consumes a private real buffer without narrowing intermediate singular factors.</summary>
-        </member>
-        <member name="T:UMapx.Decomposition.SVD.RealWorkspace">
-            <summary>Owns the real algorithm work buffers for one call only.</summary>
-        </member>
-        <member name="M:UMapx.Decomposition.SVD.RealWorkspace.#ctor(System.Double[][],System.Int32)">
-            <summary>
-            Initializes singular value decomposition.
-            </summary>
-            <param name="A">Nonempty rectangular matrix with finite real entries.</param>
-            <param name="iterations">Positive maximum number of QR sweeps per singular value.</param>
-            <exception cref="T:System.ArgumentException">The matrix is empty or contains nonfinite entries.</exception>
-            <exception cref="T:System.InvalidOperationException">The QR iteration limit is reached before convergence.</exception>
-        </member>
-        <member name="P:UMapx.Decomposition.SVD.RealWorkspace.U">
-            <summary>
-            Gets the left vectors.
-            </summary>
-        </member>
-        <member name="P:UMapx.Decomposition.SVD.RealWorkspace.S">
-            <summary>
-            Gets singular values.
-            </summary>
-        </member>
-        <member name="P:UMapx.Decomposition.SVD.RealWorkspace.V">
-            <summary>
-            Gets the right vectors.
-            </summary>
-        </member>
-        <member name="M:UMapx.Decomposition.SVD.RealWorkspace.svdcmp(System.Double[][])">
-            <summary>
-            Core SVD routine with double-precision work buffers for real single-precision inputs.
-            Performs Householder bidiagonalization followed by Golub–Kahan QR iterations
-            to compute singular values and left/right singular vectors.
-            Populates the private fields: <c>Ur</c> (left vectors), <c>Vr</c> (right vectors),
-            and <c>Sr</c> (non-negative singular values).
-            </summary>
-            <param name="A">
-            Input matrix of size n×m. Assumes n ≥ m when called (the caller transposes
-            beforehand if needed). The method works on an internal copy (jagged buffers).
-            </param>
-            <remarks>
-            Uses jagged arrays for speed. Columns of U and V are orthonormal. The number
-            of QR sweeps is limited by the instance field <see cref="F:UMapx.Decomposition.SVD.RealWorkspace.iterations"/>.
-            </remarks>
         </member>
         <member name="T:UMapx.Decomposition.UDL">
             <summary>Provides unpivoted UDL factorization for symmetric and Hermitian matrices.</summary>

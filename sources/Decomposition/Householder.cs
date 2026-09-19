@@ -84,7 +84,7 @@ namespace UMapx.Decomposition
                 C inner = 0;
                 for (int i = 0; i < v.Length; i++) inner += C.Conjugate(v[i]) * w[i];
                 for (int i = 0; i < v.Length; i++) w[i] -= inner.Real * v[i];
-                // Hermitian counterpart of the real workspace's symmetric rank-two update.
+                // Hermitian counterpart of the real symmetric rank-two update.
                 for (int i = 0; i < v.Length; i++)
                 {
                     C vi = v[i], wi = w[i];
