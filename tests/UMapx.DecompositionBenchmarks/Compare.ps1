@@ -4,7 +4,8 @@ param(
     [Parameter(Mandatory)][string]$OutputFile,
     [int[]]$Sizes = @(32, 128),
     [string[]]$Names = @('QR','LQ','QL','RQ','LU','LDU','Cholesky','LDL','UDL','SVD','EVD','EVD-SPD','Hessenberg','Householder','Bidiagonal','GramSchmidt','Arnoldi','Lanczos','Polar','GEVD','QZ','GSVD','Schur','Diagonal','Power','NMF'),
-    [int]$Rows = 0
+    [int]$Rows = 0,
+    [ValidateSet('real','complex')][string]$Domain
 )
 $ErrorActionPreference = 'Stop'
 $runner = Join-Path $PSScriptRoot 'bin/Release/net8.0/UMapx.DecompositionBenchmarks.dll'
@@ -29,7 +30,8 @@ foreach ($n in $Sizes) {
             $info.RedirectStandardError = $true
             $info.Environment['DOTNET_TieredCompilation'] = '0'
             $info.Environment['DOTNET_ReadyToRun'] = '0'
-            foreach ($argument in @($runner,$library,$version,$name,"$n","$m")) { $info.ArgumentList.Add($argument) }
+            $arguments = if ($Domain) { @($runner,'--domain',$library,$version,$name,"$n","$m",$Domain) } else { @($runner,$library,$version,$name,"$n","$m") }
+            foreach ($argument in $arguments) { $info.ArgumentList.Add($argument) }
             $process = [Diagnostics.Process]::Start($info)
             try {
                 $stdout = $process.StandardOutput.ReadToEndAsync()

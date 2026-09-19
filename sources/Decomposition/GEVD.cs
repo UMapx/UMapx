@@ -158,7 +158,7 @@ namespace UMapx.Decomposition
                 var denominator = new double[n];
                 var A = InternalMatrixMath.CopyJagged(a);
                 var B = InternalMatrixMath.CopyJagged(b);
-                double inputScale = InternalMatrixMath.ScalePair(A, B);
+                var scales = InternalMatrixMath.ScalePencil(A, B);
                 bool matz = true;
                 int ierr = 0;
 
@@ -183,13 +183,13 @@ namespace UMapx.Decomposition
                 // computes the eigenvectors of the triangular problem and
                 // transforms the results back to the original coordinate system.
                 qzvec(n, A, B, real, imaginary, denominator, vectors);
-                // Alpha and beta share the input scale; their ratios and eigenvectors are unchanged.
+                // Restore the independent pencil units, as in the real and complex QZ entry points.
                 for (int i = 0; i < n; i++)
                 {
                     for (int j = 0; j < n; j++) Z[i][j] = (float)vectors[i][j];
-                    ar[i] = (float)(real[i] * inputScale);
-                    ai[i] = (float)(imaginary[i] * inputScale);
-                    beta[i] = (float)(denominator[i] * inputScale);
+                    ar[i] = (float)(real[i] * scales.A);
+                    ai[i] = (float)(imaginary[i] * scales.A);
+                    beta[i] = (float)(denominator[i] * scales.B);
                 }
             }
             #endregion
@@ -245,11 +245,8 @@ namespace UMapx.Decomposition
             {
                 int n = a.Length;
                 // Independent scales preserve a small B even when A uses much larger units.
-                double scaleA = InternalMatrixMath.Max(a), scaleB = InternalMatrixMath.Max(b);
-                if (scaleA == 0) scaleA = 1;
-                if (scaleB == 0) scaleB = 1;
-                InternalMatrixMath.Divide(a, scaleA);
-                InternalMatrixMath.Divide(b, scaleB);
+                var scales = InternalMatrixMath.ScalePencil(a, b);
+                double scaleA = scales.A, scaleB = scales.B;
                 qzhes(n, a, b, true, z, q);
                 qzit(n, a, b, Maths.Float(eps), true, z, ref ierr, q);
                 // The bottom-left entry is scratch storage for epsb, not part of T.

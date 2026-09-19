@@ -34,7 +34,7 @@ namespace UMapx.Decomposition
 
         /// <summary>Computes right eigenvectors and eigenvalues of a complex square matrix.</summary>
         /// <param name="matrix">Finite nonempty square matrix, not modified.</param>
-        /// <param name="eps">Relative Schur deflation tolerance, with a double-roundoff floor.</param>
+        /// <param name="eps">Relative QR/QL convergence tolerance, with a double-roundoff floor.</param>
         /// <returns>V and D satisfying A V = V diag(D). Hermitian inputs have unitary V and real D. Defective inputs need not have independent eigenvectors.</returns>
         public static (Complex32[,] V, Complex32[] D) Decompose(Complex32[,] matrix, float eps = 1e-16f)
         {
@@ -42,7 +42,14 @@ namespace UMapx.Decomposition
             var a = InternalMatrixMath.Copy(matrix, true);
             // Automatic dispatch must not erase a small imaginary eigenvalue by treating
             // a nearly Hermitian matrix as exactly Hermitian.
-            bool hermitian = InternalMatrixMath.IsHermitian(a, 0);
+            if (InternalMatrixMath.IsHermitian(a, 0))
+            {
+                double tolerance = Math.Max(8 * InternalMatrixMath.Roundoff, Math.Min(1, Math.Max(0, eps)));
+                var d = HermitianFactor(a, tolerance);
+                var eigenvalues = new Complex32[d.D.Length];
+                for (int i = 0; i < eigenvalues.Length; i++) eigenvalues[i] = new Complex32((float)d.D[i], 0);
+                return (InternalMatrixMath.Single(d.V), eigenvalues);
+            }
             var schur = Schur.Factor(a, eps);
             int n = a.GetLength(0);
             var alpha = new C[n];
@@ -50,10 +57,10 @@ namespace UMapx.Decomposition
             var values = new Complex32[n];
             for (int i = 0; i < n; i++)
             {
-                alpha[i] = hermitian ? new C(schur.T[i, i].Real, 0) : schur.T[i, i]; beta[i] = 1;
+                alpha[i] = schur.T[i, i]; beta[i] = 1;
                 values[i] = new Complex32((float)alpha[i].Real, (float)alpha[i].Imaginary);
             }
-            var vectors = hermitian ? schur.Q : TriangularVectors(schur.T, InternalMatrixMath.Eye(n), schur.Q, alpha, beta);
+            var vectors = TriangularVectors(schur.T, InternalMatrixMath.Eye(n), schur.Q, alpha, beta);
             return (InternalMatrixMath.Single(vectors), values);
         }
 
@@ -155,6 +162,174 @@ namespace UMapx.Decomposition
             return vectors;
         }
 
+        /// <summary>Uses the real-workspace tridiagonal/QL strategy for exactly Hermitian complex inputs.</summary>
+        private static (C[,] V, double[] D) HermitianFactor(C[,] a, double eps)
+        {
+            int n = a.GetLength(0);
+            var components = InternalMatrixMath.ConnectedComponents(n, (i, j) => a[i, j] != C.Zero);
+            if (components.Length > 1)
+            {
+                var vectors = new C[n, n];
+                var values = new double[n];
+                int column = 0;
+                foreach (var indices in components)
+                {
+                    var block = new C[indices.Length, indices.Length];
+                    for (int i = 0; i < indices.Length; i++)
+                        for (int j = 0; j < indices.Length; j++) block[i, j] = a[indices[i], indices[j]];
+                    var part = HermitianFactor(block, eps);
+                    for (int j = 0; j < indices.Length; j++)
+                    {
+                        values[column + j] = part.D[j];
+                        for (int i = 0; i < indices.Length; i++) vectors[indices[i], column + j] = part.V[i, j];
+                    }
+                    column += indices.Length;
+                }
+                SortSymmetricEigenpairs(values, (i, j) => InternalMatrixMath.SwapColumns(vectors, i, j));
+                return (vectors, values);
+            }
+            var reduction = Householder.Tridiagonalize(a);
+            var d = new double[n];
+            var e = new double[n];
+            C phase = C.One;
+            for (int j = 0; j < n; j++)
+            {
+                d[j] = reduction.H[j, j].Real;
+                if (j > 0)
+                {
+                    e[j] = C.Abs(reduction.H[j, j - 1]);
+                    phase *= InternalMatrixMath.Phase(reduction.H[j, j - 1]);
+                }
+                for (int i = 0; i < n; i++) reduction.P[i, j] *= phase;
+            }
+            DiagonalizeTridiagonal(d, e, eps,
+                (i, j, c, sine) => InternalMatrixMath.RotateColumns(reduction.P, i, j, c, sine),
+                (i, j) => InternalMatrixMath.SwapColumns(reduction.P, i, j));
+            return (reduction.P, d);
+        }
+
+        /// <summary>Shared real tridiagonal QL iteration extracted from RealWorkspace.tql2.</summary>
+        /// <remarks>Im[0] is unused on entry; Im[i] is the subdiagonal at row i. Transformations are accumulated in the original scalar domain.</remarks>
+        private static void DiagonalizeTridiagonal(double[] Re, double[] Im, double eps,
+            Action<int, int, double, double> rotate, Action<int, int> swap)
+        {
+            int n = Re.Length;
+
+            double f = 0;
+            double tst1 = 0;
+            int blockEnd = -1;
+            int i, l, iter, m;
+            double g, p, r, dl1, h;
+            double c, c2, c3, el1, s, s2;
+
+            for (i = 1; i < n; i++)
+                Im[i - 1] = Im[i];
+
+            Im[n - 1] = 0;
+
+            for (l = 0; l < n; l++)
+            {
+                // Independent tridiagonal blocks need independent shifts and scales.
+                // Carrying either across an exact zero coupling can erase a small spectrum.
+                if (l > blockEnd)
+                {
+                    f = tst1 = 0;
+                    blockEnd = l;
+                    while (blockEnd < n - 1 && Im[blockEnd] != 0) blockEnd++;
+                }
+                // Find small subdiagonal element.
+                tst1 = System.Math.Max(tst1, System.Math.Abs(Re[l]) + System.Math.Abs(Im[l]));
+                m = l;
+                while (m < n)
+                {
+                    if (System.Math.Abs(Im[m]) <= eps * tst1)
+                        break;
+                    m++;
+                }
+
+                // If m == l, d[l] is an eigenvalue, otherwise, iterate.
+                if (m > l)
+                {
+                    iter = 0;
+                    do
+                    {
+                        if (++iter > 1000) throw new InvalidOperationException("Symmetric/Hermitian EVD failed to converge.");
+
+                        // Compute implicit shift
+                        g = Re[l];
+                        p = (Re[l + 1] - g) / (2 * Im[l]);
+                        r = InternalMatrixMath.Hypotenuse(p, 1);
+                        if (p < 0)
+                        {
+                            r = -r;
+                        }
+
+                        Re[l] = Im[l] / (p + r);
+                        Re[l + 1] = Im[l] * (p + r);
+                        dl1 = Re[l + 1];
+                        h = g - Re[l];
+                        for (i = l + 2; i <= blockEnd; i++)
+                        {
+                            Re[i] -= h;
+                        }
+
+                        f = f + h;
+
+                        // Implicit QL transformation.
+                        p = Re[m];
+                        c = 1;
+                        c2 = c;
+                        c3 = c;
+                        el1 = Im[l + 1];
+                        s = 0;
+                        s2 = 0;
+
+                        for (i = m - 1; i >= l; i--)
+                        {
+                            c3 = c2;
+                            c2 = c;
+                            s2 = s;
+                            g = c * Im[i];
+                            h = c * p;
+                            r = InternalMatrixMath.Hypotenuse(p, Im[i]);
+                            Im[i + 1] = s * r;
+                            s = Im[i] / r;
+                            c = p / r;
+                            p = c * Re[i] - s * g;
+                            Re[i + 1] = h + s * (c * g + s * Re[i]);
+
+                            // Accumulate transformation.
+                            rotate(i, i + 1, c, -s);
+                        }
+
+                        p = -s * s2 * c3 * el1 * Im[l] / dl1;
+                        Im[l] = s * p;
+                        Re[l] = c * p;
+
+                        // Check for convergence.
+                    }
+                    while (System.Math.Abs(Im[l]) > eps * tst1);
+                }
+                Re[l] = Re[l] + f;
+                Im[l] = 0;
+            }
+
+            SortSymmetricEigenpairs(Re, swap);
+        }
+
+        /// <summary>Orders a symmetric or Hermitian spectrum and its eigenvectors together.</summary>
+        private static void SortSymmetricEigenpairs(double[] values, Action<int, int> swap)
+        {
+            for (int i = 0; i < values.Length - 1; i++)
+            {
+                int best = i;
+                for (int j = i + 1; j < values.Length; j++) if (values[j] < values[best]) best = j;
+                if (best == i) continue;
+                double value = values[i]; values[i] = values[best]; values[best] = value;
+                swap(i, best);
+            }
+        }
+
         /// <summary>Owns the real algorithm work buffers for one call only.</summary>
         private sealed class RealWorkspace
         {
@@ -244,40 +419,23 @@ namespace UMapx.Decomposition
             private bool FactorIndependentSymmetricBlocks(float[,] a)
             {
                 if (n == 1) return false;
-                var visited = new bool[n];
-                var order = new int[n];
-                var starts = new int[n + 1];
-                int count = 0, components = 0;
-                for (int seed = 0; seed < n; seed++)
-                {
-                    if (visited[seed]) continue;
-                    int start = count;
-                    starts[components++] = start;
-                    order[count++] = seed;
-                    visited[seed] = true;
-                    for (int head = start; head < count && count < n; head++)
-                        for (int j = 0; j < n; j++)
-                            if (!visited[j] && a[order[head], j] != 0)
-                            {
-                                visited[j] = true;
-                                order[count++] = j;
-                            }
-                }
-                if (components == 1) return false;
-                starts[components] = n;
+                var components = InternalMatrixMath.ConnectedComponents(n, (i, j) => a[i, j] != 0);
+                if (components.Length == 1) return false;
                 matrices = InternalMatrixMath.CreateJagged(n, n);
-                for (int block = 0; block < components; block++)
+                int start = 0;
+                foreach (var indices in components)
                 {
-                    int start = starts[block], size = starts[block + 1] - start;
+                    int size = indices.Length;
                     var input = new float[size, size];
                     for (int i = 0; i < size; i++)
-                        for (int j = 0; j < size; j++) input[i, j] = a[order[start + i], order[start + j]];
+                        for (int j = 0; j < size; j++) input[i, j] = a[indices[i], indices[j]];
                     var part = new RealWorkspace(input, eps);
                     for (int j = 0; j < size; j++)
                     {
                         Re[start + j] = part.Re[j];
-                        for (int i = 0; i < size; i++) matrices[order[start + i]][start + j] = part.matrices[i][j];
+                        for (int i = 0; i < size; i++) matrices[indices[i]][start + j] = part.matrices[i][j];
                     }
+                    start += size;
                 }
                 SortSymmetricEigenpairs();
                 return true;
@@ -417,142 +575,15 @@ namespace UMapx.Decomposition
             /// </summary>
             private void tql2()
             {
-                double f = 0;
-                double tst1 = 0;
-                int blockEnd = -1;
-                int i, l, k, iter, m;
-                double g, p, r, dl1, h;
-                double c, c2, c3, el1, s, s2;
-
-                for (i = 1; i < n; i++)
-                    Im[i - 1] = Im[i];
-
-                Im[n - 1] = 0;
-
-                for (l = 0; l < n; l++)
-                {
-                    // Independent tridiagonal blocks need independent shifts and scales.
-                    // Carrying either across an exact zero coupling can erase a small spectrum.
-                    if (l > blockEnd)
-                    {
-                        f = tst1 = 0;
-                        blockEnd = l;
-                        while (blockEnd < n - 1 && Im[blockEnd] != 0) blockEnd++;
-                    }
-                    // Find small subdiagonal element.
-                    tst1 = System.Math.Max(tst1, System.Math.Abs(Re[l]) + System.Math.Abs(Im[l]));
-                    m = l;
-                    while (m < n)
-                    {
-                        if (System.Math.Abs(Im[m]) <= eps * tst1)
-                            break;
-                        m++;
-                    }
-
-                    // If m == l, d[l] is an eigenvalue, otherwise, iterate.
-                    if (m > l)
-                    {
-                        iter = 0;
-                        do
-                        {
-                            if (++iter > 1000) throw new InvalidOperationException("Real symmetric EVD failed to converge.");
-
-                            // Compute implicit shift
-                            g = Re[l];
-                            p = (Re[l + 1] - g) / (2 * Im[l]);
-                            r = InternalMatrixMath.Hypotenuse(p, 1);
-                            if (p < 0)
-                            {
-                                r = -r;
-                            }
-
-                            Re[l] = Im[l] / (p + r);
-                            Re[l + 1] = Im[l] * (p + r);
-                            dl1 = Re[l + 1];
-                            h = g - Re[l];
-                            for (i = l + 2; i <= blockEnd; i++)
-                            {
-                                Re[i] -= h;
-                            }
-
-                            f = f + h;
-
-                            // Implicit QL transformation.
-                            p = Re[m];
-                            c = 1;
-                            c2 = c;
-                            c3 = c;
-                            el1 = Im[l + 1];
-                            s = 0;
-                            s2 = 0;
-
-                            for (i = m - 1; i >= l; i--)
-                            {
-                                c3 = c2;
-                                c2 = c;
-                                s2 = s;
-                                g = c * Im[i];
-                                h = c * p;
-                                r = InternalMatrixMath.Hypotenuse(p, Im[i]);
-                                Im[i + 1] = s * r;
-                                s = Im[i] / r;
-                                c = p / r;
-                                p = c * Re[i] - s * g;
-                                Re[i + 1] = h + s * (c * g + s * Re[i]);
-
-                                // Accumulate transformation.
-                                for (k = 0; k < n; k++)
-                                {
-                                    h = matrices[k][i + 1];
-                                    matrices[k][i + 1] = s * matrices[k][i] + c * h;
-                                    matrices[k][i] = c * matrices[k][i] - s * h;
-                                }
-                            }
-
-                            p = -s * s2 * c3 * el1 * Im[l] / dl1;
-                            Im[l] = s * p;
-                            Re[l] = c * p;
-
-                            // Check for convergence.
-                        }
-                        while (System.Math.Abs(Im[l]) > eps * tst1);
-                    }
-                    Re[l] = Re[l] + f;
-                    Im[l] = 0;
-                }
-
-                SortSymmetricEigenpairs();
+                DiagonalizeTridiagonal(Re, Im, eps,
+                    (i, j, c, s) => InternalMatrixMath.RotateColumns(matrices, i, j, c, s),
+                    (i, j) => InternalMatrixMath.SwapColumns(matrices, i, j));
             }
 
             /// <summary>Sorts a real symmetric spectrum and permutes its eigenvectors together.</summary>
             private void SortSymmetricEigenpairs()
-            {
-                for (int i = 0; i < n - 1; i++)
-                {
-                    int k = i;
-                    double p = Re[i];
-                    for (int j = i + 1; j < n; j++)
-                    {
-                        if (Re[j] < p)
-                        {
-                            k = j;
-                            p = Re[j];
-                        }
-                    }
+                => EVD.SortSymmetricEigenpairs(Re, (i, j) => InternalMatrixMath.SwapColumns(matrices, i, j));
 
-                    if (k != i)
-                    {
-                        Re[k] = Re[i];
-                        Re[i] = p;
-                        for (int j = 0; j < n; j++)
-                        {
-                            p = matrices[j][i];
-                            matrices[j][i] = matrices[j][k];
-                            matrices[j][k] = p;
-                        }
-                    }
-                }
-            }
             /// <summary>
             /// Nonsymmetric reduction to Hessenberg form.
             /// This is derived from the Algol procedures orthes and ortran, by Martin and Wilkinson,

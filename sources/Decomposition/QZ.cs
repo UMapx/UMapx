@@ -54,16 +54,24 @@ namespace UMapx.Decomposition
             int n = a.GetLength(0);
             if (b.GetLength(0) != n) throw new ArgumentException("The matrices must have equal orders.");
             if (iterations < 1) throw new ArgumentOutOfRangeException(nameof(iterations));
-            double scaleA = InternalMatrixMath.Max(a), scaleB = InternalMatrixMath.Max(b);
-            if (scaleA == 0) scaleA = 1;
-            if (scaleB == 0) scaleB = 1;
-            InternalMatrixMath.Divide(a, scaleA);
-            InternalMatrixMath.Divide(b, scaleB);
-            var qr = QR.Factor(b);
-            b = qr.R;
-            var q = qr.Q;
+            var scales = InternalMatrixMath.ScalePencil(a, b);
+            double scaleA = scales.A, scaleB = scales.B;
+            var q = InternalMatrixMath.Eye(n);
             var z = InternalMatrixMath.Eye(n);
-            a = InternalMatrixMath.Multiply(InternalMatrixMath.Adjoint(q), a);
+            // Same qzhes stages as GEVD.RealWorkspace: triangularize B while
+            // applying each reflector directly to A, then reduce A with paired rotations.
+            for (int k = 0; k < n - 1; k++)
+            {
+                var reflector = InternalMatrixMath.Column(b, k, k);
+                bool hasTail = false;
+                for (int i = 1; i < reflector.Length; i++) hasTail |= reflector[i] != C.Zero;
+                if (!hasTail) continue;
+                InternalMatrixMath.HouseholderVector(reflector);
+                InternalMatrixMath.ReflectLeft(b, reflector, k, k);
+                InternalMatrixMath.ReflectLeft(a, reflector, k, 0);
+                InternalMatrixMath.ReflectRight(q, reflector, k, 0);
+                for (int i = k + 1; i < n; i++) b[i, k] = 0;
+            }
             for (int k = 0; k < n - 2; k++)
                 for (int i = n - 1; i > k + 1; i--)
                 {

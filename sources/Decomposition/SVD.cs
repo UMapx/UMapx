@@ -25,9 +25,9 @@ namespace UMapx.Decomposition
             return (InternalMatrixMath.Real(d.U), InternalMatrixMath.Single(d.S), InternalMatrixMath.Real(d.V));
         }
 
-        /// <summary>Computes the economy complex SVD, A = U diag(S) V^H, using one-sided Jacobi sweeps.</summary>
+        /// <summary>Computes the economy complex SVD, A = U diag(S) V^H, using Householder bidiagonalization and Golub-Kahan QR iterations.</summary>
         /// <param name="matrix">Finite nonempty m by n complex matrix, not modified.</param>
-        /// <param name="iterations">Positive maximum number of cyclic Jacobi sweeps.</param>
+        /// <param name="iterations">Positive maximum QR sweeps per singular value.</param>
         /// <returns>U of size m by k, descending nonnegative S of length k, and V of size n by k, where k=min(m,n).</returns>
         /// <exception cref="InvalidOperationException">The iteration limit is reached before convergence.</exception>
         public static (Complex32[,] U, float[] S, Complex32[,] V) Decompose(Complex32[,] matrix, int iterations = 50)
@@ -131,10 +131,10 @@ namespace UMapx.Decomposition
             return result;
         }
 
-        /// <summary>Orthogonalizes complex columns using unitary plane rotations without forming A^H A.</summary>
-        /// <param name="a">Private work matrix.</param>
-        /// <param name="iterations">Maximum positive sweep count.</param>
-        /// <returns>Double-precision economy singular factors and descending singular values.</returns>
+        /// <summary>Reduces a complex matrix to real bidiagonal form and uses the same QR iteration as the real workspace.</summary>
+        /// <param name="a">Private complex work matrix.</param>
+        /// <param name="iterations">Positive maximum QR sweeps per singular value.</param>
+        /// <returns>Economy singular factors and descending nonnegative singular values.</returns>
         internal static (C[,] U, double[] S, C[,] V) Factor(C[,] a, int iterations = 50)
         {
             if (iterations < 1) throw new ArgumentOutOfRangeException(nameof(iterations));
@@ -144,61 +144,208 @@ namespace UMapx.Decomposition
                 var wide = Factor(InternalMatrixMath.Adjoint(a), iterations);
                 return (wide.V, wide.S, wide.U);
             }
+            double scale = InternalMatrixMath.Max(a);
+            if (scale == 0) scale = 1;
+            InternalMatrixMath.Divide(a, scale);
             var v = InternalMatrixMath.Eye(n);
-            bool converged = n < 2;
-            for (int sweep = 0; sweep < iterations && !converged; sweep++)
-            {
-                converged = true;
-                for (int p = 0; p < n - 1; p++)
-                    for (int q = p + 1; q < n; q++)
-                    {
-                        double np = InternalMatrixMath.ColumnNorm(a, p), nq = InternalMatrixMath.ColumnNorm(a, q);
-                        double scale = Math.Max(np, nq);
-                        if (np == 0 || nq == 0) continue;
-                        double ap = np / scale, aq = nq / scale;
-                        C dot = 0;
-                        for (int i = 0; i < m; i++) dot += C.Conjugate(a[i, p] / np) * (a[i, q] / nq);
-                        double correlation = C.Abs(dot);
-                        if (correlation <= 8 * InternalMatrixMath.Roundoff * Math.Max(1, m)) continue;
-                        // Normalize the two-column Gram entries locally, preserving isolated tiny singular values.
-                        double cross = correlation * ap * aq;
-                        if (cross == 0) continue;
-                        double tau = (aq * aq - ap * ap) / (2 * cross);
-                        double t = (tau >= 0 ? 1 : -1) / (Math.Abs(tau) + Math.Sqrt(1 + tau * tau));
-                        if (t == 0) continue;
-                        double c = 1 / Math.Sqrt(1 + t * t), sn = t * c;
-                        C phase = dot / correlation;
-                        // Express the Jacobi update in the shared complex rotation convention.
-                        C sine = -sn * C.Conjugate(phase);
-                        InternalMatrixMath.RotateColumns(a, p, q, c, sine);
-                        InternalMatrixMath.RotateColumns(v, p, q, c, sine);
-                        converged = false;
-                    }
-            }
-            if (!converged) throw new InvalidOperationException("Complex SVD failed to converge within the Jacobi sweep limit.");
+            var leading = new double[n];
+            var leftPhases = new C[n];
             var singular = new double[n];
-            for (int j = 0; j < n; j++) singular[j] = InternalMatrixMath.ColumnNorm(a, j);
-            for (int p = 0; p < n; p++)
+            var offDiagonal = new double[n];
+            C rightPhase = C.One;
+            for (int k = 0; k < n; k++)
             {
-                int best = p;
-                for (int q = p + 1; q < n; q++) if (singular[q] > singular[best]) best = q;
-                if (best == p) continue;
-                double d = singular[p]; singular[p] = singular[best]; singular[best] = d;
-                InternalMatrixMath.SwapColumns(a, p, best);
-                InternalMatrixMath.SwapColumns(v, p, best);
-            }
-            var u = new C[m, n];
-            for (int j = 0; j < n; j++)
-            {
-                if (singular[j] > 0)
-                    for (int i = 0; i < m; i++) u[i, j] = a[i, j] / singular[j];
-                else
+                var left = InternalMatrixMath.Column(a, k, k);
+                double first = C.Abs(left[0]), norm = InternalMatrixMath.Norm(left);
+                leading[k] = norm == 0 ? 1 : -first / norm;
+                InternalMatrixMath.HouseholderVector(left);
+                InternalMatrixMath.ReflectLeft(a, left, k, k);
+                singular[k] = C.Abs(a[k, k]);
+                leftPhases[k] = InternalMatrixMath.Phase(a[k, k]) * rightPhase;
+                // Subsequent right reflectors only touch columns after k.
+                for (int i = 0; i < n; i++) v[i, k] *= rightPhase;
+                if (k + 1 < n)
                 {
-                    var column = InternalMatrixMath.Complete(u, j);
-                    InternalMatrixMath.SetColumn(u, j, column);
+                    var right = InternalMatrixMath.ConjugateRow(a, k, k + 1);
+                    InternalMatrixMath.HouseholderVector(right);
+                    InternalMatrixMath.ReflectRight(a, right, k + 1, k);
+                    InternalMatrixMath.ReflectRight(v, right, k + 1, 0);
+                    offDiagonal[k + 1] = C.Abs(a[k, k + 1]);
+                    rightPhase = leftPhases[k] * C.Conjugate(InternalMatrixMath.Phase(a[k, k + 1]));
+                }
+                // Like the real workspace, keep reflectors in the input work buffer.
+                // Later reductions touch only columns after k, so these entries are safe.
+                InternalMatrixMath.SetColumn(a, k, left, k);
+            }
+            // Build only the economy left factor, including a complete basis at zero singular values.
+            var u = a;
+            for (int k = n - 1; k >= 0; k--)
+            {
+                var reflection = InternalMatrixMath.Column(u, k, k);
+                for (int i = 0; i < m; i++) u[i, k] = 0;
+                u[k, k] = 1;
+                InternalMatrixMath.ReflectLeft(u, reflection, k, k);
+                u[k, k] = leading[k];
+            }
+            for (int k = 0; k < n; k++)
+                for (int i = 0; i < m; i++) u[i, k] *= leftPhases[k];
+            DiagonalizeBidiagonal(singular, offDiagonal, iterations,
+                (left, right, cosine, sine) => InternalMatrixMath.RotateColumns(u, left, right, cosine, sine),
+                (left, right, cosine, sine) => InternalMatrixMath.RotateColumns(v, left, right, cosine, sine),
+                column => { for (int row = 0; row < n; row++) v[row, column] = -v[row, column]; },
+                (left, right) => { InternalMatrixMath.SwapColumns(u, left, right); InternalMatrixMath.SwapColumns(v, left, right); });
+            for (int i = 0; i < n; i++) singular[i] *= scale;
+            return (u, singular, v);
+        }
+
+        /// <summary>Diagonalizes a real bidiagonal matrix using the original real-workspace Golub-Kahan QR iteration.</summary>
+        /// <remarks>rv1[0] is zero; rv1[i] couples diagonal entries i-1 and i. Callbacks accumulate identical real rotations in either scalar domain.</remarks>
+        private static void DiagonalizeBidiagonal(double[] Sr, double[] rv1, int iterations,
+            Action<int, int, double, double> rotateLeft, Action<int, int, double, double> rotateRight,
+            Action<int> negateRight, Action<int, int> swapColumns)
+        {
+            int size = Sr.Length, flag, i, j, k, l, nm = 0, its;
+            double c, e, f, g, h, x, y, z;
+            // diagonalization of the bidiagonal form: Loop over singular values
+            // and over allowed iterations
+            for (k = size - 1; k >= 0; k--)
+            {
+                for (its = 0; its <= iterations; its++)
+                {
+                    flag = 1;
+
+                    for (l = k; l >= 0; l--)
+                    {
+                        // test for splitting
+                        nm = l - 1;
+
+                        // Use adjacent bidiagonal entries, not a global norm: an
+                        // unrelated large block must not erase a small block's coupling.
+                        if (l == 0 || Math.Abs(rv1[l]) <= InternalMatrixMath.Roundoff *
+                            (Math.Abs(Sr[nm]) + Math.Abs(Sr[l])))
+                        {
+                            flag = 0;
+                            break;
+                        }
+
+                        if (Math.Abs(Sr[nm]) <= InternalMatrixMath.Roundoff *
+                            (Math.Abs(rv1[nm]) + Math.Abs(rv1[l])))
+                            break;
+                    }
+
+                    if (flag != 0)
+                    {
+                        c = 0.0f;
+                        e = 1.0f;
+                        for (i = l; i <= k; i++)
+                        {
+                            f = e * rv1[i];
+                            rv1[i] *= c;
+
+                            if (Math.Abs(f) <= InternalMatrixMath.Roundoff * Math.Abs(Sr[i])) break;
+                            g = Sr[i];
+                            h = InternalMatrixMath.Hypotenuse(f, g);
+                            Sr[i] = h;
+                            h = 1.0f / h;
+                            c = g * h;
+                            e = -f * h;
+
+                            // Apply the cancellation rotation to every row, including row zero.
+                            rotateLeft(nm, i, c, e);
+                        }
+                    }
+
+                    z = Sr[k];
+
+                    if (l == k)
+                    {
+                        // convergence
+                        if (z < 0.0)
+                        {
+                            // singular value is made nonnegative
+                            Sr[k] = -z;
+
+                            negateRight(k);
+                        }
+                        break;
+                    }
+
+                    if (its == iterations)
+                        throw new InvalidOperationException("Singular value decomposition failed to converge within the iteration limit.");
+
+                    // shift from bottom 2-by-2 minor
+                    x = Sr[l];
+                    nm = k - 1;
+                    y = Sr[nm];
+                    g = rv1[nm];
+                    h = rv1[k];
+                    f = ((y - z) * (y + z) + (g - h) * (g + h)) / (2.0f * h * y);
+                    g = InternalMatrixMath.Hypotenuse(f, 1.0f);
+                    f = ((x - z) * (x + z) + h * ((y / (f + InternalMatrixMath.CopySign(g, f))) - h)) / x;
+
+                    // next QR transformation
+                    c = e = 1.0f;
+
+                    for (j = l; j <= nm; j++)
+                    {
+                        i = j + 1;
+                        g = rv1[i];
+                        y = Sr[i];
+                        h = e * g;
+                        g = c * g;
+                        z = InternalMatrixMath.Hypotenuse(f, h);
+                        rv1[j] = z;
+                        c = f / z;
+                        e = h / z;
+                        f = x * c + g * e;
+                        g = g * c - x * e;
+                        h = y * e;
+                        y *= c;
+
+                        rotateRight(j, i, c, e);
+
+                        z = InternalMatrixMath.Hypotenuse(f, h);
+                        Sr[j] = z;
+
+                        if (z != 0)
+                        {
+                            z = 1.0f / z;
+                            c = f * z;
+                            e = h * z;
+                        }
+
+                        f = c * g + e * y;
+                        x = c * y - e * g;
+
+                        rotateLeft(j, i, c, e);
+                    }
+
+                    rv1[l] = 0.0f;
+                    rv1[k] = f;
+                    Sr[k] = x;
                 }
             }
-            return (u, singular, v);
+
+            // sort singular values descending and permute U, V columns accordingly
+            for (i = 0; i < size - 1; i++)
+            {
+                int maxIdx = i;
+                double maxVal = Sr[i];
+                for (j = i + 1; j < size; j++)
+                {
+                    if (Sr[j] > maxVal)
+                    {
+                        maxVal = Sr[j];
+                        maxIdx = j;
+                    }
+                }
+                if (maxIdx != i)
+                {
+                    // swap S
+                    var tS = Sr[i]; Sr[i] = Sr[maxIdx]; Sr[maxIdx] = tS;
+                    swapColumns(i, maxIdx);
+                }
+            }
         }
 
         /// <summary>Consumes a private real buffer without narrowing intermediate singular factors.</summary>
@@ -312,8 +459,8 @@ namespace UMapx.Decomposition
                 var Vr = InternalMatrixMath.CreateJagged(m, m);
                 double[] rv1 = new double[m];
 
-                int flag, i, its, j, jj, k, l = 0, nm = 0;
-                double c, f, g, h, e, scale, x, y, z;
+                int i, j, k, l = 0;
+                double f, g, h, e, scale;
 
                 // householder reduction to bidiagonal form
                 g = scale = 0.0f;
@@ -505,170 +652,11 @@ namespace UMapx.Decomposition
                     ++Ur[i][i];
                 }
 
-                // diagonalization of the bidiagonal form: Loop over singular values
-                // and over allowed iterations
-                for (k = m - 1; k >= 0; k--)
-                {
-                    for (its = 0; its <= iterations; its++)
-                    {
-                        flag = 1;
-
-                        for (l = k; l >= 0; l--)
-                        {
-                            // test for splitting
-                            nm = l - 1;
-
-                            // Use adjacent bidiagonal entries, not a global norm: an
-                            // unrelated large block must not erase a small block's coupling.
-                            if (l == 0 || Math.Abs(rv1[l]) <= InternalMatrixMath.Roundoff *
-                                (Math.Abs(Sr[nm]) + Math.Abs(Sr[l])))
-                            {
-                                flag = 0;
-                                break;
-                            }
-
-                            if (Math.Abs(Sr[nm]) <= InternalMatrixMath.Roundoff *
-                                (Math.Abs(rv1[nm]) + Math.Abs(rv1[l])))
-                                break;
-                        }
-
-                        if (flag != 0)
-                        {
-                            c = 0.0f;
-                            e = 1.0f;
-                            for (i = l; i <= k; i++)
-                            {
-                                f = e * rv1[i];
-                                rv1[i] *= c;
-
-                                if (Math.Abs(f) <= InternalMatrixMath.Roundoff * Math.Abs(Sr[i])) break;
-                                g = Sr[i];
-                                h = InternalMatrixMath.Hypotenuse(f, g);
-                                Sr[i] = h;
-                                h = 1.0f / h;
-                                c = g * h;
-                                e = -f * h;
-
-                                // Apply the cancellation rotation to every row, including row zero.
-                                for (j = 0; j < n; j++)
-                                {
-                                    y = Ur[j][nm];
-                                    z = Ur[j][i];
-                                    Ur[j][nm] = y * c + z * e;
-                                    Ur[j][i] = z * c - y * e;
-                                }
-                            }
-                        }
-
-                        z = Sr[k];
-
-                        if (l == k)
-                        {
-                            // convergence
-                            if (z < 0.0)
-                            {
-                                // singular value is made nonnegative
-                                Sr[k] = -z;
-
-                                for (j = 0; j < m; j++)
-                                {
-                                    Vr[j][k] = -Vr[j][k];
-                                }
-                            }
-                            break;
-                        }
-
-                        if (its == iterations)
-                            throw new InvalidOperationException("Singular value decomposition failed to converge within the iteration limit.");
-
-                        // shift from bottom 2-by-2 minor
-                        x = Sr[l];
-                        nm = k - 1;
-                        y = Sr[nm];
-                        g = rv1[nm];
-                        h = rv1[k];
-                        f = ((y - z) * (y + z) + (g - h) * (g + h)) / (2.0f * h * y);
-                        g = InternalMatrixMath.Hypotenuse(f, 1.0f);
-                        f = ((x - z) * (x + z) + h * ((y / (f + InternalMatrixMath.CopySign(g, f))) - h)) / x;
-
-                        // next QR transformation
-                        c = e = 1.0f;
-
-                        for (j = l; j <= nm; j++)
-                        {
-                            i = j + 1;
-                            g = rv1[i];
-                            y = Sr[i];
-                            h = e * g;
-                            g = c * g;
-                            z = InternalMatrixMath.Hypotenuse(f, h);
-                            rv1[j] = z;
-                            c = f / z;
-                            e = h / z;
-                            f = x * c + g * e;
-                            g = g * c - x * e;
-                            h = y * e;
-                            y *= c;
-
-                            for (jj = 0; jj < m; jj++)
-                            {
-                                x = Vr[jj][j];
-                                z = Vr[jj][i];
-                                Vr[jj][j] = x * c + z * e;
-                                Vr[jj][i] = z * c - x * e;
-                            }
-
-                            z = InternalMatrixMath.Hypotenuse(f, h);
-                            Sr[j] = z;
-
-                            if (z != 0)
-                            {
-                                z = 1.0f / z;
-                                c = f * z;
-                                e = h * z;
-                            }
-
-                            f = c * g + e * y;
-                            x = c * y - e * g;
-
-                            for (jj = 0; jj < n; jj++)
-                            {
-                                y = Ur[jj][j];
-                                z = Ur[jj][i];
-                                Ur[jj][j] = y * c + z * e;
-                                Ur[jj][i] = z * c - y * e;
-                            }
-                        }
-
-                        rv1[l] = 0.0f;
-                        rv1[k] = f;
-                        Sr[k] = x;
-                    }
-                }
-
-                // sort singular values descending and permute U, V columns accordingly
-                for (i = 0; i < m - 1; i++)
-                {
-                    int maxIdx = i;
-                    double maxVal = Sr[i];
-                    for (j = i + 1; j < m; j++)
-                    {
-                        if (Sr[j] > maxVal)
-                        {
-                            maxVal = Sr[j];
-                            maxIdx = j;
-                        }
-                    }
-                    if (maxIdx != i)
-                    {
-                        // swap S
-                        var tS = Sr[i]; Sr[i] = Sr[maxIdx]; Sr[maxIdx] = tS;
-                        // swap columns in U (n x m)
-                        InternalMatrixMath.SwapColumns(Ur, i, maxIdx);
-                        // swap columns in V (m x m)
-                        InternalMatrixMath.SwapColumns(Vr, i, maxIdx);
-                    }
-                }
+                DiagonalizeBidiagonal(Sr, rv1, iterations,
+                    (left, right, cosine, sine) => InternalMatrixMath.RotateColumns(Ur, left, right, cosine, sine),
+                    (left, right, cosine, sine) => InternalMatrixMath.RotateColumns(Vr, left, right, cosine, sine),
+                    column => { for (int row = 0; row < m; row++) Vr[row][column] = -Vr[row][column]; },
+                    (left, right) => { InternalMatrixMath.SwapColumns(Ur, left, right); InternalMatrixMath.SwapColumns(Vr, left, right); });
                 // Orthogonal factors do not depend on a positive common scale.
                 this.Ur = Ur;
                 this.Vr = Vr;

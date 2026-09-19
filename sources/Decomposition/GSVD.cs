@@ -22,7 +22,7 @@ namespace UMapx.Decomposition
         /// <summary>Computes A = U1 diag(S1) X and B = U2 diag(S2) X.</summary>
         /// <param name="a">Finite m by n matrix with m >= n.</param>
         /// <param name="b">Finite p by n matrix with p >= n. The stacked pair must have full column rank.</param>
-        /// <param name="iterations">Positive maximum Jacobi SVD sweeps.</param>
+        /// <param name="iterations">Positive maximum QR sweeps per singular value.</param>
         /// <returns>Orthonormal U1 and U2, nonnegative S1 and S2 with S1^2+S2^2=1, and invertible X.</returns>
         public static (Complex32[,] U1, float[] S1, Complex32[,] U2, float[] S2, Complex32[,] X)
             Decompose(Complex32[,] a, Complex32[,] b, int iterations = 50)
@@ -139,7 +139,7 @@ namespace UMapx.Decomposition
         /// <param name="cosines">Descending upper singular values, updated after the common rotation.</param>
         /// <param name="v">Common right singular vectors, updated in place.</param>
         /// <param name="lower">Lower orthonormal block multiplied by v, updated by the same rotation.</param>
-        /// <param name="iterations">Positive maximum number of Jacobi sweeps for the complementary SVD.</param>
+        /// <param name="iterations">Positive maximum QR sweeps per singular value in the complementary SVD.</param>
         /// <remarks>
         /// For cosines above sqrt(1/2), the upper vectors remain well conditioned under rotation.
         /// The lower block supplies accurate directions even when the corresponding cosines round to one.

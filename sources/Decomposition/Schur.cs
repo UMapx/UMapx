@@ -72,7 +72,7 @@ namespace UMapx.Decomposition
             return values;
         }
 
-        /// <summary>Uses shifted QR similarities on a complex Hessenberg matrix with bounded iteration.</summary>
+        /// <summary>Uses implicit shifted QR on a complex Hessenberg matrix, matching the real workspace reduction strategy.</summary>
         /// <param name="a">Private finite square buffer.</param>
         /// <param name="eps">Relative requested deflation tolerance.</param>
         /// <param name="iterations">Maximum steps before a deflation must occur.</param>
@@ -112,13 +112,18 @@ namespace UMapx.Decomposition
                 C shift = C.Abs(first - a[high, high]) < C.Abs(second - a[high, high]) ? first : second;
                 // Periodic exceptional shifts prevent stagnation on tightly clustered roots.
                 if (steps % 20 == 0) shift = a[high, high] + new C(0.75, 0.25) * C.Abs(a[high, high - 1]);
-                int size = high - low + 1;
-                var block = InternalMatrixMath.Block(a, size, size, low, low);
-                for (int i = 0; i < size; i++) block[i, i] -= shift;
-                var rotation = QR.Factor(block).Q;
-                InternalMatrixMath.ApplySimilarity(a, q, rotation, low);
-                for (int i = low + 2; i <= high; i++)
-                    for (int j = low; j < i - 1; j++) a[i, j] = 0;
+                // Complex single-shift specialization of the real workspace's implicit QR:
+                // chase a two-row bulge and accumulate each transformation directly.
+                for (int k = low; k < high; k++)
+                {
+                    C f = k == low ? a[k, k] - shift : a[k, k - 1];
+                    C g = k == low ? a[k + 1, k] : a[k + 1, k - 1];
+                    var rotation = InternalMatrixMath.Givens(f, g);
+                    InternalMatrixMath.RotateRows(a, k, k + 1, rotation.C, rotation.S);
+                    InternalMatrixMath.RotateColumns(a, k, k + 1, rotation.C, C.Conjugate(rotation.S));
+                    InternalMatrixMath.RotateColumns(q, k, k + 1, rotation.C, C.Conjugate(rotation.S));
+                    if (k > low) a[k + 1, k - 1] = 0;
+                }
             }
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < n; j++) a[i, j] = i > j ? C.Zero : a[i, j] * scale;

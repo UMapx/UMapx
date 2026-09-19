@@ -61,3 +61,29 @@ Wall-clock thresholds are deliberately kept out of unit tests.
 
 Debug builds have optimization disabled by default for easier debugging.
 Use Release for production performance comparisons.
+
+## Real/complex algorithm comparison
+
+Add `-Domain real` or `-Domain complex` to compare the static APIs in both
+scalar domains. This mode supports `SVD`, `Polar`, `GSVD`, `Householder`, `QR`,
+`Schur`, `EVD`, `EVD-SPD`, `QZ`, and `GEVD`. `EVD-SPD` builds an exactly symmetric
+or Hermitian positive definite input. It validates reconstruction/eigenvector
+residuals and orthogonality before timing, and reports both errors in the JSON.
+Reflection and conversion of matrix entries are outside the timed region.
+
+```powershell
+./tests/UMapx.DecompositionBenchmarks/Compare.ps1 `
+  -PreviousAssembly path/to/previous/UMapx.dll `
+  -CurrentAssembly sources/bin/Release/netstandard2.0/UMapx.dll `
+  -OutputFile artifacts/complex-comparison.jsonl `
+  -Domain complex -Sizes 32,128 -Names SVD,Householder,EVD-SPD,EVD,Schur,QZ,GEVD,GSVD
+```
+
+For rectangular SVD comparisons, use `-Sizes 17 -Rows 257 -Names SVD` and then
+`-Sizes 257 -Rows 17 -Names SVD`, with distinct output files. Both input dimensions
+and domains are included in the results. Timings compare each version on the
+same seeded input within a domain; real and complex random matrices have
+different spectra, so a cross-domain ratio is not an arithmetic-cost estimate.
+
+See [algorithm unification](UNIFICATION.md) for the implementation boundaries,
+validation coverage, and measured results.

@@ -3,6 +3,12 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 
+if (args.Length > 0 && args[0] == "--domain")
+{
+    DomainComparison.Run(args.Skip(1).ToArray());
+    return;
+}
+
 if (args.Length < 4)
 {
     Console.Error.WriteLine("Usage: UMapx.DecompositionBenchmarks <assembly.dll> <label> <algorithm> <columns> [rows]");
