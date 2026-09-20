@@ -220,6 +220,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of differential entropy.
         /// </summary>
+        /// <exception cref="NotSupportedException">Always thrown because this property is not supported.</exception>
         public float Entropy
         {
             get { throw new NotSupportedException(); }

@@ -92,6 +92,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
+        /// <exception cref="NotSupportedException">Always thrown because this property is not supported.</exception>
         public float Median
         {
             get { throw new NotSupportedException(); }

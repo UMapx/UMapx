@@ -5,6 +5,10 @@ namespace UMapx.Distribution
     /// <summary>
     /// Defines the distribution interface.
     /// </summary>
+    /// <remarks>
+    /// A getter may throw <see cref="System.NotSupportedException"/>
+    /// if the statistic is not supported by the implementation.
+    /// </remarks>
     public interface IDistribution
     {
         #region Components

@@ -8,8 +8,8 @@ namespace UMapx.Decomposition
     /// Defines Schur decomposition.
     /// </summary>
     /// <remarks>
-    /// This is a representation of a square matrix in the form of a product of three matrices: A = Q * T * Qᵀ,
-    /// where Q is a unitary matrix and T is a quasi upper triangular matrix (Schur form).
+    /// For real inputs, A = Q * T * Q^T, where Q is orthogonal and T is quasi-upper-triangular.
+    /// For complex inputs, A = Q * T * Q^H, where Q is unitary and T is upper triangular.
     /// More information can be found on the website:
     /// <see href="https://en.wikipedia.org/wiki/Schur_decomposition"/>.
     /// </remarks>

@@ -43,6 +43,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mean value.
         /// </summary>
+        /// <exception cref="NotSupportedException">Always thrown because this property is not supported.</exception>
         public float Mean
         {
             get { throw new NotSupportedException(); }
@@ -50,6 +51,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the variance value.
         /// </summary>
+        /// <exception cref="NotSupportedException">Always thrown because this property is not supported.</exception>
         public float Variance
         {
             get { throw new NotSupportedException(); }
@@ -57,6 +59,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
+        /// <exception cref="NotSupportedException">Always thrown because this property is not supported.</exception>
         public float Median
         {
             get { throw new NotSupportedException(); }
@@ -64,6 +67,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the mode values.
         /// </summary>
+        /// <exception cref="NotSupportedException">Always thrown because this property is not supported.</exception>
         public float[] Mode
         {
             get { throw new NotSupportedException(); }
@@ -71,6 +75,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
+        /// <exception cref="NotSupportedException">Always thrown because this property is not supported.</exception>
         public float Skewness
         {
             get { throw new NotSupportedException(); }
@@ -81,6 +86,7 @@ namespace UMapx.Distribution
         /// <remarks>
         /// Full kurtosis equals 3 plus this value.
         /// </remarks>
+        /// <exception cref="NotSupportedException">Always thrown because this property is not supported.</exception>
         public float Excess
         {
             get { throw new NotSupportedException(); }
@@ -98,6 +104,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of entropy.
         /// </summary>
+        /// <exception cref="NotSupportedException">Always thrown because this property is not supported.</exception>
         public float Entropy
         {
             get { throw new NotSupportedException(); }

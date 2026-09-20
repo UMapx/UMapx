@@ -82,6 +82,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the median value.
         /// </summary>
+        /// <exception cref="NotSupportedException">Always thrown because this property is not supported.</exception>
         public float Median
         {
             get { throw new NotSupportedException(); }
@@ -109,6 +110,7 @@ namespace UMapx.Distribution
         /// <summary>
         /// Gets the value of the asymmetry coefficient.
         /// </summary>
+        /// <exception cref="NotSupportedException">Always thrown because this property is not supported.</exception>
         public float Skewness
         {
             get { throw new NotSupportedException(); }
@@ -119,6 +121,7 @@ namespace UMapx.Distribution
         /// <remarks>
         /// Full kurtosis equals 3 plus this value.
         /// </remarks>
+        /// <exception cref="NotSupportedException">Always thrown because this property is not supported.</exception>
         public float Excess
         {
             get { throw new NotSupportedException(); }
