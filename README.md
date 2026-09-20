@@ -29,7 +29,7 @@
 **UMapx** supports only
 * 32 bit types - `float`, `Complex32`, etc (compatible with [System.Numerics](https://docs.microsoft.com/ru-ru/dotnet/api/system.numerics?view=netframework-4.8), [NAudio](https://github.com/naudio/NAudio) and other libraries),
 * 32 bit image `BitmapData` format - `Format32bppArgb` (compatible with [AForge.NET](https://github.com/andrewkirillov/AForge.NET), [Accord.NET](https://github.com/accord-net/framework/) and so on),
-* 24 bit video `BitmapData` format - `Format24bppRgb` (32 bit format not recommended).
+* 24 and 32 bit video `BitmapData` formats - `Format24bppRgb`, `Format32bppArgb`.
 
 # Installation
 You can build **UMapx** from sources or install to your own project using nuget package manager.
