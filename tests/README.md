@@ -31,10 +31,6 @@ Categories group subjects, not operating systems. Bitmap tests also occur under
 `Category=Analysis`; excluding imaging categories does not make the remaining
 suite portable. `SupportedOSPlatform` attributes do not automatically skip tests.
 
-For timing and allocation comparisons between library versions, use the
-[decomposition benchmark runner](UMapx.DecompositionBenchmarks/README.md).
-Wall-clock thresholds are kept outside the unit suite.
-
 ## Coverage
 
 ```powershell
