@@ -318,30 +318,33 @@ namespace UMapx.Decomposition
 
         #region Matrix and vector operations
 
-        /// <summary>
-        /// Applies one common positive scale to a finite matrix pencil before QZ reduction.
-        /// </summary>
-        /// <param name="a">Square copy of A; overwritten by its scaled values.</param>
-        /// <param name="b">Square copy of B of the same order; overwritten by its scaled values.</param>
-        /// <returns>The common scale to restore to alpha and beta after eigenvector calculation.</returns>
-        public static double ScalePair(double[][] a, double[][] b)
+        /// <summary>Normalizes a real pencil independently so neither matrix loses its units before QZ reduction.</summary>
+        /// <returns>The separate positive scales to restore to alpha and beta.</returns>
+        public static (double A, double B) ScalePencil(double[][] a, double[][] b)
         {
-            double scale = 0;
+            double scaleA = 0, scaleB = 0;
             for (int i = 0; i < a.Length; i++)
                 for (int j = 0; j < a.Length; j++)
                 {
                     if (double.IsNaN(a[i][j]) || double.IsInfinity(a[i][j]) || double.IsNaN(b[i][j]) || double.IsInfinity(b[i][j]))
                         throw new ArgumentException("The matrices must contain only finite values.");
-                    scale = Math.Max(scale, Math.Max(Math.Abs(a[i][j]), Math.Abs(b[i][j])));
+                    scaleA = Math.Max(scaleA, Math.Abs(a[i][j]));
+                    scaleB = Math.Max(scaleB, Math.Abs(b[i][j]));
                 }
-            if (scale == 0) return 1;
-            for (int i = 0; i < a.Length; i++)
-                for (int j = 0; j < a.Length; j++)
-                {
-                    a[i][j] /= scale;
-                    b[i][j] /= scale;
-                }
-            return scale;
+            if (scaleA == 0) scaleA = 1;
+            if (scaleB == 0) scaleB = 1;
+            Divide(a, scaleA); Divide(b, scaleB);
+            return (scaleA, scaleB);
+        }
+
+        /// <summary>Uses the same independent pencil scaling for complex QZ and GEVD.</summary>
+        public static (double A, double B) ScalePencil(C[,] a, C[,] b)
+        {
+            double scaleA = Max(a), scaleB = Max(b);
+            if (scaleA == 0) scaleA = 1;
+            if (scaleB == 0) scaleB = 1;
+            Divide(a, scaleA); Divide(b, scaleB);
+            return (scaleA, scaleB);
         }
 
         public static double[][] Block(double[][] a, int rows, int columns, int row = 0, int column = 0)
@@ -864,6 +867,54 @@ namespace UMapx.Decomposition
             }
         }
 
+        /// <summary>Partitions an undirected matrix graph without mixing disconnected numerical scales.</summary>
+        public static int[][] ConnectedComponents(int n, Func<int, int, bool> connected)
+        {
+            var visited = new bool[n];
+            var order = new int[n];
+            var result = new System.Collections.Generic.List<int[]>();
+            int remaining = n;
+            for (int seed = 0; seed < n; seed++)
+            {
+                if (visited[seed]) continue;
+                int count = 1;
+                order[0] = seed; visited[seed] = true; remaining--;
+                for (int head = 0; head < count && remaining > 0; head++)
+                    for (int j = 0; j < n; j++)
+                        if (!visited[j] && connected(order[head], j))
+                        { order[count++] = j; visited[j] = true; remaining--; }
+                var component = new int[count];
+                Array.Copy(order, component, count);
+                result.Add(component);
+            }
+            return result.ToArray();
+        }
+
+        /// <summary>Returns the unit complex phase, defining phase(0) as one.</summary>
+        public static C Phase(C value) => value == C.Zero ? C.One : value / C.Abs(value);
+
+        /// <summary>Accumulates a real plane rotation using the same column convention as the complex kernel.</summary>
+        public static void RotateColumns(double[][] a, int i, int j, double c, double s)
+        {
+            for (int k = 0; k < a.Length; k++)
+            {
+                double x = a[k][i], y = a[k][j];
+                a[k][i] = c * x + s * y;
+                a[k][j] = -s * x + c * y;
+            }
+        }
+
+        /// <summary>Accumulates a real bidiagonal/tridiagonal rotation in complex factors without complex-sine arithmetic.</summary>
+        public static void RotateColumns(C[,] a, int i, int j, double c, double s)
+        {
+            for (int k = 0; k < a.GetLength(0); k++)
+            {
+                C x = a[k, i], y = a[k, j];
+                a[k, i] = c * x + s * y;
+                a[k, j] = -s * x + c * y;
+            }
+        }
+
         /// <summary>Constructs a complex Givens rotation annihilating the second component.</summary>
         /// <param name="f">First component.</param>
         /// <param name="g">Second component.</param>
@@ -911,36 +962,6 @@ namespace UMapx.Decomposition
             }
         }
 
-        /// <summary>Applies A = U^H A U and Q = Q U for an embedded unitary transformation U.</summary>
-        /// <param name="a">Full square work matrix.</param>
-        /// <param name="q">Distinct square accumulator with the same dimensions as a.</param>
-        /// <param name="rotation">Unitary transformation on a contiguous active block.</param>
-        /// <param name="offset">First index of the active block.</param>
-        public static void ApplySimilarity(C[,] a, C[,] q, C[,] rotation, int offset)
-        {
-            int n = a.GetLength(0), size = rotation.GetLength(0);
-            var buffer = new C[size];
-            for (int j = 0; j < n; j++)
-            {
-                for (int i = 0; i < size; i++)
-                {
-                    buffer[i] = 0;
-                    for (int k = 0; k < size; k++) buffer[i] += C.Conjugate(rotation[k, i]) * a[offset + k, j];
-                }
-                for (int i = 0; i < size; i++) a[offset + i, j] = buffer[i];
-            }
-            foreach (var target in new[] { a, q })
-                for (int i = 0; i < n; i++)
-                {
-                    for (int j = 0; j < size; j++)
-                    {
-                        buffer[j] = 0;
-                        for (int k = 0; k < size; k++) buffer[j] += target[i, offset + k] * rotation[k, j];
-                    }
-                    for (int j = 0; j < size; j++) target[i, offset + j] = buffer[j];
-                }
-        }
-
         #endregion
 
         #region Orthogonalization
@@ -981,7 +1002,7 @@ namespace UMapx.Decomposition
         public static C[] Complete(C[,] q, int k)
         {
             int n = q.GetLength(0);
-            var best = new C[n];
+            C[] best = null;
             double largest = -1;
             for (int seed = 0; seed < n; seed++)
             {
@@ -989,8 +1010,9 @@ namespace UMapx.Decomposition
                 Orthogonalize(v, q, k);
                 double norm = Norm(v);
                 if (norm > largest) { largest = norm; best = v; }
+                if (norm > 0.5) break;
             }
-            if (largest <= Roundoff) throw new InvalidOperationException("Unable to complete an orthonormal basis.");
+            if (!(largest > 0)) throw new InvalidOperationException("Cannot complete the orthonormal basis.");
             Divide(best, largest);
             return best;
         }

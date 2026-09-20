@@ -9,7 +9,7 @@ namespace UMapx.Decomposition
     {
         /// <summary>Computes the right polar decomposition A = U P.</summary>
         /// <param name="matrix">Finite nonempty rectangular matrix.</param>
-        /// <param name="iterations">Positive SVD iteration limit.</param>
+        /// <param name="iterations">Positive maximum QR sweeps per singular value in the SVD.</param>
         /// <returns>The partial isometry U and positive semidefinite symmetric P. Square full-rank U is orthogonal.</returns>
         public static (float[,] U, float[,] P) Decompose(float[,] matrix, int iterations = 10)
         {
@@ -20,7 +20,7 @@ namespace UMapx.Decomposition
 
         /// <summary>Computes the right polar decomposition A = U P.</summary>
         /// <param name="matrix">Finite nonempty rectangular matrix.</param>
-        /// <param name="iterations">Positive SVD iteration limit.</param>
+        /// <param name="iterations">Positive maximum QR sweeps per singular value in the SVD.</param>
         /// <returns>The partial isometry U and positive semidefinite Hermitian P. Square full-rank U is unitary.</returns>
         public static (Complex32[,] U, Complex32[,] P) Decompose(Complex32[,] matrix, int iterations = 50)
         {

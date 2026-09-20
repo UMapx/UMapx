@@ -1,165 +1,77 @@
 # UMapx tests
 
-The xUnit suite exercises numerical algorithms, transforms, imaging, rendering,
-video parsing, and public API contracts. It includes independent reference
-values, mathematical identities, and regression cases for previously observed
-failures.
-
-The suite contains **18,108 test cases**. The verified Windows Release result
-is **18,108 passed, 0 failed, and 0 skipped**.
+The xUnit suite covers numerical algorithms, matrix decompositions, transforms,
+imaging, rendering, video streams and public API contracts. It uses independent
+reference values, mathematical identities and regression cases.
 
 ## Run the tests
 
-Requirements for the complete suite:
+The complete suite requires Windows, .NET SDK 8 or later, and the .NET 8 runtime.
+Bitmap and rendering tests use System.Drawing.Common. The first restore requires
+NuGet access unless the dependencies are already cached.
 
-- Windows, because bitmap and rendering tests use System.Drawing.Common.
-- .NET SDK 8 or later and the .NET 8 runtime.
-- NuGet access for the initial restore, or already restored dependencies.
-
-Run commands from the repository root:
+Run from the repository root:
 
 ```powershell
 dotnet test UMapx.sln -c Release -p:GeneratePackageOnBuild=false
 ```
 
-The command builds the test project, the probe executable, and the library. Package generation is
-disabled because testing does not require a NuGet package. Add `--no-restore`
-only when dependencies have already been restored.
+This builds the library, test project and probe executable without producing a
+NuGet package. Add `--no-restore` when dependencies have already been restored.
+The test output reports the current case count and results.
 
-To collect coverage and a TRX results file:
+To select an area or a test class:
+
+```powershell
+dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter "Category=Decomposition"
+dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter "FullyQualifiedName~VideoLifecycleTests"
+```
+
+Categories group subjects, not operating systems. Bitmap tests also occur under
+`Category=Analysis`; excluding imaging categories does not make the remaining
+suite portable. `SupportedOSPlatform` attributes do not automatically skip tests.
+
+## Coverage
 
 ```powershell
 dotnet test UMapx.sln -c Release -p:GeneratePackageOnBuild=false -p:DebugType=portable -p:DebugSymbols=true --collect "XPlat Code Coverage" --settings tests/UMapx.Tests/coverage.runsettings --logger "trx;LogFileName=tests.trx" --results-directory artifacts/tests/coverage
 ```
 
-Both PDB settings are required: the library's normal Release configuration
-disables debug symbols. [coverage.runsettings](UMapx.Tests/coverage.runsettings) collects
-Cobertura and JSON coverage for the UMapx assembly, excluding the test assembly
-and generated `obj` files. Results are written to `artifacts/tests/coverage`;
-generated artifacts are not tracked in Git.
+Both PDB settings are needed because the library's Release configuration disables
+debug symbols. [coverage.runsettings](UMapx.Tests/coverage.runsettings) collects
+Cobertura and JSON reports for UMapx, excluding test assemblies and generated
+`obj` files. Coverage records executed code; numerical accuracy is checked by
+the assertions and reference data.
 
-Coverage measures executed code, not numerical correctness. A passing run
-validates the included cases; it does not establish that every supported input
-is correct. Contract tests for unsupported operations do not establish that
-those operations are implemented.
+## Test conventions
 
-To select an area, a test class, or a specific regression:
-
-```powershell
-dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter "Category=Decomposition"
-dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter "FullyQualifiedName~TimeoutStreamRepairTests"
-dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter "FullyQualifiedName~IsolatedLargeEigenvalueDoesNotCorruptSmallBlockEigenvectors"
-```
-
-For reproducible decomposition timings across library versions, use the
-[standalone comparison runner](UMapx.DecompositionBenchmarks/README.md).
-`DecompositionPerformanceRepairTests` covers numerical accuracy of the optimized
-real kernels, QZ accumulation, Lanczos reorthogonalization, and NMF workspace
-reuse. Wall-clock performance thresholds are kept outside the unit suite.
-
-Categories describe subject areas, not operating-system compatibility.
-For example, [ApproximationRepairTests.cs](UMapx.Tests/ApproximationRepairTests.cs) contains
-bitmap tests under `Category=Analysis`. Excluding `Imaging`, `Geometry`,
-`Video`, and `Contract` therefore does not produce a guaranteed portable suite.
-`SupportedOSPlatform` attributes document restrictions; they do not
-automatically skip tests.
-
-## Projects and coverage areas
-
-[UMapx.Tests.csproj](UMapx.Tests/UMapx.Tests.csproj) targets .NET 8 and references the
-`netstandard2.0` library. [UMapx.AuditProbe](UMapx.AuditProbe/Program.cs)
-is a separate executable for operations whose termination must be bounded.
-
-| Categories | Main checks |
-| --- | --- |
-| `Core`, `Matrix`, `Analysis`, `Distance` | Scalar and complex arithmetic, number theory, containers, matrix operations, approximation, interpolation, calculus, and distances. |
-| `Reference`, `Identity`, `Regression` | Special-function reference values, mathematical identities, branch conventions, and boundary regressions. |
-| `Decomposition` | Real and complex factorizations, reconstruction, orthogonality, eigenvector equations, pseudoinverses, rank, scaling, and convergence contracts. |
-| `Distribution` | Densities, CDFs, support, moments, entropy, medians, modes, and parameter boundaries. |
-| `Transform`, `Wavelet`, `Window`, `WindowTransform`, `Response` | Direct transform references, reconstruction, window formulas, wavelet coefficients, framed transforms, and filter responses. |
-| `ColorSpace`, `Imaging`, `Geometry` | Color conversions, pixel equations, bitmap composition, stride and padding, depth maps, tensors, rendering, bitmap locks, and resource ownership on failure. |
-| `Video` | MIME boundaries, partial reads, JPEG framing, buffer growth, frame ordering, synthetic video sources, stream deadlines, shutdown, restart, and exception propagation. |
-| `Contract` | Public API behavior, invalid inputs, and explicitly unsupported operations. |
-
-Video tests use synthetic streams, generated images, and local HTTP servers
-on the loopback interface. They do not exercise live cameras, external MJPEG
-servers, or screen capture.
-
-## Resource and streaming checks
-
-[ImagingResourceTests.cs](UMapx.Tests/ImagingResourceTests.cs) verifies that failures release
-bitmap locks acquired by the operation while preserving caller-owned locks and
-images. Cases include a busy or disposed second bitmap, aliased inputs,
-validation failures, and exceptions from user filters. The checks cover the
-concrete `IBitmapFilter2` implementations as well as bitmap conversion, rebuild,
-stereo disparity, and motion detection paths.
-
-[ImagingCompositionAuditTests.cs](UMapx.Tests/ImagingCompositionAuditTests.cs) checks motion
-episode completion on the requested quiet frame, resumed motion, repeated
-episodes, threshold boundaries, settings changes, and reset across streams.
-Generated bitmaps also exercise input preservation, recovery after failed frame
-processing, concurrent detection, and disposal of the stored background.
-
-[VideoStreamingTests.cs](UMapx.Tests/VideoStreamingTests.cs) checks delivery of every buffered
-MJPEG frame in order, operation without subscribers, and stopping from a frame
-callback. JPEG and MJPEG sources decode generated JPEGs larger than 3 MiB with
-and without `Content-Length`. Parser tests verify that buffer growth preserves
-partial markers and unread frames.
-
-[VideoLifecycleTests.cs](UMapx.Tests/VideoLifecycleTests.cs) covers disposal, concurrent stop
-calls, callback-triggered shutdown, restart, and rejection of starts after
-disposal. Stalled-response tests send an incomplete frame body with an infinite
-read timeout and require the source to stop before the local server is released.
-They verify worker termination, a single stop notification per run, and no
-spurious source error or incomplete frame delivery.
-
-## Numerical checks and reproducibility
-
-Independent checks include direct DFT formulas, double-precision matrix
-products, all four Penrose equations, BigInteger arithmetic, exact index
-mappings, high-precision fixtures, scalar pixel formulas, guarded image buffers,
-and numerical integration of distribution densities. Checks that reuse the
-library's own CDF or PDF establish consistency rather than independent accuracy.
-
-[NumericAssert.cs](UMapx.Tests/NumericAssert.cs) uses a mixed absolute and relative bound.
-The scalar default is `2e-6 + 2e-5 * abs(expected)`; finite expectations reject
-nonfinite results. Tests override these tolerances according to the operation,
-conditioning, and quantization. Some matrix tests use relative residuals rather
-than scalar tolerances.
-
-[SpecialFunctionRepairTests.cs](UMapx.Tests/SpecialFunctionRepairTests.cs) and
-[DistributionRepairTests.cs](UMapx.Tests/DistributionRepairTests.cs) tighten absolute
-bounds for small nonzero results so that returning zero cannot pass merely
-because of a large absolute tolerance. Undefined or infinite expected values
-have explicit checks. Test tolerances are acceptance criteria for those cases,
-not a general accuracy guarantee. Do not relax a tolerance just to hide a
-failure.
-
-Branch choices, normalization, matrix orientation, and parameter conventions
-are recorded beside the relevant assertions and in the fixture generators.
-Use those sources when extending a test, especially for complex functions,
-wavelets, statistical distributions, and image interpolation.
-
-Random test inputs use fixed seeds where generated by the suite. NMF also uses
-a fixed internal seed; its tests check reconstruction error and workspace
-allocations. [TestCulture.cs](UMapx.Tests/TestCulture.cs) sets invariant culture,
-and the `SIMD audit` collection in
-[MatrixFilterAuditTests.cs](UMapx.Tests/MatrixFilterAuditTests.cs) disables parallel
-execution while changing the global SIMD setting.
-
-[AuditProcess.cs](UMapx.Tests/AuditProcess.cs) runs selected primality, factorization,
-Schur, eigenvalue, and video lifecycle checks in the probe process with a
-five-second deadline and process-tree termination. With the coverage command
-above, probe calls into the instrumented UMapx assembly contribute to the same
-coverage report. The probe executable itself is excluded by the assembly filter.
+- [NumericAssert.cs](UMapx.Tests/NumericAssert.cs) uses an absolute and relative
+  tolerance: `2e-6 + 2e-5 * abs(expected)` by default for scalars. Finite
+  expectations reject nonfinite results. Individual tests select bounds for the
+  operation, conditioning and quantization; matrix tests also use relative
+  residuals. Preserve the documented tolerances when extending tests.
+- Decomposition checks cover reconstruction, orthogonality, eigenvector
+  equations, pseudoinverses, singular pencils, scale separation and convergence
+  limits. Compare identities and spectra when factors have nonunique signs,
+  phases or bases for repeated eigenvalues.
+- Random inputs use fixed seeds. [TestCulture.cs](UMapx.Tests/TestCulture.cs)
+  selects invariant culture. Tests changing the global SIMD setting use the
+  nonparallel `SIMD audit` collection.
+- Imaging tests use generated bitmaps and check lock ownership, disposal and
+  recovery from failures. Video tests use synthetic streams and local loopback
+  HTTP servers rather than live cameras or external services.
+- [AuditProcess.cs](UMapx.Tests/AuditProcess.cs) runs selected termination checks
+  through [UMapx.AuditProbe](UMapx.AuditProbe/Program.cs), with a five-second
+  deadline and process-tree termination on timeout. The probe is required by
+  the suite.
 
 ## Reference data
 
-The JSON files in [Data](UMapx.Tests/Data) are embedded resources. Python and mpmath are
-not needed to run the C# tests.
+JSON files in [Data](UMapx.Tests/Data) are embedded resources. Python is needed
+only to regenerate them, not to build or run the C# tests.
 
-To regenerate fixtures, use Python with mpmath 1.3.0 and run the required script
-from the repository root:
+For special-function, distribution and arithmetic fixtures, install
+`mpmath==1.3.0` and run the required generator from the repository root:
 
 ```powershell
 python -m pip install mpmath==1.3.0
@@ -176,7 +88,21 @@ python -X utf8 tests/UMapx.Tests/Data/generate_reference.py
 | [generate_distribution_repair_reference.py](UMapx.Tests/Data/generate_distribution_repair_reference.py) | `distribution-repair.json` | 70 |
 | [generate_meyer_hankel_references.py](UMapx.Tests/Data/generate_meyer_hankel_references.py) | `meyer-hankel.json` | 70 |
 
-Generators specify their input rounding, parameter domains, exclusions, and
-handling of poles or divergent results. Preserve those conventions when
-regenerating data. Inspect fixture changes and run the affected tests before
-accepting regenerated values.
+For decomposition references, use NumPy (the stored fixtures were generated with
+version 2.3.5):
+
+```powershell
+python -m pip install numpy==2.3.5
+python tests/reference/generate_decomposition_unification.py
+```
+
+[The decomposition generator](reference/generate_decomposition_unification.py)
+evaluates exact float32 inputs in complex128 using NumPy/LAPACK and writes
+[decomposition-unification.json](UMapx.Tests/Data/decomposition-unification.json).
+GEVD references use `eigvals(solve(B,A))`
+only for well-conditioned, nonsingular B. Singular pencils are tested separately
+using homogeneous eigenvalue equations.
+
+Generators define rounding, branch and parameter conventions. Preserve those
+conventions, inspect fixture changes and run the affected tests before accepting
+regenerated values.

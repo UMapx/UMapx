@@ -60,23 +60,54 @@ namespace UMapx.Decomposition
             return h;
         }
 
-        /// <summary>Checks Hermitian structure and removes roundoff outside the tridiagonal band.</summary>
+        /// <summary>Tridiagonalizes a Hermitian matrix using two-sided Householder rank-two updates.</summary>
         /// <param name="a">Private square input buffer.</param>
         /// <returns>The similarity transformation and tridiagonal matrix.</returns>
-        private static (C[,] P, C[,] H) Tridiagonalize(C[,] a)
+        internal static (C[,] P, C[,] H) Tridiagonalize(C[,] a)
         {
             InternalMatrixMath.RequireHermitian(a);
-            var d = Hessenberg.Factor(a);
             int n = a.GetLength(0);
+            var q = InternalMatrixMath.Eye(n);
+            var w = new C[n];
+            for (int k = 0; k < n - 2; k++)
+            {
+                var v = InternalMatrixMath.Column(a, k, k + 1);
+                C beta = -InternalMatrixMath.Phase(v[0]) * InternalMatrixMath.Norm(v);
+                InternalMatrixMath.HouseholderVector(v);
+                Array.Clear(w, 0, v.Length);
+                for (int i = 0; i < v.Length; i++)
+                {
+                    C product = 0;
+                    for (int j = 0; j < v.Length; j++) product += a[k + 1 + i, k + 1 + j] * v[j];
+                    w[i] = 2 * product;
+                }
+                C inner = 0;
+                for (int i = 0; i < v.Length; i++) inner += C.Conjugate(v[i]) * w[i];
+                for (int i = 0; i < v.Length; i++) w[i] -= inner.Real * v[i];
+                // Hermitian counterpart of the real symmetric rank-two update.
+                for (int i = 0; i < v.Length; i++)
+                {
+                    C vi = v[i], wi = w[i];
+                    for (int j = 0; j <= i; j++)
+                    {
+                        C value = a[k + 1 + i, k + 1 + j] - vi * C.Conjugate(w[j]) - wi * C.Conjugate(v[j]);
+                        if (i == j) value = value.Real;
+                        a[k + 1 + i, k + 1 + j] = value;
+                        a[k + 1 + j, k + 1 + i] = C.Conjugate(value);
+                    }
+                }
+                a[k + 1, k] = beta;
+                a[k, k + 1] = C.Conjugate(beta);
+                for (int i = k + 2; i < n; i++) a[i, k] = a[k, i] = 0;
+                InternalMatrixMath.ReflectRight(q, v, k + 1, 0);
+            }
             for (int i = 0; i < n; i++)
             {
-                d.H[i, i] = d.H[i, i].Real;
-                for (int j = i + 1; j < n; j++)
-                    d.H[i, j] = j == i + 1 ? C.Conjugate(d.H[j, i]) : C.Zero;
+                a[i, i] = a[i, i].Real;
+                for (int j = i + 1; j < n; j++) a[i, j] = j == i + 1 ? C.Conjugate(a[j, i]) : C.Zero;
             }
-            return d;
+            return (q, a);
         }
-
 
         /// <summary>Forms the reflection that annihilates the tail of a column vector.</summary>
         /// <param name="a">Validated single-column work matrix.</param>
