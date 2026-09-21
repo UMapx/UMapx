@@ -1,5 +1,5 @@
 <p align="center"><img width="25%" src="https://raw.githubusercontent.com/UMapx/UMapx/master/docs/umapxnet_big.png" /></p>
-<p align="center"> Cross-platform .NET library for digital signal processing </p>    
+<p align="center"> .NET library for digital signal processing </p>    
 <p align="center"><i> Every journey begins in the mind... </i></p>    
 
 # UMapx
@@ -35,7 +35,7 @@
 You can build **UMapx** from sources or install to your own project using nuget package manager.
 | Specification | OS | Platform | Download | Package |
 |-------------|-------------|-------------|--------------|--------------|
-| .NET Standard 2.0 | Cross-platform | AnyCPU | [Release](https://github.com/asiryan/UMapx.NET/releases/) | [NuGet](https://www.nuget.org/packages/UMapx/) |
+| .NET Standard 2.0 | Windows | AnyCPU | [Release](https://github.com/asiryan/UMapx.NET/releases/) | [NuGet](https://www.nuget.org/packages/UMapx/) |
 
 # Namespaces
 ```c#
