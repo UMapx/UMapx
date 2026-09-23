@@ -40,10 +40,8 @@ using UMapx.Core;
 using UMapx.Decomposition;
 using UMapx.Distance;
 using UMapx.Distribution;
-using UMapx.Imaging;
 using UMapx.Response;
 using UMapx.Transform;
-using UMapx.Visualization;
 using UMapx.Wavelet;
 using UMapx.Window;
 ```
