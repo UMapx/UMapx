@@ -12,7 +12,6 @@
 * discrete orthogonal transforms and more.
 
 ### Suitable for a wide range of tasks:
-* symbolic and graphical visualization of data,
 * functional, vector and matrix analysis,
 * interpolation, approximation and optimization of functions,
 * numerical differentiation and integration,
