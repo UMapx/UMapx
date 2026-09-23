@@ -1,7 +1,7 @@
 # UMapx tests
 
 The xUnit suite covers numerical algorithms, matrix decompositions, transforms,
-imaging, rendering, video streams and public API contracts. It uses independent
+imaging, rendering and public API contracts. It uses independent
 reference values, mathematical identities and regression cases.
 
 ## Run the tests
@@ -16,7 +16,7 @@ Run from the repository root:
 dotnet test UMapx.sln -c Release -p:GeneratePackageOnBuild=false
 ```
 
-This builds the library, test project and probe executable without producing a
+This builds the library and test project without producing a
 NuGet package. Add `--no-restore` when dependencies have already been restored.
 The test output reports the current case count and results.
 
@@ -24,7 +24,7 @@ To select an area or a test class:
 
 ```powershell
 dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter "Category=Decomposition"
-dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter "FullyQualifiedName~VideoLifecycleTests"
+dotnet test tests/UMapx.Tests -c Release -p:GeneratePackageOnBuild=false --filter "FullyQualifiedName~NumberTheoryRepairTests"
 ```
 
 Categories group subjects, not operating systems. Bitmap tests also occur under
@@ -58,12 +58,7 @@ the assertions and reference data.
   selects invariant culture. Tests changing the global SIMD setting use the
   nonparallel `SIMD audit` collection.
 - Imaging tests use generated bitmaps and check lock ownership, disposal and
-  recovery from failures. Video tests use synthetic streams and local loopback
-  HTTP servers rather than live cameras or external services.
-- [AuditProcess.cs](UMapx.Tests/AuditProcess.cs) runs selected termination checks
-  through [UMapx.AuditProbe](UMapx.AuditProbe/Program.cs), with a five-second
-  deadline and process-tree termination on timeout. The probe is required by
-  the suite.
+  recovery from failures.
 
 ## Reference data
 

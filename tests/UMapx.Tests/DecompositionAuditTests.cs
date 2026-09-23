@@ -47,9 +47,15 @@ public class DecompositionAuditTests
     }
 
     [Theory] [InlineData(2)] [InlineData(3)] [InlineData(5)]
-    public async Task SchurDecompositionOfTheZeroMatrixTerminates(int n)
+    public void SchurDecompositionOfTheZeroMatrixHasZeroFormAndOrthonormalBasis(int n)
     {
-        Assert.Equal("True",await AuditProcess.RunAsync("SchurZero",n.ToString()));
+        var d = Schur.Decompose(new float[n, n], 1e-7f);
+        Assert.All(d.T.Cast<float>(), value => Assert.Equal(0f, value));
+        for (int i = 0; i < n; i++) for (int j = 0; j < n; j++)
+        {
+            double dot = Enumerable.Range(0, n).Sum(k => (double)d.Q[k, i] * d.Q[k, j]);
+            Close(i == j ? 1 : 0, dot, 1e-5, 0);
+        }
     }
 
     [Theory, MemberData(nameof(Factorizations))]
