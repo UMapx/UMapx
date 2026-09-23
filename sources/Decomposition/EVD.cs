@@ -659,10 +659,7 @@ namespace UMapx.Decomposition
                 int l = n;
                 while (l > low)
                 {
-                    s = System.Math.Abs(hessenberg[l - 1][l - 1]) + System.Math.Abs(hessenberg[l][l]);
-
-                    if (s == 0)
-                        s = norm;
+                    s = InternalMatrixMath.HessenbergDeflationScale(hessenberg, l, n);
 
                     if (double.IsNaN(s))
                         break;

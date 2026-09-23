@@ -277,7 +277,6 @@ namespace UMapx.Decomposition
             eps = Math.Max(eps, 8 * InternalMatrixMath.Roundoff);
             int n = nn - 1;
             int low = 0;
-            int high = nn - 1;
             double exshift = 0;
             double p = 0;
             double q = 0;
@@ -290,20 +289,6 @@ namespace UMapx.Decomposition
             int i, j, k, m;
             bool notlast;
 
-            // Store roots isolated by balanc and compute matrix norm
-            double norm = 0;
-            for (i = 0; i < nn; i++)
-            {
-                if (i < low | i > high)
-                {
-                    Re[i] = hessenberg[i][i];
-                    Im[i] = 0;
-                }
-
-                for (j = System.Math.Max(i - 1, 0); j < nn; j++)
-                    norm = norm + System.Math.Abs(hessenberg[i][j]);
-            }
-
             // Outer loop over eigenvalue index
             int iter = 0;
             while (n >= low)
@@ -312,10 +297,8 @@ namespace UMapx.Decomposition
                 int l = n;
                 while (l > low)
                 {
-                    s = System.Math.Abs(hessenberg[l - 1][l - 1]) + System.Math.Abs(hessenberg[l][l]);
-                    if (s == 0)
-                        s = norm;
-                    // Exact zeros must deflate even when the matrix norm or eps is zero.
+                    s = InternalMatrixMath.HessenbergDeflationScale(hessenberg, l, n);
+                    // Exact zeros must deflate even when the local scale is zero.
                     if (System.Math.Abs(hessenberg[l][l - 1]) <= eps * s)
                     {
                         hessenberg[l][l - 1] = 0;

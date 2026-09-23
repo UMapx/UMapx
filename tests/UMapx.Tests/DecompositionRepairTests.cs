@@ -1,4 +1,5 @@
 using System.Numerics;
+using UMapx.Core;
 using UMapx.Decomposition;
 using Xunit;
 
@@ -182,6 +183,87 @@ public class DecompositionRepairTests
         var schur = Schur.Decompose(diagonal).T;
         NumericAssert.Close(diagonal[0, 0], schur[0, 0], 0, 2e-6);
         NumericAssert.Close(diagonal[1, 1], schur[1, 1], 0, 2e-6);
+    }
+
+    public static IEnumerable<object[]> IsolatedSmallBlocks()
+    {
+        foreach (string algorithm in new[] { "EVD", "Schur", "GEVD", "QZ" })
+            foreach (var scales in new[] { (1e-20f, 1f), (1e-30f, 1e30f) })
+                foreach (int largeIndex in new[] { 0, 1, 2 })
+                    foreach (float eps in new[] { 0f, 1e-16f })
+                        yield return new object[] { algorithm, scales.Item1, scales.Item2, largeIndex, eps };
+    }
+
+    [Theory, MemberData(nameof(IsolatedSmallBlocks))]
+    public void NonsymmetricReductionsPreserveSmallIndependentBlocks(string algorithm, float small, float large, int largeIndex, float eps)
+    {
+        var a = new float[3, 3];
+        var identity = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 } };
+        var indices = Enumerable.Range(0, 3).Where(i => i != largeIndex).ToArray();
+        a[largeIndex, largeIndex] = large;
+        a[indices[0], indices[1]] = -small;
+        a[indices[1], indices[0]] = small;
+        Complex32[] values;
+        if (algorithm == "EVD")
+        {
+            var d = EVD.Decompose(a, eps);
+            values = d.D;
+            CheckSmallBlockEigenvectors(a, d.V, values, Enumerable.Repeat(1f, 3).ToArray(), small, large, largeIndex);
+        }
+        else if (algorithm == "Schur")
+        {
+            var d = Schur.Decompose(a, eps);
+            values = Schur.Eigenvalues(d.T);
+            CheckSmallBlockReconstruction(a, Product(Product(Double(d.Q), Double(d.T)), Transpose(Double(d.Q))), small, large, largeIndex);
+            Orthonormal(Double(d.Q));
+        }
+        else if (algorithm == "GEVD")
+        {
+            var d = GEVD.Decompose(a, identity, eps);
+            values = GEVD.Eigenvalues(d.Alpha, d.Beta);
+            CheckSmallBlockEigenvectors(a, d.V, d.Alpha, d.Beta, small, large, largeIndex);
+        }
+        else
+        {
+            var d = QZ.Decompose(a, identity, eps);
+            CheckSmallBlockReconstruction(a, Product(Product(Double(d.Q), Double(d.S)), Transpose(Double(d.Z))), small, large, largeIndex);
+            Relative(Double(identity), Product(Product(Double(d.Q), Double(d.T)), Transpose(Double(d.Z))), 2e-5);
+            Orthonormal(Double(d.Q)); Orthonormal(Double(d.Z));
+            var e = GEVD.Decompose(d.S, d.T, eps);
+            values = GEVD.Eigenvalues(e.Alpha, e.Beta);
+        }
+        var ordered = values.OrderBy(z => z.Imag).ToArray();
+        // A global absolute tolerance would accept zero in place of either small root.
+        NumericAssert.Close(new Complex(0, -small), ordered[0], 0, 2e-5);
+        NumericAssert.Close(new Complex(large, 0), ordered[1], 0, 2e-5);
+        NumericAssert.Close(new Complex(0, small), ordered[2], 0, 2e-5);
+    }
+
+    private static void CheckSmallBlockReconstruction(float[,] a, double[,] actual, float small, float large, int largeIndex)
+    {
+        for (int i = 0; i < 3; i++) for (int j = 0; j < 3; j++)
+            NumericAssert.Close(a[i, j], actual[i, j], 2e-5 * (i == largeIndex ? large : small), 0);
+    }
+
+    private static void CheckSmallBlockEigenvectors(float[,] a, float[,] packed, Complex32[] alpha, float[] beta,
+        float small, float large, int largeIndex)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            var v = new Complex[3];
+            for (int i = 0; i < 3; i++)
+                v[i] = alpha[j].Imag > 0 ? new Complex(packed[i, j], packed[i, j + 1]) :
+                    alpha[j].Imag < 0 ? new Complex(packed[i, j - 1], -packed[i, j]) : packed[i, j];
+            double norm = Math.Sqrt(v.Sum(z => z.Magnitude * z.Magnitude));
+            Assert.True(double.IsFinite(norm) && norm > 0);
+            for (int i = 0; i < 3; i++)
+            {
+                Complex av = 0;
+                for (int k = 0; k < 3; k++) av += a[i, k] * v[k];
+                double bound = (Math.Abs(beta[j]) * (i == largeIndex ? large : small) + ((Complex)alpha[j]).Magnitude) * norm;
+                Assert.True(Complex.Abs(beta[j] * av - (Complex)alpha[j] * v[i]) <= 2e-5 * bound);
+            }
+        }
     }
 
     [Fact]

@@ -388,41 +388,33 @@ namespace UMapx.Decomposition
             double ep;
             double sh = 0;
             int km1, lm1 = 0;
-            double ani, bni;
+            double bni;
             int ish, its, enm2, lor1;
-            double epsa, epsb, anorm = 0, bnorm = 0;
+            double epsa, epsb, bnorm = 0;
             int enorn;
             bool notlas;
 
             ierr = 0;
 
-            #region Compute epsa and epsb
+            #region Compute epsb
             for (i = 0; i < n; ++i)
             {
-                ani = 0.0f;
                 bni = 0.0f;
-
-                if (i != 0)
-                    ani = (Math.Abs(a[i][(i - 1)]));
 
                 for (j = i; j < n; ++j)
                 {
-                    ani += Math.Abs(a[i][j]);
                     bni += Math.Abs(b[i][j]);
                 }
 
-                if (ani > anorm) anorm = ani;
                 if (bni > bnorm) bnorm = bni;
             }
 
-            if (anorm == 0.0) anorm = 1.0f;
             if (bnorm == 0.0) bnorm = 1.0f;
 
             // Deflation cannot resolve changes below the precision of the work buffers.
             // Enforce this floor even when the requested tolerance is zero.
             ep = Math.Max(eps1, 8 * InternalMatrixMath.Roundoff);
 
-            epsa = ep * anorm;
             epsb = ep * bnorm;
             #endregion
 
@@ -451,6 +443,7 @@ namespace UMapx.Decomposition
                 if (l + 1 == 1)
                     goto L95;
 
+                epsa = ep * InternalMatrixMath.HessenbergDeflationScale(a, l, en);
                 if ((Math.Abs(a[l][lm1])) <= epsa)
                     break;
             }
@@ -551,6 +544,7 @@ namespace UMapx.Decomposition
                 if (Math.Abs(b[l][l]) > epsb)
                     t -= sh * b[l][l];
 
+                epsa = ep * InternalMatrixMath.HessenbergDeflationScale(a, l, en);
                 if (Math.Abs(a[l][lm1]) <= (Math.Abs(t / a[l1][l])) * epsa)
                     goto L100;
             }

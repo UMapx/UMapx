@@ -380,6 +380,23 @@ namespace UMapx.Decomposition
             return scale;
         }
 
+        /// <summary>Uses neighboring Hessenberg entries to scale a subdiagonal deflation test.</summary>
+        /// <param name="a">Upper Hessenberg work matrix.</param>
+        /// <param name="i">Subdiagonal row, greater than zero.</param>
+        /// <param name="high">Last row of the active leading submatrix.</param>
+        /// <returns>A local scale that does not mix disconnected blocks.</returns>
+        public static double HessenbergDeflationScale(double[][] a, int i, int high)
+        {
+            double scale = Math.Abs(a[i - 1][i - 1]) + Math.Abs(a[i][i]);
+            if (scale == 0)
+            {
+                scale = Math.Abs(a[i - 1][i]);
+                if (i > 1) scale += Math.Abs(a[i - 1][i - 2]);
+                if (i < high) scale += Math.Abs(a[i + 1][i]);
+            }
+            return scale;
+        }
+
         public static void Divide(double[][] a, double scale)
         {
             foreach (var row in a) Divide(row, scale);
