@@ -3,7 +3,7 @@
 <p align="center"><i> Every journey begins in the mind... </i></p>    
 
 # UMapx
-### Contains ready-made math tools:
+### Contains ready-made math tools
 * color spaces and their transformations,
 * real and complex algebra,
 * statistical distributions,
@@ -11,18 +11,18 @@
 * digital response filters,
 * discrete orthogonal transforms and more.
 
-### Suitable for a wide range of tasks:
+### Suitable for a wide range of tasks
 * functional, vector and matrix analysis,
 * interpolation, approximation and optimization of functions,
 * numerical differentiation and integration,
 * solving equations,
 * matrix factorization.
 
-### Includes special toolboxes:
+### Includes special toolboxes
 * **Wavelet Toolbox**. Provides wide functionality for the study of discrete and continuous wavelets. The toolbox also includes algorithms for discrete one-dimensional and two-dimensional wavelet transforms of real and complex signals.
 * **Window Toolbox**. Includes a set of tools for synthesizing and orthogonalizing window functions. It implements discrete short-time Fourier and Weyl-Heisenberg transforms ([Gabor analysis](https://github.com/asiryan/Weyl-Heisenberg-Toolbox)) for real and complex signals.
 
-# Supported types
+### Supported types
 **UMapx** supports only 32 bit types - `float`, `Complex32`, etc (compatible with [System.Numerics](https://docs.microsoft.com/ru-ru/dotnet/api/system.numerics?view=netframework-4.8), [NAudio](https://github.com/naudio/NAudio) and other libraries).
 
 # Installation
