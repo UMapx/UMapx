@@ -397,6 +397,40 @@ namespace UMapx.Decomposition
             return scale;
         }
 
+        /// <summary>Measures an active triangular block without including independent blocks.</summary>
+        /// <param name="b">Upper triangular matrix.</param>
+        /// <param name="low">First row and column of the block.</param>
+        /// <param name="high">Last row and column of the block.</param>
+        /// <returns>Maximum absolute row sum within the block.</returns>
+        public static double TriangularBlockScale(double[][] b, int low, int high)
+        {
+            double scale = 0;
+            for (int i = low; i <= high; i++)
+            {
+                double row = 0;
+                for (int j = i; j <= high; j++) row += Math.Abs(b[i][j]);
+                scale = Math.Max(scale, row);
+            }
+            return scale;
+        }
+
+        /// <summary>Measures an active complex triangular block without including independent blocks.</summary>
+        /// <param name="b">Upper triangular matrix.</param>
+        /// <param name="low">First row and column of the block.</param>
+        /// <param name="high">Last row and column of the block.</param>
+        /// <returns>Maximum absolute row sum within the block.</returns>
+        public static double TriangularBlockScale(C[,] b, int low, int high)
+        {
+            double scale = 0;
+            for (int i = low; i <= high; i++)
+            {
+                double row = 0;
+                for (int j = i; j <= high; j++) row += C.Abs(b[i, j]);
+                scale = Math.Max(scale, row);
+            }
+            return scale;
+        }
+
         public static void Divide(double[][] a, double scale)
         {
             foreach (var row in a) Divide(row, scale);

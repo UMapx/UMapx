@@ -624,7 +624,8 @@ namespace UMapx.Decomposition
             int n = nn - 1;
             int low = 0;
             int high = nn - 1;
-            double exshift = 0;
+            // Offsets belong to active blocks; an independent leading block must not be shifted.
+            var shifts = new double[nn];
             double p = 0;
             double q = 0;
             double r = 0;
@@ -665,7 +666,10 @@ namespace UMapx.Decomposition
                         break;
 
                     if (System.Math.Abs(hessenberg[l][l - 1]) <= eps * s)
+                    {
+                        hessenberg[l][l - 1] = 0;
                         break;
+                    }
 
                     l--;
                 }
@@ -674,7 +678,7 @@ namespace UMapx.Decomposition
                 if (l == n)
                 {
                     // One root found
-                    hessenberg[n][n] = hessenberg[n][n] + exshift;
+                    hessenberg[n][n] += shifts[n];
                     Re[n] = hessenberg[n][n];
                     Im[n] = 0;
                     n--;
@@ -687,8 +691,8 @@ namespace UMapx.Decomposition
                     p = (hessenberg[n - 1][n - 1] - hessenberg[n][n]) / 2;
                     q = p * p + w;
                     z = System.Math.Sqrt(System.Math.Abs(q));
-                    hessenberg[n][n] = hessenberg[n][n] + exshift;
-                    hessenberg[n - 1][n - 1] = hessenberg[n - 1][n - 1] + exshift;
+                    hessenberg[n][n] += shifts[n];
+                    hessenberg[n - 1][n - 1] += shifts[n - 1];
                     x = hessenberg[n][n];
 
                     if (q >= 0)
@@ -762,9 +766,11 @@ namespace UMapx.Decomposition
                     // Wilkinson's original ad hoc shift
                     if (iter == 10)
                     {
-                        exshift += x;
-                        for (i = low; i <= n; i++)
+                        for (i = l; i <= n; i++)
+                        {
                             hessenberg[i][i] -= x;
+                            shifts[i] += x;
+                        }
 
                         s = System.Math.Abs(hessenberg[n][n - 1]) + System.Math.Abs(hessenberg[n - 1][n - 2]);
                         x = y = 0.75 * s;
@@ -781,9 +787,11 @@ namespace UMapx.Decomposition
                             s = System.Math.Sqrt(s);
                             if (y < x) s = -s;
                             s = x - w / ((y - x) / 2 + s);
-                            for (i = low; i <= n; i++)
+                            for (i = l; i <= n; i++)
+                            {
                                 hessenberg[i][i] -= s;
-                            exshift += s;
+                                shifts[i] += s;
+                            }
                             x = y = w = 0.964;
                         }
                     }
@@ -922,8 +930,12 @@ namespace UMapx.Decomposition
                     {
                         w = hessenberg[i][i] - p;
                         r = 0;
+                        double local = System.Math.Abs(hessenberg[i][i]) + System.Math.Abs(p);
                         for (j = l; j <= n; j++)
+                        {
                             r = r + hessenberg[i][j] * hessenberg[j][n];
+                            if (hessenberg[j][n] != 0) local = Math.Max(local, Math.Abs(hessenberg[i][j]));
+                        }
 
                         if (Im[i] < 0)
                         {
@@ -935,7 +947,9 @@ namespace UMapx.Decomposition
                             l = i;
                             if (Im[i] == 0)
                             {
-                                hessenberg[i][n] = (w != 0) ? (-r / w) : (-r / (eps * norm));
+                                // A repeated root is perturbed on the scale of this equation only.
+                                double floor = Math.Max(1e-300, 16 * InternalMatrixMath.Roundoff * local);
+                                hessenberg[i][n] = -r / (w != 0 ? w : floor);
                             }
                             else
                             {
@@ -1008,7 +1022,10 @@ namespace UMapx.Decomposition
                                 vr = (Re[i] - p) * (Re[i] - p) + Im[i] * Im[i] - q * q;
                                 vi = (Re[i] - p) * 2 * q;
                                 if (vr == 0 & vi == 0)
-                                    vr = eps * norm * (System.Math.Abs(w) + System.Math.Abs(q) + System.Math.Abs(x) + System.Math.Abs(y) + System.Math.Abs(z));
+                                {
+                                    double local = Math.Abs(w) + Math.Abs(q) + Math.Abs(x) + Math.Abs(y) + Math.Abs(z);
+                                    vr = Math.Max(1e-300, 16 * InternalMatrixMath.Roundoff * local * local);
+                                }
                                 InternalMatrixMath.DivideComplex(x * r - z * ra + q * sa, x * s - z * sa - q * ra, vr, vi, ref hessenberg[i][n - 1], ref hessenberg[i][n]);
                                 if (System.Math.Abs(x) > (System.Math.Abs(z) + System.Math.Abs(q)))
                                 {

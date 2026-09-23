@@ -277,7 +277,8 @@ namespace UMapx.Decomposition
             eps = Math.Max(eps, 8 * InternalMatrixMath.Roundoff);
             int n = nn - 1;
             int low = 0;
-            double exshift = 0;
+            // Retain each block's offset when QR splits it into smaller active blocks.
+            var shifts = new double[nn];
             double p = 0;
             double q = 0;
             double r = 0;
@@ -311,7 +312,7 @@ namespace UMapx.Decomposition
                 if (l == n)
                 {
                     // One root found
-                    hessenberg[n][n] = hessenberg[n][n] + exshift;
+                    hessenberg[n][n] += shifts[n];
                     Re[n] = hessenberg[n][n];
                     Im[n] = 0;
                     n--;
@@ -324,8 +325,8 @@ namespace UMapx.Decomposition
                     p = (hessenberg[n - 1][n - 1] - hessenberg[n][n]) / 2;
                     q = p * p + w;
                     z = System.Math.Sqrt(System.Math.Abs(q));
-                    hessenberg[n][n] = hessenberg[n][n] + exshift;
-                    hessenberg[n - 1][n - 1] = hessenberg[n - 1][n - 1] + exshift;
+                    hessenberg[n][n] += shifts[n];
+                    hessenberg[n - 1][n - 1] += shifts[n - 1];
                     x = hessenberg[n][n];
 
                     if (q >= 0)
@@ -396,9 +397,11 @@ namespace UMapx.Decomposition
 
                     if (iter == 10)
                     {
-                        exshift += x;
-                        for (i = low; i <= n; i++)
+                        for (i = l; i <= n; i++)
+                        {
                             hessenberg[i][i] -= x;
+                            shifts[i] += x;
+                        }
                         s = System.Math.Abs(hessenberg[n][n - 1]) + System.Math.Abs(hessenberg[n - 1][n - 2]);
                         x = y = 0.75f * s;
                         w = -0.4375f * s * s;
@@ -414,9 +417,11 @@ namespace UMapx.Decomposition
                             if (y < x)
                                 s = -s;
                             s = x - w / ((y - x) / 2 + s);
-                            for (i = low; i <= n; i++)
+                            for (i = l; i <= n; i++)
+                            {
                                 hessenberg[i][i] -= s;
-                            exshift += s;
+                                shifts[i] += s;
+                            }
                             x = y = w = 0.964f;
                         }
                     }

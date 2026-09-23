@@ -66,7 +66,8 @@ namespace UMapx.Decomposition
             // remaining 2-by-2 blocks correspond to pairs of complex
             // eigenvalues, and returns quantities whose ratios give the
             // generalized eigenvalues.
-            qzval(n, A, B, real, imaginary, denominator, matz, vectors);
+            qzval(n, A, B, real, imaginary, denominator, matz, vectors,
+                Math.Max(Maths.Float(eps), 8 * InternalMatrixMath.Roundoff));
 
             // computes the eigenvectors of the triangular problem and
             // transforms the results back to the original coordinate system.
@@ -174,8 +175,6 @@ namespace UMapx.Decomposition
             double scaleA = scales.A, scaleB = scales.B;
             qzhes(n, a, b, true, z, q);
             qzit(n, a, b, Maths.Float(eps), true, z, ref ierr, iterations, q);
-            // The bottom-left entry is scratch storage for epsb, not part of T.
-            if (n > 1) b[n - 1][0] = 0;
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < n; j++)
                 {
@@ -388,35 +387,16 @@ namespace UMapx.Decomposition
             double ep;
             double sh = 0;
             int km1, lm1 = 0;
-            double bni;
             int ish, its, enm2, lor1;
-            double epsa, epsb, bnorm = 0;
+            double epsa, epsb;
             int enorn;
             bool notlas;
 
             ierr = 0;
 
-            #region Compute epsb
-            for (i = 0; i < n; ++i)
-            {
-                bni = 0.0f;
-
-                for (j = i; j < n; ++j)
-                {
-                    bni += Math.Abs(b[i][j]);
-                }
-
-                if (bni > bnorm) bnorm = bni;
-            }
-
-            if (bnorm == 0.0) bnorm = 1.0f;
-
             // Deflation cannot resolve changes below the precision of the work buffers.
             // Enforce this floor even when the requested tolerance is zero.
             ep = Math.Max(eps1, 8 * InternalMatrixMath.Roundoff);
-
-            epsb = ep * bnorm;
-            #endregion
 
             // Reduce a to quasi-triangular form, while keeping b triangular
             lor1 = 0;
@@ -459,6 +439,8 @@ namespace UMapx.Decomposition
         // Check for small top of b
         L95:
             ld = l;
+            // A small independent pencil must not inherit a larger block's zero threshold.
+            epsb = Math.Max(1e-300, ep * InternalMatrixMath.TriangularBlockScale(b, l, en));
 
         L100:
             l1 = l + 1;
@@ -747,10 +729,7 @@ namespace UMapx.Decomposition
         L1000:
             ierr = en + 1;
 
-        // Save epsb for use by qzval and qzvec
         L1001:
-            if (n > 1)
-                b[n - 1][0] = epsb;
             return;
         }
         /// <summary>
@@ -772,7 +751,8 @@ namespace UMapx.Decomposition
         /// <param name="beta">Denominators β_j (nonnegative). Length n. Written by the routine.</param>
         /// <param name="matz">If true, accumulate right transformations into <paramref name="z"/>.</param>
         /// <param name="z">Right transformation accumulator Z (updated if <paramref name="matz"/> is true).</param>
-        private static void qzval(int n, double[][] a, double[][] b, double[] alfr, double[] alfi, double[] beta, bool matz, double[][] z)
+        /// <param name="eps">Relative zero threshold with a double-roundoff floor, applied to each block of T.</param>
+        private static void qzval(int n, double[][] a, double[][] b, double[] alfr, double[] alfi, double[] beta, bool matz, double[][] z, double eps)
         {
             int i, j;
             int na, en, nn;
@@ -788,7 +768,7 @@ namespace UMapx.Decomposition
             double a1i, a2i, a11i, a12i, a22i, a11r, a12r, a22r;
             double sqi, ssi, sqr, szi, ssr, szr;
 
-            double epsb = b[n - 1][0];
+            double epsb;
             int isw = 1;
 
             // Find eigenvalues of quasi-triangular matrices.
@@ -814,6 +794,7 @@ namespace UMapx.Decomposition
 
             // 2-by-2 block
             L420:
+                epsb = Math.Max(1e-300, eps * InternalMatrixMath.TriangularBlockScale(b, na, en));
                 if (Math.Abs(b[na][na]) <= epsb) goto L455;
                 if (Math.Abs(b[en][en]) > epsb) goto L430;
                 a1 = a[en][en];
@@ -1058,8 +1039,6 @@ namespace UMapx.Decomposition
                 ;
             }
 
-            b[n - 1][0] = epsb;
-
             return;
         }
         /// <summary>
@@ -1094,7 +1073,7 @@ namespace UMapx.Decomposition
             double ti, rr, tr, zz = 0;
             double alfm, almi, betm, almr;
 
-            double epsb = b[n - 1][0];
+            double local;
             int isw = 1;
 
             // for en=n step -1 until 1 do --
@@ -1118,9 +1097,14 @@ namespace UMapx.Decomposition
                     i = en - ii - 1;
                     w = betm * a[i][i] - alfm * b[i][i];
                     r = 0.0f;
+                    local = Math.Abs(betm * a[i][i]) + Math.Abs(alfm * b[i][i]);
 
                     for (j = m; j <= en; ++j)
-                        r += (betm * a[i][j] - alfm * b[i][j]) * b[j][en];
+                    {
+                        double coefficient = betm * a[i][j] - alfm * b[i][j];
+                        r += coefficient * b[j][en];
+                        if (b[j][en] != 0) local = Math.Max(local, Math.Abs(coefficient));
+                    }
 
                     if (i == 0 || isw == 2)
                         goto L630;
@@ -1139,7 +1123,7 @@ namespace UMapx.Decomposition
                     // Real 1-by-1 block
                     t = w;
                     if (w == 0.0)
-                        t = epsb;
+                        t = Math.Max(1e-300, 16 * InternalMatrixMath.Roundoff * local);
                     b[i][en] = -r / t;
                     goto L700;
 
@@ -1256,7 +1240,10 @@ namespace UMapx.Decomposition
                     dr = w * zz - w1 * z1 - x * y;
                     di = w * z1 + w1 * zz - x1 * y;
                     if (dr == 0.0 && di == 0.0)
-                        dr = epsb;
+                    {
+                        local = Math.Abs(w) + Math.Abs(w1) + Math.Abs(zz) + Math.Abs(z1) + Math.Abs(x) + Math.Abs(x1) + Math.Abs(y);
+                        dr = Math.Max(1e-300, 16 * InternalMatrixMath.Roundoff * local * local);
+                    }
                     goto L775;
 
                 L782:

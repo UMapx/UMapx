@@ -86,7 +86,6 @@ namespace UMapx.Decomposition
                     b[i, i - 1] = 0;
                 }
             double tolerance = Math.Max(8 * InternalMatrixMath.Roundoff, Math.Min(1, Math.Max(0, eps)));
-            double bTolerance = tolerance * InternalMatrixMath.Max(b);
             int high = n - 1, steps = 0;
             while (high >= 0)
             {
@@ -96,6 +95,10 @@ namespace UMapx.Decomposition
                     high--; steps = 0; continue;
                 }
                 if (++steps > iterations) throw new InvalidOperationException("Complex QZ decomposition failed to converge.");
+                int low = high - 1;
+                while (low > 0 && !SmallSubdiagonal(a, low, tolerance)) low--;
+                if (low > 0) a[low, low - 1] = 0;
+                double bTolerance = Math.Max(1e-300, tolerance * InternalMatrixMath.TriangularBlockScale(b, low, high));
                 if (C.Abs(b[high, high]) <= bTolerance)
                 {
                     b[high, high] = 0;
@@ -104,12 +107,10 @@ namespace UMapx.Decomposition
                     a[high, high - 1] = 0;
                     high--; steps = 0; continue;
                 }
-                int low = 0;
                 bool chased = false;
-                for (int j = high - 1; j >= 0; j--)
+                for (int j = high - 1; j >= low; j--)
                 {
-                    bool split = j == 0 || SmallSubdiagonal(a, j, tolerance);
-                    if (split && j > 0) a[j, j - 1] = 0;
+                    bool split = j == low;
                     if (C.Abs(b[j, j]) <= bTolerance)
                     {
                         b[j, j] = 0;
@@ -134,7 +135,6 @@ namespace UMapx.Decomposition
                         }
                         chased = true; break;
                     }
-                    if (split) { low = j; break; }
                 }
                 if (chased) continue;
                 C u12 = b[high - 1, high] / b[high, high];
