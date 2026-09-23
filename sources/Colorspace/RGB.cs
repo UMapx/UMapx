@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using UMapx.Core;
 
 namespace UMapx.Colorspace
@@ -161,25 +160,25 @@ namespace UMapx.Colorspace
         }
         #endregion
 
-        #region Conversion operators
-        /// <summary>
-        /// Defines an implicit conversion from RGB to System.Drawing.Color.
-        /// </summary>
-        /// <param name="value">RGB structure.</param>
-        /// <returns>Color in terms of red, green and blue.</returns>
-        public static implicit operator Color(RGB value)
-        {
-            return Color.FromArgb(value.Red, value.Green, value.Blue);
-        }
-        /// <summary>
-        /// Defines an implicit conversion from System.Drawing.Color to RGB.
-        /// </summary>
-        /// <param name="value">Color in terms of red, green and blue.</param>
-        /// <returns>RGB structure.</returns>
-        public static implicit operator RGB(Color value)
-        {
-            return new RGB(value.R, value.G, value.B);
-        }
+        #region Conversion operators [DISABLED]
+        ///// <summary>
+        ///// Defines an implicit conversion from RGB to System.Drawing.Color.
+        ///// </summary>
+        ///// <param name="value">RGB structure.</param>
+        ///// <returns>Color in terms of red, green and blue.</returns>
+        //public static implicit operator Color(RGB value)
+        //{
+        //    return Color.FromArgb(value.Red, value.Green, value.Blue);
+        //}
+        ///// <summary>
+        ///// Defines an implicit conversion from System.Drawing.Color to RGB.
+        ///// </summary>
+        ///// <param name="value">Color in terms of red, green and blue.</param>
+        ///// <returns>RGB structure.</returns>
+        //public static implicit operator RGB(Color value)
+        //{
+        //    return new RGB(value.R, value.G, value.B);
+        //}
         #endregion
 
         #region Private voids

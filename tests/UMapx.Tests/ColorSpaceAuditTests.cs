@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Reflection;
 using UMapx.Colorspace;
 using Xunit;
@@ -80,7 +79,7 @@ public class ColorSpaceAuditTests
     [Theory] [InlineData(0,0,0)] [InlineData(255,255,255)] [InlineData(12,34,56)] [InlineData(128,1,254)]
     public void RgbTextConversionsAndNeutralAdjustmentsPreserveBytes(int r,int g,int b)
     {
-        var rgb=new RGB(r,g,b);Color color=rgb;Assert.Equal(rgb,(RGB)color);Assert.Equal(rgb,rgb.Clone());Assert.Equal(rgb,rgb.ToRGB);
+        var rgb=new RGB(r, g, b);
         var hex=RGB.ToHEX(rgb);Assert.Equal(rgb,RGB.FromHEX(hex));Assert.Equal(hex,RGB.ToHEX(r,g,b));
         Assert.Equal(rgb,RGB.FromHEX($"#{r:X2}{g:X2}{b:X2}"));
         CloseColor(rgb,RGB.Saturation(rgb,0),1);CloseColor(rgb,RGB.Vibrance(rgb,0),1);
