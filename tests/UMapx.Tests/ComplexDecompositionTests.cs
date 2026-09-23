@@ -133,14 +133,44 @@ public class ComplexDecompositionTests
     }
 
     [Theory]
-    [InlineData("Rotation,1e30,1e-16")]
-    [InlineData("Rotation,1e-30,1e-16")]
-    [InlineData("Symmetric,1e30,1e-16")]
-    [InlineData("Symmetric,1e-30,1e-16")]
-    [InlineData("Triangular,1,0")]
-    public async Task RealEigenvaluesPreserveScaleAndTerminateAtZeroTolerance(string argument)
+    [InlineData("Rotation", 1e30f, 1e-16f)]
+    [InlineData("Rotation", 1e-30f, 1e-16f)]
+    [InlineData("Symmetric", 1e30f, 1e-16f)]
+    [InlineData("Symmetric", 1e-30f, 1e-16f)]
+    [InlineData("Triangular", 1f, 0f)]
+    public void RealEigenvaluesPreserveScaleIncludingAtZeroTolerance(string kind, float scale, float eps)
     {
-        Assert.Equal("True", await AuditProcess.RunAsync("EigenScale", argument));
+        var a = kind switch
+        {
+            "Rotation" => new float[,] { { 0, -scale }, { scale, 0 } },
+            "Symmetric" => new float[,] { { 2 * scale, scale }, { scale, 2 * scale } },
+            _ => new float[,] { { scale, scale, 0 }, { 0, 2 * scale, scale }, { 0, 0, 3 * scale } }
+        };
+        var d = EVD.Decompose(a, eps);
+        int n = a.GetLength(0);
+        Assert.All(d.V.Cast<float>(), value => Assert.True(float.IsFinite(value)));
+        Assert.All(d.D, value => Assert.True(float.IsFinite(value.Real) && float.IsFinite(value.Imag)));
+        double[] expected = kind == "Rotation" ? new[] { 1.0, 1.0 }
+            : kind == "Symmetric" ? new[] { 1.0, 3.0 } : new[] { 1.0, 2.0, 3.0 };
+        var magnitudes = d.D.Select(z => Complex.Abs((Complex)z) / scale).OrderBy(x => x).ToArray();
+        for (int j = 0; j < n; j++)
+        {
+            NumericAssert.Close(expected[j], magnitudes[j], 2e-5, 0);
+            // Verify real storage of conjugate eigenvectors independently of RealEigenvalueMatrix.
+            double norm = 0, error = 0;
+            for (int i = 0; i < n; i++)
+            {
+                double av = 0;
+                for (int k = 0; k < n; k++) av += (a[i, k] / (double)scale) * d.V[k, j];
+                double vd = d.V[i, j] * (d.D[j].Real / (double)scale);
+                if (d.D[j].Imag > 0) vd -= d.V[i, j + 1] * (d.D[j].Imag / (double)scale);
+                if (d.D[j].Imag < 0) vd -= d.V[i, j - 1] * (d.D[j].Imag / (double)scale);
+                error += (av - vd) * (av - vd);
+                norm += (double)d.V[i, j] * d.V[i, j];
+            }
+            Assert.True(norm > 0);
+            NumericAssert.Close(0, Math.Sqrt(error / norm), 2e-5, 0);
+        }
     }
 
     [Theory]

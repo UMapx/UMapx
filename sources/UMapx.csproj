@@ -15,7 +15,7 @@
     <PackageProjectUrl>https://github.com/UMapx/UMapx</PackageProjectUrl>
     <RepositoryUrl>https://github.com/UMapx/UMapx</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>image video signal processing analytics streaming wavelet fourier analysis matrix decomposition transformation complex algebra</PackageTags>
+    <PackageTags>image signal processing analytics wavelet fourier analysis matrix decomposition transformation complex algebra</PackageTags>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

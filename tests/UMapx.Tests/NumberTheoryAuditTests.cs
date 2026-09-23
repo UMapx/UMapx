@@ -75,10 +75,10 @@ public class NumberTheoryAuditTests
         }
     }
 
-    [Theory] [InlineData("IsPrimeInt")] [InlineData("IsPrimeLong")]
-    public async Task OneIsNotPrimeAndTheCheckTerminates(string operation)
+    [Theory] [InlineData(false)] [InlineData(true)]
+    public void OneIsNotPrime(bool wide)
     {
-        Assert.Equal("False",await AuditProcess.RunAsync(operation,"1"));
+        Assert.False(wide ? Maths.IsPrime(1L) : Maths.IsPrime(1));
     }
 
     [Theory] [InlineData(0L)] [InlineData(1L)] [InlineData(123456789L)] [InlineData(987654321012345L)]

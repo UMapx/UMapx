@@ -161,11 +161,11 @@ public class NumberTheoryRepairTests
     [InlineData(1000000007L, 1000000009L)]
     [InlineData(2147483647L, 2147483647L)]
     [InlineData(2147483647L, 4294967291L)]
-    public async Task LargeSemiprimesSplitWithinTheIsolatedDeadline(long p, long q)
+    public void LargeSemiprimesSplitIntoTheirPrimeFactors(long p, long q)
     {
         Assert.True(TrialPrime(p)); Assert.True(TrialPrime(q));
         long n = checked(p * q);
-        Assert.Equal($"{p},{q}", await AuditProcess.RunAsync("FactorLong", n.ToString()));
+        Assert.Equal(new[] { p, q }, Maths.Itf(n));
         long[] distinct = new[] { p, q }.Distinct().ToArray();
         Assert.Equal(distinct, Maths.Itf(n, true));
         Assert.Equal(distinct.Aggregate(1L, (a, b) => a * b), Maths.Radical(n));
