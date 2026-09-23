@@ -43,6 +43,6 @@ for real in (True, False):
             case['spectrum'] = packed(values)
             cases.append(case)
 
-target = Path('tests/UMapx.Tests/Data/decomposition-unification.json')
+target = Path(__file__).with_name('decomposition-unification.json')
 target.write_text(json.dumps(dict(generator=f'NumPy {np.__version__}; numpy.linalg (LAPACK), complex128 on exact float32 inputs', cases=cases), indent=2) + '\n')
 print(f'Wrote {len(cases)} cases to {target}')

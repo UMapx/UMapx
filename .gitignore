@@ -32,6 +32,7 @@ sources/UMapx.xml
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
+tests/Results/
 [Bb]uild[Ll]og.*
 
 #NUNIT

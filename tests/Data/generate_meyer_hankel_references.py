@@ -50,5 +50,5 @@ for order in [0, 1, 5, 10, 20, 50]:
                    for j in range(size)] for i in range(size)]
         hankel.append(dict(order=order, size=size, values=values))
 
-Path('tests/UMapx.Tests/Data/meyer-hankel.json').write_text(
+Path(__file__).with_name('meyer-hankel.json').write_text(
     json.dumps(dict(meyer=meyer, hankel=hankel), indent=2) + '\n', encoding='utf-8')

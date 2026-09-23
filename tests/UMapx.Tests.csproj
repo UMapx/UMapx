@@ -17,7 +17,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <ProjectReference Include="../../sources/UMapx.csproj" />
+    <ProjectReference Include="../sources/UMapx.csproj" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data/special-functions.json" />

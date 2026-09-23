@@ -15,7 +15,7 @@ import mpmath as mp
 
 mp.mp.dps = 40
 ROOT = Path(__file__).resolve().parent
-SOURCE = ROOT.parents[2] / 'sources' / 'Distribution'
+SOURCE = ROOT.parents[1] / 'sources' / 'Distribution'
 CASES = []
 CATALOG = []
 phi = lambda x: mp.exp(-x*x/2) / mp.sqrt(2*mp.pi)
