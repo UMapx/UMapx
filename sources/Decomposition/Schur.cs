@@ -17,14 +17,15 @@ namespace UMapx.Decomposition
     {
         /// <summary>Computes the real Schur decomposition without modifying the inputs.</summary>
         /// <param name="matrix">Finite nonempty real square matrix.</param>
-        /// <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
+        /// <param name="eps">Relative convergence tolerance, clamped to [0,1] with a floor of eight double-precision rounding units.</param>
+        /// <param name="iterations">Positive maximum number of QR steps between successive deflations.</param>
         /// <returns>Orthogonal Q and quasi-upper-triangular T satisfying A = Q T Q^T.</returns>
-        public static (float[,] Q, float[,] T) Decompose(float[,] matrix, float eps = 1e-16f)
-            => Factor(matrix, eps);
+        public static (float[,] Q, float[,] T) Decompose(float[,] matrix, float eps = 1e-16f, int iterations = 1000)
+            => Factor(matrix, eps, iterations);
 
         /// <summary>Computes the complex Schur factorization A = Q T Q^H.</summary>
         /// <param name="matrix">Finite nonempty complex square matrix.</param>
-        /// <param name="eps">Relative deflation tolerance, clamped to [0,1] with a double-roundoff floor.</param>
+        /// <param name="eps">Relative convergence tolerance, clamped to [0,1] with a floor of eight double-precision rounding units.</param>
         /// <param name="iterations">Positive maximum number of QR steps between successive deflations.</param>
         /// <returns>Unitary Q and upper triangular T.</returns>
         public static (Complex32[,] Q, Complex32[,] T) Decompose(Complex32[,] matrix, float eps = 1e-16f, int iterations = 1000)
@@ -72,19 +73,21 @@ namespace UMapx.Decomposition
         /// <summary>Uses Householder reduction and implicit double-shift QR for a real Schur decomposition.</summary>
         /// <param name="A">Real input, copied before reduction.</param>
         /// <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
+        /// <param name="iterations">Positive maximum number of QR steps between successive deflations.</param>
         /// <returns>Orthogonal Q and real quasi-triangular T.</returns>
-        private static (float[,] Q, float[,] T) Factor(float[,] A, float eps)
+        private static (float[,] Q, float[,] T) Factor(float[,] A, float eps, int iterations)
         {
             if (A == null) throw new ArgumentNullException(nameof(A));
             if (A.GetLength(0) == 0) throw new ArgumentException("The matrix must be nonempty.", nameof(A));
             if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
+            if (iterations < 1) throw new ArgumentOutOfRangeException(nameof(iterations));
             if (!Matrice.IsSquare(A))
                 throw new ArgumentException("The matrix must be square");
 
             int n = A.GetLength(0);
             var hessenberg = InternalMatrixMath.ScaledCopyJagged(A, out double inputScale);
             var matrices = ReduceToHessenberg(hessenberg);
-            ReduceToSchur(hessenberg, matrices, Maths.Float(eps));
+            ReduceToSchur(hessenberg, matrices, Maths.Float(eps), iterations);
             var t = new float[n, n];
             for (int row = 0; row < n; row++)
                 for (int column = 0; column < n; column++)
@@ -265,12 +268,13 @@ namespace UMapx.Decomposition
         /// <param name="hessenberg">Scaled Hessenberg matrix, overwritten by its Schur form.</param>
         /// <param name="matrices">Orthogonal reduction accumulator, overwritten by the Schur vectors.</param>
         /// <param name="eps">Clamped relative tolerance, raised to the double-roundoff floor.</param>
-        private static void ReduceToSchur(double[][] hessenberg, double[][] matrices, double eps)
+        /// <param name="iterations">Positive maximum number of QR steps between successive deflations.</param>
+        private static void ReduceToSchur(double[][] hessenberg, double[][] matrices, double eps, int iterations)
         {
             int nn = hessenberg.Length;
             var Re = new double[nn];
             var Im = new double[nn];
-            eps = Math.Max(eps, InternalMatrixMath.Roundoff);
+            eps = Math.Max(eps, 8 * InternalMatrixMath.Roundoff);
             int n = nn - 1;
             int low = 0;
             int high = nn - 1;
@@ -435,7 +439,7 @@ namespace UMapx.Decomposition
                     }
 
                     // A failed iteration must not leave the caller in an unbounded loop.
-                    if (++iter > 100 * nn)
+                    if (++iter > iterations)
                         throw new InvalidOperationException("Schur decomposition failed to converge.");
 
                     // Look for two consecutive small sub-diagonal elements

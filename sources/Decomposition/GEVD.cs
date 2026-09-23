@@ -17,7 +17,7 @@ namespace UMapx.Decomposition
         /// <summary>Computes the real GEVD decomposition without modifying the inputs.</summary>
         /// <param name="a">Finite nonempty real square first matrix.</param>
         /// <param name="b">Finite real square second matrix of the same order; it may be singular.</param>
-        /// <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
+        /// <param name="eps">Relative convergence tolerance, clamped to [0,1] with a floor of eight double-precision rounding units.</param>
         /// <returns>Right eigenvectors V in real block storage and homogeneous eigenvalue numerators Alpha and denominators Beta.</returns>
         /// <remarks>Conjugate eigenvectors occupy adjacent real columns of V. A zero Beta can represent an infinite or indeterminate eigenvalue.</remarks>
         /// <exception cref="ArgumentException">The matrices are empty, nonfinite, nonsquare, or have different orders.</exception>
@@ -85,7 +85,7 @@ namespace UMapx.Decomposition
         /// <summary>Computes complex generalized right eigenvectors and homogeneous eigenvalues.</summary>
         /// <param name="a">Finite nonempty square first matrix.</param>
         /// <param name="b">Finite square second matrix of the same order; it may be singular.</param>
-        /// <param name="eps">Relative QZ deflation tolerance with a roundoff floor.</param>
+        /// <param name="eps">Relative convergence tolerance, clamped to [0,1] with a floor of eight double-precision rounding units.</param>
         /// <returns>V, Alpha and real nonnegative Beta satisfying beta[j]*A*v[j] = alpha[j]*B*v[j].</returns>
         public static (Complex32[,] V, Complex32[] Alpha, float[] Beta) Decompose(Complex32[,] a, Complex32[,] b, float eps = 1e-16f)
         {
@@ -165,14 +165,15 @@ namespace UMapx.Decomposition
         /// <param name="z">Matrix that accumulates the right orthogonal transformations.</param>
         /// <param name="q">Transposed left orthogonal accumulator, initially the identity.</param>
         /// <param name="ierr">Convergence flag.</param>
-        internal static void ReduceRealPencil(double[][] a, double[][] b, float eps, double[][] q, double[][] z, ref int ierr)
+        /// <param name="iterations">Positive maximum QZ steps between successive deflations.</param>
+        internal static void ReduceRealPencil(double[][] a, double[][] b, float eps, double[][] q, double[][] z, ref int ierr, int iterations)
         {
             int n = a.Length;
             // Independent scales preserve a small B even when A uses much larger units.
             var scales = InternalMatrixMath.ScalePencil(a, b);
             double scaleA = scales.A, scaleB = scales.B;
             qzhes(n, a, b, true, z, q);
-            qzit(n, a, b, Maths.Float(eps), true, z, ref ierr, q);
+            qzit(n, a, b, Maths.Float(eps), true, z, ref ierr, iterations, q);
             // The bottom-left entry is scratch storage for epsb, not part of T.
             if (n > 1) b[n - 1][0] = 0;
             for (int i = 0; i < n; i++)
@@ -357,22 +358,23 @@ namespace UMapx.Decomposition
         /// Port of EISPACK <c>QZIT</c> with Ward's NASA TN D-7305 modification. Implements single- and double-shift
         /// iterations, choosing shifts from trailing 1×1 or 2×2 blocks. Converges subdiagonals of A to zero (up to tolerance),
         /// revealing 1×1 (real) and 2×2 (complex-conjugate) blocks.
-        /// <para>Overwrites A, B, and (optionally) Z in place. <paramref name="ierr"/> is set if the iteration cap (≈ 30·n)
-        /// is exceeded.</para>
+        /// <para>Overwrites A, B, and (optionally) Z in place. <paramref name="ierr"/> is set if the iteration cap
+        /// between successive deflations is exceeded.</para>
         /// </remarks>
         /// <param name="n">Matrix order.</param>
         /// <param name="a">On entry: upper-Hessenberg from <see cref="qzhes"/>; on exit: quasi-triangular S. Modified in place.</param>
         /// <param name="b">On entry: upper-triangular from <see cref="qzhes"/>; on exit: upper-triangular T. Modified in place.</param>
         /// <param name="eps1">
-        /// Relative convergence tolerance. If zero, machine roundoff is used (via <see cref="InternalMatrixMath.Roundoff"/>).
+        /// Clamped relative convergence tolerance with a floor of eight double-precision rounding units.
         /// </param>
         /// <param name="matz">If true, accumulate right transformations into <paramref name="z"/>.</param>
         /// <param name="z">Right orthogonal accumulator Z (updated if <paramref name="matz"/> is true).</param>
         /// <param name="ierr">
         /// Output status: 0 if all subdiagonals converged; otherwise set to <c>en+1</c> at failure as in EISPACK.
         /// </param>
+        /// <param name="iterations">Positive maximum QZ steps between successive deflations.</param>
         /// <param name="left">Optional transposed left orthogonal accumulator from the Hessenberg reduction.</param>
-        private static void qzit(int n, double[][] a, double[][] b, double eps1, bool matz, double[][] z, ref int ierr, double[][] left = null)
+        private static void qzit(int n, double[][] a, double[][] b, double eps1, bool matz, double[][] z, ref int ierr, int iterations = 1000, double[][] left = null)
         {
 
             int i, j, k, l = 0;
@@ -387,7 +389,7 @@ namespace UMapx.Decomposition
             double sh = 0;
             int km1, lm1 = 0;
             double ani, bni;
-            int ish, itn, its, enm2, lor1;
+            int ish, its, enm2, lor1;
             double epsa, epsb, anorm = 0, bnorm = 0;
             int enorn;
             bool notlas;
@@ -418,7 +420,7 @@ namespace UMapx.Decomposition
 
             // Deflation cannot resolve changes below the precision of the work buffers.
             // Enforce this floor even when the requested tolerance is zero.
-            ep = Math.Max(eps1, InternalMatrixMath.Roundoff);
+            ep = Math.Max(eps1, 8 * InternalMatrixMath.Roundoff);
 
             epsa = ep * anorm;
             epsb = ep * bnorm;
@@ -428,7 +430,6 @@ namespace UMapx.Decomposition
             lor1 = 0;
             enorn = n;
             en = n - 1;
-            itn = n * 30;
 
         // Begin QZ step
         L60:
@@ -508,7 +509,7 @@ namespace UMapx.Decomposition
             if (ish == 1) goto L140;
 
             // Iteration strategy
-            if (itn == 0) goto L1000;
+            if (its >= iterations) goto L1000;
             if (its == 10) goto L155;
 
             // Determine type of shift
@@ -579,7 +580,6 @@ namespace UMapx.Decomposition
 
         L160:
             ++its;
-            --itn;
 
             if (!matz) lor1 = ld;
 
@@ -749,7 +749,7 @@ namespace UMapx.Decomposition
 
             goto L70; // End QZ step
 
-        // Set error -- all eigenvalues have not converged after 30*n iterations
+        // Set error -- no deflation occurred within the requested iteration limit.
         L1000:
             ierr = en + 1;
 

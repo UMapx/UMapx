@@ -11,7 +11,7 @@ namespace UMapx.Decomposition
         /// <param name="matrix">Finite nonempty rectangular matrix.</param>
         /// <param name="iterations">Positive maximum QR sweeps per singular value in the SVD.</param>
         /// <returns>The partial isometry U and positive semidefinite symmetric P. Square full-rank U is orthogonal.</returns>
-        public static (float[,] U, float[,] P) Decompose(float[,] matrix, int iterations = 10)
+        public static (float[,] U, float[,] P) Decompose(float[,] matrix, int iterations = 50)
         {
             var d = SVD.Decompose(matrix, iterations);
             var right = d.V.Transpose();

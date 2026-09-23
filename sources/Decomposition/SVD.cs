@@ -19,7 +19,7 @@ namespace UMapx.Decomposition
         /// <param name="matrix">Finite nonempty m by n matrix.</param>
         /// <param name="iterations">Positive maximum QR sweeps per singular value.</param>
         /// <returns>U of size m by k, descending nonnegative S of length k, and V of size n by k, where k=min(m,n).</returns>
-        public static (float[,] U, float[] S, float[,] V) Decompose(float[,] matrix, int iterations = 10)
+        public static (float[,] U, float[] S, float[,] V) Decompose(float[,] matrix, int iterations = 50)
         {
             var d = Factor(InternalMatrixMath.CopyReal(matrix), iterations);
             return (InternalMatrixMath.Real(d.U), InternalMatrixMath.Single(d.S), InternalMatrixMath.Real(d.V));

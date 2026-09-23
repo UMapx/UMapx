@@ -19,7 +19,7 @@ namespace UMapx.Decomposition
     {
         /// <summary>Computes the real EVD decomposition without modifying the inputs.</summary>
         /// <param name="matrix">Finite nonempty real square matrix.</param>
-        /// <param name="eps">Relative convergence tolerance with a roundoff floor.</param>
+        /// <param name="eps">Relative convergence tolerance, clamped to [0,1] with a floor of eight double-precision rounding units.</param>
         /// <returns>Right eigenvectors V and eigenvalues D. Symmetric inputs have orthogonal V and ascending real D; other inputs use adjacent real columns for complex-conjugate eigenvectors.</returns>
         /// <exception cref="InvalidOperationException">The QR or QL iteration limit is reached before convergence.</exception>
         public static (float[,] V, Complex32[] D) Decompose(float[,] matrix, float eps = 1e-16f)
@@ -34,7 +34,7 @@ namespace UMapx.Decomposition
 
         /// <summary>Computes right eigenvectors and eigenvalues of a complex square matrix.</summary>
         /// <param name="matrix">Finite nonempty square matrix, not modified.</param>
-        /// <param name="eps">Relative QR/QL convergence tolerance, with a double-roundoff floor.</param>
+        /// <param name="eps">Relative convergence tolerance, clamped to [0,1] with a floor of eight double-precision rounding units.</param>
         /// <returns>V and D satisfying A V = V diag(D). Exactly Hermitian inputs have unitary V and ascending real D. Defective inputs need not have independent eigenvectors.</returns>
         public static (Complex32[,] V, Complex32[] D) Decompose(Complex32[,] matrix, float eps = 1e-16f)
         {

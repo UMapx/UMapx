@@ -10,19 +10,22 @@ namespace UMapx.Decomposition
         /// <summary>Computes the real generalized Schur factors A = Q S Z^T and B = Q T Z^T.</summary>
         /// <param name="a">Finite nonempty square matrix A.</param>
         /// <param name="b">Finite square matrix B of the same order.</param>
-        /// <param name="eps">Relative deflation tolerance with a roundoff floor.</param>
+        /// <param name="eps">Relative convergence tolerance, clamped to [0,1] with a floor of eight double-precision rounding units.</param>
+        /// <param name="iterations">Positive maximum QZ steps between successive deflations.</param>
         /// <returns>Orthogonal Q and Z, quasi-triangular S, and upper triangular T.</returns>
-        public static (float[,] Q, float[,] S, float[,] T, float[,] Z) Decompose(float[,] a, float[,] b, float eps = 1e-16f)
+        public static (float[,] Q, float[,] S, float[,] T, float[,] Z) Decompose(
+            float[,] a, float[,] b, float eps = 1e-16f, int iterations = 1000)
         {
             var s = InternalMatrixMath.CopyReal(a, true);
             var t = InternalMatrixMath.CopyReal(b, true);
             if (a.GetLength(0) != b.GetLength(0)) throw new ArgumentException("The matrices must have equal orders.");
             if (float.IsNaN(eps)) throw new ArgumentOutOfRangeException(nameof(eps));
+            if (iterations < 1) throw new ArgumentOutOfRangeException(nameof(iterations));
             int n = a.GetLength(0), error = 0;
             // Store Q^T so each left reflection updates contiguous rows.
             var q = InternalMatrixMath.EyeJagged(n);
             var z = InternalMatrixMath.EyeJagged(n);
-            GEVD.ReduceRealPencil(s, t, eps, q, z, ref error);
+            GEVD.ReduceRealPencil(s, t, eps, q, z, ref error, iterations);
             if (error != 0) throw new InvalidOperationException("Real QZ decomposition failed to converge.");
             return (InternalMatrixMath.RealTranspose(q), InternalMatrixMath.Real(s),
                     InternalMatrixMath.Real(t), InternalMatrixMath.Real(z));
@@ -31,7 +34,7 @@ namespace UMapx.Decomposition
         /// <summary>Computes the complex generalized Schur factors A = Q S Z^H and B = Q T Z^H.</summary>
         /// <param name="a">Finite nonempty square matrix A.</param>
         /// <param name="b">Finite square matrix B of the same order; it may be singular.</param>
-        /// <param name="eps">Relative deflation tolerance with a roundoff floor.</param>
+        /// <param name="eps">Relative convergence tolerance, clamped to [0,1] with a floor of eight double-precision rounding units.</param>
         /// <param name="iterations">Positive maximum QZ steps between successive deflations.</param>
         /// <returns>Unitary Q and Z and upper triangular S and T; T has real nonnegative diagonal entries.</returns>
         public static (Complex32[,] Q, Complex32[,] S, Complex32[,] T, Complex32[,] Z) Decompose(
