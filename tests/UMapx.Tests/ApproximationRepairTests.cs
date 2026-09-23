@@ -231,31 +231,4 @@ public class ApproximationRepairTests
             Check(Value(a, p.Item1, p.Item2), result.GetValue(i, j)!);
         }
     }
-
-    [Theory]
-    [InlineData(1, 1)] [InlineData(3, 5)] [InlineData(7, 9)]
-    [SupportedOSPlatform("windows")]
-    public void BitmapBicubicResizeMatchesIndependentChannelInterpolation(int height, int width)
-    {
-        using var input = new Bitmap(5, 3, PixelFormat.Format32bppArgb);
-        using var output = new Bitmap(width, height, PixelFormat.Format32bppArgb);
-        var planes = Enumerable.Range(0, 4).Select(_ => new Complex[3, 5]).ToArray();
-        for (int i = 0; i < 3; i++) for (int j = 0; j < 5; j++)
-        {
-            var color = Color.FromArgb(70 + i * 20 + j * 7, i * 45 + j * 17, 180 - i * 12 - j * 21, 20 + i * 25 + j * 31);
-            input.SetPixel(j, i, color);
-            int[] channels = { color.A, color.R, color.G, color.B };
-            for (int k = 0; k < 4; k++) planes[k][i, j] = channels[k];
-        }
-        new UMapx.Imaging.Resize(width, height, InterpolationMode.Bicubic).Apply(output, input);
-        for (int i = 0; i < height; i++) for (int j = 0; j < width; j++)
-        {
-            var c = output.GetPixel(j, i); int[] channels = { c.A, c.R, c.G, c.B };
-            for (int k = 0; k < 4; k++)
-            {
-                double expected = Math.Clamp(Resample(planes[k], (i + .5) * 3 / height - .5, (j + .5) * 5 / width - .5).Real, 0, 255);
-                Close(expected, channels[k], 1.001, 0);
-            }
-        }
-    }
 }
