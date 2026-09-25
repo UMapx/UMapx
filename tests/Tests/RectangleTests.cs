@@ -9,6 +9,31 @@ namespace UMapx.Tests;
 [Trait("Category", "Core")]
 public class RectangleTests
 {
+    [Fact]
+    public void ClonesPreserveAllComponentsAndCanBeModifiedIndependently()
+    {
+        foreach (var expected in IntegerCases())
+        {
+            var original = Convert(expected);
+            var clone = original.Clone();
+            Same(expected, clone);
+            Same(expected, (RectangleInt)((ICloneable)original).Clone());
+            clone.X = 123;
+            clone.Height = -456;
+            Same(expected, original);
+        }
+        foreach (var expected in FloatCases())
+        {
+            var original = Convert(expected);
+            var clone = original.Clone();
+            Same(expected, clone);
+            Same(expected, (RectangleFloat)((ICloneable)original).Clone());
+            clone.X = 123;
+            clone.Height = -456;
+            Same(expected, original);
+        }
+    }
+
     private static void Same(Rectangle expected, RectangleInt actual)
     {
         Assert.Equal(expected.X, actual.X);

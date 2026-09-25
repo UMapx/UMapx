@@ -6,7 +6,7 @@ namespace UMapx.Core
     /// Defines a rectangle with integer coordinates and dimensions.
     /// </summary>
     [Serializable]
-    public struct RectangleInt : IEquatable<RectangleInt>
+    public struct RectangleInt : IEquatable<RectangleInt>, ICloneable
     {
         #region Private data
         private int x;
@@ -733,5 +733,25 @@ namespace UMapx.Core
         }
         #endregion
 
+        #region Clone members
+        /// <summary>
+        /// Creates a copy of RectangleInt.
+        /// </summary>
+        /// <returns>Rectangle copy.</returns>
+        object ICloneable.Clone()
+        {
+            return new RectangleInt(x, y, width, height);
+        }
+
+        /// <summary>
+        /// Creates a copy of RectangleInt.
+        /// </summary>
+        /// <returns>Rectangle copy.</returns>
+        public RectangleInt Clone()
+        {
+            return new RectangleInt(x, y, width, height);
+        }
+
+        #endregion
     }
 }

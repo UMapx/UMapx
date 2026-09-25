@@ -45,6 +45,8 @@ public class GeometryApiTests
     [InlineData(typeof(PointF))]
     [InlineData(typeof(Rectangle))]
     [InlineData(typeof(RectangleF))]
+    [InlineData(typeof(Size))]
+    [InlineData(typeof(SizeF))]
     public void AllSystemDrawingPublicMembersHaveMatchingSignatures(Type original)
     {
         var actual = Map(original);
@@ -95,6 +97,10 @@ public class GeometryApiTests
     [InlineData(typeof(PointFloat))]
     [InlineData(typeof(RectangleInt))]
     [InlineData(typeof(RectangleFloat))]
+    [InlineData(typeof(SizeInt))]
+    [InlineData(typeof(SizeFloat))]
+    [InlineData(typeof(RangeInt))]
+    [InlineData(typeof(RangeFloat))]
     public void ConversionMethodsAndInstanceReadonlyModifiersAreAbsent(Type type)
     {
         foreach (var method in type.GetMethods(PublicMembers))
@@ -107,7 +113,6 @@ public class GeometryApiTests
         }
         if (type == typeof(RectangleInt) || type == typeof(RectangleFloat))
         {
-            Assert.Null(type.GetMethod("Clone"));
             Assert.Null(type.GetMethod("op_Addition"));
             Assert.Null(type.GetMethod("op_Subtraction"));
         }

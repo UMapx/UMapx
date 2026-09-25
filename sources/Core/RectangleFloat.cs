@@ -7,7 +7,7 @@ namespace UMapx.Core
     /// Defines a rectangle with single-precision floating-point coordinates and dimensions.
     /// </summary>
     [Serializable]
-    public struct RectangleFloat : IEquatable<RectangleFloat>
+    public struct RectangleFloat : IEquatable<RectangleFloat>, ICloneable
     {
         #region Private data
         private float x;
@@ -729,5 +729,25 @@ namespace UMapx.Core
         }
         #endregion
 
+        #region Clone members
+        /// <summary>
+        /// Creates a copy of RectangleFloat.
+        /// </summary>
+        /// <returns>Rectangle copy.</returns>
+        object ICloneable.Clone()
+        {
+            return new RectangleFloat(x, y, width, height);
+        }
+
+        /// <summary>
+        /// Creates a copy of RectangleFloat.
+        /// </summary>
+        /// <returns>Rectangle copy.</returns>
+        public RectangleFloat Clone()
+        {
+            return new RectangleFloat(x, y, width, height);
+        }
+
+        #endregion
     }
 }
