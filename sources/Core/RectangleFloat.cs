@@ -6,12 +6,8 @@ namespace UMapx.Core
     /// <summary>
     /// Defines a rectangle with single-precision floating-point coordinates and dimensions.
     /// </summary>
-    /// <remarks>
-    /// Standard geometry members follow System.Drawing.RectangleF semantics.
-    /// Additional arithmetic members return new values without changing this rectangle.
-    /// </remarks>
     [Serializable]
-    public struct RectangleFloat : IEquatable<RectangleFloat>, ICloneable
+    public struct RectangleFloat : IEquatable<RectangleFloat>
     {
         #region Private data
         private float x;
@@ -54,68 +50,72 @@ namespace UMapx.Core
         /// <summary>
         /// Gets or sets the left coordinate.
         /// </summary>
-        public float X { readonly get => x; set => x = value; }
+        public float X { get => x; set => x = value; }
 
         /// <summary>
         /// Gets or sets the top coordinate.
         /// </summary>
-        public float Y { readonly get => y; set => y = value; }
+        public float Y { get => y; set => y = value; }
 
         /// <summary>
         /// Gets or sets the width.
         /// </summary>
-        public float Width { readonly get => width; set => width = value; }
+        public float Width { get => width; set => width = value; }
 
         /// <summary>
         /// Gets or sets the height.
         /// </summary>
-        public float Height { readonly get => height; set => height = value; }
+        public float Height { get => height; set => height = value; }
 
         /// <summary>
         /// Gets or sets the upper-left corner.
         /// </summary>
+        [System.ComponentModel.Browsable(false)]
         public PointFloat Location
         {
-            readonly get => new PointFloat(x, y);
+            get => new PointFloat(x, y);
             set { x = value.X; y = value.Y; }
         }
 
         /// <summary>
         /// Gets or sets the dimensions.
         /// </summary>
+        [System.ComponentModel.Browsable(false)]
         public SizeFloat Size
         {
-            readonly get => new SizeFloat(width, height);
+            get => new SizeFloat(width, height);
             set { width = value.Width; height = value.Height; }
         }
 
         /// <summary>
         /// Gets the left coordinate.
         /// </summary>
-        public readonly float Left => x;
+        [System.ComponentModel.Browsable(false)]
+        public float Left => x;
 
         /// <summary>
         /// Gets the top coordinate.
         /// </summary>
-        public readonly float Top => y;
+        [System.ComponentModel.Browsable(false)]
+        public float Top => y;
 
         /// <summary>
         /// Gets the right coordinate (X + Width).
         /// </summary>
-        public readonly float Right => x + width;
+        [System.ComponentModel.Browsable(false)]
+        public float Right => x + width;
 
         /// <summary>
         /// Gets the bottom coordinate (Y + Height).
         /// </summary>
-        public readonly float Bottom => y + height;
+        [System.ComponentModel.Browsable(false)]
+        public float Bottom => y + height;
 
         /// <summary>
         /// Tests whether either dimension is zero or negative, regardless of location.
         /// </summary>
-        /// <remarks>
-        /// Uses the same rule as RectangleInt. Compare with Empty to test whether all components are zero.
-        /// </remarks>
-        public readonly bool IsEmpty => width <= 0 || height <= 0;
+        [System.ComponentModel.Browsable(false)]
+        public bool IsEmpty => width <= 0 || height <= 0;
         #endregion
 
         #region Geometry
@@ -138,7 +138,7 @@ namespace UMapx.Core
         /// <param name="x">Point X coordinate.</param>
         /// <param name="y">Point Y coordinate.</param>
         /// <returns>Boolean.</returns>
-        public readonly bool Contains(float x, float y)
+        public bool Contains(float x, float y)
         {
             return this.x <= x && x < Right && this.y <= y && y < Bottom;
         }
@@ -146,40 +146,40 @@ namespace UMapx.Core
         /// <summary>
         /// Tests whether a point lies inside, excluding the right and bottom edges.
         /// </summary>
-        /// <param name="point">Point.</param>
+        /// <param name="pt">Point.</param>
         /// <returns>Boolean.</returns>
-        public readonly bool Contains(PointFloat point) => Contains(point.X, point.Y);
+        public bool Contains(PointFloat pt) => Contains(pt.X, pt.Y);
 
         /// <summary>
         /// Tests whether the specified rectangle is entirely contained within this rectangle.
         /// </summary>
-        /// <param name="rectangle">Rectangle.</param>
+        /// <param name="rect">Rectangle.</param>
         /// <returns>Boolean.</returns>
-        public readonly bool Contains(RectangleFloat rectangle)
+        public bool Contains(RectangleFloat rect)
         {
-            return x <= rectangle.x && rectangle.Right <= Right
-                && y <= rectangle.y && rectangle.Bottom <= Bottom;
+            return x <= rect.x && rect.Right <= Right
+                && y <= rect.y && rect.Bottom <= Bottom;
         }
 
         /// <summary>
         /// Tests whether this rectangle overlaps the specified rectangle.
         /// Touching edges alone do not count as an overlap.
         /// </summary>
-        /// <param name="rectangle">Rectangle.</param>
+        /// <param name="rect">Rectangle.</param>
         /// <returns>Boolean.</returns>
-        public readonly bool IntersectsWith(RectangleFloat rectangle)
+        public bool IntersectsWith(RectangleFloat rect)
         {
-            return rectangle.x < Right && x < rectangle.Right
-                && rectangle.y < Bottom && y < rectangle.Bottom;
+            return rect.x < Right && x < rect.Right
+                && rect.y < Bottom && y < rect.Bottom;
         }
 
         /// <summary>
         /// Replaces this rectangle with its intersection with the specified rectangle.
         /// </summary>
-        /// <param name="rectangle">Rectangle.</param>
-        public void Intersect(RectangleFloat rectangle)
+        /// <param name="rect">Rectangle.</param>
+        public void Intersect(RectangleFloat rect)
         {
-            this = Intersect(rectangle, this);
+            this = Intersect(rect, this);
         }
 
         /// <summary>
@@ -232,14 +232,14 @@ namespace UMapx.Core
         /// <summary>
         /// Returns an expanded copy of the specified rectangle.
         /// </summary>
-        /// <param name="rectangle">Rectangle.</param>
+        /// <param name="rect">Rectangle.</param>
         /// <param name="x">Horizontal amount per side.</param>
         /// <param name="y">Vertical amount per side.</param>
         /// <returns>Expanded rectangle.</returns>
-        public static RectangleFloat Inflate(RectangleFloat rectangle, float x, float y)
+        public static RectangleFloat Inflate(RectangleFloat rect, float x, float y)
         {
-            rectangle.Inflate(x, y);
-            return rectangle;
+            rect.Inflate(x, y);
+            return rect;
         }
 
         /// <summary>
@@ -256,300 +256,385 @@ namespace UMapx.Core
         /// <summary>
         /// Moves this rectangle by the specified displacement.
         /// </summary>
-        /// <param name="point">Displacement.</param>
-        public void Offset(PointFloat point) => Offset(point.X, point.Y);
+        /// <param name="pos">Displacement.</param>
+        public void Offset(PointFloat pos) => Offset(pos.X, pos.Y);
         #endregion
 
         #region Arithmetic
         /// <summary>
-        /// Returns a translated copy of this rectangle.
+        /// Translates a rectangle by adding the specified offset to its position.
         /// </summary>
-        /// <param name="point">Displacement to add.</param>
-        /// <returns>Translated rectangle.</returns>
-        public readonly RectangleFloat Add(PointFloat point)
+        /// <param name="point">Horizontal and vertical offsets to add.</param>
+        /// <returns>Translated rectangle with the original width and height.</returns>
+        public RectangleFloat Add(PointFloat point)
         {
-            return new RectangleFloat(x + point.X, y + point.Y, width, height);
+            var rectangle = this;
+            return new RectangleFloat
+            {
+                X = rectangle.X + point.X,
+                Y = rectangle.Y + point.Y,
+                Width = rectangle.Width,
+                Height = rectangle.Height
+            };
         }
 
         /// <summary>
-        /// Returns a copy translated by the negative of the displacement.
+        /// Translates a rectangle by subtracting the specified offset from its position.
         /// </summary>
-        /// <param name="point">Displacement to subtract.</param>
-        /// <returns>Translated rectangle.</returns>
-        public readonly RectangleFloat Sub(PointFloat point)
+        /// <param name="point">Horizontal and vertical offsets to subtract.</param>
+        /// <returns>Translated rectangle with the original width and height.</returns>
+        public RectangleFloat Sub(PointFloat point)
         {
-            return new RectangleFloat(x - point.X, y - point.Y, width, height);
+            var rectangle = this;
+            return new RectangleFloat
+            {
+                X = rectangle.X - point.X,
+                Y = rectangle.Y - point.Y,
+                Width = rectangle.Width,
+                Height = rectangle.Height
+            };
         }
 
         /// <summary>
-        /// Adds a displacement without changing the original rectangle.
+        /// Translates each rectangle by adding the specified offset to its position.
         /// </summary>
-        /// <param name="rectangle">Rectangle.</param>
-        /// <param name="point">Displacement.</param>
-        /// <returns>Translated rectangle.</returns>
-        public static RectangleFloat operator +(RectangleFloat rectangle, PointFloat point) => rectangle.Add(point);
-
-        /// <summary>
-        /// Subtracts a displacement without changing the original rectangle.
-        /// </summary>
-        /// <param name="rectangle">Rectangle.</param>
-        /// <param name="point">Displacement.</param>
-        /// <returns>Translated rectangle.</returns>
-        public static RectangleFloat operator -(RectangleFloat rectangle, PointFloat point) => rectangle.Sub(point);
-
-        /// <summary>
-        /// Returns translated copies of an array of rectangles.
-        /// </summary>
-        /// <param name="rectangles">Rectangles.</param>
-        /// <param name="point">Displacement to add.</param>
-        /// <returns>New array of translated rectangles.</returns>
+        /// <param name="rectangles">Rectangles to translate.</param>
+        /// <param name="point">Horizontal and vertical offsets to add.</param>
+        /// <returns>New array of translated rectangles in the original order, with unchanged sizes.</returns>
         public static RectangleFloat[] Add(RectangleFloat[] rectangles, PointFloat point)
         {
-            if (rectangles == null) throw new ArgumentNullException(nameof(rectangles));
-            var result = new RectangleFloat[rectangles.Length];
-            for (int i = 0; i < result.Length; i++) result[i] = rectangles[i].Add(point);
-            return result;
+            var count = rectangles.Length;
+            var output = new RectangleFloat[count];
+
+            for (int i = 0; i < count; i++)
+            {
+                output[i] = rectangles[i].Add(point);
+            }
+
+            return output;
         }
 
         /// <summary>
-        /// Returns copies of an array translated by the negative displacement.
+        /// Translates each rectangle by subtracting the specified offset from its position.
         /// </summary>
-        /// <param name="rectangles">Rectangles.</param>
-        /// <param name="point">Displacement to subtract.</param>
-        /// <returns>New array of translated rectangles.</returns>
+        /// <param name="rectangles">Rectangles to translate.</param>
+        /// <param name="point">Horizontal and vertical offsets to subtract.</param>
+        /// <returns>New array of translated rectangles in the original order, with unchanged sizes.</returns>
         public static RectangleFloat[] Sub(RectangleFloat[] rectangles, PointFloat point)
         {
-            if (rectangles == null) throw new ArgumentNullException(nameof(rectangles));
-            var result = new RectangleFloat[rectangles.Length];
-            for (int i = 0; i < result.Length; i++) result[i] = rectangles[i].Sub(point);
-            return result;
+            var count = rectangles.Length;
+            var output = new RectangleFloat[count];
+
+            for (int i = 0; i < count; i++)
+            {
+                output[i] = rectangles[i].Sub(point);
+            }
+
+            return output;
         }
 
         /// <summary>
-        /// Returns corners clockwise: top-left, top-right, bottom-right, bottom-left.
+        /// Returns the four corners of a rectangle.
         /// </summary>
-        /// <returns>Four corner points.</returns>
-        public readonly PointFloat[] ToPoints()
+        /// <returns>New array containing the top-left, top-right, bottom-right, and bottom-left corners, in that order.</returns>
+        public PointFloat[] ToPoints()
         {
-            return new[] { new PointFloat(Left, Top), new PointFloat(Right, Top),
-                new PointFloat(Right, Bottom), new PointFloat(Left, Bottom) };
+            var rectangle = this;
+            return new PointFloat[]
+            {
+                new PointFloat (rectangle.Left, rectangle.Top),
+                new PointFloat (rectangle.Right, rectangle.Top),
+                new PointFloat (rectangle.Right, rectangle.Bottom),
+                new PointFloat (rectangle.Left, rectangle.Bottom)
+            };
         }
 
         /// <summary>
-        /// Creates a rectangle from four ordered corners, using corners zero and two.
+        /// Creates a rectangle from an array of four corner points.
         /// </summary>
-        /// <param name="points">Four corners in the order returned by ToPoints.</param>
-        /// <returns>Rectangle.</returns>
-        /// <exception cref="ArgumentNullException">The points array is null.</exception>
-        /// <exception cref="ArgumentException">The array does not contain four points.</exception>
+        /// <param name="points">Four points ordered as top-left, top-right, bottom-right, and bottom-left.</param>
+        /// <returns>Rectangle with its left and top edges taken from the first point and its right and bottom edges from the third point.</returns>
+        /// <exception cref="ArgumentException">The array does not contain exactly four points.</exception>
         public static RectangleFloat FromPoints(PointFloat[] points)
         {
-            if (points == null) throw new ArgumentNullException(nameof(points));
             if (points.Length != 4)
-                throw new ArgumentException("A rectangle can only be built using four points.", nameof(points));
-            return FromLTRB(points[0].X, points[0].Y, points[2].X, points[2].Y);
+                throw new ArgumentException("A rectangle can only be built using four points");
+
+            return RectangleFloat.FromLTRB(
+                points[0].X,
+                points[0].Y,
+                points[2].X,
+                points[2].Y);
         }
 
         /// <summary>
-        /// Returns the upper-left corner.
+        /// Returns the location of a rectangle.
         /// </summary>
-        /// <returns>Point.</returns>
-        public readonly PointFloat GetPoint() => Location;
+        /// <returns>Point containing the rectangle's X and Y coordinates.</returns>
+        public PointFloat GetPoint()
+        {
+            var rectangle = this;
+            return new PointFloat
+            {
+                X = rectangle.X,
+                Y = rectangle.Y
+            };
+        }
 
         /// <summary>
-        /// Returns Width multiplied by Height.
+        /// Calculates the product of a size's width and height.
         /// </summary>
-        /// <returns>Signed area.</returns>
-        public readonly float Area() => width * height;
+        /// <param name="size">Size whose area is calculated.</param>
+        /// <returns>Width multiplied by height, without taking the absolute value.</returns>
+        public static float Area(SizeFloat size)
+        {
+            return size.Width * size.Height;
+        }
 
         /// <summary>
-        /// Returns the product of the specified dimensions.
+        /// Calculates the product of a rectangle's width and height.
         /// </summary>
-        /// <param name="size">Dimensions.</param>
-        /// <returns>Signed area.</returns>
-        public static float Area(SizeFloat size) => size.Width * size.Height;
+        /// <returns>Width multiplied by height, without taking the absolute value.</returns>
+        public float Area()
+        {
+            var rectangle = this;
+            return rectangle.Width * rectangle.Height;
+        }
 
         /// <summary>
-        /// Returns the first non-empty rectangle with the largest signed area.
-        /// Products are compared in double precision to avoid area overflow.
+        /// Selects the rectangle with the largest width-height product.
         /// </summary>
-        /// <param name="rectangles">Rectangles.</param>
-        /// <returns>Selected rectangle, or Empty if no non-empty rectangle exists.</returns>
+        /// <param name="rectangles">Rectangles to compare by area.</param>
+        /// <returns>First rectangle with the largest qualifying area, or the first input rectangle if none qualifies; <see cref="RectangleFloat.Empty"/> for an empty array.</returns>
         public static RectangleFloat Max(params RectangleFloat[] rectangles)
         {
-            if (rectangles == null) throw new ArgumentNullException(nameof(rectangles));
-            var result = Empty;
-            double bestArea = 0;
-            bool found = false;
-            foreach (var rectangle in rectangles)
+            var length = rectangles.Length;
+            var rectangle = RectangleFloat.Empty;
+            var area = float.MinValue;
+            var max = 0;
+
+            for (int i = 0; i < length; i++)
             {
-                if (rectangle.IsEmpty) continue;
-                double area = (double)rectangle.width * rectangle.height;
-                if (!found || area > bestArea)
+                rectangle = rectangles[i];
+
+                if (rectangle.IsEmpty)
+                    continue;
+
+                var current = rectangle.Area();
+
+                if (current > area)
                 {
-                    result = rectangle;
-                    bestArea = area;
-                    found = true;
+                    max = i;
+                    area = current;
                 }
             }
-            return result;
+
+            return length > 0 ? rectangles[max] : rectangle;
         }
 
         /// <summary>
-        /// Returns the first non-empty rectangle with the smallest signed area.
-        /// Products are compared in double precision to avoid area overflow.
+        /// Selects the rectangle with the smallest width-height product.
         /// </summary>
-        /// <param name="rectangles">Rectangles.</param>
-        /// <returns>Selected rectangle, or Empty if no non-empty rectangle exists.</returns>
+        /// <param name="rectangles">Rectangles to compare by area.</param>
+        /// <returns>First rectangle with the smallest qualifying area, or <see cref="RectangleFloat.Empty"/> if none qualifies.</returns>
         public static RectangleFloat Min(params RectangleFloat[] rectangles)
         {
-            if (rectangles == null) throw new ArgumentNullException(nameof(rectangles));
-            var result = Empty;
-            double bestArea = 0;
-            bool found = false;
-            foreach (var rectangle in rectangles)
+            var length = rectangles.Length;
+            var rectangle = RectangleFloat.Empty;
+            var area = float.MaxValue;
+            var min = -1;
+
+            for (int i = 0; i < length; i++)
             {
-                if (rectangle.IsEmpty) continue;
-                double area = (double)rectangle.width * rectangle.height;
-                if (!found || area < bestArea)
+                rectangle = rectangles[i];
+
+                if (rectangle.IsEmpty)
+                    continue;
+
+                var current = rectangle.Area();
+
+                if (current < area)
                 {
-                    result = rectangle;
-                    bestArea = area;
-                    found = true;
+                    min = i;
+                    area = current;
                 }
             }
-            return result;
+
+            return min >= 0 ? rectangles[min] : RectangleInt.Empty;
         }
 
         /// <summary>
-        /// Expands the shorter dimension to form a square around the same center.
-        /// The resulting side is the larger original dimension.
+        /// Converts a rectangle to a square using its larger dimension.
         /// </summary>
-        /// <returns>Square rectangle.</returns>
-        public readonly RectangleFloat ToBox()
+        /// <returns>Square with a side equal to the larger of the original width and height.</returns>
+        public RectangleFloat ToBox()
         {
-            float side = Math.Max(width, height);
-            return new RectangleFloat(x - (side - width) / 2, y - (side - height) / 2, side, side);
+            var rectangle = this;
+            var max = Math.Max(rectangle.Width, rectangle.Height);
+            var dx = max - rectangle.Width;
+            var dy = max - rectangle.Height;
+
+            return new RectangleFloat
+            {
+                X = rectangle.X - dx / 2,
+                Y = rectangle.Y - dy / 2,
+                Width = rectangle.Width + dx,
+                Height = rectangle.Height + dy
+            };
         }
 
         /// <summary>
-        /// Grows each dimension by the specified fraction around the center.
-        /// A scale of zero preserves the rectangle; one doubles its dimensions.
-        /// This overload preserves the aspect ratio instead of forming a square.
+        /// Resizes a rectangle by a relative change in both dimensions.
         /// </summary>
-        /// <param name="scale">Fractional increase in both dimensions.</param>
-        /// <returns>Resized rectangle.</returns>
-        public readonly RectangleFloat ToBox(float scale)
+        /// <param name="scale">Relative change in width and height; for example, 0.1 increases both by 10% before truncation.</param>
+        /// <returns>Resized rectangle with coordinates and dimensions truncated toward zero to integers.</returns>
+        public RectangleFloat ToBox(float scale)
         {
-            float dx = width * scale;
-            float dy = height * scale;
-            return new RectangleFloat(x - dx / 2, y - dy / 2, width + dx, height + dy);
+            var rectangle = this;
+            float gainX = rectangle.Width * scale;
+            float gainY = rectangle.Height * scale;
+
+            return new RectangleFloat(
+                (int)(rectangle.X - gainX / 2),
+                (int)(rectangle.Y - gainY / 2),
+                (int)(rectangle.Width + gainX),
+                (int)(rectangle.Height + gainY)
+                );
         }
 
         /// <summary>
-        /// Returns square copies of the specified rectangles.
+        /// Converts each rectangle to a square using its larger dimension.
         /// </summary>
-        /// <param name="rectangles">Rectangles.</param>
-        /// <returns>New array of square rectangles.</returns>
+        /// <param name="rectangles">Rectangles to convert.</param>
+        /// <returns>New array of squares in the original order, each with a side equal to the larger original dimension.</returns>
         public static RectangleFloat[] ToBox(params RectangleFloat[] rectangles)
         {
-            if (rectangles == null) throw new ArgumentNullException(nameof(rectangles));
-            var result = new RectangleFloat[rectangles.Length];
-            for (int i = 0; i < result.Length; i++) result[i] = rectangles[i].ToBox();
-            return result;
+            int length = rectangles.Length;
+            var newRectangles = new RectangleFloat[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                newRectangles[i] = rectangles[i].ToBox();
+            }
+
+            return newRectangles;
         }
 
         /// <summary>
-        /// Returns copies grown by the specified fraction around their centers.
+        /// Resizes each rectangle by a relative change in both dimensions.
         /// </summary>
-        /// <param name="factor">Fractional increase in both dimensions.</param>
-        /// <param name="rectangles">Rectangles.</param>
-        /// <returns>New array of resized rectangles.</returns>
+        /// <param name="factor">Relative change in width and height; for example, 0.1 increases both by 10% before truncation.</param>
+        /// <param name="rectangles">Rectangles to resize.</param>
+        /// <returns>New array of resized rectangles in the original order.</returns>
         public static RectangleFloat[] ToBox(float factor, params RectangleFloat[] rectangles)
         {
-            if (rectangles == null) throw new ArgumentNullException(nameof(rectangles));
-            var result = new RectangleFloat[rectangles.Length];
-            for (int i = 0; i < result.Length; i++) result[i] = rectangles[i].ToBox(factor);
-            return result;
+            int length = rectangles.Length;
+            var newRectangles = new RectangleFloat[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                newRectangles[i] = rectangles[i].ToBox(factor);
+            }
+
+            return newRectangles;
         }
 
         /// <summary>
-        /// Returns intersection area divided by union area.
-        /// Degenerate or disjoint rectangles return zero. Intermediate calculations
-        /// use double precision to avoid coordinate and area overflow.
+        /// Calculates the intersection-over-union (IoU) ratio of two rectangles.
         /// </summary>
-        /// <param name="rectangle">Other rectangle.</param>
-        /// <returns>Intersection over union.</returns>
-        public readonly float IoU(RectangleFloat rectangle) => IoU(this, rectangle);
-
-        /// <summary>
-        /// Returns intersection area divided by union area.
-        /// Degenerate or disjoint rectangles return zero.
-        /// </summary>
-        /// <param name="a">First rectangle.</param>
-        /// <param name="b">Second rectangle.</param>
-        /// <returns>Intersection over union.</returns>
-        public static float IoU(RectangleFloat a, RectangleFloat b)
+        /// <param name="b">Second rectangle, with nonnegative width and height.</param>
+        /// <returns>Intersection area divided by union area, or zero if the intersection area is zero.</returns>
+        public float IoU(RectangleFloat b)
         {
-            if (a.width <= 0 || a.height <= 0 || b.width <= 0 || b.height <= 0) return 0;
-            double left = Math.Max((double)a.x, b.x);
-            double top = Math.Max((double)a.y, b.y);
-            double right = Math.Min((double)a.x + a.width, (double)b.x + b.width);
-            double bottom = Math.Min((double)a.y + a.height, (double)b.y + b.height);
-            double intersection = Math.Max(0, right - left) * Math.Max(0, bottom - top);
-            if (intersection == 0) return 0;
-            double union = (double)a.width * a.height + (double)b.width * b.height - intersection;
-            return (float)(intersection / union);
+            var a = this;
+            var xA = Math.Max(a.Left, b.Left);
+            var yA = Math.Max(a.Top, b.Top);
+            var xB = Math.Min(a.Right, b.Right);
+            var yB = Math.Min(a.Bottom, b.Bottom);
+
+            var interArea = Math.Abs(Math.Max(xB - xA, 0) * (float)Math.Max(yB - yA, 0));
+
+            if (interArea == 0)
+                return 0;
+
+            var boxAArea = Math.Abs((a.Right - a.Left) * (float)(a.Bottom - a.Top));
+            var boxBArea = Math.Abs((b.Right - b.Left) * (float)(b.Bottom - b.Top));
+
+            return interArea / (float)(boxAArea + boxBArea - interArea);
         }
 
         /// <summary>
-        /// Grows each dimension by its fractional increase around the center.
-        /// Zero preserves that dimension; one doubles it.
+        /// Resizes a rectangle by independent relative changes in width and height.
         /// </summary>
-        /// <param name="kx">Fractional increase in width.</param>
-        /// <param name="ky">Fractional increase in height.</param>
-        /// <returns>Resized rectangle.</returns>
-        public readonly RectangleFloat Scale(float kx = 0.0f, float ky = 0.0f)
+        /// <param name="kx">Relative width change; for example, 0.1 adds 10% of the width before truncation. Defaults to zero.</param>
+        /// <param name="ky">Relative height change; for example, 0.1 adds 10% of the height before truncation. Defaults to zero.</param>
+        /// <returns>Rectangle with the computed dimension changes added and half of each change subtracted from its position.</returns>
+        public RectangleFloat Scale(float kx = 0.0f, float ky = 0.0f)
         {
-            float dx = width * kx;
-            float dy = height * ky;
-            return new RectangleFloat(x - dx / 2, y - dy / 2, width + dx, height + dy);
+            var rectangle = this;
+            var x = rectangle.X;
+            var y = rectangle.Y;
+            var w = rectangle.Width;
+            var h = rectangle.Height;
+
+            var dw = (int)(w * kx);
+            var dh = (int)(h * ky);
+
+            return new RectangleFloat
+            {
+                X = x - dw / 2,
+                Y = y - dh / 2,
+                Width = w + dw,
+                Height = h + dh,
+            };
         }
 
         /// <summary>
-        /// Returns a centered square whose side is the original diagonal length.
-        /// Intermediate products use double precision.
+        /// Converts a rectangle to a square using its diagonal length.
         /// </summary>
-        /// <returns>Square rectangle.</returns>
-        public readonly RectangleFloat Scale()
+        /// <returns>Square with a side equal to the original diagonal length truncated toward zero to an integer.</returns>
+        public RectangleFloat Scale()
         {
-            float side = (float)Math.Sqrt((double)width * width + (double)height * height);
-            return new RectangleFloat(x - (side - width) / 2, y - (side - height) / 2, side, side);
+            var rectangle = this;
+            var r = (int)Math.Sqrt(rectangle.Width * rectangle.Width + rectangle.Height * rectangle.Height);
+            var dx = r - rectangle.Width;
+            var dy = r - rectangle.Height;
+
+            var x = rectangle.X - dx / 2;
+            var y = rectangle.Y - dy / 2;
+            var w = rectangle.Width + dx;
+            var h = rectangle.Height + dy;
+
+            return new RectangleFloat
+            {
+                X = x,
+                Y = y,
+                Width = w,
+                Height = h
+            };
         }
 
         /// <summary>
-        /// Normalizes this rectangle's negative dimensions and clips it to the bounds.
-        /// Disjoint results retain the clipped origin and have nonnegative dimensions.
+        /// Clips a rectangle against the bounds of another rectangle.
         /// </summary>
-        /// <param name="bounds">Clipping rectangle, used without normalization.</param>
-        /// <returns>Clipped rectangle.</returns>
-        public readonly RectangleFloat Clamp(RectangleFloat bounds) => Clamp(this, bounds);
-
-        /// <summary>
-        /// Normalizes the first rectangle's negative dimensions and clips it to the second.
-        /// </summary>
-        /// <param name="first">Rectangle to normalize and clip.</param>
-        /// <param name="second">Clipping rectangle, used without normalization.</param>
-        /// <returns>Clipped rectangle.</returns>
-        public static RectangleFloat Clamp(RectangleFloat first, RectangleFloat second)
+        /// <param name="second">Clipping bounds, expected to have nonnegative width and height.</param>
+        /// <returns>Rectangle starting at the maximum left and top coordinates, with each intersection dimension clamped to zero.</returns>
+        public RectangleFloat Clamp(RectangleFloat second)
         {
-            if (first.width < 0) { first.x += first.width; first.width = -first.width; }
-            if (first.height < 0) { first.y += first.height; first.height = -first.height; }
-            float left = Math.Max(first.Left, second.Left);
-            float top = Math.Max(first.Top, second.Top);
+            var first = this;
+            if (first.Width < 0) { first.X += first.Width; first.Width = -first.Width; }
+            if (first.Height < 0) { first.Y += first.Height; first.Height = -first.Height; }
+
+            float x = Math.Max(first.X, second.Left);
+            float y = Math.Max(first.Y, second.Top);
+
             float right = Math.Min(first.Right, second.Right);
             float bottom = Math.Min(first.Bottom, second.Bottom);
-            return new RectangleFloat(left, top, Math.Max(0, right - left), Math.Max(0, bottom - top));
+
+            float w = Math.Max(0, right - x);
+            float h = Math.Max(0, bottom - y);
+
+            return new RectangleFloat(x, y, w, h);
         }
         #endregion
 
@@ -566,7 +651,7 @@ namespace UMapx.Core
         /// Returns a vector containing X, Y, Width and Height.
         /// </summary>
         /// <returns>Four-component vector.</returns>
-        public readonly Vector4 ToVector4() => new Vector4(x, y, width, height);
+        public Vector4 ToVector4() => new Vector4(x, y, width, height);
 
         /// <summary>
         /// Converts a rectangle to a vector.
@@ -583,102 +668,66 @@ namespace UMapx.Core
         /// <summary>
         /// Converts integer components to single precision.
         /// </summary>
-        /// <param name="rectangle">Integer rectangle.</param>
-        public static implicit operator RectangleFloat(RectangleInt rectangle)
+        /// <param name="r">Integer rectangle.</param>
+        public static implicit operator RectangleFloat(RectangleInt r)
         {
-            return new RectangleFloat(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            return new RectangleFloat(r.X, r.Y, r.Width, r.Height);
         }
 
-        /// <summary>
-        /// Converts a System.Drawing.RectangleF without changing its components.
-        /// </summary>
-        /// <param name="rectangle">System.Drawing rectangle.</param>
-        public static implicit operator RectangleFloat(System.Drawing.RectangleF rectangle)
-        {
-            return new RectangleFloat(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
-        }
-
-        /// <summary>
-        /// Converts to System.Drawing.RectangleF without changing the components.
-        /// </summary>
-        /// <param name="rectangle">Rectangle.</param>
-        public static implicit operator System.Drawing.RectangleF(RectangleFloat rectangle)
-        {
-            return new System.Drawing.RectangleF(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-        }
         #endregion
 
         #region Equality and overrides
         /// <summary>
         /// Compares all four components.
         /// </summary>
-        /// <param name="a">First rectangle.</param>
-        /// <param name="b">Second rectangle.</param>
+        /// <param name="left">First rectangle.</param>
+        /// <param name="right">Second rectangle.</param>
         /// <returns>Boolean.</returns>
-        public static bool operator ==(RectangleFloat a, RectangleFloat b)
+        public static bool operator ==(RectangleFloat left, RectangleFloat right)
         {
-            return a.x == b.x && a.y == b.y && a.width == b.width && a.height == b.height;
+            return left.x == right.x && left.y == right.y && left.width == right.width && left.height == right.height;
         }
 
         /// <summary>
         /// Tests whether any component differs.
         /// </summary>
-        /// <param name="a">First rectangle.</param>
-        /// <param name="b">Second rectangle.</param>
+        /// <param name="left">First rectangle.</param>
+        /// <param name="right">Second rectangle.</param>
         /// <returns>Boolean.</returns>
-        public static bool operator !=(RectangleFloat a, RectangleFloat b) => !(a == b);
+        public static bool operator !=(RectangleFloat left, RectangleFloat right) => !(left == right);
 
         /// <summary>
         /// Tests whether another rectangle has the same components.
         /// </summary>
         /// <param name="other">Rectangle.</param>
         /// <returns>Boolean.</returns>
-        public readonly bool Equals(RectangleFloat other) => this == other;
+        public bool Equals(RectangleFloat other) => this == other;
 
         /// <summary>
         /// Tests whether an object is an equal RectangleFloat.
         /// </summary>
         /// <param name="obj">Object.</param>
         /// <returns>Boolean.</returns>
-        public override readonly bool Equals(object obj) => obj is RectangleFloat other && Equals(other);
+        public override bool Equals(object obj) => obj is RectangleFloat other && Equals(other);
 
         /// <summary>
         /// Returns a hash code based on all four components.
         /// </summary>
         /// <returns>Hash code.</returns>
-        public override readonly int GetHashCode()
+        public override int GetHashCode()
         {
-            unchecked
-            {
-                int hash = x.GetHashCode();
-                hash = hash * 397 ^ y.GetHashCode();
-                hash = hash * 397 ^ width.GetHashCode();
-                return hash * 397 ^ height.GetHashCode();
-            }
+            return new System.Drawing.RectangleF(x, y, width, height).GetHashCode();
         }
 
         /// <summary>
-        /// Returns the location and dimensions in System.Drawing format.
+        /// Returns a string containing the location and dimensions.
         /// </summary>
         /// <returns>Text representation.</returns>
-        public override readonly string ToString()
+        public override string ToString()
         {
             return string.Format("{{X={0},Y={1},Width={2},Height={3}}}", x, y, width, height);
         }
         #endregion
 
-        #region Clone members
-        /// <summary>
-        /// Returns a copy of this rectangle.
-        /// </summary>
-        /// <returns>Rectangle copy.</returns>
-        public readonly RectangleFloat Clone() => this;
-
-        /// <summary>
-        /// Returns a boxed copy of this rectangle.
-        /// </summary>
-        /// <returns>Rectangle copy.</returns>
-        readonly object ICloneable.Clone() => Clone();
-        #endregion
     }
 }
