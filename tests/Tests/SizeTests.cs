@@ -131,23 +131,43 @@ public class SizeTests
     }
 
     [Fact]
-    public void IntegerArithmeticMatchesSystemDrawingIncludingDivisionExceptions()
+    public void IntegerAdditionAndSubtractionMatchSystemDrawing()
     {
         foreach (int width in Integers)
         foreach (int height in Integers)
-        foreach (int factor in Integers)
+        foreach (int secondWidth in Integers)
+        foreach (int secondHeight in Integers)
         {
             var expected = new Size(width, height);
             var actual = new SizeInt(width, height);
-            var second = new Size(factor, height);
-            var secondActual = new SizeInt(factor, height);
+            var second = new Size(secondWidth, secondHeight);
+            var secondActual = new SizeInt(secondWidth, secondHeight);
             Same(Size.Add(expected, second), SizeInt.Add(actual, secondActual));
             Same(Size.Subtract(expected, second), SizeInt.Subtract(actual, secondActual));
             Same(expected + second, actual + secondActual);
             Same(expected - second, actual - secondActual);
-            Same(expected * factor, actual * factor);
-            Same(factor * expected, factor * actual);
-            SameResult(() => expected / factor, () => actual / factor, Same);
+            Assert.Equal(expected.Equals(second), actual.Equals(secondActual));
+            Assert.Equal(expected == second, actual == secondActual);
+            Assert.Equal(expected != second, actual != secondActual);
+            Same(new Size(width, height), actual);
+            Same(new Size(secondWidth, secondHeight), secondActual);
+        }
+    }
+
+    [Fact]
+    public void IntegerScalingMatchesSystemDrawingIncludingDivisionExceptions()
+    {
+        foreach (int width in Integers)
+        foreach (int height in Integers)
+        {
+            var expected = new Size(width, height);
+            var actual = new SizeInt(width, height);
+            foreach (int factor in Integers)
+            {
+                Same(expected * factor, actual * factor);
+                Same(factor * expected, factor * actual);
+                SameResult(() => expected / factor, () => actual / factor, Same);
+            }
             foreach (float floating in Floats)
             {
                 Same(expected * floating, actual * floating);

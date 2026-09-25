@@ -9,7 +9,7 @@ internal static class NumericAssert
     internal static void Close(double expected, double actual, double absolute = 2e-6, double relative = 2e-5)
     {
         double tolerance = absolute + relative * Math.Abs(expected);
-        Assert.True(double.IsFinite(actual) && Math.Abs(actual - expected) <= tolerance,
+        Assert.True(double.IsFinite(expected) && double.IsFinite(actual) && Math.Abs(actual - expected) <= tolerance,
             FormattableString.Invariant($"Expected {expected:G17}; actual {actual:G17}; tolerance {tolerance:G6}."));
     }
 

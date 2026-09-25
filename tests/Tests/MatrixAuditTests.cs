@@ -138,7 +138,7 @@ public class MatrixAuditTests
         else if(operation=="Crop")result=(Array)Call("Crop",1,1,2,2,true);
         else
         {
-            // A constant patch isolates placement from the independent bicubic resampling defect.
+            // A constant patch isolates placement from resampling.
             var patch=Array.CreateInstance(a.GetType().GetElementType()!,2,2);
             for(int i=0;i<2;i++)for(int j=0;j<2;j++)patch.SetValue(complex?(object)new Complex32(2,.5f):2f,i,j);
             result=(Array)Call("Merge",patch,1,1,2,2);

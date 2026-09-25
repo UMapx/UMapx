@@ -12,8 +12,6 @@ using Poisson = UMapx.Distribution.Poisson;
 
 namespace UMapx.Tests;
 
-// These tests assert the correct mathematics. Failures are intentional evidence
-// of existing library defects, not assertions of the current incorrect behavior.
 [Trait("Category", "Regression")]
 public class MathematicalRegressionTests
 {
