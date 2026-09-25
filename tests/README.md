@@ -11,27 +11,26 @@ dotnet test tests/UMapx.Tests.csproj --collect:"XPlat Code Coverage" --settings 
 
 ## Organization
 
-Tests live in `Tests/`, grouped by the part of the library they exercise.
+Tests live in `Tests/`, grouped by library namespace. Each directory name matches
+the corresponding `UMapx` namespace.
 
 | Directory | Scope | Category |
 | --- | --- | --- |
 | `Analysis` | Integration, differentiation, roots, interpolation and approximation | `Analysis` |
 | `Colorspace` | Color conversions and component preservation | `Colorspace` |
-| `Core` | Scalar arithmetic, number theory, special functions, kernels, heaps and console diagnostics | `Core` |
+| `Core` | Scalar arithmetic, number theory, special functions, kernels, heaps, console diagnostics, geometry and matrices | `Core`, `Geometry`, `Matrix` |
 | `Decomposition` | Matrix factors, eigenvalues, numerical edge cases and independent references | `Decomposition` |
-| `Distances` | Real, complex and boolean distances | `Distance` |
-| `Distributions` | Probability references, moments, modes, medians and time-frequency kernels | `Distribution` |
-| `Geometry` | Points, sizes, rectangles, ranges, hashing and rounding | `Geometry` |
-| `Matrices` | Arithmetic, statistics, array operations, filtering, resampling and SIMD | `Matrix` |
-| `Responses` | FIR and IIR responses and stability | `Response` |
-| `Transforms` | Direct, fast, windowed and multichannel transforms and their filters | `Transform` |
-| `Wavelets` | Filter banks, reconstruction and analytic wavelets | `Wavelet` |
-| `Windows` | Window formulas, dimensions and boundaries | `Window` |
-| `Support` | Shared assertions, test data utilities and culture initialization | `Infrastructure` |
+| `Distance` | Real, complex and boolean distances | `Distance` |
+| `Distribution` | Probability references, moments, modes, medians and time-frequency kernels | `Distribution` |
+| `Response` | FIR and IIR responses and stability | `Response` |
+| `Transform` | Direct, fast, windowed and multichannel transforms and their filters | `Transform` |
+| `Wavelet` | Filter banks, reconstruction and analytic wavelets | `Wavelet` |
+| `Window` | Window formulas, dimensions and boundaries | `Window` |
 
 Name test classes after their subject and test methods after the behavior they verify.
-Keep regression cases with the relevant subject. Shared helpers belong in `Support`;
-test classes should not provide utilities for other test classes.
+Keep regression cases with the relevant subject. Shared helpers and their tests live
+directly in `Tests/`; test classes should not provide utilities for other test classes.
+Tests of shared helpers use the `Infrastructure` category.
 
 `GeometryRoundingTests` holds shared rounding rules and exceptional conversions.
 Type-specific tests retain randomized component checks. Hash tests check equality
