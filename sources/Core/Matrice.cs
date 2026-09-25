@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using System.Threading.Tasks;
 
 namespace UMapx.Core
@@ -7781,7 +7780,7 @@ namespace UMapx.Core
             int width = input.GetLength(1);
             int height = input.GetLength(0);
             int max = Math.Max(width, height);
-            var rect = new Rectangle((max - width) / 2, (max - height) / 2, width, height);
+            var rect = new RectangleInt((max - width) / 2, (max - height) / 2, width, height);
             var temp = new float[max, max].Add(value);
 
             for (int y = 0; y < rect.Height; y++)
@@ -7808,7 +7807,7 @@ namespace UMapx.Core
             int width = w;
             int height = h;
             int max = Math.Max(width, height);
-            var rect = new Rectangle((max - width) / 2, (max - height) / 2, width, height);
+            var rect = new RectangleInt((max - width) / 2, (max - height) / 2, width, height);
             var resized = input.Resize(max, max, interpolationMode);
             var temp = new float[rect.Height, rect.Width];
 
@@ -7837,7 +7836,7 @@ namespace UMapx.Core
             int width = input.GetLength(1);
             int height = input.GetLength(0);
             int max = Math.Max(width, height);
-            var rect = new Rectangle((max - width) / 2, (max - height) / 2, width, height);
+            var rect = new RectangleInt((max - width) / 2, (max - height) / 2, width, height);
             var temp = new Complex32[max, max].Add(value);
 
             for (int y = 0; y < rect.Height; y++)
@@ -7864,7 +7863,7 @@ namespace UMapx.Core
             int width = w;
             int height = h;
             int max = Math.Max(width, height);
-            var rect = new Rectangle((max - width) / 2, (max - height) / 2, width, height);
+            var rect = new RectangleInt((max - width) / 2, (max - height) / 2, width, height);
             var resized = input.Resize(max, max, interpolationMode);
             var temp = new Complex32[rect.Height, rect.Width];
 

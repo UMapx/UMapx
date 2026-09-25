@@ -387,7 +387,7 @@ namespace UMapx.Core
         /// <returns>Integer number.</returns>
         public override int GetHashCode()
         {
-            return new System.Drawing.PointF(x, y).GetHashCode();
+            return unchecked((x.GetHashCode() * 397) ^ y.GetHashCode());
         }
         /// <summary>
         /// Converts a PointFloat to its corresponding string representation.
@@ -395,7 +395,7 @@ namespace UMapx.Core
         /// <returns>Text as a sequence of Unicode characters.</returns>
         public override string ToString()
         {
-            return new System.Drawing.PointF(x, y).ToString();
+            return string.Format("{{X={0}, Y={1}}}", x, y);
         }
         /// <summary>
         /// Gets a value indicating whether this instance is equal to the specified value of type PointFloat.

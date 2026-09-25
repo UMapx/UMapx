@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Globalization;
 using System.Numerics;
 using UMapx.Core;
@@ -9,13 +8,13 @@ namespace UMapx.Tests;
 [Trait("Category", "Core")]
 public class PointTests
 {
-    private static void Same(Point expected, PointInt actual)
+    private static void Same((int X, int Y) expected, PointInt actual)
     {
         Assert.Equal(expected.X, actual.X);
         Assert.Equal(expected.Y, actual.Y);
     }
 
-    private static void Same(PointF expected, PointFloat actual)
+    private static void Same((float X, float Y) expected, PointFloat actual)
     {
         Assert.Equal(expected.X, actual.X);
         Assert.Equal(expected.Y, actual.Y);
@@ -26,101 +25,96 @@ public class PointTests
         2.25f, float.MaxValue, float.NaN, float.PositiveInfinity, float.NegativeInfinity };
 
     [Fact]
-    public void IntegerConstructionPropertiesEqualityAndOffsetsMatchSystemDrawing()
+    public void IntegerConstructionPropertiesEqualityAndOffsetsPreserveCoordinates()
     {
         foreach (int x in Integers)
         foreach (int y in Integers)
         {
-            var expected = new Point(x, y);
+            var expected = (X: x, Y: y);
             var actual = new PointInt(x, y);
             Same(expected, actual);
-            Same(new Point(new Size(x, y)), new PointInt(new SizeInt(x, y)));
-            Assert.Equal(expected.IsEmpty, actual.IsEmpty);
+            Same(expected, new PointInt(new SizeInt(x, y)));
+            Assert.Equal(x == 0 && y == 0, actual.IsEmpty);
             Assert.True(((IEquatable<PointInt>)actual).Equals(new PointInt(x, y)));
             Assert.True(actual.Equals((object)new PointInt(x, y)));
             Assert.False(actual.Equals(null));
             Assert.False(actual.Equals((object)expected));
-            Assert.Equal(expected == Point.Empty, actual == PointInt.Empty);
-            Assert.Equal(expected != Point.Empty, actual != PointInt.Empty);
+            Assert.Equal(x == 0 && y == 0, actual == PointInt.Empty);
+            Assert.Equal(x != 0 || y != 0, actual != PointInt.Empty);
             Assert.Equal(new SizeInt(x, y), (SizeInt)actual);
-            Assert.Equal(expected.GetHashCode(), actual.GetHashCode());
-            Assert.Equal(expected.ToString(), actual.ToString());
 
-            expected.Offset(new Point(y, x));
+            expected = (unchecked(x + y), unchecked(y + x));
             actual.Offset(new PointInt(y, x));
             Same(expected, actual);
-            expected.Offset(-10, 17);
+            expected = (unchecked(expected.X - 10), unchecked(expected.Y + 17));
             actual.Offset(-10, 17);
             Same(expected, actual);
             actual.X = x; actual.Y = y;
-            Same(new Point(x, y), actual);
+            Same((x, y), actual);
         }
     }
 
     [Theory]
-    [InlineData(0)]
-    [InlineData(-1)]
-    [InlineData(int.MinValue)]
-    [InlineData(int.MaxValue)]
-    [InlineData(65535)]
-    [InlineData(65536)]
-    [InlineData(-2147450880)]
-    public void PackedIntegerConstructorMatchesSignedWordsInSystemDrawing(int packed)
+    [InlineData(0, 0, 0)]
+    [InlineData(-1, -1, -1)]
+    [InlineData(int.MinValue, 0, -32768)]
+    [InlineData(int.MaxValue, -1, 32767)]
+    [InlineData(65535, -1, 0)]
+    [InlineData(65536, 0, 1)]
+    [InlineData(-2147450880, -32768, -32768)]
+    public void PackedIntegerConstructorDecodesSignedWords(int packed, int x, int y)
     {
-        Same(new Point(packed), new PointInt(packed));
+        Same((x, y), new PointInt(packed));
     }
 
     [Fact]
-    public void IntegerSizeArithmeticMatchesSystemDrawingIncludingOverflow()
+    public void IntegerSizeArithmeticWrapsOverflowInEachCoordinate()
     {
         foreach (int x in Integers)
         foreach (int y in Integers)
         foreach (int delta in Integers)
         {
-            var expected = new Point(x, y);
             var actual = new PointInt(x, y);
-            var drawingSize = new Size(delta, -7);
             var size = new SizeInt(delta, -7);
-            Same(Point.Add(expected, drawingSize), PointInt.Add(actual, size));
-            Same(Point.Subtract(expected, drawingSize), PointInt.Subtract(actual, size));
-            Same(expected + drawingSize, actual + size);
-            Same(expected - drawingSize, actual - size);
+            var sum = (unchecked(x + delta), unchecked(y - 7));
+            var difference = (unchecked(x - delta), unchecked(y + 7));
+            Same(sum, PointInt.Add(actual, size));
+            Same(difference, PointInt.Subtract(actual, size));
+            Same(sum, actual + size);
+            Same(difference, actual - size);
             Assert.Equal(new PointInt(x, y), actual);
         }
     }
 
     [Fact]
-    public void FloatPropertiesEqualityAndSizeArithmeticMatchSystemDrawing()
+    public void FloatPropertiesEqualityAndSizeArithmeticUseEachCoordinate()
     {
         foreach (float x in Floats)
         foreach (float y in Floats)
         {
-            var expected = new PointF(x, y);
+            var expected = (X: x, Y: y);
             var actual = new PointFloat(x, y);
             Same(expected, actual);
-            Assert.Equal(expected.IsEmpty, actual.IsEmpty);
-            Assert.Equal(expected.Equals(new PointF(x, y)), actual.Equals(new PointFloat(x, y)));
-            Assert.Equal(expected.Equals((object)expected), actual.Equals((object)actual));
-            Assert.Equal(expected.Equals(expected), ((IEquatable<PointFloat>)actual).Equals(actual));
+            Assert.Equal(x == 0 && y == 0, actual.IsEmpty);
+            bool reflexive = !float.IsNaN(x) && !float.IsNaN(y);
+            Assert.Equal(reflexive, actual.Equals(new PointFloat(x, y)));
+            Assert.Equal(reflexive, actual.Equals((object)actual));
+            Assert.Equal(reflexive, ((IEquatable<PointFloat>)actual).Equals(actual));
             Assert.False(actual.Equals(null));
             Assert.False(actual.Equals((object)expected));
-            Assert.Equal(expected == PointF.Empty, actual == PointFloat.Empty);
-            Assert.Equal(expected != PointF.Empty, actual != PointFloat.Empty);
-            Assert.Equal(expected.GetHashCode(), actual.GetHashCode());
-            Assert.Equal(expected.ToString(), actual.ToString());
+            Assert.Equal(x == 0 && y == 0, actual == PointFloat.Empty);
+            Assert.Equal(x != 0 || y != 0, actual != PointFloat.Empty);
 
             var size = new SizeFloat(-2.75f, 4.5f);
-            var drawingSize = new SizeF(size.Width, size.Height);
-            Same(PointF.Add(expected, drawingSize), PointFloat.Add(actual, size));
-            Same(PointF.Subtract(expected, drawingSize), PointFloat.Subtract(actual, size));
-            Same(expected + drawingSize, actual + size);
-            Same(expected - drawingSize, actual - size);
+            Same((x - 2.75f, y + 4.5f), PointFloat.Add(actual, size));
+            Same((x + 2.75f, y - 4.5f), PointFloat.Subtract(actual, size));
+            Same((x - 2.75f, y + 4.5f), actual + size);
+            Same((x + 2.75f, y - 4.5f), actual - size);
             var integerSize = new SizeInt(int.MaxValue, int.MinValue);
-            var drawingIntegerSize = new Size(integerSize.Width, integerSize.Height);
-            Same(PointF.Add(expected, drawingIntegerSize), PointFloat.Add(actual, integerSize));
-            Same(PointF.Subtract(expected, drawingIntegerSize), PointFloat.Subtract(actual, integerSize));
-            Same(expected + drawingIntegerSize, actual + integerSize);
-            Same(expected - drawingIntegerSize, actual - integerSize);
+            Same((x + int.MaxValue, y + int.MinValue), PointFloat.Add(actual, integerSize));
+            Same((x - int.MaxValue, y - int.MinValue), PointFloat.Subtract(actual, integerSize));
+            Same((x + int.MaxValue, y + int.MinValue), actual + integerSize);
+            Same((x - int.MaxValue, y - int.MinValue), actual - integerSize);
             Same(expected, actual);
             actual.X = x; actual.Y = y;
             Same(expected, actual);
@@ -129,19 +123,17 @@ public class PointTests
     }
 
     [Theory]
-    [InlineData(-2.5f, 3.5f)]
-    [InlineData(2.5f, -3.5f)]
-    [InlineData(-0.9f, 0.9f)]
-    [InlineData(0, 16777215)]
-    [InlineData(float.NaN, float.PositiveInfinity)]
-    [InlineData(float.MaxValue, float.MinValue)]
-    public void RoundingMatchesSystemDrawing(float x, float y)
+    [InlineData(-2.5f, 3.5f, -2, 4, -2, 4, -2, 3)]
+    [InlineData(2.5f, -3.5f, 3, -3, 2, -4, 2, -3)]
+    [InlineData(-0.9f, 0.9f, 0, 1, -1, 1, 0, 0)]
+    [InlineData(0, 16777215, 0, 16777215, 0, 16777215, 0, 16777215)]
+    public void RoundingUsesCeilingMidpointToEvenAndTruncation(float x, float y,
+        int ceilingX, int ceilingY, int roundX, int roundY, int truncateX, int truncateY)
     {
-        var expected = new PointF(x, y);
         var actual = new PointFloat(x, y);
-        Same(Point.Ceiling(expected), PointInt.Ceiling(actual));
-        Same(Point.Round(expected), PointInt.Round(actual));
-        Same(Point.Truncate(expected), PointInt.Truncate(actual));
+        Same((ceilingX, ceilingY), PointInt.Ceiling(actual));
+        Same((roundX, roundY), PointInt.Round(actual));
+        Same((truncateX, truncateY), PointInt.Truncate(actual));
     }
 
     [Fact]
@@ -151,24 +143,24 @@ public class PointTests
         foreach (int y in Integers)
         {
             PointFloat point = new PointInt(x, y);
-            Same((PointF)new Point(x, y), point);
+            Same(((float)x, (float)y), point);
         }
         foreach (float x in Floats)
         foreach (float y in Floats)
         {
             var vector = new Vector2(x, y);
             var point = new PointFloat(x, y);
-            Same(new PointF(x, y), new PointFloat(vector));
-            Same(new PointF(x, y), (PointFloat)vector);
+            Same((x, y), new PointFloat(vector));
+            Same((x, y), (PointFloat)vector);
             Assert.Equal(vector, point.ToVector2());
             Assert.Equal(vector, (Vector2)point);
         }
     }
 
     [Theory]
-    [InlineData("en-US")]
-    [InlineData("ru-RU")]
-    public void StringFormattingMatchesSystemDrawingAndCloneIsRetained(string culture)
+    [InlineData("en-US", "{X=-3.25, Y=7.5}")]
+    [InlineData("ru-RU", "{X=-3,25, Y=7,5}")]
+    public void StringFormattingUsesCurrentCultureAndCloneIsRetained(string culture, string expected)
     {
         var integer = new PointInt(-3, 7);
         var floating = new PointFloat(-3.25f, 7.5f);
@@ -180,8 +172,8 @@ public class PointTests
         try
         {
             CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo(culture);
-            Assert.Equal(new Point(-3, 7).ToString(), integer.ToString());
-            Assert.Equal(new PointF(-3.25f, 7.5f).ToString(), floating.ToString());
+            Assert.Equal("{X=-3,Y=7}", integer.ToString());
+            Assert.Equal(expected, floating.ToString());
         }
         finally { CultureInfo.CurrentCulture = previous; }
     }

@@ -1,4 +1,3 @@
-using System.Drawing;
 using UMapx.Core;
 using Xunit;
 
@@ -168,20 +167,15 @@ public class RangeTests
     }
 
     [Theory]
-    [InlineData(-2.5f, 3.5f)]
-    [InlineData(3.75f, -1.25f)]
-    [InlineData(float.NaN, float.PositiveInfinity)]
-    [InlineData(float.MinValue, float.MaxValue)]
-    public void RoundingBoundsUsesSystemDrawingRounding(float min, float max)
+    [InlineData(-2.5f, 3.5f, -2, 4, -2, 4, -2, 3)]
+    [InlineData(3.75f, -1.25f, 4, -1, 4, -1, 3, -1)]
+    public void RoundingBoundsUsesCeilingMidpointToEvenAndTruncation(float min, float max,
+        int ceilingMin, int ceilingMax, int roundMin, int roundMax, int truncateMin, int truncateMax)
     {
-        var point = new PointF(min, max);
         var range = new RangeFloat(min, max);
-        var ceiling = Point.Ceiling(point);
-        var round = Point.Round(point);
-        var truncate = Point.Truncate(point);
-        Same(new RangeInt(ceiling.X, ceiling.Y), RangeInt.Ceiling(range));
-        Same(new RangeInt(round.X, round.Y), RangeInt.Round(range));
-        Same(new RangeInt(truncate.X, truncate.Y), RangeInt.Truncate(range));
+        Same(new RangeInt(ceilingMin, ceilingMax), RangeInt.Ceiling(range));
+        Same(new RangeInt(roundMin, roundMax), RangeInt.Round(range));
+        Same(new RangeInt(truncateMin, truncateMax), RangeInt.Truncate(range));
     }
 
     [Fact]

@@ -201,7 +201,7 @@ namespace UMapx.Core
         /// <returns>Integer number.</returns>
         public override int GetHashCode()
         {
-            return new System.Drawing.SizeF(width, height).GetHashCode();
+            return unchecked((width.GetHashCode() * 397) ^ height.GetHashCode());
         }
         /// <summary>
         /// Converts a SizeFloat to its corresponding string representation.
@@ -209,7 +209,7 @@ namespace UMapx.Core
         /// <returns>Text as a sequence of Unicode characters.</returns>
         public override string ToString()
         {
-            return new System.Drawing.SizeF(width, height).ToString();
+            return string.Format("{{Width={0}, Height={1}}}", width, height);
         }
         /// <summary>
         /// Gets a value indicating whether this instance is equal to the specified value of type SizeFloat.

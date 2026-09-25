@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 
 namespace UMapx.Colorspace
 {
@@ -416,24 +415,24 @@ namespace UMapx.Colorspace
             return new YUV(value.X, value.Y, value.Z);
         }
 
-        /// <summary>
-        /// Defines an implicit conversion from Color to Unknown.
-        /// </summary>
-        /// <param name="value">Structure.</param>
-        /// <returns>Structure.</returns>
-        public static implicit operator Unknown(Color value)
-        {
-            return new Unknown(value.R, value.G, value.B);
-        }
-        /// <summary>
-        /// Defines an implicit conversion from Unknown to Color.
-        /// </summary>
-        /// <param name="value">Structure.</param>
-        /// <returns>Structure.</returns>
-        public static implicit operator Color(Unknown value)
-        {
-            return Color.FromArgb((int)value.X, (int)value.Y, (int)value.Z);
-        }
+        ///// <summary>
+        ///// Defines an implicit conversion from Color to Unknown.
+        ///// </summary>
+        ///// <param name="value">Structure.</param>
+        ///// <returns>Structure.</returns>
+        //public static implicit operator Unknown(Color value)
+        //{
+        //    return new Unknown(value.R, value.G, value.B);
+        //}
+        ///// <summary>
+        ///// Defines an implicit conversion from Unknown to Color.
+        ///// </summary>
+        ///// <param name="value">Structure.</param>
+        ///// <returns>Structure.</returns>
+        //public static implicit operator Color(Unknown value)
+        //{
+        //    return Color.FromArgb((int)value.X, (int)value.Y, (int)value.Z);
+        //}
         #endregion
 
         #region Clone members

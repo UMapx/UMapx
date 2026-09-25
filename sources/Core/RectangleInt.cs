@@ -720,7 +720,13 @@ namespace UMapx.Core
         /// <returns>Hash code.</returns>
         public override int GetHashCode()
         {
-            return new System.Drawing.Rectangle(x, y, width, height).GetHashCode();
+            unchecked
+            {
+                int hash = x;
+                hash = (hash * 397) ^ y;
+                hash = (hash * 397) ^ width;
+                return (hash * 397) ^ height;
+            }
         }
 
         /// <summary>

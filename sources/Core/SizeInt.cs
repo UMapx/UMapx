@@ -210,7 +210,7 @@ namespace UMapx.Core
         /// <returns>Integer number.</returns>
         public override int GetHashCode()
         {
-            return new System.Drawing.Size(width, height).GetHashCode();
+            return unchecked((width * 397) ^ height);
         }
         /// <summary>
         /// Converts a SizeInt to its corresponding string representation.
@@ -218,7 +218,7 @@ namespace UMapx.Core
         /// <returns>Text as a sequence of Unicode characters.</returns>
         public override string ToString()
         {
-            return new System.Drawing.Size(width, height).ToString();
+            return string.Format("{{Width={0}, Height={1}}}", width, height);
         }
         /// <summary>
         /// Gets a value indicating whether this instance is equal to the specified value of type SizeInt.

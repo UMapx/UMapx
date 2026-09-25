@@ -716,7 +716,13 @@ namespace UMapx.Core
         /// <returns>Hash code.</returns>
         public override int GetHashCode()
         {
-            return new System.Drawing.RectangleF(x, y, width, height).GetHashCode();
+            unchecked
+            {
+                int hash = x.GetHashCode();
+                hash = (hash * 397) ^ y.GetHashCode();
+                hash = (hash * 397) ^ width.GetHashCode();
+                return (hash * 397) ^ height.GetHashCode();
+            }
         }
 
         /// <summary>
