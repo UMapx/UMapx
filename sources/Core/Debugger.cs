@@ -174,7 +174,7 @@ namespace UMapx.Core
                 int w = 0;
                 for (int i = 0; i < m; i++)
                 {
-                    string str = A[i, j].ToString();
+                    string str = A[i, j]?.ToString() ?? string.Empty;
                     s[i, j] = str;
                     if (str.Length > w) w = str.Length;
                 }
@@ -235,10 +235,11 @@ namespace UMapx.Core
         /// Prints jagged array to console.
         /// </summary>
         /// <typeparam name="T">Type.</typeparam>
-        /// <param name="A">Jagged array.</param>
+        /// <param name="A">Jagged array. Missing and null elements are printed as empty cells.</param>
         public static void Print<T>(this T[][] A)
         {
-            int m = A?.GetLength(0) ?? 0, n = A?[0]?.GetLength(0) ?? 0;
+            int m = A?.Length ?? 0;
+            int n = m == 0 ? 0 : A.Max(row => row?.Length ?? 0);
 
             // Empty cases
             if (m == 0 || n == 0)
@@ -260,7 +261,8 @@ namespace UMapx.Core
                 int w = 0;
                 for (int i = 0; i < m; i++)
                 {
-                    string str = A[i][j].ToString();
+                    string str = j < (A[i]?.Length ?? 0)
+                        ? A[i][j]?.ToString() ?? string.Empty : string.Empty;
                     s[i, j] = str;
                     if (str.Length > w) w = str.Length;
                 }
@@ -323,9 +325,7 @@ namespace UMapx.Core
         /// <summary>
         /// Prints a simple reflection-based summary of an object's public properties and methods.
         /// </summary>
-        /// <param name="T">
-        /// The target instance. (Note: parameter name is uppercase by design here; typically it's named <c>obj</c>.).
-        /// </param>
+        /// <param name="T">Target instance.</param>
         /// <param name="includeInherited">
         /// If <c>true</c>, include members inherited from base types; otherwise, only members declared on the object's exact type are included.
         /// </param>
@@ -357,6 +357,7 @@ namespace UMapx.Core
             flags |= includeStatic ? BindingFlags.Instance | BindingFlags.Static
                                    : BindingFlags.Instance;
             if (!includeInherited) flags |= BindingFlags.DeclaredOnly;
+            else flags |= BindingFlags.FlattenHierarchy;
 
             // Collect property names
             var props = t.GetProperties(flags).Select(p => p.Name);
