@@ -1,12 +1,9 @@
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Numerics;
-using System.Runtime.Versioning;
 using UMapx.Analysis;
 using UMapx.Core;
 using Xunit;
-using static UMapx.Tests.NumericAssert;
 using static UMapx.Tests.MatrixAuditTests;
+using static UMapx.Tests.NumericAssert;
 
 namespace UMapx.Tests;
 
