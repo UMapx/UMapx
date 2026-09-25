@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Numerics;
 using UMapx.Core;
 using Xunit;
+using ReferenceRectangles = UMapx.Tests.Reference.Rectangles;
 
 namespace UMapx.Tests;
 
@@ -19,13 +20,13 @@ public class RectangleTests
 
     private static void Same(RectangleF expected, RectangleFloat actual)
     {
-        Assert.Equal(expected.X, actual.X);
-        Assert.Equal(expected.Y, actual.Y);
-        Assert.Equal(expected.Width, actual.Width);
-        Assert.Equal(expected.Height, actual.Height);
+        SameBits(expected.X, actual.X);
+        SameBits(expected.Y, actual.Y);
+        SameBits(expected.Width, actual.Width);
+        SameBits(expected.Height, actual.Height);
     }
 
-    private static Rectangle[] IntegerCases()
+    private static Rectangle[] IntegerCases(int seed = 731)
     {
         var cases = new List<Rectangle>
         {
@@ -35,16 +36,21 @@ public class RectangleTests
             new(int.MaxValue, int.MinValue, 4, -5), new(int.MinValue, int.MaxValue, -4, 5),
             new(-1, -2, int.MaxValue, int.MinValue)
         };
-        var random = new Random(731);
+        var random = new Random(seed);
         for (int i = 0; i < 60; i++)
             cases.Add(new Rectangle(random.Next(-50, 50), random.Next(-50, 50),
                 random.Next(-10, 70), random.Next(-10, 70)));
+        for (int i = 0; i < 64; i++)
+            cases.Add(new Rectangle((int)random.NextInt64(int.MinValue, (long)int.MaxValue + 1),
+                (int)random.NextInt64(int.MinValue, (long)int.MaxValue + 1),
+                (int)random.NextInt64(int.MinValue, (long)int.MaxValue + 1),
+                (int)random.NextInt64(int.MinValue, (long)int.MaxValue + 1)));
         return cases.ToArray();
     }
 
-    private static RectangleF[] FloatCases()
+    private static RectangleF[] FloatCases(int seed = 731)
     {
-        var cases = IntegerCases().Select(r => (RectangleF)r).ToList();
+        var cases = IntegerCases(seed).Select(r => (RectangleF)r).ToList();
         cases.AddRange(new[]
         {
             new RectangleF(-2.75f, 3.125f, 4.5f, 1.75f),
@@ -59,6 +65,12 @@ public class RectangleTests
             new RectangleF(0, 0, float.NaN, 3),
             new RectangleF(0, 0, 2, float.NaN)
         });
+        var random = new Random(seed);
+        for (int i = 0; i < 64; i++)
+        {
+            float Next() => BitConverter.Int32BitsToSingle((int)random.NextInt64(int.MinValue, (long)int.MaxValue + 1));
+            cases.Add(new RectangleF(Next(), Next(), Next(), Next()));
+        }
         return cases.ToArray();
     }
 
@@ -83,9 +95,7 @@ public class RectangleTests
             Assert.True(((IEquatable<RectangleInt>)actual).Equals(actual));
             Assert.False(actual.Equals(null));
             Assert.False(actual.Equals((object)expected));
-            Assert.Equal(actual.GetHashCode(), actual.Clone().GetHashCode());
-            Same(expected, actual.Clone());
-            Same(expected, (RectangleInt)((ICloneable)actual).Clone());
+            Assert.Equal(expected.GetHashCode(), actual.GetHashCode());
 
             var changed = actual;
             changed.Location = new PointInt(7, -11);
@@ -121,9 +131,7 @@ public class RectangleTests
             Assert.Equal(expected.Equals(expected), ((IEquatable<RectangleFloat>)actual).Equals(actual));
             Assert.False(actual.Equals(null));
             Assert.False(actual.Equals((object)expected));
-            Assert.Equal(actual.GetHashCode(), actual.Clone().GetHashCode());
-            Same(expected, actual.Clone());
-            Same(expected, (RectangleFloat)((ICloneable)actual).Clone());
+            Assert.Equal(expected.GetHashCode(), actual.GetHashCode());
 
             var changed = actual;
             changed.Location = new PointFloat(7.25f, -11.5f);
@@ -174,8 +182,8 @@ public class RectangleTests
         foreach (var a in cases)
         foreach (var b in cases)
         {
-            RectangleInt actual = a;
-            RectangleInt other = b;
+            RectangleInt actual = Convert(a);
+            RectangleInt other = Convert(b);
             Assert.Equal(a == b, actual == other);
             Assert.Equal(a != b, actual != other);
             Assert.Equal(a.Equals(b), actual.Equals(other));
@@ -199,8 +207,8 @@ public class RectangleTests
         foreach (var a in cases)
         foreach (var b in cases)
         {
-            RectangleFloat actual = a;
-            RectangleFloat other = b;
+            RectangleFloat actual = Convert(a);
+            RectangleFloat other = Convert(b);
             Assert.Equal(a == b, actual == other);
             Assert.Equal(a != b, actual != other);
             Assert.Equal(a.Equals(b), actual.Equals(other));
@@ -223,7 +231,7 @@ public class RectangleTests
         foreach (var rectangle in IntegerCases())
         foreach (int amount in new[] { -20, 0, 7, int.MinValue, int.MaxValue })
         {
-            RectangleInt original = rectangle;
+            RectangleInt original = Convert(rectangle);
             Same(Rectangle.Inflate(rectangle, amount, -3), RectangleInt.Inflate(original, amount, -3));
             var expected = rectangle;
             var actual = original;
@@ -246,7 +254,7 @@ public class RectangleTests
         foreach (var rectangle in FloatCases())
         foreach (float amount in new[] { -20.25f, 0, 7.5f, float.MaxValue, float.NaN })
         {
-            RectangleFloat original = rectangle;
+            RectangleFloat original = Convert(rectangle);
             Same(RectangleF.Inflate(rectangle, amount, -3.5f), RectangleFloat.Inflate(original, amount, -3.5f));
             var expected = rectangle;
             var actual = original;
@@ -282,17 +290,13 @@ public class RectangleTests
     {
         foreach (var rectangle in IntegerCases())
         {
-            RectangleInt integer = rectangle;
-            Rectangle drawing = integer;
-            Assert.Equal(rectangle, drawing);
+            RectangleInt integer = Convert(rectangle);
             RectangleFloat floating = integer;
             Same((RectangleF)rectangle, floating);
         }
         foreach (var rectangle in FloatCases())
         {
-            RectangleFloat floating = rectangle;
-            RectangleF drawing = floating;
-            Same(drawing, floating);
+            RectangleFloat floating = Convert(rectangle);
             var vector = new Vector4(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
             Same(rectangle, new RectangleFloat(vector));
             Same(rectangle, (RectangleFloat)vector);
@@ -317,247 +321,250 @@ public class RectangleTests
         finally { CultureInfo.CurrentCulture = previous; }
     }
 
-    [Fact]
-    public void IntegerArithmeticRetainsImagingRoundingAndDoesNotMutateInputs()
-    {
-        var rectangle = new RectangleInt(10, 20, 3, 4);
-        var point = new PointInt(-2, 5);
-        Assert.Equal(new RectangleInt(8, 25, 3, 4), rectangle.Add(point));
-        Assert.Equal(new RectangleInt(12, 15, 3, 4), rectangle.Sub(point));
-        Assert.Equal(rectangle.Add(point), rectangle + point);
-        Assert.Equal(rectangle.Sub(point), rectangle - point);
-        Assert.Equal(12, rectangle.Area());
-        Assert.Equal(12, RectangleInt.Area(rectangle.Size));
-        Assert.Equal(new PointInt(10, 20), rectangle.GetPoint());
-        Assert.Equal(new RectangleInt(10, 20, 4, 4), rectangle.ToBox());
-        Assert.Equal(new RectangleInt(9, 19, 4, 6), rectangle.ToBox(.5f));
-        Assert.Equal(new RectangleInt(10, 19, 4, 6), rectangle.Scale(.5f, .5f));
-        Assert.Equal(new RectangleInt(10, 20, 4, 4), rectangle.Scale(kx: .5f));
-        Assert.Equal(new RectangleInt(10, 19, 3, 6), rectangle.Scale(ky: .5f));
-        Assert.Equal(new RectangleInt(9, 20, 5, 5), rectangle.Scale());
-        Assert.Equal(rectangle, rectangle.Scale(0, 0));
-        Assert.Equal(rectangle, rectangle.ToBox(0));
-        Assert.Equal(new RectangleInt(10, 20, 3, 4), rectangle);
+    private static RectangleInt Convert(Rectangle r) => new RectangleInt(r.X, r.Y, r.Width, r.Height);
+    private static RectangleFloat Convert(RectangleF r) => new RectangleFloat(r.X, r.Y, r.Width, r.Height);
+    private static PointInt Convert(Point p) => new PointInt(p.X, p.Y);
+    private static PointFloat Convert(PointF p) => new PointFloat(p.X, p.Y);
 
-        var negativeOrigin = new RectangleInt(-2, -3, 3, 5);
-        Assert.Equal(new RectangleInt(-2, -4, 4, 7), negativeOrigin.ToBox(.5f));
-        Assert.Equal(new RectangleInt(-2, -4, 4, 7), negativeOrigin.Scale(.5f, .5f));
-        Assert.Equal(new RectangleInt(-15000, -10000, 50000, 50000),
-            new RectangleInt(-5000, -5000, 30000, 40000).Scale());
+    private static void SameBits(float expected, float actual) =>
+        Assert.Equal(BitConverter.SingleToInt32Bits(expected), BitConverter.SingleToInt32Bits(actual));
+
+    private static void Same(Point expected, PointInt actual)
+    {
+        Assert.Equal(expected.X, actual.X);
+        Assert.Equal(expected.Y, actual.Y);
     }
 
-    [Fact]
-    public void FloatArithmeticPreservesFractionalCoordinates()
+    private static void Same(PointF expected, PointFloat actual)
     {
-        var rectangle = new RectangleFloat(10, 20, 3, 4);
-        var point = new PointFloat(-2.25f, 5.5f);
-        Assert.Equal(new RectangleFloat(7.75f, 25.5f, 3, 4), rectangle.Add(point));
-        Assert.Equal(new RectangleFloat(12.25f, 14.5f, 3, 4), rectangle.Sub(point));
-        Assert.Equal(rectangle.Add(point), rectangle + point);
-        Assert.Equal(rectangle.Sub(point), rectangle - point);
-        Assert.Equal(12, rectangle.Area());
-        Assert.Equal(12, RectangleFloat.Area(rectangle.Size));
-        Assert.Equal(new PointFloat(10, 20), rectangle.GetPoint());
-        Assert.Equal(new RectangleFloat(9.5f, 20, 4, 4), rectangle.ToBox());
-        Assert.Equal(new RectangleFloat(9.25f, 19, 4.5f, 6), rectangle.ToBox(.5f));
-        Assert.Equal(new RectangleFloat(9.25f, 19, 4.5f, 6), rectangle.Scale(.5f, .5f));
-        Assert.Equal(new RectangleFloat(9.25f, 20, 4.5f, 4), rectangle.Scale(kx: .5f));
-        Assert.Equal(new RectangleFloat(10, 19, 3, 6), rectangle.Scale(ky: .5f));
-        Assert.Equal(new RectangleFloat(9, 19.5f, 5, 5), rectangle.Scale());
-        Assert.Equal(rectangle, rectangle.Scale(0, 0));
-        Assert.Equal(rectangle, rectangle.ToBox(0));
-        Assert.Equal(new RectangleFloat(10, 20, 3, 4), rectangle);
-        NumericAssert.Close(5e20, new RectangleFloat(0, 0, 3e20f, 4e20f).Scale().Width);
+        SameBits(expected.X, actual.X);
+        SameBits(expected.Y, actual.Y);
     }
 
-    [Fact]
-    public void CornerOrderAndRoundTripMatchImagingConvention()
+    private static void SameArray(Rectangle[] expected, RectangleInt[] actual)
     {
-        var integer = new RectangleInt(2, 3, 4, 5);
-        Assert.Equal(new[] { new PointInt(2, 3), new PointInt(6, 3), new PointInt(6, 8), new PointInt(2, 8) },
-            integer.ToPoints());
-        Assert.Equal(integer, RectangleInt.FromPoints(integer.ToPoints()));
-        var floating = new RectangleFloat(2.5f, 3.25f, 4.5f, 5.75f);
-        Assert.Equal(new[] { new PointFloat(2.5f, 3.25f), new PointFloat(7, 3.25f),
-            new PointFloat(7, 9), new PointFloat(2.5f, 9) }, floating.ToPoints());
-        Assert.Equal(floating, RectangleFloat.FromPoints(floating.ToPoints()));
-        Assert.Equal(RectangleInt.Empty, RectangleInt.FromPoints(RectangleInt.Empty.ToPoints()));
-        var negative = new RectangleFloat(4, 5, -2, -3);
-        Assert.Equal(negative, RectangleFloat.FromPoints(negative.ToPoints()));
-        Assert.Throws<ArgumentNullException>(() => RectangleInt.FromPoints(null!));
-        Assert.Throws<ArgumentNullException>(() => RectangleFloat.FromPoints(null!));
-        foreach (int length in new[] { 0, 1, 3, 5 })
+        Assert.Equal(expected.Length, actual.Length);
+        for (int i = 0; i < expected.Length; i++) Same(expected[i], actual[i]);
+    }
+
+    private static void SameArray(RectangleF[] expected, RectangleFloat[] actual)
+    {
+        Assert.Equal(expected.Length, actual.Length);
+        for (int i = 0; i < expected.Length; i++) Same(expected[i], actual[i]);
+    }
+
+    private static void SameResult<TReference, TActual>(
+        Func<TReference> reference, Func<TActual> actual, Action<TReference, TActual> compare)
+    {
+        TReference expectedValue = default!;
+        TActual actualValue = default!;
+        Exception? expectedException = null;
+        Exception? actualException = null;
+        try { expectedValue = reference(); } catch (Exception exception) { expectedException = exception; }
+        try { actualValue = actual(); } catch (Exception exception) { actualException = exception; }
+        Assert.Equal(expectedException?.GetType(), actualException?.GetType());
+        if (expectedException is ArgumentException argument)
+            Assert.Equal(argument.Message, actualException!.Message);
+        if (expectedException == null) compare(expectedValue, actualValue);
+    }
+
+    private static readonly float[] Factors = { -2, -1, -0.5f, -0.0f, 0, 0.5f, 1, 2.75f,
+        float.Epsilon, float.MaxValue, float.MinValue, float.NaN,
+        float.PositiveInfinity, float.NegativeInfinity };
+
+    [Fact]
+    public void RoundingExtremeFloatComponentsMatchesSystemDrawing()
+    {
+        foreach (var rectangle in FloatCases())
         {
-            Assert.Throws<ArgumentException>(() => RectangleInt.FromPoints(new PointInt[length]));
-            Assert.Throws<ArgumentException>(() => RectangleFloat.FromPoints(new PointFloat[length]));
+            var actual = Convert(rectangle);
+            Same(Rectangle.Ceiling(rectangle), RectangleInt.Ceiling(actual));
+            Same(Rectangle.Round(rectangle), RectangleInt.Round(actual));
+            Same(Rectangle.Truncate(rectangle), RectangleInt.Truncate(actual));
+        }
+    }
+
+    [Theory]
+    [InlineData(731)]
+    [InlineData(1999)]
+    [InlineData(42)]
+    public void IntegerArithmeticMatchesReferenceIncludingOverflowAndSpecialValues(int seed)
+    {
+        var cases = IntegerCases(seed);
+        foreach (var rectangle in cases)
+        {
+            var actual = Convert(rectangle);
+            Same(ReferenceRectangles.ToBox(rectangle), actual.ToBox());
+            Same(ReferenceRectangles.Scale(rectangle), actual.Scale());
+            Same(ReferenceRectangles.GetPoint(rectangle), actual.GetPoint());
+            Assert.Equal(ReferenceRectangles.Area(rectangle), actual.Area());
+            Assert.Equal(ReferenceRectangles.Area(rectangle.Size), RectangleInt.Area(actual.Size));
+            var corners = ReferenceRectangles.ToPoints(rectangle);
+            var actualCorners = actual.ToPoints();
+            Assert.Equal(corners.Length, actualCorners.Length);
+            for (int i = 0; i < corners.Length; i++) Same(corners[i], actualCorners[i]);
+            Same(ReferenceRectangles.FromPoints(corners), RectangleInt.FromPoints(actualCorners));
+            foreach (float factor in Factors)
+            {
+                Same(ReferenceRectangles.ToBox(rectangle, factor), actual.ToBox(factor));
+                Same(ReferenceRectangles.Scale(rectangle, kx: factor), actual.Scale(kx: factor));
+                Same(ReferenceRectangles.Scale(rectangle, ky: factor), actual.Scale(ky: factor));
+                Same(ReferenceRectangles.Scale(rectangle, factor, -factor), actual.Scale(factor, -factor));
+            }
+            foreach (var other in cases)
+            {
+                Same(ReferenceRectangles.Add(rectangle, other.Location), actual.Add(Convert(other.Location)));
+                Same(ReferenceRectangles.Sub(rectangle, other.Location), actual.Sub(Convert(other.Location)));
+                SameBits(ReferenceRectangles.IoU(rectangle, other), actual.IoU(Convert(other)));
+                Same(ReferenceRectangles.Clamp(rectangle, other), actual.Clamp(Convert(other)));
+            }
+            Same(rectangle, actual);
+        }
+    }
+
+    [Theory]
+    [InlineData(731)]
+    [InlineData(1999)]
+    [InlineData(42)]
+    public void IntegerArrayArithmeticMatchesReferenceWithAgreedEmptinessRule(int seed)
+    {
+        var pool = IntegerCases(seed);
+        var arrays = new List<Rectangle[]?> { null, Array.Empty<Rectangle>(), pool,
+            new[] { new Rectangle(3, 4, 0, 0), new Rectangle(1, 2, -3, -4) },
+            new[] { new Rectangle(1, 2, 3, 4), new Rectangle(5, 6, 4, 3) } };
+        for (int i = 0; i < pool.Length; i++)
+        {
+            arrays.Add(new[] { pool[i] });
+            arrays.Add(new[] { pool[i], pool[(i * 7 + 1) % pool.Length], pool[(i * 13 + 2) % pool.Length] });
+        }
+        for (int i = 0; i < arrays.Count; i++)
+        {
+            var rectangles = arrays[i];
+            var actual = rectangles?.Select(Convert).ToArray();
+            var offset = pool[i % pool.Length].Location;
+            SameResult(() => ReferenceRectangles.Add(rectangles!, offset),
+                () => RectangleInt.Add(actual!, Convert(offset)), SameArray);
+            SameResult(() => ReferenceRectangles.Sub(rectangles!, offset),
+                () => RectangleInt.Sub(actual!, Convert(offset)), SameArray);
+            SameResult(() => ReferenceRectangles.Max(rectangles!), () => RectangleInt.Max(actual!), Same);
+            SameResult(() => ReferenceRectangles.Min(rectangles!), () => RectangleInt.Min(actual!), Same);
+            SameResult(() => ReferenceRectangles.ToBox(rectangles!), () => RectangleInt.ToBox(actual!), SameArray);
+            foreach (float factor in Factors)
+                SameResult(() => ReferenceRectangles.ToBox(factor, rectangles!),
+                    () => RectangleInt.ToBox(factor, actual!), SameArray);
+            if (rectangles != null)
+            {
+                SameArray(rectangles, actual!);
+                Assert.NotSame(actual, RectangleInt.Add(actual!, Convert(Point.Empty)));
+                Assert.NotSame(actual, RectangleInt.Sub(actual!, Convert(Point.Empty)));
+                Assert.NotSame(actual, RectangleInt.ToBox(actual!));
+                Assert.NotSame(actual, RectangleInt.ToBox(0.5f, actual!));
+            }
         }
     }
 
     [Fact]
-    public void ArrayOperationsReturnNewArraysAndLeaveInputsUnchanged()
+    public void IntegerFromPointsMatchesReferenceForUnorderedAndInvalidInputs()
     {
-        var integers = new[] { new RectangleInt(10, 20, 3, 4), new RectangleInt(-2, -3, 3, 5) };
-        var originals = integers.ToArray();
-        Assert.Equal(new[] { new RectangleInt(11, 18, 3, 4), new RectangleInt(-1, -5, 3, 5) },
-            RectangleInt.Add(integers, new PointInt(1, -2)));
-        Assert.Equal(new[] { new RectangleInt(9, 22, 3, 4), new RectangleInt(-3, -1, 3, 5) },
-            RectangleInt.Sub(integers, new PointInt(1, -2)));
-        Assert.Equal(new[] { new RectangleInt(10, 20, 4, 4), new RectangleInt(-3, -3, 5, 5) },
-            RectangleInt.ToBox(integers));
-        Assert.Equal(new[] { new RectangleInt(9, 19, 4, 6), new RectangleInt(-2, -4, 4, 7) },
-            RectangleInt.ToBox(.5f, integers));
-        Assert.Equal(originals, integers);
-        Assert.NotSame(integers, RectangleInt.Add(integers, default));
-
-        var floats = new[] { new RectangleFloat(10, 20, 3, 4), new RectangleFloat(-2, -3, 3, 5) };
-        var floatOriginals = floats.ToArray();
-        Assert.Equal(new[] { new RectangleFloat(11, 18, 3, 4), new RectangleFloat(-1, -5, 3, 5) },
-            RectangleFloat.Add(floats, new PointFloat(1, -2)));
-        Assert.Equal(new[] { new RectangleFloat(9, 22, 3, 4), new RectangleFloat(-3, -1, 3, 5) },
-            RectangleFloat.Sub(floats, new PointFloat(1, -2)));
-        Assert.Equal(new[] { new RectangleFloat(9.5f, 20, 4, 4), new RectangleFloat(-3, -3, 5, 5) },
-            RectangleFloat.ToBox(floats));
-        Assert.Equal(new[] { new RectangleFloat(9.25f, 19, 4.5f, 6), new RectangleFloat(-2.75f, -4.25f, 4.5f, 7.5f) },
-            RectangleFloat.ToBox(.5f, floats));
-        Assert.Equal(floatOriginals, floats);
-        Assert.NotSame(floats, RectangleFloat.Sub(floats, default));
-        Assert.Empty(RectangleInt.ToBox(Array.Empty<RectangleInt>()));
-        Assert.Empty(RectangleFloat.ToBox(.5f, Array.Empty<RectangleFloat>()));
+        var pool = IntegerCases().Select(r => r.Location).ToArray();
+        var arrays = new List<Point[]?> { null, Array.Empty<Point>(), pool };
+        for (int length = 1; length <= 5; length++)
+        for (int i = 0; i < pool.Length; i++)
+            arrays.Add(Enumerable.Range(0, length).Select(n => pool[(i + 11 * n) % pool.Length]).ToArray());
+        foreach (var points in arrays)
+            SameResult(() => ReferenceRectangles.FromPoints(points!),
+                () => RectangleInt.FromPoints(points?.Select(Convert).ToArray()!), Same);
     }
 
-    [Fact]
-    public void ArrayOperationsRejectNullInputs()
+    [Theory]
+    [InlineData(731)]
+    [InlineData(1999)]
+    [InlineData(42)]
+    public void FloatArithmeticMatchesReferenceIncludingOverflowAndSpecialValues(int seed)
     {
-        Assert.Throws<ArgumentNullException>(() => RectangleInt.Add(null!, default));
-        Assert.Throws<ArgumentNullException>(() => RectangleInt.Sub(null!, default));
-        Assert.Throws<ArgumentNullException>(() => RectangleInt.Min(null!));
-        Assert.Throws<ArgumentNullException>(() => RectangleInt.Max(null!));
-        Assert.Throws<ArgumentNullException>(() => RectangleInt.ToBox(null!));
-        Assert.Throws<ArgumentNullException>(() => RectangleInt.ToBox(.5f, null!));
-        Assert.Throws<ArgumentNullException>(() => RectangleFloat.Add(null!, default));
-        Assert.Throws<ArgumentNullException>(() => RectangleFloat.Sub(null!, default));
-        Assert.Throws<ArgumentNullException>(() => RectangleFloat.Min(null!));
-        Assert.Throws<ArgumentNullException>(() => RectangleFloat.Max(null!));
-        Assert.Throws<ArgumentNullException>(() => RectangleFloat.ToBox(null!));
-        Assert.Throws<ArgumentNullException>(() => RectangleFloat.ToBox(.5f, null!));
-    }
-
-    [Fact]
-    public void AreaSelectionHandlesEmptyInputsTiesAndOverflow()
-    {
-        var small = new RectangleInt(1, 2, 3, 4);
-        var tie = new RectangleInt(9, 8, 6, 2);
-        var large = new RectangleInt(1, 2, 100000, 100000);
-        Assert.Equal(RectangleInt.Empty, RectangleInt.Min());
-        Assert.Equal(RectangleInt.Empty, RectangleInt.Max());
-        Assert.Equal(RectangleInt.Empty, RectangleInt.Min(RectangleInt.Empty));
-        Assert.Equal(RectangleInt.Empty, RectangleInt.Max(RectangleInt.Empty));
-        Assert.Equal(small, RectangleInt.Min(RectangleInt.Empty, small, tie, large));
-        Assert.Equal(large, RectangleInt.Max(RectangleInt.Empty, small, large));
-        Assert.Equal(small, RectangleInt.Max(small, tie));
-        var maxArea = new RectangleInt(0, 0, int.MaxValue, 1);
-        Assert.Equal(maxArea, RectangleInt.Min(maxArea));
-        Assert.Equal(small, RectangleInt.Min(small, new RectangleInt(1, 1, 0, 0)));
-
-        var tinyFloat = new RectangleFloat(2, 3, float.Epsilon, float.Epsilon);
-        var hugeFloat = new RectangleFloat(2, 3, float.MaxValue, float.MaxValue);
-        var smallerFloat = new RectangleFloat(4, 5, float.MaxValue, float.MaxValue / 2);
-        Assert.Equal(RectangleFloat.Empty, RectangleFloat.Min());
-        Assert.Equal(RectangleFloat.Empty, RectangleFloat.Max());
-        Assert.Equal(RectangleFloat.Empty, RectangleFloat.Min(new RectangleFloat(3, 4, 0, 7)));
-        Assert.Equal(RectangleFloat.Empty, RectangleFloat.Max(new RectangleFloat(3, 4, -1, 7)));
-        Assert.Equal(tinyFloat, RectangleFloat.Min(hugeFloat, RectangleFloat.Empty, tinyFloat));
-        Assert.Equal(hugeFloat, RectangleFloat.Max(smallerFloat, hugeFloat));
-        Assert.Equal(smallerFloat, RectangleFloat.Min(hugeFloat, smallerFloat));
-        Assert.Equal((RectangleFloat)small, RectangleFloat.Min(small, tie));
-        Assert.Equal((RectangleFloat)small, RectangleFloat.Max(small, tie));
-    }
-
-    [Fact]
-    public void AreaSelectionSkipsZeroAndNegativeDimensionsForBothTypes()
-    {
-        var empty = new[] { new RectangleInt(10, 20, 0, 5), new RectangleInt(10, 20, 5, 0),
-            new RectangleInt(10, 20, -100, 100), new RectangleInt(10, 20, 100, -100),
-            new RectangleInt(10, 20, -100, -100) };
-        var valid = new RectangleInt(1, 2, 3, 4);
-        foreach (var rectangle in empty)
+        var cases = FloatCases(seed);
+        foreach (var rectangle in cases)
         {
-            Assert.Equal(RectangleInt.Empty, RectangleInt.Min(rectangle));
-            Assert.Equal(RectangleInt.Empty, RectangleInt.Max(rectangle));
-            Assert.Equal(valid, RectangleInt.Min(rectangle, valid));
-            Assert.Equal(valid, RectangleInt.Max(rectangle, valid));
+            var actual = Convert(rectangle);
+            Same(ReferenceRectangles.ToBox(rectangle), actual.ToBox());
+            Same(ReferenceRectangles.Scale(rectangle), actual.Scale());
+            Same(ReferenceRectangles.GetPoint(rectangle), actual.GetPoint());
+            SameBits(ReferenceRectangles.Area(rectangle), actual.Area());
+            SameBits(ReferenceRectangles.Area(rectangle.Size), RectangleFloat.Area(actual.Size));
+            var corners = ReferenceRectangles.ToPoints(rectangle);
+            var actualCorners = actual.ToPoints();
+            Assert.Equal(corners.Length, actualCorners.Length);
+            for (int i = 0; i < corners.Length; i++) Same(corners[i], actualCorners[i]);
+            Same(ReferenceRectangles.FromPoints(corners), RectangleFloat.FromPoints(actualCorners));
+            foreach (float factor in Factors)
+            {
+                Same(ReferenceRectangles.ToBox(rectangle, factor), actual.ToBox(factor));
+                Same(ReferenceRectangles.Scale(rectangle, kx: factor), actual.Scale(kx: factor));
+                Same(ReferenceRectangles.Scale(rectangle, ky: factor), actual.Scale(ky: factor));
+                Same(ReferenceRectangles.Scale(rectangle, factor, -factor), actual.Scale(factor, -factor));
+            }
+            foreach (var other in cases)
+            {
+                Same(ReferenceRectangles.Add(rectangle, other.Location), actual.Add(Convert(other.Location)));
+                Same(ReferenceRectangles.Sub(rectangle, other.Location), actual.Sub(Convert(other.Location)));
+                SameBits(ReferenceRectangles.IoU(rectangle, other), actual.IoU(Convert(other)));
+                Same(ReferenceRectangles.Clamp(rectangle, other), actual.Clamp(Convert(other)));
+            }
+            Same(rectangle, actual);
+        }
+    }
 
-            RectangleFloat floating = rectangle;
-            Assert.Equal(RectangleFloat.Empty, RectangleFloat.Min(floating));
-            Assert.Equal(RectangleFloat.Empty, RectangleFloat.Max(floating));
-            Assert.Equal((RectangleFloat)valid, RectangleFloat.Min(floating, valid));
-            Assert.Equal((RectangleFloat)valid, RectangleFloat.Max(floating, valid));
+    [Theory]
+    [InlineData(731)]
+    [InlineData(1999)]
+    [InlineData(42)]
+    public void FloatArrayArithmeticMatchesReferenceWithAgreedEmptinessRule(int seed)
+    {
+        var pool = FloatCases(seed);
+        var arrays = new List<RectangleF[]?> { null, Array.Empty<RectangleF>(), pool,
+            new[] { new RectangleF(3, 4, 0, 0), new RectangleF(1, 2, -3, -4) },
+            new[] { new RectangleF(1, 2, 3, 4), new RectangleF(5, 6, 4, 3) } };
+        for (int i = 0; i < pool.Length; i++)
+        {
+            arrays.Add(new[] { pool[i] });
+            arrays.Add(new[] { pool[i], pool[(i * 7 + 1) % pool.Length], pool[(i * 13 + 2) % pool.Length] });
+        }
+        for (int i = 0; i < arrays.Count; i++)
+        {
+            var rectangles = arrays[i];
+            var actual = rectangles?.Select(Convert).ToArray();
+            var offset = pool[i % pool.Length].Location;
+            SameResult(() => ReferenceRectangles.Add(rectangles!, offset),
+                () => RectangleFloat.Add(actual!, Convert(offset)), SameArray);
+            SameResult(() => ReferenceRectangles.Sub(rectangles!, offset),
+                () => RectangleFloat.Sub(actual!, Convert(offset)), SameArray);
+            SameResult(() => ReferenceRectangles.Max(rectangles!), () => RectangleFloat.Max(actual!), Same);
+            SameResult(() => ReferenceRectangles.Min(rectangles!), () => RectangleFloat.Min(actual!), Same);
+            SameResult(() => ReferenceRectangles.ToBox(rectangles!), () => RectangleFloat.ToBox(actual!), SameArray);
+            foreach (float factor in Factors)
+                SameResult(() => ReferenceRectangles.ToBox(factor, rectangles!),
+                    () => RectangleFloat.ToBox(factor, actual!), SameArray);
+            if (rectangles != null)
+            {
+                SameArray(rectangles, actual!);
+                Assert.NotSame(actual, RectangleFloat.Add(actual!, Convert(PointF.Empty)));
+                Assert.NotSame(actual, RectangleFloat.Sub(actual!, Convert(PointF.Empty)));
+                Assert.NotSame(actual, RectangleFloat.ToBox(actual!));
+                Assert.NotSame(actual, RectangleFloat.ToBox(0.5f, actual!));
+            }
         }
     }
 
     [Fact]
-    public void IoUHandlesOverlapContainmentTouchingAndDegenerateRectangles()
+    public void FloatFromPointsMatchesReferenceForUnorderedAndInvalidInputs()
     {
-        var a = new RectangleInt(0, 0, 10, 10);
-        var b = new RectangleInt(5, 5, 10, 10);
-        NumericAssert.Close(1.0 / 7, a.IoU(b));
-        NumericAssert.Close(1.0 / 7, RectangleInt.IoU(b, a));
-        Assert.Equal(1, a.IoU(a));
-        Assert.Equal(.25f, a.IoU(new RectangleInt(2, 2, 5, 5)));
-        Assert.Equal(0, a.IoU(new RectangleInt(10, 0, 10, 10)));
-        Assert.Equal(0, a.IoU(new RectangleInt(50, 50, 10, 10)));
-        Assert.Equal(0, a.IoU(RectangleInt.Empty));
-        Assert.Equal(0, RectangleInt.Empty.IoU(RectangleInt.Empty));
-        Assert.Equal(0, a.IoU(new RectangleInt(5, 5, -2, 3)));
-
-        var af = new RectangleFloat(.5f, .25f, 10, 10);
-        var bf = new RectangleFloat(5.5f, 5.25f, 10, 10);
-        NumericAssert.Close(1.0 / 7, af.IoU(bf));
-        NumericAssert.Close(1.0 / 7, RectangleFloat.IoU(bf, af));
-        Assert.Equal(1, af.IoU(af));
-        Assert.Equal(0, af.IoU(new RectangleFloat(10.5f, .25f, 10, 10)));
-        Assert.Equal(0, af.IoU(RectangleFloat.Empty));
-        Assert.Equal(0, RectangleFloat.Empty.IoU(RectangleFloat.Empty));
-        Assert.Equal(0, af.IoU(new RectangleFloat(5, 5, 2, -3)));
-    }
-
-    [Fact]
-    public void IoUAvoidsCoordinateAreaOverflowAndUnderflow()
-    {
-        Assert.Equal(1, new RectangleInt(0, 0, 100000, 100000).IoU(new RectangleInt(0, 0, 100000, 100000)));
-        var edge = new RectangleInt(int.MaxValue - 2, int.MinValue, 10, 10);
-        Assert.Equal(1, edge.IoU(edge));
-        var other = new RectangleInt(int.MaxValue - 7, int.MinValue, 10, 10);
-        NumericAssert.Close(1.0 / 3, edge.IoU(other));
-        Assert.Equal(0, edge.IoU(new RectangleInt(int.MinValue, int.MinValue, 10, 10)));
-        var enormous = new RectangleFloat(0, 0, float.MaxValue, float.MaxValue);
-        Assert.Equal(1, enormous.IoU(enormous));
-        var tiny = new RectangleFloat(0, 0, float.Epsilon, float.Epsilon);
-        Assert.Equal(1, tiny.IoU(tiny));
-    }
-
-    [Fact]
-    public void ClampNormalizesOnlyTheFirstRectangleAndRetainsDisjointOrigins()
-    {
-        var bounds = new RectangleInt(0, 0, 10, 10);
-        var reversed = new RectangleInt(12, 8, -8, -12);
-        Assert.Equal(new RectangleInt(4, 0, 6, 8), reversed.Clamp(bounds));
-        Assert.Equal(new RectangleInt(4, 0, 6, 8), RectangleInt.Clamp(reversed, bounds));
-        Assert.Equal(new RectangleInt(20, 2, 0, 3), new RectangleInt(20, 2, 5, 3).Clamp(bounds));
-        Assert.Equal(new RectangleInt(0, 2, 0, 3), new RectangleInt(-20, 2, 5, 3).Clamp(bounds));
-        Assert.Equal(new RectangleInt(12, 8, -8, -12), reversed);
-        Assert.Equal(new RectangleInt(5, 5, 0, 0), bounds.Clamp(new RectangleInt(5, 5, -3, -3)));
-        Assert.Equal(new RectangleInt(-10, 0, 10, 1),
-            new RectangleInt(0, 0, int.MinValue, 1).Clamp(new RectangleInt(-10, 0, 20, 1)));
-        Assert.Equal(new RectangleInt(int.MaxValue, 0, 5, 1),
-            new RectangleInt(int.MaxValue, 0, 10, 1).Clamp(new RectangleInt(int.MaxValue, 0, 5, 1)));
-
-        var floatBounds = new RectangleFloat(0, 0, 10, 10);
-        var floatReversed = new RectangleFloat(12.5f, 8.25f, -8, -12);
-        Assert.Equal(new RectangleFloat(4.5f, 0, 5.5f, 8.25f), floatReversed.Clamp(floatBounds));
-        Assert.Equal(new RectangleFloat(4.5f, 0, 5.5f, 8.25f), RectangleFloat.Clamp(floatReversed, floatBounds));
-        Assert.Equal(new RectangleFloat(20, 2, 0, 3), new RectangleFloat(20, 2, 5, 3).Clamp(floatBounds));
-        Assert.Equal(new RectangleFloat(5, 5, 0, 0), floatBounds.Clamp(new RectangleFloat(5, 5, -3, -3)));
-        Assert.Equal(new RectangleFloat(12.5f, 8.25f, -8, -12), floatReversed);
+        var pool = FloatCases().Select(r => r.Location).ToArray();
+        var arrays = new List<PointF[]?> { null, Array.Empty<PointF>(), pool };
+        for (int length = 1; length <= 5; length++)
+        for (int i = 0; i < pool.Length; i++)
+            arrays.Add(Enumerable.Range(0, length).Select(n => pool[(i + 11 * n) % pool.Length]).ToArray());
+        foreach (var points in arrays)
+            SameResult(() => ReferenceRectangles.FromPoints(points!),
+                () => RectangleFloat.FromPoints(points?.Select(Convert).ToArray()!), Same);
     }
 }
