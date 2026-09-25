@@ -33,6 +33,6 @@ for name, function in [('Tanh', mp.tanh), ('Ctanh', mp.coth), ('Sech', mp.sech),
                 continue
             value = function(mp.mpc(re, im))
             rows.append([name, re, im, 0, 0, float(value.real), float(value.imag)])
-output = Path(__file__).with_name('arithmetic-repair.json')
+output = Path(__file__).with_name('arithmetic.json')
 output.write_text(json.dumps({'generator': 'mpmath ' + mp.__version__, 'precision': mp.mp.dps, 'cases': rows}, indent=2) + '\n', encoding='utf-8')
 print(f'{len(rows)} arithmetic reference cases -> {output}')
